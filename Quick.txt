@@ -1,0 +1,15 @@
+Quick Start Guide
+
+FileDir works like Windows Explorer so you can begin using FileDir with the same commands.  Many more commands are also defined, generally involving a modifier key like Shift,Control, or Alt in combination with a letter that begins the name of the command.    
+
+Launch FileDir with the desktop shortcut key Control+Alt+f.  When running, a complete list of hot keys may be displayed with Alt+Shift+H.  F1 displays the FileDir documentation in your web browser.  Shift+F1 displays the Change History and Control+F1 displays this quick start guide.  Use the standard JAWS command Insert+Q to query and confirm whether the optional FileDir scripts are active.  
+
+Commonly used FileDir commands are described as follows:
+
+Press Control+L to hear a list of items in the current folder, including both file and folder items.  Press Shift+L for a list of only those items that are currently tagged.  Similarly, press Control+Y for a yield of items in the current folder, providing a count of items and a total of bytes they occupy.  Press Shift+Y for a yield of tagged items.
+
+For specific information about the current item, the one with keyboard focus, press Shift+S for its size in bytes or Shift+D for the date and time it was last modified.  Press Shift+T for its type, as well as the default program to open it, if any.  Press question mark for the What command, which reads the contents of the file.  
+
+Several commands operate on the currently tagged items.  These include Shift+C to copy, Shift+M to move, Shift+R to rename, Shift+U to unzip, and Shift+Z to zip.  Shift+W writes tagged files or folders to a CD, if found.  Control+M mails items as attachments using the default program for electronic mail.
+
+Other commands switch the view from one folder to another.  Press Control+G to go to a folder that you then specify, either by typing a path or picking from a folder tree.  Press Alt+O to open one of a list of special folders such as My Documents.  Press Control+Tab to cycle to a view of another folder that may be readily accessed.

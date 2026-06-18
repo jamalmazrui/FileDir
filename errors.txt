@@ -1,0 +1,18 @@
+FileDir.cs(4965,1): warning CS0162: Unreachable code detected
+FileDir.cs(5081,1): warning CS0162: Unreachable code detected
+FileDir.cs(5120,1): warning CS0162: Unreachable code detected
+FileDir.cs(5842,6): error CS0246: The type or namespace name 't' could not be found (are you missing a using directive or an assembly reference?)
+FileDir.cs(5842,19): error CS0029: Cannot implicitly convert type 'System.Collections.Generic.List<string[]>' to 'System.Collections.Generic.List<t>'
+FileDir.cs(5843,6): error CS0246: The type or namespace name 't' could not be found (are you missing a using directive or an assembly reference?)
+FileDir.cs(5843,20): error CS0029: Cannot implicitly convert type 'System.Collections.Generic.List<string[]>' to 'System.Collections.Generic.List<t>'
+FileDir.cs(5844,6): error CS0246: The type or namespace name 't' could not be found (are you missing a using directive or an assembly reference?)
+FileDir.cs(5844,23): error CS0029: Cannot implicitly convert type 'System.Collections.Generic.List<string[]>' to 'System.Collections.Generic.List<t>'
+FileDir.cs(5852,34): error CS0117: 'System.IO.Directory' does not contain a definition for 'GetLastTime'
+FileDir.cs(5855,34): error CS0117: 'System.IO.Directory' does not contain a definition for 'GetLastTime'
+FileDir.cs(5858,1): error CS1502: The best overloaded method match for 'System.Collections.Generic.List<t>.Add(t)' has some invalid arguments
+FileDir.cs(5858,26): error CS1503: Argument '1': cannot convert from 'string[]' to 't'
+FileDir.cs(5860,6): error CS1502: The best overloaded method match for 'System.Collections.Generic.List<t>.Add(t)' has some invalid arguments
+FileDir.cs(5860,32): error CS1503: Argument '1': cannot convert from 'string[]' to 't'
+FileDir.cs(5866,32): error CS1502: The best overloaded method match for 'System.Collections.Generic.List<t>.Add(t)' has some invalid arguments
+FileDir.cs(5866,61): error CS1503: Argument '1': cannot convert from 'string[]' to 't'
+FileDir.cs(6885,1): warning CS0162: Unreachable code detected

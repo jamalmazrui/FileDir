@@ -1,0 +1,787 @@
+﻿                          HttpClient: Downloading to a Local File - Henrik's 
+Blog - Site Home - MSDN Blogs  
+
+     
+//<![CDATA[ var theForm = document.forms['aspnetForm']; if (!theForm) { theForm 
+= document.aspnetForm; } function __doPostBack(eventTarget, eventArgument) { if 
+(!theForm.onsubmit || (theForm.onsubmit() != false)) { 
+theForm.__EVENTTARGET.value = eventTarget; theForm.__EVENTARGUMENT.value = 
+eventArgument; theForm.submit(); } } //]]>   //<![CDATA[ function 
+WebForm_OnSubmit() { if (typeof(ValidatorOnSubmit) == "function" && 
+ValidatorOnSubmit() == false) return false; return true; } //]]>  
+ 
+
+
+
+
+
+ 
+
+
+  Sign in 
+    
+
+  
+
+
+
+Henrik's Blog
+
+Henrik works at Microsoft building software for the Web. You can also find me on 
+twitter -- my twitter handle is @frystyk. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Translate This Page
+
+ 
+
+
+Translate this pageArabicBosnian (Latin)BulgarianCatalanChinese 
+  SimplifiedChinese 
+  TraditionalCroatianCzechDanishDutchEstonianFinnishFrenchGermanGreekHaitian 
+  CreoleHebrewHindiHmong 
+  DawHungarianIndonesianItalianJapaneseKlingonKoreanLatvianLithuanianMalayMalteseNorwegianPersianPolishPortugueseQuerétaroD
+  OtomiRomanianRussianSerbian (Cyrillic)Serbian 
+  (Latin)SlovakSlovenianSpanishSwedishThaiTurkishUkrainianUrduVietnameseWelshYucatecg
+  Maya
+
+Microsoft® Translator
+
+Check out this page in {0} translated from {1}translated 
+fromOriginal:Translated:Automatic translation powered by Microsoft® 
+TranslatorStart translatingStop translatingCloseClose and show original 
+pageSelect
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Options
+
+
+
+  Blog Home
+
+
+  Share this 
+
+
+  RSS for posts
+
+
+  Atom
+
+
+  RSS for comments
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Search
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Search this blog Search all blogs 
+var elmSearchAll = $('#search-allblogs-container').hide(); var elmSearchThis = 
+$('#search-thisblog-container'); // try to get the blog id, if we fail, then we 
+aren't on a blog and just use the regular search approach (15067 === -1) && 
+$('#search-switch-container').hide(); $(document).ready(function() { 
+$('#ThisBlog').click(function () { var self = $(this); if (self.is(':checked')) 
+{ elmSearchAll.hide(); elmSearchThis.show(); } }); $('#AllBlogs').click(function 
+() { var self = $(this); if (self.is(':checked')) { elmSearchThis.hide(); 
+elmSearchAll.show(); } }); });    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tags
+
+
+  .NET Backend
+   AspNet
+   AspNetWebAPI
+   AspNetWebHooks
+   Autofac
+   AzureMobile
+   CodePlex
+   HTTP
+   HttpClient
+   MongoDB
+   MVC
+   NotificationHub
+   Razor
+   REST
+   SignalR
+   WebAPI
+   WebHooks
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Archive
+
+
+
+Archives
+  September 2015 (4)
+  July 2014 (1)
+  June 2014 (2)
+  April 2014 (2)
+  March 2014 (1)
+  November 2012 (1)
+  September 2012 (1)
+  August 2012 (6)
+  June 2012 (3)
+  May 2012 (2)
+  April 2012 (5)
+  March 2012 (2)
+  February 2012 (9)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HttpClient: Downloading to a Local File 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MSDN Blogs  >  Henrik's Blog   >  HttpClient: Downloading to a Local File  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HttpClient: Downloading to a Local File
+ Henrik F Nielsen 
+
+  
+
+Henrik F Nielsen
+
+Microsoft
+
+MSFT
+
+24,655Points 10 3 1 
+
+Recent Achievements 
+
+
+First Answer Confirmed Blogger II Blog Party Starter 
+
+View Profile 
+   17 Feb 2012 2:34 AM   
+  Comments 4 
+    
+ 
+
+Downloading content to a local file is a common thing to do. The current version 
+of HttpClient doesn’t yet provide out of the box support for saving content to a 
+file but this sample shows how to extend HttpClient with new ways of reading 
+content retrieved using HttpClient. Please see List of ASP.NET Web API and 
+HttpClient Samples for the complete sample solution.
+
+ReadAs Extension Methods
+
+The HttpContent class contains content to be sent to a client (in the case of 
+PUT, POST, etc.) as well as data being read from the server in a response. The 
+basic System.Net.Http NuGet package provides support for reading the content as 
+a stream, a string, or a byte array using one of
+  HttpContent.ReadAsStringAsync
+  HttpContent.ReadAsStreamAsync
+  HttpContent.ReadAsByteArrayAsync
+
+The way to extend how an HttpContent can be consumed is through the ReadAs* 
+extension methods. The System.Net.Formatter NuGet package offers a set of 
+additional ReadAs* methods, for reading and deserializing data at the same time. 
+This sample shows how to add a simple ReadAsFileAsync extension method but the 
+floor is open for any number of ways of reading the content.
+
+LoadIntobufferAsync
+
+In general, when you read data from an HttpContent it is consumed meaning that 
+it can’t be read again (like when you read a non-seekable stream). However, if 
+you want to be able to read the content multiple times then you can use the 
+LoadIntoBufferAsync method to do that. This will cause the content to get read 
+into an internal buffer so that it can consumed multiple times without 
+retrieving it again over the network.
+
+
+   1: static void Main(string[] args)    2: { 
+   3:     HttpClient client = new HttpClient();    4:   
+   5:     // Send asynchronous request 
+   6:     client.GetAsync(_address).ContinueWith(    7:         (requestTask) => 
+   8:         {    9:             // Get HTTP response from completed task. 
+  10:             HttpResponseMessage response = requestTask.Result;   11:   
+  12:             // Check that response was successful or throw exception 
+  13:             response.EnsureSuccessStatusCode();   14:   
+  15:             // Read content into buffer 
+  16:             response.Content.LoadIntoBufferAsync();   17:   
+  18:             // The content can now be read multiple times using any ReadAs* extension methodt
+  19:         });   20:     21:     Console.WriteLine("Hit ENTER to exit..."); 
+  22:     Console.ReadLine();   23: }
+ReadAsFileAsync
+
+First we make the ReadAsFileAsync extension method on HttpContent to provide 
+support for reading the content and storing it directly in a local file:
+
+
+   1: public static class HttpContentExtensions    2: { 
+   3:     public static Task ReadAsFileAsync(this HttpContent content, string filename, bool overwrite)t
+   4:     {    5:         string pathname = Path.GetFullPath(filename); 
+   6:         if (!overwrite && File.Exists(filename))    7:         { 
+   8:             throw new InvalidOperationException(string.Format("File {0} already exists.", pathname)); 
+   9:         }   10:     11:         FileStream fileStream = null; 
+  12:         try   13:         { 
+  14:             fileStream = new FileStream(pathname, FileMode.Create, FileAccess.Write, FileShare.None);n
+  15:             return content.CopyToAsync(fileStream).ContinueWith( 
+  16:                 (copyTask) =>   17:                 { 
+  18:                     fileStream.Close();   19:                 }); 
+  20:         }   21:         catch   22:         { 
+  23:             if (fileStream != null)   24:             { 
+  25:                 fileStream.Close();   26:             }   27:   
+  28:             throw;   29:         }   30:     }   31: }
+Downloading a Google Map
+
+Finally we put the two together – in this case we download an image from Google 
+Maps and open it up in the default image viewer (if you don’t have an image 
+viewer then opening the downloaded image will fail but that doesn’t change the 
+download part):
+
+
+   1: /// <summary> 
+   2: ///  Downloads a Redmond map from Google Map, saves it as a file and opens the default viewer.{
+   3: /// </summary>    4: class Program    5: { 
+   6:     static string _address = "http://maps.googleapis.com/maps/api/staticmap?center=Redmond,WA&zoom=14&size=400x400&sensor=false";:
+   7:      8:     static void Main(string[] args)    9:     { 
+  10:         HttpClient client = new HttpClient();   11:   
+  12:         // Send asynchronous request 
+  13:         client.GetAsync(_address).ContinueWith( 
+  14:             (requestTask) =>   15:             { 
+  16:                 // Get HTTP response from completed task. 
+  17:                 HttpResponseMessage response = requestTask.Result;   18:   
+  19:                 // Check that response was successful or throw exception 
+  20:                 response.EnsureSuccessStatusCode();   21:   
+  22:                 // Read response asynchronously and save to file 
+  23:                 response.Content.ReadAsFileAsync("output.png", true).ContinueWith(i
+  24:                     (readTask) =>   25:                     { 
+  26:                         Process process = new Process(); 
+  27:                         process.StartInfo.FileName = "output.png"; 
+  28:                         process.Start();   29:                     }); 
+  30:             });   31:   
+  32:         Console.WriteLine("Hit ENTER to exit..."); 
+  33:         Console.ReadLine();   34:     }   35: }
+Have fun!
+
+Henrik
+del.icio.us Tags: asp.net,webapi,mvc,rest,httpclient
+
+
+
+   4 Comments
+    
+ 
+
+
+
+
+AspNetWebAPI, HttpClient, HTTP, AspNet, REST, WebAPI 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Blog - Comment List MSDN TechNet
+
+ // <![CDATA[ (function ($) { $.extend(jQuery.tmpl.tag, { "for": { _default: { 
+$2: "var i=1;i<=1;i++" }, open: 'for ($2){', close: '};' } }); })(jQuery); 
+function findYPos(obj) { var curtop = 0; if (obj.offsetParent) { do { curtop += 
+obj.offsetTop; } while (obj = obj.offsetParent); return [curtop]; } } var 
+endpoint = '/b/henrikn/listComments.aspx'; var deleteendpoint = 
+'/Utility/ContentFragments/Blogs/FeedbackListAjax.asmx'; 
+$(document).ready(function () { if (window.location.hash) { var commentHash = 
+parseInt(window.location.hash.substring(1, window.location.hash.length)); if 
+(!isNaN(commentHash)) { loadComments(0, commentHash, true); return; } } 
+loadComments(0, 0, true); }); function loadComments(page, anchorId, isFirstLoad) 
+{ $.ajax({ type: 'POST', async: false, contentType: 'application/json', 
+dataType: 'json', url: endpoint + '?blogId=15067&postId=10268839&page=' + page + 
+'&commentId=' + anchorId + '&pageSize=1000&firstLoad=' + isFirstLoad + "&time=" 
++ new Date().getTime(), success: function (data) { var pager = 
+$('#pagerContainer'); $('#commentList').html(''); 
+$('#commentList').html($('#commentTemplate').tmpl(data.Comments)); 
+$('#pagerContainer').html($('#pagerTemplate').tmpl(data)); 
+$('.pagingLink').click(function (e) { e.preventDefault(); 
+loadComments($(this).data('page'), 0, false); window.scroll(0, 
+findYPos(document.getElementById('commentList')) - 50); return false; }); 
+$('.pagingLink').removeClass('selected'); $('#pager' + 
+data.CurrentPage).addClass('selected'); } }); } // ]]>   
+Comments  
+
+
+
+
+     Raghu    25 Jul 2012 11:10 AM  # 
+
+  Thanks for the sample. 
+
+  But I do not see the extension method used here. I am missing something.
+
+
+
+
+
+
+
+
+
+
+
+     Steve    3 Nov 2012 11:56 AM  # 
+
+  Raghu:
+
+  public static Task ReadAsFileAsync(this HttpContent content, string filename, 
+  bool overwrite)
+
+  That is an used in the download a google map section
+
+
+
+
+
+
+
+
+
+
+
+     PR    15 Mar 2014 10:48 AM  # 
+
+  I want to POST large files to a server using HttpClient. Httpclient has a 
+  default timeout of 100 seconds. I do not want to set timeout to infinite. My 
+  httpclient should not timeout under normal circumstances and if the httpclient 
+  is not able to write data to the request stream it should timeout after say 4 
+  minutes. Any ideas on how accomplish this ? 
+
+  Thanks
+
+
+
+
+
+
+
+
+
+
+
+     dinesh    18 Jun 2015 5:08 AM  # 
+
+  can you please explain httpclient means
+
+
+
+
+
+
+
+
+
+{{if Author}} <li id="commentItem${Id}" class="content-item"> <div 
+class="full-post-outer fiji-full-post-outer"><div class="full-post-header"><div 
+class="r fiji-r"></div></div> <div class="full-post"><div class="full-post-inner 
+fiji-full-post-inner"> <div class="post-author"> <span class="avatar"> {{if 
+!Author.IsAnonymous}} <a href="${Author.ProfileUrl}"> <img 
+src="${Author.AvatarUrl}" 
+style="border-width:0;max-height:32px;max-width:32px;"/> </a> {{else}} <img 
+src="${Author.AvatarUrl}" 
+style="border-width:0;max-height:32px;max-width:32px;"/> {{/if}} </span> <span 
+class="profile-usercard-hover" data-profile-userid="${Author.ProfileId}"> <span 
+class="user-name"> {{if !Author.IsAnonymous}} <a href="${Author.ProfileUrl}"> 
+${Author.DisplayName} </a> {{else}} ${Author.DisplayName} {{/if}} </span> 
+</span> </div> <div class="post-date"> <span 
+class="value">${PublishedDate}</span> </div> <a name="${Id}" 
+style="padding-left:5px;" href="#${Id}">#</a> <div class="post-content 
+user-defined-markup"> {{html Body}} </div> <div class="post-actions"> </div> 
+</div> {{if !Author.IsAnonymous && Author.Id == 37458}} <div 
+class="full-post-footer user-is-author"> {{else}} <div class="full-post-footer"> 
+{{/if}} <div class="r wireframe-r"></div> </div> </li> {{/if}}  {{if 
+TotalPages}} {{if TotalPages > 1}} <span class="summary">Page 1 of 3 (39 
+items)</span> {{for(i=1;i<=TotalPages;i++)}} <a id="pager${i}" data-page="${i}" 
+href="javascript:void(0);" class="pagingLink"> <span>${i}</span> </a> <span 
+class="separator"></span> {{/for }} {{else}} {{/if}} {{else}} {{/if}} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+Leave a Comment 
+  Name
+   * 
+
+  Comment
+   * Please enter a comment Please shorten the content to 3072 or less 
+  *Please add 6 and 6 and type the answer here:  
+  // <![CDATA[ $(document).ready(function () { 
+  $('a.add-reply.post').click(function (e) { e.preventDefault(); 
+  postComment(this); return false; }); 
+  $('#ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').keyup(functionu
+  (e) { $('#errorOnPosting').hide(); }); var nameBox = 
+  $('#ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName');t
+  if (nameBox.length > 0) { $(nameBox).keyup(function (e) { 
+  $('#errorOnPosting').hide(); }); } }); function postComment(anchor) { if 
+  (Page_ClientValidate('BlogPostCommentForm-ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00'))f
+  { togglePostAndPublishing(); var Core_CreateBlogComment_AjaxEndpoint = 
+  '/Utility/ContentFragments/Core/CreateBlogComment.asmx' + "/PostComment"; var 
+  name = ''; var nameBox = 
+  $('#ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName');h
+  if (nameBox.length > 0) { name = $(nameBox).val(); } var body = 
+  $('#ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').val();e
+  var weblogPostId = '10268839'; $.ajax({ type: "POST", async: false, url: 
+  Core_CreateBlogComment_AjaxEndpoint, beforeSend: function (xhr) { 
+  TelligentUtility.WriteAuthorizationHeader(xhr); }, data: { weblogPostId: 
+  weblogPostId, url: '', subject: '', message: body, name: name, remember: false 
+  }, success: function (results) { var responseVal = 
+  $(results.firstChild).text(); if (responseVal === "-1" || responseVal === 
+  "-2") { togglePostAndPublishing(); if (responseVal == "-2") 
+  $('#errorOnPosting').html('Your comment has been flagged as spam! The blog 
+  administrator has been notified.'); $('#errorOnPosting').show(); return; } var 
+  redirectUrl = window.location.href; if (redirectUrl.indexOf("?") > -1) { 
+  redirectUrl = redirectUrl.replace(/\?.*/, ""); } else if 
+  (redirectUrl.indexOf("#") > -1) { redirectUrl = redirectUrl.replace(/\#.*/, 
+  ""); } redirectUrl += '?CommentPosted=true#commentmessage'; if 
+  (window.location.href == redirectUrl) { location.reload(true); } else { 
+  window.location.href = redirectUrl; } }, error: function (xhr, textStatus, 
+  errorThrown) { togglePostAndPublishing(); $('#errorOnPosting').show(); } }); } 
+  } function togglePostAndPublishing() { $('a.add-reply.post').toggle(); 
+  $('a.publishing').toggle(); } // ]]>  
+  Post 
+  Publishing An error occurred while posting! Please retry posting your comment. o
+  
+
+
+
+
+
+
+
+
+
+
+
+  © 2015 Microsoft Corporation.
+   Terms of Use 
+   Trademarks 
+   Privacy & Cookies 
+   Report Abuse 
+   5.6.426.415
+   
+ <a href="http://www.omniture.com" title="Web Analytics"><img 
+src="http://msstomsdnblogs.112.2O7.net/b/ss/msstomsdnblogs/1/H.20.2--NS/0" 
+height="1" width="1" border="0" alt="" /></a> 
+
+$(document).ready(function () { window.appInsights = { queue: [], start: 
+function (n) { function r(n, t) { n[t] = function () { var i = arguments; 
+n.queue.push(function () { n[t].apply(n, i) }) } } var t, i; 
+this.applicationInsightsId = n; this.accountId = null; this.appUserId = null; 
+r(this, "logEvent"); r(this, "logPageView"); t = 
+document.createElement("script"); t.type = "text/javascript"; t.src = 
+"//az416426.vo.msecnd.net/scripts/ai.js"; t.async = !0; i = 
+document.getElementsByTagName("script")[0]; i.parentNode.insertBefore(t, i) } }; 
+window.appInsights.start("b4d65b72-ce61-486e-b07c-969cef6675f6"); 
+window.appInsights.logPageView(); });  
+
+//<![CDATA[ var Page_Validators = new 
+Array(document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV"),m
+document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV"),c
+document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV"),i
+document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha"));
+ //]]>  //<![CDATA[ var 
+ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFVa
+= document.all ? 
+document.all["ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV"]n
+: 
+document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV");
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.controltovalidatet
+= 
+"ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.display4
+= "Dynamic";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.validationGroupl
+= "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.evaluationfunctionA
+= "RequiredFieldValidatorEvaluateIsValid";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.initialvalue0
+= ""; var 
+ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFVm
+= document.all ? 
+document.all["ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV"]o
+: 
+document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV");
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.controltovalidate_
+= 
+"ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.display0
+= "Dynamic";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.validationGroupt
+= "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.evaluationfunctiont
+= "RequiredFieldValidatorEvaluateIsValid";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.initialvalue3
+= ""; var 
+ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV_
+= document.all ? 
+document.all["ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV"]_
+: 
+document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV");
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.controltovalidatel
+= 
+"ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.display_
+= "Dynamic";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.validationGroupm
+= "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.evaluationfunction2
+= "RegularExpressionValidatorEvaluateIsValid";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.validationexpressiont
+= "^[\\s\\S]{0,3072}$"; var 
+ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha4
+= document.all ? 
+document.all["ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha"].
+: 
+document.getElementById("ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha");
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.errormessaget
+= "*";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.displayo
+= "Dynamic";
+ ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.validationGroup1
+= "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00"; //]]>  
+// <![CDATA[ ctl00_content_ctl00 = new 
+ContentFragmentPageCustomCallback('ctl00_content_ctl00',new 
+Function('mode','parameters','callback','errorCallback','context','ctl00_content_ctl00_ctl00._doCallback(mode+\':\'+parameters,callback,context,errorCallback);'));
+ // ]]>   // <![CDATA[
+ Telligent_Modal.Configure('\/utility\/loading.htm',['modal'],['modal-title','modal-title-2','modal-title-3','modal-title-4'],['modal-close'],['modal-content','modal-content-2'],['modal-footer','modal-footer-2','modal-footer-3'],['modal-resize'],['modal-mask'],10000,false,true,true);
+ // ]]>  // <![CDATA[ window.ctl00_content_ctl00_ctl00 = new 
+Telligent_CallbackManager('ctl00_content_ctl00_ctl00','ctl00$content$ctl00$ctl00','aspnetForm');
+ // ]]>  // <![CDATA[
+ $('#ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_Container 
+input[value="Save"]').attr('onclick','').removeAttr('onclick').click( 
+function(){ try { var tagText = 
+$('#ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_Tags').val(); if 
+(!tagText) return false;var tagList = tagText.replace(';',',').split(','); var 
+isValid = true; for (var i=0,l=tagList.length;i<l;i++) {isValid = /^[ 
+-~]{0,100}$/ig.test(tagList[i]); if (!isValid) { alert(tagList[i] + ' : is not 
+valide'); return false; } 
+}ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01.Save();}catch(ex){ } 
+return false; }); // ]]>  // <![CDATA[
+ window.ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01 = new 
+Telligent_InlineEditor('ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01','ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_Container',newc
+Function('id', 'p', 
+'ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_InlineTagEditor.SetInlineEditorPanelAndParameter(id,p);'),new0
+Function('return 
+ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_InlineTagEditor.GetContent();'),new'
+Function('c', 
+'ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_InlineTagEditor.SetContent(c);'),null,newc
+Function('ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_InlineTagEditor.Focus();'),newi
+Function('w', 'h', 
+'ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_InlineTagEditor.Resize(w,h);'),300,90);
+ // ]]>  // <![CDATA[ var 
+ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_TagEditor = new 
+TagEditor('ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_TagEditor',[['.NET<
+Backend','.NET 
+Backend'],['AspNet','AspNet'],['AspNetWebAPI','AspNetWebAPI'],['AspNetWebHooks','AspNetWebHooks'],['Autofac','Autofac'],['AzureMobile','AzureMobile'],['CodePlex','CodePlex'],['HTTP','HTTP'],['HttpClient','HttpClient'],['MongoDB','MongoDB'],['MVC','MVC'],['NotificationHub','NotificationHub'],['Razor','Razor'],['REST','REST'],['SignalR','SignalR'],['WebAPI','WebAPI'],['WebHooks','WebHooks']],'ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_Tags');
+ // ]]>  // <![CDATA[ var 
+ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_InlineTagEditor = new 
+InlineTagEditor('ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_InlineTagEditor','ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01','ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_Container','ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01_Tags');
+ // ]]>  // <![CDATA[
+ window.ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl02 = new 
+Telligent_InlineEditorPanel('ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl02','ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl02','ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl02_State','ctl00_content_ctl00_w_52317__a07d1d_ctl00_ctl15_ctl01',false,null,null,null);
+ // ]]>  //<![CDATA[ var Page_ValidationActive = false; if 
+(typeof(ValidatorOnLoad) == "function") { ValidatorOnLoad(); } function 
+ValidatorOnSubmit() { if (Page_ValidationActive) { return 
+ValidatorCommonOnSubmit(); } else { return true; } } 
+$('#ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').autoResize({animate,
+: false,extraSpace : 0,limit : 3000});//]]>  
+subtext_invisible_captcha_hideFromJavascriptEnabledBrowsers('ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_subtext_captcha'); 
+ subtext_invisible_captcha_setAnswer(6, 6, 
+'ctl00_content_ctl00_w_52320__a07d1d_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_answer'); 0
+(window).load(function () { 
+$.getScript('http://widgets.membership.s-msft.com/v1/loader.js?brand=msdn&lang=en-US',_
+function () { }); });  $('div.breadcrumb-list span:last a').addClass('last'); 

@@ -1,0 +1,766 @@
+﻿ ContentDisposition Class (System.Net.Mime)                             try {
+ /**/ (window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains 
+= { "image": "https://i-msdn.sec.s-msft.com", "js": 
+"https://i2-msdn.sec.s-msft.com", "css": "https://i-msdn.sec.s-msft.com", "xap": 
+"https://msdn.microsoft.com" }); /**/ } finally { MTPS._injectNextScript_0 && 
+MTPS._injectNextScript_0(); }try { // var literalNormalizedUrl = 
+'/en-us/library/yztcycc2(l=en-us,v=vs.110).aspx'; var wt_nvr_ru = 'WT_NVR_RU'; 
+var wt_fpcdom = '.microsoft.com'; var wt_domlist = 'msdn.microsoft.com'; var 
+wt_pathlist = ''; var wt_paramlist = 'DCSext.mtps_devcenter'; var wt_siteid = 
+'MSDN'; var gDomain = 'm.webtrends.com'; var gDcsId = 
+'dcsmgru7m99k7mqmgrhudo0k8_8c6m'; var gFpc = 'WT_FPC'; if 
+(document.cookie.indexOf(gFpc + "=") == -1) { var wtidJs = 
+document.createElement("script"); wtidJs.src = "//" + gDomain + "/" + gDcsId + 
+"/wtid.js"; document.getElementsByTagName("head")[0].appendChild(wtidJs); } var 
+detectedLocale = 'en-us'; var wtsp = 'msdnlib_dotnet'; var gTrackEvents = '0';
+ /**/ } finally { MTPS._injectNextScript_2 && MTPS._injectNextScript_2(); }try {
+ // window.appInsightsId = '60854590-027a-4ae4-98be-2741a40f355f'; // } finally 
+{ MTPS._injectNextScript_3 && MTPS._injectNextScript_3(); }try { MTPS = 
+window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; 
+MTPS.LocalizedStrings.ExpandButtonTooltip = 'Expand'; 
+MTPS.LocalizedStrings.CollapseButtonTooltip = 'Collapse'; 
+MTPS.LocalizedStrings.EnhancedExpandTooltip = 'Click to expand. Double-click to 
+expand all.'; MTPS.LocalizedStrings.EnhancedCollapseTooltip = 'Click to 
+collapse. Double-click to collapse all.'; 
+MTPS.LocalizedStrings.ExpandAllButtonTooltip = 'Expand All'; 
+MTPS.LocalizedStrings.CollapseAllButtonTooltip = 'Collapse All'; } finally { 
+MTPS._injectNextScript_6 && MTPS._injectNextScript_6(); }try {
+ $(document).ready(function() { try { var token = $("#globalRequestVerification 
+input[name='__RequestVerificationToken']").clone(); 
+$("#siteFeedbackForm").append(token); } catch(err) { } }); } finally { 
+MTPS._injectNextScript_8 && MTPS._injectNextScript_8(); } 
+  
+
+  
+
+
+
+
+
+ 
+ Developer Network Developer Network Developer 
+
+ 
+ 
+
+
+
+
+
+MSDN subscriptions 
+
+Get tools 
+
+
+
+  http://www.facebook.com/microsoftdeveloper 
+  https://twitter.com/msdev 
+  http://plus.google.com/111221966647232053570/ 
+
+
+Sign in
+
+
+
+
+ 
+ 
+
+
+
+
+  
+
+
+ 
+
+
+
+
+
+  Technologies
+
+    Cloud
+
+
+    App Development
+
+
+    Web
+
+
+    Data
+
+
+    Gaming
+
+
+
+  Downloads
+
+    Visual Studio
+
+
+    MSDN subscription access
+
+
+    SDKs
+
+
+    Trial software
+
+      Free downloads
+
+
+      Office resources
+
+
+      SharePoint Server 2013 resources
+
+
+      SQL Server 2014 Express resources
+
+
+      Windows Server 2012 resources
+
+
+
+
+  Programs
+
+    Rewards
+
+
+    Startups
+
+
+    Students
+
+      Microsoft Imagine
+
+
+      Microsoft Student Partners
+
+
+
+    Architects
+
+      Overview
+
+
+      Case studies
+
+
+      Blueprints
+
+
+      Blog
+
+
+      Forums
+
+
+
+    Events
+
+
+    MSDN Subscriptions
+
+      Overview
+
+
+      Benefits
+
+
+      Administrators
+
+
+
+
+  Community
+
+    Magazine
+
+
+    Forums
+
+
+    Blogs
+
+
+    Tech Advisors
+
+
+    Channel 9
+
+
+
+  Documentation
+
+    APIs and reference
+
+
+    Dev centers
+
+
+
+  Samples
+
+
+  
+
+ .NET Framework Class Library System.Net Namespaces System.Net.Mime  
+
+
+
+
+
+  
+
+
+
+
+ContentDisposition Class
+
+
+
+ContentDisposition Constructor
+
+
+ContentDisposition Methods
+
+
+ContentDisposition Properties
+
+
+
+ContentType Class
+
+
+DispositionTypeNames Class
+
+
+MediaTypeNames Class
+
+
+MediaTypeNames.Application Class
+
+
+MediaTypeNames.Image Class
+
+
+MediaTypeNames.Text Class
+
+
+TransferEncoding Enumeration
+
+ System.Net.Mime ContentDisposition Class 
+Any Suggestions? Print  Export (0)  
+
+ ContentDisposition Class 
+
+
+
+ContentDisposition Class
+
+   
+
+
+Collapse the table of content
+
+Expand the table of content
+
+ 
+
+
+
+
+ContentDisposition Class
+
+
+ .NET Framework 4.6 and 4.5  
+
+
+
+
+ Other Versions  
+
+ 
+  .NET Framework 4 
+  .NET Framework 3.5 
+  .NET Framework 3.0 
+  .NET Framework 2.0 
+
+
+
+
+
+
+
+
+Represents a MIME protocol Content-Disposition header.
+
+
+
+ 
+Inheritance Hierarchy
+ 
+
+
+ 
+
+ System.Object 
+  System.Net.Mime.ContentDisposition
+
+
+
+Namespace:  System.Net.Mime
+Assembly:  System (in System.dll)
+
+
+
+Syntax
+
+
+
+
+
+ 
+
+
+C#
+
+C++
+
+F#
+
+JScript
+
+VB
+
+
+
+
+Copy
+
+
+public class ContentDisposition
+
+The ContentDisposition type exposes the following members.
+
+
+
+
+Constructors
+
+
+
+
+
+
+ 
+Show: Inherited  Protected  
+
+
+
+      
+
+    Name
+
+    Description
+
+      ContentDisposition()Initializes a new instance of the ContentDisposition 
+      class with a DispositionType of Attachment. 
+      ContentDisposition(String)Initializes a new instance of the 
+      ContentDisposition class with the specified disposition information.
+Top
+
+
+
+Properties
+
+
+
+
+
+
+ 
+Show: Inherited  Protected  
+
+
+
+      
+
+    Name
+
+    Description
+
+      CreationDateGets or sets the creation date for a file attachment.
+      DispositionTypeGets or sets the disposition type for an e-mail attachment.
+      FileNameGets or sets the suggested file name for an e-mail attachment.
+      InlineGets or sets a Boolean value that determines the disposition type 
+      (Inline or Attachment) for an e-mail attachment.
+      ModificationDateGets or sets the modification date for a file attachment.
+      ParametersGets the parameters included in the Content-Disposition header 
+      represented by this instance.
+      ReadDateGets or sets the read date for a file attachment.
+      SizeGets or sets the size of a file attachment.
+Top
+
+
+
+Methods
+
+
+
+
+
+
+ 
+Show: Inherited  Protected  
+
+
+
+      
+
+    Name
+
+    Description
+
+      EqualsDetermines whether the content-disposition header of the specified 
+      ContentDisposition object is equal to the content-disposition header of 
+      this object. (Overrides Object.Equals(Object).)
+      FinalizeAllows an object to try to free resources and perform other 
+      cleanup operations before it is reclaimed by garbage collection. 
+      (Inherited from Object.)
+      GetHashCodeDetermines the hash code of the specified ContentDisposition 
+      object (Overrides Object.GetHashCode().)
+      GetTypeGets the Type of the current instance. (Inherited from Object.)
+      MemberwiseCloneCreates a shallow copy of the current Object. (Inherited 
+      from Object.)
+      ToStringReturns a String representation of this instance. (Overrides 
+      Object.ToString().)
+Top
+
+
+
+Remarks
+
+
+
+
+
+
+The information in the ContentDisposition class accompanies an e-mail message 
+that contains attachments when the e-mail message is sent to its destination. 
+The information in ContentDisposition can be used by software that displays 
+e-mail to present the e-mail attachments in the manner intended by the sender. 
+
+E-mail messages are created using instances of the MailMessage class. Instances 
+of the Attachment class are used to add attachments to e-mail messages. To 
+modify the ContentDisposition for an attachment, get the instance from the 
+Attachment.ContentDisposition property.
+
+Content to be displayed as part of the message body has the disposition type of 
+Inline. Content that is not displayed but is attached in a separate file has the 
+disposition type of Attachment. Use the Inline property to control the 
+disposition type for the attachment associated with an instance of 
+ContentDisposition.
+
+For file attachments, you can use the properties of the ContentDisposition to 
+set the file size, as well as the date the file was created, last read, and last 
+modified. For all attachments, you can set a recommended file name in the event 
+that the attachment is stored on the receiving computer.
+
+The ToString method returns the Content-Disposition header. The 
+Content-Disposition header is described in RFC 2183 available at 
+http://www.ietf.org.
+
+
+
+
+Examples
+
+
+
+
+
+
+The following code example creates an e-mail message with an attachment to be 
+displayed inline.
+
+
+
+
+C#
+
+C++
+
+
+
+
+Copy
+
+
+		public static void CreateMessageInlineAttachment(string server, string
+		textMessage)
+		{
+			// Create a message and set up the recipients.
+			MailMessage message = new MailMessage(
+			   "jane@contoso.com",
+			   "ben@contoso.com",
+			   "An inline text message for you.",
+			   "Message: ");
+
+			// Attach the message string to this e-mail message.
+			Attachment data = new Attachment(textMessage, MediaTypeNames.Text.Plain);
+			// Send textMessage as part of the e-mail body.
+			message.Attachments.Add(data);
+			ContentDisposition disposition = data.ContentDisposition;
+			disposition.Inline = true;
+			//Send the message. 
+			// Include credentials if the server requires them.
+			SmtpClient client = new SmtpClient(server);
+			client.Credentials = CredentialCache.DefaultNetworkCredentials;
+
+	    try {
+        client.Send(message);
+      }
+      catch (Exception ex) {
+        Console.WriteLine("Exception caught in CreateMessageInlineAttachment: {0}", 
+                    ex.ToString() );
+      }
+			data.Dispose();
+		}
+
+
+
+
+Version Information
+
+
+
+
+
+
+.NET Framework
+Supported in: 4.6, 4.5, 4, 3.5, 3.0, 2.0
+
+.NET Framework Client Profile
+Supported in: 4, 3.5 SP1
+
+
+
+
+Thread Safety
+
+
+
+
+
+Any public static (Shared in Visual Basic) members of this type are thread safe. 
+Any instance members are not guaranteed to be thread safe.
+
+
+
+
+See Also
+
+
+
+
+
+
+Reference
+
+System.Net.Mime Namespace
+  
+
+
+
+
+
+
+
+Any Suggestions?
+
+Print 
+
+Export (0) 
+
+
+IN THIS ARTICLE
+  Inheritance Hierarchy
+  Syntax
+  Constructors
+  Properties
+  Methods
+  Remarks
+  Examples
+  Version Information
+  Thread Safety
+  See Also
+
+
+
+   
+
+
+
+
+
+ Was this page helpful?  
+Your feedback about this content is important. Let us know what you think. 
+Yes No   
+
+
+Additional feedback? 
+
+1500 characters remaining 
+
+Submit Skip this 
+
+Thank you!  
+We appreciate your feedback. 
+
+ 
+
+
+ 
+
+
+Was this page helpful? 
+
+Your feedback about this content is important.
+Let us know what you think. 
+
+Yes No 
+ 
+
+Additional feedback? 
+ 
+1500 characters remaining 
+
+Submit Skip this 
+
+
+Thank you! 
+
+We appreciate your feedback. 
+
+
+
+Have a suggestion to improve MSDN Library? 
+
+Visit our UserVoice Page to submit and vote on ideas! 
+
+Make a suggestion 
+
+
+
+
+
+Dev centers
+  Windows 
+  Office 
+  Visual Studio 
+  Microsoft Azure 
+  More... 
+
+
+
+
+Learning resources
+  Microsoft Virtual Academy 
+  Channel 9 
+  Interoperability Bridges 
+  MSDN Magazine 
+
+
+
+Community
+  Forums 
+  Blogs 
+  Codeplex 
+
+
+
+Support
+  Self support 
+
+
+
+Programs
+  BizSpark (for startups) 
+  DreamSpark 
+  Imagine Cup 
+
+
+
+ United States (English) 
+
+
+  Newsletter 
+  Privacy & cookies 
+  Terms of use 
+  Trademarks 
+
+
+© 2015 Microsoft 
+
+© 2015 Microsoft
+   <div><img alt="DCSIMG" id="Img1" width="1" height="1" 
+src="https://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;WT.js=No" 
+/></div> 
+ 
+/*<![CDATA[*/ (function(window,document){"use strict";function 
+preload(scripts){for(var 
+result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);returni
+result}function inject(scripts,index){var 
+script,elem;if(index>=scripts.length){delete 
+mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var.
+isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete 
+mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="tryv
+{\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && 
+MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var 
+mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+ MTPS.injectScripts([ { txt: "/**/\r\n(window.MTPS || (window.MTPS = 
+{})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": 
+\"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": 
+\"https://i2-msdn.sec.s-msft.com\", \r\n\t\"css\": 
+\"https://i-msdn.sec.s-msft.com\", \r\n\t\"xap\": 
+\"https://msdn.microsoft.com\"\r\n});\r\n/**/" }, { url: 
+"https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js" }, { txt: "//\n var 
+literalNormalizedUrl = 
+\u0027/en-us/library/yztcycc2(l=en-us,v=vs.110).aspx\u0027;\n var wt_nvr_ru = 
+\u0027WT_NVR_RU\u0027;\n var wt_fpcdom = \u0027.microsoft.com\u0027;\n var 
+wt_domlist = \u0027msdn.microsoft.com\u0027;\n var wt_pathlist = \u0027\u0027;\n 
+var wt_paramlist = \u0027DCSext.mtps_devcenter\u0027;\n var wt_siteid = 
+\u0027MSDN\u0027;\n var gDomain = \u0027m.webtrends.com\u0027;\n var gDcsId = 
+\u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n var gFpc = 
+\u0027WT_FPC\u0027;\n\n\n\n if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n 
+var wtidJs = document.createElement(\"script\");\n wtidJs.src = \"//\" + gDomain 
++ \"/\" + gDcsId + \"/wtid.js\";\n 
+document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n }\n\n\n\n var 
+detectedLocale = \u0027en-us\u0027;\n var wtsp = \u0027msdnlib_dotnet\u0027;\n 
+var gTrackEvents = \u00270\u0027;\n/**/" }, { txt: "//\n\n window.appInsightsId 
+= \u002760854590-027a-4ae4-98be-2741a40f355f\u0027;\n //" }, { url: 
+"https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5\u0026amp;hashKey=757523711D4A3025BA8EF1C19FC518BE\u0026amp;v=E1D76E5BAF330B583A367F5731C392C8"a
+}, { url: 
+"https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=Msdn\u0026loc=en-us\u0026focusOnInit=false\u0026emptyWatermark=true\u0026searchButtonTooltip=SearchS
+MSDN" }, { txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = 
+window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = 
+\u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = 
+\u0027Collapse\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027Click 
+to expand. Double-click to expand all.\u0027; 
+MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027Click to collapse. 
+Double-click to collapse all.\u0027; 
+MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027Expand All\u0027; 
+MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027Collapse All\u0027;" }, { 
+url: 
+"https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1\u0026amp;hashKey=16381DF0927C75E12C62EAD23C017874\u0026amp;v=E1D76E5BAF330B583A367F5731C392C8"6
+}, { txt: "$(document).ready(function() {\n try {\n var token = 
+$(\"#globalRequestVerification 
+input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n 
+$(\"#siteFeedbackForm\").append(token);\n } catch(err) {\n \n }\n });" } ]);
+ /*]]>*/  

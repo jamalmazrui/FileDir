@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+
+<title>Is Encoding the same as Escaping? - webr2.com</title>
+    <meta name="keywords" content="theory, encoding, escaping">
+    <meta name="description" content="Is Encoding the same as Escaping? I am interested in theory on whether Encoding is the same as Escaping? According to Wikipedia an escape character is a character which invokes an alternative interpretation on subsequent characters in a character sequence. My current thought is that">
+  
+
+
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/static/style.css" media="all">
+<link rel="stylesheet" href="/static/tomorrow-night.min.css">
+<script src="/static/highlight.min.js"></script>
+<script>
+window.onload = function() {
+    var aCodes = document.getElementsByTagName('pre');
+    for (var i=0; i < aCodes.length; i++) {
+        hljs.highlightBlock(aCodes[i]);
+    }
+};
+</script>
+
+
+
+</head>
+<body>
+
+<div id="hd">
+  <div id="nav">
+    <a href="http://www.webr2.com/" title="webr2.com" class="logo"><img src="/static/logo.png" alt="webr2.com" height="29" width="118"></a><!-- an End -->
+    
+
+
+    <ul class="nav_list">
+      <li><a title="Windows" class="nav-item" href="/category/windows/">Windows</a></li>
+      <li><a title="C#" class="nav-item" href="/category/c/">C#</a></li>
+      <li><a title="Java" class="nav-item" href="/category/java/">Java</a></li>
+      <li><a title="php" class="nav-item" href="/category/php/">php</a></li>
+      <li><a title="javascript" class="nav-item" href="/category/javascript/">javascript</a></li>
+      <li><a title="Android" class="nav-item" href="/category/android/">Android</a></li>
+    </ul>
+    
+    
+    <div class="tb-nav">
+      <div class="tb-item"> 
+        <div style="background: none repeat scroll 0% 0% transparent;" class="sc">
+          <form method="post" id="searchform" action="/search/">
+            <input id="keyword" class="focus" size="24" name="keyword" accesskey="s" autosave="baidu" results="8" autocomplete="off">
+            <button type="submit" name="sa">Search</button>
+          </form>          
+        </div>
+      </div>
+    </div><!-- tb-nav End -->    
+
+  </div>
+</div>
+
+
+
+<div id="con">
+  <div id="wrapper">
+
+<div class="content fl">
+  <div class="current_nav">
+    <a href="/">Home</a> <span class="sub">&gt;</span>
+    <a href="http://www.webr2.com/category/encoding/" title="encoding">encoding</a> <span class="sub">&gt;</span>
+    <a href="http://www.webr2.com/is-encoding-the-same-as-escaping/">Is Encoding the same as Escaping?</a>
+  </div>
+  
+  
+
+  <div class="post_title">
+    <h1>Is Encoding the same as Escaping?</h1>
+  </div>
+
+  <script type="text/javascript">
+    google_ad_client = "ca-pub-8579809634325354";
+    google_ad_slot = "5350820425";
+    google_ad_width = 336;
+    google_ad_height = 280;
+</script>
+<!-- head -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  
+  <div class="post_content" id="paragraph">
+    <p>I am interested in theory on whether Encoding is the same as Escaping? According to Wikipedia</p>
+<blockquote><p>an escape character is a character which invokes an alternative interpretation on subsequent characters in a character sequence.</p></blockquote>
+<p>My current thought is that they are different. Escaping is when you place an escape charater in front of a metacharacter(s) to mark it/them as to behave differently than what they would have normally.</p>
+<p>Encoding, on the other hand, is all about transforming data into another form, and upon wanting to read the original content it is decoded back to its original form.</p>
+<p>--------------Solutions-------------</p>
+<p>They're different, and I think you're getting the distinction correctly.</p>
+<p>Encoding is when you transform between a logical representation of a text ("logical string", e.g. Unicode) into a well-defined sequence of binary digits ("physical string", e.g. ASCII, UTF-8, UTF-16). Escaping is a special character (typically the backslash: '\') which initiates a different interpretation of the character(s) following the escape character; escaping is necessary when you need to encode a larger number of symbols to a smaller number of distinct (and finite) bit sequences.</p>
+<p>Escaping is a subset of encoding: You only encode certain characters by prefixing a special character instead of transferring (typically all or many) characters to another representation.</p>
+<p>Escaping examples:</p>
+<ul>
+<li>In an SQL statement: ... WHERE name='O\' Reilly'
+    </li>
+<li>In the shell: <code>ls Thirty\ Seconds\ *</code>
+    </li>
+<li>Many programming languages: <code>"\"Test\"</code> string (or <code>"""Test"""</code>)
+    </li>
+</ul>
+<p>Encoding examples:</p>
+<ul>
+<li>Replacing <code>&lt;</code> with <code>&amp;lt;</code> when outputting user input in HTML
+    </li>
+<li>The character encoding, like UTF-8
+    </li>
+<li>Using sequences that do not include the desired character, like <code>\u0061</code> for <code>a</code>
+    </li>
+</ul>
+<p>They are indeed different.</p>
+<p>You pretty much got it right.</p>  </div>
+
+  <script type="text/javascript">
+    google_ad_client = "ca-pub-8579809634325354";
+    google_ad_slot = "5350820425";
+    google_ad_width = 336;
+    google_ad_height = 280;
+</script>
+<!-- head -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  
+  
+  <span class="pt_info pre1"> 
+    <span>Category:<a href="http://www.webr2.com/category/encoding/" title="encoding">encoding</a></span>
+    <span id="pubtime">Time:2010-12-04</span>
+    <span id="hitcount">Views:<strong>1</strong></span>
+  </span>
+    
+  <div class="hot_tags">
+    <span>Tags:</span>
+    <a href="http://www.webr2.com/tag/theory/" title="theory">theory</a> <a href="http://www.webr2.com/tag/encoding/" title="encoding">encoding</a> <a href="http://www.webr2.com/tag/escaping/" title="escaping">escaping</a>  </div>
+
+  <div id="commentDiv">
+    
+  </div>
+  
+
+  <!-- related_post -->
+  <div class="related_post">
+    <h2>Related post</h2>
+    <ul class="list_1">
+  	    		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/decoding-base64-encoded-string-with-url-escaped-characters/">decoding base64 encoded string with URL escaped characters</a>
+          <span class="date">2010-01-25</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I am currently working on importing contacts from windows live contacts(hotmail addressbook). At one stage, the service posts back some data that i need to my page as a base64 encoded string which, as per microsoft documentation, contains url escaped          </p>
+      </li>
+        		  		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/using-the-jquery-form-plugin-how-do-i-stop-json-encoded-html-from-being-escaped/">Using the jquery form plugin, how do I stop json-encoded html from being escaped</a>
+          <span class="date">2010-10-11</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I've got a setup where I use the JQuery Form plugin to submit my forms through ajax, returning a json object from the server (running django, using simplejson.dumps). The json returned is constructed as this: status: [success/invalid/error] error: [e          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/xml-escaping-encoding-terminology/">Xml Escaping/Encoding terminology</a>
+          <span class="date">2009-04-18</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I'm confused as for the difference between the terms "escaping" and "encoding" in phrases like: Xml Encoding Xml Escaping Encoded Html Escaped Url ... Can anyone explain it to me? --------------Solutions------------- Encoding describes how the file's          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/how-to-detect-if-a-string-is-encoded-with-escape-or-encodeuricomponent/">How to detect if a string is encoded with escape() or encodeURIComponent()</a>
+          <span class="date">2009-08-14</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I have a web service that receives data from various clients. Some of them sends the data encoded using escape(), while the others instead use encodeURIComponent(). Is there a way to detect the encoding used to escape the data? --------------Solution          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/when-escaping-a-string-with-html-entities-can-i-safely-skip-encoding-chars-above-unicode-127-if-i-use-utf-8/">When escaping a string with HTML entities, can I safely skip encoding chars above Unicode 127 if I use UTF-8?</a>
+          <span class="date">2011-02-09</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            When outputting a string in HTML, one must escape special characters as HTML entities ("&amp;&lt;&gt;" etc.) for understandable reasons. I've examined two Java implementations of this: org.apache.commons.lang.StringEscapeUtils.escapeHtml(String) net.          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/json-encoding-wrongly-escaped-rails-3-ruby-1-9-2/">JSON encoding wrongly escaped (Rails 3, Ruby 1.9.2)</a>
+          <span class="date">2011-02-25</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            In my controller, the following works (prints "oké") puts obj.inspect But this doesn't (renders "ok\u00e9") render :json =&gt; obj Apparently the to_json method escapes unicode characters. Is there an option to prevent this? --------------Solutions--          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/encode-urls-into-safe-filename-string/">Encode URLs into safe filename string</a>
+          <span class="date">2008-11-03</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I'm writing a simple C++ class in which I would like cache picture thumbnails versions of images downloaded from the web. As such, I would like to use a hash function which takes in URL strings and outputs a unique string suitable as a filename. Is t          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/how-do-i-perform-html-decoding-encoding-using-python-django/">How do I perform HTML decoding/encoding using Python/Django?</a>
+          <span class="date">2008-11-08</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I have a string that is html encoded: &amp;lt;img class=&amp;quot;size-medium wp-image-113&amp;quot; style=&amp;quot;margin-left: 15px;&amp;quot; title=&amp;quot;su1&amp;quot; src=&amp;quot;http://blah.org/wp-content/uploads/2008/10/su1-300x194.jpg          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/implementing-run-length-encoding/">Implementing run-length encoding</a>
+          <span class="date">2009-03-26</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I've written a program to perform run length encoding. In typical scenario if the text is AAAAAABBCDEEEEGGHJ run length encoding will make it A6B2C1D1E4G2H1J1 but it was adding extra 1 for each non repeating character. Since i'm compressing BMP files          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/how-can-i-disable-url-encoding-of-cookies-in-rails/">How can I disable URL-encoding of cookies in Rails</a>
+          <span class="date">2009-07-07</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I have a Rails application that has to co-exist with a very old legacy application. The legacy application looks for a cookie that has a value containing a specific string of characters. Unfortunately, the characters in the legacy cookie often contai          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/python-json-loads-chokes-on-escapes/">Python: json.loads chokes on escapes</a>
+          <span class="date">2009-10-01</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I have an application that is sending a JSON object (formatted with Prototype) to an ASP server. On the server, the Python 2.6 "json" module tries to loads() the JSON, but it's choking on some combination of backslashes. Observe: &gt;&gt;&gt; s '{"Fi          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/xml-and-html-escaping-special-characters/">xml and html escaping special characters</a>
+          <span class="date">2009-12-12</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            i store my article in a xml file, so if i write into it special characters "' xml automatically escapes this characters and when i get(via PHP) the xml content i get something like \". so if i write into xml "hello dude" my html will look like this \          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/escaping-html-in-java/">Escaping html in Java</a>
+          <span class="date">2010-01-27</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            How do I make sure I don't escape something twice? I've heard that its good practice to escape values as you receive them from a form, and also escape when you output. That way you have two chances to catch something. --------------Solutions---------          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/when-should-i-html-escape-data-and-when-should-i-url-escape-data/">When should I HTML-escape data and when should I URL-escape data?</a>
+          <span class="date">2010-01-28</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            When should I HTML-escape data in my code and when should I URL-escape? I am confused about which one when to use... For example, given a element which asks for an URL: &lt;input type="text" value="DATA" name="URL"&gt; Should I HTML-Escape DATA here          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/nsstring-method-to-percent-escape-for-url/">NSString method to percent escape &apos;&amp;&apos; for URL</a>
+          <span class="date">2010-01-29</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            Which NSString encoding method will percent escape the ampersand (&amp;) character correctly into %26? stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding gets the spaces (%20) and other baddies but ignores ampersands!?! --------------Solu          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/what-characters-must-be-escaped-in-an-http-query-string/">What characters must be escaped in an HTTP query string?</a>
+          <span class="date">2010-02-24</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            This question concerns the characters in the query string portion of the URL, which appear after the ? mark character. Per Wikipedia, certain characters are left as is and others are encoded (usually with a % escape sequence). I've been trying to tra          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/smtpclient-net-does-not-encode-mail-header-in-conformance-with-rfc-2047/">SmtpClient (.NET) does not encode mail header in conformance with RFC 2047</a>
+          <span class="date">2010-03-15</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I am using .NET SmtpClient to send e-mail where the subject might contain characters outside of the ASCII range. The RFC 2047 defines how e-mail text should be encoded when it contains special characters. Here is an example of a subject in an e-mail          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/what-s-the-difference-between-uri-escape-and-cgi-escape/">What&apos;s the difference between URI.escape and CGI.escape?</a>
+          <span class="date">2010-05-13</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            What are the differences, and which one should I use? --------------Solutions------------- There were some small differences, but the important point is that URI.escape has been deprecated in Ruby 1.9.2... so use CGI::escape or ERB::Util.url_encode.          </p>
+      </li>
+        		      <li class="clearfix">
+          <a target="_blank" href="http://www.webr2.com/is-there-a-standard-way-to-encode-a-net-string-into-javascript-string-for-use-in-ms-ajax/">Is there a standard way to encode a .NET string into JavaScript string for use in MS Ajax?</a>
+          <span class="date">2010-05-27</span>
+          <div class="clearfix"></div>
+          <p class="excerpt">
+            I'm trying to pass the output of a SQL Server exception to the client using the RegisterStartUpScript method of the MS ScriptManager in .NET 3.5. This works fine for some errors but when the exception contains single quotes the alert fails. I dont wa          </p>
+      </li>
+          </ul>
+  </div>
+  
+
+</div>
+
+  <!-- content End -->
+
+
+    <!-- side -->
+    <div class="sidebar">
+      <ul>
+        <li class="sb_list">
+            <div class="bx"> 
+<script type="text/javascript">
+    google_ad_client = "ca-pub-8579809634325354";
+    google_ad_slot = "6827553627";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- side -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+        </li>
+        <li class="sb_list sbb">
+          <div class="tags_title">All categories</div>
+          <ul class="side_tags sub_ul">
+<li><a href="/category/windows/" title="windows">windows</a></li><li><a href="/category/c/" title="c#">c#</a></li><li><a href="/category/java/" title="java">java</a></li><li><a href="/category/php/" title="php">php</a></li><li><a href="/category/javascript/" title="javascript">javascript</a></li><li><a href="/category/internet-explorer/" title="internet explorer">internet explorer</a></li><li><a href="/category/android/" title="android">android</a></li><li><a href="/category/iphone/" title="iphone">iphone</a></li><li><a href="/category/python/" title="python">python</a></li><li><a href="/category/jquery/" title="jquery">jquery</a></li><li><a href="/category/ruby-on-rails/" title="ruby on rails">ruby on rails</a></li><li><a href="/category/asp-net/" title="asp.net">asp.net</a></li><li><a href="/category/sql/" title="sql">sql</a></li><li><a href="/category/net/" title=".net">.net</a></li><li><a href="/category/mysql/" title="mysql">mysql</a></li><li><a href="/category/objective-c/" title="objective c">objective c</a></li><li><a href="/category/html/" title="html">html</a></li><li><a href="/category/css/" title="css">css</a></li><li><a href="/category/ios/" title="ios">ios</a></li><li><a href="/category/wpf/" title="wpf">wpf</a></li><li><a href="/category/ruby/" title="ruby">ruby</a></li><li><a href="/category/asp-net-mvc/" title="asp.net mvc">asp.net mvc</a></li><li><a href="/category/sql-server/" title="sql server">sql server</a></li><li><a href="/category/django/" title="django">django</a></li><li><a href="/category/linux/" title="linux">linux</a></li><li><a href="/category/vb-net/" title="vb.net">vb.net</a></li><li><a href="/category/xml/" title="xml">xml</a></li><li><a href="/category/git/" title="git">git</a></li><li><a href="/category/perl/" title="perl">perl</a></li><li><a href="/category/flex/" title="flex">flex</a></li>          </ul>
+        </li>
+        <li class="sb_list">
+            
+        </li>
+        <li class="sb_list">
+          <div class="right_con post_right_con ">
+            <div class="top_news">
+              <div class="bar">
+                 <b>Recommended reading</b>
+              </div>
+              <div id="con1" class="list">
+                <ul>
+                  <li>
+                    <a title="MS-SQL 2000: Turn off logging during stored procedure" target="_blank" href="http://www.webr2.com/ms-sql-2000-turn-off-logging-during-stored-procedure/">
+                      MS-SQL 2000: Turn off logging during stored procedure                    </a>
+                  </li>
+                  <li>
+                    <a title="How do i prevent the browser from making expensive DNS lookups?" target="_blank" href="http://www.webr2.com/how-do-i-prevent-the-browser-from-making-expensive-dns-lookups/">
+                      How do i prevent the browser from making expensive DNS lookups?                    </a>
+                  </li>
+                  <li>
+                    <a title="parentElement and commonParentElement for getting parent element" target="_blank" href="http://www.webr2.com/parentelement-and-commonparentelement-for-getting-parent-element/">
+                      parentElement and commonParentElement for getting parent element                    </a>
+                  </li>
+                  <li>
+                    <a title="How to do animation in Android? " target="_blank" href="http://www.webr2.com/how-to-do-animation-in-android/">
+                      How to do animation in Android?                     </a>
+                  </li>
+                  <li>
+                    <a title="Why do I get &apos;No data found&apos; when passing a string variable into PL/SQL where clause" target="_blank" href="http://www.webr2.com/why-do-i-get-no-data-found-when-passing-a-string-variable-into-pl-sql-where-clause/">
+                      Why do I get &apos;No data found&apos; when passing a string variable into PL/SQL where clause                    </a>
+                  </li>
+                  <li>
+                    <a title="javascript 5 random non duplicating integers from 0 - 20" target="_blank" href="http://www.webr2.com/javascript-5-random-non-duplicating-integers-from-0-20/">
+                      javascript 5 random non duplicating integers from 0 - 20                    </a>
+                  </li>
+                  <li>
+                    <a title="Accessing JSON object after event completed" target="_blank" href="http://www.webr2.com/accessing-json-object-after-event-completed/">
+                      Accessing JSON object after event completed                    </a>
+                  </li>
+                  <li>
+                    <a title="mac osx: unable to use virtualenv" target="_blank" href="http://www.webr2.com/mac-osx-unable-to-use-virtualenv/">
+                      mac osx: unable to use virtualenv                    </a>
+                  </li>
+                  <li>
+                    <a title="How to reset a div CSS completely using CSS or jQuery" target="_blank" href="http://www.webr2.com/how-to-reset-a-div-css-completely-using-css-or-jquery/">
+                      How to reset a div CSS completely using CSS or jQuery                    </a>
+                  </li>
+                  <li>
+                    <a title="How to specify both keys in Kohana 3 ORM relationships" target="_blank" href="http://www.webr2.com/how-to-specify-both-keys-in-kohana-3-orm-relationships/">
+                      How to specify both keys in Kohana 3 ORM relationships                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </li>
+        <li class="sb_list">
+            
+        </li>
+
+        <li class="sb_list">
+          <div class="right_con post_right_con">
+            <div class="hotnews_list">
+              <div class="hidden_line"></div>
+              <div class="hn_title">You may also like</div>
+              <ul class="ulcl">
+                
+                                                <li class="hn_li bg">
+                  <a title="Silverlight 3: How to retrieve large(approx: 50 MB) xml string from ASP.NET webpage?" target="_blank" href="http://www.webr2.com/silverlight-3-how-to-retrieve-large-approx-50-mb-xml-string-from-asp-net-webpage/">• Silverlight 3: How to retrieve large(approx: 50 MB) xml string from ASP.NET webpage?</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="How do I handle time-stamped data that comes from different time zones?" target="_blank" href="http://www.webr2.com/how-do-i-handle-time-stamped-data-that-comes-from-different-time-zones/">• How do I handle time-stamped data that comes from different time zones?</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="What are the pitfalls of using .NET RIA Services in Silverlight?" target="_blank" href="http://www.webr2.com/what-are-the-pitfalls-of-using-net-ria-services-in-silverlight/">• What are the pitfalls of using .NET RIA Services in Silverlight?</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="Using XMLdocument to add node" target="_blank" href="http://www.webr2.com/using-xmldocument-to-add-node/">• Using XMLdocument to add node</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="Ignore whitespace when doing a merge in mercurial" target="_blank" href="http://www.webr2.com/ignore-whitespace-when-doing-a-merge-in-mercurial/">• Ignore whitespace when doing a merge in mercurial</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="Django form multiple select box size in template" target="_blank" href="http://www.webr2.com/django-form-multiple-select-box-size-in-template/">• Django form multiple select box size in template</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="Facebook Like or Like Box not showing in my web page" target="_blank" href="http://www.webr2.com/facebook-like-or-like-box-not-showing-in-my-web-page/">• Facebook Like or Like Box not showing in my web page</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="Solution/Architecture: queues or something else?" target="_blank" href="http://www.webr2.com/solution-architecture-queues-or-something-else/">• Solution/Architecture: queues or something else?</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="my hotmail is now outlook and it is totally messed up. I dont know how to update. Help!!!!!! Please." target="_blank" href="http://www.webr2.com/my-hotmail-is-now-outlook-and-it-is-totally-messed-up-i-dont-know-how-to-update-help-please/">• my hotmail is now outlook and it is totally messed up. I dont know how to update. Help!!!!!! Please.</a>
+                </li>
+                                <li class="hn_li bg">
+                  <a title="I have a new referb laptop with windows 7. I have used the key mounted on the case and it will not activate." target="_blank" href="http://www.webr2.com/i-have-a-new-referb-laptop-with-windows-7-i-have-used-the-key-mounted-on-the-case-and-it-will-not-activate/">• I have a new referb laptop with windows 7. I have used the key mounted on the case and it will not activate.</a>
+                </li>
+                              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="sb_list">
+            
+        </li>
+
+        <li class="sb_list">
+          <div class="right_con post_right_con">
+            <div class="hotnews_list">
+              <div class="hidden_line"></div>
+              <div class="hn_title">Other</div>
+              <ul class="ulcl">
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/menginstall-win-ultimit-7.html" title="menginstall win ultimit 7">menginstall win ultimit 7</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/jsfiddle-infinite-scroll-loop-jquery.html" title="jsfiddle infinite scroll loop jquery">jsfiddle infinite scroll loop jquery</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/adivesita.html" title="adivesita">adivesita</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/isql-2-10-dos-16m.html" title="isql 2.10 dos 16m">isql 2.10 dos 16m</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/zte-modem-mf110-setup-exe.html" title="ZTE MODEM MF110 SETUP EXE">ZTE MODEM MF110 SETUP EXE</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/windowsupdate-80244018.html" title="WindowsUpdate_80244018">WindowsUpdate_80244018</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/0x807800b4.html" title="0x807800B4">0x807800B4</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/video-problem-htc-8x.html" title="video problem htc 8x">video problem htc 8x</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/51-22-into-inr.html" title="$51.22 into inr">$51.22 into inr</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/eclipse-what-terminate-brutal.html" title="eclipse what terminate brutal">eclipse what terminate brutal</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/error-enternet-solution.html" title="eRRoR enteRnet soluTion">eRRoR enteRnet soluTion</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/timer-create-give-null-timerid-in-daemon.html" title="timer_create give NULL timerid in daemon">timer_create give NULL timerid in daemon</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/jtab-sahr.html" title="jtab sahr">jtab sahr</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/outlook-notmobile.html" title="outlook notmobile">outlook notmobile</a>                </li>
+                                <li class="hn_li bg" style="line-height:1em;">
+                  <a href="http://www.webr2.com/driver-asus-acpi-ausente.html" title="driver asus acpi ausente">driver asus acpi ausente</a>                </li>
+                              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+      <ul id="crf1">
+        <li class="sb_list">
+                    <div class="bx">
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- sidebar End --> </div>
+    
+    
+
+  <!-- wrapper End --> </div>
+<!-- con End -->
+
+<div id="ft">
+  <div class="if">
+    
+    <div class="bx1">
+      <a href="/about/about/" target="_blank"><strong>About</strong></a><span class="v">|</span>
+      <a href="/about/contact/" target="_blank"><strong>Contact</strong></a><span class="v">|</span>
+      <a href="/about/wap/" target="_blank"><strong>WAP</strong></a><span class="v">|</span>
+      <a href="/sitemap/" target="_blank"><strong>Sitemap</strong></a><span class="v">|</span> 
+      <a href="/archiver/" target="_blank"><strong>Archiver</strong></a>
+    </div>
+<div style="display: none"><script type="text/javascript" src="/js/count.js"></script></div>
+    <div class="bx2">
+      <p>Copyright (C) <a href="http://www.webr2.com/" target="_blank">webr2.com</a>, All Rights Reserved.</p>
+      <p>processed in 0.100 (s). 14 q(s)</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+    

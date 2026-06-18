@@ -1,0 +1,690 @@
+Marshal.GetIDispatchForObject Method (System.Runtime.InteropServices)   
+ 
+United States - English Argentina (Español)
+      Australia (English)
+      Brasil (Português)
+      Canada (English)
+      Canada (Français)
+      中国 (简体中文)
+      Colombia (Español)
+      Deutschland (Deutsch)
+      España (Español)
+      France (Français)
+      India (English)
+      Italia (Italiano)
+      日本 (日本語)
+      México (Español)
+      Perú (Español)
+      Россия (Pусский)
+      United Kingdom (English)
+      United States (English)
+
+      More...
+Microsoft.com Product Families
+      Office
+      Windows
+      Windows Server System
+      Windows Mobile
+      Developer Tools
+      Business Solutions
+      Games & Xbox
+      MSNResources
+      Microsoft Update
+      Office Update
+      Download Center
+      Help & Support
+      Security
+      Volume Licensing
+      About Microsoft
+      Company Information
+      Investor Relations
+      PressPass for journalistsPopular Places
+      MSDN (Developers)
+      TechNet (IT Pros)
+      Microsoft At Home
+      Microsoft At Work
+      Business & Industry
+      Microsoft partners
+      Microsoft hardware
+      Product catalog
+      Mactopia
+      Microsoft.com site map
+
+      Popular Searches
+      Templates
+      ActiveSync
+      Clip artPopular Downloads
+      Windows Defender Beta 2
+      DirectX End-User Runtime
+      More popular downloads
+Welcome Sign in      Suggestions
+Search  with Live Search
+MSDN
+Microsoft.com
+Entire Web
+
+CloseDeveloper CentersMSDN Home.NET Framework Developer 
+CenterHomeLibraryLearnDownloadsSupportCommunityForums
+
+ Printer Friendly Version    Add To Favorites    Send    Add Content...   
+      Click to Rate and Give Feedback       
+
+Give feedback on this content   
+  MSDN Library
+    Azure Services Platform
+    Design Tools
+    Development Tools and Languages
+    Mobile and Embedded Development
+    .NET Development
+      .NET Framework 3.5
+      Web Services Enhancements (WSE)
+      Previous Versions
+        .NET Framework 3.0
+        .NET Framework 2.0
+          .NET Framework Programming
+          Class Library Reference
+            ( Default Namespace )
+            Accessibility
+            IEHost.Execute
+            Microsoft.Aspnet.Snapin
+            Microsoft.Build.BuildEngine
+            Microsoft.Build.Framework
+            Microsoft.Build.Tasks
+            Microsoft.Build.Tasks.Deployment.Bootstrapper
+            Microsoft.Build.Tasks.Deployment.ManifestUtilities
+            Microsoft.Build.Tasks.Hosting
+            Microsoft.Build.Utilities
+            Microsoft.CLRAdmin
+            Microsoft.CSharp
+            Microsoft.IE
+            Microsoft.JScript
+            Microsoft.JScript.Vsa
+            Microsoft.SqlServer.Server
+            Microsoft.VisualBasic
+            Microsoft.VisualBasic.ApplicationServices
+            Microsoft.VisualBasic.CompilerServices
+            Microsoft.VisualBasic.Devices
+            Microsoft.VisualBasic.FileIO
+            Microsoft.VisualBasic.Logging
+            Microsoft.VisualBasic.MyServices
+            Microsoft.VisualBasic.MyServices.Internal
+            Microsoft.VisualBasic.Vsa
+            Microsoft.VisualC
+            Microsoft.Vsa
+            Microsoft.Vsa.Vb.CodeDOM
+            Microsoft.Win32
+            Microsoft.Win32.SafeHandles
+            Microsoft.WindowsCE.Forms
+            Microsoft.WindowsMobile.DirectX
+            Microsoft.WindowsMobile.DirectX.Direct3D
+            Microsoft_VsaVb
+            System
+            System.CodeDom
+            System.CodeDom.Compiler
+            System.Collections
+            System.Collections.Generic
+            System.Collections.ObjectModel
+            System.Collections.Specialized
+            System.ComponentModel
+            System.ComponentModel.Design
+            System.ComponentModel.Design.Data
+            System.ComponentModel.Design.Serialization
+            System.Configuration
+            System.Configuration.Assemblies
+            System.Configuration.Install
+            System.Configuration.Internal
+            System.Configuration.Provider
+            System.Data
+            System.Data.Common
+            System.Data.Design
+            System.Data.Odbc
+            System.Data.OleDb
+            System.Data.OracleClient
+            System.Data.Sql
+            System.Data.SqlClient
+            System.Data.SqlServerCe
+            System.Data.SqlTypes
+            System.Deployment.Application
+            System.Deployment.Internal
+            System.Diagnostics
+            System.Diagnostics.CodeAnalysis
+            System.Diagnostics.Design
+            System.Diagnostics.SymbolStore
+            System.DirectoryServices
+            System.DirectoryServices.ActiveDirectory
+            System.DirectoryServices.Protocols
+            System.Drawing
+            System.Drawing.Design
+            System.Drawing.Drawing2D
+            System.Drawing.Imaging
+            System.Drawing.Printing
+            System.Drawing.Text
+            System.EnterpriseServices
+            System.EnterpriseServices.CompensatingResourceManager
+            System.EnterpriseServices.Internal
+            System.Globalization
+            System.IO
+            System.IO.Compression
+            System.IO.IsolatedStorage
+            System.IO.Ports
+            System.Management
+            System.Management.Instrumentation
+            System.Media
+            System.Messaging
+            System.Messaging.Design
+            System.Net
+            System.Net.Cache
+            System.Net.Configuration
+            System.Net.Mail
+            System.Net.Mime
+            System.Net.NetworkInformation
+            System.Net.Security
+            System.Net.Sockets
+            System.Reflection
+            System.Reflection.Emit
+            System.Resources
+            System.Resources.Tools
+            System.Runtime
+            System.Runtime.CompilerServices
+            System.Runtime.ConstrainedExecution
+            System.Runtime.Hosting
+            System.Runtime.InteropServices
+              _Activator Interface
+              _Assembly Interface
+              _AssemblyBuilder Interface
+              _AssemblyName Interface
+              _Attribute Interface
+              _ConstructorBuilder Interface
+              _ConstructorInfo Interface
+              _CustomAttributeBuilder Interface
+              _EnumBuilder Interface
+              _EventBuilder Interface
+              _EventInfo Interface
+              _Exception Interface
+              _FieldBuilder Interface
+              _FieldInfo Interface
+              _ILGenerator Interface
+              _LocalBuilder Interface
+              _MemberInfo Interface
+              _MethodBase Interface
+              _MethodBuilder Interface
+              _MethodInfo Interface
+              _MethodRental Interface
+              _Module Interface
+              _ModuleBuilder Interface
+              _ParameterBuilder Interface
+              _ParameterInfo Interface
+              _PropertyBuilder Interface
+              _PropertyInfo Interface
+              _SignatureHelper Interface
+              _Thread Interface
+              _Type Interface
+              _TypeBuilder Interface
+              ArrayWithOffset Structure
+              AssemblyRegistrationFlags Enumeration
+              AutomationProxyAttribute Class
+              BestFitMappingAttribute Class
+              BIND_OPTS Structure
+              BINDPTR Structure
+              BStrWrapper Class
+              CALLCONV Enumeration
+              CallingConvention Enumeration
+              CharSet Enumeration
+              ClassInterfaceAttribute Class
+              ClassInterfaceType Enumeration
+              CoClassAttribute Class
+              ComAliasNameAttribute Class
+              ComCompatibleVersionAttribute Class
+              ComConversionLossAttribute Class
+              ComDefaultInterfaceAttribute Class
+              ComEventInterfaceAttribute Class
+              COMException Class
+              ComImportAttribute Class
+              ComInterfaceType Enumeration
+              ComMemberType Enumeration
+              ComRegisterFunctionAttribute Class
+              ComSourceInterfacesAttribute Class
+              ComUnregisterFunctionAttribute Class
+              ComVisibleAttribute Class
+              CONNECTDATA Structure
+              CriticalHandle Class
+              CurrencyWrapper Class
+              DefaultCharSetAttribute Class
+              DefaultParameterValueAttribute Class
+              DESCKIND Enumeration
+              DispatchWrapper Class
+              DispIdAttribute Class
+              DISPPARAMS Structure
+              DllImportAttribute Class
+              ELEMDESC Structure
+              ELEMDESC.DESCUNION Structure
+              ErrorWrapper Class
+              EXCEPINFO Structure
+              ExporterEventKind Enumeration
+              ExtensibleClassFactory Class
+              ExternalException Class
+              FieldOffsetAttribute Class
+              FILETIME Structure
+              FUNCDESC Structure
+              FUNCFLAGS Enumeration
+              FUNCKIND Enumeration
+              GCHandle Structure
+              GCHandleType Enumeration
+              GuidAttribute Class
+              HandleCollector Class
+              HandleRef Structure
+              ICustomAdapter Interface
+              ICustomFactory Interface
+              ICustomMarshaler Interface
+              IDispatchImplAttribute Class
+              IDispatchImplType Enumeration
+              IDLDESC Structure
+              IDLFLAG Enumeration
+              IMPLTYPEFLAGS Enumeration
+              ImportedFromTypeLibAttribute Class
+              ImporterEventKind Enumeration
+              InAttribute Class
+              InterfaceTypeAttribute Class
+              InvalidComObjectException Class
+              InvalidOleVariantTypeException Class
+              INVOKEKIND Enumeration
+              IRegistrationServices Interface
+              ITypeLibConverter Interface
+              ITypeLibExporterNameProvider Interface
+              ITypeLibExporterNotifySink Interface
+              ITypeLibImporterNotifySink Interface
+              LayoutKind Enumeration
+              LCIDConversionAttribute Class
+              LIBFLAGS Enumeration
+              Marshal Class
+                Marshal Members
+                Marshal Fields
+                Marshal Methods
+                  AddRef Method
+                  AllocCoTaskMem Method
+                  AllocHGlobal Method
+                  BindToMoniker Method
+                  ChangeWrapperHandleStrength Method
+                  Copy Method
+                  CreateAggregatedObject Method
+                  CreateWrapperOfType Method
+                  DestroyStructure Method
+                  FinalReleaseComObject Method
+                  FreeBSTR Method
+                  FreeCoTaskMem Method
+                  FreeHGlobal Method
+                  GenerateGuidForType Method
+                  GenerateProgIdForType Method
+                  GetActiveObject Method
+                  GetComInterfaceForObject Method
+                  GetComInterfaceForObjectInContext Method
+                  GetComObjectData Method
+                  GetComSlotForMethodInfo Method
+                  GetDelegateForFunctionPointer Method
+                  GetEndComSlot Method
+                  GetExceptionCode Method
+                  GetExceptionForHR Method
+                  GetExceptionPointers Method
+                  GetFunctionPointerForDelegate Method
+                  GetHINSTANCE Method
+                  GetHRForException Method
+                  GetHRForLastWin32Error Method
+                  GetIDispatchForObject Method
+                  GetIDispatchForObjectInContext Method
+                  GetITypeInfoForType Method
+                  GetIUnknownForObject Method
+                  GetIUnknownForObjectInContext Method
+                  GetLastWin32Error Method
+                  GetManagedThunkForUnmanagedMethodPtr Method
+                  GetMethodInfoForComSlot Method
+                  GetNativeVariantForObject Method
+                  GetObjectForIUnknown Method
+                  GetObjectForNativeVariant Method
+                  GetObjectsForNativeVariants Method
+                  GetStartComSlot Method
+                  GetThreadFromFiberCookie Method
+                  GetTypedObjectForIUnknown Method
+                  GetTypeForITypeInfo Method
+                  GetTypeInfoName Method
+                  GetTypeLibGuid Method
+                  GetTypeLibGuidForAssembly Method
+                  GetTypeLibLcid Method
+                  GetTypeLibName Method
+                  GetTypeLibVersionForAssembly Method
+                  GetUniqueObjectForIUnknown Method
+                  GetUnmanagedThunkForManagedMethodPtr Method
+                  IsComObject Method
+                  IsTypeVisibleFromCom Method
+                  NumParamBytes Method
+                  OffsetOf Method
+                  Prelink Method
+                  PrelinkAll Method
+                  PtrToStringAnsi Method
+                  PtrToStringAuto Method
+                  PtrToStringBSTR Method
+                  PtrToStringUni Method
+                  PtrToStructure Method
+                  QueryInterface Method
+                  ReadByte Method
+                  ReadInt16 Method
+                  ReadInt32 Method
+                  ReadInt64 Method
+                  ReadIntPtr Method
+                  ReAllocCoTaskMem Method
+                  ReAllocHGlobal Method
+                  Release Method
+                  ReleaseComObject Method
+                  ReleaseThreadCache Method
+                  SecureStringToBSTR Method
+                  SecureStringToCoTaskMemAnsi Method
+                  SecureStringToCoTaskMemUnicode Method
+                  SecureStringToGlobalAllocAnsi Method
+                  SecureStringToGlobalAllocUnicode Method
+                  SetComObjectData Method
+                  SizeOf Method
+                  StringToBSTR Method
+                  StringToCoTaskMemAnsi Method
+                  StringToCoTaskMemAuto Method
+                  StringToCoTaskMemUni Method
+                  StringToHGlobalAnsi Method
+                  StringToHGlobalAuto Method
+                  StringToHGlobalUni Method
+                  StructureToPtr Method
+                  ThrowExceptionForHR Method
+                  UnsafeAddrOfPinnedArrayElement Method
+                  WriteByte Method
+                  WriteInt16 Method
+                  WriteInt32 Method
+                  WriteInt64 Method
+                  WriteIntPtr Method
+                  ZeroFreeBSTR Method
+                  ZeroFreeCoTaskMemAnsi Method
+                  ZeroFreeCoTaskMemUnicode Method
+                  ZeroFreeGlobalAllocAnsi Method
+                  ZeroFreeGlobalAllocUnicode Method
+              MarshalAsAttribute Class
+              MarshalDirectiveException Class
+              ObjectCreationDelegate Delegate
+              OptionalAttribute Class
+              OutAttribute Class
+              PARAMDESC Structure
+              PARAMFLAG Enumeration
+              PreserveSigAttribute Class
+              PrimaryInteropAssemblyAttribute Class
+              ProgIdAttribute Class
+              RegistrationClassContext Enumeration
+              RegistrationConnectionType Enumeration
+              RegistrationServices Class
+              RuntimeEnvironment Class
+              SafeArrayRankMismatchException Class
+              SafeArrayTypeMismatchException Class
+              SafeHandle Class
+              SEHException Class
+              SetWin32ContextInIDispatchAttribute Class
+              StandardOleMarshalObject Class
+              STATSTG Structure
+              StructLayoutAttribute Class
+              SYSKIND Enumeration
+              TYPEATTR Structure
+              TYPEDESC Structure
+              TYPEFLAGS Enumeration
+              TYPEKIND Enumeration
+              TYPELIBATTR Structure
+              TypeLibConverter Class
+              TypeLibExporterFlags Enumeration
+              TypeLibFuncAttribute Class
+              TypeLibFuncFlags Enumeration
+              TypeLibImportClassAttribute Class
+              TypeLibImporterFlags Enumeration
+              TypeLibTypeAttribute Class
+              TypeLibTypeFlags Enumeration
+              TypeLibVarAttribute Class
+              TypeLibVarFlags Enumeration
+              TypeLibVersionAttribute Class
+              UCOMIBindCtx Interface
+              UCOMIConnectionPoint Interface
+              UCOMIConnectionPointContainer Interface
+              UCOMIEnumConnectionPoints Interface
+              UCOMIEnumConnections Interface
+              UCOMIEnumMoniker Interface
+              UCOMIEnumString Interface
+              UCOMIEnumVARIANT Interface
+              UCOMIMoniker Interface
+              UCOMIPersistFile Interface
+              UCOMIRunningObjectTable Interface
+              UCOMIStream Interface
+              UCOMITypeComp Interface
+              UCOMITypeInfo Interface
+              UCOMITypeLib Interface
+              UnknownWrapper Class
+              UnmanagedFunctionPointerAttribute Class
+              UnmanagedType Enumeration
+              VARDESC Structure
+              VARDESC.DESCUNION Structure
+              VarEnum Enumeration
+              VARFLAGS Enumeration
+              VariantWrapper Class
+            System.Runtime.InteropServices.ComTypes
+            System.Runtime.InteropServices.CustomMarshalers
+            System.Runtime.InteropServices.Expando
+            System.Runtime.Remoting
+            System.Runtime.Remoting.Activation
+            System.Runtime.Remoting.Channels
+            System.Runtime.Remoting.Channels.Http
+            System.Runtime.Remoting.Channels.Ipc
+            System.Runtime.Remoting.Channels.Tcp
+            System.Runtime.Remoting.Contexts
+            System.Runtime.Remoting.Lifetime
+            System.Runtime.Remoting.Messaging
+            System.Runtime.Remoting.Metadata
+            System.Runtime.Remoting.Metadata.W3cXsd2001
+            System.Runtime.Remoting.MetadataServices
+            System.Runtime.Remoting.Proxies
+            System.Runtime.Remoting.Services
+            System.Runtime.Serialization
+            System.Runtime.Serialization.Formatters
+            System.Runtime.Serialization.Formatters.Binary
+            System.Runtime.Serialization.Formatters.Soap
+            System.Runtime.Versioning
+            System.Security
+            System.Security.AccessControl
+            System.Security.Authentication
+            System.Security.Cryptography
+            System.Security.Cryptography.Pkcs
+            System.Security.Cryptography.X509Certificates
+            System.Security.Cryptography.Xml
+            System.Security.Permissions
+            System.Security.Policy
+            System.Security.Principal
+            System.ServiceProcess
+            System.ServiceProcess.Design
+            System.Text
+            System.Text.RegularExpressions
+            System.Threading
+            System.Timers
+            System.Transactions
+            System.Transactions.Configuration
+            System.Web
+            System.Web.Caching
+            System.Web.Compilation
+            System.Web.Configuration
+            System.Web.Configuration.Internal
+            System.Web.Handlers
+            System.Web.Hosting
+            System.Web.Mail
+            System.Web.Management
+            System.Web.Mobile
+            System.Web.Profile
+            System.Web.RegularExpressions
+            System.Web.Security
+            System.Web.Services
+            System.Web.Services.Configuration
+            System.Web.Services.Description
+            System.Web.Services.Discovery
+            System.Web.Services.Protocols
+            System.Web.SessionState
+            System.Web.UI
+            System.Web.UI.Adapters
+            System.Web.UI.Design
+            System.Web.UI.Design.MobileControls
+            System.Web.UI.Design.MobileControls.Converters
+            System.Web.UI.Design.WebControls
+            System.Web.UI.Design.WebControls.WebParts
+            System.Web.UI.HtmlControls
+            System.Web.UI.MobileControls
+            System.Web.UI.MobileControls.Adapters
+            System.Web.UI.MobileControls.Adapters.XhtmlAdapters
+            System.Web.UI.WebControls
+            System.Web.UI.WebControls.Adapters
+            System.Web.UI.WebControls.WebParts
+            System.Web.Util
+            System.Windows.Forms
+            System.Windows.Forms.ComponentModel.Com2Interop
+            System.Windows.Forms.Design
+            System.Windows.Forms.Design.Behavior
+            System.Windows.Forms.Layout
+            System.Windows.Forms.PropertyGridInternal
+            System.Windows.Forms.VisualStyles
+            System.Xml
+            System.Xml.Schema
+            System.Xml.Serialization
+            System.Xml.Serialization.Advanced
+            System.Xml.Serialization.Configuration
+            System.Xml.XPath
+            System.Xml.Xsl
+            System.Xml.Xsl.Runtime
+          General Reference
+          .NET Framework Tools
+          MMC Snap-In for ASP.NET
+        .NET Framework 1.1
+      Beta Versions and Previews
+      Microsoft Oslo
+      Microsoft Press
+      Software Licensing and Protection Services
+      Articles and Overviews
+    Office Development
+    Open Specifications
+    Servers and Enterprise Development
+    Web Development
+    Win32 and COM Development
+MSDNPlease WaitMSDN LibraryPlease Wait.NET DevelopmentPlease WaitPrevious 
+VersionsPlease Wait.NET Framework 2.0Please WaitClass Library ReferencePlease 
+WaitSystem.Runtime.InteropServicesPlease WaitMarshal ClassPlease WaitMarshal 
+MethodsPlease Wait GetIDispatchForObject MethodCollapse AllLanguage Filter : 
+AllVisual Basic
+
+C#
+
+C++
+
+J#
+
+JScript
+
+XAML
+This page is specific to 
+Microsoft Visual Studio 2005/.NET Framework 2.0
+
+
+Other versions are also available for the following: 
+  Microsoft Visual Studio 2003/.NET Framework 1.1
+  .NET Framework 3.0
+  Microsoft Visual Studio 2008/.NET Framework 3.5
+.NET Framework Class Library
+Marshal.GetIDispatchForObject Method
+Returns an IDispatch interface from a managed object. 
+Namespace: System.Runtime.InteropServices
+Assembly: mscorlib (in mscorlib.dll)
+ Syntax 
+Visual Basic (Declaration)
+Public Shared Function GetIDispatchForObject ( _
+    o As Object _
+) As IntPtr
+Visual Basic (Usage)
+Dim o As Object
+Dim returnValue As IntPtr
+
+returnValue = Marshal.GetIDispatchForObject(o)
+C#
+public static IntPtr GetIDispatchForObject (
+    Object o
+)
+C++
+public:
+static IntPtr GetIDispatchForObject (
+    Object^ o
+)
+J#
+public static IntPtr GetIDispatchForObject (
+    Object o
+)
+JScript
+public static function GetIDispatchForObject (
+    o : Object
+) : IntPtr
+
+Parameters
+  o
+  The object whose IDispatch interface is requested. 
+Return Value
+The IDispatch pointer for the o parameter. 
+ Exceptions 
+      Exception typeCondition
+      InvalidCastExceptiono does not support the requested interface. 
+
+ Remarks 
+In managed code, you seldom work directly with the IDispatch interface. However, 
+GetIDispatchForObject is useful when calling a method that exposes a COM object 
+parameter as an IntPtr type, or with custom marshaling. Calling an object with 
+this method causes the reference count to increment on the interface pointer 
+before the pointer is returned. Always use Marshal.Release to decrement the 
+reference count once you have finished with the pointer.
+You can also use this method on a managed object to obtain an interface pointer 
+to the COM callable wrapper for the object. For additional information, see COM 
+Callable Wrapper.
+      Note 
+      This method uses SecurityAction.LinkDemand to prevent it from being called 
+      from untrusted code; only the immediate caller is required to have 
+      SecurityPermissionAttribute.UnmanagedCode permission. If your code can be 
+      called from partially trusted code, do not pass user input to Marshal 
+      class methods without validation. For important limitations on using the 
+      LinkDemand member, see Demand vs. LinkDemand.
+
+ .NET Framework Security 
+  SecurityPermission  for permission to call unmanaged code. Associated 
+  enumeration: UnmanagedCode Security action: LinkDemand 
+ Platforms 
+Windows 98, Windows 2000 SP4, Windows CE, Windows Millennium Edition, Windows 
+Mobile for Pocket PC, Windows Mobile for Smartphone, Windows Server 2003, 
+Windows XP Media Center Edition, Windows XP Professional x64 Edition, Windows XP 
+SP2, Windows XP Starter Edition
+The .NET Framework does not support all versions of every platform. For a list 
+of the supported versions, see System Requirements.
+ Version Information 
+.NET Framework
+Supported in: 2.0, 1.1, 1.0
+
+.NET Compact Framework
+Supported in: 2.0
+
+ See Also 
+Reference
+Marshal Class
+Marshal Members
+System.Runtime.InteropServices Namespace
+Release
+GetIDispatchForObjectInContext
+
+Tags : Add a tag  Add   Cancel Flag as ContentBug 
+ 
+      Community Content    
+      Add new content   Annotations 
+
+             |   Edit 
+
+  
+Tags : Add a tag  Add   Cancel Flag as ContentBug 
+  
+ 
+      © 2009 Microsoft Corporation. All rights reserved. Terms of Use  |  
+      Trademarks  |  Privacy Statement  

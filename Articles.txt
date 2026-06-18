@@ -1,0 +1,2044 @@
+ArticlesThe Essentials for Using COM in Managed Code
+By Adam Nathan
+Date: Jun 14, 2002
+Sample Chapter is provided courtesy of Sams.
+Return to the article
+
+
+Learn what COM Interoperability means when sitting down at the keyboard and 
+writing managed code that uses COM components. By the end of this sample 
+chapter, you'll have all the knowledge you need to use many COM components in 
+your .NET applications. 
+
+
+In This Chapter
+  Referencing a COM Component in Visual Studio .NET
+  Referencing a COM Component Using Only the .NET Framework SDK
+  Example: A Spoken Hello, World Using the Microsoft Speech API
+  The Type Library Importer
+  Using COM Objects in ASP.NET Pages
+  An Introduction to Interop Marshaling
+  Common Interactions with COM Objects
+  Using ActiveX Controls in .NET Applications
+  Deploying a .NET Application That Uses COM
+  Example: Using Microsoft Word to Check Spelling
+So far we've covered the features of the .NET Framework, seen some managed code, 
+and discussed how interoperating with COM works from a high level. This chapter 
+shows what COM Interoperability means when sitting down at the keyboard and 
+writing managed code that uses COM components. By the end of this chapter, 
+you'll have all the knowledge you need to use many COM components in your .NET 
+applications.
+Before going into all the details on using COM components in .NET, let's see how 
+Visual Studio .NET makes referencing a COM component fairly seamless. As 
+mentioned in the previous chapter, one of the great benefits of COM access in 
+the .NET Framework is that tons of COM components already exist that can fill in 
+missing functionality in the pure .NET world. So, the first task in this chapter 
+is to change the Hello, World programs of Chapter 1, "Introduction to the .NET 
+Framework," into audible Hello, World programs using the Microsoft Speech API 
+(SAPI) COM component. Of course, this requires a computer with speakers and the 
+appropriate hardware. Also, if you don't already have it, download the Microsoft 
+Speech Software Development Kit (SDK) version 5.1 from Microsoft's Web site and 
+follow its instructions to install the software. Windows XP has the necessary 
+software pre-installed.
+CAUTION
+Using COM components authored in Visual Basic 6 may crash during shutdown when 
+used from a .NET application unless you have at least Service Pack 3 for the 
+Visual Basic 6 runtime. If you have Visual Studio 6, you can download and 
+install a Visual Studio 6 Service Pack. Otherwise, you can download Service Pack 
+5 for just the VB6 runtime at 
+download.microsoft.com/download/vb60pro/Redist/sp5/WIN98Me/ 
+EN-US/VBRun60sp5.exe. Windows 2000 and later operating systems already have a 
+runtime with the necessary update.
+Referencing a COM Component in Visual Studio .NET
+Referencing a COM component is often the first step for using it in Visual 
+Studio .NET, and it leads to the audible Hello, World sample later in this 
+chapter. When referencing a COM component, you're actually referencing its type 
+library, which provides the compiler with definitions of types, methods, and 
+properties that the component exposes. 
+Digging Deeper
+Type libraries can be standalone files with a .tlb extension, or they can be 
+embedded in a file as a resource. They are typically contained in files with the 
+extension .dll, .exe, .ocx, or .olb. A quick way to check for the presence of a 
+type library in a file is to try opening the file in OLEVIEW.EXE, the utility 
+introduced in the previous chapter.
+Type libraries are often, but not always, registered in the Windows Registry. 
+Among other things, this enables programs such as Visual Studio .NET to present 
+a user with a list of type libraries on the current computer.
+The steps for referencing a COM component's type library are:
+  Start Visual Studio .NET and create either a new Visual Basic .NET console 
+  application or a Visual C# console application. The remaining steps apply to 
+  either language.
+  Select the Project, Add Reference... menu. There are two kinds of components 
+  that can be referenced: .NET and COM. The default .NET tab shows a list of 
+  assemblies. To add a reference to a COM component, click the COM tab (see 
+  Figure 3.1). This tab should be familiar to Visual Basic 6 users, who 
+  reference a COM component's type library the same way (using the Project, 
+  References... menu in the Visual Basic 6 IDE).
+  The list of components consists of type libraries that are registered in the 
+  Windows Registry (under HKEY_CLASSES_ROOT\TypeLib). Each name displayed is the 
+  contents of the library's helpstring attribute, or the library name if none 
+  exists. To add a reference to a type library that isn't listed, click 
+  Browse... and select the file. This registers the type library, so the next 
+  time it is listed in the dialog. You should double-click Microsoft Speech 
+  Object Library in the list to try the upcoming example.
+  Click the OK button.
+Figure 3.1 Adding a reference to a COM component using Visual Studio .NET, and 
+the same task in Visual Basic 6.
+Digging Deeper
+It may surprise you to learn that the list of assemblies on the Add Reference 
+dialog's .NET tab is obtained from the Windows Registry, not from the Global 
+Assembly Cache. The GAC is not meant to be used at development time, so Visual 
+Studio .NET uses the registry to find places in the file system to search for 
+assemblies.
+To add your own assemblies to the list, you can add a new subkey under the 
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\AssemblyFolders key (or the 
+same key under HKEY_CURRENT_USER) with any name, such as "My Company". Its 
+default value should be set to the name of a directory, such as "C:\Program 
+Files\My Company\". Any assemblies (with a .dll extension) that reside in this 
+directory are loaded and listed with its assembly name, or the string inside its 
+System.Reflection. AssemblyTitleAttribute custom attribute if it exists.
+If adding the reference succeeded, a SpeechLib reference appears in the 
+References section of the Solution Explorer window, shown in Figure 3.2.
+Figure 3.2 The Solution Explorer after a reference has been added.
+You can use the Object Browser (by clicking View, Other Windows, Object Browser) 
+to view the contents of the SpeechLib library, as shown in Figure 3.3.
+Figure 3.3 Browsing the type information for a COM
+Referencing a COM Component Using Only the .NET Framework SDK
+Now, let's look at how to accomplish the same task using only the .NET Framework 
+SDK. The following example uses the .NET Framework Type Library to Assembly 
+Converter (TLBIMP.EXE). This utility is usually just called the type library 
+importer, which is what TLBIMP stands for. As mentioned in Chapter 1, if you've 
+installed Visual Studio .NET but still want to run the SDK tools, you may have 
+to open a Visual Studio .NET command prompt to get the tools in your path.
+The steps for referencing a COM component without Visual Studio .NET are:
+  From a command prompt, run TLBIMP.EXE on the file containing the desired type 
+  library, as follows (replacing the path with the location of SAPI.DLL on your 
+  computer):
+  TlbImp "C:\Program Files\Common Files\Microsoft Shared\Speech\sapi.dll"
+  This example command produces an assembly in the current directory called 
+  SpeechLib.dll because SpeechLib is the name of the input library (which can be 
+  seen by opening SAPI.DLL using the OLEVIEW.EXE utility). A lot of warnings are 
+  produced when running TLBIMP.EXE, but you can ignore them.
+  Reference the assembly just as you would any other assembly, which depends on 
+  the language. Using the command-line compilers that come with the SDK, 
+  referencing an assembly is done as follows:
+  C# (from a command prompt):
+  csc HelloWorld.cs /r:SpeechLib.dll
+  Visual Basic .NET (from a command prompt):
+  vbc HelloWorld.vb /r:SpeechLib.dll
+  Visual C++ .NET (in source code):
+  #using <SpeechLib.dll>
+After TLBIMP.EXE has generated the assembly, you can browse its metadata using 
+the IL Disassembler (ILDASM.EXE) by typing the following:
+ildasm SpeechLib.dllThe name IL Disassembler is a little misleading because it's really useful for 
+browsing metadata, which is separate from the MSIL. As shown in Figure 3.4, most 
+SpeechLib methods don't even contain MSIL because the methods are empty 
+implementations that forward calls to the original COM component. This can be 
+seen by double-clicking on member names.
+Figure 3.4 Using the IL Disassembler as an object browser. 
+ILDASM.EXE gives you much more information than the object browser in Visual 
+Studio .NET, including pseudo-custom attributes. The information in the windows 
+that appear when you double-click on items is explained in detail in Chapter 7, 
+"Modifying Interop Assemblies."
+Example: A Spoken Hello, World Using the Microsoft Speech API
+Once you've either referenced the Microsoft Speech Object Library in Visual 
+Studio .NET, or run the TLBIMP.EXE utility on SAPI.DLL, you're ready to write 
+the code that uses this COM component. This can be done with these two steps:
+  Type the following code either in a Visual Studio .NET project or in your 
+  favorite text editor.
+		The C# version (HelloWorld.cs):
+  using SpeechLib;
+  class Class1
+  {
+   static void Main()
+   {
+   SpVoice voice = new SpVoice();
+   voice.Speak("Hello, World!", SpeechVoiceSpeakFlags.SVSFDefault);
+   }
+  }
+   The Visual Basic .NET version (HelloWorld.vb):
+  Imports SpeechLib
+  Module Module1
+   Sub Main()
+   Dim voice as SpVoice
+   voice = new SpVoice()
+   voice.Speak("Hello, World!")
+   End Sub
+  End Module
+  		The C++ version (HelloWorld.cpp):
+  #using <mscorlib.dll> // Required for all managed programs
+  #using <SpeechLib.dll> // The assembly created by TLBIMP.EXE
+  using namespace SpeechLib;
+  void main()
+  {
+   SpVoice* voice = new SpVoiceClass();
+   voice->Speak("Hello, World!", SpeechVoiceSpeakFlags::SVSFDefault);
+  };Because Visual C++ .NET projects do not provide a mechanism for referencing 
+  COM components, TLBIMP.EXE needs to be used to create SpeechLib.dll regardless 
+  of whether or not you use Visual Studio .NET.
+  Compile and run the code (and listen to the voice). Feel free to have some 
+  more fun with the Speech API. You'll find that interacting with it is easy 
+  after you've gotten this far.
+Notice the differences between the C#, Visual Basic .NET, and C++ versions of 
+the same program. For example, the C# and C++ calls to Speak use two parameters 
+but the same call in VB .NET has just one parameter. That's because the second 
+parameter is optional, yet C# and C++ do not support optional parameters. 
+Instead, a value must always be passed. Also notice that the C++ program 
+instantiates SpVoiceClass instead of SpVoice as the others do. In this case, the 
+C# and VB .NET compilers are doing some extra work behind-the-scenes to enable 
+the user to work with a class that has the same name as the original COM 
+coclass. More information about this extra work is given in the next chapter, 
+"An In-Depth Look at Imported Assemblies."
+The Type Library Importer
+COM components such as the Microsoft Speech API expose type information using 
+type libraries, but .NET compilers (excluding Visual C++ .NET) don't understand 
+type libraries. They only understand .NET metadata as a source of type 
+information. Therefore, the key to making a COM component readily available to 
+the .NET world is a mechanism that takes a type library and produces equivalent 
+metadata. The Common Language Runtime's execution engine contains this 
+functionality, which is called the type library importer.
+The term type library importer was introduced previously when describing 
+TLBIMP.EXE, but the type library importer is exposed in other ways as well. In 
+fact, when you add a reference to a COM component in Visual Studio .NET, you are 
+really invoking the type library importer. This creates a new assembly, and this 
+assembly—not the type library—is what your project is really referencing. This 
+assembly (SpeechLib.dll in the previous example) is the same file that would 
+have been generated by TLBIMP.EXE. It's always a single file with a .dll 
+extension, and is placed in a directory specific to your project when generated 
+by Visual Studio .NET.
+Interop Assemblies
+An assembly produced by the type library importer is known as an Interop 
+Assembly because it contains definitions of COM types that can be used from 
+managed code via COM Interoperability. The metadata inside an Interop Assembly 
+enables .NET compilers to resolve calls, and enables the Common Language Runtime 
+to generate a Runtime-Callable Wrapper (RCW) at run time.
+You can think of importing a type library as providing a second view of the same 
+COM component—one for unmanaged clients and another for managed clients. This 
+relationship is shown in Figure 3.5.
+Figure 3.5 Two views of the same COM component.
+The actual implementation of the COM component remains in the original COM 
+binary file(s). In other words, nothing magical happens to transform unmanaged 
+code into the MSIL produced by a .NET compiler. Unlike normal assemblies, which 
+contain an abundance of both metadata and MSIL, Interop Assemblies consist 
+mostly of metadata. The signatures have special custom attributes and 
+pseudo-custom attributes that instruct the CLR to delegate calls to the original 
+COM component at run time.
+There are three ways of using the type library importer to create an Interop 
+Assembly:
+  Referencing a type library in Visual Studio .NET.
+  Using TLBIMP.EXE, the command-line utility that is part of the .NET Framework 
+  SDK.
+  Using the TypeLibConverter class in the System.Runtime.InteropServices 
+  namespace.
+All three of these methods produce the exact same output, although each option 
+gives more flexibility than the previous one. TLBIMP.EXE has several options to 
+customize the import process, but Visual Studio .NET doesn't expose these 
+customizations when referencing a type library. Using TLBIMP.EXE to precisely 
+mimic the behavior of Visual Studio .NET when it imports a type library, you'd 
+need to run it as follows:
+TlbImp InputFile /out:Interop.LibraryName.dll /namespace:LibraryName /sysarraywhere InputFile is the file containing the type library (such as SAPI.DLL) and 
+LibraryName is the name found inside the type library that can be viewed with 
+OLEVIEW.EXE (such as SpeechLib). All of TLBIMP.EXE's options are covered in 
+Appendix B, "SDK Tools Reference."
+The TypeLibConverter class enables programmatic access to type library 
+importing, and has one additional capability when compared to 
+TLBIMP.EXE—importing an in-memory type library. The use of this class is 
+demonstrated in Chapter 22, "Using APIs Instead of SDK Tools."
+Some of the transformations made by the type library importer are non-intuitive. 
+For example, every COM class (such as SpVoice) is converted to an interface, 
+then an additional class with the name ClassNameClass (such as SpVoiceClass) is 
+generated. More information about this transformation is given in the next 
+chapter, "An In-Depth Look at Imported Assemblies," but this is why SpVoiceClass 
+had to be used in the C++ Hello, World example. The C# and VB .NET compilers 
+perform a little magic to enable instantiating one of these special interfaces 
+such as SpVoice, and treats it as if you're instantiating SpVoiceClass instead.
+Whereas the process of converting type library information to metadata is called 
+importing, and the process of converting metadata to type library information is 
+called exporting. Type library export is introduced in Chapter 8, "The 
+Essentials for Using .NET Components from COM."
+Tip
+Although TLBIMP.EXE has several options that Visual Studio .NET doesn't allow 
+you to configure within the IDE, you can reference an Interop Assembly in two 
+steps in order to gain the desired customizations within Visual Studio .NET. 
+First, produce the Interop Assembly exactly as you wish using TLBIMP.EXE. Then, 
+reference this assembly within Visual Studio .NET using the .NET tab instead of 
+the COM tab. Simply browse to the assembly and add it to your project, just as 
+you would add any other assembly.
+Everything so far assumes that a type library is available for the COM component 
+you want to use. For several existing COM components, this is simply not the 
+case. If the COM component has one or more IDL files, you could create a type 
+library from them using the MIDL compiler. (Unfortunately, there's no such tool 
+as IDLIMP that directly converts from IDL to .NET metadata.) As mentioned 
+previously in Figure 3.5, however, .NET compilers can produce the same kind of 
+metadata that the type library importer produces, so you can create an Interop 
+Assembly directly from .NET source code. This advanced technique is covered in 
+Chapter 21, "Manually Defining COM Types in Source Code." An easy solution to a 
+lack of type information is to perform late binding, if the COM objects you wish 
+to use support the IDispatch interface. See the "Common Interactions with COM 
+Objects" section for more information.
+Primary Interop Assemblies
+The previously described process of generating Interop Assemblies has an 
+undesirable side effect due to the differences in the definition of identity 
+between COM and the .NET Framework. Therefore, extra support exists to map .NET 
+and COM identities more appropriately.
+In COM, a type is identified by its GUID. It doesn't matter where you get the 
+definition; if the numeric value of the GUID is correct, then everything works. 
+You might find a common COM interface (such as IFont) defined in ten different 
+type libraries, rather than each library referencing the official definition in 
+the OLE Automation type library (STDOLE2.TLB). This duplication doesn't matter 
+in the world of COM.
+On the other hand, if ten different assemblies each have a definition of IFont, 
+these are considered ten unrelated interfaces in managed code simply because 
+they reside in different assemblies. The containing assembly is part of a 
+managed type's identity, so it doesn't matter if multiple interfaces have the 
+same name or look identical in all other respects.
+This is the root of the identity problem. Suppose ten software companies write 
+.NET applications that use definitions in the OLE Automation type library 
+(STDOLE2.TLB). Each company uses Visual Studio .NET and adds a reference to the 
+type library, causing a new assembly to be generated called stdole.dll. Each 
+company digitally signs the assemblies that comprise the application, including 
+the stdole Interop Assembly, as shown in Figure 3.6.
+Figure 3.6 Applications from ten different companies—each using their own 
+Interop Assembly for the OLE Automation type library.
+Now imagine a user's computer with all ten of these programs installed. One 
+problem is that the Global Assembly Cache is cluttered with Interop Assemblies 
+that have no differences except for the publisher's identity, shown in Figure 
+3.7. The difference in publishers can be seen as differences in the public key 
+tokens.
+Figure 3.7 The opposite of DLL Hell—a cluttered Global Assembly Cache with 
+multiple Interop Assemblies for the same type library.
+Even if all these Interop Assemblies aren't installed in the GAC, the computer 
+could be cluttered in other places, such as local application directories. This 
+is the opposite of DLL Hell—application isolation taken to an extreme. There is 
+no sharing whatsoever, not even when it's safe for the applications to do so.
+Besides clutter, the main problem is that none of these applications can easily 
+communicate as they could if they were unmanaged COM applications. If the 
+Payroll assembly from Figure 3.6 exposes a method with an IFont parameter and 
+the Search assembly wants to call this, it would try passing a stdole.IFont 
+signed by Donna's Antiques. This doesn't work because the method expects a 
+stdole.IFont signed by Rick's Aviation. As far as the CLR is concerned, these 
+are completely different types.
+What we really want is a single managed identity for a COM component's type 
+definitions. Such "blessed" Interop Assemblies do exist, and are known as 
+Primary Interop Assemblies (PIAs). A Primary Interop Assembly is digitally 
+signed by the publisher of the original COM component. In the case of the OLE 
+Automation type library, the publisher is Microsoft. A Primary Interop Assembly 
+is not much different from any other Interop Assembly. Besides being digitally 
+signed by the COM component's author, it is marked with a PIA-specific custom 
+attribute (System.Runtime.InteropServices.PrimaryInteropAssemblyAttribute), and 
+usually registered specially.
+Figure 3.8 shows what the ten applications would look like if each used the 
+Primary Interop Assembly for the OLE Automation Type Library rather than custom 
+Interop Assemblies.
+Figure 3.8 Applications from ten different companies—each using the Primary 
+Interop Assembly for the OLE Automation type library.
+Nothing forces .NET applications to make use of a PIA when one exists. The 
+notion of Primary Interop Assemblies is just a convention that can be used by 
+tools, such as Visual Studio .NET, to help guide software developers in the 
+right direction by referencing common types.
+To make use of Primary Interop Assemblies, adding a reference to a type library 
+in Visual Studio .NET is a little more complicated than what was first stated. 
+Visual Studio .NET tries to avoid invoking the type library importer if at all 
+possible, since it generates a new assembly with its own identity. Instead, 
+Visual Studio .NET automatically adds a copy of a PIA to a project's references 
+if one is registered for a type library that the user references on the COM tab 
+of the Add Reference dialog. (A copy of an assembly is just as good as the 
+original, since the internal assembly identity is the same.) The TLBIMP.EXE 
+utility, on the other hand, simply warns the user when attempting to create an 
+Interop Assembly for a type library whose PIA is registered on the current 
+computer; it still creates a new Interop Assembly. TLBIMP.EXE does make use of 
+registered PIAs for dependent type libraries, described in the next chapter.
+As Primary Interop Assemblies are created for existing COM components, they will 
+likely be available for download from MSDN Online or component vendor Web sites. 
+At the time of writing, no PIAs other than the handful that ship with Visual 
+Studio .NET exist.
+Digging Deeper
+It's possible to work around the identity problem caused by multiple Interop 
+Assemblies without a notion of Primary Interop Assemblies. Due to the way in 
+which COM interfaces are handled by the CLR, it's possible to cast from a COM 
+interface definition in one assembly to a COM interface definition in another 
+assembly if they have the same IID. (This does not work for regular .NET 
+interfaces.) It's also possible to convert from a COM class defined in one 
+assembly to a COM class defined in another assembly using the 
+Marshal.CreateWrapperOfType method. Nothing enables converting between instances 
+of duplicate structure definitions, but a structure's fields could be copied 
+one-by-one.
+But Primary Interop Assemblies have another important use. Interop Assemblies 
+often need modifications, such as the ones shown in Chapter 7 to be completely 
+usable in managed code. When you have a PIA with such customizations registered 
+on your computer, you can benefit from these customizations simply by 
+referencing the type library for the COM component you wish to use inside Visual 
+Studio .NET. For example, the PIA for Microsoft ActiveX Data Objects (ADO), 
+which ships with Visual Studio .NET, contains some customizations to handle 
+object lifetime issues. If you created your own Interop Assembly for ADO using 
+TLBIMP.EXE, you would not benefit from these customizations.
+The process of creating and registering Primary Interop Assemblies is discussed 
+in Chapter 15, "Creating and Deploying Useful Primary Interop Assemblies."
+Using COM Objects in ASP.NET Pages
+As in ASP pages, COM objects can be created in ASP.NET Web pages with the 
+<object> tag. Using the <object> tag with a runat="server" attribute enables the 
+COM object to be used in server-side script blocks. The <object> tag can contain 
+a class identifier (CLSID) or programmatic identifier (ProgID) to identify the 
+COM component to instantiate. The following code illustrates how to create an 
+instance of a COM component using a CLSID:
+<object id="MyObject" runat="server"
+  classid="e2d9b696-86ce-45d3-8fc6-fb5b90230c11"
+/>And the following code illustrates how to create an instance of a COM component 
+using a ProgID:
+<object id="MyObject" runat="server"
+  progid="Excel.Chart"
+/>These two COM-specific techniques use late binding and do not require Interop 
+Assemblies in order to work. However, the ASP.NET <object> tag can also be used 
+with a class attribute to instantiate .NET objects or COM objects described in 
+an Interop Assembly. This can be used as follows:
+<object id="recset" runat="server"
+  class="ADODB.RecordsetClass, ADODB, Version=7.0.3300.0, Culture=neutral,  _PublicKeyToken=b03f5f7f11d50a3a"
+/>The class string contains an assembly-qualified class name, which has the 
+ClassName, AssemblyName format. The assembly name could be just an assembly's 
+simple name (such as ADODB or SpeechLib) if the assembly is not in the Global 
+Assembly Cache. This is known as partial binding since the desired assembly 
+isn't completely described. Assemblies that may reside in the Global Assembly 
+Cache, however, must be referenced with their complete name, as shown in the 
+preceding example. (Version policy could still be applied to cause a different 
+version of the assembly to be loaded than the one specified.) As with the C++ 
+Hello, World example, the Class suffix must be used with the class name.
+Interop Assemblies used in ASP.NET pages should be placed with any other 
+assemblies, such as in the site's \bin directory.
+ASP.NET also provides several ways to create COM objects inside the server-side 
+script block:
+  Using Server.CreateObject
+  Using Server.CreateObjectFromClsid
+  Using the new Operator
+The Server.CreateObject method should be familiar to ASP programmers. 
+Server.CreateObject is a method with one string parameter that enables you to 
+create an object from its ProgID. The following code illustrates how to create 
+an instance of a COM component using Server.CreateObject in Visual Basic .NET:
+Dim connection As Object
+connection = Server.CreateObject("ADODB.Connection")The Server.CreateObjectFromClsid method is used just like Server.CreateObject 
+but with a string representing a CLSID. 
+Again, these are two COM-specific mechanisms that use late binding. To take 
+advantage of an Interop Assembly, you could use the new operator as in the 
+Hello, World examples or use an overload of the Server.CreateObject method. This 
+overload has a Type object parameter instead of a string. To use this method, we 
+can obtain a Type object from a method such as System.Type.GetType, which is 
+described in the "Common Interactions with COM Objects" section.
+Tip
+Using Server.CreateObject with a Type object obtained from Type.GetType or using 
+the <object> tag with the class attribute is the preferred method of creating a 
+COM object in an ASP.NET page. Besides giving you the massive performance 
+benefits of early binding, it supports COM objects that rely on OnStartPage and 
+OnEndPage notifications as given by classic ASP pages (whereas the New keyword 
+does not).
+Example: Using ADO in ASP.NET
+To demonstrate the use of COM components in an ASP.NET Web page, this example 
+uses one of the most widely used COM components in ASP—Microsoft ActiveX Data 
+Objects, or ADO.
+Tip
+The functionality provided by ADO is available via ADO.NET, a set of 
+data-related classes in the .NET Framework. Using these classes in the 
+System.Data assembly is the recommended way to perform data access in an ASP.NET 
+Web page.
+However, because a learning curve is involved in switching to a new data-access 
+model, you may prefer to stick with ADO. Thanks to COM Interoperability, you can 
+continue to use these familiar COM objects when upgrading your Web site to use 
+ASP.NET.
+Listing 3.1 demonstrates using the ADO COM component in an ASP.NET page by 
+declaring two ADO COM objects with the <object> tag.
+Listing 3.1 Traditional ADO Can Be Used in an ASP.NET Page Using the Familiar 
+<object> Tag
+ 1: <%@ Page aspcompat=true %>
+ 2: <%@ Import namespace="System.Data" %>
+ 3: <script language="VB" runat="server">
+ 4: Sub Page_Load(sender As Object, e As EventArgs)
+ 5:  Dim strConnection As String
+ 6:  Dim i As Integer
+ 7:
+ 8:  ' Connection string for the sample "pubs" database
+ 9:  strConnection = _ 
+10:   "DRIVER={SQL Server};SERVER=(local);UID=sa;PWD=;DATABASE=pubs;"
+11:
+12:  Try
+13:   ' Call a method on the page's connection object
+14:   connection.Open(strConnection)
+15:  Catch ex as Exception
+16:   Response.Write("Unable to open connection to database. " + ex.Message)
+17:  End Try
+18:
+19:  Try
+20:   ' Set properties and call a method on the page's recordset object
+21:   recordset.CursorType = 1 ' 1 = ADODB.CursorTypeEnum.adOpenKeyset
+22:   recordset.LockType = 3  ' 3 = ADODB.LockTypeEnum.adLockOptimistic
+23:   ' 2 = ADODB.CommandTypeEnum.adCmdTable
+24:   recordset.Open("titles", connection, , , 2) 
+25:  Catch ex as Exception
+26:   Response.Write("Unable to open recordset. " + ex.Message)
+27:  End Try
+28:
+29:  Dim table As DataTable
+30:  Dim row As DataRow
+31:
+32:  ' Create a DataTable
+33:  table = New DataTable()
+34:
+35:  ' Add the appropriate columns
+36:  For i = 0 to recordset.Fields.Count - 1
+37:   table.Columns.Add(New DataColumn(recordset.Fields(i).Name, _
+38:    GetType(String)))
+39:  Next
+40:
+41:  ' Scan through the recordset and add a row for each record
+42:  Do While Not recordset.EOF
+43:   row = table.NewRow()
+44:
+45:   ' Look at each field and add an entry to the row
+46:   For i = 0 to recordset.Fields.Count - 1
+47:    row(i) = recordset.Fields(i).Value.ToString()
+48:   Next
+49:
+50:   ' Add the row to the DataTable
+51:   table.Rows.Add(row)
+52:
+53:   recordset.MoveNext()
+54:  Loop
+55:
+56:  ' Update the DataGrid control
+57:  dataGrid1.DataSource = New DataView(table)
+58:  dataGrid1.DataBind()
+59:
+60:  ' Cleanup
+61:  recordset.Close()
+62:  connection.Close()
+63: End Sub
+64: </script>
+65:
+66: <html><title>Using ADO in ASP.NET</title>
+67:  <body>
+68:   <form runat=server>
+69:    <asp:DataGrid id="dataGrid1" runat="server"
+70:     BorderColor="black"
+71:     GridLines="Both"
+72:     BackColor="#ffdddd"
+73:    />
+74:   </form>
+75:   <object id="connection" runat="server"
+76:    progid="ADODB.Connection"/>
+77:   <object id="recordset" runat="server"
+78:    progid="ADODB.Recordset"/>
+79:  </body>
+80: </html>The <%@ Page aspcompat=true %> directive in Line 1 is explained in Chapter 6, 
+"Advanced Topics for Using COM Components." The important part of Listing 3.1 is 
+Lines 75–78, which declare the two COM objects used in the ASP.NET page via 
+ProgIDs. The HTML portion of the page contains one control—the DataGrid control. 
+This data grid will hold the information that we obtain using ADO.
+Inside the Page_Load method, Lines 9–10 initialize a connection string for the 
+sample database (pubs) in the local machine's SQL Server. You may need to adjust 
+this string appropriately to run the example on your computer. Lines 21–24 use a 
+few "magic numbers"—hard-coded values that represent various ADO enumeration 
+values mentioned in the code's comments. If you use the Primary Interop Assembly 
+for ADO, then you can reference the actually enum values instead.
+After creating a new DataTable object in Line 33, we add the appropriate number 
+of columns by looping through the Fields collection. On Line 37, each column 
+added is given the name of the current field's Name property, and the type of 
+the data held in each column is set to the type String. The Do While loop 
+starting in Line 42 processes each record in the Recordset object. Once 
+Recordset.EOF is true, we've gone through all the records. With each record, we 
+create a new row (Line 43), add each of the record's fields to the row (Lines 
+46–48), and add the row to the table (Line 51). Each string added to a row is 
+the current field's Value property. ToString is called on the Value property in 
+Line 47, in case the data isn't already a string. In Lines 57–58, we associate 
+the DataTable object with the page's DataGrid control and call DataBind to 
+display the records. Finally, Lines 61–62 call Close on the two ADO objects to 
+indicate that we're finished with them. 
+Figure 3.9 displays the output of Listing 3.1 as shown in a Web browser.
+Figure 3.9 The output of Listing 3.1 when viewed in a Web browser.
+Using COM+ Components
+Just like COM components, COM+ components—formerly Microsoft Transaction Server 
+(MTS) components—can be used in an ASP.NET application. However, due to 
+differences between the ASP and ASP.NET security models, using COM+ components 
+in an ASP.NET application might require changing their security settings. 
+If you get an error with a message such as "Permission denied" when attempting 
+to use COM+ components, you should be able to solve the problem as follows:
+  Open the Component Services explorer.
+  Under the Component Services node, find the COM+ application you wish to use, 
+  right-click on it, and select Properties.
+  Go to the Identity tab and change the account information to a brand new local 
+  machine account.
+  At a command prompt, run DCOMCNFG.EXE, a tool that lets you configure DCOM 
+  settings (such as security) for your COM+ application.
+  Go to the Default Security tab and click the Edit Default... button in the 
+  Default Access Permissions area.
+  Add the new user created in Step 3.
+  Restart Internet Information Services (IIS).
+An Introduction to Interop Marshaling
+When calls are made from managed code to unmanaged code (or vice-versa), data 
+passed in parameters needs to be converted from one representation to another. 
+These conversions are described in the next chapter. The process of packaging 
+data to be sent from one entity to another is known as marshaling. In COM, 
+marshaling is done when sending data across context boundaries such as 
+apartments, operating system processes, or computers. (Apartments are discussed 
+in Chapter 6.) To differentiate the marshaling performed by the CLR from COM 
+marshaling, the process of marshaling across unmanaged/managed boundaries is 
+known as Interop marshaling.
+COM marshaling often involves extra work for users, such as registering a type 
+library to be used by the standard OLE Automation marshaler or registering your 
+own proxy/stub DLL to handle marshaling for custom interfaces that can't 
+adequately be described in a type library. Interop marshaling, on the other 
+hand, is handled transparently in a way that's usually sufficient by a CLR 
+component known as the Interop Marshaler. The metadata inside an Interop 
+Assembly gives the Interop Marshaler the information it needs to be able to 
+marshal data from .NET to COM and vice-versa.
+Interop marshaling is completely independent of COM marshaling. COM marshaling 
+occurs externally to the CLR, just as in the pre-.NET days. If COM marshaling is 
+needed due to a call to a COM component occurring across contexts, Interop 
+marshaling occurs either before or after COM marshaling, depending on the order 
+of data flow. One direction of COM marshaling and Interop marshaling is pictured 
+in Figure 3.10.
+Figure 3.10 The relationship between Interop marshaling and COM marshaling. 
+In this diagram, a COM component returns a COM string type known as a BSTR to a 
+.NET application calling it. BSTR is a pointer to a length-prefixed Unicode 
+string. The pictured string contains "abc" and has a four-byte length prefix 
+that describes the string as six bytes long. (The extra zeros appear in memory 
+because each Unicode character occupies two bytes.) The calling .NET object 
+happens to be in a different apartment, so standard COM marshaling copies the 
+string to the caller's apartment. See Chapter 6 for controlling what kind of 
+apartment a .NET application runs in when using COM Interoperability.
+Once the BSTR has been marshaled by a standard COM mechanism, the Interop 
+Marshaler is responsible for copying the data to a .NET string instance 
+(System.String). Although .NET strings are also Unicode and length-prefixed, 
+they have additional information stored in their prefix. Hence, a copy must be 
+made between these two bitwise-incompatible entities. This new System.String 
+instance can then be returned to the .NET caller (after the Interop Marshaler 
+calls SysFreeString to destroy the BSTR). The CLR and the Interop Marshaler 
+don't know or care that COM marshaling has occurred before it performed Interop 
+Marshaling, as long as the unmanaged data is presented correctly in the current 
+context. If an interface pointer were being passed from one apartment to the 
+next and the interface did not have an appropriate COM marshaler registered for 
+it, the call would fail just as it would in a pure COM scenario.
+Many data types, such as strings, require copying from one internal 
+representation to another during an Interop transition. When such data types are 
+used by-reference, the Interop Marshaler provides copy-in/copy-out behavior 
+rather than true by-reference semantics. Several common data types, however, 
+have the same managed and unmanaged memory representations. A data type with the 
+same managed and unmanaged representation is known as blittable. The blittable 
+.NET data types are:
+  System.SByte 
+  System.Int16 
+  System.Int32 
+  System.Int64 
+  System.IntPtr 
+  System.Byte 
+  System.UInt16 
+  System.UInt32 
+  System.UInt64 
+  System.UIntPtr 
+  System.Single 
+  System.Double 
+  Structs composed only of the previous types 
+  C-style arrays whose elements are of the previous types 
+In version 1.0 of the CLR, the Interop Marshaler pins and directly exposes 
+managed memory to unmanaged code for any blittable types. (Pinning is discussed 
+in Chapter 6.) By taking advantage of a common memory representation, the 
+Interop Marshaler copies data only when necessary and therefore exhibits better 
+performance when blittable types are used. This implementation detail can show 
+up in more ways than performance, however. For example, copying data in or out 
+of an Interop call can be suppressed by custom attributes, but for blittable 
+types these same custom attributes have no effect because the original memory is 
+always directly exposed to the method being called. Chapter 12, "Customizing 
+COM's View of .NET Components," discusses these custom attributes and their 
+relationship to blittable data types. 
+You can customize the behavior of the Interop Marshaler in two ways:
+  Changing the metadata inside Interop Assemblies to change the way the Interop 
+  Marshaler treats data types. This technique is covered in Chapter 6.
+  Plugging in your own custom marshaler, as discussed in Chapter 20, "Custom 
+  Marshaling."
+Common Interactions with COM Objects
+Interacting with types defined inside an Interop Assembly often feels just as 
+natural as interacting with .NET types. There are some additional options and 
+subtleties, however, and they're discussed in this section.
+Creating an Instance
+Creating an instance of a COM class can be just like creating an instance of a 
+.NET class. The Hello, World example showed the most common way of creating a 
+COM object—using the new operator. At run time, after the metadata is located, 
+the class's ComImportAttribute pseudo-custom attribute tells the Common Language 
+Runtime to create an RCW for the class, and to construct the COM object by 
+calling CoCreateInstance using the CLSID specified in the class's GuidAttribute.
+Digging Deeper
+When instantiating an RCW, the exact CoCreateInstance call that the new operator 
+maps to is as follows, in C++ syntax:
+     CoCreateInstance(clsid, NULL, CLSCTX_SERVER, IID_IUnknown, (void**)&punk);The CLSCTX_SERVER flag means that the object could be created in-process, 
+out-of-process, or even on a remote computer (using DCOM), depending on how the 
+coclass is registered.
+If you need to modify the behavior of this call, you could alternatively call 
+CoCreateInstance or CoCreateInstanceEx yourself using Platform Invocation 
+Services (PInvoke). This technique is shown in Chapter 19, "Deeper Into PInvoke 
+and Useful Examples."
+Not all coclasses are creatable, however. Instances of noncreatable types can 
+only be obtained when returned from a method or property. The object's RCW is 
+created as soon as you obtain a COM object in this way.
+Alternatives to the new Operator
+There are other ways to create a COM object, some of which don't even require 
+metadata for the COM object. In Visual Basic 6, you can avoid the need to 
+reference a type library by calling CreateObject and passing the object's ProgID 
+(a string). In the .NET Framework, you can avoid the need to reference an 
+Interop Assembly by using the System.Type and System.Activator classes.
+Creating an object in this alternative way is a two-step process:
+  Get a Type instance so that we can create an instance of the desired class. 
+  This can be done three different ways, shown here in C# using the Microsoft 
+  Speech SpVoice class:
+    Type t = Type.GetTypeFromProgID("SAPI.SpVoice");
+    Type t = Type.GetTypeFromCLSID(new 
+    Guid("96749377-3391-11D2-9EE3-00C04F797396"));
+    Type t = Type.GetType("SpeechLib.SpVoiceClass, SpeechLib, Version=5.0.0.0, 
+    Culture=neutral, PublicKeyToken=null");
+  Create an instance of the type (shown in C#):
+Object voice = Activator.CreateInstance(t);
+In step 1, the goal of all three techniques is to return a Type instance whose 
+GUID property is set to the CLSID of the COM object we want to create. The first 
+technique obtains the CLSID indirectly from the registry by using the class's 
+ProgID. Most COM classes are registered with ProgIDs (which doesn't necessarily 
+match the type name qualified with the library name, as in this example) so 
+calling GetTypeFromProgID is a popular option. The second technique passes the 
+CLSID directly, which should be reserved for COM objects without a ProgID due to 
+its lack of readability. 
+Whereas the first two techniques don't require an Interop Assembly (which is 
+great for COM objects that aren't described in a type library), the third 
+technique of using Type.GetType does require one at run time. That's because the 
+string passed to Type.GetType represents a .NET type whose metadata description 
+must be found and loaded in order for the call to succeed. The format for the 
+string is the same as the string used with the class attribute for an <object> 
+tag in an ASP.NET page:
+ClassName, AssemblyName
+Step 2 creates an instance of the COM object and assigns it to an Object 
+variable. With this variable, you could call members in a late bound fashion, 
+shown in the "Calling Methods and Properties on a COM Object" section. Or, if 
+you compiled the program with metadata definitions of interfaces that the COM 
+object implements, you could cast the object to such an interface. In the 
+SpVoice example, you could do the following:
+SpVoice voice = (SpVoice)Activator.CreateInstance(t);However, if you compile with a metadata definition of SpVoice, then you might as 
+well instantiate the object using new.
+Digging Deeper
+Type.GetTypeFromProgID and Type.GetTypeFromCLSID have overloads that accept a 
+string parameter with a server name. This enables COM objects to be created on a 
+specified remote computer even if they are registered to also be creatable 
+locally. Chapter 6 has more information.
+For backwards compatibility with Visual Basic 6, you can still call CreateObject 
+in Visual Basic .NET. Calling this method with a ProgID does the same thing as 
+calling Type.GetTypeFromProgID followed by Activator.CreateInstance. (As with 
+any .NET APIs, this can be called from other languages as well. CreateObject is 
+simply a static method on the Interaction class inside the Microsoft.VisualBasic 
+assembly.)
+Detecting Errors
+The most common error when attempting to create a COM object is due to the class 
+not being registered (meaning that the CLSID for the class doesn't have an entry 
+under HKEY_CLASSES_ ROOT\CLSID in the Windows Registry). When an error occurs 
+during object creation, a COMException (defined in 
+System.Runtime.InteropServices) is thrown. When calling one of the three 
+Type.GetType... methods, however, failure is indicated by returning a null Type 
+object unless you call the overloaded method with a boolean throwOnError 
+parameter.
+Because the goal of calling Type.GetTypeFromCLSID is to return a Type instance 
+with the appropriate GUID, and because the desired GUID is passed directly as a 
+parameter, the implementation of Type.GetTypeFromCLSID doesn't bother checking 
+the Windows Registry. Instead, it always returns a Type instance whose GUID 
+property is set to the passed-in CLSID. Therefore, failure is not noticed until 
+you attempt to instantiate the class using the returned Type instance.
+Calling Methods and Properties on a COM Object
+When you have metadata for the COM object, calling methods is no different from 
+calling methods and properties on a .NET object (as shown in the Hello, World 
+example):
+voice.Speak("Hello, World!", SpeechVoiceSpeakFlags.SVSFDefault);There is one thing to note about properties and C#. Sometimes COM properties 
+aren't supported by C# because they have by-reference parameters or multiple 
+parameters. (C# does support properties with multiple parameters, also known as 
+parameterized properties, if they are also default properties.) In such cases, 
+C# doesn't allow you to call these properties with the normal property syntax, 
+but does allow you to call the accessor methods directly. An example of this can 
+be seen with the Microsoft SourceSafe 6.0 type library, which has the following 
+property defined on the IVSSDatabase interface (shown in IDL):
+[id(0x00000008), propget]
+HRESULT User([in] BSTR Name, [out, retval] IVSSUser** ppIUser);In C#, this property must be called as follows:
+user = database.get_User("Guest");Attempting to call the User property directly would cause compiler error CS1546 
+with the following message:
+Property or indexer 'User' is not supported by the language; try directly 
+calling accessor method 'SourceSafeTypeLib.VSSDatabase.get_User(string)'.In Visual Basic .NET, this same property can be used with regular property 
+syntax:
+user = database.User("Guest")If you don't have metadata for the COM object (either by choice or because the 
+COM object doesn't have a type library), you must make late-bound calls, as the 
+compiler has no type definitions. In Visual Basic .NET, this looks the same as 
+it did in Visual Basic 6 (as long as you ensure that Option Strict is turned 
+off):
+Imports System
+Module Module1
+ Sub Main()
+  Dim t as Type
+  Dim voice as Object
+  t = Type.GetTypeFromProgID("SAPI.SpVoice")
+  voice = Activator.CreateInstance(t)
+  voice.Speak("Hello, World!")
+ End Sub
+End ModuleThis can simply be compiled from the command line as follows, which does not 
+require the SpeechLib Interop Assembly:
+vbc HelloWorld.vbBecause the type of voice is System.Object, the Visual Basic .NET compiler 
+doesn't check the method call at compile time. It's possible that a method 
+called Speak won't exist on the voice object at run time or that it will have a 
+different number of parameters (although we know otherwise), but all failures 
+are reported at run time when using late binding.
+In C#, however, the equivalent code doesn't compile:
+using System;
+
+class Class1
+{
+ static void Main()
+ {
+  Type t = Type.GetTypeFromProgID("SAPI.SpVoice");
+  object voice = Activator.CreateInstance(t);
+
+  // Causes compiler error CS0117: 
+  // 'object' does not contain a definition for 'Speak'
+  voice.Speak("Hello, World!", 0);
+ }
+}That's because the type of voice is System.Object and there's no method called 
+Speak on this type. The only way to make a late-bound call in C# is to use the 
+general .NET feature of reflection, introduced in Chapter 1. Therefore, the 
+previous C# example can be changed to:
+using System;
+using System.Reflection;
+
+class Class1
+{
+ static void Main()
+ {
+  Type t = Type.GetTypeFromProgID("SAPI.SpVoice");
+  object voice = Activator.CreateInstance(t);
+  object [] args = new Object[2];
+  args[0] = "Hello, World!";
+  args[1] = 0;
+  t.InvokeMember("Speak", BindingFlags.InvokeMethod, null, voice, args);
+ }
+}When reflecting on a COM object using Type.InvokeMember, the CLR communicates 
+with the object through its IDispatch interface. Different binding flags can be 
+used to control what kind of member is invoked. Internally, which binding flag 
+is chosen affects the wFlags parameter that the CLR passes to IDispatch.Invoke. 
+These binding flags are:
+  BindingFlags.InvokeMethod. The CLR passes DISPATCH_METHOD, which indicates 
+  that a method should be invoked.
+  BindingFlags.GetProperty. The CLR passes DISPATCH_PROPERTYGET, which indicates 
+  that a property's get accessor (propget) should be invoked.
+  BindingFlags.SetProperty. The CLR passes DISPATCH_PROPERTYPUT | 
+  DISPATCH_PROPERTYPUTREF, which indicates that either a property's set accessor 
+  (propputref) or let accessor (propput) should be invoked. If the property has 
+  both of these accessors, it's up to the object's IDispatch implementation to 
+  decide which to invoke.
+  BindingFlags.PutDispProperty. The CLR passes DISPATCH_PROPERTYPUT, which 
+  indicates that a property's let accessor (propput) should be invoked.
+  BindingFlags.PutRefDispProperty. The CLR passes DISPATCH_PROPERTYPUTREF, which 
+  indicates that a property's set accessor (propputref) should be invoked.
+For more information about COM properties, see Chapter 4.
+When you don't have metadata for a COM object, the amount of information that 
+you can get through the reflection API is limited. In addition (unlike .NET 
+objects), not all COM objects support late binding because COM objects might not 
+implement IDispatch. If you try to use Type.InvokeMember with such a COM object, 
+you'll get an exception with the message:
+The COM target does not implement IDispatch.For these types of objects, having metadata definitions of the types and using 
+different reflection APIs (such as MemberInfo.Invoke) is a must because late 
+binding isn't an option.
+Note
+When reflecting on a COM object that is defined in an Interop Assembly, you can 
+use reflection APIs such as MemberInfo.Invoke even if the object doesn't support 
+IDispatch. All of the reflection APIs except Type.InvokeMember call through a 
+COM object's v-table unless the interface you're invoking on happens to be a 
+dispinterface.
+If you're reflecting on a COM object that has no metadata, Type.InvokeMember is 
+just about the only reflection functionality you can make use of. For example, 
+calling Type.GetMethods on such an object returns the methods of the generic 
+System.__ComObject class rather than the COM object's methods. Without metadata, 
+there is no way to enumerate a COM object's methods using reflection.
+Using Optional Parameters
+Optional parameters, commonly used in COM components, are parameters that a 
+caller might omit. Optional parameters enable callers to use shorter syntax when 
+the default values of parameters are acceptable, such as the second parameter of 
+the Speak method used previously.
+Optional Parameters in COM
+In IDL, a method with optional parameters looks like this:
+HRESULT PrintItems([in, optional] VARIANT x, [in, optional] VARIANT y);In Visual Basic 6, this method might be implemented as follows:
+Public Sub PrintItems(Optional ByVal x as Variant, Optional ByVal y as Variant)
+ If Not IsMissing(x) Then ReallyPrint x
+ If Not IsMissing(y) Then ReallyPrint y
+End SubThe VARIANT type can represent a missing value (meaning that the caller didn't 
+pass anything). A missing value can be determined in VB6 using the built-in 
+IsMissing method, and can be determined in unmanaged C++ by checking for a 
+VARIANT with type VT_ERROR and a value equal to DISP_E_PARAMNOTFOUND (defined in 
+winerror.h):
+//
+// MessageId: DISP_E_PARAMNOTFOUND
+//
+// MessageText:
+//
+// Parameter not found.
+//
+#define DISP_E_PARAMNOTFOUND       _HRESULT_TYPEDEF_(0x80020004L)Non-VARIANT types can also be optional if they have a default value, 
+demonstrated by the following method:
+IDL:
+HRESULT AddItem([in, optional, defaultvalue("New Entry")] BSTR name,
+ [in, optional, defaultvalue(1)] short importance);Visual Basic 6:
+Public Sub AddItem(Optional ByVal name As String = "New Entry", 
+ Optional ByVal importance As Integer = 1)For parameters with default values, the method implementer doesn't check for a 
+missing value because if the caller didn't pass a value, it looks to the method 
+as if the caller passed the default value.
+Optional Parameters in the .NET Framework
+Optional parameters also exist in the .NET Framework, although support for them 
+is not required by the CLS. This means that you can't count on taking advantage 
+of optional parameters in all .NET languages—C# being a prime example. Because 
+C# does not support optional parameters, it can become frustrating to use COM 
+objects that make heavy use of them.
+FAQ: Why doesn't C# support optional parameters?
+The C# designers decided not to support optional parameters because their 
+implementation has the unfortunate consequence of emitting the default value 
+into the caller's MSIL instructions as if the caller passed the value in source 
+code. For example, in Visual Basic .NET, viewing the IL produced for the 
+following method call
+list.AddItem()reveals that the code produced is equivalent to the code that would be produced 
+if the programmer had written
+list.AddItem("New Entry", 1)This could result in versioning headaches if a future version of a component 
+changes the default values because the values are hard-coded in the client. One 
+could argue that a component shouldn't change default values as they are part of 
+a contract with a client. One could also argue that it doesn't matter if the 
+default values change because the clients still get the same behavior for the 
+values they're passing in. If the component did want clients to switch to a new 
+default, however, it couldn't be achieved without recompiling every client. 
+Besides, C# prefers to be explicit to avoid any confusion. The recommended 
+alternative to achieve the same effect as optional parameters when designing 
+.NET components is to use method overloading. So, a C# programmer should define 
+the following methods to get the same functionality as the earlier AddItem 
+method:
+public void AddItem(){
+ AddItem("New Entry", 1);
+}
+public void AddItem(string name)
+{
+ AddItem(name, 1);
+}
+public void AddItem(short importance)
+{
+ AddItem("New Entry", importance);
+}
+public void AddItem(string name, short importance)
+{
+ // Real implementation
+}This encapsulates the default values in the component's implementation. Note 
+that method overloading isn't possible in COM because each method on an 
+interface must have a unique name.
+The type library importer preserves the optional marking on parameters in the 
+metadata that it produces. So, optional parameters in COM look like optional 
+parameters to the .NET languages that support them. In Visual Basic .NET, for 
+example, calling a COM method with optional parameters works the same way as it 
+does in Visual Basic 6, as demonstrated in the Visual Basic .NET Hello, World 
+example. 
+Behind the scenes, the VB .NET compiler fills in each missing parameter with 
+either the default value or a System.Type.Missing instance if no default value 
+exists. When passed to unmanaged code, the CLR converts a System.Type.Missing 
+type to COM's version of a missing type—a VT_ERROR VARIANT with the value 
+DISP_E_PARAMNOTFOUND. You could explicitly pass the Type.Missing static field 
+for each optional parameter, but this isn't necessary as the VB .NET compiler 
+does it for you. In languages like C#, however, passing Type.Missing can be 
+useful for "omitting" a parameter.
+Consider the following method, shown in both IDL and Visual Basic 6:
+IDL:
+HRESULT AddAnyItem([in, optional, defaultvalue("New Entry")] VARIANT name,
+ [in, optional, defaultvalue(1)] VARIANT importance);Visual Basic 6:
+Public Sub AddAnyItem(Optional ByVal name As Variant = "New Entry", 
+ Optional ByVal importance As Variant = 1)This method can be called in Visual Basic .NET the following ways, which are all 
+equivalent:
+  list.AddAnyItem() 
+  list.AddAnyItem("New Entry") 
+  list.AddAnyItem(, 1) 
+  list.AddAnyItem("New Entry", 1) 
+  list.AddAnyItem(Type.Missing, Type.Missing) 
+  list.AddAnyItem("New Entry", Type.Missing) 
+  list.AddAnyItem(Type.Missing, 1) 
+Because the C# compiler ignores the optional marking in the metadata, only the 
+last four ways of calling AddAnyItem can be used in C#.
+Digging Deeper
+Passing System.Reflection.Missing.Value as a missing type also works, but 
+there's no reason to choose it over passing System.Type.Missing. Both are static 
+fields that are an instance of the System.Reflection.Missing type, so both 
+reflection and COM Interoperability treat these fields the same way.
+For non-VARIANT optional parameters, C# programs must explicitly pass a default 
+value to get the default behavior. That's because the compiler won't allow you 
+to pass Type.Missing where a string is expected, for example. If you're not sure 
+what the default value for a parameter is, view the type library using 
+OLEVIEW.EXE or the corresponding metadata using ILDASM.EXE. The metadata for the 
+AddAnyItem method is shown here:
+.method public newslot virtual instance void
+ AddAnyItem([in][opt] object marshal( struct) name,
+       [in][opt] object marshal( struct) importance) 
+ runtime managed internalcall
+{
+ .custom instance void [mscorlib]
+  System.Runtime.InteropServices.DispIdAttribute::.ctor(int32) =
+  ( 01 00 00 00 03 60 00 00 )
+ .param [1] = "New Entry"
+ .param [2] = int16(0x0001)
+} // end of method IList::AddItemDigging Deeper
+There is actually a way to avoid explicitly passing default values to 
+non-VARIANT optional parameters in C#, and that's to use reflection. Because the 
+reflection APIs force you to package parameters as arrays of Objects, you can 
+always pass Type.Missing for any kind of optional parameter, and reflection does 
+the right thing.
+But there's one more wrinkle for C# programmers—optional VARIANT parameters that 
+are passed by-reference. As discussed in the next chapter, a VARIANT passed 
+by-reference looks like ref object in C#. Thus, you can't simply pass 
+Type.Missing or ref Type.Missing because it's a static field. You need to pass a 
+reference to a variable that has been set to Type.Missing. For example, to call 
+the following method from the Microsoft Word type library:
+VARIANT_BOOL CheckSpelling(
+ [in] BSTR Word,
+ [in, optional] VARIANT* CustomDictionary,
+ [in, optional] VARIANT* IgnoreUppercase,
+ [in, optional] VARIANT* MainDictionary,
+ [in, optional] VARIANT* CustomDictionary2,
+ [in, optional] VARIANT* CustomDictionary3,
+ [in, optional] VARIANT* CustomDictionary4,
+ [in, optional] VARIANT* CustomDictionary5,
+ [in, optional] VARIANT* CustomDictionary6,
+ [in, optional] VARIANT* CustomDictionary7,
+ [in, optional] VARIANT* CustomDictionary8,
+ [in, optional] VARIANT* CustomDictionary9,
+ [in, optional] VARIANT* CustomDictionary10);you need the following silly-looking C# code:
+object missing = Type.Missing;
+result = msWord.CheckSpelling(
+ word,      // Word
+ ref missing,   // CustomDictionary
+ ref ignoreUpper, // IgnoreUppercase
+ ref missing,   // AlwaysSuggest
+ ref missing,   // CustomDictionary2
+ ref missing,   // CustomDictionary3
+ ref missing,   // CustomDictionary4
+ ref missing,   // CustomDictionary5
+ ref missing,   // CustomDictionary6
+ ref missing,   // CustomDictionary7
+ ref missing,   // CustomDictionary8
+ ref missing,   // CustomDictionary9
+ ref missing);  // CustomDictionary10It's ugly, but it works. This sometimes comes as a surprise because people don't 
+often think of [in] VARIANT* in IDL as being passed by-reference, as there's no 
+[out] flag.
+Releasing a COM Object
+The Common Language Runtime handles reference counting of COM objects, so there 
+is no need to call IUnknown.AddRef or IUnknown.Release in managed code. You 
+simply create the object using the new operator, or one of the other techniques 
+discussed, and allow the system to take care of releasing the object.
+Leaving it up to the CLR to release a COM object can sometimes be problematic 
+because it does not occur at a deterministic time. Once you're finished using an 
+RCW, it becomes eligible for garbage collection but does not actually get 
+collected until some later point in time. And the wrapped COM object doesn't get 
+released until the RCW is collected.
+Sometimes COM objects require being released at a specific point during program 
+execution. If you need to control exactly when the Runtime-Callable Wrapper 
+calls IUnknown.Release, you can call the static (Shared in VB .NET) 
+Marshal.ReleaseComObject method in the System.Runtime.InteropServices namespace. 
+For a COM object called obj, this method can be called in Visual Basic .NET as 
+follows:
+Dim obj As MyCompany.ComObject
+...
+' We're finished with the object.
+Marshal.ReleaseComObject(obj)Marshal.ReleaseComObject has different semantics than IUnknown.Release—it makes 
+the CLR call IUnknown.Release on every COM interface pointer it wraps, making 
+the instance unusable to managed code afterwards. Attempting to use an object 
+after passing it to ReleaseComObject raises a NullReferenceException. See 
+Chapter 6 for more information about eagerly releasing COM objects.
+Tip
+In Visual Basic 6, a COM object could be immediately released by setting the 
+object reference to Nothing (null):
+Set comObj = Nothing
+In managed code, however, setting an object to Nothing or null only makes the 
+original instance eligible for garbage collection; the object is not immediately 
+released. For COM objects, this can be accomplished by calling ReleaseComObject 
+instead of or in addition to the previous line of code. For both .NET and COM 
+objects, this can be accomplished by calling System.GC.Collect and System.GC. 
+WaitForPendingFinalizers after setting the object to Nothing or null.
+Casting to an Interface (QueryInterface)
+In COM, calling QueryInterface is the way to programmatically determine whether 
+an object implements a certain interface. The equivalent of this in .NET is 
+casting. (In Visual Basic .NET, casting is done with either the CType or 
+DirectCast operators.)
+When attempting to cast a COM type to another type, the CLR calls QueryInterface 
+in order to ask the object if the cast is legal, unless the type relationship 
+can be determined from metadata. Because COM classes aren't required to list all 
+the interfaces they implement in a type library, a QueryInterface call might 
+often be necessary. Figure 3.11 diagrams what occurs when a COM object (an RCW) 
+is cast to another type in managed code. There's more to the story than what is 
+described here, however, which is indicated with the ellipses in the figure. 
+Chapter 5, "Responding to COM Events," will update this diagram with the 
+complete sequence of events.
+Figure 3.11 Casting a COM object to another type in managed code.
+This relationship between casting and QueryInterface means that an 
+InvalidCastException is thrown in managed code whenever a QueryInterface call 
+fails. When using COM components, however, an InvalidCastException can be thrown 
+in other circumstances that don't involve casting. Chapter 6 discusses some of 
+the common problems that cause an InvalidCastException.
+The following code snippets illustrate how various unmanaged and managed 
+languages enable coercing an instance of the SpVoice type to the ISpVoice 
+interface:
+Unmanaged C++:
+IUnknown* punk = NULL;
+ISpVoice* pVoice = NULL;
+...
+HRESULT hresult = punk->QueryInterface(IID_ISpVoice, (void**)&pVoice);Visual Basic 6:
+Dim i as ISpVoice
+Dim v as SpVoice
+...
+Set i = vC#:
+ISpVoice i;
+SpVoice v;
+...
+i = (ISpVoice)v;Visual Basic .NET:
+Dim i as ISpVoice
+Dim v as SpVoice
+...
+i = CType(v, ISpVoice)Because casting a COM object is like calling QueryInterface, COM objects should 
+not be cast to a class type; they should only be cast to an interface. Not all 
+COM objects expose a mechanism to determine what their class type is; the only 
+thing you can count on is determining what interfaces it implements. However, 
+because the names that represent classes in COM (such as SpVoice) now represent 
+interfaces, casting to one of these special interfaces works. It results in a 
+QueryInterface call to the class's default interface. What does not always work 
+is casting a COM object to a type that's represented as a class in metadata, 
+such as SpVoiceClass.
+Error Handling
+As mentioned in the preceding chapter, the COM way of error handling is to 
+return a status code called an HRESULT. To bridge the gap between the two models 
+of handling errors, the CLR checks for a failure HRESULT after an invocation 
+and, if appropriate, throws an exception for managed clients to catch. The type 
+of the exception thrown is based on the returned HRESULT, and the contents of 
+the exception can contain customized information if the COM object sets 
+additional information via the IErrorInfo interface. The translation between 
+IErrorInfo and a .NET exception is covered in Chapter 16, "COM Design Guidelines 
+for Components Used by .NET Clients." The exception types thrown by the CLR for 
+various HRESULT values are listed in Appendix C, "HRESULT to .NET Exception 
+Transformations."
+In .NET, the type of an exception is often the most important aspect of an 
+exception that enables clients to programmatically take a course of action. 
+Although the CLR transforms some often-used HRESULTs (such as E_OUTOFMEMORY) 
+into system-supplied exceptions (such as System.OutOfMemoryException), many COM 
+components define and use custom HRESULTs. Unfortunately, such HRESULTs cannot 
+be transformed to nice-looking exception types by the CLR. There are two reasons 
+for this:
+  Appropriate exception types specific to custom HRESULT values would need to be 
+  defined somewhere in an assembly.
+  The CLR would need a mechanism for transforming arbitrary HRESULT values into 
+  arbitrary exception types, and there's no way to provide this information. In 
+  other words, the HRESULT transformation list in Appendix C is nonextensible.
+Any unrecognized failure HRESULT is transformed to a 
+System.Runtime.InteropServices. COMException. This is probably one of the most 
+noticeable seams in the nearly seamless interoperation of COM components. 
+COMExceptions have a public ErrorCode property that contains the HRESULT value, 
+making it possible to check exactly which HRESULT caused this generic exception. 
+This is demonstrated by the following Visual Basic .NET code:
+Try
+ Dim msWord As Object = new Word.Application()
+Catch ex as COMException
+ If (ex.ErrorCode = &H80040154)
+  MessageBox.Show("Word is not registered.")
+ Else
+  MessageBox.Show("Unexpected COMException: " + ex.ToString())
+ End If
+Catch ex as Exception
+ MessageBox.Show("Unexpected exception: " + ex.ToString())
+End TryOther exception types typically don't have a public member that enables you to 
+see the HRESULT, but every exception does have a corresponding HRESULT stored in 
+a protected property, called HResult. The motivation is that in the .NET 
+Framework, checking for error codes should be a thing of the past, and replaced 
+by checking for the type of exception.
+Digging Deeper
+There is usually no need to check the HRESULT value inside an arbitrary 
+exception, but it is possible by calling the 
+System.Runtime.InteropServices.Marshal. GetHRForException method. It can also be 
+done using the System.Runtime.InteropServices.ErrorWrapper class, but that isn't 
+its intent.
+Caution
+COM methods may occasionally change the data inside by-reference parameters 
+before returning a failure HRESULT. When such a method is called from managed 
+code, however, the updated values of any by-reference parameters are not copied 
+back to the caller before the .NET exception is thrown. This effect is only seen 
+with non-blittable types because any changes that the COM method makes to 
+by-reference blittable types directly change the original memory.
+All this discussion overlooks the fact that an HRESULT doesn't just represent an 
+error code. It can be a nonerror status code known a success HRESULT, identified 
+by a severity bit set to zero. Success HRESULTs other than S_OK (the standard 
+return value when there's no failure) are used much less often than failure 
+HRESULTs, but can show up when using members of widely used interfaces. One 
+common example is the IPersistStorage.IsDirty method, which returns either S_OK 
+or S_FALSE, neither of which is an error condition.
+HRESULTs are hidden from managed code, so there's no way to know what HRESULT is 
+returned from a method or property unless it causes an exception to be thrown. 
+One could imagine a SuccessException being thrown whenever a COM object returns 
+an interesting success HRESULT, but throwing an exception slows down an 
+application and thus should be reserved for exceptional situations. Chapter 7 
+demonstrates a way to expose HRESULTs in imported signatures in order to handle 
+success HRESULTs.
+Enumerating Over a Collection
+Thanks to the transformations performed by the type library importer, 
+enumerating over a collection exposed by a COM object is as simple as 
+enumerating over a collection exposed by a .NET object. This occurs as long as 
+the COM collection is exposed as a member with DISPID_NEW_ENUM that returns an 
+IEnumVARIANT interface pointer, as discussed in the next chapter.
+The following is a Visual Basic .NET code snippet that demonstrates enumeration 
+over a collection exposed by the Microsoft Word type library. More of this is 
+shown in the example at the end of this chapter.
+Dim suggestions As SpellingSuggestions
+Dim suggestion As SpellingSuggestion
+suggestions = msWord.GetSpellingSuggestions("errror")
+
+' Enumerate over the SpellingSuggestions collection
+For Each suggestion In suggestions
+ Console.WriteLine(suggestion.Name)
+NextPassing the Right Type of Object
+When COM methods or properties have VARIANT parameters, they look like 
+System.Object types to managed code. Passing the right type of Object so that 
+the COM component sees the right type of VARIANT is usually straightforward. For 
+example, passing a managed Boolean means the component sees a VARIANT containing 
+a VARIANT_BOOL (a Boolean in VB6), and passing a managed Double means the 
+component sees a VARIANT containing a double. 
+The tricky cases are the managed data types that have multiple unmanaged 
+representations. Some common types used in COM no longer exist in the .NET 
+Framework: CURRENCY, VARIANT, IUnknown, IDispatch, SCODE, and HRESULT. 
+Therefore, as discussed further in Chapter 4, .NET Decimal types can be used to 
+represent COM CURRENCY or DECIMAL types, .NET Object types can be used to 
+represent COM VARIANT, IUnknown, or IDispatch types, and .NET integers can be 
+used to represent COM SCODE or HRESULT types. If a COM signature had a CURRENCY 
+parameter, you could simply pass a Decimal when early-binding to the 
+corresponding method described in an Interop Assembly. The CLR would 
+automatically transform it to a CURRENCY because the type library importer 
+decorates such parameters a custom attribute that tells the CLR what the 
+unmanaged data type is. With a VARIANT parameter, however, there needs to be 
+some way to control whether the type passed looks like a DECIMAL (VT_DECIMAL) or 
+a CURRENCY (VT_CY) to the COM component, and this information is not captured in 
+the signature.
+The solution for using a single .NET type to represent multiple COM types lies 
+in some simple wrappers (not to be confused with RCWs or CCWs) defined in the 
+System.Runtime. InteropServices namespace. There is a wrapper for each basic 
+type that doesn't exist in the managed world:
+  CurrencyWrapper Used to make a Decimal look like a CURRENCY type when passed 
+  inside a VARIANT.
+  UnknownWrapper Used to make an Object look like an IUnknown interface pointer 
+  when passed inside a VARIANT.
+  DispatchWrapper Used to make an Object look like an IDispatch interface 
+  pointer when passed inside a VARIANT.
+  ErrorWrapper Used to make an integer or an Exception look like an SCODE when 
+  passed inside a VARIANT.
+Listing 3.2 shows C# code that demonstrates how to use these wrappers to convey 
+different VARIANT types when calling the following GiveMeAnything method (shown 
+in its unmanaged and managed representations):
+IDL:
+HRESULT GiveMeAnything([in] VARIANT v);Visual Basic 6:
+Public Sub GiveMeAnything(ByVal v As Variant)C#:
+public virtual void GiveMeAnything(Object v);Listing 3.2 Using CurrencyWrapper, UnknownWrapper, DispatchWrapper, and 
+ErrorWrapper to Convey Different VARIANT Types
+Decimal d = 123.456M;
+int i = 10;
+Object o = ...
+
+// Pass a VARIANT with type VT_DECIMAL (Decimal)
+comObj.GiveMeAnything(d);
+
+// Pass a VARIANT with type VT_CY (Currency)
+comObj.GiveMeAnything(new CurrencyWrapper(d));
+
+
+// Pass a VARIANT with type VT_UNKNOWN
+comObj.GiveMeAnything(new UnknownWrapper(o));
+
+// Pass a VARIANT with type VT_DISPATCH
+comObj.GiveMeAnything(new DispatchWrapper(o));
+
+// Pass a VARIANT with whatever the type of the object is.
+// For example, a String results in type VT_BSTR, and an object like
+// System.Collections.Hashtable results in type VT_DISPATCH.
+comObj.GiveMeAnything(o);
+
+
+// Pass a VARIANT with type VT_I4 (long in IDL, Short in VB6)
+comObj.GiveMeAnything(i);
+
+// Pass a VARIANT with type VT_ERROR (SCODE)
+comObj.GiveMeAnything(new ErrorWrapper(i));
+
+// Pass a VARIANT with type VT_ERROR (SCODE) 
+// using the value of the exception's internal HRESULT.
+comObj.GiveMeAnything(new ErrorWrapper(new StackOverflowException()));Caution
+The Interop Marshaler never creates wrapper types such as CurrencyWrapper when 
+marshaling an unmanaged data type to a managed data type; these wrappers work in 
+one direction only. Combined with the copy-in/copy-out semantics of by-reference 
+parameters passed across an Interop boundary, this fact can cause behavior that 
+sometimes surprises people. If you pass a CurrencyWrapper instance by-reference 
+to unmanaged code (via a parameter typed as System.Object), it becomes a Decimal 
+instance after the call even if the COM object did nothing with the parameter.
+Table 3.1 summarizes what kind of instance can be passed as a System.Object 
+parameter in order to get the desired VARIANT type when marshaled to unmanaged 
+code. When early binding to a COM object, these only apply when the parameter 
+type is System.Object, because otherwise these types would not be marshaled as 
+VARIANTs.
+Table 3.1 .NET Types and Their Marshaling Behavior Inside VARIANTs
+      Type of InstanceVARIANT Type
+      null (Nothing in VB .NET)VT_EMPTY
+      System.DBNullVT_NULL
+      System.Runtime.InteropServices.CurrencyWrapperVT_CY
+      System.Runtime.InteropServices.UnknownWrapperVT_UNKNOWN
+      System.Runtime.InteropServices.DispatchWrapperVT_DISPATCH
+      System.Runtime.InteropServices.ErrorWrapperVT_ERROR
+      System.Reflection.Missing-VT_ERROR with value DISP_E_PARAMNOTFOUND
+      System.String VT_BSTR
+      System.Decimal VT_DECIMAL
+      System.Boolean VT_BOOL
+      System.Char VT_U2
+      System.Byte VT_U1
+      System.SByte VT_I1
+      System.Int16 VT_I2
+      System.Int32 VT_I4
+      System.Int64 VT_I8
+      System.IntPtrVT_INT
+      System.UInt16 VT_U2
+      System.UInt32 VT_U4
+      System.UInt64 VT_U8
+      System.UIntPtr VT_UINT
+      System.Single VT_R4
+      System.Double VT_R8
+      System.DateTimeVT_DATE
+      Any ArrayVT_... | VT_ARRAY
+      System.Object or other .NET classesVT_DISPATCH
+
+
+An array of strings appears as VT_BSTR | VT_ARRAY, an array of doubles appears 
+as VT_R8 | VT_ARRAY, and so on. The VT_I8 and VT_U8 VARIANT types listed in 
+Table 3.1 are not supported prior to Windows XP. Also, notice that in version 
+1.0 the Interop Marshaler does not support VARIANTs with the VT_RECORD type 
+(used for user-defined structures).
+Tip
+Because null (Nothing) is mapped to an "empty object" (a VARIANT with type 
+VT_EMPTY) when passed to COM via a System.Object parameter, you can pass new 
+DispatchWrapper(null) or new UnknownWrapper(null) to represent a null object. 
+This maps to a VARIANT with type VT_DISPATCH or VT_UNKNOWN, respectively, whose 
+pointer value is null.
+Digging Deeper
+The conversions in Table 3.1 are based on the type code that each type's 
+IConvertible implementation returns from its GetTypeCode method. Therefore, any 
+.NET object that implements IConvertible can control how it gets marshaled 
+inside a VARIANT. For example, an object that returns a type code equal to 
+TypeCode.Double is marshaled as a VT_R8 VARIANT.
+Late Binding and By-Reference Parameters
+Previous code examples have shown how to late bind to a COM component using 
+either reflection or Visual Basic .NET late binding syntax. Table 3.1 and the 
+use of wrappers such as CurrencyWrapper are also important for late binding 
+because all parameters are packaged in VARIANTs when late binding to a COM 
+component. One remaining issue that needs to be addressed is the handling of 
+by-reference parameters.
+When late binding to .NET members (or members defined in an Interop Assembly), 
+the metadata tells reflection whether a parameter is passed by value or by 
+reference. When late binding to COM members via IDispatch (using 
+Type.InvokeMember in managed code), however, the CLR has no way to know which 
+parameters must be passed by value and which must be passed by reference. 
+Because all parameters are packaged in VARIANTs when late binding to a COM 
+component, a by-reference parameter looks like a VARIANT whose type is 
+bitwise-ORed with the VT_BYREF flag.
+Reflection and the VB .NET late binding abstraction choose different default 
+behavior when late binding to COM members—Visual Basic .NET passes all 
+parameters by reference by default, but Type.InvokeMember passes all parameters 
+by value by default!
+Changing the default behavior in the VB .NET case is easy. As in earlier 
+versions of Visual Basic, you can surround an argument in extra parentheses to 
+force it to be passed by value:
+Dim s As String = "SomeString"
+' Call COM method via late binding
+' The String parameter is passed by-reference (VT_BSTR | VT_BYREF)
+comObj.SomeMethod(s)
+
+' Call COM method again via late binding
+' The String parameter is passed by-value (VT_BSTR)
+comObj.SomeMethod((s))Changing the default behavior with Type.InvokeMember is not so easy. To pass any 
+parameters by reference, you must call an overload of Type.InvokeMember that 
+accepts an array of System.Reflection.ParameterModifier types. You must pass an 
+array with only a single ParameterModifier element that is initialized with the 
+number of parameters in the member being invoked. ParameterModifier has a 
+default property called Item (exposed as an indexer in C#) that can be indexed 
+from 0 to NumberOfParameters-1. Each element in this property must either be set 
+to true if the corresponding parameter should be passed by reference, or false 
+if the corresponding parameter should be passed by value. This is summarized in 
+Listing 3.3, which contains C# code that late binds to a COM object's method and 
+passes a single string parameter first by reference and then by value.
+Listing 3.3 Using System.Reflection.ParameterModifier to Pass Parameters to COM 
+with the VT_BYREF Flag
+using SomeComLibrary;
+using System.Reflection;
+
+public class LateBinding
+{
+ public static void Main()
+ {
+  SomeComObject obj = new SomeComObject();
+
+  object [] args = { "SomeString" };
+
+  // Initialize a ParameterModifier with the number of parameters
+  ParameterModifier p = new ParameterModifier(1);
+  // Set the VT_BYREF flag on the first parameter
+  p[0] = true;
+  // Always create an array of ParameterModifiers with a single element
+  ParameterModifier [] mods = { p };
+
+  // Call the method via late binding. 
+  // The parameter is passed by reference (VT_BSTR | VT_BYREF)
+  obj.GetType().InvokeMember("SomeMethod", BindingFlags.InvokeMethod, null,
+   obj, args, mods, null, null);
+
+  // Call the method again using the simplest InvokeMember overload
+  // The parameter is passed by value (VT_BSTR) 
+  obj.GetType().InvokeMember("SomeMethod", BindingFlags.InvokeMethod, null,
+   obj, args);
+ }
+}Using ParameterModifier is only necessary when reflecting using 
+Type.InvokeMember because all other reflection methods use metadata that 
+completely describes every parameter in the member being called. Note that there 
+is no built-in way to pass an object to COM that appears as a VARIANT with the 
+type VT_VARIANT | VT_BYREF. Additionally, in an early bound call, there is no 
+way to pass a VARIANT with the VT_BYREF flag set without resorting to 
+do-it-yourself marshaling techniques described in Chapter 6.
+Using ActiveX Controls in .NET Applications
+The terms ActiveX control and COM component are often used interchangeably, but 
+in this book an ActiveX control is a special kind of COM component that supports 
+being hosted in an ActiveX container. Such objects typically implement several 
+interfaces such as IOleObject, IOleInPlaceObject, IOleControl, IDataObject, and 
+more. They are typically registered specially as a control (as opposed to a 
+simple class) and are marked with the [control] IDL attribute in their type 
+libraries. They also usually have a graphical user interface.
+The .NET equivalent of ActiveX controls are Windows Forms controls. Just as it's 
+possible to expose and use COM objects as if they are .NET objects, it's 
+possible to expose and use ActiveX controls as if they are Windows Forms 
+controls. First we'll look at the process of referencing an ActiveX control in 
+Visual Studio .NET, then how to do it with a .NET Framework SDK utility. 
+Finally, we'll look at an example of hosting and using the control on a .NET 
+Windows Form. For these examples, we'll use the WebBrowser control located in 
+the Microsoft Internet Controls type library (SHDOCVW.DLL).
+Referencing an ActiveX Control in Visual Studio .NET
+If you referenced the Microsoft Internet Controls type library as you would any 
+other type library, then the WebBrowser class could only be used like an 
+ordinary object; you wouldn't be able to drag and drop it on a form. Using 
+ActiveX controls as Windows Forms controls requires these steps:
+  Start Visual Studio .NET and create either a new Visual Basic .NET Windows 
+  application or a Visual C# Windows application. The remaining steps apply to 
+  either language.
+  Select Tools, Customize Toolbox... from the menu, or right-click inside the 
+  Toolbox window and select Customize Toolbox... from the context menu. There 
+  are two kinds of controls that can be referenced: COM Components and .NET 
+  Framework Components. The default COM Components tab shows a list of all the 
+  registered ActiveX controls on the computer. This dialog is shown in Figure 
+  3.12.
+  Select the desired control, then click the OK button.
+  Figure 3.12 Adding a reference to an ActiveX control in Visual Studio .NET.
+If these steps succeeded, then an icon for the control should appear in the 
+Toolbox window. Select it and drag an instance of the control onto your form 
+just as you would with any Windows Forms control. At this point, at least two 
+assemblies are added to your project's references—an Interop Assembly for the 
+ActiveX control's type library (and any dependent Interop Assemblies), and an 
+ActiveX Assembly that wraps any ActiveX controls inside the type library as 
+special Windows Forms controls. This ActiveX Assembly always has the same name 
+as the Interop Assembly, but with an Ax prefix. Figure 3.13 shows these two 
+assemblies that appear in the Solution Explorer window when referencing and 
+using the WebBrowser ActiveX control.
+Figure 3.13 The Solution Explorer after an ActiveX control has been added to a 
+Windows Form.
+Referencing an ActiveX Control Using Only the .NET Framework SDK
+Now, let's look at how to accomplish the same task using only the .NET Framework 
+SDK. The following example uses the .NET ActiveX Control to Windows Forms 
+Assembly Generator (AXIMP.EXE), also known as the ActiveX importer. This utility 
+is the TLBIMP.EXE of the Windows Forms world, and can be used as follows:
+  From a command prompt, type the following (replacing the path with the 
+  location of SHDOCVW.DLL on your computer):
+AxImp C:\Windows\System32\shdocvw.dll This produces both an Interop Assembly (SHDocVw.dll) and ActiveX Assembly 
+  (AxSHDocVw.dll) for the input type library in the current directory. Unlike 
+  TLBIMP.EXE, AXIMP.EXE does not search for the input file using the PATH 
+  environment variable.
+  Reference the ActiveX Assembly just as you would any other assembly, which 
+  depends on the language. Depending on the nature of your application, you 
+  might also have to reference the Interop Assembly, the System.Windows.Forms 
+  assembly, and more.
+The Interop Assembly created by AXIMP.EXE is no different from the one created 
+by TLBIMP.EXE. If a Primary Interop Assembly for the input type library is 
+registered on the current computer, AXIMP.EXE references that assembly rather 
+than generating a new one.
+If no ActiveX control can be found in an input type library, AXIMP.EXE reports:
+AxImp Error: Did not find any registered ActiveX control in '...'.In order for AXIMP.EXE to recognize a COM class as an ActiveX control, it must 
+be registered on the current computer with the following registry value:
+HKEY_CLASSES_ROOT\CLSID\{CLSID}\ControlBeing marked in the type library with the [control] attribute is irrelevant.
+Example: A Simple Web Browser
+Now that we know how to generate and reference an ActiveX Assembly that wraps an 
+ActiveX control as a Windows Forms control, we'll put together a short example 
+that uses an ActiveX control in managed code. Listing 3.4 demonstrates the use 
+of the WebBrowser control to create a simple Web browser application, pictured 
+in Figure 3.14. Parts of the listing are omitted, but the complete source code 
+is available on this book's Web site.
+Figure 3.14 The simple Web browser.
+Listing 3.4 MyWebBrowser.cs. Using the WebBrowser ActiveX Control in C#
+ 1: using System;
+ 2: using SHDocVw;
+ 3: using System.Windows.Forms;
+ 4: 
+ 5: public class MyWebBrowser : Form
+ 6: {
+ 7:  ...
+ 8:  object m = Type.Missing;
+ 9: 
+10:  // Constructor
+11:  public MyWebBrowser()
+12:  {
+13:   // Required for Windows Form Designer support
+14:   InitializeComponent();
+15:   // Start on the home page
+16:   axWebBrowser1.GoHome();
+17:  }
+18: 
+19:  // Clean up any resources being used
+20:  protected override void Dispose( bool disposing )
+21:  {
+22:   if (disposing)
+23:   {
+24:    if (components != null) 
+25:    {
+26:     components.Dispose();
+27:    }
+28:   }
+29:   base.Dispose(disposing);
+30:  }
+31: 
+32:  // Required method for Designer support
+33:  private void InitializeComponent()
+34:  {
+35:   ...
+36:   this.axWebBrowser1 = new AxSHDocVw.AxWebBrowser();
+37:   ...
+38:   ((System.ComponentModel.ISupportInitialize)
+39:    (this.axWebBrowser1)).BeginInit();
+40:   ... 
+41:   this.axWebBrowser1.OcxState = ((System.Windows.Forms.AxHost.State)
+42:    (resources.GetObject("axWebBrowser1.OcxState")));
+43:   ...
+44:   ((System.ComponentModel.ISupportInitialize)
+45:    (this.axWebBrowser1)).EndInit();
+46:   ...
+47:  }
+48: 
+49:  [STAThread]
+50:  static void Main() 
+51:  {
+52:   Application.Run(new MyWebBrowser());
+53:  }
+54: 
+55:  // Called when one of the toolbar buttons is clicked
+56:  private void toolBar1_ButtonClick(object sender, 
+57:   ToolBarButtonClickEventArgs e)
+58:  {
+59:   if (e.Button.Text == "Back")
+60:   {
+61:    try { axWebBrowser1.GoBack(); }
+62:    catch {}
+63:   }
+64:   else if (e.Button.Text == "Forward")
+65:   {
+66:    try { axWebBrowser1.GoForward(); }
+67:    catch {}
+68:   }
+69:   else if (e.Button.Text == "Stop")
+70:   {
+71:    axWebBrowser1.Stop();
+72:   }
+73:   else if (e.Button.Text == "Refresh")
+74:   {
+75:    axWebBrowser1.CtlRefresh();
+76:   }
+77:   else if (e.Button.Text == "Home")
+78:   {
+79:    axWebBrowser1.GoHome();
+80:   }
+81:  }
+82: 
+83:  // Called when "Go" is clicked
+84:  private void goButton_Click(object sender, System.EventArgs e)
+85:  {
+86:   axWebBrowser1.Navigate(navigateBox.Text, ref m, ref m, ref m, ref m);
+87:  }
+88: }Line 8 declares a Missing instance used for optional parameters in Line 86. The 
+constructor in Lines 11–17 first calls the standard InitializeComponent method 
+to initialize the form's user interface, then calls GoHome on the ActiveX 
+control to browse to the user's home page.
+Lines 33–47 contain a few of the lines inside InitializeComponent that relate to 
+the ActiveX control. Although the class is called WebBrowser, the class created 
+by the ActiveX importer always begins with an Ax prefix. Therefore, Line 36 
+instantiates a new AxWebBrowser object. Lines 56–81 contain the event handler 
+that gets called whenever the user clicks on one of the buttons across the top 
+of the form. Whenever the Back and Forward buttons are clicked, the GoBack and 
+GoForward methods are called, respectively. Because these methods throw an 
+exception if there is no page to move to, any exception is caught and ignored. 
+This is not the ideal way to implement these buttons, but it will have to wait 
+until Chapter 5.
+Notice that Line 75 calls a method called CtlRefresh, although the original 
+WebBrowser control doesn't have such a method. What happens here is that any 
+class created by the ActiveX importer ultimately derives from 
+System.Windows.Forms.Control, and this class already has a property called 
+Refresh. To distinguish members of the ActiveX control from members of the 
+wrapper's base classes, the ActiveX importer places a Ctl prefix (which stands 
+for control) on any members with conflicting names. The AxWebBrowser class has 
+many other renamed members due to name conflicts—CtlContainer, CtlHeight, 
+CtlLeft, CtlParent, CtlTop, CtlVisible, and CtlWidth.
+Finally, Lines 84–87 call the ActiveX control's Navigate method when the user 
+clicks the Go button.
+Deploying a .NET Application That Uses COM
+Deploying a .NET application that uses COM components is not quite as simple as 
+deploying a .NET application that doesn't. Besides satisfying the requirements 
+of the .NET Framework, you must satisfy the requirements of COM. This means 
+registering the COM component(s) in the Windows Registry on the user's machine, 
+just as you would have if no managed code were involved. This is usually 
+accomplished by running REGSVR32.EXE on each COM DLL. It might also be necessary 
+to register type libraries, which adds additional registry entries for 
+interfaces. If you're relying on a component being installed (such as the 
+Microsoft Speech SDK), no additional work is necessary, except the supplied 
+installation.
+Unless you late bind to the COM components and only create COM types via ProgID 
+or CLSID, you also need to deploy metadata for the COM components you use. This 
+is no different from managed types because metadata is needed at compile time 
+and at run time. It sometimes seems like more of a burden for COM types, 
+however, because the metadata resides in an Interop Assembly separate from the 
+file containing the implementation. These should be installed just like other 
+assemblies, either in the Global Assembly Cache and/or in an 
+application-specific directory.
+You should avoid deploying Interop Assemblies for COM components you didn't 
+author if Primary Interop Assemblies already exist. If you need to create 
+Primary Interop Assemblies for your own COM components, see Chapter 15.
+Example: Using Microsoft Word to Check Spelling
+To end the chapter, let's apply everything we've learned to a larger example. 
+This example application is a very simple word processor, shown in Figure 3.15, 
+which uses Microsoft Word for its spellchecker functionality. The user can type 
+inside the application, and then click the Check Spelling button. Each 
+misspelled word (according to Microsoft Word) is highlighted in red and 
+underlined. At any time, the user can right-click a word and choose from a list 
+of correctly spelled replacements supplied by Microsoft Word. The application 
+also gives an option to ignore words with all uppercase letters. When selected, 
+such a word isn't ever marked as misspelled, and alternate spellings aren't 
+suggested when right-clicking it.
+Figure 3.15 The example word processor.
+The code, shown in C# in Listing 3.5, demonstrates the use of by-reference 
+optional parameters, error handling with COM objects, and enumerating over a 
+collection. The C# version is shown because calling the methods with optional 
+parameters requires extra work. The Visual Basic .NET version on this book's Web 
+site looks much less messy when calling these methods.
+To compile or run this example, you must have Microsoft Word on your computer. 
+The sample uses Word 2002, which ships with Microsoft Office XP. If you have a 
+different version of Word installed, it should still work (as long as you use 
+the appropriate type library instead of the one mentioned in step 2).
+If you have Visual Studio .NET, here are the steps for creating and running this 
+application:
+  Create a new Visual C# Windows Application project.
+  Add a reference to Microsoft Word 10.0 Object Library using the method 
+  explained at the beginning of this chapter.
+  View the code for Form1.cs in your project, and change its contents to the 
+  code in Listing 3.5. One way to view the code is to right-click on the 
+  filename in the Solution Explorer window and select View Code.
+  Build and run the project.
+Otherwise, if all you have is the .NET Framework SDK, you can perform the 
+following steps:
+  Create and save a Form1.cs file with the code in Listing 3.5. The Windows 
+  Forms code inside InitializeComponent is omitted, but the complete source code 
+  is available on this book's Web site.
+  Use TLBIMP.EXE to generate an Interop Assembly for the Microsoft Word type 
+  library as follows:
+  TlbImp "C:\Program Files\Microsoft Office\Office10\msword.olb"
+  The path for the input file may need to change depending on your computer's 
+  settings. If a PIA for the Word type library is available, you should download 
+  it from MSDN Online and use that instead of running TLBIMP.EXE.
+  Compile the code, referencing all the needed assemblies:
+  csc /t:winexe Form1.cs /r:Word.dll /r:System.Windows.Forms.dll 
+  _/r:System.Drawing.dll /r:System.dll
+  Run the generated executable.
+Listing 3.5 Form1.cs. Using Microsoft Word Spell Checking in C#
+ 1: using System;
+ 2: using System.Drawing;
+ 3: using System.Windows.Forms;
+ 4: 
+ 5: public class Form1 : Form
+ 6: {
+ 7:  // Visual controls
+ 8:  private RichTextBox richTextBox1;
+ 9:  private Button button1;
+ 10:  private CheckBox checkBox1;
+ 11:  private ContextMenu contextMenu1;
+ 12: 
+ 13:  // Required designer variable
+ 14:  private System.ComponentModel.Container components = null;
+ 15: 
+ 16:  // The Word application object
+ 17:  private Word.Application msWord;
+ 18: 
+ 19:  // Two fonts used to display normal words and misspelled words
+ 20:  private Font normalFont = new Font("Times New Roman", 12);
+ 21:  private Font errorFont = new Font("Times New Roman", 12, 
+ 22:   FontStyle.Underline);
+ 23: 
+ 24:  // Objects that need to be passed by-reference when calling Word
+ 25:  private object missing = Type.Missing;
+ 26:  private object ignoreUpper;
+ 27: 
+ 28:  // Event handler used for the ContextMenu when 
+ 29:  // the user clicks on spelling suggestions
+ 30:  private EventHandler menuHandler;
+ 31: 
+ 32:  // Constructor
+ 33:  public Form1()
+ 34:  {
+ 35:   // Required for Windows Form Designer support
+ 36:   InitializeComponent();
+ 37:   menuHandler = new System.EventHandler(this.Menu_Click);
+ 38:  }
+ 39: 
+ 40:  // Called when the form is loading. Initializes Microsoft Word.
+ 41:  protected override void OnLoad(EventArgs e)
+ 42:  {
+ 43:   base.OnLoad(e);
+ 44: 
+ 45:   try
+ 46:   {
+ 47:    msWord = new Word.Application();
+ 48: 
+ 49:    // Call this in order for GetSpellingSuggestions to work later
+ 50:    msWord.Documents.Add(ref missing, ref missing, ref missing, 
+ 51:     ref missing);
+ 52:   }
+ 53:   catch (System.Runtime.InteropServices.COMException ex)
+ 54:   {
+ 55:    if ((uint)ex.ErrorCode == 0x80040154)
+ 56:    {
+ 57:     MessageBox.Show("This application requires Microsoft Word " +
+ 58:      "to be installed for spelling functionality. " +
+ 59:      "Since Word can't be located, the spelling functionality " +
+ 60:      "is disabled.", "Warning");
+ 61:     button1.Enabled = false;
+ 62:     checkBox1.Enabled = false;
+ 63:    }
+ 64:    else
+ 65:    {
+ 66:     MessageBox.Show("Unexpected initialization error. " + 
+ 67:      ex.Message + "\n\nDetails:\n" + ex.ToString(), 
+ 68:      "Unexpected Initialization Error", MessageBoxButtons.OK, 
+ 69:      MessageBoxIcon.Error);
+ 70:     this.Close();
+ 71:    }
+ 72:   }
+ 73:   catch (Exception ex)
+ 74:   {
+ 75:    MessageBox.Show("Unexpected initialization error. " + ex.Message +
+ 76:     "\n\nDetails:\n" + ex.ToString(), 
+ 77:     "Unexpected Initialization Error", MessageBoxButtons.OK, 
+ 78:     MessageBoxIcon.Error);
+ 79:    this.Close();
+ 80:   }
+ 81:  }
+ 82: 
+ 83:  // Clean up any resources being used
+ 84:  protected override void Dispose(bool disposing)
+ 85:  {
+ 86:   if (disposing)
+ 87:   {
+ 88:    if (components != null) 
+ 89:    {
+ 90:     components.Dispose();
+ 91:    }
+ 92:   }
+ 93:   base.Dispose(disposing);
+ 94:  }
+ 95: 
+ 96:  // Required method for Designer support
+ 97:  private void InitializeComponent()
+ 98:  {
+ 99:   ...
+100:  }
+101: 
+102:  // The main entry point for the application
+103:  [STAThread]
+104:  public static void Main()
+105:  {
+106:   Application.Run(new Form1());
+107:  }
+108: 
+109:  // Checks the spelling of the word contained in the string argument.
+110:  // Returns true if spelled correctly, false otherwise.
+111:  // This method ignores words in all uppercase letters if checkBox1 
+112:  // is checked.
+113:  private bool CheckSpelling(string word)
+114:  {
+115:   ignoreUpper = checkBox1.Checked;
+116: 
+117:   // Pass a reference to Type.Missing for each 
+118:   // by-reference optional parameter
+119: 
+120:   return msWord.CheckSpelling(word, // Word
+121:    ref missing,          // CustomDictionary
+122:    ref ignoreUpper,        // IgnoreUppercase
+123:    ref missing,          // AlwaysSuggest
+124:    ref missing,          // CustomDictionary2
+125:    ref missing,          // CustomDictionary3
+126:    ref missing,          // CustomDictionary4
+127:    ref missing,          // CustomDictionary5
+128:    ref missing,          // CustomDictionary6
+129:    ref missing,          // CustomDictionary7
+130:    ref missing,          // CustomDictionary8
+131:    ref missing,          // CustomDictionary9
+132:    ref missing);          // CustomDictionary10
+133:  }
+134: 
+135:  // Checks the spelling of the word contained in the string argument.
+136:  // Returns a SpellingSuggestions collection, which is empty if the word
+137:  // is spelled correctly.
+138:  // This method ignores words in all uppercase letters if checkBox1
+139:  // is checked.
+140:  private Word.SpellingSuggestions GetSpellingSuggestions(string word)
+141:  {
+142:   ignoreUpper = checkBox1.Checked;
+143: 
+144:   // Pass a reference to Type.Missing for each 
+145:   // by-reference optional parameter
+146: 
+147:   return msWord.GetSpellingSuggestions(word, // Word
+148:    ref missing,               // CustomDictionary
+149:    ref ignoreUpper,             // IgnoreUppercase
+150:    ref missing,               // MainDictionary
+151:    ref missing,               // SuggestionMode
+152:    ref missing,               // CustomDictionary2
+153:    ref missing,               // CustomDictionary3
+154:    ref missing,               // CustomDictionary4
+155:    ref missing,               // CustomDictionary5
+156:    ref missing,               // CustomDictionary6
+157:    ref missing,               // CustomDictionary7
+158:    ref missing,               // CustomDictionary8
+159:    ref missing,               // CustomDictionary9
+160:    ref missing);              // CustomDictionary10
+161:  }
+162: 
+163:  // Called when the "Check Spelling" button is clicked.
+164:  // Checks the spelling of each word and changes the font of 
+165:  // each misspelled word.
+166:  private void button1_Click(object sender, EventArgs e)
+167:  {
+168:   try
+169:   {
+170:    // Return all text to normal since 
+171:    // underlined spaces might be left behind
+172:    richTextBox1.SelectionStart = 0;
+173:    richTextBox1.SelectionLength = richTextBox1.Text.Length;
+174:    richTextBox1.SelectionFont = normalFont;
+175: 
+176:    // Beginning location in the RichTextBox of the next word to check
+177:    int index = 0;
+178: 
+179:    // Enumerate over the collection of words obtained from String.Split
+180:    foreach (string s in richTextBox1.Text.Split(null))
+181:    {
+182:     // Select the word
+183:     richTextBox1.SelectionStart = index;
+184:     richTextBox1.SelectionLength = s.Length;
+185: 
+186:     // Trim off any ending punctuation in the selected text
+187:     while (richTextBox1.SelectionLength > 0 && 
+188:      Char.IsPunctuation(
+189:      richTextBox1.Text[index + richTextBox1.SelectionLength - 1]))
+190:     {
+191:      richTextBox1.SelectionLength--;
+192:     }
+193: 
+194:     // Check the word's spelling
+195:     if (!CheckSpelling(s))
+196:     {
+197:      // Mark as incorrect
+198:      richTextBox1.SelectionFont = errorFont;
+199:      richTextBox1.SelectionColor = Color.Red;
+200:     }
+201:     else
+202:     {
+203:      // Mark as correct
+204:      richTextBox1.SelectionFont = normalFont;
+205:      richTextBox1.SelectionColor = Color.Black;
+206:     }
+207: 
+208:     // Update to point to the character after the current word
+209:     index = index + s.Length + 1;
+210:    }
+211:   }
+212:   catch (Exception ex)
+213:   {
+214:    MessageBox.Show("Unable to check spelling. " + ex.Message + 
+215:     "\n\nDetails:\n" + ex.ToString(), "Unable to Check Spelling", 
+216:     MessageBoxButtons.OK, MessageBoxIcon.Error);
+217:   }
+218:  }
+219: 
+220:  // Called when the user clicks anywhere on the text. If the user 
+221:  // clicked the right mouse button, this determines the word underneath
+222:  // the mouse pointer (if any) and presents a context menu of
+223:  // spelling suggestions.
+224:  private void richTextBox1_MouseDown(object sender, MouseEventArgs e)
+225:  {
+226:   try
+227:   {
+228:    if (e.Button == MouseButtons.Right)
+229:    {
+230:     // Get the location of the mouse pointer
+231:     Point point = new Point(e.X, e.Y);
+232: 
+233:     // Find the index of the character underneath the mouse pointer
+234:     int index = richTextBox1.GetCharIndexFromPosition(point);
+235: 
+236:     // Length of the word underneath the mouse pointer
+237:     int length = 1;
+238: 
+239:     // If the character under the mouse pointer isn't whitespace,
+240:     // determine what the word is and display spelling suggestions
+241: 
+242:     if (!Char.IsWhiteSpace(richTextBox1.Text[index]))
+243:     {
+244:      // Going backward from the index, 
+245:      // figure out where the word begins
+246:      while (index > 0 && !Char.IsWhiteSpace(
+247:       richTextBox1.Text[index-1])) { index--; length++; }
+248: 
+249:      // Going forward, figure out where the word ends, 
+250:      // making sure to not include punctuation except for apostrophes
+251:      // (This works for English.)
+252:      while (index + length < richTextBox1.Text.Length &&
+253:       !Char.IsWhiteSpace(richTextBox1.Text[index + length]) &&
+254:       (!Char.IsPunctuation(richTextBox1.Text[index + length]) || 
+255:       richTextBox1.Text[index + length] == Char.Parse("'"))
+256:       ) length++;
+257: 
+258:      // Now that we've found the entire word, select it
+259:      richTextBox1.SelectionStart = index;
+260:      richTextBox1.SelectionLength = length;
+261: 
+262:      // Clear the context menu in case 
+263:      // there are items on it from last time
+264:      contextMenu1.MenuItems.Clear();
+265: 
+266:      // Enumerate over the SpellingSuggestions collection 
+267:      // returned by GetSpellingSuggestions
+268:      foreach (Word.SpellingSuggestion s in 
+269:       GetSpellingSuggestions(richTextBox1.SelectedText))
+270:      {
+271:       // Add the menu item with the suggestion text and the 
+272:       // Menu_Click handler
+273:       contextMenu1.MenuItems.Add(s.Name, menuHandler);
+274:      }
+275: 
+276:      // Display special text if there are no spelling suggestions
+277:      if (contextMenu1.MenuItems.Count == 0)
+278:      {
+279:       contextMenu1.MenuItems.Add("No suggestions.");
+280:      }
+281:      else
+282:      {
+283:       // Add two more items whenever there are spelling suggestions.
+284:       // Since there is no event handler, nothing will happen when 
+285:       // these are clicked.
+286:       contextMenu1.MenuItems.Add("-");
+287:       contextMenu1.MenuItems.Add("Don't change the spelling.");
+288:      }
+289: 
+290:      // Now that the menu is ready, show it
+291:      contextMenu1.Show(richTextBox1, point);
+292:     }
+293:    }
+294:   }
+295:   catch (Exception ex)
+296:   {
+297:    MessageBox.Show("Unable to give spelling suggestions. " + 
+298:     ex.Message + "\n\nDetails:\n" + ex.ToString(), 
+299:     "Unable to Give Spelling Suggestions", MessageBoxButtons.OK, 
+300:     MessageBoxIcon.Error);
+301:   }
+302:  }
+303: 
+304:  // Called when a spelling suggestion is clicked on the context menu.
+305:  // Replaces the currently selected text with the text 
+306:  // from the item clicked.
+307:  private void Menu_Click(object sender, EventArgs e)
+308:  {
+309:   // The suggestion should be spelled correctly, 
+310:   // so restore the font to normal
+311:   richTextBox1.SelectionFont = normalFont;
+312:   richTextBox1.SelectionColor = Color.Black;
+313: 
+314:   // Obtain the text from the MenuItem and replace the SelectedText
+315:   richTextBox1.SelectedText = ((MenuItem)sender).Text;
+316:  }
+317: }Line 17 declares the Application object used to communicate with Microsoft Word, 
+and Lines 20–21 define the two different fonts that the application uses—one for 
+correctly spelled words and one for misspelled words. Line 25 defines a Missing 
+instance that is used for accepting the default behavior of optional parameters. 
+It's defined as a System.Object due to C#'s requirement of exact type matching 
+when passing by-reference parameters. The ignoreUpper variable in Line 26 tracks 
+the user's preference about checking uppercase words, and the menuHandler 
+delegate in Line 30 handles clicks on the context menu presented when a user 
+right-clicks. Events and delegates are discussed in Chapter 5.
+The OnLoad method in Lines 41–81 handles the initialization of Microsoft Word. 
+If Word isn't installed, it displays a warning message and simply disables spell 
+checking functionality rather than ending the entire program. The CheckSpelling 
+method in Lines 113–133 returns true if the input word is spelled correctly, or 
+false if it is misspelled (according to Word's own CheckSpelling method). The 
+GetSpellingSuggestions method in Lines 140–161 returns a SpellingSuggestions 
+collection returned by Word for the input string. These CheckSpelling and 
+GetSpellingSuggestions methods wrap their corresponding Word methods simply 
+because the original methods are cumbersome with all of the optional parameters 
+that must be dealt with explicitly.
+The button1_Click method in Lines 166–218, which is called when the user clicks 
+the Check Spelling button, enumerates over every word inside the RichTextBox 
+control and calls CheckSpelling to determine whether to underline each word. The 
+richTextBox1_MouseDown method in Lines 224–302 determines if the user has 
+right-clicked on a word. If so, it dynamically builds a context menu with the 
+collection of spelling suggestions returned by the call to 
+GetSpellingSuggestions in Line 269. The Menu_Click method in Lines 307–316 is 
+the event handler associated with any misspelled words displayed on the context 
+menu. When the user clicks a word in the menu, this method is called and Line 
+315 replaces the original text with the corrected text.
+Microsoft Word is an out-of-process COM server, meaning that it runs in a 
+separate process from the application that's using it. You can see this process 
+while the example application runs by opening Windows Task Manager and looking 
+for WINWORD.EXE.
+Using Windows Task Manager, here's something you can try to see exception 
+handling in action:
+  Start the example application.
+  Open Windows Task Manager by Pressing Ctrl+Alt+Delete (and, if appropriate, 
+  clicking the Task Manager button) and end the WINWORD.EXE process, as shown in 
+  Figure 3.16. The exact step depends on your version of Windows, but there 
+  should be a button marked either End Process or End Task.
+  Although the server has been terminated, the client application is still 
+  running. Now press the Check Spelling button on the example application.
+  Observe the dialog box that appears, which is shown in Figure 3.17. This is 
+  the result of the catch statement in the button1_Click method.
+  Figure 3.16 Ending the WINWORD.EXE process while the client application is 
+  still running.
+  Figure 3.17 Handliing a comexception caused by a failure. 
+Conclusion
+This chapter discussed a bunch of topics that are essential for using COM 
+components in .NET applications. In this chapter, you've seen how to reference 
+COM components via Interop Assemblies generated by the type library importer. 
+Primary Interop Assemblies were also introduced, so you should understand why 
+they should be used whenever possible instead of generating your own Interop 
+Assemblies.
+You've also seen the main ways to create a COM object:
+      With metadata: new or Type.GetType + Activator.CreateInstance 
+      Without metadata: Type.GetTypeFromProgID or Type.GetTypeFromCLSID + 
+      Activator.CreateInstance 
+
+
+You've also seen how to invoke a COM object's methods via its v-table, or by 
+late binding. The next chapter examines Interop Assemblies in detail so you can 
+gain a better understanding on what to expect when using any COM objects in 
+managed code, and how it differs from using them in COM-based languages.
+
+
+
+© 2009 Pearson Education, Inc. Informit. All rights reserved.
+800 East 96th Street Indianapolis, Indiana 46240

@@ -1,0 +1,338 @@
+﻿ Your user agent » Common user-agents                         
+<!--/*--><![CDATA[/*><!--*/ @import url("/useragent/css_phpcms.css"); /*]]>*/-->    
+
+    yourUserAgent.info  
+
+  
+  Basic informationTells what your user agent is, your IP address, etc.Extended 
+  informationExtended information, requires EcmaScriptCommon user-agentsThe most 
+  common user-agentsCommon referrersThe most common referrersHelpWhat does this 
+  all mean?LegalsLegal noticesSearchComprehensive Search FacilitySitemapSitemap   
+
+You are here:
+ 
+ Common user-agents  >   
+ 
+
+
+     Search:    
+ 
+  
+  
+Your user agent » Common user-agents
+
+Comprehensive list of common user agent strings
+
+
+Index
+  Web Browsers Internet Explorer
+    Firefox
+    Opera
+    Safari
+
+  Robots
+
+Web Browsers
+
+
+<p>AdSense ad Code</p>   
+
+ (adsbygoogle = window.adsbygoogle || []).push({});  
+Internet Explorer
+
+Back to top
+
+
+    String
+
+    Description
+
+
+      Microsoft Internet Explorer/1.0 (Windows 95)Internet Explorer 1.0 on 
+      Microsoft Windows 4.00.
+      Mozilla/1.22 (compatible; MSIE 1.5; Windows NT)Internet Explorer 1.5 on 
+      Microsoft Windows NT 3.1 Workstation.
+      Mozilla/2.0 (compatible; MSIE 3.0; Windows 3.1)Internet Explorer 3.0 on 
+      Microsoft Windows for Workgroups 3.11.
+      Mozilla/4.0 (compatible; MSIE 4.01; Windows NT 5.0)Internet Explorer 4.01 
+      on Windows NT 5.0 (Windows 2000).
+      Mozilla/4.0 (compatible; MSIE 5.5; Windows 95)Internet Explorer 5.5 on 
+      Windows 4.00.
+      Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET 
+      CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)Internet 
+      Explorer 6.0 on Windows NT 5.1 (Windows XP), standalone, with Microsoft 
+      dot NET installed, versions 1.1.4322, 2.0.50727, 3.0.4506.2152 and 
+      3.5.30729.
+      Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; 
+      .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)Internet Explorer 6.0 on Windows 
+      NT 5.2 (Windows 2003 Server) with Microsoft dot NET installed, versions 
+      1.1.4322, 2.0.50727 and 3.0.04506.30.
+      Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; Win64; x64; 
+      SV1)Internet Explorer 6.0, 64 bits version, on Windows NT 5.2 (Windows XP 
+      64 bits) with Service Pack 2.
+      Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; .NET CLR 
+      1.1.4322)Internet Explorer 7.0 on Windows NT 5.2 (Windows 2003 Server) 
+      with Microsoft dot NET installed, version 1.1.4322.
+      Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 
+      2.0.50727; .NET CLR 3.0.04506; .NET CLR 1.1.4322; InfoPath.2; .NET CLR 
+      3.5.21022)Internet Explorer 7.0 on Windows NT 6.0 (Windows Vista) with 
+      Microsoft dot NET installed, versions 2.0.50727, 3.0.04506, 1.1.4322 and 
+      3.5.21022, as well as InfoPath v.2 MS Office Component and 
+      Microsoft-Windows-Security-Licensing-SLCC component.
+      Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; 
+      .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center 
+      PC 6.0; .NET CLR 1.1.4322; Tablet PC 2.0; OfficeLiveConnector.1.3; 
+      OfficeLivePatch.1.3; MS-RTC LM 8; InfoPath.3)Internet Explorer 8.0 on 
+      Windows NT 6.1 (Windows 7) with Microsoft dot NET installed, versions 
+      2.0.50727, 3.5.30729, 3.0.30729 and 1.1.4322, as well as InfoPath v.3 MS 
+      Office Component, Microsoft Office Live Meeting, Microsoft Tablet Service 
+      v.2.0 and Microsoft-Windows-Security-Licensing-SLCC component.
+      Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; FDM; .NET 
+      CLR 2.0.50727; InfoPath.2; .NET CLR 1.1.4322)Internet Explorer 8.0 on 
+      Windows NT 5.1 (Windows XP), in Compatibility Mode, with Microsoft dot NET 
+      installed, versions 2.0.50727 and 1.1.4322, as well as InfoPath v.2 MS 
+      Office Component and Free Download Manager.
+
+Firefox
+
+Back to top
+
+
+    String
+
+    Description
+
+
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; fr; rv:1.7) Gecko/20040624 
+      Firefox/0.9Firefox 0.9 (interface translated into French) on Mac OS X 
+      based on a March kernel running on a PowerPC CPU.
+      Mozilla/5.0 (Windows; U; Win 9x 4.90; rv:1.7) Gecko/20041103 
+      Firefox/0.9.3Firefox 0.9.3 on Windows 4.90 (Windows ME).
+      Mozilla/5.0 (X11; U; Linux i686; de-AT; rv:1.7.5) Gecko/20041222 
+      Firefox/1.0 (Debian package 1.0-4)Firefox 1.0 (interface translated into 
+      Austrian German) on Debian GNU/Linux running on a Intel Pentium Pro CPU.
+      Mozilla/5.0 (X11; I; SunOS sun4u; en-GB; rv:1.7.8) Gecko/20050713 
+      Firefox/1.0.4Firefox 1.0.4 (interface translated into British English) on 
+      SunOS. Weak security.
+      Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.8b5) Gecko/20051006 
+      Firefox/1.4.1Firefox 1.4.1 on Windows NT 5.2 (Windows Server 2003).
+      Mozilla/5.0 (X11; U; NetBSD alpha; en-US; rv:1.8) Gecko/20060107 
+      Firefox/1.5Firefox 1.5 on NetBSD running on an Alpha (formely Alpha AXP) 
+      CPU.
+      Mozilla/5.0 (ZX-81; U; CP/M86; en-US; rv:1.8.0.1) Gecko/20060111 
+      Firefox/1.5.0.1Firefox 1.5.0.1 on CP/M 86 running on a Sinclair ZX81
+      Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.8.0.7) Gecko/20060909 
+      Firefox/1.5.0.7Firefox 1.5.0.7 on Windows NT 5.0 (Windows 2000).
+      Mozilla/5.0 (Windows; U; Win95; it; rv:1.8.1) Gecko/20061010 
+      Firefox/2.0Firefox 2.0 (interface translated into Italian) on Windows 4.00 
+      (Windows 95).
+      Mozilla/5.0 (Windows; U; Windows NT 6.0; zh-HK; rv:1.8.1.7) Gecko 
+      Firefox/2.0Firefox 2.0 (interface translated into Chinese from Hong Kong) 
+      on Windows NT 6.0 (Windows Vista)
+      Mozilla/5.0 (Windows; U; Windows NT 5.1; pt-BR; rv:1.8.1.15) 
+      Gecko/20080623 Firefox/2.0.0.15Firefox 2.0.0.15 (interface translated into 
+      Brazilian Portuguese) on Windows NT 5.1 (Windows XP).
+      Mozilla/5.0 (Windows; U; Windows NT 6.1; es-AR; rv:1.9) Gecko/2008051206 
+      Firefox/3.0Firefox 3.0 (interface translated into Argentine Spanish) on 
+      Windows NT 6.1 (Windows 7).
+      Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6 ; nl; rv:1.9) 
+      Gecko/2008051206 Firefox/3.0Firefox 2.0.0.15 (interface translated into 
+      Dutch) on Mac OS X 10.5.6 (Leopard) running on an Intel CPU.
+      Mozilla/5.0 (Windows; U; Windows NT 5.1; es-AR; rv:1.9.0.11) 
+      Gecko/2009060215 Firefox/3.0.11Firefox 3.0.11 (interface translated into 
+      Argentine Spanish) on Windows NT 5.1 (Windows XP).
+      Mozilla/5.0 (X11; U; Linux x86_64; cy; rv:1.9.1b3) Gecko/20090327 
+      Fedora/3.1-0.11.beta3.fc11 Firefox/3.1b3Firefox 3.1 beta3 (interface 
+      translated into Welsh) on Fedora Core Linux version 11 running on an amd64 
+      CPU.
+      Mozilla/5.0 (Windows; U; Windows NT 6.1; ja; rv:1.9.2a1pre) Gecko/20090403 
+      Firefox/3.6a1preFirefox 3.6 alpha 1 (interface translated into Japanese) 
+      on Windows NT 6.1 (Windows 7).
+
+Opera
+
+Back to top
+
+
+    String
+
+    Description
+
+
+      Opera/4.02 (Windows 98; U) [en]Opera 4.02 on Windows 4.10(Windows 98), 
+      using strong security.
+      Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0 [en]Opera 5.0 on a 
+      Linux-based system, impersonating MSIE 5.0.
+      Mozilla/4.0 (compatible; MSIE 5.0; Mac_PowerPC) Opera 5.0 [en]Opera 5.0 on 
+      Mac OS running on a PowerPC CPU, impersonating MSIE 5.0.
+      Opera/5.0 (SunOS 5.8 sun4u; U) [en]Opera 5.0 on SunOS 5.8 (Solaris 8) 
+      running on sun4u.
+      Mozilla/4.0 (compatible; MSIE 5.0; Windows ME) Opera 5.11 [de]Opera 5.11 
+      (interface translated into German) on Windows 4.90 (Windows ME), 
+      impersonating MSIE 5.0.
+      Mozilla/4.0 (compatible; MSIE 5.0; Mac_PowerPC) Opera 5.12 [it]Opera 5.12 
+      (interface translated into Italian) on Mac OS running on a PowerPC CPU, 
+      impersonating MSIE 5.0.
+      Mozilla/4.76 (Windows NT 5.1; U) Opera 5.12 [en]Opera 5.12 on Windows NT 
+      5.1 (Windows XP), impersonating Netscape Navigator 4.76.
+      Mozilla/4.0 (compatible; MSIE 5.0; Linux 2.4.18-4GB i386) Opera 6.0 
+      [en]Opera 6.0 on a Linux-based OS (kernel version 2.4.18-4GB) on a Intel 
+      80386 CPU, impersonating MSIE 5.0.
+      Opera/6.0 (Macintosh; PPC Mac OS X; U)Opera 6.0 on Mac OS X running on a 
+      PowerPC CPU.
+      Mozilla/4.0 (compatible; MSIE 5.0; Windows XP) Opera 6.04 [fr]Opera 6.04 
+      (interface translated into French) on Windows NT 5.1 (Windows XP), 
+      impersonating MSIE 5.0.
+      Mozilla/4.0 (compatible; MSIE 6.0; MSIE 5.5; Windows NT 4.0) Opera 7.0 
+      [de]Opera 7.0 (interface translated into German) on Windows NT 4.0, 
+      impersonating MSIE 5.5 and MSIE 6.0.
+      Mozilla/5.0 (Windows 2000; U) Opera 7.0 [en]Opera 7.0 on Windows NT 5.0 
+      (Windows 2000), impersonating Netscape.
+      Mozilla/3.0 (Windows NT 5.0; U) Opera 7.10 [de]Opera 7.10 (interface 
+      translated into German) on Windows NT 5.0 (Windows 2000), impersonating 
+      Netscape Navigator 3.0.
+      Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1) Opera 7.11 [ru]Opera 
+      7.11 (interface translated into Russian) on Windows NT 5.1 (Windows XP), 
+      impersonating MSIE 6.0.
+      Opera/8.0 (X11; Linux i686; U; cs)Opera 8.0 (interface translated into 
+      Czech) on a Linux-based OS, using the X Window System.
+      MOT-A1200eam/1.0/R541L7_G_11.00.16R Mozilla/4.0 (compatible; MSIE 6.0; 
+      Linux; A1200eam; 781) Profile/MIDP-2.0 Configuration/CLDC-1.1 Opera 
+      8.00Opera 8.0 on a Linux-based OS running on a Motorola A1200e mobile 
+      phone.
+      Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; es-ES) Opera 8.50Opera 
+      8.50 (interface translated into Spanish from Spain) on Windows NT 5.1 
+      (Windows XP), impersonating MSIE 6.0.
+      Mozilla/4.0 (compatible; MSIE 6.0; Mac_PowerPC; en) Opera 9.00Opera 9.0 on 
+      Mac OS running on a PowerPC CPU, impersonating MSIE 6.0.
+      Mozilla/5.0 (X11; Linux i686; U; en) Opera 9.00Opera 9.0 on a Linux-based 
+      OS running on a Intel Pentium Pro CPU, impersonating Netscape.
+      Mozilla/4.0 (compatible; MSIE 6.0; Mac_PowerPC; en) Opera 9.00Opera 9.0 on 
+      Mac OS running on a PowerPC CPU, impersonating MSIE 6.0.
+      Opera/9.00 (Nintindo Wii; U; ; 103858; Wii Shop Channel/1.0; en)Opera 9.0 
+      running on a Nintendo Wii gaming console.
+      Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 6.0; pt-br) Opera 9.25Opera 
+      9.25 (interface translated into Brazilian Portuguese) on Windows NT 6.0 
+      (Windows Vista) impersonating MSIE 6.0.
+      Opera/9.50 (Macintosh; Intel Mac OS X; U; en)Opera 9.50 on Mac OS X 
+      running on a Intel CPU.
+      Opera/9.61 (Windows NT 6.1; U; zh-cn) Presto/2.1.1Opera 9.61 (interface 
+      translated into Chinese) on Windows NT 6.1 (Windows 7).
+      Mozilla/5.0 (Windows NT 5.0; U; en-GB; rv:1.8.1) Gecko/20061208 
+      Firefox/2.0.0 Opera 9.61Opera 9.61 (interface translated into British 
+      English) on Windows NT 5.0 (Windows 2000), impersonating Firefox 2.0.
+      Opera/10.00 (X11; Linux i686; U; en) Presto/2.2.0Opera 10.00 (alpha 
+      release) on a Linux-based OS running on a Intel Pentium Pro CPU.
+      Mozilla/5.0 (Macintosh; PPC Mac OS X; U; en; rv:1.8.1) Gecko/20061208 
+      Firefox/2.0.0 Opera 10.00Opera 10.00 on Mac OS X running on a PowerPC CPU, 
+      impersonating Firefox 2.0.
+      Mozilla/4.0 (compatible; MSIE 6.0; X11; Linux i686 ; en) Opera 10.00Opera 
+      10.00 on a Linux-based OS running on a Intel Pentium Pro CPU, 
+      impersonating MSIE 6.0.
+      Opera/9.80 (Windows NT 6.0; U; fi) Presto/2.2.0 Version/10.00Opera 10.00 
+      (interface translated into Finnish) on a Windows NT 6.0 (Windows Vista), 
+      pretending to be Opera 9.80 for backwards-compatibility.
+
+Safari
+
+Back to top
+
+
+    String
+
+    Description
+
+
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/48 (like Gecko) 
+      Safari/48Safari 0.8 (public beta) on Mac OS running on a PowerPC CPU.
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; es) AppleWebKit/51 (like Gecko) 
+      Safari/51Safari 0.8.1 (Safari Update 1.0 Beta, interface translated into 
+      Spanish) on Mac OS running on a PowerPC CPU.
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; it) AppleWebKit/73 (KHTML, like 
+      Gecko) Safari/73Safari 0.9 (beta 2, interface translated into Italian) on 
+      Mac OS running on a PowerPC CPU.
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; fr) AppleWebKit/85.7 (KHTML, like 
+      Gecko) Safari/85.5Safari 1.0 (interface translated into French) on Mac OS 
+      running on a PowerPC CPU.
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/103u (KHTML, like 
+      Gecko) Safari/100Safari 1.1 on Mac OS running on a PowerPC CPU.
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; de-de) AppleWebKit/125.2 (KHTML, 
+      like Gecko) Safari/125.8Safari 1.2.2 (interface translated into Germany) 
+      on Mac OS running on a PowerPC CPU.
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; de-de) AppleWebKit/412.6 (KHTML, 
+      like Gecko) Safari/412.2Safari 2.0 (interface translated into Germany) on 
+      Mac OS running on a PowerPC CPU.
+      Mozilla/5.0 (Windows; U; Windows NT 5.1; id) AppleWebKit/522.11.3 (KHTML, 
+      like Gecko) Version/3.0 Safari/522.11.3Safari 3.0 (interface translated 
+      into Indonesian) on Windows NT 5.1 (Windows XP).
+      Mozilla/5.0 (Windows; U; Windows NT 6.1; da) AppleWebKit/522.15.5 (KHTML, 
+      like Gecko) Version/3.0.3 Safari/522.15.5Safari 3.0 (interface translated 
+      into Danish) on Windows NT 6.1 (Windows 7).
+      Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_4_11; ar) AppleWebKit/525.18 
+      (KHTML, like Gecko) Version/3.1.1 Safari/525.18Safari 3.1.1 (interface 
+      translated into Arabic) on Mac OS running on a PowerPC CPU.
+      Mozilla/5.0 (Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_0_1 like Mac OS X; 
+      hu-hu) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5G77 
+      Safari/525.20Safari 3.1.1 (interface translated into Hungarian) on iPhone 
+      OS running on an iPhone.
+      Mozilla/5.0 (iPod; U; CPU iPhone OS 2_2_1 like Mac OS X; es-es) 
+      AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5H11 
+      Safari/525.20Safari 3.1.1 (interface translated into Spanish) on iPhone OS 
+      running on an iPod.
+      Mozilla/5.0 (Windows; U; Windows NT 6.0; he-IL) AppleWebKit/528.16 (KHTML, 
+      like Gecko) Version/4.0 Safari/528.16Safari 4.0 (interface translated into 
+      Hebrew) on Windows NT 6.0 (Windows Vista).
+      Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_1; zh-CN) 
+      AppleWebKit/530.19.2 (KHTML, like Gecko) Version/4.0.2 Safari/530.19Safari 
+      4.0.2 (interface translated into Chinese) on Mac OS X 10.6.1 (Snow 
+      Leopard) running on an Intel CPU.
+
+Robots
+
+Back to top
+
+
+    String
+
+    Description
+
+
+      Mozilla/4.0 (compatible; Netcraft Web Server Survey)Netcraft Web Server 
+      Survey
+      ia_archiver (+http://www.alexa.com/site/help/webmasters; 
+      crawler@alexa.com)Alexa.com (Search Engine) web crawler
+      YandexSomething/1.0Yandex.ru (Search engine) web crawler
+      Mozilla/5.0 (compatible; Yahoo! Slurp/3.0; 
+      http://help.yahoo.com/help/us/ysearch/slurp)Yahoo! (Search engine) Slurp 
+      web crawler
+      Mozilla/5.0 (compatible; Googlebot/2.1; 
+      +http://www.google.com/bot.html)Google (Search engine) Googlebot web 
+      crawler
+      Baiduspider+(+http://www.baidu.com/search/spider.htm)Baidu (Search engine) 
+      Baiduspider web crawler
+      Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, 
+      like Gecko) Version/3.0 Mobile/1A543a Safari/419.3 (compatible; 
+      Googlebot-Mobile/2.1; +http://www.google.com/bot.html)Google (Search 
+      engine) Googlebot web crawler (impersonating Safari on iPhone)
+      Mediapartners-GoogleGoogle (Search engine) AdSense program web crawler
+      msnbot-webmaster/1.0 (+http://search.msn.com/msnbot.htm)Bing (Search 
+      engine) msnbot web crawler
+      curl/7.18.2 (i686-pc-linux-gnu) libcurl/7.18.2 GnuTLS/2.3.11 
+      zlib/1.2.3cURL 7.18.2 web crawler on Linux running on a Intel Pentium Pro 
+      CPU.
+      Wget/1.10.2Wget 1.10.2 web crawler
+
+Back to top
+ 
+ Copyright © MMIX youruseragent.info. All rights reserved. Please read the Legal 
+notice and the Privacy Policy for further information. All the mentioned 
+trademarks are the exclusive property of their corresponding holders.  
+
+Last updated: 2014-10-29 14:11
+<!--/*--><![CDATA[/*><!--*/ var gaJsHost = (("https:" == 
+document.location.protocol) ? "https://ssl." : "http://www.");
+ document.write(unescape("%3Cscript src='" + gaJsHost + 
+"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); // ]]> 
+-->  <p>Load Google Analytics script.</p> <!--/*--><![CDATA[/*><!--*/ try { var 
+pageTracker = _gat._getTracker("UA-9176632-1"); pageTracker._trackPageview(); } 
+catch(err) {} // ]]> --> <p>Send stats to Google Analytics.</p> 

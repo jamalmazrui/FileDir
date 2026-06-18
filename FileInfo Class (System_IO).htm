@@ -1,0 +1,1590 @@
+﻿<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "" ""><HTML lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=11.0000" http-equiv="X-UA-Compatible">
+
+<META name="WT.seg_1" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"><LINK href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(v=vs.110).aspx" 
+rel="canonical">         <TITLE>FileInfo Class&nbsp;(System.IO)</TITLE> 
+<META name="DCS.dcsuri" content="/en-us/library/akth6b1k(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="NormalizedUrl" content="https://msdn.microsoft.com/en-us/library/akth6b1k(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="ms.normalizedurl" content="https://msdn.microsoft.com/en-us/library/akth6b1k(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="DCS.appliesToProduct" content=""> 
+<META name="DCS.appliesToTechnology" content=""> 
+<META name="DCS.appliesToVersion" content=""> 
+<META name="ms.prod" content=".net-framework-4.6"> 
+<META name="ms.service" content=""> 
+<META name="ms.devlang" content="csharp"> 
+<META name="ms.topic" content="managed-reference"> 
+<META name="AmbientContext" content='{"AmbientContextId":"2F6E1E86-B039-4D2C-A664-F44EE000FD54","AmbientContextDownstream":{}}'> 
+<META name="VotingContextUrl" content="https://msdn.microsoft.com/en-us/library/akth6b1k(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="MN" content="FB361395-11:19:35 AM"> 
+<META name="Search.ShortId" content="akth6b1k"> 
+<META name="ms.shortidmsdn" content="akth6b1k"> 
+<META name="Ms.Locale" content="en-us"> 
+<META name="ms.prodver" content="VS.110"> 
+<META name="ms.contentlang" content="EN"> 
+<META name="ms.lang" content="EN"> 
+<META name="ms.loc" content="US"> 
+<META name="ms.sitever" content="2015.09.14.1"> 
+<META name="ms.assetid" content="T:System.IO.FileInfo"> 
+<META name="ms.auth" content="0"> 
+<META name="ms.custom" content=""> 
+<META name="viewport" content="width=device-width, initial-scale=1.0">           
+              <LINK href="https://i-msdn.sec.s-msft.com/Combined.css?resources=0:ImageSprite,0:TopicResponsive,0:TopicResponsive.MediaQueries,1:CodeSnippet,1:ProgrammingSelector,1:ExpandableCollapsibleArea,0:CommunityContent,1:TopicNotInScope,1:FeedViewerBasic,1:ImageSprite,2:Header,2:HeaderFooterSprite,2:Header.MediaQueries,3:Banner.MediaQueries,4:LinkList,0:Breadcrumbs,0:Breadcrumbs.MediaQueries,0:ResponsiveToc,0:ResponsiveToc.MediaQueries,1:VersionSelector,0:LibraryMemberFilter,5:SkinnyRating,2:Footer,2:Footer.MediaQueries,4:FooterSock,4:FooterSock.MediaQueries,0:BaseResponsive,6:MsdnResponsive;/Areas/Library/Content:0,/Areas/Epx/Content/Css:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Epx/Shared/Content:3,/Areas/Epx/Themes/Base/Content:4,/Areas/Library/Themes/Base/Content:5,/Areas/Library/Themes/Msdn/Content:6&amp;amp;v=C095E67EC215988DCA7BF7D689D03CFF" 
+rel="stylesheet" type="text/css">
+<SCRIPT src="//az416426.vo.msecnd.net/scripts/a/ai.0.js" type="text/javascript" async=""></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+/**/
+(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { 
+	"image": "https://i-msdn.sec.s-msft.com", 
+	"js": "https://i2-msdn.sec.s-msft.com", 
+	"css": "https://i-msdn.sec.s-msft.com", 
+	"xap": "https://msdn.microsoft.com"
+});
+/**/
+} finally { MTPS._injectNextScript_0 && MTPS._injectNextScript_0(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+//
+  var literalNormalizedUrl = '/en-us/library/akth6b1k(l=en-us,v=vs.110).aspx';
+  var wt_nvr_ru = 'WT_NVR_RU';
+  var wt_fpcdom = '.microsoft.com';
+  var wt_domlist = 'msdn.microsoft.com';
+  var wt_pathlist = '';
+  var wt_paramlist = 'DCSext.mtps_devcenter';
+  var wt_siteid = 'MSDN';
+  var gDomain = 'm.webtrends.com';
+  var gDcsId = 'dcsmgru7m99k7mqmgrhudo0k8_8c6m';
+  var gFpc = 'WT_FPC';
+
+
+
+  if (document.cookie.indexOf(gFpc + "=") == -1) {
+    var wtidJs = document.createElement("script");
+    wtidJs.src = "//" + gDomain + "/" + gDcsId + "/wtid.js";
+    document.getElementsByTagName("head")[0].appendChild(wtidJs);
+  }
+
+
+
+  var detectedLocale = 'en-us';
+  var wtsp = 'msdnlib_dotnet';
+  var gTrackEvents = '0';
+/**/
+} finally { MTPS._injectNextScript_2 && MTPS._injectNextScript_2(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+//
+
+        window.appInsightsId = '60854590-027a-4ae4-98be-2741a40f355f';
+        //
+} finally { MTPS._injectNextScript_3 && MTPS._injectNextScript_3(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5&amp;amp;hashKey=0B41D28E6726B4E716D72FB5060856F6&amp;amp;v=39C43C7786CEFC417EBC779FDB2447B4"></SCRIPT>
+<LINK href="/Areas/Epx/Content/Css/PrintView.css" rel="stylesheet" type="text/css" 
+media="print">
+<SCRIPT src="https://c.microsoft.com/ms.js" type="text/javascript"></SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox&amp;btnid=HeaderSearchButton&amp;brand=Msdn&amp;loc=en-us&amp;focusOnInit=false&amp;emptyWatermark=true&amp;searchButtonTooltip=Search MSDN"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = 'Expand'; MTPS.LocalizedStrings.CollapseButtonTooltip = 'Collapse'; MTPS.LocalizedStrings.EnhancedExpandTooltip = 'Click to expand. Double-click to expand all.'; MTPS.LocalizedStrings.EnhancedCollapseTooltip = 'Click to collapse. Double-click to collapse all.'; MTPS.LocalizedStrings.ExpandAllButtonTooltip = 'Expand All'; MTPS.LocalizedStrings.CollapseAllButtonTooltip = 'Collapse All';
+} finally { MTPS._injectNextScript_6 && MTPS._injectNextScript_6(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1&amp;amp;hashKey=16381DF0927C75E12C62EAD23C017874&amp;amp;v=39C43C7786CEFC417EBC779FDB2447B4"></SCRIPT>
+
+<SCRIPT src="https://www.microsoft.com/library/svy/sto/https/broker.js"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+$(document).ready(function() {
+        try {
+            var token = $("#globalRequestVerification input[name='__RequestVerificationToken']").clone();
+            $("#siteFeedbackForm").append(token);
+        } catch(err) {
+            
+        }
+    });
+} finally { MTPS._injectNextScript_8 && MTPS._injectNextScript_8(); }</SCRIPT>
+</HEAD> 
+<BODY class="library IE IE11">
+<DIV id="page"><LINK rel="stylesheet" type="text/css">                         
+<INPUT id="isHeaderBleeding" type="hidden" value="true">     
+<DIV class="ltr msdn" id="ux-header" dir="ltr" data-device-type="tablet"><HEADER 
+class="mobile" ms.pgarea="header"><SPAN id="singleCol"></SPAN>         <SPAN id="doubleCol"></SPAN> 
+        <SPAN id="isMobile"></SPAN>
+<DIV>
+<DIV class="row topRow">
+<DIV class="top">
+<DIV class="left"><A class="msdnLogoImg" 
+href="https://msdn.microsoft.com/en-us">
+<DIV class="tablet-msft-logo" id="msft-logo"></DIV></A>                 
+<DIV class="GrayPipe"></DIV>                   <A class="DevCenterFullNameNonMegaBlade" 
+href="https://msdn.microsoft.com/en-us">Developer Network</A>                 <A 
+class="DevCenterFullName" href="https://msdn.microsoft.com/en-us">Developer 
+Network</A>                 <A class="DevCenterShortName" href="https://msdn.microsoft.com/en-us">Developer</A> 
+              </DIV>
+<DIV class="right">
+<DIV id="signIn"><IMG class="profileImage" src="https://i-msdn.sec.s-msft.com/Areas/Centers/Themes/StandardDevCenter/Content/Images/profile.jpg?v=635777873377454672"> 
+</DIV>                 </DIV></DIV></DIV>
+<DIV class="row middleRow">
+<DIV class="expandTop" style="display: none;">
+<DIV class="left">
+<DIV class="auxNav">
+<DIV>
+<DIV id="Fragment_Subscriptions" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="Subscriptions"><A id="Subscriptions_2153_1" href="https://msdn.microsoft.com/subscriptions/manage/hh442900" 
+xmlns="http://www.w3.org/1999/xhtml">MSDN subscriptions</A> </DIV>
+<DIV id="Fragment_GetTools" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="GetTools"><A id="GetTools_2153_3" href="http://go.microsoft.com/fwlink/?LinkId=309297&amp;clcid=0x409&amp;slcid=0x409&amp;campaign=o~msft~msdn~gettools-header~dn308572" 
+xmlns="http://www.w3.org/1999/xhtml">Get tools</A> </DIV></DIV>
+<DIV>
+<DIV id="Fragment_SocialLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SocialLinks">
+<DIV class="linkList">
+<UL class="links horizontal">
+  <LI><A class="facebook" id="SocialLinks_2152_4" href="http://www.facebook.com/microsoftdeveloper" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">http://www.facebook.com/microsoftdeveloper</A> 
+        </LI>
+  <LI><A class="twitter" id="SocialLinks_2152_5" href="https://twitter.com/msdev" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">https://twitter.com/msdev</A>       </LI>
+  <LI><A class="googlePlus" id="SocialLinks_2152_6" href="http://plus.google.com/111221966647232053570/" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">http://plus.google.com/111221966647232053570/</A> 
+        </LI></UL></DIV></DIV></DIV></DIV></DIV>
+<DIV class="right"><A title="Sign in" class="scarabLink" href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1442859575&amp;rver=6.0.5276.0&amp;wp=MCMBI&amp;wlcxt=MSDN%24MSDN%24MSDN&amp;wreply=https%3a%2f%2fmsdn.microsoft.com%2fen-us%2flibrary%2fsystem.io.fileinfo%2528v%3dvs.110%2529.aspx&amp;lc=1033&amp;id=254354&amp;mkt=en-US">Sign 
+in</A></DIV></DIV></DIV></DIV>
+<DIV class="bg_default" id="buttomRowWrapper">
+<DIV class="row buttomRow bg_default">
+<DIV class="bottom">
+<DIV class="left"><A class="menu-icon" id="grip" href="javascript:void(0)"></A>  
+                               </DIV>               
+<DIV class="right">
+<DIV id="Fragment_SearchBox" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SearchBox">
+<DIV class="SearchBox">
+<FORM name="HeaderSearchForm" id="HeaderSearchForm" method="get"><BUTTON class="header-search-button" 
+id="FakeHeaderSearchButton" type="submit" value="Search">
+<DIV class="search-finder" id="search-finder"></DIV></BUTTON>       <BUTTON 
+title="Search MSDN" id="HeaderSearchButton" style="display: none;" 
+data-searchtype="icon"></BUTTON>       
+<DIV id="searchSplitter"></DIV>
+<DIV class="search-clear-x" id="searchCloseIcon"></DIV>
+<DIV id="searchTextContainer" style="width: 0px; display: none;"><INPUT name="query" id="HeaderSearchTextBox" onfocus="Epx.Controls.SearchBox.watermarkFocus(event, this.title)" onblur="Epx.Controls.SearchBox.watermarkBlur(event, this.title)" type="text" maxlength="200" autocomplete="off" data-searchtype="searchbox"> 
+      
+<DIV id="SearchFlyoutContainer" style='padding: 2px; border: 1px solid buttonshadow; border-image: none; text-align: left; color: rgb(255, 255, 255); font-family: "Segoe UI",Tahoma,Helvetica,Sans-Serif; font-size: 16px; display: none; position: absolute; z-index: 1000; background-color: rgb(255, 255, 255);'>
+<DIV id="SuggestionContainer">
+<UL style="list-style: none; margin: 1px; padding: 4px 2px 0px 1px; white-space: nowrap; cursor: pointer;"></UL></DIV></DIV></DIV></FORM></DIV></DIV></DIV></DIV>
+<DIV id="drawer" style="display: none;">
+<DIV class="toc"><NAV>
+<UL class="navL1" ms.cmpgrp="main nav">
+  <LI class="inactive toggle"><A title="Technologies" 
+  href="javascript:void(0)">Technologies</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Cloud" href="https://msdn.microsoft.com/cloud-app-development-msdn">Cloud</A></LI>
+    <LI class="inactive"><A title="App Development" href="https://msdn.microsoft.com/app-development-msdn">App 
+    Development</A></LI>
+    <LI class="inactive"><A title="Web" href="https://msdn.microsoft.com/web-app-development-msdn">Web</A></LI>
+    <LI class="inactive"><A title="Data" href="https://msdn.microsoft.com/big-data-development-msdn">Data</A></LI>
+    <LI class="inactive"><A title="Gaming" href="https://msdn.microsoft.com/games-development-msdn">Gaming</A></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Downloads" 
+  href="javascript:void(0)">Downloads</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Visual Studio" href="https://www.visualstudio.com/downloads/download-visual-studio-vs">Visual 
+    Studio</A></LI>
+    <LI class="inactive"><A title="MSDN subscription access" href="https://msdn.microsoft.com/subscriptions">MSDN 
+    subscription access</A></LI>
+    <LI class="inactive"><A title="SDKs" href="https://msdn.microsoft.com/microsoft-sdks-msdn">SDKs</A></LI>
+    <LI class="inactive toggle"><A title="Trial software" href="javascript:void(0)">Trial 
+    software</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Free downloads" href="https://msdn.microsoft.com/evalcenter">Free 
+      downloads</A></LI>
+      <LI class="inactive"><A title="Office resources" href="https://msdn.microsoft.com/officeevaluationresources">Office 
+      resources</A></LI>
+      <LI class="inactive"><A title="SharePoint Server 2013 resources" href="https://msdn.microsoft.com/sharepoint2013resources">SharePoint 
+      Server 2013 resources</A></LI>
+      <LI class="inactive"><A title="SQL Server 2014 Express resources" href="https://msdn.microsoft.com/sqlserver2014expressresources">SQL 
+      Server 2014 Express resources</A></LI>
+      <LI class="inactive"><A title="Windows Server 2012 resources" href="https://msdn.microsoft.com/windowsserver2012r2resources">Windows 
+      Server 2012 resources</A></LI></UL></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Programs" 
+  href="javascript:void(0)">Programs</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Rewards" href="https://rewards.msdn.microsoft.com/">Rewards</A></LI>
+    <LI class="inactive"><A title="Startups" href="https://www.microsoft.com/bizspark">Startups</A></LI>
+    <LI class="inactive toggle"><A title="Students" 
+    href="javascript:void(0)">Students</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Microsoft Imagine" href="https://msdn.microsoft.com/imagine/imagine-home">Microsoft 
+      Imagine</A></LI>
+      <LI class="inactive"><A title="Microsoft Student Partners" href="https://msdn.microsoft.com/microsoftstudentpartners">Microsoft 
+      Student Partners</A></LI></UL></LI>
+    <LI class="inactive toggle"><A title="Architects" 
+    href="javascript:void(0)">Architects</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Overview" href="https://msdn.microsoft.com/architects-overview-msdn">Overview</A></LI>
+      <LI class="inactive"><A title="Case studies" href="https://msdn.microsoft.com/architects-case-studies-msdn">Case 
+      studies</A></LI>
+      <LI class="inactive"><A title="Blueprints" href="https://msdn.microsoft.com/architects-blueprints-msdn">Blueprints</A></LI>
+      <LI class="inactive"><A title="Blog" href="http://blogs.msdn.com/b/msarchitecture/">Blog</A></LI>
+      <LI class="inactive"><A title="Forums" href="http://social.msdn.microsoft.com/forums/en-us/home?brandignore=true&amp;sort=relevancedesc&amp;searchterm=architecture+or+architect">Forums</A></LI></UL></LI>
+    <LI class="inactive"><A title="Events" href="http://events.msdn.microsoft.com/">Events</A></LI>
+    <LI class="inactive toggle"><A title="MSDN Subscriptions" href="javascript:void(0)">MSDN 
+    Subscriptions</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Overview" href="https://msdn.microsoft.com/msdn-subscriptions-overview">Overview</A></LI>
+      <LI class="inactive"><A title="Benefits" href="https://msdn.microsoft.com/benefits-overview">Benefits</A></LI>
+      <LI class="inactive"><A title="Administrators" href="https://msdn.microsoft.com/msdn-subscriptions-administration">Administrators</A></LI></UL></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Community" 
+  href="javascript:void(0)">Community</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Magazine" href="https://msdn.microsoft.com/magazine/dd767791">Magazine</A></LI>
+    <LI class="inactive"><A title="Forums" href="https://social.msdn.microsoft.com/forums/">Forums</A></LI>
+    <LI class="inactive"><A title="Blogs" href="http://blogs.msdn.com/b/developer-tools/">Blogs</A></LI>
+    <LI class="inactive"><A title="Tech Advisors" href="http://tech-advisors.msdn.microsoft.com/en-us">Tech 
+    Advisors</A></LI>
+    <LI class="inactive"><A title="Channel 9" 
+    href="http://channel9.msdn.com/">Channel 9</A></LI></UL></LI>
+  <LI class="inactive current toggle"><A title="Documentation" href="javascript:void(0)">Documentation</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive current"><A title="APIs and reference" href="https://msdn.microsoft.com/library">APIs 
+    and reference</A></LI>
+    <LI class="inactive"><A title="Dev centers" href="https://msdn.microsoft.com/developer-centers-msdn">Dev 
+    centers</A></LI></UL></LI>
+  <LI class="inactive"><A title="Samples" href="https://code.msdn.microsoft.com/">Samples</A></LI></UL></NAV></DIV></DIV></DIV></DIV></HEADER>
+<DIV id="overlayMaskHeader"></DIV></DIV><LINK rel="stylesheet" type="text/css"> 
+<LINK rel="stylesheet" type="text/css">     
+<DIV id="breadcrumbs">
+<DIV class="breadCrumb" id="breadcrumbDesktop"><SPAN 
+class="breadcrumbEllipsis"><A title=".NET Framework 4.6 and 4.5" href="https://msdn.microsoft.com/en-us/library/w0x726c2(v=vs.110).aspx"></A></SPAN> 
+                        <SPAN><A title=".NET Framework Class Library" href="https://msdn.microsoft.com/en-us/library/mt472912(v=vs.110).aspx"><SPAN>.NET 
+Framework Class Library</SPAN></A></SPAN>                         <SPAN><A 
+title="System.IO Namespaces" href="https://msdn.microsoft.com/en-us/library/mt481548(v=vs.110).aspx"><SPAN>System.IO 
+Namespaces</SPAN></A></SPAN>                         <SPAN class="breadcrumbDropSmall"><A 
+title="System.IO" id="breadcrumbDropDownButton" href="#" targethref="https://msdn.microsoft.com/en-us/library/mt481548(v=vs.110).aspx"><SPAN>System.IO</SPAN></A> 
+                        </SPAN>         </DIV>
+<DIV id="breadcrumbDropDownMenu" style="display: none;"></DIV>
+<DIV id="tocDropDownMenu" style="display: none;"></DIV>
+<DIV class="breadCrumb" id="breadcrumbTablet"><SPAN 
+class="breadcrumbEllipsis"><A title="System.IO Namespaces" href="https://msdn.microsoft.com/en-us/library/mt481548(v=vs.110).aspx"></A></SPAN> 
+                    <SPAN><A title="System.IO" href="https://msdn.microsoft.com/en-us/library/System.IO(v=vs.110).aspx"><SPAN>System.IO</SPAN></A></SPAN> 
+                <SPAN class="breadcrumbDropSmall"><A title="FileInfo Class" id="tocDropDownButton" 
+href="#"><SPAN>FileInfo Class</SPAN></A></SPAN>         
+<DIV id="navigationButtons"><A id="provideFeedback1" 
+href="javascript:void(0)"><INS class="suggestion"></INS>Any Suggestions?</A>     
+        <A id="isd_print" href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(d=printer,v=vs.110).aspx" 
+rel="nofollow"><INS class="print"></INS>Print </A>             <A id="isd_printABook" 
+href="/en-us/library/export/help/?returnUrl=%2fen-us%2flibrary%2fsystem.io.fileinfo(v%3dvs.110).aspx"><INS 
+class="export"></INS>Export (<SPAN class="count">0</SPAN>)             </A>      
+   </DIV></DIV>
+<DIV class="breadCrumb" id="breadcrumbMobile"><SPAN 
+class="breadcrumbEllipsis"><A title="System.IO" href="https://msdn.microsoft.com/en-us/library/System.IO(v=vs.110).aspx"></A></SPAN> 
+            <SPAN class="breadcrumbDropSmall"><A title="FileInfo Class" id="tocPopupButton" 
+href="#"><SPAN>FileInfo Class</SPAN></A></SPAN>         </DIV></DIV>
+<DIV id="tocPopupMenu" style="display: none;">
+<DIV class="tocCloseLarge" id="tocPopMenuClose"></DIV>
+<DIV id="tocTitle">FileInfo Class</DIV>
+<DIV class="hide-archive" id="tocnav" style="top: 60px; width: 255px; position: fixed;" 
+ms.pgarea="left toc">
+<DIV class="tocunselected">
+<DIV id="tocExpandArea" style="display: block;"><SPAN class="toc_empty"></SPAN>  
+           <SPAN id="tocExpandButton"><A href="#"></A></SPAN>         </DIV>
+<DIV id="tocExpand">
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="BinaryReader Class" id="mt526318_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.binaryreader(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">BinaryReader Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="BinaryWriter Class" id="mt526322_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.binarywriter(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">BinaryWriter Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="BufferedStream Class" id="mt541411_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.bufferedstream(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">BufferedStream Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Directory Class" id="mt541345_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.directory(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Directory 
+Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="DirectoryInfo Class" id="mt541337_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.directoryinfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">DirectoryInfo Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="DirectoryNotFoundException Class" id="mt541312_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.directorynotfoundexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">DirectoryNotFoundException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="DriveInfo Class" id="mt541334_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.driveinfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">DriveInfo 
+Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="DriveNotFoundException Class" id="mt541320_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.drivenotfoundexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">DriveNotFoundException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="DriveType Enumeration" href="https://msdn.microsoft.com/en-us/library/system.io.drivetype(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">DriveType Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="EndOfStreamException Class" id="mt541331_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.endofstreamexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">EndOfStreamException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="ErrorEventArgs Class" id="mt526339_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.erroreventargs(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">ErrorEventArgs Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="ErrorEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.io.erroreventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">ErrorEventHandler 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="File Class" id="mt541374_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.file(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">File 
+Class</A></DIV></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="FileAccess Enumeration" href="https://msdn.microsoft.com/en-us/library/4z36sx0f(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">FileAccess Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="FileAttributes Enumeration" href="https://msdn.microsoft.com/en-us/library/system.io.fileattributes(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">FileAttributes 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileFormatException Class" id="mt541390_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.fileformatexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">FileFormatException Class</A></DIV></DIV>
+<DIV class="tocselected">
+<DIV class="toclevel current" data-toclevel="1" data-childrenloaded="true"><A 
+class="toc_expanded" aria-label="Collapse the table of content" href="#"></A><A 
+title="FileInfo Class" id="mt541370_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">FileInfo 
+Class</A></DIV>
+<DIV class="tocPadding">
+<DIV class="toclevel " data-toclevel="2"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileInfo Methods" id="mt541366_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo_methods(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">FileInfo 
+Methods</A></DIV>
+<DIV class="toclevel " data-toclevel="2"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileInfo Properties" id="mt541353_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo_properties(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">FileInfo 
+Properties</A></DIV>
+<DIV class="toclevel " data-toclevel="2"><SPAN class="toc_empty"></SPAN><A 
+title="FileInfo Constructor" href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.fileinfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">FileInfo 
+Constructor</A></DIV></DIV></DIV>
+<DIV class="tocunselected">
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileLoadException Class" id="mt541397_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.fileloadexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">FileLoadException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="FileMode Enumeration" href="https://msdn.microsoft.com/en-us/library/system.io.filemode(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">FileMode Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileNotFoundException Class" id="mt541387_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.filenotfoundexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">FileNotFoundException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="FileOptions Enumeration" href="https://msdn.microsoft.com/en-us/library/system.io.fileoptions(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">FileOptions Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="FileShare Enumeration" href="https://msdn.microsoft.com/en-us/library/system.io.fileshare(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">FileShare Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileStream Class" id="mt541404_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.filestream(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">FileStream Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileSystemEventArgs Class" id="mt541378_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.filesystemeventargs(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">FileSystemEventArgs Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="FileSystemEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.io.filesystemeventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">FileSystemEventHandler 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileSystemInfo Class" id="mt438916_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">FileSystemInfo Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="FileSystemWatcher Class" id="mt541391_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.filesystemwatcher(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">FileSystemWatcher Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HandleInheritability Enumeration" href="https://msdn.microsoft.com/en-us/library/system.io.handleinheritability(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HandleInheritability 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="InternalBufferOverflowException Class" id="mt541384_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.internalbufferoverflowexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">InternalBufferOverflowException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="InvalidDataException Class" id="mt541395_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.invaliddataexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">InvalidDataException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IODescriptionAttribute Class" id="mt541410_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.iodescriptionattribute(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IODescriptionAttribute Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IOException Class" id="mt541442_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.ioexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IOException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="MemoryStream Class" id="mt541452_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.memorystream(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">MemoryStream Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="NotifyFilters Enumeration" href="https://msdn.microsoft.com/en-us/library/system.io.notifyfilters(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">NotifyFilters Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Path Class" id="mt541460_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.path(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Path 
+Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="PathTooLongException Class" id="mt541454_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.pathtoolongexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">PathTooLongException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="PipeException Class" id="mt541430_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.pipeexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">PipeException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="RenamedEventArgs Class" id="mt541421_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.renamedeventargs(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">RenamedEventArgs Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="RenamedEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.io.renamedeventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">RenamedEventHandler 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="SearchOption Enumeration" href="https://msdn.microsoft.com/en-us/library/ms143448(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">SearchOption Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="SeekOrigin Enumeration" href="https://msdn.microsoft.com/en-us/library/883dhyx0(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">SeekOrigin Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Stream Class" id="mt541483_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.stream(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Stream 
+Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="StreamReader Class" id="mt541428_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.streamreader(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">StreamReader Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="StreamWriter Class" id="mt541507_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.streamwriter(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">StreamWriter Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="StringReader Class" id="mt541447_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.stringreader(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">StringReader Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="StringWriter Class" id="mt541498_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.stringwriter(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">StringWriter Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="TextReader Class" id="mt541441_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.textreader(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">TextReader Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="TextWriter Class" id="mt541479_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.io.textwriter(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">TextWriter Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="UnmanagedMemoryAccessor Class" id="mt541480_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.unmanagedmemoryaccessor(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">UnmanagedMemoryAccessor Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="UnmanagedMemoryStream Class" id="mt541477_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.unmanagedmemorystream(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">UnmanagedMemoryStream Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="WaitForChangedResult Structure" id="mt541493_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.io.waitforchangedresult(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">WaitForChangedResult Structure</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="WatcherChangeTypes Enumeration" href="https://msdn.microsoft.com/en-us/library/t6xf43e0(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">WatcherChangeTypes 
+Enumeration</A></DIV></DIV></DIV></DIV>
+<DIV id="body"><SPAN id="tabletView_large"></SPAN>             <SPAN id="tabletView_small"></SPAN> 
+            <SPAN id="mobileView"></SPAN>                 
+<DIV id="leftNav" style="height: 0px;">
+<DIV style="display: none;">
+<DIV id="CollapseLocalizeString">Collapse the table of content</DIV>
+<DIV id="ExpandLocalizeString">Expand the table of content</DIV></DIV>
+<DIV><A id="isd_archiveControlResponsive" style="display: none;" 
+data-exclude-archive="Exclude Previous Version" data-include-archive="Include Previous Version"></A> 
+        </DIV></DIV>
+<DIV class="content" id="content">
+<DIV xmlns="http://www.w3.org/1999/xhtml">
+<DIV class="topic">
+<H1 class="title">FileInfo Class</H1>
+<DIV class="lw_vs">
+<DIV id="curversion"><STRONG>            .NET Framework 4.6 and 4.5         
+</STRONG>       </DIV>
+<DIV id="versionclick">
+<DIV class="cl_lw_vs_seperator" id="vsseperator"></DIV>
+<DIV>
+<DIV><A id="vsLink" href="javascript:;">                        Other Versions   
+                  </A>           </DIV>
+<DIV class="cl_vs_arrow clip10x10"><IMG class="cl_lw_vs_arrow" id="vsArrow" alt="" 
+src="https://i-msdn.sec.s-msft.com/Areas/Epx/Content/Images/ImageSprite.png?v=635777873432767956"> 
+          </DIV></DIV>
+<UL id="vsPanel">
+  <LI><A href="/en-us/library/system.io.fileinfo(v=vs.100).aspx">.NET Framework 
+  4</A>           </LI>
+  <LI><A href="/en-us/library/system.io.fileinfo(v=vs.95).aspx">Silverlight </A> 
+            </LI>
+  <LI><A href="/en-us/library/system.io.fileinfo(v=vs.90).aspx">.NET Framework 
+  3.5</A>           </LI>
+  <LI><A href="/en-us/library/system.io.fileinfo(v=vs.85).aspx">.NET Framework 
+  3.0</A>           </LI>
+  <LI><A href="/en-us/library/system.io.fileinfo(v=vs.80).aspx">.NET Framework 
+  2.0</A>           </LI>
+  <LI><A href="/en-us/library/system.io.fileinfo(v=vs.71).aspx">.NET Framework 
+  1.1</A>           </LI></UL></DIV></DIV>
+<DIV style="clear: both;"></DIV>
+<DIV id="mainSection">
+<DIV id="mainBody">&nbsp;
+<DIV class="section">
+<DIV class="section">
+<P>Provides properties and instance methods for the creation, copying, deletion, 
+moving, and opening of files, and aids in the creation of <A href="https://msdn.microsoft.com/en-us/library/system.io.filestream(v=vs.110).aspx">FileStream</A> 
+objects. This class cannot be inherited.</P>
+<P>To browse the .NET Framework source code for this type, see the <A href="http://referencesource.microsoft.com/#mscorlib/system/io/fileinfo.cs#4ee673c1a4ecad41">Reference 
+Source</A>.</P></DIV><STRONG>Namespace:       </STRONG>      &nbsp;       <A 
+href="https://msdn.microsoft.com/en-us/library/system.io(v=vs.110).aspx">System.IO</A><BR><STRONG>Assembly: 
+        </STRONG>&nbsp;mscorlib (in mscorlib.dll)<BR><BR>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Inheritance 
+Hierarchy</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><SPAN id="idFamilies"></SPAN><A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">System<SPAN 
+xmlns="">.</SPAN>Object</A><BR>&nbsp;&nbsp;<A href="https://msdn.microsoft.com/en-us/library/system.marshalbyrefobject(v=vs.110).aspx">System<SPAN 
+xmlns="">.</SPAN>MarshalByRefObject</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;<A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">System.IO<SPAN 
+xmlns="">.</SPAN>FileSystemInfo</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN 
+class="selflink">System.IO<SPAN 
+xmlns="">.</SPAN>FileInfo</SPAN><BR></DIV></DIV><BR>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Syntax</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="codeSnippetContainer" id="code-snippet-1" xmlns="">
+<DIV class="codeSnippetContainerTabs">
+<DIV class="codeSnippetContainerTabActive" dir="ltr"><A>C#</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=cpp#code-snippet-1">C++</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=fsharp#code-snippet-1">F#</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-1">VB</A></DIV></DIV>
+<DIV class="codeSnippetContainerCodeContainer">
+<DIV class="codeSnippetToolBar">
+<DIV class="codeSnippetToolBarText"><A name="CodeSnippetCopyLink" title="Copy to clipboard." 
+style="display: block;" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_7be7584b-8e37-41eb-8b90-8d53fdf09cc1');">Copy</A></DIV></DIV>
+<DIV class="codeSnippetContainerCode" id="CodeSnippetContainerCode_7be7584b-8e37-41eb-8b90-8d53fdf09cc1" 
+dir="ltr">
+<DIV style="color: black;">
+<PRE>[SerializableAttribute]
+[ComVisibleAttribute(<SPAN style="color: blue;">true</SPAN>)]
+<SPAN style="color: blue;">public</SPAN> <SPAN style="color: blue;">sealed</SPAN> <SPAN style="color: blue;">class</SPAN> FileInfo : FileSystemInfo
+</PRE></DIV></DIV></DIV></DIV></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Constructors</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="contentTableWrapper">
+<TABLE id="idConstructors">
+  <TBODY>
+  <TR>
+    <TH class="iconColumn">
+    <TH class="nameColumn">Name</TH>
+    <TH class="descriptionColumn">Description</TH></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.fileinfo(v=vs.110).aspx">FileInfo<SPAN 
+      xmlns="">(String)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Initializes a new instance of the <SPAN 
+      class="selflink">FileInfo</SPAN> class, which acts as a wrapper for a file 
+      path.</P></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Properties</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="contentTableWrapper">
+<TABLE id="idProperties">
+  <TBODY>
+  <TR>
+    <TH class="iconColumn">
+    <TH class="nameColumn">Name</TH>
+    <TH class="descriptionColumn">Description</TH></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.attributes(v=vs.110).aspx"><SPAN 
+      xmlns="">Attributes</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets the attributes for the current file or 
+      directory.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.creationtime(v=vs.110).aspx"><SPAN 
+      xmlns="">CreationTime</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets the creation time of the current file or 
+      directory.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.creationtimeutc(v=vs.110).aspx"><SPAN 
+      xmlns="">CreationTimeUtc</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets the creation time, in coordinated universal time (UTC), of 
+      the current file or directory.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.directory(v=vs.110).aspx"><SPAN 
+      xmlns="">Directory</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets an instance of the parent directory.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.directoryname(v=vs.110).aspx"><SPAN 
+      xmlns="">DirectoryName</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets a string representing the directory's full path.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.exists(v=vs.110).aspx"><SPAN 
+      xmlns="">Exists</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets a value indicating whether a file exists.(Overrides <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.exists(v=vs.110).aspx"><SPAN 
+      xmlns="">FileSystemInfo.Exists</SPAN></A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.extension(v=vs.110).aspx"><SPAN 
+      xmlns="">Extension</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets the string representing the extension part of the file.(Inherited 
+      from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.fullname(v=vs.110).aspx"><SPAN 
+      xmlns="">FullName</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets the full path of the directory or file.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.isreadonly(v=vs.110).aspx"><SPAN 
+      xmlns="">IsReadOnly</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets a value that determines if the current file is read 
+      only.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.lastaccesstime(v=vs.110).aspx"><SPAN 
+      xmlns="">LastAccessTime</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets the time the current file or directory was last 
+      accessed.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.lastaccesstimeutc(v=vs.110).aspx"><SPAN 
+      xmlns="">LastAccessTimeUtc</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets the time, in coordinated universal time (UTC), that the 
+      current file or directory was last accessed.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.lastwritetime(v=vs.110).aspx"><SPAN 
+      xmlns="">LastWriteTime</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets the time when the current file or directory was last 
+      written to.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.lastwritetimeutc(v=vs.110).aspx"><SPAN 
+      xmlns="">LastWriteTimeUtc</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets or sets the time, in coordinated universal time (UTC), when the 
+      current file or directory was last written to.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.length(v=vs.110).aspx"><SPAN 
+      xmlns="">Length</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets the size, in bytes, of the current file.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubproperty" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubproperty" 
+      alt="System_CAPS_pubproperty" src="https://i-msdn.sec.s-msft.com/dynimg/IC74937.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.name(v=vs.110).aspx"><SPAN 
+      xmlns="">Name</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets the name of the file.(Overrides <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.name(v=vs.110).aspx"><SPAN 
+      xmlns="">FileSystemInfo.Name</SPAN></A>.)</P></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Methods</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="contentTableWrapper">
+<TABLE id="idMethods">
+  <TBODY>
+  <TR>
+    <TH class="iconColumn">
+    <TH class="nameColumn">Name</TH>
+    <TH class="descriptionColumn">Description</TH></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.appendtext(v=vs.110).aspx">AppendText<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Creates a <A href="https://msdn.microsoft.com/en-us/library/system.io.streamwriter(v=vs.110).aspx">StreamWriter</A> 
+      that appends text to the file represented by this instance of the <SPAN 
+      class="selflink">FileInfo</SPAN>.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/f0e105zt(v=vs.110).aspx">CopyTo<SPAN 
+      xmlns="">(String)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Copies an existing file to a new file, disallowing the overwriting of 
+      an existing file.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/5axsfwbc(v=vs.110).aspx">CopyTo<SPAN 
+      xmlns="">(String,&nbsp;Boolean)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Copies an existing file to a new file, allowing the overwriting of an 
+      existing file.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.create(v=vs.110).aspx">Create<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Creates a file.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.marshalbyrefobject.createobjref(v=vs.110).aspx">CreateObjRef<SPAN 
+      xmlns="">(Type)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Creates an object that contains all the relevant information required 
+      to generate a proxy used to communicate with a remote object.(Inherited 
+      from <A href="https://msdn.microsoft.com/en-us/library/system.marshalbyrefobject(v=vs.110).aspx">MarshalByRefObject</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.createtext(v=vs.110).aspx">CreateText<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Creates a <A href="https://msdn.microsoft.com/en-us/library/system.io.streamwriter(v=vs.110).aspx">StreamWriter</A> 
+      that writes a new text file.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.decrypt(v=vs.110).aspx">Decrypt<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Decrypts a file that was encrypted by the current account using the <A 
+      href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.encrypt(v=vs.110).aspx">Encrypt</A> 
+      method.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.delete(v=vs.110).aspx">Delete<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Permanently deletes a file.(Overrides <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.delete(v=vs.110).aspx">FileSystemInfo<SPAN 
+      xmlns="">.</SPAN>Delete<SPAN xmlns="">()</SPAN></A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.encrypt(v=vs.110).aspx">Encrypt<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Encrypts a file so that only the account used to encrypt the file can 
+      decrypt it.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Equals<SPAN 
+      xmlns="">(Object)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Determines whether the specified object is equal to the current 
+      object.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/9c13ttb3(v=vs.110).aspx">GetAccessControl<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets a <A href="https://msdn.microsoft.com/en-us/library/system.security.accesscontrol.filesecurity(v=vs.110).aspx">FileSecurity</A> 
+      object that encapsulates the access control list (ACL) entries for the 
+      file described by the current <SPAN class="selflink">FileInfo</SPAN> 
+      object.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/daw8s8yb(v=vs.110).aspx">GetAccessControl<SPAN 
+      xmlns="">(AccessControlSections)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets a <A href="https://msdn.microsoft.com/en-us/library/system.security.accesscontrol.filesecurity(v=vs.110).aspx">FileSecurity</A> 
+      object that encapsulates the specified type of access control list (ACL) 
+      entries for the file described by the current <SPAN 
+      class="selflink">FileInfo</SPAN> object.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.object.gethashcode(v=vs.110).aspx">GetHashCode<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Serves as the default hash function. (Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.marshalbyrefobject.getlifetimeservice(v=vs.110).aspx">GetLifetimeService<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Retrieves the current lifetime service object that controls the 
+      lifetime policy for this instance.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.marshalbyrefobject(v=vs.110).aspx">MarshalByRefObject</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.getobjectdata(v=vs.110).aspx">GetObjectData<SPAN 
+      xmlns="">(SerializationInfo,&nbsp;StreamingContext)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Sets the <A href="https://msdn.microsoft.com/en-us/library/system.runtime.serialization.serializationinfo(v=vs.110).aspx">SerializationInfo</A> 
+      object with the file name and additional exception information.(Inherited 
+      from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.object.gettype(v=vs.110).aspx">GetType<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Gets the <A href="https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx">Type</A> 
+      of the current instance.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.marshalbyrefobject.initializelifetimeservice(v=vs.110).aspx">InitializeLifetimeService<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Obtains a lifetime service object to control the lifetime policy for 
+      this instance.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.marshalbyrefobject(v=vs.110).aspx">MarshalByRefObject</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.moveto(v=vs.110).aspx">MoveTo<SPAN 
+      xmlns="">(String)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Moves a specified file to a new location, providing the option to 
+      specify a new file name.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/ya63c7c5(v=vs.110).aspx">Open<SPAN 
+      xmlns="">(FileMode)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Opens a file in the specified mode.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/dzdw7xcy(v=vs.110).aspx">Open<SPAN 
+      xmlns="">(FileMode,&nbsp;FileAccess)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Opens a file in the specified mode with read, write, or read/write 
+      access.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/d3wke8tz(v=vs.110).aspx">Open<SPAN 
+      xmlns="">(FileMode,&nbsp;FileAccess,&nbsp;FileShare)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Opens a file in the specified mode with read, write, or read/write 
+      access and the specified sharing option.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.openread(v=vs.110).aspx">OpenRead<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Creates a read-only <A href="https://msdn.microsoft.com/en-us/library/system.io.filestream(v=vs.110).aspx">FileStream</A>.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.opentext(v=vs.110).aspx">OpenText<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Creates a <A href="https://msdn.microsoft.com/en-us/library/system.io.streamreader(v=vs.110).aspx">StreamReader</A> 
+      with UTF8 encoding that reads from an existing text file.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.openwrite(v=vs.110).aspx">OpenWrite<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Creates a write-only <A href="https://msdn.microsoft.com/en-us/library/system.io.filestream(v=vs.110).aspx">FileStream</A>.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.refresh(v=vs.110).aspx">Refresh<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Refreshes the state of the object.(Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo(v=vs.110).aspx">FileSystemInfo</A>.)</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/8a3t4ek5(v=vs.110).aspx">Replace<SPAN 
+      xmlns="">(String,&nbsp;String)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Replaces the contents of a specified file with the file described by 
+      the current <SPAN class="selflink">FileInfo</SPAN> object, deleting the 
+      original file, and creating a backup of the replaced file.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/dz3hy29c(v=vs.110).aspx">Replace<SPAN 
+      xmlns="">(String,&nbsp;String,&nbsp;Boolean)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Replaces the contents of a specified file with the file described by 
+      the current <SPAN class="selflink">FileInfo</SPAN> object, deleting the 
+      original file, and creating a backup of the replaced file.  Also specifies 
+      whether to ignore merge errors. </P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.setaccesscontrol(v=vs.110).aspx">SetAccessControl<SPAN 
+      xmlns="">(FileSecurity)</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Applies access control list (ACL) entries described by a <A href="https://msdn.microsoft.com/en-us/library/system.security.accesscontrol.filesecurity(v=vs.110).aspx">FileSecurity</A> 
+      object to the file described by the current <SPAN 
+      class="selflink">FileInfo</SPAN> object.</P></DIV></TD></TR>
+  <TR>
+    <TD><SPAN><IMG title="System_CAPS_pubmethod" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-pubmethod" 
+      alt="System_CAPS_pubmethod" src="https://i-msdn.sec.s-msft.com/dynimg/IC91302.jpeg" 
+      xmlns=""></SPAN></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.tostring(v=vs.110).aspx">ToString<SPAN 
+      xmlns="">()</SPAN></A></TD>
+    <TD>
+      <DIV class="section">
+      <P>Returns the path as a string.(Overrides <A href="https://msdn.microsoft.com/en-us/library/system.object.tostring(v=vs.110).aspx">Object<SPAN 
+      xmlns="">.</SPAN>ToString<SPAN 
+  xmlns="">()</SPAN></A>.)</P></DIV></TD></TR></TBODY></TABLE></DIV></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Remarks</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="section">
+<DIV class="alert">
+<DIV class="contentTableWrapper">
+<TABLE>
+  <TBODY>
+  <TR>
+    <TH align="left"><SPAN><IMG title="System_CAPS_note" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-note" 
+      alt="System_CAPS_note" src="https://i-msdn.sec.s-msft.com/dynimg/IC101471.jpeg" 
+      xmlns=""></SPAN><SPAN class="alertTitle">Note </SPAN></TH></TR>
+  <TR>
+    <TD>
+      <P>To view the .NET Framework source code for this type, see the <A href="http://referencesource.microsoft.com/#mscorlib/system/io/fileinfo.cs#4ee673c1a4ecad41">Reference 
+      Source</A>. You can browse through the source code online, download the 
+      reference for offline viewing, and step through the sources (including 
+      patches and updates) during debugging; see <A href="http://referencesource.microsoft.com/">instructions</A>.</P></TD></TR></TBODY></TABLE></DIV></DIV>
+<P>Use the <SPAN class="selflink">FileInfo</SPAN> class for typical operations 
+such as copying, moving, renaming, creating, opening, deleting, and appending to 
+files.</P>
+<P>If you are performing multiple operations on the same file, it can be more 
+efficient to use <SPAN class="selflink">FileInfo</SPAN> instance methods instead 
+of the corresponding static methods of the <A href="https://msdn.microsoft.com/en-us/library/system.io.file(v=vs.110).aspx">File</A> 
+class, because a security check will not always be necessary.</P>
+<P>Many of the <SPAN class="selflink">FileInfo</SPAN> methods return other I/O 
+types when you create or open files. You can use these other types to further 
+manipulate a file. For more information, see specific <SPAN 
+class="selflink">FileInfo</SPAN> members such as <A href="https://msdn.microsoft.com/en-us/library/ya63c7c5(v=vs.110).aspx">Open</A>, 
+<A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.openread(v=vs.110).aspx">OpenRead</A>, 
+<A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.opentext(v=vs.110).aspx">OpenText</A>, 
+<A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.createtext(v=vs.110).aspx">CreateText</A>, 
+or <A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.create(v=vs.110).aspx">Create</A>.</P>
+<P>By default, full read/write access to new files is granted to all users.</P>
+<P>The following table describes the enumerations that are used to customize the 
+behavior of various <SPAN class="selflink">FileInfo</SPAN> methods.</P>
+<DIV class="contentTableWrapper">
+<TABLE>
+  <TBODY>
+  <TR>
+    <TH>
+      <P>Enumeration </P></TH>
+    <TH>
+      <P>Description </P></TH></TR>
+  <TR>
+    <TD>
+      <P><A href="https://msdn.microsoft.com/en-us/library/4z36sx0f(v=vs.110).aspx">FileAccess</A></P></TD>
+    <TD>
+      <P>Specifies read and write access to a file. </P></TD></TR>
+  <TR>
+    <TD>
+      <P><A href="https://msdn.microsoft.com/en-us/library/system.io.fileshare(v=vs.110).aspx">FileShare</A></P></TD>
+    <TD>
+      <P>Specifies the level of access permitted for a file that is already in 
+      use. </P></TD></TR>
+  <TR>
+    <TD>
+      <P><A href="https://msdn.microsoft.com/en-us/library/system.io.filemode(v=vs.110).aspx">FileMode</A></P></TD>
+    <TD>
+      <P>Specifies whether the contents of an existing file are preserved or 
+      overwritten, and whether requests to create an existing file cause an 
+      exception. </P></TD></TR></TBODY></TABLE></DIV>
+<DIV class="alert">
+<DIV class="contentTableWrapper">
+<TABLE>
+  <TBODY>
+  <TR>
+    <TH align="left"><SPAN><IMG title="System_CAPS_note" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-note" 
+      alt="System_CAPS_note" src="https://i-msdn.sec.s-msft.com/dynimg/IC101471.jpeg" 
+      xmlns=""></SPAN><SPAN class="alertTitle">Note </SPAN></TH></TR>
+  <TR>
+    <TD>
+      <P>In members that accept a path as an input string, that path must be 
+      well-formed or an exception is raised. For example, if a path is fully 
+      qualified but begins with a space, the path is not trimmed in methods of 
+      the class. Therefore, the path is malformed and an exception is raised. 
+      Similarly, a path or a combination of paths cannot be fully qualified 
+      twice. For example, "c:\temp c:\windows" also raises an exception in most 
+      cases. Ensure that your paths are well-formed when using methods that 
+      accept a path string.</P></TD></TR></TBODY></TABLE></DIV></DIV>
+<P>In members that accept a path, the path can refer to a file or just a 
+directory. The specified path can also refer to a relative path or a Universal 
+Naming Convention (UNC) path for a server and share name. For example, all the 
+following are acceptable paths: </P>
+<UL class="unordered">
+  <LI>
+  <P>"c:\\MyDir\\MyFile.txt" in C#, or "c:\MyDir\MyFile.txt" in Visual 
+  Basic.</P></LI>
+  <LI>
+  <P>"c:\\MyDir" in C#, or "c:\MyDir" in Visual Basic.</P></LI>
+  <LI>
+  <P>"MyDir\\MySubdir" in C#, or "MyDir\MySubDir" in Visual Basic.</P></LI>
+  <LI>
+  <P>"\\\\MyServer\\MyShare" in C#, or "\\MyServer\MyShare" in Visual 
+  Basic.</P></LI></UL>
+<P>The <SPAN class="selflink">FileInfo</SPAN> class provides the following 
+properties that enable you to retrieve information about a file. For an example 
+of how to use each property, see the property pages. </P>
+<UL class="unordered">
+  <LI>
+  <P>The <A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.directory(v=vs.110).aspx"><SPAN 
+  xmlns="">Directory</SPAN></A> property retrieves an object that represents the 
+  parent directory of a file.</P></LI>
+  <LI>
+  <P>The <A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.directoryname(v=vs.110).aspx"><SPAN 
+  xmlns="">DirectoryName</SPAN></A> property retrieves the full path of the 
+  parent directory of a file.</P></LI>
+  <LI>
+  <P>The <A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.exists(v=vs.110).aspx"><SPAN 
+  xmlns="">Exists</SPAN></A> property checks for the presence of a file before 
+  operating on it.</P></LI>
+  <LI>
+  <P>The <A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.isreadonly(v=vs.110).aspx"><SPAN 
+  xmlns="">IsReadOnly</SPAN></A> property retrieves or sets a value that 
+  specifies whether a file can be modified.</P></LI>
+  <LI>
+  <P>The <A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.length(v=vs.110).aspx"><SPAN 
+  xmlns="">Length</SPAN></A> retrieves the size of a file.</P></LI>
+  <LI>
+  <P>The <A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo.name(v=vs.110).aspx"><SPAN 
+  xmlns="">Name</SPAN></A> retrieves the name of a 
+file.</P></LI></UL></DIV></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Examples</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="section">
+<DIV class="section">
+<H3 class="subHeading">Legacy Code Example</H3>
+<DIV class="section">
+<P>The following example demonstrates some of the main members of the 
+<STRONG>FileInfo</STRONG> class.</P>
+<P>When the properties are first retrieved, <SPAN 
+class="selflink">FileInfo</SPAN> calls the <A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.refresh(v=vs.110).aspx">Refresh</A> 
+method and caches information about the file. On subsequent calls, you must call 
+<A href="https://msdn.microsoft.com/en-us/library/system.io.filesysteminfo.refresh(v=vs.110).aspx">Refresh</A> 
+to get the latest copy of the information.</P>
+<DIV class="codeSnippetContainer" id="code-snippet-2" xmlns="">
+<DIV class="codeSnippetContainerTabs">
+<DIV class="codeSnippetContainerTabActive" dir="ltr"><A>C#</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=cpp#code-snippet-2">C++</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-2">VB</A></DIV></DIV>
+<DIV class="codeSnippetContainerCodeContainer">
+<DIV class="codeSnippetToolBar">
+<DIV class="codeSnippetToolBarText"><A name="CodeSnippetCopyLink" title="Copy to clipboard." 
+style="display: block;" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_82939309-8590-4097-ae4e-7601091df57a');">Copy</A></DIV></DIV>
+<DIV class="codeSnippetContainerCode" id="CodeSnippetContainerCode_82939309-8590-4097-ae4e-7601091df57a" 
+dir="ltr">
+<DIV style="color: black;">
+<PRE><SPAN style="color: blue;">using</SPAN> System;
+<SPAN style="color: blue;">using</SPAN> System.IO;
+
+<SPAN style="color: blue;">class</SPAN> Test 
+{
+
+    <SPAN style="color: blue;">public</SPAN> <SPAN style="color: blue;">static</SPAN> <SPAN style="color: blue;">void</SPAN> Main() 
+    {
+        <SPAN style="color: blue;">string</SPAN> path = Path.GetTempFileName();
+        FileInfo fi1 = <SPAN style="color: blue;">new</SPAN> FileInfo(path);
+
+        <SPAN style="color: green;">//Create a file to write to.</SPAN>
+        <SPAN style="color: blue;">using</SPAN> (StreamWriter sw = fi1.CreateText()) 
+        {
+            sw.WriteLine(<SPAN style="color: rgb(163, 21, 21);">"Hello"</SPAN>);
+            sw.WriteLine(<SPAN style="color: rgb(163, 21, 21);">"And"</SPAN>);
+            sw.WriteLine(<SPAN style="color: rgb(163, 21, 21);">"Welcome"</SPAN>);
+        }	
+
+        <SPAN style="color: green;">//Open the file to read from.</SPAN>
+        <SPAN style="color: blue;">using</SPAN> (StreamReader sr = fi1.OpenText()) 
+        {
+            <SPAN style="color: blue;">string</SPAN> s = <SPAN style="color: rgb(163, 21, 21);">""</SPAN>;
+            <SPAN style="color: blue;">while</SPAN> ((s = sr.ReadLine()) != <SPAN style="color: blue;">null</SPAN>) 
+            {
+                Console.WriteLine(s);
+            }
+        }
+
+        <SPAN style="color: blue;">try</SPAN> 
+        {
+            <SPAN style="color: blue;">string</SPAN> path2 = Path.GetTempFileName();
+            FileInfo fi2 = <SPAN style="color: blue;">new</SPAN> FileInfo(path2);
+
+            <SPAN style="color: green;">//Ensure that the target does not exist.</SPAN>
+            fi2.Delete();
+
+            <SPAN style="color: green;">//Copy the file.</SPAN>
+            fi1.CopyTo(path2);
+            Console.WriteLine(<SPAN style="color: rgb(163, 21, 21);">"{0} was copied to {1}."</SPAN>, path, path2);
+
+            <SPAN style="color: green;">//Delete the newly created file.</SPAN>
+            fi2.Delete();
+            Console.WriteLine(<SPAN style="color: rgb(163, 21, 21);">"{0} was successfully deleted."</SPAN>, path2);
+
+        } 
+        <SPAN style="color: blue;">catch</SPAN> (Exception e) 
+        {
+            Console.WriteLine(<SPAN style="color: rgb(163, 21, 21);">"The process failed: {0}"</SPAN>, e.ToString());
+        }
+    }
+}
+</PRE></DIV></DIV></DIV></DIV>
+<P>This example produces output similar to the following.</P>
+<DIV class="codeSnippetContainer" id="code-snippet-3" xmlns="">
+<DIV class="codeSnippetContainerTabs"></DIV>
+<DIV class="codeSnippetContainerCodeContainer">
+<DIV class="codeSnippetToolBar">
+<DIV class="codeSnippetToolBarText"><A name="CodeSnippetCopyLink" title="Copy to clipboard." 
+style="display: block;" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_a5b7d9e8-dc7a-43a3-853c-d8de373af97d');">Copy</A></DIV></DIV>
+<DIV class="codeSnippetContainerCode" id="CodeSnippetContainerCode_a5b7d9e8-dc7a-43a3-853c-d8de373af97d" 
+dir="ltr">
+<DIV style="color: black;">
+<PRE>Hello
+And
+Welcome
+C:\Users\userName\AppData\Local\Temp\tmp70AB.tmp was copied to C:\Users\userName\AppData\Local\Temp\tmp70CB.tmp.
+C:\Users\userName\AppData\Local\Temp\tmp70CB.tmp was successfully deleted.
+</PRE></DIV></DIV></DIV></DIV></DIV></DIV></DIV></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Version 
+Information</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><STRONG>Universal Windows 
+Platform</STRONG><BR>Available since 10<BR><STRONG>.NET 
+Framework</STRONG><BR>Available since 
+1.1<BR><STRONG>Silverlight</STRONG><BR>Available since 2.0<BR><STRONG>Windows 
+Phone Silverlight</STRONG><BR>Available since 7.0<BR></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Thread 
+Safety</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<P>        Any public static (<STRONG>Shared</STRONG> in Visual Basic) members 
+of this type are thread safe. Any instance members are not guaranteed to be 
+thread safe.       </P></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">See 
+Also</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<P><A href="https://msdn.microsoft.com/en-us/library/system.io.filesystemwatcher(v=vs.110).aspx">FileSystemWatcher</A><BR><A 
+href="https://msdn.microsoft.com/en-us/library/system.io.driveinfo(v=vs.110).aspx">DriveInfo</A><BR><A 
+href="https://msdn.microsoft.com/en-us/library/system.io(v=vs.110).aspx">System.IO 
+Namespace</A><BR><A href="https://msdn.microsoft.com/en-us/library/k3352a4t(v=vs.110).aspx">File 
+and Stream I/O</A><BR><A href="https://msdn.microsoft.com/en-us/library/db5x7c0d(v=vs.110).aspx">How 
+to: Read Text from a File</A><BR><A href="https://msdn.microsoft.com/en-us/library/6ka1wd3w(v=vs.110).aspx">How 
+to: Write Text to a File</A><BR><A href="https://msdn.microsoft.com/en-us/library/36b93480(v=vs.110).aspx">How 
+to: Read and Write to a Newly Created Data File</A><BR></P></DIV></DIV><A href="#mainBody">Return 
+to top</A><BR></DIV></DIV></DIV></DIV></DIV>
+<DIV class="libraryMemberFilter">
+<DIV class="filterContainer"><SPAN>Show:</SPAN>         <LABEL><INPUT class="libraryFilterInherited" 
+type="checkbox" checked="checked" value="Inherit">Inherited         </LABEL>     
+    <LABEL><INPUT class="libraryFilterProtected" type="checkbox" checked="checked" 
+value="Protected">Protected         </LABEL>     </DIV></DIV><INPUT id="libraryMemberFilterEmptyWarning" type="hidden" value="There are no members available with your current filter settings."> 
+    </DIV> 
+<DIV id="rightNavigationMenu" ms.pgarea="right nav">
+<DIV id="mobileButtons"></DIV>
+<DIV id="navMain" style="top: 60px; position: fixed;">
+<DIV id="closeNavigation"><A class="tocCloseSmall" id="closeButton"></A></DIV>
+<DIV id="navigationButtons"><A id="provideFeedback2" 
+href="javascript:void(0)"><INS class="suggestion"></INS>Any Suggestions?</A><A 
+id="isd_print" href="https://msdn.microsoft.com/en-us/library/system.io.fileinfo(d=printer,v=vs.110).aspx" 
+rel="nofollow"><INS class="print"></INS>Print </A><A id="isd_printABook2" href="/en-us/library/export/help/?returnUrl=%2fen-us%2flibrary%2fsystem.io.fileinfo(v%3dvs.110).aspx"><INS 
+class="export"></INS>Export (<SPAN class="count">0</SPAN>)             
+</A></DIV>
+<DIV id="indoc_toc" ms.cmpgrp="indoc toc">
+<DIV id="indoc_title">IN THIS ARTICLE</DIV>
+<UL id="indoc_toclist">
+  <LI data-index="0">Inheritance Hierarchy</LI>
+  <LI data-index="1">Syntax</LI>
+  <LI data-index="2">Constructors</LI>
+  <LI data-index="3">Properties</LI>
+  <LI data-index="4">Methods</LI>
+  <LI data-index="5">Remarks</LI>
+  <LI data-index="6">Examples</LI>
+  <LI data-index="7">Version Information</LI>
+  <LI class="active" data-index="8">Thread Safety</LI>
+  <LI data-index="9">See Also</LI></UL></DIV></DIV></DIV>
+<DIV class="rightNavigationMenuThumbnail" 
+id="rightNavigationMenuThumbnail"></DIV></DIV>
+<DIV 
+class="clear"></DIV><INPUT name="__RequestVerificationToken" type="hidden" value="aYv2X8sKRRQSNMnOhDT_q_d4R6oty6Ia4azL3K-pRU0mbRZzlGthIh86Ha-ymAAo0Vrp1nloKc6wgK3VmLiUsd4w5g01"> 
+<INPUT id="ratingSubmitUrl" type="hidden" value="https://msdn.microsoft.com/en-us/library/feedback/add/system.io.fileinfo(v=vs.110).aspx"> 
+<INPUT id="isTopicRated" type="hidden" value="false">     
+<DIV id="lib-footer">
+<DIV class="show" id="responsiveRating" ms.pgarea="rating">
+<DIV id="skinnyRating">
+<DIV class="closeSmallWhite"></DIV>
+<DIV class="rating">
+<DIV id="s_ratingSection1">
+<DIV class="title">                Was this page helpful?             </DIV>     
+        
+<DIV class="description">                Your feedback about this content is 
+important. Let us know what you think.             </DIV>
+<DIV class="buttons"><BUTTON class="button" id="s_ratingYes" aria-label="Yes, this page was helpful">Yes</BUTTON> 
+                <BUTTON class="button" id="s_ratingNo" aria-label="No, this page was not helpful">No</BUTTON> 
+            </DIV>             <INPUT id="s_ratingValue" type="hidden" value=""> 
+        </DIV>
+<DIV id="s_ratingSection2">
+<DIV id="s_skinnyRatingForm">
+<DIV class="title">                    Additional feedback?                 
+</DIV><TEXTAREA id="s_ratingText" maxlength="1500" rows="6" cols="20"></TEXTAREA>
+<DIV class="counter right"><SPAN id="feedbackTextCounter">1500</SPAN> characters 
+remaining                 </DIV></DIV>
+<DIV class="buttons left"><BUTTON class="button" id="s_ratingSubmit" aria-label="Submit my additional feedback">Submit</BUTTON> 
+                <BUTTON class="button" id="s_ratingSkipThis" aria-label="Skip additional feedback">Skip 
+this</BUTTON>             </DIV></DIV>
+<DIV id="s_ratingSection3" style="display: none;">
+<DIV class="title">                Thank you!             </DIV>             
+<DIV class="description">                We appreciate your feedback.            
+ </DIV></DIV>
+<DIV id="contentFeedbackQAContainer" 
+style="display: none;"></DIV></DIV></DIV></DIV><LINK rel="stylesheet" type="text/css"> 
+                
+<DIV id="ux-footer" dir="ltr">
+<DIV class="both" id="footerSock">
+<DIV id="footerSockInner"><A name="feedback"></A> 
+<DIV class="rating">
+<DIV id="ratingSection1">
+<DIV class="title">            Was this page helpful?         </DIV>
+<DIV class="description">            Your feedback about this content is 
+important.<BR>Let us know what you think.         </DIV>
+<DIV class="buttons"><BUTTON class="button" id="ratingYes" aria-label="Yes, this page was helpful">Yes</BUTTON> 
+            <BUTTON class="button" id="ratingNo" aria-label="No, this page was not helpful">No</BUTTON> 
+        </DIV><INPUT id="ratingValue" type="hidden" value="">     </DIV>
+<DIV id="ratingSection2">
+<DIV class="title">            Additional feedback?         </DIV><TEXTAREA id="ratingText" maxlength="1500" rows="6" cols="20"></TEXTAREA> 
+        
+<DIV class="counter right"><SPAN id="feedbackTextCounter">1500</SPAN> characters 
+remaining         </DIV>
+<DIV class="buttons left"><BUTTON class="button" id="ratingSubmit" aria-label="Submit my additional feedback">Submit</BUTTON> 
+            <BUTTON class="button" id="ratingSkipThis" aria-label="Skip additional feedback">Skip 
+this</BUTTON>         </DIV></DIV>
+<DIV id="ratingSection3">
+<DIV class="title">            Thank you!         </DIV>
+<DIV class="description">            We appreciate your feedback.         
+</DIV></DIV>
+<DIV id="contentFeedbackQAContainer" style="display: none;"></DIV></DIV>
+<DIV class="userVoice">
+<DIV class="title">        Have a suggestion to improve MSDN Library?     </DIV>
+<DIV class="description">            Visit our UserVoice Page to submit and vote 
+on ideas!         </DIV>
+<DIV class="buttons"><A class="button" id="userVoiceButton" href="http://feedback.msdn.com/forums/257782-msdn-feature-suggestions/category/83975" 
+target="_blank">Make a suggestion</A>     </DIV></DIV>
+<DIV class="clear"></DIV></DIV></DIV><FOOTER class="top">
+<DIV id="Fragment_LeftLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="LeftLinks">
+<DIV class="linkList">
+<DIV class="linkListTitle">Dev centers</DIV>
+<UL class="links">
+  <LI><A class="windowsBlue" id="LeftLinks_2148_1" href="https://dev.windows.com" 
+  xmlns="http://www.w3.org/1999/xhtml">Windows</A>       </LI>
+  <LI><A class="office" id="LeftLinks_2148_3" href="http://dev.office.com" 
+  xmlns="http://www.w3.org/1999/xhtml">Office</A>       </LI>
+  <LI><A class="visualStudio" id="LeftLinks_2148_4" href="https://msdn.microsoft.com/vstudio" 
+  xmlns="http://www.w3.org/1999/xhtml">Visual Studio</A>       </LI>
+  <LI><A id="LeftLinks_2148_12" href="http://azure.microsoft.com/en-us/documentation/" 
+  target="_blank" xmlns="http://www.w3.org/1999/xhtml">Microsoft Azure</A>       
+  </LI>
+  <LI><A id="LeftLinks_2148_5" href="https://msdn.microsoft.com/aa937802" xmlns="http://www.w3.org/1999/xhtml">More...</A> 
+        </LI></UL></DIV></DIV>
+<DIV id="rightLinks">
+<DIV id="Fragment_CenterLinks1" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks1">
+<DIV class="linkList">
+<DIV class="linkListTitle">Learning resources</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks1_2151_4" href="http://www.microsoftvirtualacademy.com/" 
+  xmlns="http://www.w3.org/1999/xhtml">Microsoft Virtual Academy</A>       </LI>
+  <LI><A id="CenterLinks1_2151_5" href="http://channel9.msdn.com/" xmlns="http://www.w3.org/1999/xhtml">Channel 
+  9</A>       </LI>
+  <LI><A id="CenterLinks1_2151_6" href="http://www.interoperabilitybridges.com/" 
+  xmlns="http://www.w3.org/1999/xhtml">Interoperability Bridges</A>       </LI>
+  <LI><A id="CenterLinks1_2151_7" href="https://msdn.microsoft.com/magazine/" 
+  xmlns="http://www.w3.org/1999/xhtml">MSDN Magazine</A>       
+</LI></UL></DIV></DIV>
+<DIV id="Fragment_CenterLinks2" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks2">
+<DIV class="linkList">
+<DIV class="linkListTitle">Community</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks2_2151_8" href="https://social.msdn.microsoft.com/forums/en-us/home" 
+  xmlns="http://www.w3.org/1999/xhtml">Forums</A>       </LI>
+  <LI><A id="CenterLinks2_2151_9" href="http://blogs.msdn.com/b/developer-tools/" 
+  xmlns="http://www.w3.org/1999/xhtml">Blogs</A>       </LI>
+  <LI><A id="CenterLinks2_2151_10" href="http://www.codeplex.com" xmlns="http://www.w3.org/1999/xhtml">Codeplex</A> 
+        </LI></UL></DIV></DIV>
+<DIV id="Fragment_CenterLinks3" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks3">
+<DIV class="linkList">
+<DIV class="linkListTitle">Support</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks3_2151_11" href="https://msdn.microsoft.com/hh361695" 
+  xmlns="http://www.w3.org/1999/xhtml">Self support</A>       
+</LI></UL></DIV></DIV>
+<DIV class="nth-child-4n" id="Fragment_CenterLinks4" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks4">
+<DIV class="linkList">
+<DIV class="linkListTitle">Programs</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks4_2151_13" href="https://www.microsoft.com/bizspark/" 
+  xmlns="http://www.w3.org/1999/xhtml">BizSpark (for startups)</A>       </LI>
+  <LI><A id="CenterLinks4_2151_14" href="https://www.dreamspark.com/" xmlns="http://www.w3.org/1999/xhtml">DreamSpark</A> 
+        </LI>
+  <LI><A id="CenterLinks4_2151_17" href="http://www.imaginecup.com" xmlns="http://www.w3.org/1999/xhtml">Imagine 
+  Cup</A>       </LI></UL></DIV></DIV></DIV></FOOTER><FOOTER class="bottom"><SPAN 
+class="localeContainer">
+<FORM class="selectLocale" id="selectLocaleForm" action="https://msdn.microsoft.com/en-us/selectlocale-dmc"><INPUT name="fromPage" type="hidden" value="https%3a%2f%2fmsdn.microsoft.com%2fen-us%2flibrary%2fsystem.io.fileinfo(v%3dvs.110).aspx"> 
+        <A title="Change your language" onclick="$('#selectLocaleForm').submit();return false;" 
+href="#">United States (English)</A>     </FORM></SPAN>
+<DIV id="Fragment_BottomLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="BottomLinks">
+<DIV class="linkList">
+<UL class="links horizontal">
+  <LI><A id="BottomLinks_2148_7" href="https://msdn.microsoft.com/newsletter.aspx" 
+  xmlns="http://www.w3.org/1999/xhtml">Newsletter</A>       </LI>
+  <LI><A id="BottomLinks_2148_8" href="https://msdn.microsoft.com/dn529288" 
+  xmlns="http://www.w3.org/1999/xhtml">Privacy &amp; cookies</A>       </LI>
+  <LI><A id="BottomLinks_2148_9" href="https://msdn.microsoft.com/cc300389" 
+  xmlns="http://www.w3.org/1999/xhtml">Terms of use</A>       </LI>
+  <LI><A id="BottomLinks_2148_10" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" 
+  xmlns="http://www.w3.org/1999/xhtml">Trademarks</A>       
+</LI></UL></DIV></DIV><SPAN class="logoLegal"><SPAN class="logo"></SPAN><SPAN 
+class="copyright">© 2015 Microsoft</SPAN>             
+</SPAN></FOOTER></DIV></DIV>
+<DIV class="footerPrintView">
+<DIV class="footerCopyrightPrintView">© 2015 Microsoft</DIV></DIV><INPUT id="tocPaddingPerLevel" type="hidden" value="17"> 
+        <INPUT id="MtpsDevice" type="hidden" value="Default"> <!--[CDATA[ Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]--> 
+                                            <NOSCRIPT>&lt;div&gt;&lt;img 
+alt="DCSIMG" id="Img1" width="1" height="1" 
+src="https://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;amp;WT.js=No" 
+/&gt;&lt;/div&gt;</NOSCRIPT> 
+<DIV 
+id="globalRequestVerification"><INPUT name="__RequestVerificationToken" type="hidden" value="v1WTO8iAoXeJMhBSTmbrT-92Fb2odOejaAMTRlmmOrZ0J1jNiaA6QjirhwGNvRYvjjqqRYzYRXYoMolcxgtYRH46T_Y1"> 
+</DIV></DIV>
+<SCRIPT class="mtps-injected" type="text/javascript">
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-msdn.sec.s-msft.com\", \r\n\t\"css\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"xap\": \"https://msdn.microsoft.com\"\r\n});\r\n/**/" },
+	{ url: "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js" },
+	{ txt: "//\n  var literalNormalizedUrl = \u0027/en-us/library/akth6b1k(l=en-us,v=vs.110).aspx\u0027;\n  var wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n  var wt_fpcdom = \u0027.microsoft.com\u0027;\n  var wt_domlist = \u0027msdn.microsoft.com\u0027;\n  var wt_pathlist = \u0027\u0027;\n  var wt_paramlist = \u0027DCSext.mtps_devcenter\u0027;\n  var wt_siteid = \u0027MSDN\u0027;\n  var gDomain = \u0027m.webtrends.com\u0027;\n  var gDcsId = \u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n  var gFpc = \u0027WT_FPC\u0027;\n\n\n\n  if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n    var wtidJs = document.createElement(\"script\");\n    wtidJs.src = \"//\" + gDomain + \"/\" + gDcsId + \"/wtid.js\";\n    document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n  }\n\n\n\n  var detectedLocale = \u0027en-us\u0027;\n  var wtsp = \u0027msdnlib_dotnet\u0027;\n  var gTrackEvents = \u00270\u0027;\n/**/" },
+	{ txt: "//\n\n        window.appInsightsId = \u002760854590-027a-4ae4-98be-2741a40f355f\u0027;\n        //" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5\u0026amp;hashKey=0B41D28E6726B4E716D72FB5060856F6\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4" },
+	{ url: "https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=Msdn\u0026loc=en-us\u0026focusOnInit=false\u0026emptyWatermark=true\u0026searchButtonTooltip=Search MSDN" },
+	{ txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = \u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = \u0027Collapse\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027Click to expand. Double-click to expand all.\u0027; MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027Click to collapse. Double-click to collapse all.\u0027; MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027Expand All\u0027; MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027Collapse All\u0027;" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1\u0026amp;hashKey=16381DF0927C75E12C62EAD23C017874\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4" },
+	{ txt: "$(document).ready(function() {\n        try {\n            var token = $(\"#globalRequestVerification input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n            $(\"#siteFeedbackForm\").append(token);\n        } catch(err) {\n            \n        }\n    });" }
+]);
+
+/*]]>*/
+</SCRIPT>
+ 
+<DIV id="overlayMask"></DIV>
+<SCRIPT src="https://www.microsoft.com/library/svy/sto/https/broker-config.js?1442859576614"></SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,1761 @@
+﻿       Get filename HttpWebRequest   //<![CDATA[ var fms_site_culture = 
+'en-US'; var fms_site_lcid = '1033'; //]]>    if (top.location.href != 
+self.location.href) top.location.href = self.location.href;       $
+(document).ready(function () { prettyPrint(); });        $
+(document).ready(function () { window.appInsights = { queue: [], start: function 
+(n) { function r(n, t) { n[t] = function () { var i = arguments; 
+n.queue.push(function () { n[t].apply(n, i); }); }; } var t, i; 
+this.applicationInsightsId = n; this.accountId = null; this.appUserId = null; 
+r(this, "logEvent"); r(this, "logPageView"); t = 
+document.createElement("script"); t.type = "text/javascript"; t.src = 
+"//az416426.vo.msecnd.net/scripts/ai.js"; t.async = true; i = 
+document.getElementsByTagName("script")[0]; i.parentNode.insertBefore(t, i); } 
+}; window.appInsights.start("6e09d518-9cc0-4a60-995f-a3fad357f796"); 
+window.appInsights.logPageView(); });   
+
+ 
+
+   
+
+
+
+
+ 
+ Developer Network Developer Network Developer 
+
+   :CreateViewProfileText: Sign in
+ 
+
+
+MSDN subscriptions 
+ 
+Get tools 
+  
+
+
+  http://www.facebook.com/microsoftdeveloper 
+  https://twitter.com/msdev 
+  http://plus.google.com/111221966647232053570/ 
+     
+
+
+
+
+
+
+
+ 
+
+
+  Technologies Cloud 
+    App Development 
+    Web 
+    Data 
+    Gaming 
+
+  Downloads Visual Studio 
+    MSDN subscription access 
+    SDKs 
+    Trial software Free downloads 
+      Office resources 
+      SharePoint Server 2013 resources 
+      SQL Server 2014 Express resources 
+      Windows Server 2012 resources 
+
+
+  Programs Rewards 
+    Startups 
+    Students Microsoft Imagine 
+      Microsoft Student Partners 
+
+    Architects Overview 
+      Case studies 
+      Blueprints 
+      Blog 
+      Forums 
+
+    Events 
+    MSDN Subscriptions Overview 
+      Benefits 
+      Administrators 
+
+
+  Community Magazine 
+    Forums 
+    Blogs 
+    Tech Advisors 
+    Channel 9 
+
+  Documentation APIs and reference 
+    Dev centers 
+
+  Samples 
+  
+
+
+
+
+  
+
+
+ 
+
+
+/*<![CDATA[*/ /**/ (window.MTPS || (window.MTPS = {})).cdnDomains || 
+(window.MTPS.cdnDomains = { "image": "https://msdn.microsoft.com", "js": 
+"https://msdn.microsoft.com", "css": "https://msdn.microsoft.com", "xap": 
+"https://msdn.microsoft.com" }); /**/ /*]]>*/ 
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+   
+
+
+
+
+
+
+
+Ask a question 
+
+
+
+Quick access 
+
+ 
+
+  Forums home
+
+
+  Browse forums users
+
+
+  FAQ
+
+
+ 
+
+
+
+Search related threads 
+
+
+
+
+        
+ $(function() { Forums.Homepage.wireTopBar('Search forum questions'); });  
+
+ 
+
+
+
+
+  Remove From My Forums
+
+
+
+
+
+
+
+
+Answered by:
+
+
+
+
+
+         
+
+
+
+      50,595 
+
+      Points
+
+      Top 0.1
+
+ 
+      Louis.fr 
+       Joined Jun 2009 
+       
+
+
+      3
+       
+      4
+       
+      12
+       
+
+
+      Louis.fr's threads
+
+
+      Show activity
+
+
+
+
+
+Top related threads
+
+
+  Get filename HttpWebRequest 
+
+
+
+
+  get filename 
+
+
+
+
+  get filename 
+
+
+
+
+  Get filename? 
+
+
+
+
+  Get FileName 
+
+
+
+ 
+
+
+
+ 
+Get filename HttpWebRequest  
+
+Visual Studio Languages  
+
+ , 
+
+.NET Framework  
+ >  
+Visual C#   
+
+
+  Question
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  I'm downloading some files with HTTPRequest, following this tutorial 
+  http://www.geekpedia.com/tutorial179_Creating-a-download-manager-in-Csharp.html
+
+  However, how do I get the filename? I need to get the file name in order to 
+  save it, because I don't know the extensions of the files.
+
+  Get a life. Go party! 
+
+
+  Friday, July 23, 2010 12:35 AM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  JobaDiniz
+
+   
+
+           
+
+
+
+
+              100 
+
+              Points
+
+              Top 15
+
+
+
+        JobaDiniz 
+         Joined Oct 2008 
+         
+
+
+        1
+         
+        8
+         
+
+
+        JobaDiniz's threads
+
+
+        Show activity
+
+
+
+  100 Points 
+
+   
+
+
+Answers 
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  The file name is GREL - Sumário AGE - incorporação IBE 2005.doc and it appears 
+  in the headers of the WebResponse.
+   
+    Marked as answer by JobaDiniz Saturday, July 24, 2010 5:27 PM 
+
+
+
+  Saturday, July 24, 2010 1:08 AM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Louis.fr
+
+   
+
+           
+
+
+
+
+              50,595 
+
+              Points
+
+              Top 0.1
+
+
+
+        Louis.fr 
+         Joined Jun 2009 
+         
+
+
+        3
+         
+        4
+         
+        12
+         
+
+
+        Louis.fr's threads
+
+
+        Show activity
+
+
+
+  50,595 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  Okay, I got it.
+
+  webResponse.Headers["Content-Disposition"]
+
+  Get a life. Go party! 
+    Marked as answer by JobaDiniz Saturday, July 24, 2010 5:27 PM 
+
+
+
+  Saturday, July 24, 2010 5:27 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  JobaDiniz
+
+   
+
+           
+
+
+
+
+              100 
+
+              Points
+
+              Top 15
+
+
+
+        JobaDiniz 
+         Joined Oct 2008 
+         
+
+
+        1
+         
+        8
+         
+
+
+        JobaDiniz's threads
+
+
+        Show activity
+
+
+
+  100 Points 
+
+   
+
+
+All replies 
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+  The file name is simply everything after the last '/' in the url (and before 
+  the ? if the url has parameters).
+   
+
+
+  Friday, July 23, 2010 4:03 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  s3rvy
+
+   
+
+           
+
+
+
+
+              2,680 
+
+              Points
+
+              Top 5
+
+
+
+        s3rvy 
+         Joined Jul 2010 
+         
+
+
+        3
+         
+        9
+         
+
+
+        s3rvy's threads
+
+
+        Show activity
+
+
+
+  2,680 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  No it isn't. Here is the link: 
+  http://siteempresas.bovespa.com.br/DWL/FormDetalheDownload.asp?site=C&prot=76579
+
+  The file name is GREL.doc
+
+  Get a life. Go party! 
+
+
+  Friday, July 23, 2010 8:26 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  JobaDiniz
+
+   
+
+           
+
+
+
+
+              100 
+
+              Points
+
+              Top 15
+
+
+
+        JobaDiniz 
+         Joined Oct 2008 
+         
+
+
+        1
+         
+        8
+         
+
+
+        JobaDiniz's threads
+
+
+        Show activity
+
+
+
+  100 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  The file name is GREL - Sumário AGE - incorporação IBE 2005.doc and it appears 
+  in the headers of the WebResponse.
+   
+    Marked as answer by JobaDiniz Saturday, July 24, 2010 5:27 PM 
+
+
+
+  Saturday, July 24, 2010 1:08 AM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Louis.fr
+
+   
+
+           
+
+
+
+
+              50,595 
+
+              Points
+
+              Top 0.1
+
+
+
+        Louis.fr 
+         Joined Jun 2009 
+         
+
+
+        3
+         
+        4
+         
+        12
+         
+
+
+        Louis.fr's threads
+
+
+        Show activity
+
+
+
+  50,595 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  I can't figure out how you managed to get the file name from the Headers of 
+  HttpWebResponse.
+
+  It's a bunch of Keys, I can't get the filename from those keys.
+
+   
+
+webRequest = (HttpWebRequest)WebRequest.Create(currentFile.Url);<br/>
+          webRequest.Credentials = CredentialCache.DefaultCredentials;<br/>
+          webResponse = (HttpWebResponse)webRequest.GetResponse();          <br/>
+          long fileSize = webResponse.ContentLength;<br/>
+          string filename = webResponse.Headers.Keys??;
+
+
+  Get a life. Go party! 
+
+
+  Saturday, July 24, 2010 3:14 AM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  JobaDiniz
+
+   
+
+           
+
+
+
+
+              100 
+
+              Points
+
+              Top 15
+
+
+
+        JobaDiniz 
+         Joined Oct 2008 
+         
+
+
+        1
+         
+        8
+         
+
+
+        JobaDiniz's threads
+
+
+        Show activity
+
+
+
+  100 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  Okay, I got it.
+
+  webResponse.Headers["Content-Disposition"]
+
+  Get a life. Go party! 
+    Marked as answer by JobaDiniz Saturday, July 24, 2010 5:27 PM 
+
+
+
+  Saturday, July 24, 2010 5:27 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  JobaDiniz
+
+   
+
+           
+
+
+
+
+              100 
+
+              Points
+
+              Top 15
+
+
+
+        JobaDiniz 
+         Joined Oct 2008 
+         
+
+
+        1
+         
+        8
+         
+
+
+        JobaDiniz's threads
+
+
+        Show activity
+
+
+
+  100 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  Hi JobaDiniz..
+
+   
+
+  i have also created download manager from tutorial 
+  http://www.geekpedia.com/tutorial179_Creating-a-download-manager-in-Csharp.html..
+
+   
+
+  How do you able to retrieve file name from the link ?
+
+   
+
+  I am trying to get file name and extension from this link 
+  "http://www.apniisp.com/songs.php?id=1407"..
+
+   
+
+  I try this ...
+
+   
+               public string RetriveFileName()
+           {
+               //Create a request to the file we are downloading
+               webRequest = (HttpWebRequest)WebRequest.Create(_url);
+
+             
+
+               //set default authentication
+               webRequest.Credentials = CredentialCache.DefaultCredentials;
+
+               //retrive response from the server
+               webResponse = (HttpWebResponse)webRequest.GetResponse();
+
+               string name = webResponse.Headers["Content-Disposition"];
+
+              
+               return name;
+                  
+           }
+
+
+   Not working in my case.. Can u suggest some changes in my code..If u knw how 
+  to retrieve file name           
+            
+
+   
+
+
+  Sunday, October 30, 2011 8:00 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Sumair Sheikh
+
+   
+
+           
+
+
+
+
+              0 
+
+              Points
+
+
+
+        Sumair Sheikh 
+         Joined Aug 2011 
+         
+
+
+        4
+         
+
+
+        Sumair Sheikh's threads
+
+
+        Show activity
+
+
+
+  0 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+  > I am trying to get file name and extension from this link 
+   http://www.apniisp.com/songs.php?id=1407..
+
+     
+
+using System;
+using System.IO;
+...
+var url = new Uri("http://www.apniisp.com/songs.php?id=1407");
+var fullName = url.LocalPath.TrimStart('/');
+var name = Path.GetFileNameWithoutExtension(fullName);
+var ext = Path.GetExtension(fullName);
+
+
+   
+
+
+  Sunday, October 30, 2011 8:11 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Malobukv
+
+   
+
+           
+
+
+
+
+              15,470 
+
+              Points
+
+              Top 0.5
+
+
+
+        Malobukv 
+         Joined Sep 2008 
+         
+
+
+        4
+         
+        4
+         
+        15
+         
+
+
+        Malobukv's threads
+
+
+        Show activity
+
+
+
+  15,470 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  Malobukv... thanks for the reply..
+
+   
+
+  Ur code return Filename = Songs
+
+  and extention = .php
+
+   
+
+  Thats not i want ... Try to run this link in your browser.. you will find the 
+  orignal name of file..
+
+  170 - Khwahishon.mp3
+
+   
+
+   
+   
+
+
+  Sunday, October 30, 2011 8:45 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Sumair Sheikh
+
+   
+
+           
+
+
+
+
+              0 
+
+              Points
+
+
+
+        Sumair Sheikh 
+         Joined Aug 2011 
+         
+
+
+        4
+         
+
+
+        Sumair Sheikh's threads
+
+
+        Show activity
+
+
+
+  0 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  > Thats not i want ... Try to run this link in your browser.. you will find 
+  the orignal name of file.. 170 - Khwahishon.mp3
+
+
+  this is because server returns http-header named Location: ... and browser 
+  requests new file.
+   in this case you should set  HttpWebRequest.AllowAutoRedirect = false;
+   and after request read Location with HttpWebResponse.GetResponseHeader
+   
+    Proposed as answer by Sumair Sheikh Sunday, October 30, 2011 11:40 PM 
+
+
+
+  Sunday, October 30, 2011 9:05 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Malobukv
+
+   
+
+           
+
+
+
+
+              15,470 
+
+              Points
+
+              Top 0.5
+
+
+
+        Malobukv 
+         Joined Sep 2008 
+         
+
+
+        4
+         
+        4
+         
+        15
+         
+
+
+        Malobukv's threads
+
+
+        Show activity
+
+
+
+  15,470 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  I try your suggestion
+
+     //Create a request to the file we are downloading
+
+              
+               webRequest = (HttpWebRequest)WebRequest.Create(_url);
+
+               webRequest.AllowAutoRedirect = false;
+
+               //set default authentication
+               webRequest.Credentials = CredentialCache.DefaultCredentials;
+
+               //retrive response from the server
+               webResponse = (HttpWebResponse)webRequest.GetResponse();
+
+              // string name = webRequest.Headers.ToString();
+
+               string n = webResponse.Headers["Location"] ;
+              
+             
+                  
+
+                   var url = new Uri(n);
+                   var fullName = url.LocalPath.TrimStart('/');
+                   var name = Path.GetFileNameWithoutExtension(fullName);
+                   var ext = Path.GetExtension(fullName);
+
+                   return fullName;
+
+   
+
+  Now its return .. Mix - Songs/170 - Khwahishon - Farhan Saeed 
+(Apniisp.Com).mp3
+
+  i want   .........170 - Khwahishon - Farhan Saeed (Apniisp.Com).mp3
+
+   
+
+  Thanks  buddy.. i m trying to make download manager..can i use same strategy 
+  webRequest.AllowAutoRedirect = false; FOR all downloads???
+
+   
+    Edited by Sumair Sheikh Sunday, October 30, 2011 11:40 PM 
+
+
+
+  Sunday, October 30, 2011 11:38 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Sumair Sheikh
+
+   
+
+           
+
+
+
+
+              0 
+
+              Points
+
+
+
+        Sumair Sheikh 
+         Joined Aug 2011 
+         
+
+
+        4
+         
+
+
+        Sumair Sheikh's threads
+
+
+        Show activity
+
+
+
+  0 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  I am very confused...About  my strategy ..
+
+  for example Look this link...
+
+  http://files2.freedownloadmanager.org/fdm38inst.exe
+
+   
+
+  This link doesnot need webRequest.AllowAutoRedirect = false
+
+  and we can access  file name by only with this line of code..
+
+     var url = new Uri(_url);
+                   var fullName = url.LocalPath.TrimStart('/');
+                   var name = Path.GetFileNameWithoutExtension(fullName);
+                   var ext = Path.GetExtension(fullName);
+
+                   return fullName;
+
+   
+
+  I dun understand how to tackle all kind of links.. I wish to make 
+  Method(function) which always return correct file name..
+
+  Whatever the link is
+
+  http://files2.freedownloadmanager.org/fdm38inst.exe
+
+  http://www.apniisp.com/songs.php?id=1407
+
+   
+
+  Malobukv can u please help me to make FUNCTION in which we pass URL and it 
+  always return the Correct downloaded FUll name..  Like all other download 
+  manger gives.
+
+
+
+   
+    Proposed as answer by kssitwarBanned Saturday, March 03, 2012 5:24 PM 
+
+
+
+  Sunday, October 30, 2011 11:52 PM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Sumair Sheikh
+
+   
+
+           
+
+
+
+
+              0 
+
+              Points
+
+
+
+        Sumair Sheikh 
+         Joined Aug 2011 
+         
+
+
+        4
+         
+
+
+        Sumair Sheikh's threads
+
+
+        Show activity
+
+
+
+  0 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+
+  I fount my self .. Some Links have "Content-Disposition" header in which they 
+  have filename info..
+
+  Somelink have file info in "Location" header..
+
+  and some Links are simple.. Like 
+  ..http://files2.freedownloadmanager.org/fdm38inst.exe
+
+  I wish to know the best way to always  retrive correct file name..
+
+   
+    Edited by Sumair Sheikh Monday, October 31, 2011 12:01 AM 
+
+
+
+  Monday, October 31, 2011 12:00 AM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  Sumair Sheikh
+
+   
+
+           
+
+
+
+
+              0 
+
+              Points
+
+
+
+        Sumair Sheikh 
+         Joined Aug 2011 
+         
+
+
+        4
+         
+
+
+        Sumair Sheikh's threads
+
+
+        Show activity
+
+
+
+  0 Points 
+
+   
+
+
+
+
+   
+
+
+
+   
+  0
+
+  Sign in to vote  
+
+
+
+  Many, many thanks for tip
+   I was losing the will to live trying to find FileName
+   
+
+
+  Thursday, April 30, 2015 10:37 AM
+
+
+   Reply  
+
+  |
+
+   Quote  
+
+
+
+
+
+
+   
+
+
+
+  JohnJames55
+
+   
+
+           
+
+
+
+
+              65 
+
+              Points
+
+              Top 15
+
+
+
+        JohnJames55 
+         Joined May 2008 
+         
+
+
+        4
+         
+
+
+        JohnJames55's threads
+
+
+        Show activity
+
+
+
+  65 Points 
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Have a suggestion to improve Forums? 
+
+Visit our UserVoice Page to submit and vote on ideas! 
+
+Make a suggestion 
+
+
+
+
+
+Dev centers
+  Windows 
+  Office 
+  Visual Studio 
+  Microsoft Azure 
+  More... 
+
+
+
+
+Learning resources
+  Microsoft Virtual Academy 
+  Channel 9 
+  Interoperability Bridges 
+  MSDN Magazine 
+
+
+
+Community
+  Forums 
+  Blogs 
+  Codeplex 
+
+
+
+Support
+  Self support 
+
+
+
+Programs
+  BizSpark (for startups) 
+  DreamSpark 
+  Imagine Cup 
+
+
+ United States (English) 
+ 
+
+  Newsletter 
+  Privacy & cookies 
+  Terms of use 
+  Trademarks 
+ © 2015 Microsoft  /*<![CDATA[*/ /**/ (window.MTPS || (window.MTPS = 
+{})).cdnDomains || (window.MTPS.cdnDomains = { "image": 
+"https://i-msdn.sec.s-msft.com", "js": "https://i2-msdn.sec.s-msft.com", "css": 
+"https://i-msdn.sec.s-msft.com", "xap": "https://msdn.microsoft.com" }); /**/
+ /*]]>*/ 
+  var railItems = 
+["/Forums/en-US/rightrailannouncement/Msdn/1b8316f5-41a3-4b88-b3f0-dcd6dba95852"]; e
+var pageData = {"validUser":false,"autoSubscribe":false};  var 
+userEmailConfigured = false;    $(document).ready(function () { 
+Forums.ThreadPage.wirePageElements('Search forum questions'); });   <img alt="" 
+border="0" id="DCSIMG" width="1" height="1" 
+src="http://m.webtrends.com/dcsour5e80000008ybade4ttg_1i1l/njs.gif?dcsuri=/nojavascript&amp;WT.js=No">r
+       <a href="https://www.omniture.com" title="Web Analytics"> <img 
+src="https://msstonojssocial.112.2O7.net/b/ss/msstonojssocial/1/H.20.2--NS/0" 
+height="1" width="1" alt="" /> </a> 

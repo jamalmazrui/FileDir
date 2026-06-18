@@ -1,0 +1,858 @@
+﻿ Simple Usages of HttpWebRequest and RestSharp with JSON.NET - CodeProject                  
+               //<![CDATA[ function defrm () { /* thanks twitter */ 
+document.write = ''; window.top.location = window.self.location; 
+setTimeout(function() { document.body.innerHTML = ''; }, 0); window.self.onload 
+= function(evt) { document.body.innerHTML = ''; }; }if (window.top !== 
+window.self) { try { if (window.top.location.host) { /* will throw */ } else { 
+defrm(); /* chrome */ } } catch (ex) { defrm(); /* everyone else */ } }if 
+(typeof(DemoUrl)!='undefined') document.write(unescape('%3Cme')+'ta 
+http'+'-equiv="re'+'fresh" con'+'tent="1;url='+DemoUrl+unescape('"%3CE'));
+ (function() { var _dma = document.createElement('script'); _dma.type = 
+'text/javascript'; _dma.async = true; _dma.src = ('https:' == 
+document.location.protocol ? 'https://' : 'http://') + 
+'cdn2.developermedia.com/a.min.js'; (document.getElementsByTagName('head')[0] || 
+document.getElementsByTagName('body')[0]).appendChild(_dma); })(); //]]>  var 
+_gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-1735123-1']);
+ _gaq.push(['_trackPageview']); _gaq.push(['_setDomainName', 
+'www.codeproject.com']); _gaq.push(['_setSessionTimeout', '1200']); (function () 
+{ var ga = document.createElement('script'); ga.type = 'text/javascript'; 
+ga.async = true; ga.src = ('https:' == document.location.protocol ? 
+'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ (document.getElementsByTagName('head')[0] || 
+document.getElementsByTagName('body')[0]).appendChild(ga); })();  	 
+
+× 
+Sign up for our free weekly Web Developer Newsletter.
+
+
+
+
+11,753,757 members (79,119 online)
+
+
+
+//<!-- function doSubmit(secure) { if (secure) document.subForm.action = 
+"https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fTips%2f668625%2fSimple-Usages-of-HttpWebRequest-and-RestSharp-with"
+ else document.subForm.action = 
+"https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fTips%2f668625%2fSimple-Usages-of-HttpWebRequest-and-RestSharp-with"
+ document.subForm.submit(); return true; }//-->   Sign in 
+
+ 
+Email
+
+
+
+Password
+
+
+
+function Join(){ var url = 
+'http://www.codeproject.com/script/Membership/Modify.aspx?meml=' + 
+document.subForm.Email.value; document.location.href=url;return false; }
+ document.write('<input type="button" class="create" onclick="return Join();" 
+value="Join"'); document.write('<input type="hidden" name="fld_quicksign" 
+value="true" />');   
+
+  Forgot your password? 
+
+Sign in using      
+
+
+
+ 
+
+
+
+
+Don't like this Ad?
+
+Please tell us why: OffensiveAbusiveOff topicDon't like the Ad Report
+
+Thank you for the report!
+ 
+
+
+
+
+
+
+
+Search within:
+ Articles
+Quick Answers
+Messages
+
+
+
+
+  home
+
+
+  articles
+
+    Chapters and Sections>
+
+       
+
+
+
+    Search
+
+
+    Latest Articles
+
+
+    Latest Tips/Tricks
+
+
+    Top Articles
+
+
+    Beginner Articles
+
+
+    Technical Blogs
+
+
+    Posting/Update Guidelines
+
+
+    Article Help Forum
+
+
+    Article Competition
+
+
+     Submit an article or tip 
+
+
+     Post your Blog 
+
+
+
+
+
+  quick answers
+  Q&A 
+     Ask a Question
+
+
+    View Unanswered Questions
+
+
+    View All Questions...
+
+
+    Linux questions
+
+
+    C# questions
+
+
+    ASP.NET questions
+
+
+    C#5 questions
+
+
+    SQL questions
+
+
+
+
+
+  discussions
+  forums 
+    All Message Boards...
+
+
+    Application Lifecycle>
+
+      Running a Business
+
+
+      Sales / Marketing
+
+
+      Collaboration / Beta Testing
+
+
+      Work Issues
+
+
+
+    Design and Architecture
+
+
+    ASP.NET
+
+
+    JavaScript
+
+
+    C / C++ / MFC>
+
+      ATL / WTL / STL
+
+
+      Managed C++/CLI
+
+
+
+    C#
+
+
+    Free Tools
+
+
+    Objective-C and Swift
+
+
+    Database
+
+
+    Hardware & Devices>
+
+      System Admin
+
+
+
+    Hosting and Servers
+
+
+    Java
+
+
+    .NET Framework
+
+
+    Android
+
+
+    iOS
+
+
+    Mobile
+
+
+    Sharepoint
+
+
+    Silverlight / WPF
+
+
+    Visual Basic
+
+
+    Web Development
+
+
+    Site Bugs / Suggestions
+
+
+
+
+  features
+
+    Competitions
+
+
+    News
+
+
+    The Insider Newsletter
+
+
+    The Daily Build Newsletter
+
+
+    Newsletter archive
+
+
+    Surveys
+
+
+    Product Showcase
+
+
+    Research Library
+
+
+    CodeProject Stuff
+
+
+
+
+
+  community
+  lounge 
+    Who's Who
+
+
+    Most Valuable Professionals
+
+
+    The Lounge  
+
+
+    The Insider News
+
+
+    The Weird & The Wonderful
+
+
+    The Soapbox
+
+
+    Press Releases
+
+
+    Non-English Language >
+
+      General Indian Topics
+
+
+      General Chinese Topics
+
+
+
+
+
+  help
+
+    What is 'CodeProject'?
+
+
+    General FAQ
+
+
+    Ask a Question
+
+
+    Bugs and Suggestions
+
+
+    Article Help Forum
+
+
+    Site Map
+
+
+    Advertise with us
+
+
+    Employment Opportunities
+
+
+    About Us
+
+
+
+
+
+
+
+
+
+Articles » Web Development » ASP.NET » Samples
+
+
+
+  
+
+    
+
+
+
+
+
+      Tip/Trick
+
+      Browse Code
+
+      Stats
+
+      Revisions (32)
+
+      Alternatives
+
+      Comments  
+
+
+      Tagged as
+
+      C#
+
+      ASP.NET
+
+      Windows
+
+      .NET
+
+      Visual-Studio
+        
+
+
+
+       
+
+       
+
+        
+
+      Simple Usages of HttpWebRequest and RestSharp with JSON.NET
+
+
+       
+      B. Clay Shannon,  18 Oct 2013 CPOL 110.8K 18
+       
+              
+
+             
+
+             
+                4.64 (6 votes) 
+
+
+
+
+            123
+
+            4
+
+            5
+
+      4.64/5 - 6 votes
+
+      μ 4.64, σa 0.96 [?]
+
+
+
+
+
+              
+                  Rate this:  
+                  vote 1vote 2vote 3vote 4vote 5
+                    
+
+
+
+
+      Please Sign up or sign in to vote. 
+
+      Simple RestSharp and HttpWebRequest with JSON.NET examples
+      	
+
+      Introduction
+
+      Lately, I've been researching how best to consume web-hosted resources 
+      from "legacy" C# clients. By "legacy", I mean versions of .NET that 
+      predate the HttpClient object (IOW, anything prior to .NET 4.5). If you 
+      are using .NET 4.5 or better in your client, you will probably want to at 
+      least consider using the native HttpClient object. 
+
+      My conclusion is that, for pre-.NET 4.5 clients, there are two primary 
+      options: HttpWebRequest and RestSharp. 
+
+      Whether you choose RestSharp or HttpWebrequest depends on a few factors: 
+        RestSharp is reputedly easier to use than HttpWebRequest 
+        HttpWebRequest is a native C# object (it "comes in the box"); you have 
+        to install RestSharp if you want to use it; see this link and, if using 
+        an older version of Visual Studio such as VS 2008 for your client 
+        project, see this link.) 
+        RestSharp is, as its name indicates, tailored towards working with REST 
+        methods 
+        HttpWebRequest is most useful with non-REST resources, such as raw HTML, 
+        JSON, etc. 
+
+      Using the Code
+
+      Without further ado, before I say adieux, here are the simplest possible 
+      code snippets to demonstrate how both RestSharp and HttpWebRequest are 
+      used. First, the RestSharp code, which was adapted from here. 
+
+      Note: This assumes that you are consuming a REST method that returns data 
+      named "duckbilledPlatypi". 
+
+      Hide   Shrink    Copy Code
+try
+{
+     var client = new RestClient();
+     // This, of course, needs to be altered to match the
+     // IP Address/Port of the server to which you are connecting
+     client.BaseUrl = "http://192.128.65.42:80/";
+     var request = new RestRequest();
+     // The server's Rest method will probably return something
+     // other than "duckbilledPlatypi" in your case
+     request.Resource = "api/duckbilledPlatypi/";
+     var response = client.Execute(request) as RestResponse;
+     if (response != null && ((response.StatusCode == HttpStatusCode.OK) && 
+      (response.ResponseStatus == ResponseStatus.Completed))) // It's probably not necessary to test both
+     {
+         var arr = JsonConvert.DeserializeObject<JArray>(response.Content);
+         foreach (JObject obj in arr)  
+         {       
+             var id = (string)obj["Id"];
+             var platypusId = (double)obj["PlatypusId"]
+             var platypusName = (string)obj["PlatypusName"];
+             MessageBox.Show(string.Format("saw id of {0}, platypusId of {1}, 
+               and platypusName of {2}", id, platypusId, platypusName));
+         }
+     }
+     else if (response != null)
+     {
+         MessageBox.Show(string.Format
+         ("Status code is {0} ({1}); response status is {2}",
+                response.StatusCode, response.StatusDescription, response.ResponseStatus));
+     }  
+}
+catch (Exception ex)
+{
+    MessageBox.Show(ex.Message);
+}
+      Now for the HttpWebRequest code. The URI used is related to my earlier 
+      article here.
+
+      Hide   Shrink    Copy Code
+const int POINT_OF_SATISFIED_CURIOSITY = 7;
+try
+{
+    string uri = "http://www.awardwinnersonly.com/Content/sundance.json";  // <-- this returns formatted json
+    var webRequest = (HttpWebRequest)WebRequest.Create(uri);
+    webRequest.Method = "GET";  // <-- GET is the default method/verb, but it's here for clarity
+    var webResponse = (HttpWebResponse)webRequest.GetResponse();
+    if ((webResponse.StatusCode == HttpStatusCode.OK) && (webResponse.ContentLength > 0))
+    {
+        var reader = new StreamReader(webResponse.GetResponseStream());
+        string s = reader.ReadToEnd();
+        var arr = JsonConvert.DeserializeObject<JArray>(s);
+        int i = 1;
+        string cat;
+        string film;
+        string instavid;
+        string bluray;
+        string dvd;
+        string imghtml;
+        foreach (JObject obj in arr)
+        {
+            cat = (string)obj["category"];
+            film = (string)obj["film"];
+            instavid = (string)obj["instavid"];
+            bluray = (string)obj["bluray"];
+            dvd = (string)obj["dvd"];
+            imghtml = (string)obj["imghtml"];
+            MessageBox.Show(string.Format("Object {0} in JSON array: cat == {1}, " + 
+              "film == {2}, instavid == {3}, bluray == {4}, dvd == {5}, imghtml == {6}", 
+                 i, cat, film, instavid, bluray, dvd, imghtml));
+            i++;
+            if (i > POINT_OF_SATISFIED_CURIOSITY) break;
+        }
+    }    
+    else
+    {
+        //MessageBox.Show("Was fuer ein Schlamassel! Es gab irgendeine Boo-boo!
+        MessageBox.Show(string.Format("Status code == {0}, Content length == {1}", 
+          webResponse.StatusCode, webResponse.ContentLength)); 
+    } 
+}
+catch (Exception ex)
+{
+    MessageBox.Show(ex.Message);
+}
+      As can be seen from the comments in the snippet directly above, 
+      HttpWebRequest can return HTML (as shown with nobelsa2f.html), or JSON (as 
+      shown with both sundance.json and GetHugos). GetHugos is actually a C# 
+      method that returns JSONized C# classes. For this reason, that (Hugo) JSON 
+      is returned unformatted; the raw json obtained from sundance.json is, 
+      OTOH, formatted. You can see this for yourself by entering any of those 
+      URLs in your browser. In the case of the HTML file (nobelsa2f.html), it 
+      will be partially rendered in your browser (but only partially, due to 
+      lack of the CSS formatting that you will see if you go here and select 
+      Books > Nobels A-F). 
+
+      The code above, though, returns just the raw HTML in the webResponse. 
+
+      Note that using HttpWebRequest works for downstreaming other file types, 
+      too, such as XML files, text files, CSS files, and even JavaScript/jQuery 
+      files. All the following return the files named:
+        http://www.awardwinnersonly.com/sitemap.xml 
+        http://www.awardwinnersonly.com/robots.txt 
+        http://www.awardwinnersonly.com/Content/Site.css 
+        http://www.awardwinnersonly.com/Scripts/mynext.js 
+
+      You can probably grab other types of files, too, such as image files. Of 
+      course, these won't display in a MessageBox.Show(). So this is sort of a 
+      double-edged scimitar: it's cool for programmatically accessing all sorts 
+      of files on web servers (you're own, that is, unless you have permission 
+      otherwise), but it also shows that many of your files are available to 
+      anyone - which you may not like, as they might see your sloppy code or 
+      other things you'd prefer to keep private). 
+
+      Then again, some of your files are available to any Thomasina, Rikki, or 
+      Henrietta anyway -- all they need to do is select the "View Page Source" 
+      context menu item from your site. However, not all of your files are 
+      accessible that way (specifically, your .js and .CSS *are* exposed, as 
+      shown above, but your .xml and .txt files are not, at least based on what 
+      I see using my site as the Guinea piglet). 
+
+      Finally, you can also retrieve Rest method data using HttpWebRequest. This 
+      sort of thing...
+
+      Hide   Copy Code
+string uri = "http://localhost:48614/api/duckbilledPlatypi"; 
+      ...works for that. 
+
+      Conclusion 
+
+      So: If you just need to grab some web-hosted resources available via HTTP 
+      and are using an older version of .NET (older than 4.5), httpWebRequest is 
+      a good way to go (otherwise use HttpClient, which is not covered in this 
+      article, but can be examined here). If you are consuming REST methods, 
+      though, RestSharp is worth a try. 
+
+
+
+
+      License
+
+
+      This article, along with any associated source code and files, is licensed 
+      under The Code Project Open License (CPOL)
+
+      Share
+
+       
+
+         
+        email 
+         
+
+         
+        twitter 
+         
+
+         
+        facebook 
+         
+
+         
+        linkedin 
+
+
+         
+        reddit 
+         
+
+         
+        google+ 
+       
+      About the Author
+
+
+       
+
+      B. Clay Shannon 
+
+               
+
+            Founder "Across Time & Space" 
+
+            United States  
+
+      Ideaman and Coder at Across Time & Space, creator of "Mark Twain Central" 
+      at http://twaincentral.azurewebsites.net/
+
+       Peripatetic and picaresque, I have lived in eight states; specifically, 
+      besides my native California (where I was born and where I now again 
+      reside) in chronological order: New York, Montana, Alaska, Oklahoma, 
+      Wisconsin, Idaho, and Missouri.
+
+       I am also a writer of both fiction (for which I use a nom de plume, 
+      "Blackbird Crow Raven", as a nod to my Native American heritage - I am "½ 
+      Cowboy, ½ Indian") and nonfiction: 
+      http://www.lulu.com/spotlight/blackbirdcraven 
+
+
+
+
+
+
+
+
+      You may also be interested in...
+
+
+
+
+
+            Handling the HttpWebRequest
+
+
+
+
+            Getting Started with the Intel® Edison Board on Windows
+
+
+
+
+
+            Simple one page RestSharp based console application for the DropBox 
+            Cloud service
+
+
+
+
+            Scan Anything, Anywhere, Any Time
+
+
+
+
+
+            Class Library that uses HttpWebRequest and HttpWebResponse with 
+            JSON.Net and XML Serialization
+
+
+
+
+            Red Hat JBoss BPM Suite 6 Compared to Pegasystems Pega 7 BPM
+
+
+      Comments and Discussions
+       
+       
+            You must Sign In to use this message board.
+
+
+
+
+                  Search Comments   
+
+
+
+                  Profile popups    SpacingRelaxedCompactTight   
+                    LayoutNormalOpen TopicsOpen AllThread View   Per page102550    
+                   
+
+
+               
+                   
+
+
+
+                  -- There are no messages in this forum --
+
+
+
+
+
+      Info
+
+       
+            First Posted 14 Oct 2013
+
+
+
+
+
+
+      Don't like this Ad?
+
+      Please tell us why: OffensiveAbusiveOff topicDon't like the Ad
+
+      Report
+
+      Thank you for the report!
+
+      Go to top 
+
+
+
+
+
+Permalink | Advertise  | Privacy | Terms of Use | Mobile 
+ Web04 | 2.8.1509010.1 | Last Updated 18 Oct 2013 
+
+
+
+Select Language​▼
+
+Article Copyright 2013 by B. Clay Shannon
+Everything else Copyright © CodeProject, 1999-2015 
+
+
+Layout: fixed | fluid 
+
+
+
+ //<![CDATA[ if (typeof jQuery == 'undefined') { 
+document.write(unescape("%3Cscript src='/script/JS/jquery-1.6.2.min.js' 
+type='text/javascript' %3E%3C/script%3E")); }//]]>     //<![CDATA[
+ $(document).ready(function () { processCodeBlocks.Initialise('#contentdiv'); 
+}); function googleTranslateElementInit() { new 
+google.translate.TranslateElement({ pageLanguage: 'en', layout: 
+google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false, 
+gaTrack: true, gaId: 'UA-1735123-1'}, 'ctl00_GoogleTranslate');}
+ $(document).ready(function() { anchorAnimate();
+ $('#RHSticky').sticky($('#stickyStop'));
+ $('#ctl00_Nav').sticky($('#stickyStop')); }); $(document).ready(function() { 
+$('.alert-bar').fadeIn('slow'); $('.alert-bar a.close-notify').click(function() 
+{ $('.alert-bar').fadeOut('fast'); return false; });}); $(function () { 
+$('.oauth').click(function () { $this = $(this); href = $this.attr('href'); var 
+myWindow = window.open(href, 'popup', 
+'width=800,height=600,location=0,menubar=0,resizeable=0,scrollbars=0,toolbar=0'); 
+myWindow.focus(); var timer = setInterval(function () { if (myWindow.closed) { 
+clearInterval(timer); // window.location.reload(); // May do a POST reload, 
+shows a warning window.location = window.location; // force a GET reload } }, 
+200); return false; }); }); var oSrchFlt = false, 
+oSrchBox=false,srchBoxFoc=false; $(document).ready(function() { 
+if(InitWatermark)InitWatermark('sb_tb', 'Search for articles, questions, tips'); 
+var sbar = $('#sb_tb'); var sfilter = $('#SearchFilter'); if (sbar && sfilter) { 
+sfilter.removeClass('popup'); sfilter.hide(); sfilter.removeClass('open'); 
+sbar.blur(function() { if (!oSrchFlt) {sfilter.hide(); 
+sfilter.removeClass('open');} srchBoxFoc=false; }); sbar.focus(function() { 
+oSrchFlt=false; srchBoxFoc=true; sfilter.show(); sfilter.addClass('open'); }); 
+sbar.mouseleave(function() { oSrchBox=false; }); sbar.mouseover(function() { 
+oSrchBox=true; }); sfilter.mouseleave(function() { oSrchFlt=false; if 
+(!srchBoxFoc&&!oSrchBox) { sfilter.hide(); sfilter.removeClass('open'); }}); 
+sfilter.mouseover(function() { oSrchFlt=true; }); } });
+ $('#clear-rate_ctl00_RateArticle_RSU').click(function () { 
+$('#ctl00_RateArticle_RSU').hide(); return 
+false;});$("#ctl00_RateArticle_RateItemWrapper") 
+.removeClass("container-rating") .hover( function() { 
+$('#ctl00_RateArticle_RSU').fadeIn('fast'); }, function() { 
+$('#ctl00_RateArticle_RSU').fadeOut('fast'); } ); function 
+PostBack_ctl00_RateArticle_RateItemWrapper() { return 
+rateItem(668625,2,6,true,true,0,'LargeStars'); } function 
+getVotesHistogram(objectId, objectTypeId, containerId, loadingId) { if (!$('#' + 
+containerId).attr('alreadyRequested')){ $.ajax({ url: 
+'/script/Ratings/Ajax/Histogram.aspx?obid=' + objectId + '&obtid='+objectTypeId, 
+success: function (data) { $('#' + containerId).html(data); $('#' + 
+loadingId).hide(); } }); $('#' + containerId).attr('alreadyRequested', 'true'); 
+} } $(document).ready(function() { new 
+starRating('#ctl00_RateArticle_VoteFormDiv', 
+PostBack_ctl00_RateArticle_RateItemWrapper,'ctl00_RateArticle'); 
+$('#ctl00_RateArticle_RB').mouseenter(function() { getVotesHistogram(668625,2 
+,'ctl00_RateArticle_Histogram','ctl00_RateArticle_Loading'); })})
+ $(document).ready(function() { $('#ctl00_RateArticle_SubmitRateBtn').hide(); 
+}); $(document).ready(function() { $('#ctl00_RateArticle_SubmitRateBtn').hide(); 
+});function ChkRtctl00_RateArticle(){} forumDir = '/script/Forums/';
+ allowReporting = false; allowRating = false; allowRatingDisplay = true; var 
+smoothScroll = true; Selected = -1; oldTitle = document.title; minMessageScore = 
+1; minMessageScore = 5; abuseScore = -2; spamScore = -1; getRatingUrl = 
+'/script/Ratings/Ajax/GetRatings.aspx'; getRatingRefKey = 'obrs'; //]]>  
+
+
+
+
+
+
+Original text
+
+
+
+
+Contribute a better translation
+
+
+
+

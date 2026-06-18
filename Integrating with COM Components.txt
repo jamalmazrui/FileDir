@@ -1,0 +1,904 @@
+Integrating with COM ComponentsThis is the html version of the file 
+http://example.oreilly.com/9780596527570/COMIntegrationC%23Nutshell2ndEd.pdf.
+Google automatically generates html versions of documents as we crawl the web.
+      Page 1
+© O’Reilly Media Inc. 2002-2003118Integrating with COM ComponentsThe CLR 
+provides support both for exposing C# objects as COM objects and for using 
+COMobjects from C#. Additionally, CLR components can make use of COM+ services 
+and can be usedas configured components by CLR and classic COM 
+applications.Binding COM and C# ObjectsInteroperating between COM and C# works 
+through either early or late binding. Early bindingallows you to program with 
+types known at compile time, while late binding forces you toprogram with types 
+via dynamic discovery, using reflection on the C# side and IDispatch on theCOM 
+side.When calling COM programs from C#, early binding works by providing 
+metadata in the form ofan assembly for the COM object and its interfaces. 
+TlbImp.exe takes a COM type library andgenerates the equivalent metadata in an 
+assembly. With the generated assembly, it’s possible toinstantiate and call 
+methods on a COM object just as you would on any other C# object.When calling C# 
+programs from COM, early binding works via a type library. Both TlbExp.exe 
+andRegAsm.exe allow you to generate a COM type library from your assembly. You 
+can then use thistype library with tools that support early binding via type 
+libraries such as Visual Basic 6.Exposing COM Objects to C#When you instantiate 
+a COM object, you are actually working with a proxy known as theRuntime Callable 
+Wrapper (RCW). The RCW is responsible for managing the lifetimerequirements of 
+the COM object and translating the methods called on it into the 
+appropriatecalls on the COM object. When the garbage collector finalizes the 
+RCW, it releases all referencesto the object it was holding. For situations in 
+which you need to release the COM object withoutwaiting for the garbage 
+collector to finalize the RCW, you can use the static ReleaseComObjectmethod of 
+the System.Runtime.InteropServices.Marshal type.The following example 
+demonstrates how to change your MSN Instant Messenger friendly nameusing C# via 
+COM Interop:
+
+      Page 2
+© O’Reilly Media Inc. 2002-20032// RenameMe.cs - compile with://csc RenameMe.cs 
+/r:Messenger.dll// Run RenameMe.exe "new name" to change your name//as it is 
+displayed to other users.// Run TlbImp.exe "C:\Program 
+Files\Messenger\msmsgs.exe"//to create Messenger.dllusing System;using 
+Messenger;class MSNFun {static void Main(string[ ] args) {MsgrObject mo = new 
+MsgrObject();IMsgrService ims = mo.Services.PrimaryService;ims.FriendlyName = 
+args[0];}}You can also work with COM objects using the reflection API. This is 
+more cumbersome thanusing TlbImp.exe, but is handy in cases in which it’s 
+impossible or inconvenient to run TlbImp.exe.To use COM through reflection, you 
+have to get a Type from Type.GetTypeFromProgID() foreach COM type you want to 
+work with. Then, use Activator.CreateInstance() to create aninstance of the 
+type. To invoke methods or set or get properties, use the reflection API:using 
+System;using System.Reflection;public class ComReflect {public static void 
+Main() {object obj_msword;// Microsoft Word ApplicationType wa = 
+Type.GetTypeFromProgID("Word.Application", true);// Create an instance of 
+Microsoft Wordobj_msword = Activator.CreateInstance(wa);// Use the reflection 
+API from here on in...}}Exposing C# Objects to COMJust as an RCW proxy wraps a 
+COM object when you access it from C#, code that accesses a C#object as a COM 
+object must do so through a proxy as well. When your C# object is marshaled 
+outto COM, the runtime creates a COM Callable Wrapper (CCW). The CCW follows the 
+samelifetime rules as other COM objects, and as long as it is alive, a CCW 
+maintains a traceablereference to the object it wraps. This keeps the object 
+alive when the garbage collector is run.The following example shows how you can 
+export both a class and an interface from C# andcontrol the Global Unique 
+Identifiers (GUIDs) and Dispatch IDs (DISPIDs) assigned. Aftercompiling IRunInfo 
+and StackSnapshot, you can register both using RegAsm.exe.// IRunInfo.cs// 
+Compile with://csc /t:library IRunInfo.csusing System;using 
+System.Runtime.InteropServices;[GuidAttribute("aa6b10a2-dc4f-4a24-ae5e-90362c2142c1")]public 
+interface IRunInfo {[DispId(1)]string GetRunInfo();}
+
+      Page 3
+© O’Reilly Media Inc. 2002-20033// StackSnapshot.cs//compile with csc /t:library 
+/r:IRunInfo.dll StackSnapShot.csusing System;using 
+System.Runtime.InteropServices;using 
+System.Diagnostics;[GuidAttribute("b72ccf55-88cc-4657-8577-72bd0ff767bc")]public 
+class StackSnapshot : IRunInfo {public StackSnapshot() {st = new 
+StackTrace();}[DispId(1)]public string GetRunInfo() {return 
+st.ToString();}private StackTrace st;}COM Mapping in C#When you use a COM object 
+from C#, the RCW makes a COM method look like a normal C#instance method. In 
+COM, methods normally return an HRESULT to indicate success or failureand use an 
+out parameter to return a value. In C#, however, methods normally return their 
+resultvalues and use exceptions to report errors. The RCW handles this by 
+checking the HRESULTreturned from the call to a COM method and throwing a C# 
+exception when it finds a failureresult. With a success result, the RCW returns 
+the parameter marked as the return value in theCOM method signature.Common COM 
+Interop Support AttributesThe FCL provides a set of attributes you can use to 
+mark up your objects with information neededby the CLR interop services to 
+expose managed types to the unmanaged world as COM objects.See Chapter 37, for 
+documentation about these attributes.COM+ SupportThe CLR also includes special 
+plumbing and interop services that allow CLR classes to be deployedas COM+ 
+configured components. This allows both CLR clients and classic COM clients to 
+makeuse of COM+ services for building scalable applications.What Is COM+?COM+ 
+provides a set of services that are designed to help build scalable distributed 
+systems, suchas distributed transaction support, object pooling, Just-In-Time 
+activation, synchronization, role-based security, loosely coupled events, and 
+others.These services are provided by a runtime environment called the COM+ 
+runtime, and are basedon the idea of intercepting new COM object creation and 
+(possibly) method calls to layer in theadditional services as needed.
+
+      Page 4
+© O’Reilly Media Inc. 2002-20034COM classes that use COM+ services are called 
+Configured Components because the exact set ofservices each COM class requires 
+is controlled and configured using declarative attributes that arestored in a 
+metadata repository called the COM+ Catalog.The COM+ Catalog groups a set of 
+configured components together into something called anApplication, which also 
+has metadata settings that control which process the COM componentsend up in 
+when they are created at runtime (the options here are Library and Server, 
+whereLibrary components end up in the creator’s process, while Server components 
+are hosted in aseparate process), the security principal the new process runs 
+as, and other settings.Using COM+ Services with CLR ClassesNaturally, CLR 
+classes can also take advantage of COM+ services. Although the 
+underlyingimplementation of this is currently the classic COM+ runtime, the 
+mechanics of it are largelyhidden from the .NET programmer, who may choose to 
+work almost entirely in terms of normalCLR base classes, interfaces, and custom 
+attributes.The bulk of the functionality in .NET for using COM+ services is 
+exposed via theSystem.EnterpriseServices namespace. The most important type in 
+this namespace is theServicedComponent class, which is the base class that all 
+CLR classes must derive from if theywish to use COM+ services (i.e., if they 
+want to be configured components).There is a suite of custom attributes in this 
+namespace that can control almost all of theconfiguration settings that would 
+otherwise be stored in the COM+ Catalog. Examples of theseattributes include 
+both assembly-level attributes which control the settings for the entire 
+COM+application, the ApplicationActivationAttributes, which controls whether the 
+CLR class isdeployed in a COM+ Library or Server application, and 
+component-level attributes, which declareand configure the COM+ services the CLR 
+class wishes to be provided at runtime. Examples ofcomponent-level custom 
+attributes include the TransactionAttribute (which specifies theCOM+ transaction 
+semantics for the class), the JustInTimeActivationAttribute (whichspecifies that 
+the CLR class should have JITA semantics), the SynchronizationAttribute(which 
+controls the synchronization behavior of methods), the 
+ObjectPoolingAttribute(which controls whether the CLR class is pooled), and 
+many, many others.Although ServicedComponent serves as a special base class 
+which signals the .NET Frameworkthat a class needs COM+ services, it also 
+provides other capabilities. In classic COM+ work, COMclasses implement 
+interfaces such as IObjectConstruct and IObjectControl to customizeaspects of 
+their behavior. When using COM+ services in .NET, your classes can override 
+virtualmethods provided by ServicedComponent that mirror the functionality in 
+IObjectConstructand IObjectControl, allowing a very natural, .NET-centric way of 
+accomplishing the same thing.Other important classes in the 
+System.EnterpriseServices namespace include ContextUtiland SecurityCallContext. 
+These classes provide static methods that allow a CLR-configuredcomponent to 
+access COM+ context. This is used to control things like transaction status and 
+toaccess information such as the security role a caller is in.Lastly, let’s 
+discuss deployment. Deploying traditional COM+ applications requires one 
+toconfigure the component’s COM+ Catalog settings. This is typically done using 
+either the COM+Explorer (by hand, really only suitable for toy applications) or 
+using custom registration code.When configuring CLR classes, there are two 
+different approaches.
+
+      Page 5
+© O’Reilly Media Inc. 2002-20035The first approach is using the RegSvcs.exe 
+command-line tool. This tool performs all the relevantCOM Interop and COM+ 
+Catalog configuration, using both command-line options and thecustom attributes 
+applied to your assembly and classes to control the COM+ metadata. While 
+thisrequires an extra step, arguably this approach is the most powerful and 
+flexible, resulting in CLR-configured classes that can be used from both COM and 
+.NET clients.Alternatively, the .NET COM+ integration is able to automatically 
+register classes that derive fromServicedComponent in the COM+ catalog when they 
+are first instantiated. This has theadvantage of not requiring any additional 
+setup, but also has several disadvantages, most notablythat the client code that 
+indirectly causes the registration to occur needs elevated privileges, anduntil 
+the class is configured, it is invisible to COM clients.A simple C# configured 
+class might look like this:using System;using 
+System.EnterpriseServices;[assembly:ApplicationName("MyCOMPlusApplication")][assembly:ApplicationActivation(ActivationOption.Server)][ObjectPooling(true), 
+Transaction(TransactionOption.Required)]public class MyConfiguredComponent : 
+ServicedComponent {public void DoDBWork() {ContextUtil.SetAbort();// ... do 
+database work...ContextUtil.SetComplete();}public override bool CanBePooled() 
+{return true;}}
+
+      Page 6
+© O’Reilly Media Inc. 2002-2003637System.Runtime.InteropServicesThe types in 
+this namespace work with unmanaged code using either PInvoke or COM. 
+PInvoke(short for Platform Invoke) lets you access functions that reside in 
+underlying operating system-specific shared libraries (on Win32, these are 
+DLLs). COM (Component Object Model) is a Win32legacy component architecture that 
+is used throughout Windows and Windows applications.Many programmers experience 
+COM through the object models of applications such as MicrosoftOffice, Exchange, 
+and SQL Server. The COM support in .NET lets you access COM components asthough 
+they were native .NET classes.We have omitted some of the more esoteric parts of 
+this namespace, so there are some classes thataren’t discussed here. For the 
+most part, you will not need those classes unless you are developingspecialized 
+code that handles marshaling data types between managed and unmanaged code. If 
+so,you should consult the MSDN .NET reference materials.ArrayWithOffsetThis 
+class converts an array of value type instances to an unmanaged array. Your 
+unmanagedcode accesses this array as a pointer that initially points to the 
+first array element. Each time thepointer increments, it points to the next 
+element in the array. The constructor takes a mandatoryoffset argument that 
+specifies which element should be the first element in the unmanagedarray. If 
+you want to pass the whole array, specify an offset of zero.public struct 
+ArrayWithOffset {// Public Constructorspublic ArrayWithOffset(object array, int 
+offset);// Public Instance Methodspublic override bool Equals(object obj);// 
+overrides ValueTypepublic object GetArray();public override int GetHashCode();// 
+overrides ValueTypepublic int GetOffset();}HierarchySystem.Object > 
+System.ValueType > ArrayWithOffset
+
+      Page 7
+© O’Reilly Media Inc. 2002-20037AssemblyRegistrationFlagsThis enumeration 
+specifies the flags you can use 
+withIRegistrationServices.RegisterAssembly().public enum 
+AssemblyRegistrationFlags {None = 0x00000000,SetCodeBase = 
+0x00000001}HierarchySystem.Object > System.ValueType > 
+System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+AssemblyRegistrationFlagsPassed 
+ToIRegistrationServices.RegisterAssembly(),RegistrationServices.RegisterAssembly()BestFitMappingAttributeThis 
+class determines whether Unicode characters are converted to ANSI characters by 
+selectingthe closest matching character.public sealed class 
+BestFitMappingAttribute : Attribute {// Public Constructorspublic 
+BestFitMappingAttribute(bool BestFitMapping);// Public Instance Fieldspublic 
+bool ThrowOnUnmappableChar;// Public Instance Propertiespublic bool 
+BestFitMapping{get; }}HierarchySystem.Object > System.Attribute > 
+BestFitMappingAttributeValid OnAssembly, Class, Struct, 
+InterfaceCallingConventionThis enumeration specifies the calling convention to 
+use when you invoke a function.DllImportAttribute uses this in its 
+CallingConvention parameter.Cdecl specifies the standard calling convention used 
+by C++ and C programs. This is required forfunctions that take a variable number 
+of arguments, such as printf(). FastCall attempts to putfunction arguments into 
+registers. StdCall is the convention used for calling Win32 APIfunctions. 
+ThisCall is the calling convention used by C++ member functions taking 
+fixedarguments. Use the Winapi calling convention for function calls that use 
+PASCAL or _ _far __pascal.
+
+      Page 8
+© O’Reilly Media Inc. 2002-20038public enum CallingConvention {Winapi = 1,Cdecl 
+= 2,StdCall = 3,ThisCall = 4,FastCall = 5}HierarchySystem.Object > 
+System.ValueType > System.Enum(System.IComparable,System.IFormattable, 
+System.IConvertible) > CallingConventionPassed 
+ToSystem.Reflection.Emit.ILGenerator.EmitCalli(),System.Reflection.Emit.ModuleBuilder.DefinePInvokeMethod(),System.Reflection.Emit.SignatureHelper.GetMethodSigHelper(),System.Reflection.Emit.TypeBuilder.DefinePInvokeMethod()CharSetThis 
+enumeration specifies the character set that is used for marshaled strings. It 
+is used byDllImportAttribute and StructLayoutAttribute.Ansi marshals strings 
+using one-byte ANSI characters, while Unicode uses two bytes to representa 
+single Unicode character. The Auto value is used only for PInvoke and specifies 
+that PInvokeshould decide how to marshal the strings based on your operating 
+system (Unicode for WindowsNT/2000/XP and ANSI for Windows 9x/Me).public enum 
+CharSet {None = 1,Ansi = 2,Unicode = 3,Auto = 4}HierarchySystem.Object > 
+System.ValueType > System.Enum(System.IComparable,System.IFormattable, 
+System.IConvertible) > CharSetPassed 
+ToSystem.Reflection.Emit.ModuleBuilder.DefinePInvokeMethod(),System.Reflection.Emit.TypeBuilder.DefinePInvokeMethod()ClassInterfaceAttributeThis 
+attribute specifies the interface that should be exposed to COM when you 
+generate a typelibrary. See ClassInterfaceType for the possible arguments to 
+this attribute.
+
+      Page 9
+© O’Reilly Media Inc. 2002-20039public sealed class ClassInterfaceAttribute : 
+Attribute {// Public Constructorspublic 
+ClassInterfaceAttribute(ClassInterfaceType classInterfaceType);public 
+ClassInterfaceAttribute(short classInterfaceType);// Public Instance 
+Propertiespublic ClassInterfaceType Value{get; }}HierarchySystem.Object > 
+System.Attribute > ClassInterfaceAttributeValid OnAssembly, 
+ClassClassInterfaceTypeThis enumeration contains values to use as arguments for 
+ClassInterfaceAttribute.AutoDispatch specifies that a dispatch-only interface 
+should be generated. AutoDual specifiesthat a dual interface should be 
+generated, and None specifies that no interface should begenerated.public enum 
+ClassInterfaceType {None = 0,AutoDispatch = 1,AutoDual = 
+2}HierarchySystem.Object > System.ValueType > 
+System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+ClassInterfaceTypeReturned ByClassInterfaceAttribute.ValuePassed 
+ToClassInterfaceAttribute.ClassInterfaceAttribute()CoClassAttributeThis 
+attribute describes the class ID of a coclass that was imported from a type 
+library.public sealed class CoClassAttribute : Attribute {// Public 
+Constructorspublic CoClassAttribute(Type coClass);// Public Instance 
+Propertiespublic Type CoClass{get; }}HierarchySystem.Object > System.Attribute > 
+CoClassAttributeValid OnInterface
+
+      Page 10
+© O’Reilly Media Inc. 2002-200310ComAliasNameAttributeThis attribute is 
+automatically added when COM type libraries are imported into the .NETruntime. 
+COM uses alias names for various data types (such as typedef [public] 
+intSHOE_SIZE). When you import a COM object that uses such an alias, .NET 
+automaticallydecorates each parameter, property, field, and return value with 
+this attribute. If you need to knowthe name of the COM alias, use the 
+System.Reflection API to see if this custom attribute hasbeen attached to the 
+parameter, property, field, or return value you are interested in.Since .NET 
+automatically converts COM aliases to the underlying .NET types when it imports 
+atype library, you do not need to use this attribute for typical applications 
+(tool developers will findthis attribute useful, though).public sealed class 
+ComAliasNameAttribute : Attribute {// Public Constructorspublic 
+ComAliasNameAttribute(string alias);// Public Instance Propertiespublic string 
+Value{get; }}HierarchySystem.Object > System.Attribute > 
+ComAliasNameAttributeValid OnProperty, Field, Parameter, 
+ReturnValueComCompatibleVersionAttributeThis attribute tells COM clients that 
+the types in the assembly are backward-compatible withthose from an earlier 
+version.public sealed class ComCompatibleVersionAttribute : Attribute {// Public 
+Constructorspublic ComCompatibleVersionAttribute(int major, int minor, int 
+build, int revision);// Public Instance Propertiespublic int BuildNumber{get; 
+}public int MajorVersion{get; }public int MinorVersion{get; }public int 
+RevisionNumber{get; }}HierarchySystem.Object > System.Attribute > 
+ComCompatibleVersionAttributeValid OnAssemblyComConversionLossAttributeThe 
+presence of this attribute indicates that information about a type was lost as 
+it was importedfrom a type library.public sealed class 
+ComConversionLossAttribute : Attribute {// Public Constructorspublic 
+ComConversionLossAttribute();}
+
+      Page 11
+© O’Reilly Media Inc. 2002-200311HierarchySystem.Object > System.Attribute > 
+ComConversionLossAttributeValid OnAllCOMExceptionWhen a COM error occurs, .NET 
+tries to map it to an exception in the .NET Framework andthrows that exception. 
+If the COM error does not map to any exception in the .NET Framework,this 
+exception is thrown instead. It’s the “couldn’t find an exception” 
+exception.public class COMException : ExternalException {// Public 
+Constructorspublic COMException();public COMException(string message);public 
+COMException(string message, Exception inner);public COMException(string 
+message, int errorCode);// Protected Constructorsprotected 
+COMException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext context);// Public Instance 
+Methodspublic override string ToString();// overrides 
+Exception}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > ExternalException > COMExceptionComImportAttributeThis 
+attribute indicates that the type decorated by this attribute is in fact an 
+unmanaged typedefined in a previously published type library and should be 
+treated differently internally tosupport that.This attribute is necessary only 
+if the .NET type definition—the class definition in C#—Thisinterface indicates a 
+type whose members can be removed or added. The members are representedas 
+System.Reflection.MemberInfo objects.is merely a “shim” for interacting with the 
+unmanaged version. In most cases, .NET programmersonly use this type when 
+interacting with existing COM APIs, such as when building Explorer 
+ShellExtensions.public sealed class ComImportAttribute : Attribute {// Public 
+Constructorspublic ComImportAttribute();}HierarchySystem.Object > 
+System.Attribute > ComImportAttributeValid OnClass, Interface
+
+      Page 12
+© O’Reilly Media Inc. 2002-200312ComInterfaceTypeThis enumeration specifies the 
+COM interface type. Use this attribute withInterfaceTypeAttribute to specify how 
+your .NET interfaces are exposed to COM.public enum ComInterfaceType 
+{InterfaceIsDual = 0,InterfaceIsIUnknown = 1,InterfaceIsIDispatch = 
+2}HierarchySystem.Object|aut System.ValueType > 
+System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+ComInterfaceTypeReturned ByInterfaceTypeAttribute.ValuePassed 
+ToInterfaceTypeAttribute.InterfaceTypeAttribute()ComMemberTypeThis enumeration 
+describes a COM member. Method indicates that the member is an ordinarymethod. 
+PropGet and PropSet identify methods that get and set the values of properties 
+(gettersand setters).public enum ComMemberType {Method = 0,PropGet = 1,PropSet = 
+2}HierarchySystem.Object > System.ValueType > 
+System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+ComMemberTypePassed 
+ToMarshal.GetMethodInfoForComSlot()ComRegisterFunctionAttributeThis attribute is 
+attached to a static method to indicate that it should be invoked when 
+theenclosing assembly is registered with COM. The method should take two string 
+arguments. Thefirst is the name of the registry key being updated, and the 
+second is the namespace-qualifiedname of the type being registered (such as 
+System.String). There can only be one registrationfunction in each 
+assembly.Microsoft suggests that you do not use this feature and includes it 
+only for backwardcompatibility. If you use this feature to specify a 
+registration method, you must also specify an
+
+      Page 13
+© O’Reilly Media Inc. 2002-200313unregistration method (see 
+ComUnregisterFunctionAttribute) that reverses all changes youmade in the 
+registration function.public sealed class ComRegisterFunctionAttribute : 
+Attribute {// Public Constructorspublic 
+ComRegisterFunctionAttribute();}HierarchySystem.Object > System.Attribute > 
+ComRegisterFunctionAttributeValid OnMethodComSourceInterfacesAttributeThis 
+attribute indicates the unmanaged event (using the COM IConnectionPoint 
+architecture)interfaces that are available on the decorated type. For each 
+method defined in the COM interface,the type must provide a corresponding 
+“event” instance that the COM architecture will plug into.This attribute is only 
+necessary when building .NET objects for plugging into COM event-awaresystems, 
+such as ActiveX control containers.public sealed class 
+ComSourceInterfacesAttribute : Attribute {// Public Constructorspublic 
+ComSourceInterfacesAttribute(string sourceInterfaces);public 
+ComSourceInterfacesAttribute(Type sourceInterface);public 
+ComSourceInterfacesAttribute(Type sourceInterface1, Type 
+sourceInterface2);public ComSourceInterfacesAttribute(Type sourceInterface1, 
+Type sourceInterface2,Type sourceInterface3);public 
+ComSourceInterfacesAttribute(Type sourceInterface1, Type sourceInterface2,Type 
+sourceInterface3, Type sourceInterface4);// Public Instance Propertiespublic 
+string Value{get; }}HierarchySystem.Object > System.Attribute > 
+ComSourceInterfacesAttributeValid OnClassComUnregisterFunctionAttributeThis 
+attribute is attached to a static method to indicate that it should be invoked 
+when theenclosing assembly is unregistered from COM. There can only be one 
+unregistration function ineach assembly.For more details, see 
+ComRegisterFunctionAttribute.public sealed class ComUnregisterFunctionAttribute 
+: Attribute {// Public Constructorspublic 
+ComUnregisterFunctionAttribute();}HierarchySystem.Object > System.Attribute > 
+ComUnregisterFunctionAttribute
+
+      Page 14
+© O’Reilly Media Inc. 2002-200314Valid OnMethodComVisibleAttributeBy default, 
+all public assemblies, types, and members that are registered with COM are 
+visible toCOM. This attribute is used with a false argument to hide an assembly, 
+type, or member fromCOM. This attribute has a cascading effect: if you hide an 
+assembly, all the public types in thatassembly are hidden as well.You can 
+override this attribute on individual types. If, for example, you want to make 
+only onepublic type visible from an assembly, add the attribute 
+[ComVisible(false)] to the assembly,but also add [ComVisible(true)] to the one 
+type that you want to expose.public sealed class ComVisibleAttribute : Attribute 
+{// Public Constructorspublic ComVisibleAttribute(bool visibility);// Public 
+Instance Propertiespublic bool Value{get; }}HierarchySystem.Object > 
+System.Attribute > ComVisibleAttributeValid OnAssembly, Class, Struct, Enum, 
+Method, Property, Field, Interface, DelegateCurrencyWrapperThis class is used to 
+create a wrapper around a decimal value. Then, when you pass the newlycreated 
+CurrencyWrapper to an unmanaged method, the object is marshaled as 
+theVT_CURRENCY type.public sealed class CurrencyWrapper {// Public 
+Constructorspublic CurrencyWrapper(decimal obj);public CurrencyWrapper(object 
+obj);// Public Instance Propertiespublic decimal WrappedObject{get; 
+}}DispatchWrapperBy default, objects are passed to unmanaged methods as the 
+VT_UNKNOWN type. This wrapper isused to send an object as type 
+VT_DISPATCH.public sealed class DispatchWrapper {// Public Constructorspublic 
+DispatchWrapper(object obj);// Public Instance Propertiespublic object 
+WrappedObject{get; }}DispIdAttributeSpecifies a member’s DispId when it is 
+exposed to COM.
+
+      Page 15
+© O’Reilly Media Inc. 2002-200315public sealed class DispIdAttribute : Attribute 
+{// Public Constructorspublic DispIdAttribute(int dispId);// Public Instance 
+Propertiespublic int Value{get; }}HierarchySystem.Object > System.Attribute > 
+DispIdAttributeValid OnMethod, Property, Field, EventDllImportAttributeThis 
+attribute (and, in C#, the keyword “extern”) specifies that a method definition 
+isimplemented externally (usually in a DLL). Apply this attribute to a method 
+that has beendeclared (but not defined) to specify the DLL name and entry point 
+in which the method can befound.The attribute can be customized in a number of 
+different ways to help control the binding againstthe external method. The 
+CallingConvention value dictates how the parameters to the call (andreturn value 
+coming back) should be sent to the function. CallingConvention.StdCall (usedfor 
+calling into _stdcall-declared functions, which is most of the Win32 API set) 
+andCallingConvention.Cdecl (used for calling functions declared directly from C 
+or C++) are thetwo most common values. The CharSet value indicates which 
+character set parameters to the callare expected to be, either two-byte Unicode 
+or one-byte ANSI. EntryPoint indicates the name ofthe exported function from the 
+DLL to bind to (normally this is guessed from the name of the.NET-declared 
+method), and ExactSpelling indicates whether the .NET compiler shouldattempt to 
+“best match” a declared DllImport method against a possible set of 
+exportedfunctions. The PreserveSig value indicates how .NET should treat 
+[out]-declared and[retval]-declared parameters. By default, the .NET compilers 
+ignore the HRESULT return valueon IDL-declared methods and use the 
+[retval]-declared parameter as the return value; settingPreserveSig to true 
+turns this off. BestFitMapping is used to define whether the CLR shouldtry to 
+“best fit” Unicode characters to ANSI equivalents, and is turned on by 
+default.ThrowOnUnmappableChar indicates whether an exception should be thrown 
+when the interopmarshaler attempts to convert an unmappable character, and is 
+turned off by default. Finally,because many Win32 APIs use the GetLastError API 
+call to note the exact reason a call fails, theSetLastError value indicates 
+whether the caller should use that API to discover the reason forfailures.public 
+sealed class DllImportAttribute : Attribute {// Public Constructorspublic 
+DllImportAttribute(string dllName);// Public Instance Fieldspublic bool 
+BestFitMapping;public CallingConvention CallingConvention;public CharSet 
+CharSet;public string EntryPoint;public bool ExactSpelling;public bool 
+PreserveSig;public bool SetLastError;public bool ThrowOnUnmappableChar;// Public 
+Instance Propertiespublic string Value{get; }}
+
+      Page 16
+© O’Reilly Media Inc. 2002-200316HierarchySystem.Object > System.Attribute > 
+DllImportAttributeValid OnMethodErrorWrapperThis wrapper is used to force an 
+integer, Exception, or other object to be marshaled as typeVT_ERROR.public 
+sealed class ErrorWrapper {// Public Constructorspublic ErrorWrapper(Exception 
+e);public ErrorWrapper(int errorCode);public ErrorWrapper(object errorCode);// 
+Public Instance Propertiespublic int ErrorCode{get; }}ExtensibleClassFactoryThis 
+class exposes the method RegisterObjectCreationCallback(), which specifies 
+adelegate that manufactures instances of a managed type. Use this to build 
+managed types thatextend unmanaged types. Since a managed type cannot directly 
+inherit from an unmanaged type,the managed type needs to aggregate an instance 
+of the unmanaged type. The delegate that youregister with 
+RegisterObjectCreationCallback() takes care of creating the unmanaged 
+type.public sealed class ExtensibleClassFactory {// Public Static Methodspublic 
+static void RegisterObjectCreationCallback(ObjectCreationDelegate 
+callback);}ExternalExceptionThis is the base class for COM interop and SEH 
+(Structured Exception Handler) exceptions.public class ExternalException : 
+SystemException {// Public Constructorspublic ExternalException();public 
+ExternalException(string message);public ExternalException(string message, 
+Exception inner);public ExternalException(string message, int errorCode);// 
+Protected Constructorsprotected 
+ExternalException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext context);// Public Instance 
+Propertiespublic virtual int ErrorCode{get; }}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > ExternalExceptionSubclassesCOMException, SEHException
+
+      Page 17
+© O’Reilly Media Inc. 2002-200317FieldOffsetAttributeThis attribute controls the 
+offset, in bytes, of a field. Use it to match your .NET types to thelayout of C 
+and C++ structures exactly. This attribute can be used only within classes that 
+have theStructLayoutAttribute attribute where LayoutKind.Explicit was 
+used.public sealed class FieldOffsetAttribute : Attribute {// Public 
+Constructorspublic FieldOffsetAttribute(int offset);// Public Instance 
+Propertiespublic int Value{get; }}HierarchySystem.Object > System.Attribute > 
+FieldOffsetAttributeValid OnFieldGCHandleThis class is used when you need to 
+pass a managed object to unmanaged code. To use this class,pass an instance of a 
+.NET-managed type to the Alloc() method. The single-argument form ofAlloc() 
+creates the GCHandle with GCHandleType.Normal, which ensures that the object 
+willnot be freed by the garbage collector. (This means that some kind of user 
+code must also call theFree() method in order to release the object.) Managed 
+code can use the Target property toaccess the underlying object.public struct 
+GCHandle {// Public Instance Propertiespublic bool IsAllocated{get; }public 
+object Target{set; get; }// Public Static Methodspublic static GCHandle 
+Alloc(object value);public static GCHandle Alloc(object value, GCHandleType 
+type);public static explicit operator GCHandle(IntPtr value);public static 
+explicit operator IntPtr(GCHandle value);// Public Instance Methodspublic IntPtr 
+AddrOfPinnedObject();public void Free();}HierarchySystem.Object > 
+System.ValueType > GCHandleGCHandleTypeThis enumeration contains values for the 
+two-argument form of GCHandle.Alloc(). Normalprotects the object from being 
+garbage collected, and Pinned does the same (but it also enablesthe 
+GCHandle.AddrOfPinnedObject() method). Weak and WeakTrackResurrection bothallow 
+the object to be garbage-collected. However, Weak causes the object to be zeroed 
+out beforethe finalizer runs, but WeakTrackResurrection does not zero the 
+object, so the object’s finalizercan safely resurrect it.
+
+      Page 18
+© O’Reilly Media Inc. 2002-200318public enum GCHandleType {Weak = 
+0,WeakTrackResurrection = 1,Normal = 2,Pinned = 3}HierarchySystem.Object > 
+System.ValueType > System.Enum(System.IComparable,System.IFormattable, 
+System.IConvertible) > GCHandleTypePassed ToGCHandle.Alloc()GuidAttributeThis 
+attribute is used to specify the GUID of assemblies, modules, or types you 
+expose to COM. Ifyou don’t use this attribute to specify a GUID, one is 
+automatically generated. When you applythis attribute, use its full name 
+([GuidAttribute()] rather than [Guid()]) to avoid clashes withthe System.Guid 
+type.public sealed class GuidAttribute : Attribute {// Public Constructorspublic 
+GuidAttribute(string guid);// Public Instance Propertiespublic string Value{get; 
+}}HierarchySystem.Object > System.Attribute > GuidAttributeValid OnAssembly, 
+Class, Struct, Enum, Interface, DelegateHandleRefWhen you pass a managed object 
+into unmanaged code using PInvoke, there is a chance that thegarbage collector 
+will finalize the object before the unmanaged code is finished with it. This 
+canonly happen when your managed code does not reference the object after the 
+PInvoke call.Because the garbage collector’s reach does not extend into 
+unmanaged code, this fools the garbagecollector into thinking that you are 
+finished with it.This class is used to wrap your managed object before passing 
+it into unmanaged code, and youare guaranteed that the garbage collector will 
+not touch it until the PInvoke call returns.public struct HandleRef {// Public 
+Constructorspublic HandleRef(object wrapper, IntPtr handle);// Public Instance 
+Propertiespublic IntPtr Handle{get; }public object Wrapper{get; }// Public 
+Static Methodspublic static explicit operator IntPtr(HandleRef 
+value);}HierarchySystem.Object > System.ValueType > HandleRef
+
+      Page 19
+© O’Reilly Media Inc. 2002-200319IDispatchImplAttributeThere are multiple 
+implementations of IDispatch available for you to expose dual interfaces 
+anddispinterfaces to COM. Attach this attribute to a class or an assembly to 
+specify which IDispatchimplementation to use. If you apply this attribute to an 
+assembly, it applies to all classes withinthat assembly. For a list of available 
+IDispatch implementations, see IDispatchImplType.public sealed class 
+IDispatchImplAttribute : Attribute {// Public Constructorspublic 
+IDispatchImplAttribute(IDispatchImplType implType);public 
+IDispatchImplAttribute(short implType);// Public Instance Propertiespublic 
+IDispatchImplType Value{get; }}HierarchySystem.Object > System.Attribute > 
+IDispatchImplAttributeValid OnAssembly, ClassIDispatchImplTypeThis enumeration 
+contains the values used by IDispatchImplAttribute. SystemDefinedImpltells the 
+runtime to decide which IDispatch implementation to use. InternalImpl tells .NET 
+touse its own IDispatch implementation, and CompatibleImpl uses an 
+IDispatchimplementation that is compatible with OLE automation. If you use this 
+last implementation, itrequires static type information. Because this 
+information is automatically generated at runtime,CompatibleImpl may have an 
+adverse impact on performance.public enum IDispatchImplType {SystemDefinedImpl = 
+0,InternalImpl = 1,CompatibleImpl = 2}HierarchySystem.Object > System.ValueType 
+> System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+IDispatchImplTypeReturned ByIDispatchImplAttribute.ValuePassed 
+ToIDispatchImplAttribute.IDispatchImplAttribute()InAttributeThis attribute is 
+attached to a parameter to marshal it as an in parameter. By default, 
+parametersare marshaled based on their modifiers, so this attribute is only 
+necessary if you want to overridethe defaults. Parameters with no modifiers are 
+marshaled as [In]. Parameters with the refmodifier are marshaled as [In, Out]. 
+Parameters with the out modifier are marshaled as [Out].
+
+      Page 20
+© O’Reilly Media Inc. 2002-200320public sealed class InAttribute : Attribute {// 
+Public Constructorspublic InAttribute();}HierarchySystem.Object > 
+System.Attribute > InAttributeValid OnParameterInterfaceTypeAttributeThis 
+attribute is used to create a .NET interface that maps a COM interface into your 
+managedapplication. See ComInterfaceType for the available values.public sealed 
+class InterfaceTypeAttribute : Attribute {// Public Constructorspublic 
+InterfaceTypeAttribute(ComInterfaceType interfaceType);public 
+InterfaceTypeAttribute(short interfaceType);// Public Instance Propertiespublic 
+ComInterfaceType Value{get; }}HierarchySystem.Object > System.Attribute > 
+InterfaceTypeAttributeValid OnInterfaceInvalidComObjectExceptionThis exception 
+signals that an invalid COM object has been used.public class 
+InvalidComObjectException : SystemException {// Public Constructorspublic 
+InvalidComObjectException();public InvalidComObjectException(string 
+message);public InvalidComObjectException(string message, Exception inner);// 
+Protected Constructorsprotected 
+InvalidComObjectException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext 
+context);}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > 
+InvalidComObjectExceptionInvalidOleVariantTypeExceptionThis exception signals 
+that the marshaler failed in an attempt to marshal a variant to managedcode.
+
+      Page 21
+© O’Reilly Media Inc. 2002-200321public class InvalidOleVariantTypeException : 
+SystemException {// Public Constructorspublic 
+InvalidOleVariantTypeException();public InvalidOleVariantTypeException(string 
+message);public InvalidOleVariantTypeException(string message, Exception 
+inner);// Protected Constructorsprotected 
+InvalidOleVariantTypeException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext 
+context);}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > 
+InvalidOleVariantTypeExceptionIRegistrationServicesThis interface defines the 
+interface used by classes that register and unregister assemblies withCOM.public 
+interface IRegistrationServices {// Public Instance Methodspublic Guid 
+GetManagedCategoryGuid();public string GetProgIdForType(Type type);public Type[ 
+] GetRegistrableTypesInAssembly(System.Reflection.Assembly assembly);public bool 
+RegisterAssembly(System.Reflection.Assembly assembly,AssemblyRegistrationFlags 
+flags);public void RegisterTypeForComClients(Type type, ref Guid g);public bool 
+TypeRepresentsComType(Type type);public bool TypeRequiresRegistration(Type 
+type);public bool UnregisterAssembly(System.Reflection.Assembly 
+assembly);}Implemented ByRegistrationServicesLayoutKindThis enumeration is used 
+to specify how objects are laid out when they are passed to unmanagedcode. Auto 
+specifies that .NET should choose the best method to lay out the objects. 
+Explicitgives you complete control over how the object’s data members are laid 
+out. You must useFieldOffsetAttribute with each member if you specify Explicit. 
+Sequential lays out theobject’s members one after the other, in the same order 
+that they are defined in the classdefinition.public enum LayoutKind {Sequential 
+= 0,Explicit = 2,Auto = 3}HierarchySystem.Object > System.ValueType > 
+System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+LayoutKindReturned ByStructLayoutAttribute.Value
+
+      Page 22
+© O’Reilly Media Inc. 2002-200322Passed 
+ToStructLayoutAttribute.StructLayoutAttribute()LCIDConversionAttributeThis 
+attribute indicates that a parameter within the method’s unmanaged signature 
+expects an[lcid] argument. Pass an integer value to the constructor to specify 
+which parameter, startingwith 0 for the first parameter.public sealed class 
+LCIDConversionAttribute : Attribute {// Public Constructorspublic 
+LCIDConversionAttribute(int lcid);// Public Instance Propertiespublic int 
+Value{get; }}HierarchySystem.Object > System.Attribute > 
+LCIDConversionAttributeValid OnMethodMarshalThis class offers a collection of 
+static methods for working with unmanaged memory andconverting managed types to 
+unmanaged types. Unless you are developing specialized code formarshaling types 
+between managed and unmanaged code, you probably do not need to use any ofthese 
+methods.GetHRForException() converts a .NET exception to a COM HResult. If you 
+are curious aboutthe platform you are running on, you can find out the size of a 
+character with theSystemDefaultCharSize field, which is 1 on an ANSI platform 
+(Windows 9x/Me) and 2 on aUnicode platform (Windows NT, 2000, and XP).Use the 
+IsComObject() method to determine whether an object is actually an unmanaged 
+COMobject. The AddRef() method increments a COM object’s reference count.public 
+sealed class Marshal {// Public Static Fieldspublic static readonly int 
+SystemDefaultCharSize; // =2public static readonly int SystemMaxDBCSCharSize; // 
+=1// Public Static Methodspublic static int AddRef(IntPtr pUnk);public static 
+IntPtr AllocCoTaskMem(int cb);public static IntPtr AllocHGlobal(int cb);public 
+static IntPtr AllocHGlobal(IntPtr cb);public static object BindToMoniker(string 
+monikerName);public static void ChangeWrapperHandleStrength(object otp, bool 
+fIsWeak);public static void Copy(byte[ ] source, int startIndex, IntPtr 
+destination, int length);public static void Copy(char[ ] source, int startIndex, 
+IntPtr destination, int length);public static void Copy(double[ ] source, int 
+startIndex, IntPtr destination, int length);public static void Copy(short[ ] 
+source, int startIndex, IntPtr destination, int length);public static void 
+Copy(int[ ] source, int startIndex, IntPtr destination, int length);public 
+static void Copy(long[ ] source, int startIndex, IntPtr destination, int 
+length);public static void Copy(IntPtr source, byte[ ] destination, int 
+startIndex, int length);public static void Copy(IntPtr source, char[ ] 
+destination, int startIndex, int length);public static void Copy(IntPtr source, 
+double[ ] destination, int startIndex, int length);public static void 
+Copy(IntPtr source, short[ ] destination, int startIndex, int length);
+
+      Page 23
+© O’Reilly Media Inc. 2002-200323public static void Copy(IntPtr source, int[ ] 
+destination, int startIndex, int length);public static void Copy(IntPtr source, 
+long[ ] destination, int startIndex, int length);public static void Copy(IntPtr 
+source, float[ ] destination, int startIndex, int length);public static void 
+Copy(float[ ] source, int startIndex, IntPtr destination, int length);public 
+static object CreateWrapperOfType(object o, Type t);public static void 
+DestroyStructure(IntPtr ptr, Type structuretype);public static void 
+FreeBSTR(IntPtr ptr);public static void FreeCoTaskMem(IntPtr ptr);public static 
+void FreeHGlobal(IntPtr hglobal);public static Guid GenerateGuidForType(Type 
+type);public static string GenerateProgIdForType(Type type);public static object 
+GetActiveObject(string progID);public static IntPtr 
+GetComInterfaceForObject(object o, Type T);public static object 
+GetComObjectData(object obj, object key);public static int 
+GetComSlotForMethodInfo(System.Reflection.MemberInfo m);public static int 
+GetEndComSlot(Type t);public static int GetExceptionCode();public static IntPtr 
+GetExceptionPointers();public static IntPtr 
+GetHINSTANCE(System.Reflection.Module m);public static int 
+GetHRForException(Exception e);public static int GetHRForLastWin32Error();public 
+static IntPtr GetIDispatchForObject(object o);public static IntPtr 
+GetITypeInfoForType(Type t);public static IntPtr GetIUnknownForObject(object 
+o);public static int GetLastWin32Error();public static IntPtr 
+GetManagedThunkForUnmanagedMethodPtr(IntPtr pfnMethodToWrap,IntPtr pbSignature, 
+int cbSignature);public static MemberInfo GetMethodInfoForComSlot(Type t, int 
+slot,ref ComMemberType memberType);public static void 
+GetNativeVariantForObject(object obj, IntPtr pDstNativeVariant);public static 
+object GetObjectForIUnknown(IntPtr pUnk);public static object 
+GetObjectForNativeVariant(IntPtr pSrcNativeVariant);public static object[ ] 
+GetObjectsForNativeVariants(IntPtr aSrcNativeVariant, int cVars);public static 
+int GetStartComSlot(Type t);public static Thread GetThreadFromFiberCookie(int 
+cookie);public static object GetTypedObjectForIUnknown(IntPtr pUnk, Type 
+t);public static Type GetTypeForITypeInfo(IntPtr piTypeInfo);public static 
+string GetTypeInfoName(UCOMITypeInfo pTI);public static Guid 
+GetTypeLibGuid(UCOMITypeLib pTLB);public static Guid 
+GetTypeLibGuidForAssembly(System.Reflection.Assembly asm);public static int 
+GetTypeLibLcid(UCOMITypeLib pTLB);public static string 
+GetTypeLibName(UCOMITypeLib pTLB);public static IntPtr 
+GetUnmanagedThunkForManagedMethodPtr(IntPtr pfnMethodToWrap,IntPtr pbSignature, 
+int cbSignature);public static bool IsComObject(object o);public static bool 
+IsTypeVisibleFromCom(Type t);public static int 
+NumParamBytes(System.Reflection.MethodInfo m);public static IntPtr OffsetOf(Type 
+t, string fieldName);public static void Prelink(System.Reflection.MethodInfo 
+m);public static void PrelinkAll(Type c);public static string 
+PtrToStringAnsi(IntPtr ptr);public static string PtrToStringAnsi(IntPtr ptr, int 
+len);public static string PtrToStringAuto(IntPtr ptr);public static string 
+PtrToStringAuto(IntPtr ptr, int len);public static string PtrToStringBSTR(IntPtr 
+ptr);public static string PtrToStringUni(IntPtr ptr);public static string 
+PtrToStringUni(IntPtr ptr, int len);public static object PtrToStructure(IntPtr 
+ptr, Type structureType);public static void PtrToStructure(IntPtr ptr, object 
+structure);public static int QueryInterface(IntPtr pUnk, ref Guid iid, out 
+IntPtr ppv);public static byte ReadByte(IntPtr ptr);
+
+      Page 24
+© O’Reilly Media Inc. 2002-200324public static byte ReadByte(IntPtr ptr, int 
+ofs);public static byte ReadByte(in object ptr, int ofs);public static short 
+ReadInt16(IntPtr ptr);public static short ReadInt16(IntPtr ptr, int ofs);public 
+static short ReadInt16(in object ptr, int ofs);public static int 
+ReadInt32(IntPtr ptr);public static int ReadInt32(IntPtr ptr, int ofs);public 
+static int ReadInt32(in object ptr, int ofs);public static long ReadInt64(IntPtr 
+ptr);public static long ReadInt64(IntPtr ptr, int ofs);public static long 
+ReadInt64(in object ptr, int ofs);public static IntPtr ReadIntPtr(IntPtr 
+ptr);public static IntPtr ReadIntPtr(IntPtr ptr, int ofs);public static IntPtr 
+ReadIntPtr(in object ptr, int ofs);public static IntPtr ReAllocCoTaskMem(IntPtr 
+pv, int cb);public static IntPtr ReAllocHGlobal(IntPtr pv, IntPtr cb);public 
+static int Release(IntPtr pUnk);public static int ReleaseComObject(object 
+o);public static void ReleaseThreadCache();public static bool 
+SetComObjectData(object obj, object key, object data);public static int 
+SizeOf(object structure);public static int SizeOf(Type t);public static IntPtr 
+StringToBSTR(string s);public static IntPtr StringToCoTaskMemAnsi(string 
+s);public static IntPtr StringToCoTaskMemAuto(string s);public static IntPtr 
+StringToCoTaskMemUni(string s);public static IntPtr StringToHGlobalAnsi(string 
+s);public static IntPtr StringToHGlobalAuto(string s);public static IntPtr 
+StringToHGlobalUni(string s);public static void StructureToPtr(object structure, 
+IntPtr ptr, bool fDeleteOld);public static void ThrowExceptionForHR(int 
+errorCode);public static void ThrowExceptionForHR(int errorCode, IntPtr 
+errorInfo);public static IntPtr UnsafeAddrOfPinnedArrayElement(Array arr, int 
+index);public static void WriteByte(IntPtr ptr, byte val);public static void 
+WriteByte(IntPtr ptr, int ofs, byte val);public static void WriteByte(in object 
+ptr, int ofs, byte val);public static void WriteInt16(IntPtr ptr, char 
+val);public static void WriteInt16(IntPtr ptr, short val);public static void 
+WriteInt16(IntPtr ptr, int ofs, char val);public static void WriteInt16(IntPtr 
+ptr, int ofs, short val);public static void WriteInt16(in object ptr, int ofs, 
+char val);public static void WriteInt16(in object ptr, int ofs, short 
+val);public static void WriteInt32(IntPtr ptr, int val);public static void 
+WriteInt32(IntPtr ptr, int ofs, int val);public static void WriteInt32(in object 
+ptr, int ofs, int val);public static void WriteInt64(IntPtr ptr, int ofs, long 
+val);public static void WriteInt64(IntPtr ptr, long val);public static void 
+WriteInt64(in object ptr, int ofs, long val);public static void 
+WriteIntPtr(IntPtr ptr, int ofs, IntPtr val);public static void 
+WriteIntPtr(IntPtr ptr, IntPtr val);public static void WriteIntPtr(in object 
+ptr, int ofs, IntPtr val);}MarshalAsAttributeThis optional attribute is used to 
+explicitly specify the unmanaged type a parameter, field, orreturn value should 
+be marshaled to. If you do not specify this attribute, .NET uses the 
+type’sdefault marshaler. The UnmanagedType enumeration contains the unmanaged 
+types you canmarshal to with this attribute.
+
+      Page 25
+© O’Reilly Media Inc. 2002-200325public sealed class MarshalAsAttribute : 
+Attribute {// Public Constructorspublic MarshalAsAttribute(short 
+unmanagedType);public MarshalAsAttribute(UnmanagedType unmanagedType);// Public 
+Instance Fieldspublic UnmanagedType ArraySubType;public string 
+MarshalCookie;public string MarshalType;public Type MarshalTypeRef;public 
+VarEnum SafeArraySubType;public Type SafeArrayUserDefinedSubType;public int 
+SizeConst;public short SizeParamIndex;// Public Instance Propertiespublic 
+UnmanagedType Value{get; }}HierarchySystem.Object > System.Attribute > 
+MarshalAsAttributeValid OnField, Parameter, 
+ReturnValueMarshalDirectiveExceptionThis exception is thrown when the marshaler 
+encounters an unsupported MarshalAsAttribute.public class 
+MarshalDirectiveException : SystemException {// Public Constructorspublic 
+MarshalDirectiveException();public MarshalDirectiveException(string 
+message);public MarshalDirectiveException(string message, Exception inner);// 
+Protected Constructorsprotected 
+MarshalDirectiveException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext 
+context);}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > MarshalDirectiveExceptionObjectCreationDelegateUse 
+this delegate with the 
+ExtensibleClassFactory.RegisterObjectCreationCallback()method to create a COM 
+object.public delegate IntPtr ObjectCreationDelegate(IntPtr aggregator);Passed 
+ToExtensibleClassFactory.RegisterObjectCreationCallback()OptionalAttributeThis 
+attribute is attached to a parameter to indicate that it is optional.public 
+sealed class OptionalAttribute : Attribute {// Public Constructorspublic 
+OptionalAttribute();}
+
+      Page 26
+© O’Reilly Media Inc. 2002-200326HierarchySystem.Object > System.Attribute > 
+OptionalAttributeValid OnParameterOutAttributeThis attribute is attached to a 
+parameter to cause it to be marshaled as an out parameter. SeeInAttribute for 
+more details, including information on the default behavior.public sealed class 
+OutAttribute : Attribute {// Public Constructorspublic 
+OutAttribute();}HierarchySystem.Object > System.Attribute > OutAttributeValid 
+OnParameterPreserveSigAttributeWhen .NET converts a managed method signature to 
+an unmanaged signature, it changes thereturn value to a parameter that has the 
+out and retval COM attributes. Instead of the originalreturn value, the 
+unmanaged method returns a COM HRESULT. If you want to override thisbehavior, 
+attach the PreserveSigAttribute to the method.Something similar happens when you 
+call unmanaged methods from managed code. In that case,the [out, retval] 
+parameter on the COM side becomes the return value, and an HRESULT thatindicates 
+an error condition is translated into a .NET exception. If you want to be able 
+to accessthe HRESULT as a long return value, use the PreserveSigAttribute on the 
+methods in yourCOM interface declaration (see InterfaceTypeAttribute).public 
+sealed class PreserveSigAttribute : Attribute {// Public Constructorspublic 
+PreserveSigAttribute();}HierarchySystem.Object > System.Attribute > 
+PreserveSigAttributeValid OnMethod
+
+      Page 27
+© O’Reilly Media Inc. 2002-200327ProgIdAttributeThis attribute is attached to a 
+class to specify its COM ProgID.public sealed class ProgIdAttribute : Attribute 
+{// Public Constructorspublic ProgIdAttribute(string progId);// Public Instance 
+Propertiespublic string Value{get; }}HierarchySystem.Object > System.Attribute > 
+ProgIdAttributeValid OnClassRegistrationServicesThis class is responsible for 
+registering and unregistering assemblies with COM.public class 
+RegistrationServices : IRegistrationServices {// Public Constructorspublic 
+RegistrationServices();// Public Instance Methodspublic virtual Guid 
+GetManagedCategoryGuid();// implements IRegistrationServicespublic virtual 
+string GetProgIdForType(Type type);// implements IRegistrationServicespublic 
+virtual Type[ ] GetRegistrableTypesInAssembly(System.Reflection.Assembly 
+assembly); // implementsIRegistrationServicespublic virtual bool 
+RegisterAssembly(System.Reflection.Assembly assembly,AssemblyRegistrationFlags 
+flags); // implements IRegistrationServicespublic virtual void 
+RegisterTypeForComClients(Type type, ref Guid g);// implements 
+IRegistrationServicespublic virtual bool TypeRepresentsComType(Type type);// 
+implements IRegistrationServicespublic virtual bool 
+TypeRequiresRegistration(Type type);// implements IRegistrationServicespublic 
+virtual bool UnregisterAssembly(System.Reflection.Assembly assembly)// 
+implements IRegistrationServices}RuntimeEnvironmentThis type exposes static 
+methods you can use to get information about the CLR’s environment.public class 
+RuntimeEnvironment {// Public Constructorspublic RuntimeEnvironment();// Public 
+Static Propertiespublic static string SystemConfigurationFile{get; }// Public 
+Static Methodspublic static bool 
+FromGlobalAccessCache(System.Reflection.Assembly a);public static string 
+GetRuntimeDirectory();public static string 
+GetSystemVersion();}SafeArrayRankMismatchExceptionThis exception signals that a 
+SAFEARRAY’s rank does not match the rank in the method signature;it might be 
+thrown when invoking a managed method.
+
+      Page 28
+© O’Reilly Media Inc. 2002-200328public class SafeArrayRankMismatchException : 
+SystemException {// Public Constructorspublic 
+SafeArrayRankMismatchException();public SafeArrayRankMismatchException(string 
+message);public SafeArrayRankMismatchException(string message, Exception 
+inner);// Protected Constructorsprotected 
+SafeArrayRankMismatchException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext 
+context);}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > 
+SafeArrayRankMismatchExceptionSafeArrayTypeMismatchExceptionThis exception 
+signals that a SAFEARRAY’s type does not match the type in the method 
+signature;it might be thrown when invoking a managed method.public class 
+SafeArrayTypeMismatchException : SystemException {// Public Constructorspublic 
+SafeArrayTypeMismatchException();public SafeArrayTypeMismatchException(string 
+message);public SafeArrayTypeMismatchException(string message, Exception 
+inner);// Protected Constructorsprotected 
+SafeArrayTypeMismatchException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext 
+context);}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > SafeArrayTypeMismatchExceptionSEHExceptionThis class 
+is used as a wrapper for an unmanaged C++ exception that was thrown.public class 
+SEHException : ExternalException {// Public Constructorspublic 
+SEHException();public SEHException(string message);public SEHException(string 
+message, Exception inner);// Protected Constructorsprotected 
+SEHException(System.Runtime.Serialization.SerializationInfo 
+info,System.Runtime.Serialization.StreamingContext context);// Public Instance 
+Methodspublic virtual bool CanResume();}HierarchySystem.Object > 
+System.Exception(System.Runtime.Serialization.ISerializable) 
+>System.SystemException > ExternalException > 
+SEHExceptionStructLayoutAttributeUse this attribute to control how the members 
+of a class are laid out in memory. See LayoutKindfor the possible values you can 
+use with this attribute.
+
+      Page 29
+© O’Reilly Media Inc. 2002-200329public sealed class StructLayoutAttribute : 
+Attribute {// Public Constructorspublic StructLayoutAttribute(short 
+layoutKind);public StructLayoutAttribute(LayoutKind layoutKind);// Public 
+Instance Fieldspublic CharSet CharSet;public int Pack;public int Size;// Public 
+Instance Propertiespublic LayoutKind Value{get; }}HierarchySystem.Object > 
+System.Attribute > StructLayoutAttributeValid OnClass, 
+StructTypeLibVersionAttributeThis attribute specifies the exported type 
+library’s version.public sealed class TypeLibVersionAttribute : Attribute {// 
+Public Constructorspublic TypeLibVersionAttribute(int major, int minor);// 
+Public Instance Propertiespublic int MajorVersion{get; }public int 
+MinorVersion{get; }}HierarchySystem.Object > System.Attribute > 
+TypeLibVersionAttributeValid OnAssemblyUnknownWrapperUse this wrapper to pass a 
+managed object into unmanaged code as type VT_UNKNOWN.public sealed class 
+UnknownWrapper {// Public Constructorspublic UnknownWrapper(object obj);// 
+Public Instance Propertiespublic object WrappedObject{get; }}UnmanagedTypeThis 
+enumeration contains constant values that represent various unmanaged 
+types.public enum UnmanagedType {Bool = 2,I1 = 3,U1 = 4,I2 = 5,U2 = 6,I4 = 7,U4 
+= 8,I8 = 9,U8 = 10,
+
+      Page 30
+© O’Reilly Media Inc. 2002-200330R4 = 11,R8 = 12,Currency = 15,BStr = 19,LPStr = 
+20,LPWStr = 21,LPTStr = 22,ByValTStr = 23,IUnknown = 25,IDispatch = 26,Struct = 
+27,Interface = 28,SafeArray = 29,ByValArray = 30,SysInt = 31,SysUInt = 
+32,VBByRefStr = 34,AnsiBStr = 35,TBStr = 36,VariantBool = 37,FunctionPtr = 
+38,AsAny = 40,LPArray = 42,LPStruct = 43,CustomMarshaler = 44,Error = 
+45}HierarchySystem.Object > System.ValueType > 
+System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+UnmanagedTypeReturned BySystem.Reflection.Emit.UnmanagedMarshal.{BaseType, 
+GetUnmanagedType},MarshalAsAttribute.ValuePassed 
+ToSystem.Reflection.Emit.UnmanagedMarshal.{DefineLPArray(), 
+DefineSafeArray(),DefineUnmanagedMarshal()}, 
+MarshalAsAttribute.MarshalAsAttribute()VarEnumThis enumeration contains 
+constants that can be used withMarshalAsAttribute.SafeArraySubType to specify 
+how to marshal arrays that are passed frommanaged to unmanaged code.public enum 
+VarEnum {VT_EMPTY = 0,VT_NULL = 1,VT_I2 = 2,VT_I4 = 3,VT_R4 = 4,VT_R8 = 5,VT_CY 
+= 6,VT_DATE = 7,VT_BSTR = 8,
+
+      Page 31
+© O’Reilly Media Inc. 2002-200331VT_DISPATCH = 9,VT_ERROR = 10,VT_BOOL = 
+11,VT_VARIANT = 12,VT_UNKNOWN = 13,VT_DECIMAL = 14,VT_I1 = 16,VT_UI1 = 17,VT_UI2 
+= 18,VT_UI4 = 19,VT_I8 = 20,VT_UI8 = 21,VT_INT = 22,VT_UINT = 23,VT_VOID = 
+24,VT_HRESULT = 25,VT_PTR = 26,VT_SAFEARRAY = 27,VT_CARRAY = 28,VT_USERDEFINED = 
+29,VT_LPSTR = 30,VT_LPWSTR = 31,VT_RECORD = 36,VT_FILETIME = 64,VT_BLOB = 
+65,VT_STREAM = 66,VT_STORAGE = 67,VT_STREAMED_OBJECT = 68,VT_STORED_OBJECT = 
+69,VT_BLOB_OBJECT = 70,VT_CF = 71,VT_CLSID = 72,VT_VECTOR = 4096,VT_ARRAY = 
+8192,VT_BYREF = 16384}HierarchySystem.Object > System.ValueType > 
+System.Enum(System.IComparable,System.IFormattable, System.IConvertible) > 
+VarEnumIExpandoThis interface indicates a type whose members can be removed or 
+added. The members arerepresented as System.Reflection.MemberInfo objects.public 
+interface IExpando : System.Reflection.IReflect {// Public Instance 
+Methodspublic FieldInfo AddField(string name);public MethodInfo AddMethod(string 
+name, Delegate method);public PropertyInfo AddProperty(string name);public void 
+RemoveMember(System.Reflection.MemberInfo m);}

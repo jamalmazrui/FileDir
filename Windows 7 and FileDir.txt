@@ -1,0 +1,32 @@
+Subject:
+Windows 7 and FileDir
+From:
+"Tony Swartz" <tbswartz@ptd.net>
+Date:
+Wed, 3 Feb 2010 19:41:27 -0500
+To:
+"Jamal Mazrui" <empower@smart.net>
+
+Hello Jamal:
+ 
+Hope things are well with you.
+ 
+Do you plan to update FileDir for Windows 7? I've noticed just a couple of things.
+ 
+1. If Set folders and .zip Extension to Open with FileDir is set, it replaces control panel.
+ 
+2. FileDir or the Jaws scripts zip extractor doesn't know where to place the Jaws scripts which should be in the user folder under current user, roaming, freedom scientific, Jaws, version number, and so forth.
+ 
+I would also very much love to see a version one day which would allow burning to DVD.
+ 
+All the best, and thanks much,
+Tony
+ 
+   
+ 
+Tony B. Swartz
+ 
+1944 Girard Ave
+Allentown PA 18104
+ 
+Phone# 610-799-4565 

@@ -1,0 +1,350 @@
+WdSaveFormat Enumeration (Microsoft.Office.Interop.Word)Home Library Learn 
+      Downloads Support Community Sign in | United States - English |  |  
+       
+
+        
+ MSDN Library  Office Development  Microsoft Office 2003  Office 2003  Primary 
+Interop Assembly References  Microsoft Office Word Primary Interop Reference  
+Microsoft.Office.Interop.Word  _Application Interface  _Document Interface  
+_Font Interface  _Global Interface  _LetterContent Interface  _OLEControl 
+Interface  _ParagraphFormat Interface  AddIn Interface  AddIns Interface  
+Adjustments Interface  Application Interface  ApplicationClass Class  
+ApplicationEvents Interface  ApplicationEvents_Event Interface  
+ApplicationEvents_SinkHelper Class  ApplicationEvents2 Interface  
+ApplicationEvents2_DocumentBeforeCloseEventHandler Delegate  
+ApplicationEvents2_DocumentBeforePrintEventHandler Delegate  
+ApplicationEvents2_DocumentBeforeSaveEventHandler Delegate  
+ApplicationEvents2_DocumentChangeEventHandler Delegate  
+ApplicationEvents2_DocumentOpenEventHandler Delegate  ApplicationEvents2_Event 
+Interface  ApplicationEvents2_NewDocumentEventHandler Delegate  
+ApplicationEvents2_QuitEventHandler Delegate  ApplicationEvents2_SinkHelper 
+Class  ApplicationEvents2_StartupEventHandler Delegate  
+ApplicationEvents2_WindowActivateEventHandler Delegate  
+ApplicationEvents2_WindowBeforeDoubleClickEventHandler Delegate  
+ApplicationEvents2_WindowBeforeRightClickEventHandler Delegate  
+ApplicationEvents2_WindowDeactivateEventHandler Delegate  
+ApplicationEvents2_WindowSelectionChangeEventHandler Delegate  
+ApplicationEvents3 Interface  ApplicationEvents3_DocumentBeforeCloseEventHandler 
+Delegate  ApplicationEvents3_DocumentBeforePrintEventHandler Delegate  
+ApplicationEvents3_DocumentBeforeSaveEventHandler Delegate  
+ApplicationEvents3_DocumentChangeEventHandler Delegate  
+ApplicationEvents3_DocumentOpenEventHandler Delegate  
+ApplicationEvents3_EPostageInsertEventHandler Delegate  
+ApplicationEvents3_EPostagePropertyDialogEventHandler Delegate  
+ApplicationEvents3_Event Interface  
+ApplicationEvents3_MailMergeAfterMergeEventHandler Delegate  
+ApplicationEvents3_MailMergeAfterRecordMergeEventHandler Delegate  
+ApplicationEvents3_MailMergeBeforeMergeEventHandler Delegate  
+ApplicationEvents3_MailMergeBeforeRecordMergeEventHandler Delegate  
+ApplicationEvents3_MailMergeDataSourceLoadEventHandler Delegate  
+ApplicationEvents3_MailMergeDataSourceValidateEventHandler Delegate  
+ApplicationEvents3_MailMergeWizardSendToCustomEventHandler Delegate  
+ApplicationEvents3_MailMergeWizardStateChangeEventHandler Delegate  
+ApplicationEvents3_NewDocumentEventHandler Delegate  
+ApplicationEvents3_QuitEventHandler Delegate  ApplicationEvents3_SinkHelper 
+Class  ApplicationEvents3_StartupEventHandler Delegate  
+ApplicationEvents3_WindowActivateEventHandler Delegate  
+ApplicationEvents3_WindowBeforeDoubleClickEventHandler Delegate  
+ApplicationEvents3_WindowBeforeRightClickEventHandler Delegate  
+ApplicationEvents3_WindowDeactivateEventHandler Delegate  
+ApplicationEvents3_WindowSelectionChangeEventHandler Delegate  
+ApplicationEvents3_WindowSizeEventHandler Delegate  ApplicationEvents4 Interface 
+ ApplicationEvents4_DocumentBeforeCloseEventHandler Delegate  
+ApplicationEvents4_DocumentBeforePrintEventHandler Delegate  
+ApplicationEvents4_DocumentBeforeSaveEventHandler Delegate  
+ApplicationEvents4_DocumentChangeEventHandler Delegate  
+ApplicationEvents4_DocumentOpenEventHandler Delegate  
+ApplicationEvents4_DocumentSyncEventHandler Delegate  
+ApplicationEvents4_EPostageInsertEventHandler Delegate  
+ApplicationEvents4_EPostageInsertExEventHandler Delegate  
+ApplicationEvents4_EPostagePropertyDialogEventHandler Delegate  
+ApplicationEvents4_Event Interface  
+ApplicationEvents4_MailMergeAfterMergeEventHandler Delegate  
+ApplicationEvents4_MailMergeAfterRecordMergeEventHandler Delegate  
+ApplicationEvents4_MailMergeBeforeMergeEventHandler Delegate  
+ApplicationEvents4_MailMergeBeforeRecordMergeEventHandler Delegate  
+ApplicationEvents4_MailMergeDataSourceLoadEventHandler Delegate  
+ApplicationEvents4_MailMergeDataSourceValidateEventHandler Delegate  
+ApplicationEvents4_MailMergeWizardSendToCustomEventHandler Delegate  
+ApplicationEvents4_MailMergeWizardStateChangeEventHandler Delegate  
+ApplicationEvents4_NewDocumentEventHandler Delegate  
+ApplicationEvents4_QuitEventHandler Delegate  ApplicationEvents4_SinkHelper 
+Class  ApplicationEvents4_StartupEventHandler Delegate  
+ApplicationEvents4_WindowActivateEventHandler Delegate  
+ApplicationEvents4_WindowBeforeDoubleClickEventHandler Delegate  
+ApplicationEvents4_WindowBeforeRightClickEventHandler Delegate  
+ApplicationEvents4_WindowDeactivateEventHandler Delegate  
+ApplicationEvents4_WindowSelectionChangeEventHandler Delegate  
+ApplicationEvents4_WindowSizeEventHandler Delegate  
+ApplicationEvents4_XMLSelectionChangeEventHandler Delegate  
+ApplicationEvents4_XMLValidationErrorEventHandler Delegate  AutoCaption 
+Interface  AutoCaptions Interface  AutoCorrect Interface  AutoCorrectEntries 
+Interface  AutoCorrectEntry Interface  AutoTextEntries Interface  AutoTextEntry 
+Interface  Bookmark Interface  Bookmarks Interface  Border Interface  Borders 
+Interface  Break Interface  Breaks Interface  Browser Interface  CalloutFormat 
+Interface  CanvasShapes Interface  CaptionLabel Interface  CaptionLabels 
+Interface  Cell Interface  Cells Interface  Characters Interface  CheckBox 
+Interface  ColorFormat Interface  Column Interface  Columns Interface  Comment 
+Interface  Comments Interface  ConditionalStyle Interface  ConnectorFormat 
+Interface  CustomLabel Interface  CustomLabels Interface  CustomProperties 
+Interface  CustomProperty Interface  DefaultWebOptions Interface  Diagram 
+Interface  DiagramNode Interface  DiagramNodeChildren Interface  DiagramNodes 
+Interface  Dialog Interface  Dialogs Interface  Dictionaries Interface  
+Dictionary Interface  Document Interface  DocumentClass Class  DocumentEvents 
+Interface  DocumentEvents_CloseEventHandler Delegate  DocumentEvents_Event 
+Interface  DocumentEvents_NewEventHandler Delegate  
+DocumentEvents_OpenEventHandler Delegate  DocumentEvents_SinkHelper Class  
+DocumentEvents2 Interface  DocumentEvents2_CloseEventHandler Delegate  
+DocumentEvents2_Event Interface  DocumentEvents2_NewEventHandler Delegate  
+DocumentEvents2_OpenEventHandler Delegate  DocumentEvents2_SinkHelper Class  
+DocumentEvents2_SyncEventHandler Delegate  
+DocumentEvents2_XMLAfterInsertEventHandler Delegate  
+DocumentEvents2_XMLBeforeDeleteEventHandler Delegate  Documents Interface  
+DropCap Interface  DropDown Interface  Editor Interface  Editors Interface  
+Email Interface  EmailAuthor Interface  EmailOptions Interface  EmailSignature 
+Interface  EmailSignatureEntries Interface  EmailSignatureEntry Interface  
+Endnote Interface  EndnoteOptions Interface  Endnotes Interface  Envelope 
+Interface  Field Interface  Fields Interface  FileConverter Interface  
+FileConverters Interface  FillFormat Interface  Find Interface  
+FirstLetterException Interface  FirstLetterExceptions Interface  Font Interface  
+FontClass Class  FontNames Interface  Footnote Interface  FootnoteOptions 
+Interface  Footnotes Interface  FormField Interface  FormFields Interface  Frame 
+Interface  Frames Interface  Frameset Interface  FreeformBuilder Interface  
+Global Interface  GlobalClass Class  GroupShapes Interface  
+HangulAndAlphabetException Interface  HangulAndAlphabetExceptions Interface  
+HangulHanjaConversionDictionaries Interface  HeaderFooter Interface  
+HeadersFooters Interface  HeadingStyle Interface  HeadingStyles Interface  
+HorizontalLineFormat Interface  HTMLDivision Interface  HTMLDivisions Interface  
+Hyperlink Interface  Hyperlinks Interface  IApplicationEvents Interface  
+IApplicationEvents2 Interface  IApplicationEvents3 Interface  
+IApplicationEvents4 Interface  Index Interface  Indexes Interface  InlineShape 
+Interface  InlineShapes Interface  KeyBinding Interface  KeyBindings Interface  
+KeysBoundTo Interface  Language Interface  Languages Interface  LetterContent 
+Interface  LetterContentClass Class  Line Interface  LineFormat Interface  
+LineNumbering Interface  Lines Interface  LinkFormat Interface  List Interface  
+ListEntries Interface  ListEntry Interface  ListFormat Interface  ListGalleries 
+Interface  ListGallery Interface  ListLevel Interface  ListLevels Interface  
+ListParagraphs Interface  Lists Interface  ListTemplate Interface  ListTemplates 
+Interface  Mailer Interface  MailingLabel Interface  MailMerge Interface  
+MailMergeDataField Interface  MailMergeDataFields Interface  MailMergeDataSource 
+Interface  MailMergeField Interface  MailMergeFieldName Interface  
+MailMergeFieldNames Interface  MailMergeFields Interface  MailMessage Interface  
+MappedDataField Interface  MappedDataFields Interface  OCXEvents Interface  
+OCXEvents_Event Interface  OCXEvents_GotFocusEventHandler Delegate  
+OCXEvents_LostFocusEventHandler Delegate  OCXEvents_SinkHelper Class  OLEControl 
+Interface  OLEControlClass Class  OLEFormat Interface  Options Interface  
+OtherCorrectionsException Interface  OtherCorrectionsExceptions Interface  Page 
+Interface  PageNumber Interface  PageNumbers Interface  Pages Interface  
+PageSetup Interface  Pane Interface  Panes Interface  Paragraph Interface  
+ParagraphFormat Interface  ParagraphFormatClass Class  Paragraphs Interface  
+PictureFormat Interface  ProofreadingErrors Interface  Range Interface  
+ReadabilityStatistic Interface  ReadabilityStatistics Interface  RecentFile 
+Interface  RecentFiles Interface  Rectangle Interface  Rectangles Interface  
+Replacement Interface  Reviewer Interface  Reviewers Interface  Revision 
+Interface  Revisions Interface  RoutingSlip Interface  Row Interface  Rows 
+Interface  Section Interface  Sections Interface  Selection Interface  Sentences 
+Interface  Shading Interface  ShadowFormat Interface  Shape Interface  ShapeNode 
+Interface  ShapeNodes Interface  ShapeRange Interface  Shapes Interface  
+SmartTag Interface  SmartTagAction Interface  SmartTagActions Interface  
+SmartTagRecognizer Interface  SmartTagRecognizers Interface  SmartTags Interface 
+ SmartTagType Interface  SmartTagTypes Interface  SpellingSuggestion Interface  
+SpellingSuggestions Interface  StoryRanges Interface  Style Interface  Styles 
+Interface  StyleSheet Interface  StyleSheets Interface  Subdocument Interface  
+Subdocuments Interface  SynonymInfo Interface  System Interface  Table Interface 
+ TableOfAuthorities Interface  TableOfAuthoritiesCategory Interface  
+TableOfContents Interface  TableOfFigures Interface  Tables Interface  
+TablesOfAuthorities Interface  TablesOfAuthoritiesCategories Interface  
+TablesOfContents Interface  TablesOfFigures Interface  TableStyle Interface  
+TabStop Interface  TabStops Interface  Task Interface  TaskPane Interface  
+TaskPanes Interface  Tasks Interface  Template Interface  Templates Interface  
+TextColumn Interface  TextColumns Interface  TextEffectFormat Interface  
+TextFrame Interface  TextInput Interface  TextRetrievalMode Interface  
+ThreeDFormat Interface  TwoInitialCapsException Interface  
+TwoInitialCapsExceptions Interface  Variable Interface  Variables Interface  
+Version Interface  Versions Interface  View Interface  WdAlertLevel Enumeration  
+WdAnimation Enumeration  WdArabicNumeral Enumeration  WdAraSpeller Enumeration  
+WdArrangeStyle Enumeration  WdAutoFitBehavior Enumeration  WdAutoMacros 
+Enumeration  WdAutoVersions Enumeration  WdBaselineAlignment Enumeration  
+WdBookmarkSortBy Enumeration  WdBorderDistanceFrom Enumeration  WdBorderType 
+Enumeration  WdBorderTypeHID Enumeration  WdBreakType Enumeration  
+WdBrowserLevel Enumeration  WdBrowseTarget Enumeration  WdBuiltInProperty 
+Enumeration  WdBuiltinStyle Enumeration  WdCalendarType Enumeration  
+WdCalendarTypeBi Enumeration  WdCaptionLabelID Enumeration  WdCaptionNumberStyle 
+Enumeration  WdCaptionNumberStyleHID Enumeration  WdCaptionPosition Enumeration  
+WdCellVerticalAlignment Enumeration  WdCharacterCase Enumeration  
+WdCharacterCaseHID Enumeration  WdCharacterWidth Enumeration  
+WdChevronConvertRule Enumeration  WdCollapseDirection Enumeration  WdColor 
+Enumeration  WdColorIndex Enumeration  WdCompareTarget Enumeration  
+WdCompatibility Enumeration  WdConditionCode Enumeration  WdConstants 
+Enumeration  WdContinue Enumeration  WdCountry Enumeration  WdCursorMovement 
+Enumeration  WdCursorType Enumeration  WdCustomLabelPageSize Enumeration  
+WdDateLanguage Enumeration  WdDefaultFilePath Enumeration  WdDefaultListBehavior 
+Enumeration  WdDefaultTableBehavior Enumeration  WdDeleteCells Enumeration  
+WdDeletedTextMark Enumeration  WdDiacriticColor Enumeration  WdDictionaryType 
+Enumeration  WdDictionaryTypeHID Enumeration  WdDisableFeaturesIntroducedAfter 
+Enumeration  WdDocumentDirection Enumeration  WdDocumentKind Enumeration  
+WdDocumentMedium Enumeration  WdDocumentType Enumeration  
+WdDocumentViewDirection Enumeration  WdDropPosition Enumeration  WdEditionOption 
+Enumeration  WdEditionType Enumeration  WdEditorType Enumeration  
+WdEmailHTMLFidelity Enumeration  WdEmphasisMark Enumeration  WdEnableCancelKey 
+Enumeration  WdEncloseStyle Enumeration  WdEnclosureType Enumeration  
+WdEndnoteLocation Enumeration  WdEnvelopeOrientation Enumeration  
+WdFarEastLineBreakLanguageID Enumeration  WdFarEastLineBreakLevel Enumeration  
+WdFieldKind Enumeration  WdFieldShading Enumeration  WdFieldType Enumeration  
+WdFindMatch Enumeration  WdFindWrap Enumeration  WdFlowDirection Enumeration  
+WdFontBias Enumeration  WdFootnoteLocation Enumeration  WdFramePosition 
+Enumeration  WdFramesetNewFrameLocation Enumeration  WdFramesetSizeType 
+Enumeration  WdFramesetType Enumeration  WdFrameSizeRule Enumeration  
+WdGoToDirection Enumeration  WdGoToItem Enumeration  WdGutterStyle Enumeration  
+WdGutterStyleOld Enumeration  WdHeaderFooterIndex Enumeration  
+WdHeadingSeparator Enumeration  WdHebSpellStart Enumeration  WdHelpType 
+Enumeration  WdHelpTypeHID Enumeration  WdHighAnsiText Enumeration  
+WdHorizontalInVerticalType Enumeration  WdHorizontalLineAlignment Enumeration  
+WdHorizontalLineWidthType Enumeration  WdIMEMode Enumeration  WdIndexFilter 
+Enumeration  WdIndexFormat Enumeration  WdIndexSortBy Enumeration  WdIndexType 
+Enumeration  WdInformation Enumeration  WdInlineShapeType Enumeration  
+WdInsertCells Enumeration  WdInsertedTextMark Enumeration  WdInternationalIndex 
+Enumeration  WdJustificationMode Enumeration  WdKana Enumeration  WdKey 
+Enumeration  WdKeyCategory Enumeration  WdLanguageID Enumeration  
+WdLanguageID2000 Enumeration  WdLayoutMode Enumeration  WdLetterheadLocation 
+Enumeration  WdLetterStyle Enumeration  WdLineEndingType Enumeration  
+WdLineSpacing Enumeration  WdLineStyle Enumeration  WdLineType Enumeration  
+WdLineWidth Enumeration  WdLinkType Enumeration  WdListApplyTo Enumeration  
+WdListGalleryType Enumeration  WdListLevelAlignment Enumeration  
+WdListNumberStyle Enumeration  WdListNumberStyleHID Enumeration  WdListType 
+Enumeration  WdMailerPriority Enumeration  WdMailMergeActiveRecord Enumeration  
+WdMailMergeComparison Enumeration  WdMailMergeDataSource Enumeration  
+WdMailMergeDefaultRecord Enumeration  WdMailMergeDestination Enumeration  
+WdMailMergeMailFormat Enumeration  WdMailMergeMainDocType Enumeration  
+WdMailMergeState Enumeration  WdMailSystem Enumeration  WdMappedDataFields 
+Enumeration  WdMeasurementUnits Enumeration  WdMeasurementUnitsHID Enumeration  
+WdMergeSubType Enumeration  WdMergeTarget Enumeration  WdMonthNames Enumeration  
+WdMovementType Enumeration  WdMultipleWordConversionsMode Enumeration  
+WdNewDocumentType Enumeration  WdNoteNumberStyle Enumeration  
+WdNoteNumberStyleHID Enumeration  WdNumberingRule Enumeration  
+WdNumberStyleWordBasicBiDi Enumeration  WdNumberType Enumeration  WdOLEPlacement 
+Enumeration  WdOLEType Enumeration  WdOLEVerb Enumeration  WdOpenFormat 
+Enumeration  WdOrganizerObject Enumeration  WdOrientation Enumeration  
+WdOriginalFormat Enumeration  WdOutlineLevel Enumeration  WdPageBorderArt 
+Enumeration  WdPageFit Enumeration  WdPageNumberAlignment Enumeration  
+WdPageNumberStyle Enumeration  WdPageNumberStyleHID Enumeration  WdPaperSize 
+Enumeration  WdPaperTray Enumeration  WdParagraphAlignment Enumeration  
+WdParagraphAlignmentHID Enumeration  WdPartOfSpeech Enumeration  WdPasteDataType 
+Enumeration  WdPhoneticGuideAlignmentType Enumeration  WdPictureLinkType 
+Enumeration  WdPreferredWidthType Enumeration  WdPrintOutItem Enumeration  
+WdPrintOutPages Enumeration  WdPrintOutRange Enumeration  
+WdProofreadingErrorType Enumeration  WdProtectionType Enumeration  
+WdReadingOrder Enumeration  WdRecoveryType Enumeration  WdRectangleType 
+Enumeration  WdReferenceKind Enumeration  WdReferenceType Enumeration  
+WdRelativeHorizontalPosition Enumeration  WdRelativeVerticalPosition Enumeration 
+ WdRelocate Enumeration  WdReplace Enumeration  WdRevisedLinesMark Enumeration  
+WdRevisedPropertiesMark Enumeration  WdRevisionsBalloonMargin Enumeration  
+WdRevisionsBalloonPrintOrientation Enumeration  WdRevisionsBalloonWidthType 
+Enumeration  WdRevisionsMode Enumeration  WdRevisionsView Enumeration  
+WdRevisionsWrap Enumeration  WdRevisionType Enumeration  WdRoutingSlipDelivery 
+Enumeration  WdRoutingSlipStatus Enumeration  WdRowAlignment Enumeration  
+WdRowHeightRule Enumeration  WdRulerStyle Enumeration  WdSalutationGender 
+Enumeration  WdSalutationType Enumeration  WdSaveFormat Enumeration  
+WdSaveOptions Enumeration  WdScrollbarType Enumeration  WdSectionDirection 
+Enumeration  WdSectionStart Enumeration  WdSeekView Enumeration  
+WdSelectionFlags Enumeration  WdSelectionType Enumeration  WdSeparatorType 
+Enumeration  WdShapePosition Enumeration  WdShowFilter Enumeration  
+WdSmartTagControlType Enumeration  WdSortFieldType Enumeration  
+WdSortFieldTypeHID Enumeration  WdSortOrder Enumeration  WdSortSeparator 
+Enumeration  WdSpecialPane Enumeration  WdSpellingErrorType Enumeration  
+WdSpellingWordType Enumeration  WdStatistic Enumeration  WdStatisticHID 
+Enumeration  WdStoryType Enumeration  WdStyleSheetLinkType Enumeration  
+WdStyleSheetPrecedence Enumeration  WdStyleType Enumeration  WdSubscriberFormats 
+Enumeration  WdSummaryLength Enumeration  WdSummaryMode Enumeration  
+WdTabAlignment Enumeration  WdTabLeader Enumeration  WdTabLeaderHID Enumeration  
+WdTableDirection Enumeration  WdTableFieldSeparator Enumeration  WdTableFormat 
+Enumeration  WdTableFormatApply Enumeration  WdTablePosition Enumeration  
+WdTaskPanes Enumeration  WdTCSCConverterDirection Enumeration  WdTemplateType 
+Enumeration  WdTextFormFieldType Enumeration  WdTextOrientation Enumeration  
+WdTextOrientationHID Enumeration  WdTextureIndex Enumeration  WdToaFormat 
+Enumeration  WdTocFormat Enumeration  WdTofFormat Enumeration  
+WdTrailingCharacter Enumeration  WdTwoLinesInOneType Enumeration  WdUnderline 
+Enumeration  WdUnits Enumeration  WdUseFormattingFrom Enumeration  
+WdVerticalAlignment Enumeration  WdViewType Enumeration  WdViewTypeOld 
+Enumeration  WdVisualSelection Enumeration  WdWindowState Enumeration  
+WdWindowType Enumeration  WdWordDialog Enumeration  WdWordDialogHID Enumeration  
+WdWordDialogTab Enumeration  WdWordDialogTabHID Enumeration  WdWrapSideType 
+Enumeration  WdWrapType Enumeration  WdWrapTypeMerged Enumeration  
+WdXMLNodeLevel Enumeration  WdXMLNodeType Enumeration  
+WdXMLSelectionChangeReason Enumeration  WdXMLValidationStatus Enumeration  
+WebOptions Interface  Window Interface  Windows Interface  Words Interface  
+WrapFormat Interface  XMLChildNodeSuggestion Interface  XMLChildNodeSuggestions 
+Interface  XMLNamespace Interface  XMLNamespaces Interface  XMLNode Interface  
+XMLNodes Interface  XMLSchemaReference Interface  XMLSchemaReferences Interface  
+XSLTransform Interface  XSLTransforms Interface  Zoom Interface  Zooms Interface 
+ 
+Community Content
+ Saving .docx in Word 2007...
+  Saving as .docx in Word 2007, yo...
+More...   
+ WdSaveFormat Enumeration  
+Office 2003 Other Versions  Office 2010 
+Specifies the format to use when saving a document. 
+Namespace: Microsoft.Office.Interop.Word
+Assembly: Microsoft.Office.Interop.Word (in 
+microsoft.office.interop.word.dll)Usage
+
+
+VBCopy
+ 'Usage
+Dim wdSaveFormat1 As WdSaveFormat = WdSaveFormat.wdFormatDocument
+
+Syntax
+
+
+C#C++VBCopy
+ public enum WdSaveFormat
+J#Copy
+ public enum WdSaveFormat
+JScriptCopy
+ public enum WdSaveFormat
+Members
+
+
+      Member nameDescription
+      wdFormatDocumentMicrosoft Word format.
+      wdFormatDOSTextMicrosoft DOS text format.
+      wdFormatDOSTextLineBreaksMicrosoft DOS text with line breaks preserved.
+      wdFormatEncodedTextEncoded text format.
+      wdFormatFilteredHTMLFiltered HTML format.
+      wdFormatHTMLStandard HTML format.
+      wdFormatRTFRich text format (RTF).
+      wdFormatTemplateMicrosoft Word template format.
+      wdFormatTextMicrosoft Windows text format.
+      wdFormatTextLineBreaksMicrosoft Windows text format with line breaks 
+      preserved.
+      wdFormatUnicodeTextUnicode text format.
+      wdFormatWebArchiveWeb archive format.
+      wdFormatXMLExtensible Markup Language (XML) format.
+
+Platforms
+
+
+Development Platforms
+Windows XP Home Edition, Windows XP Professional, Windows Server 2003, and 
+Windows 2000
+Target Platforms
+See Also
+
+
+Reference
+Microsoft.Office.Interop.Word Namespace 
+
+Community Content Add  FAQ Saving .docx in Word 2007 
+Saving as .docx in Word 2007, you might expect that wdFormatDocument is right.  
+In my experience, however, you get an unopenable file.  What you want is 
+wdFormatXMLDocument. 
+History 
+ 
+ 
+  9/14/2011
+  Arthur Gardner 
+© 2011 Microsoft. All rights reserved.Terms of Use | Trademarks | Privacy 
+Statement | Feedback Feedback  Feedbackx Tell us about your experience... Did 
+the page load quickly? Yes  No  Do you like the page design? Yes  No  How useful 
+is this topic?       Tell us more  Enter description here.           

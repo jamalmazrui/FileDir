@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta charset='utf-8'/>
+<meta content='IE=9; IE=8; IE=7; IE=EDGE; chrome=1' http-equiv='X-UA-Compatible'/>
+<!-- 25/03/2010 - changed to only show article title in sub pages -->
+<title>
+A straightforward method to detecting RSS and Atom feeds in websites with HtmlAgilityPack
+</title>
+<!-- original title markup: title data:blog.pageTitle/ /title -->
+<meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+<meta content='Matthew Harris' name='author'/>
+<meta content='moXb5owNyEVpTJUnntpDaTTBzME' name='alexaVerifyID'/>
+<meta content='Bbywlz1-lLlmkOZ36XXuQIBU_f2JG1KJBtHkWKLq3oA' name='google-site-verification'/>
+<meta content='22DAFEEE18F6AC2B3AB46425D637EB9C' name='msvalidate.01'/>
+<meta content='a4d25dce4586f4df' name='y_key'/>
+<meta content='dfLpAkFqZsUmeZX9FtF4N7J1Z7E' type=''/>
+<link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css' rel='stylesheet'/>
+<link href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet'/>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Bitter' rel='stylesheet' type='text/css'/>
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/static/v1/widgets/859616579-widget_css_bundle.css' />
+<link type='text/css' rel='stylesheet' href='//www.google.com/uds/css/gsearch.css' />
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=5519904556829079674&zx=3db46b05-7bec-45f0-81bd-1e76e2ca15f6' />
+<style type='text/css'>
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Open Sans', "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+        background-image:url('//static.rtpdesign.co.uk/blog/img/background.png');
+        background-repeat:no-repeat;
+		background-position: right top;
+		background-size: 80%;
+      }
+      /* Small Devices, Tablets */
+      @media only screen and (min-width : 768px) {
+          body {
+              background-size: 70%;
+          }
+      }
+
+      /* Medium Devices, Desktops */
+      @media only screen and (min-width : 992px) {
+          body {
+              background-size: 60%;
+          }
+      }
+
+      /* Large Devices, Wide Screens */
+      @media only screen and (min-width : 1200px) {
+          body {
+              background-size: 50%;
+          }
+      }
+	  a {
+		color: #0054A6;
+      }
+      p, ul, ol
+      {
+        margin-bottom: 25px;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Bitter', Georgia, 'Times New Roman', serif;
+      }
+	  .well {
+		opacity: 0.9;
+      }
+      .widget {
+        margin-bottom: 2em;
+      }
+      .date-outer {
+        margin-bottom: 3em;
+      }
+      h1, h2, h3, h4, h5, h6, .entry-title a {
+        /* color: #ed9c00;  orange */
+        color: #E54A41; /*#A5352F; /*#d8463d; /* red */ 
+      }
+	  h1 {
+		margin-top: 2em;
+      }
+      h2 {
+        margin-top: 1.75em;
+      }
+      h2:first-child {
+        margin-top: 0.5em;
+      }
+      h4,h5,h6 {
+        margin-top: 1em;
+        margin-bottom: .5em;
+      }
+      ol li {
+        margin-bottom: .75em;
+      }
+	  .indexpostdate {
+        font-size: smaller;
+        margin-bottom: 10px;
+      }
+      .post-footer {
+        border-top: 3px solid #eee;
+        margin-top: 3em;
+      }
+	  .post-footer-line {
+		padding-top: 5px;
+		padding-bottom: 5px;
+      }
+	  .post-comment-link {
+		display: none;
+      }
+      .postupdatednotifybox{
+        padding: 1em 1em 0.5em 1em; 
+        border: 1px solid #ff0000; 
+        margin-bottom: 1em;
+      }
+      dd.comment-footer {
+        margin-bottom: 1em;
+      }
+      div.syntaxhighlighter {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px 4px 4px 4px;
+        padding: 8.5px;
+      }
+	  #main img {
+		  display: block;
+          max-width: 100%;
+          height: auto;
+      }
+      #main .syntaxhighlighter .gutter .line {
+        border-right: 3px solid #0088CC !important;
+      }
+      #main .syntaxhighlighter .toolbar {
+        background: #0088CC !important;
+      }
+      #main .syntaxhighlighter .toolbar a:hover {
+      }
+      div.Label ul {
+        list-style-type: none;
+        margin: 0;
+      }
+      div.Label ul li {
+        float: left;
+        padding: 3px;
+        border: 1px solid #0088CC;
+        margin: 0 10px 10px 0;
+      }
+      .alert-info a:link,
+      .alert-info a:visited {
+		text-decoration: underline;
+		font-weight: bold;
+      }
+      /* fix so bootstrap and syntax highlighter play well together */
+      .syntaxhighlighter .container:before,
+      .syntaxhighlighter .container:after {
+        display: none;
+      }
+    </style>
+<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+<style type='text/css'>
+      #WasProblemSolvedLinkPanel .ButtonPane
+      {
+        float: left;
+        display: block;
+        width: 49%;
+        text-align: center;
+        line-height: 3em;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+      #WasProblemSolvedLinkPanel #ProblemSolved
+      {
+        font-size: 2em;
+        margin-right: 3px;
+      }
+      #WasProblemSolvedPanel .Yes
+      {
+        background-color: #36BE6C;
+        border: 1px solid #0A7133;   	
+      }
+      #WasProblemSolvedPanel .No
+      {
+        background-color: #FF6B62;
+        border: 1px solid #BE3E36;
+      }
+	  #WasProblemSolvedLinkPanel a
+	  {
+		color: #fff;
+      }
+      #WasProblemSolvedLinkPanel #ProblemNotSolved
+      {
+        font-size: 2em;        	
+      }
+      #WasProblemSolvedThanksPanel
+      {
+        height: 4em;
+        text-align: center;
+      }
+      #WasProblemSolvedLearnMore
+      {
+        clear: both;
+        font-size: smaller;
+      }
+    </style>
+<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-7034895-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { (function(){function c(a){this.t={};this.tick=function(a,c,b){var d=void 0!=b?b:(new Date).getTime();this.t[a]=[d,c];if(void 0==b)try{window.console.timeStamp("CSI/"+a)}catch(e){}};this.tick("start",null,a)}var a;window.performance&&(a=window.performance.timing);var h=a?new c(a.responseStart):new c;window.jstiming={Timer:c,load:h};if(a){var b=a.navigationStart,e=a.responseStart;0<b&&e>=b&&(window.jstiming.srt=e-b)}if(a){var d=window.jstiming.load;0<b&&e>=b&&(d.tick("_wtsrt",void 0,b),d.tick("wtsrt_",
+"_wtsrt",e),d.tick("tbsd_","wtsrt_"))}try{a=null,window.chrome&&window.chrome.csi&&(a=Math.floor(window.chrome.csi().pageT),d&&0<b&&(d.tick("_tbnd",void 0,window.chrome.csi().startE),d.tick("tbnd_","_tbnd",b))),null==a&&window.gtbExternal&&(a=window.gtbExternal.pageT()),null==a&&window.external&&(a=window.external.pageT,d&&0<b&&(d.tick("_tbnd",void 0,window.external.startE),d.tick("tbnd_","_tbnd",b))),a&&(window.jstiming.pt=a)}catch(k){}})();window.tickAboveFold=function(c){var a=0;if(c.offsetParent){do a+=c.offsetTop;while(c=c.offsetParent)}c=a;750>=c&&window.jstiming.load.tick("aft")};var f=!1;function g(){f||(f=!0,window.jstiming.load.tick("firstScrollTime"))}window.addEventListener?window.addEventListener("scroll",g,!1):window.attachEvent("onscroll",g);
+ })();</script>
+<meta content='blogger' name='generator'/>
+<link href='http://articles.runtings.co.uk/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Run Tings Proper - Atom" href="http://articles.runtings.co.uk/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Run Tings Proper - RSS" href="http://articles.runtings.co.uk/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Run Tings Proper - Atom" href="https://www.blogger.com/feeds/5519904556829079674/posts/default" />
+
+<link rel="alternate" type="application/atom+xml" title="Run Tings Proper - Atom" href="http://articles.runtings.co.uk/feeds/8624087217328673675/comments/default" />
+<link href='http://lh3.ggpht.com/-gHAyglauOG8/UAiAGLTiFnI/AAAAAAAAAnk/HB3ueRWPKtk/image_thumb%25255B3%25255D.png?imgmax=800' rel='image_src'/>
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<style id='page-skin-1' type='text/css'><!--
+/*
+
+--></style>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'>
+</div>
+<nav class='navbar navbar-default navbar-fixed-top'>
+<div class='container'>
+<div class='navbar-header'>
+<button class='navbar-toggle collapsed' data-target='#topnav' data-toggle='collapse' type='button'>
+<span class='sr-only'>
+              Toggle navigation
+            </span>
+<span class='icon-bar'>
+</span>
+<span class='icon-bar'>
+</span>
+<span class='icon-bar'>
+</span>
+</button>
+<a class='navbar-brand' href='/'>
+            Run Tings Proper
+          </a>
+</div>
+<div class='collapse navbar-collapse' id='topnav'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>
+                Articles
+              </a>
+</li>
+<li class='dropdown'>
+<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+                Projects 
+                <b class='caret'></b>
+</a>
+<ul class='dropdown-menu'>
+<li>
+<a href='/search/label/Bootstrap-sample'>
+                    Bootstrap 3 Samples
+                  </a>
+</li>
+<li>
+<a href='/p/bootlint-this-page-chrome.html'>
+                    Bootlint This Page - Chrome Extension
+                  </a>
+</li>
+<li>
+<a href='/p/bulk-page-stub-creator-wordpress.html'>
+                    Bulk Page Stub Creator - WordPress Plugin
+                  </a>
+</li>
+<li>
+<a href='/p/good-deeds-firefox.html'>
+                    Good Deeds - Firefox Addon
+                  </a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</div>
+<!-- /.container-fluid -->
+</nav>
+<div class='container'>
+<div class='row'>
+<div class='col-md-9'>
+<div>
+<a href='/'><img alt='' class='img-responsive' src='//static.rtpdesign.co.uk/blog/img/blog-logo.png'/></a>
+</div>
+<div class='row'>
+<div class='col-md-12'>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'></div>
+</div>
+<div id='main-wrapper'>
+<div class='main section' id='main'><div class='widget Blog' id='Blog1'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start(name=default) -->
+
+                              <div class="date-outer">
+                            
+
+                              <div class="date-posts">
+                            
+<div class='post-outer'>
+<div class='post hentry'>
+<a name='8624087217328673675'></a>
+<h1 class='post-title entry-title'>
+A straightforward method to detecting RSS and Atom feeds in websites with HtmlAgilityPack
+</h1>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+<p>Let's create a tool that will be able to query any website and detect if they provide feeds in one of the common syndication formats. By using HtmlAgilityPack we can apply screen scraping techniques and examine the meta tags to see what alternative formats are available.</p>  <a name='more'></a>    <h4>A little background</h4>  <p>If you haven't heard about HtmlAgilityPack yet then you have landed on the wrong post. Head over to the main article index and check out the introduction post.</p>  <ul>   <li><a title="http://runtingsproper.blogspot.co.uk/2009/09/htmlagilitypack-article-series.html" href="http://runtingsproper.blogspot.co.uk/2009/09/htmlagilitypack-article-series.html">HtmlAgilityPack Article Series</a> </li> </ul>  <h4>Syndication feeds? RSS? Atom?</h4>  <p>Well if you don't know what these are then you probably don't have much interest in reading an article about detecting them but for completeness I will provide a brief introduction.</p>  <p>Its possible to make a copy of a websites news posts available in a special computer readable format. There are two main standards around; RSS and Atom. Collectively this is referred to as syndication. </p>  <p>These data feeds are normally used in two main ways:</p>  <ol>   <li>Collected together in special software called feed readers </li>    <li>Republished on other websites as content </li> </ol>  <p>Users can add feeds into feed readers to consume the feeds. By keeping feeds inside a feed reader users can read the latest news from their favourite websites without having to check every site for updates.</p>  <p>For content creators it means that their content can easily be integrated into other websites. The other websites like the fresh content and the content creators like being able to generate traffic back to their websites by linking to themselves within the articles.</p>  <p>For a much deeper discussion of this topic check out this Wikipedia article:</p>  <ul>   <li><a href="http://en.wikipedia.org/wiki/Web_syndication">http://en.wikipedia.org/wiki/Web_syndication</a> </li> </ul>  <h4>Feed discovery</h4>  <p>There is a standard to detect if a website provides an alternate format RSS or Atom feed. This process is called autodiscovery and has been standardised by the RSS Advisory Board and adopted by the Atom feed format.</p>  <p>The mechanism is simply a &lt;link&gt; tag placed in the &lt;head&gt; of a webpage. The basic rules are:</p>  <ul>   <li>Set rel to &quot;alternate&quot; </li>    <li>Each href must be a different feed </li>    <li>The type must contain the feed's mime type </li> </ul>  <p>You can have as many feeds as you want in a page and you can mix and match feed formats.</p>  <p>This web site uses the following tags to allow feed autodiscovery. </p>  <pre class="brush: xml;">&lt;link rel=&quot;alternate&quot; type=&quot;application/atom+xml&quot; title=&quot;Run Tings Proper - Atom&quot; href=&quot;http://runtingsproper.blogspot.com/feeds/posts/default&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;Run Tings Proper - RSS&quot; href=&quot;http://runtingsproper.blogspot.com/feeds/posts/default?alt=rss&quot; /&gt;</pre>
+
+<p>You can read more about RSS autodiscovery here:</p>
+
+<ul>
+  <li><a href="http://www.rssboard.org/rss-autodiscovery">http://www.rssboard.org/rss-autodiscovery</a>&#160; </li>
+</ul>
+
+<h4>Writing the application</h4>
+
+<p>We are going to build this application together from scratch. I am actually writing the sample as I write the article so the steps I describe are the steps I&#8217;m taking - there won't be any Blue Peter &quot;here's one I made earlier&quot; style magic!</p>
+
+<p>The first step is to load up Microsoft Visual Studio. I am using Visual Studio 2011 Beta but I'm not planning on using any special tricks so it should be virtually identical even if you are on an older or express version.</p>
+
+<p>The first step is to create a new website project.</p>
+
+<ol>
+  <li>Load up Visual Studio </li>
+
+  <li>Click File | New | New Website </li>
+
+  <li>Choose an asp.net website template and the C# language. In my Visual Studio I picked .NET Framework 4, Visual C#, ASP.NET Empty Web Site. </li>
+
+  <li>Give your project a name. I called mine &quot;HtmlAgilityPackExample-DetectSyndicationFeeds&quot; but you can call it whatever you like. </li>
+
+  <li>Click OK to create your new website. </li>
+</ol>
+
+<p>A simple start to the tutorial! As this tutorial relies on the HtmlAgilityPack we are going to need to download it. </p>
+
+<h4>Download the HtmlAgilityPack &#8211; NuGet</h4>
+
+<p>This article was originally written back in 2009 before we had the joys of NuGet in our lives but it never got finished. Well we should all have NuGet installed now so I&#8217;ll run through this section really quickly.</p>
+
+<p>If you don&#8217;t have NuGet then either <a href="http://www.nuget.org/" target="_blank">get it</a> or follow the guide in the next section to manually install it.</p>
+
+<ol>
+  <li>Click the Website menu (or right click on the top project node in your Solution Explorer window) </li>
+
+  <li>Choose Manage NuGet packages&#8230; </li>
+
+  <li>Click the Online tab in the left hand side then All </li>
+
+  <li>Search for HtmlAgilityPack in the top right hand corner </li>
+
+  <li>Click the Install button on the HtmlAgilityPack entry in the results list that's in the centre of the window. </li>
+</ol>
+
+<h4>Download the HtmlAgilityPack &#8211; Manual</h4>
+
+<p>Note: You can skip this section if you just followed the NuGet installation instructions.</p>
+
+<p>For our purposes we only need the binary release of the HtmlAgilityPack. Go to the site below and download the latest binary release.</p>
+
+<ul>
+  <li><a href="http://htmlagilitypack.codeplex.com/releases/">http://htmlagilitypack.codeplex.com/releases/</a> </li>
+</ul>
+
+<p>At the time of writing the latest version is 1.4.0.</p>
+
+<p>I recommend extracting this to a common location. Personally I keep all my 3rd party library downloads in F:\libraries\ and when I need one I can easily browse to it from any project.</p>
+
+<p>If you follow this method then one advantage is that the assembly will have a .refresh file automatically generated for it. This allows Visual Studio to check that it has the latest version on your hard drive before compiling the main project.</p>
+
+<p>In any case you should now do the following:</p>
+
+<ol>
+  <li>Extract the archive and make a note of the path. </li>
+
+  <li>Return to Visual Studio and right click on the Website menu then choose Add Reference. 
+    <ul>
+      <li>If there isn't a menu called Website just move your mouse over to the Solution Explorer tool window and click on any file inside your website. The Project menu will be replaced with a Website menu. </li>
+    </ul>
+  </li>
+
+  <li>Click the Browse tab and navigate to the location you extracted the code to. </li>
+
+  <li>Select HtmlAgilityPack.dll and click OK </li>
+</ol>
+
+<h4>Lay out the user interface</h4>
+
+<p>The next stage of the article is to lay out the user interface. The interface will have a TextBox to take the website address, a Button to fire it off, a GridView to display the results.</p>
+
+<ol>
+  <li>Click Website | Add New Item (or press Ctrl-Shift-A) </li>
+
+  <li>Select Web Form and click Add (leaving the name as Default.aspx, Place code in separate file ticked and Select master page unticked) </li>
+
+  <li>Either copy and paste the code below or drop a TextBox, Button and GridView onto the page until your page looks like this: </li>
+</ol>
+
+<pre class="brush: xml;">&lt;%@ Page Language=&quot;C#&quot; AutoEventWireup=&quot;true&quot; CodeFile=&quot;Default.aspx.cs&quot; Inherits=&quot;_Default&quot; %&gt;
+
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head runat=&quot;server&quot;&gt;
+    &lt;title&gt;Html Agility Pack Example - Extract All Syndication Feeds From A Web Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form id=&quot;form1&quot; runat=&quot;server&quot;&gt;
+    &lt;div&gt;
+        &lt;h1&gt;
+            Html Agility Pack Example - Extract All Syndication Feeds From A Web Page&lt;/h1&gt;
+        &lt;p&gt;
+            This example shows you how to use Html Agility Pack to load a remote url and parse
+            out the urls of all the syndication feeds it contains.&lt;/p&gt;
+        &lt;div&gt;
+            &lt;asp:Label ID=&quot;Label1&quot; runat=&quot;server&quot; Text=&quot;URL:&quot; /&gt;
+            &lt;asp:TextBox ID=&quot;Url&quot; runat=&quot;server&quot; Text=&quot;http://www.cnn.com/&quot;&gt;&lt;/asp:TextBox&gt;
+            &lt;asp:Button ID=&quot;RetrieveButton&quot; runat=&quot;server&quot; Text=&quot;Get Feeds&quot;/&gt;
+        &lt;/div&gt;
+        &lt;asp:GridView ID=&quot;ResultsGrid&quot; runat=&quot;server&quot;&gt;
+        &lt;/asp:GridView&gt;
+    &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<h4>Making a DataObject</h4>
+
+<p>We are going to package up the code that does all the heavy lifting inside a class of its own. This will allow us to reuse the code on multiple pages without duplicating the code. </p>
+
+<p>As an added bonus we can tag this class up with DataObject attributes and then codelessly bind it to a databound control via an ObjectDataSource.</p>
+
+<ol>
+  <li>Right click on the App_Code folder 
+    <ul>
+      <li>If the App_Code folder isn't in your project just right click on the project node and choose Add ASP.NET folder | App_Code </li>
+    </ul>
+  </li>
+
+  <li>Choose Add New Item </li>
+
+  <li>Select Class and call the class SyndicationFeedsDataObject.cs </li>
+
+  <li>Add a using statement to the top: 
+    <br />
+
+    <pre class="brush: csharp;">using System.ComponentModel;
+using HtmlAgilityPack;</pre>
+  </li>
+
+  <li>Tag the class with a [DataObject(true)] attribute 
+    <br />
+
+    <pre class="brush: csharp;">/// &lt;summary&gt;
+/// Summary description for SyndicationFeedsDataObject
+/// &lt;/summary&gt;
+[DataObject(true)]
+public class SyndicationFeedsDataObject
+{
+}</pre>
+  </li>
+
+  <li>Add a Select() method to the class that has the following signature: 
+    <br />
+
+    <pre class="brush: csharp;">public IEnumerable&lt;SyndicationFeedsDataObject&gt; Select(string WebsiteUrl)</pre>
+  </li>
+
+  <li>The last part is to tag the Select() method with the correct attribute: 
+    <br />
+
+    <pre class="brush: csharp;">[DataObjectMethod(DataObjectMethodType.Select, true)]
+public IEnumerable&lt;SyndicationFeedsDataObject&gt; Select(string WebsiteUrl)</pre>
+  </li>
+
+  <li>At this point your complete class should look like this: </li>
+</ol>
+
+<pre class="brush: csharp;">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel;
+using HtmlAgilityPack;
+
+/// &lt;summary&gt;
+/// Summary description for SyndicationFeedsDataObject
+/// &lt;/summary&gt;
+[DataObject(true)]
+public class SyndicationFeedsDataObject
+{
+    public SyndicationFeedsDataObject()
+    {
+    }
+
+    [DataObjectMethod(DataObjectMethodType.Select, true)]
+    public IEnumerable&lt;SyndicationFeedsDataObject&gt; Select(string WebsiteUrl)
+    {
+        throw new NotImplementedException();
+    }
+}</pre>
+
+<h4>Adding bindable public properties</h4>
+
+<p>We need to add some public properties to our DataObject so that we have something to bind against in our GridView. I think that we need to capture the following information about the feed:</p>
+
+<ul>
+  <li>Feed Url </li>
+
+  <li>Title </li>
+
+  <li>Mime Type </li>
+</ul>
+
+<p>To add a property you should go to the top of the class definition and type:</p>
+
+<p>prop [tab] [tab]</p>
+
+<p>This is a shortcut in Visual Studio which lays out what is known as an Automatic Property. It looks like this by default:</p>
+
+<pre class="brush: csharp;">public int MyProperty { get; set; }</pre>
+
+<p>Your cursor is positioned at the data type so that you can then enter it (like string). Then pressing tab again will let you input the property name. Finally press enter to complete the property insert.</p>
+
+<p>Now you know how to do this you need to add properties until your class looks like this:</p>
+
+<pre class="brush: csharp;">[DataObject(true)]
+public class SyndicationFeedsDataObject
+{
+    public string FeedUrl { get; set; }
+    public string Title { get; set; }
+    public string MimeType { get; set; }
+
+    // ...
+}</pre>
+
+<h4>Preparing the Select() statement</h4>
+
+<p>The Select() method we stubbed out earlier is going to be the main workhorse of this application. It will take in a website url, parse it for correctness, retrieve the html page located at that url, extract the feed urls and return that data.</p>
+
+<p>If an exception occurs that's going to prevent a valid collection of feeds being returned then I intend to return null. The data bound control will handle this seamlessly and execute its empty dataset code.</p>
+
+<p>When I want to start out a new method I usually like to put in a series of comments which describe what the method is going to do. This gives focus to the work that I am doing. This approach is discussed in detail in Steven McConnell's book Code Complete (if you buy it make sure you get the second edition).</p>
+
+<p>Following that technique lets us lay out the plans we just made so we can get started on the coding:</p>
+
+<pre class="brush: csharp;">    [DataObjectMethod(DataObjectMethodType.Select, true)]
+    public IEnumerable&lt;SyndicationFeedsDataObject&gt; Select(string WebsiteUrl)
+    {
+        // parse the url
+        // retrieve the website html
+        // extract all tags
+        // convert extracted tags to SyndicationFeedsDataObjects
+        // return the data
+    }</pre>
+
+<h4>Url Validation</h4>
+
+<p>So the first part should be pretty simple. If you pass an invalid url to Html Agility Pack it throws a UriFormatException. We don't want to force a user to remember the http:// at the start so if they forget it then we will add it in to this method. We can then check if the url is formatted correctly by trying to instantiate a new Uri() from it:</p>
+
+<pre class="brush: csharp;">    private static string ParseUrl(string WebsiteUrl)
+    {
+        if (string.IsNullOrEmpty(WebsiteUrl))
+        {
+            return string.Empty;
+        }
+
+        if (!Regex.IsMatch(WebsiteUrl, &quot;^http://&quot;, RegexOptions.IgnoreCase))
+        {
+            WebsiteUrl = &quot;http://&quot; + WebsiteUrl;
+        }
+
+        try
+        {
+            Uri TestUrl = new Uri(WebsiteUrl);
+        }
+        catch (UriFormatException)
+        {
+            WebsiteUrl = string.Empty;
+        }
+
+        return WebsiteUrl;
+    }</pre>
+
+<p>This could have been done in the UI using a RegularExpressionValidator control or even a CustomValidator control but I felt that if we are going to make it idiot proof then it should be a seamless implementation rather than forcing the user to read an error message and then type the http:// themselves.</p>
+
+<h4>Using HtmlDocument and HtmlWeb</h4>
+
+<p>When we know we have a valid url we can rely on we can then make our first use of the HtmlAgilityPack so far in this tutorial. </p>
+
+<p>The HtmlDocument class is the main class used by HtmlAgilityPack. This is the workhorse which contains all of the nodes and attributes with a document. There are two ways to load html into this class. </p>
+
+<p>The first one (which was demonstrated in my <a href="http://runtingsproper.blogspot.com/2009/11/easily-extracting-links-from-snippet-of.html">easily extracting links from a snippet of html</a> article) is to use the HtmlDocument methods. LoadHtml() will load html in from a string. Load() will load html from a path, Stream, or TextReader.</p>
+
+<p>The new trick that we are going to use today is to load in remote html in with a simple command. The HtmlWeb class included with HtmlAgilityPack will take a valid url, retrieve the contents and return it as a HtmlDocument.</p>
+
+<p>The code looks like this:</p>
+
+<pre class="brush: csharp;">HtmlWeb hw = new HtmlWeb();
+HtmlDocument doc = hw.Load(WebsiteUrl);</pre>
+
+<p>Simple!</p>
+
+<h4>Link tag extraction</h4>
+
+<p>This part of the code is where we really see the power of HtmlAgilityPack. All of the tags in the html document we just retrieved are placed inside the Document.ChildNodes property. To select them based on your requirements you can pass an XPath statement to the SelectNodes method.</p>
+
+<p>XPath is an <a href="http://www.w3.org/TR/xpath/">official w3c standard</a> designed to give you a structured query language for extracting nodes in an xml document. In this case it is being applied to the (probably) invalid html mark-up by the HtmlAgilityPack library.</p>
+
+<p>Take a look at the following XPath statement:</p>
+
+<pre class="brush: xml;">//link[(@type='application/rss+xml' or @type='application/atom+xml') and @rel='alternate']</pre>
+
+<p>What it is looking for is:</p>
+
+<ul>
+  <li>all &lt;link&gt; tags </li>
+
+  <li>where the type attribute is equal to either an rss or atom feed </li>
+
+  <li>and the rel attribute is equal to alternate </li>
+</ul>
+
+<p>The rel=&quot;alternate&quot; is important because without it you can get false positives. For example, the atom format lets you define the endpoint that you can connect to if you wanted to post an item to a blog as a &lt;link&gt; tag. </p>
+
+<pre class="brush: xml;">&lt;link rel=&quot;service.post&quot; type=&quot;application/atom+xml&quot; title=&quot;Example&quot; href=&quot;http://www.example.com/endpoint&quot; /&gt;</pre>
+
+<p>The type attribute is the same as above but the rel tag is &quot;service.post&quot;.</p>
+
+<p>So to wrap this up in a convenient method we would pass in the XPath statement above to the SelectNodes() method which would return a HtmlNodeCollection containing only the tags we wanted. It would look like this:</p>
+
+<pre class="brush: csharp;">private static HtmlNodeCollection SelectFeeds(HtmlDocument doc)
+{
+    return doc.DocumentNode.SelectNodes(&quot;//link[(@type='application/rss+xml' or @type='application/atom+xml') and @rel='alternate']&quot;);
+}</pre>
+
+<h4>Preparing for Data Binding</h4>
+
+<p>The last stage we need to do is to convert all of the data extracted so far into a format that can be data bound. The reason that we need to convert them is that the HtmlNode's inside the HtmlNodeCollection contain weakly typed attributes that look like this:</p>
+
+<pre class="brush: csharp;">link.Attributes[&quot;href&quot;].Value</pre>
+
+<p>So the conversion is required in order to be able to pass these in to our databound controls and access them using clean notation such as:</p>
+
+<pre class="brush: csharp;">Eval(&quot;Href&quot;);</pre>
+
+<p>This means using a helper method to convert the HtmlNode's into SyndicatedFeedsDataObject's. </p>
+
+<p>Apart from being a requirement in this case it's also a good programming practice. This is known as a code seam. By converting to our own class before we return the data we are actually fully encapsulating our use of HtmlAgilityPack. The dataobject takes a string for input (the website url) and returns a collection of itself (the feeds it found at the website url). As far as the outside world is concerned HtmlAgilityPack doesn't exist. </p>
+
+<p>This means that if you write an application that depends on the SyndicatedFeedsDataObject and then you find some whizzo new html parsing library you can swap it out without changing any of the calling code. For our sample application this doesn't mean much but in your full blown application you will certainly appreciate not having to change line after line of code to remove your dependency on the HtmlNode class.</p>
+
+<p>A simple method which uses a linq query to translate the data would look like this:</p>
+
+<pre class="brush: csharp;">private static IEnumerable&lt;SyndicationFeedsDataObject&gt; ConvertNodesToSyndicationFeeds(HtmlNodeCollection feeds)
+{
+    var query = from link in feeds
+                select new SyndicationFeedsDataObject
+                {
+                    FeedUrl = link.Attributes[&quot;href&quot;].Value,
+                    Title = link.Attributes[&quot;title&quot;].Value,
+                    MimeType = link.Attributes[&quot;type&quot;].Value
+                };
+    return query;
+}</pre>
+
+<p>It is written in LINQ query syntax and projects the data into the new class using object initializers. At this point I'm just pleased to be using some of the technical jargon that I've been brushing up on recently. If you don't understand the snippet above then it is far beyond the scope of this tutorial to start explaining it but I will say that I have been very happy with my recent purchase of <a href="http://www.amazon.co.uk/4-0-Nutshell-Definitive-Reference-OReilly/dp/0596800959/ref=sr_1_2?ie=UTF8&amp;s=books&amp;qid=1273793029&amp;sr=8-2">C# 4.0 in a nutshell</a> (no affiliate codes embedded in there - I'm just a happy customer).</p>
+
+<p>Disregarding the technical jargon in the last paragraph you should be able to see that it simply assigns the values of one class to the values of another class and returns a collection of the converted classes.</p>
+
+<h4>Putting our Select() together</h4>
+
+<p>A few sections back we made a list of comments that outlined the plan for the Select(). We then spent the next few sections writing the key functionality that would be needed to turn these comments into working code.</p>
+
+<p>This means that we can now flesh out each of these comments into blocks of code.</p>
+
+<pre class="brush: csharp;">// parse the url
+WebsiteUrl = ParseUrl(WebsiteUrl);
+
+if (!IsValidUrl(WebsiteUrl))
+{
+    return null;
+}</pre>
+
+<p>The IsValidUrl() is just a simple check to make sure the string isn't empty:</p>
+
+<pre class="brush: csharp;">private static bool IsValidUrl(string WebsiteUrl)
+{
+    return !string.IsNullOrWhiteSpace(WebsiteUrl);
+}</pre>
+
+<p>I could have put this check inline but after reading Uncle Bob&#8217;s book <a href="http://www.amazon.co.uk/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882" target="_blank">Clean Code</a> I developed a habit of showing the intention of my code by refactoring it into many small functions.</p>
+
+<p>Then we use two of the functions we wrote, RetrieveHtml and SelectFeeds to pull the data in, plus a quick sanity check on the data:</p>
+
+<pre class="brush: csharp;">// retrieve the website html
+HtmlDocument doc = RetrieveHtml(WebsiteUrl);
+
+// extract all tags
+HtmlNodeCollection feeds = SelectFeeds(doc);
+
+if (!IsValidFeedCollection(feeds))
+{
+    return null;
+}</pre>
+
+<p>IsValidFeedCollection() is another one of my seemingly pointless methods which simply checks if the input is null or not. Again I could have put this inline but it allows me to express what my intention was for the if statement. It prevents me from having to drop down to a lower level of abstraction. In fact in &#8220;real&#8221; code I would probably have used var rather than HtmlDocument and HtmlNodeCollection as it would make it ready a lot more smoothly and datatypes are not important at this stage. I only included the types verbosely for the sake of introducing them in this tutorial.</p>
+
+<p>Here is that IsValidFeedCollection function for the curious:</p>
+
+<pre class="brush: csharp;">private static bool IsValidFeedCollection(HtmlNodeCollection feeds)
+{
+    return feeds != null;
+}</pre>
+
+<p>Then I throw the collected feeds data through the conversion routine and return it:</p>
+
+<pre class="brush: csharp;">// convert extracted tags to SyndicationFeedsDataObjects
+var query = ConvertNodesToSyndicationFeeds(feeds);
+
+// return the data
+return query;</pre>
+
+<p>We are working with IEnumerable&lt;&gt; collection types so this is easily understood by the data bound controls that are going to use the DataObject we just made.</p>
+
+<h4>How to bind our results to the GridView</h4>
+
+<p>Because of the DataObject attributes we applied to our code earlier on binding this to a GridView is a codeless procedure. We don&#8217;t get away with it quite that easily though because there is still an ObjectDataSource that needs to be configured. You shouldn&#8217;t see anything new here, its a simple ObjectDataSource, with a control parameter set up so that it pulls the url in the textbox into the Select() statement. There isn&#8217;t even any code in the button click event &#8211; its only there to trigger a postback and then the ObjectDataSource does the rest.</p>
+
+<pre class="brush: xml;">&lt;asp:GridView ID=&quot;ResultsGrid&quot; runat=&quot;server&quot; DataSourceID=&quot;ObjectDataSource1&quot;&gt;
+&lt;/asp:GridView&gt;
+&lt;asp:ObjectDataSource ID=&quot;ObjectDataSource1&quot; runat=&quot;server&quot; 
+    OldValuesParameterFormatString=&quot;original_{0}&quot; SelectMethod=&quot;Select&quot; 
+    TypeName=&quot;SyndicationFeedsDataObject&quot;&gt;
+    &lt;SelectParameters&gt;
+        &lt;asp:ControlParameter ControlID=&quot;Url&quot; Name=&quot;WebsiteUrl&quot; PropertyName=&quot;Text&quot; 
+            Type=&quot;String&quot; /&gt;
+    &lt;/SelectParameters&gt;
+&lt;/asp:ObjectDataSource&gt;</pre>
+
+<p>If anything went wrong in the code we simply returned null. The GridView&#8217;s default behaviour in this case is to simply hide itself. </p>
+
+<p>So congratulations, if you have diligently copied each of these snippets into their correct locations you will now have a working app! Press F5 to start up and lets see. If you don&#8217;t get any compile time errors then you will see something like the screenshots below. If you do get errors then don&#8217;t worry, try to fix them or just <a href="#downloadthesampleapplication">jump to the download instructions</a> to get the working files.</p>
+
+<p><a href="http://lh5.ggpht.com/-VQrxCnhKKFU/UAiAFCyspaI/AAAAAAAAAnc/9zzFgE1Ah20/s1600-h/image%25255B5%25255D.png"><img style="display: inline" title="image" alt="image" src="http://lh3.ggpht.com/-gHAyglauOG8/UAiAGLTiFnI/AAAAAAAAAnk/HB3ueRWPKtk/image_thumb%25255B3%25255D.png?imgmax=800" width="620" height="287" /></a></p>
+
+<h4>The final code </h4>
+
+<p>Despite the epic length of this article you might be surprised to find that the final application weighs in at only 102 lines of code and a simple aspx file to drive it. The work we put in early on meant that the rest of the asp.net ecosystem knew how to play well together. This coupled with the easy retrieval and manipulation of html that HtmlAgililtyPack provides has been a recipe for success.</p>
+
+<p>Another big benefit to packaging up the code in a DataObject class is that in a few months time when you want to reuse this in another project you can rip out out easily without having to untangle dependencies or spend time trying to figure out how it all fits together. It uses standard development patterns and is decoupled. This is the kind of code you could take home to meet your mother!</p>
+
+<h4>What can I do with this data once I have found it?</h4>
+
+<p>Now that you&#8217;ve learned this new technique you have to be asking yourself what can you do with it? An obvious next step is to pull the feeds in and display them. I&#8217;m not going to start a second tutorial here but I will introduce you to a man who has already swum in these waters:</p>
+
+<ul>
+  <li><a href="http://dotnetslackers.com/articles/aspnet/How-to-create-a-syndication-feed-for-your-website.aspx#consuming-a-syndication-feed" target="_blank">Scott Mitchell teaches you how to consume a syndication feed</a> </li>
+</ul>
+
+<p>Its the tutorial I read when I first needed to display feed headlines in a site.</p>
+
+<h4 id="downloadthesampleapplication">Download the sample application</h4>
+
+<p>I gave the listings and the explanations for everything you need to build the sample app but if you didn&#8217;t follow along at the time then you can download or fork this at GitHub:</p>
+
+<ul>
+  <li><a href="https://github.com/rtpHarry/HtmlAgilityPackExample-DetectSyndicationFeeds/zipball/master" target="_blank">Download sample app in a zip file</a> </li>
+
+  <li><a href="https://github.com/rtpHarry/HtmlAgilityPackExample-DetectSyndicationFeeds" target="_blank">Fork me on GitHub</a> </li>
+</ul>
+
+<h4>Conclusion</h4>
+
+<p>We have covered a very large spectrum of asp.net development in this article. You should have learned a lot because we have covered:</p>
+
+<ul>
+  <li>Learned about syndication feeds </li>
+
+  <li>Learned about feed autodiscovery </li>
+
+  <li>Using HtmlAgilityPack to check a remote website for feeds </li>
+
+  <li>Public properties </li>
+
+  <li>Shortcut to creating Automatic Properties </li>
+
+  <li>Creating a bindable Data Object </li>
+</ul>
+
+<p>I also hope you picked up a few good book recommendations and some programming techniques that will keep your code clean and professional.</p>
+
+<h4>More in this series</h4>
+
+<p>This article is part of a series. You can find more posts in this series here:</p>
+
+<ul>
+  <li><a title="http://runtingsproper.blogspot.com/2009/09/htmlagilitypack-article-series.html" href="http://runtingsproper.blogspot.com/2009/09/htmlagilitypack-article-series.html">http://runtingsproper.blogspot.com/2009/09/htmlagilitypack-article-series.html</a> </li>
+</ul>  
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1 row'>
+<div class='col-md-2'>
+<span class='post-author vcard'>
+<span class='fn'>
+<i class='fa fa-user'></i>
+rtpHarry
+</span>
+</span>
+</div>
+<div class='col-md-4'>
+<span class='post-timestamp'>
+<i class='fa fa-calendar'></i>
+<a class='timestamp-link' href='http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html' rel='bookmark' title='permanent link'>
+<abbr class='published' title='2012-07-19T22:55:00+01:00'>
+Thursday, 19 July 2012
+22:55
+</abbr>
+</a>
+</span>
+</div>
+<div class='col-md-6'>
+<span class='post-labels'>
+<i class='fa fa-tags'></i>
+Labels:
+<a href='http://articles.runtings.co.uk/search/label/.net' rel='tag'>
+.net
+</a>
+
+                                    ,
+                                  
+<a href='http://articles.runtings.co.uk/search/label/article' rel='tag'>
+article
+</a>
+
+                                    ,
+                                  
+<a href='http://articles.runtings.co.uk/search/label/asp.net' rel='tag'>
+asp.net
+</a>
+
+                                    ,
+                                  
+<a href='http://articles.runtings.co.uk/search/label/HtmlAgilityPack' rel='tag'>
+HtmlAgilityPack
+</a>
+
+                                    ,
+                                  
+<a href='http://articles.runtings.co.uk/search/label/screen%20scraping' rel='tag'>
+screen scraping
+</a>
+</span>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-comment-link'>
+</span>
+<span class='post-icons'>
+</span>
+<div class='post-share-buttons'>
+<a class='goog-inline-block share-button sb-email' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=8624087217328673675&target=email' target='_blank' title='Email This'>
+<span class='share-button-link-text'>
+Email This
+</span>
+</a>
+<a class='goog-inline-block share-button sb-blog' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=8624087217328673675&target=blog' onclick='window.open(this.href, "_blank", "height=270,width=475"); return false;' target='_blank' title='BlogThis!'>
+<span class='share-button-link-text'>
+BlogThis!
+</span>
+</a>
+<a class='goog-inline-block share-button sb-twitter' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=8624087217328673675&target=twitter' target='_blank' title='Share to Twitter'>
+<span class='share-button-link-text'>
+Share to Twitter
+</span>
+</a>
+<a class='goog-inline-block share-button sb-facebook' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=8624087217328673675&target=facebook' onclick='window.open(this.href, "_blank", "height=430,width=640"); return false;' target='_blank' title='Share to Facebook'>
+<span class='share-button-link-text'>
+Share to Facebook
+</span>
+</a>
+<a class='goog-inline-block share-button sb-pinterest' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=8624087217328673675&target=pinterest' target='_blank' title='Share to Pinterest'>
+<span class='share-button-link-text'>
+Share to Pinterest
+</span>
+</a>
+<div class='goog-inline-block dummy-container'>
+<g:plusone source='blogger:blog:plusone' href='http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html' size='medium' width='300' annotation='inline'/>
+</div>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-3'></div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>
+3 comments
+                            :
+                          </h4>
+<div id='Blog1_comments-block-wrapper'>
+<dl class='avatar-comment-indent' id='comments-block'>
+<dt class='comment-author ' id='c4260618318852906042'>
+<a name='c4260618318852906042'></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="https://www.blogger.com/profile/14516128061510018135" rel="nofollow" onclick="" class="avatar-hovercard" id="av-0-14516128061510018135"><img src="https://img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" class="delayLoad" style="display: none;" longdesc="//lh3.googleusercontent.com/--fPIXk4-Ofg/AAAAAAAAAAI/AAAAAAAAAAA/XOut5FfjM5U/s35-c/photo.jpg" title="Conrad Braam">
+
+<noscript><img src="//lh3.googleusercontent.com/--fPIXk4-Ofg/AAAAAAAAAAI/AAAAAAAAAAA/XOut5FfjM5U/s35-c/photo.jpg" width="35" height="35" class="photo" alt=""></noscript></a></span></div>
+<a href='https://www.blogger.com/profile/14516128061510018135' rel='nofollow'>
+Conrad Braam
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-4260618318852906042'>
+<p>
+I have tried to use htmlagilitypack based on recommendations from stackoverflow.<br />But there appears to be no support for this module, and I do not have VS IDE so cannot just debug my problem for myself - the file fails to load. Who supports htmlagilitypack?
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html?showComment=1357142172451#c4260618318852906042' title='comment permalink'>
+2 January 2013 at 15:56
+</a>
+<span class='item-control blog-admin pid-926482030'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=4260618318852906042' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c5101337427425218203'>
+<a name='c5101337427425218203'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/14042572446848270795" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1-14042572446848270795"><img src="https://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Clay Shannon">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/14042572446848270795' rel='nofollow'>
+Clay Shannon
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-5101337427425218203'>
+<p>
+So what IDE are you using, if you&#39;re not using VS? You&#39;ll have to use the htmlagilitypack .dll in some way.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html?showComment=1370362966568#c5101337427425218203' title='comment permalink'>
+4 June 2013 at 17:22
+</a>
+<span class='item-control blog-admin pid-1718103592'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=5101337427425218203' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c2903038154654815381'>
+<a name='c2903038154654815381'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/11950450427576254628" rel="nofollow" onclick="" class="avatar-hovercard" id="av-2-11950450427576254628"><img src="https://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="anant">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/11950450427576254628' rel='nofollow'>
+anant
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-2903038154654815381'>
+<p>
+sir, I really liked your article here on HTMLAGILITY PACK . I wish to ask you few question , could I? like if in a source code of a page there are many links but I want a specific big link which contains a small word , So what exactly will be the XPAth of it .? <br />Should it be like this : //a[@href=&#39;%word&#39;];<br />like we did in SQL to find a word
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html?showComment=1406280867703#c2903038154654815381' title='comment permalink'>
+25 July 2014 at 10:34
+</a>
+<span class='item-control blog-admin pid-1330890291'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=2903038154654815381' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+</dl>
+</div>
+<p class='comment-footer'>
+<a class='btn btn-primary' href='https://www.blogger.com/comment.g?blogID=5519904556829079674&amp;postID=8624087217328673675' onclick=''>
+<i class='icon-comment icon-white'></i>
+Post a Comment
+</a>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+
+                            </div></div>
+                          
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='btn btn-default blog-pager-newer-link' href='http://articles.runtings.co.uk/2012/07/solved-error-was-encountered-in-wsat.html' id='Blog1_blog-pager-newer-link' title='Newer Post'>
+Newer Post
+</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='btn btn-default blog-pager-older-link' href='http://articles.runtings.co.uk/2011/06/solved-javascript-error-reset-is-not.html' id='Blog1_blog-pager-older-link' title='Older Post'>
+Older Post
+</a>
+</span>
+<a class='btn btn-default home-link' href='http://articles.runtings.co.uk/'>
+Home
+</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://articles.runtings.co.uk/feeds/8624087217328673675/comments/default' target='_blank' type='application/atom+xml'>
+Post Comments
+                            (
+                            Atom
+                            )
+                          </a>
+</div>
+</div>
+<script type="text/javascript">window.___gcfg = {'lang': 'en_GB'};</script>
+</div><div class='widget HTML' id='HTML4'>
+<div class='widget-content'>
+<div id="WasProblemSolvedPanel" style="display: none;">
+           <h2>Was your problem solved by this article?</h2>
+           <div id="WasProblemSolvedLinkPanel">
+               <a class="ButtonPane Yes" href="#" id="ProblemSolved">Yes</a>
+               <a class="ButtonPane No" href="#" id="ProblemNotSolved">No</a>
+               <div style="clear: both;"></div>
+           </div>
+           <div id="WasProblemSolvedThanksPanel" style="display: none;">
+               <p>Thank you for clicking!</p>
+               <p>If you have additional feedback please use the <a href="#comments">comment form</a>.</p>
+           </div>
+           <p id="WasProblemSolvedLearnMore"><a href="http://runtingsproper.blogspot.com/2011/04/did-i-help-gauge-if-your-articles-are.html">Learn how I built this feature using jQuery and Google Analytics</a></p>
+       </div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML4&action=editWidget&sectionId=main' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML4"));' target='configHTML4' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML2'>
+<script type='text/javascript'>
+                          var disqus_shortname = 'rtpdesign';
+                          var disqus_blogger_current_url = "http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html";
+                          if (!disqus_blogger_current_url.length) {
+                              disqus_blogger_current_url = "http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html";
+                          }
+                          var disqus_blogger_homepage_url = "http://articles.runtings.co.uk/";
+                          var disqus_blogger_canonical_homepage_url = "http://articles.runtings.co.uk/";
+                      </script>
+<style type='text/css'>
+                              #comments {display:none;}
+                          </style>
+<script type='text/javascript'>
+                              (function() {
+                                  var bloggerjs = document.createElement('script');
+                                  bloggerjs.type = 'text/javascript';
+                                  bloggerjs.async = true;
+                                  bloggerjs.src = '//'+disqus_shortname+'.disqus.com/blogger_item.js';
+                                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(bloggerjs);
+                              })();
+                          </script>
+<style type='text/css'>
+                              .post-comment-link { visibility: hidden; }
+                          </style>
+<script type='text/javascript'>
+                          (function() {
+                              var bloggerjs = document.createElement('script');
+                              bloggerjs.type = 'text/javascript';
+                              bloggerjs.async = true;
+                              bloggerjs.src = '//'+disqus_shortname+'.disqus.com/blogger_index.js';
+                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(bloggerjs);
+                          })();
+                          </script>
+</div></div>
+</div>
+</div>
+<!--/span-->
+</div>
+<!--/row-->
+</div>
+<!--/span-->
+<div class='col-md-3'>
+<div class='well sidebar-nav'>
+<div id='sidebar-wrapper'>
+<div class='sidebar section' id='sidebar'><div class='widget BlogArchive' id='BlogArchive1'>
+<h2>
+Articles
+</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2015-01-01T00:00:00Z&amp;updated-max=2016-01-01T00:00:00Z&amp;max-results=20'>
+2015
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            20
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_09_01_archive.html'>
+September
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_08_01_archive.html'>
+August
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            5
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_06_01_archive.html'>
+June
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_05_01_archive.html'>
+May
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            4
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_04_01_archive.html'>
+April
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_03_01_archive.html'>
+March
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            7
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2014-01-01T00:00:00Z&amp;updated-max=2015-01-01T00:00:00Z&amp;max-results=10'>
+2014
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            10
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_12_01_archive.html'>
+December
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            4
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_11_01_archive.html'>
+November
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_10_01_archive.html'>
+October
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_09_01_archive.html'>
+September
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            4
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2013-01-01T00:00:00Z&amp;updated-max=2014-01-01T00:00:00Z&amp;max-results=2'>
+2013
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2013_07_01_archive.html'>
+July
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+                            &#9660;&#160;
+                          </span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2012-01-01T00:00:00Z&amp;updated-max=2013-01-01T00:00:00Z&amp;max-results=2'>
+2012
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+                            &#9660;&#160;
+                          </span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2012_07_01_archive.html'>
+July
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+<ul class='posts'>
+<li>
+<a href='http://articles.runtings.co.uk/2012/07/solved-error-was-encountered-in-wsat.html'>
+SOLVED: &#8220;An error was encountered&#8221; in WSAT (Websit...
+</a>
+</li>
+<li>
+<a href='http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html'>
+A straightforward method to detecting RSS and Atom...
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2011-01-01T00:00:00Z&amp;updated-max=2012-01-01T00:00:00Z&amp;max-results=7'>
+2011
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            7
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2011_06_01_archive.html'>
+June
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2011_04_01_archive.html'>
+April
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2011_03_01_archive.html'>
+March
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2010-01-01T00:00:00Z&amp;updated-max=2011-01-01T00:00:00Z&amp;max-results=10'>
+2010
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            10
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2010_04_01_archive.html'>
+April
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            5
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2010_03_01_archive.html'>
+March
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2010_02_01_archive.html'>
+February
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2009-01-01T00:00:00Z&amp;updated-max=2010-01-01T00:00:00Z&amp;max-results=50'>
+2009
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            51
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_12_01_archive.html'>
+December
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            5
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_11_01_archive.html'>
+November
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            6
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_10_01_archive.html'>
+October
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            22
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_09_01_archive.html'>
+September
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            6
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_08_01_archive.html'>
+August
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_07_01_archive.html'>
+July
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            9
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget CustomSearch' id='CustomSearch1'>
+<h2 class='title'>
+Search
+</h2>
+<div class='widget-content'>
+<div id='CustomSearch1_form'>
+<span class='cse-status'>
+Loading...
+</span>
+</div>
+</div>
+<style type='text/css'>
+                      #uds-searchControl .gs-result .gs-title,
+                      #uds-searchControl .gs-result .gs-title *,
+                      #uds-searchControl .gsc-results .gsc-trailing-more-results,
+                      #uds-searchControl .gsc-results .gsc-trailing-more-results * {
+                        color:#00c;
+                      }
+                      #uds-searchControl .gs-result .gs-title a:visited,
+                      #uds-searchControl .gs-result .gs-title a:visited * {
+                        color:#00c;
+                      }
+                      #uds-searchControl .gs-relativePublishedDate,
+                      #uds-searchControl .gs-publishedDate {
+                        color: #6f6f6f;
+                      }
+                      #uds-searchControl .gs-result a.gs-visibleUrl,
+                      #uds-searchControl .gs-result .gs-visibleUrl {
+                        color: #00c;
+                      }
+                      #uds-searchControl .gsc-results {
+                        border-color: #6f6f6f;
+                        background-color: #fff;
+                      }
+                      #uds-searchControl .gsc-tabhActive {
+                        border-color: #6f6f6f;
+                        border-top-color: #6f6f6f;
+                        background-color: #fff;
+                        color: #000;
+                      }
+                      #uds-searchControl .gsc-tabhInactive {
+                        border-color: #6f6f6f;
+                        background-color: transparent;
+                        color: #00c;
+                      }
+                      #uds-searchClearResults {
+                        border-color: #6f6f6f;
+                      }
+                      #uds-searchClearResults:hover {
+                        border-color: #6f6f6f;
+                      }
+                      #uds-searchControl .gsc-cursor-page {
+                        color: #00c;
+                      }
+                      #uds-searchControl .gsc-cursor-current-page {
+                        color: #000;
+                      }
+                    </style>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=CustomSearch&widgetId=CustomSearch1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("CustomSearch1"));' target='configCustomSearch1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Stats' id='Stats1'>
+<h2>Visitors</h2>
+<div class='widget-content'>
+<div id='Stats1_content' style='display: none;'>
+<img alt='Sparkline' height='30' id='Stats1_sparkline' width='75'/>
+<span class='counter-wrapper text-counter-wrapper' id='Stats1_totalCount'>
+</span>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=Stats&widgetId=Stats1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("Stats1"));' target='configStats1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div>
+</div><div class='widget HTML' id='HTML1'>
+<div class='widget-content'>
+<a id="clustrMapsLink" href="http://www3.clustrmaps.com/counter/maps.php?url=http://runtingsproper.blogspot.com"><img id="clustrMapsImg" style="border:0px;" alt="Locations of visitors to this page" src="http://www3.clustrmaps.com/counter/index2.php?url=http://runtingsproper.blogspot.com" onerror="this.onerror=null; this.src='http://www2.clustrmaps.com/images/clustrmaps-back-soon.jpg'; document.getElementById('clustrMapsLink').href='http://www2.clustrmaps.com';" title="Locations of visitors to this page"/>
+</a>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML5'>
+<div class='widget-content'>
+<!-- who's amung us -->
+<!--
+<script src="http://widgets.amung.us/classic.js" type="text/javascript"></script><script type="text/javascript">WAU_classic('6zm8tfa5w0q4')</script>
+-->
+
+<!-- tynt -->
+<!--
+<script type="text/javascript">tyntVariables = {"ap":""};</script> <script src="http://tcr.tynt.com/javascripts/Tracer.js?user=du7lrUZXyr3PqRab7jrHtB&amp;s=91&amp;a=0&amp;lang=en" type="text/javascript"></script>
+-->
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML5&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML5"));' target='configHTML5' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML7'>
+<div class='widget-content'>
+<div style="float: left; margin-right: 15px;">
+
+<!-- Feedburner -->
+<p><a href="http://runtingsproper.blogspot.com/feeds/posts/default"><img width="88" style="border:0" alt="" src="http://feeds.feedburner.com/~fc/RunTingsProper?bg=99CCFF&amp;fg=444444&amp;anim=1" height="26"/></a></p>
+
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML7&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML7"));' target='configHTML7' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+</div>
+<!--/.well -->
+</div>
+<!--/span-->
+</div>
+<!--/row-->
+<hr/>
+<footer>
+<p>
+          &#169; Copyright rtp design ltd
+        </p>
+<div id='footer-wrapper'>
+<div class='footer section' id='footer'></div>
+</div>
+</footer>
+</div>
+<!--/.fluid-container-->
+<!-- Le javascript ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src='//code.jquery.com/jquery-1.11.1.min.js'></script>
+<script src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'></script>
+<script type='text/javascript'>
+      /* <![CDATA[ */
+      var ScrollMarker = 0;
+      $(document).ready(function () {
+        SetupGoogleAnalyticsTrackEvents();
+      });
+      function SetupGoogleAnalyticsTrackEvents()
+      {
+        TrackEventsForCodeSampleDownloads();
+        TrackEventsForImageClicks();
+        TrackEventsForMinimumPageScroll();
+        TrackEventsForWasProblemSolved();
+      }
+      function TrackEventsForWasProblemSolved()
+      {
+        $("#WasProblemSolvedPanel").show();
+        $("#ProblemSolved").click(function(e){
+          e.preventDefault();
+          WasProblemSolvedClick("Yes");
+        });
+        $("#ProblemNotSolved").click(function(e){
+          e.preventDefault();
+          WasProblemSolvedClick("No");
+        });
+      }
+      function WasProblemSolvedClick(answer)
+      {
+        TrackEvent("Was Problem Solved?", answer, document.location.href);
+        $("#WasProblemSolvedLinkPanel").hide("fast");
+        $("#WasProblemSolvedThanksPanel").addClass(answer);
+        $("#WasProblemSolvedThanksPanel").show("fast");
+      }
+      function TrackEventsForMinimumPageScroll()
+      {
+        $(window).scroll(function(){
+          var bottom = $(window).height() + $(window).scrollTop();
+          var height = $(document).height();
+          var percentage = Math.round(100*bottom/height);
+          if(percentage > 90)
+          {
+            if(ScrollMarker == 0)
+            { 
+              ScrollMarker = 1;
+              //                 alert("Page Scrolled to 90% in " + document.location.href);
+              TrackEvent("Content Engagement", "Scrolled To 90%", document.location.href);
+            }
+          }
+        }); 
+      }
+      function TrackEventsForCodeSampleDownloads()
+      {
+        var FilterByBlogSampleHref = "href^='http://cid-15f731b049c8a797.skydrive.live.com/self.aspx/BlogExamples/'";
+        var FilterByRarFileExtension = "href$='.rar'";
+        $("a[" + FilterByBlogSampleHref + "][" + FilterByRarFileExtension + "]").click(function() {
+          var SampleFileName = ExtractFileNameFromUrl($(this).attr("href"));
+          TrackEvent("Sample Application", "Download", SampleFileName);
+        });
+      }
+      function TrackEventsForImageClicks()
+      {
+        TrackEventByFileExtension(".gif");
+        TrackEventByFileExtension(".jpg");
+        TrackEventByFileExtension(".jpeg");
+        TrackEventByFileExtension(".png");
+      }
+      function TrackEventByFileExtension(FileExtension)
+      {
+        $("a[href$='" + FileExtension + "']").click(function() {
+          var ImageFileName = ExtractFileNameFromUrl($(this).attr("href"));
+          TrackEvent("Image Enlargement", "Click", ImageFileName);
+        });
+      }
+      function ExtractFileNameFromUrl(Url)
+      {
+        // Note this code assumes
+        //   - that the url doesnt contain a query string
+        //   - that a real url has been passed in
+        //   - that the url has a filename and isnt a folder
+        var SplitUrl = Url.split('/');
+        var FileName = SplitUrl[SplitUrl.length-1];
+        return FileName;
+      }
+      function TrackEvent(Category, Action, Label)
+      {
+        ga('send', 'event', Category, Action, Label, {'nonInteraction': 1});
+      }     
+      /* ]]> */
+    </script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shCore.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushCSharp.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushCss.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushSql.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushVb.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushXml.js' type='text/javascript'></script>
+<link href='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/styles/shCoreDefault.css' rel='stylesheet' type='text/css'/>
+<script type='text/javascript'>
+      //        SyntaxHighlighter.config.clipboardSwf = 'http://alexgorbatchev.com/pub/sh/2.1.364/scripts/clipboard.swf';
+      //        SyntaxHighlighter.config.bloggerMode = true;
+      SyntaxHighlighter.config.stripBrs = true;
+      SyntaxHighlighter.all();	
+    </script>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script>
+
+<!-- 'It is your responsibility to notify your visitors about cookies used on your blog. See http://www.blogger.com/go/cookiechoices for more details.' -->
+<script src="/js/cookiechoices.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.cookieChoices && cookieChoices.showCookieConsentBar && cookieChoices.showCookieConsentBar(
+        (window.cookieOptions && cookieOptions.msg) || 'This site uses cookies from Google to deliver its services, to personalize ads and to analyze traffic. Information about your use of this site is shared with Google. By using this site, you agree to its use of cookies.',
+        (window.cookieOptions && cookieOptions.close) || 'Got it',
+        (window.cookieOptions && cookieOptions.learn) || 'Learn More',
+        (window.cookieOptions && cookieOptions.link) || 'https://www.blogger.com/go/blogspot-cookies');
+  });
+</script>
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/3141703100-widgets.js"></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '5519904556829079674';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d5519904556829079674','//articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html','5519904556829079674');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '5519904556829079674', 'bloggerUrl': 'https://www.blogger.com', 'title': 'Run Tings Proper', 'pageType': 'item', 'postId': '8624087217328673675', 'url': 'http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html', 'canonicalUrl': 'http://articles.runtings.co.uk/2012/07/a-straightforward-method-to-detecting.html', 'homepageUrl': 'http://articles.runtings.co.uk/', 'canonicalHomepageUrl': 'http://articles.runtings.co.uk/', 'blogspotFaviconUrl': 'http://articles.runtings.co.uk/favicon.ico', 'enabledCommentProfileImages': true, 'adultContent': false, 'disableAdSenseWidget': false, 'analyticsAccountNumber': '', 'useUniversalAnalytics': false, 'searchLabel': '', 'searchQuery': '', 'pageName': 'A straightforward method to detecting RSS and Atom feeds in websites with HtmlAgilityPack', 'pageTitle': 'Run Tings Proper: A straightforward method to detecting RSS and Atom feeds in websites with HtmlAgilityPack', 'encoding': 'UTF-8', 'locale': 'en_GB', 'localeUnderscoreDelimited': 'en_gb', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Run Tings Proper - Atom\42 href\75\42http://articles.runtings.co.uk/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42Run Tings Proper - RSS\42 href\75\42http://articles.runtings.co.uk/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42Run Tings Proper - Atom\42 href\75\42https://www.blogger.com/feeds/5519904556829079674/posts/default\42 /\76\n\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Run Tings Proper - Atom\42 href\75\42http://articles.runtings.co.uk/feeds/8624087217328673675/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'postImageThumbnailUrl': 'http://lh3.ggpht.com/-gHAyglauOG8/UAiAGLTiFnI/AAAAAAAAAnk/HB3ueRWPKtk/s72-c/image_thumb%25255B3%25255D.png?imgmax\75800', 'postImageUrl': 'http://lh3.ggpht.com/-gHAyglauOG8/UAiAGLTiFnI/AAAAAAAAAnk/HB3ueRWPKtk/image_thumb%25255B3%25255D.png?imgmax\75800', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { (function(){function c(a){this.t\75{};this.tick\75function(a,c,b){var d\75void 0!\75b?b:(new Date).getTime();this.t[a]\75[d,c];if(void 0\75\75b)try{window.console.timeStamp(\42CSI/\42+a)}catch(e){}};this.tick(\42start\42,null,a)}var a;window.performance\46\46(a\75window.performance.timing);var h\75a?new c(a.responseStart):new c;window.jstiming\75{Timer:c,load:h};if(a){var b\75a.navigationStart,e\75a.responseStart;0\74b\46\46e\76\75b\46\46(window.jstiming.srt\75e-b)}if(a){var d\75window.jstiming.load;0\74b\46\46e\76\75b\46\46(d.tick(\42_wtsrt\42,void 0,b),d.tick(\42wtsrt_\42,\n\42_wtsrt\42,e),d.tick(\42tbsd_\42,\42wtsrt_\42))}try{a\75null,window.chrome\46\46window.chrome.csi\46\46(a\75Math.floor(window.chrome.csi().pageT),d\46\0460\74b\46\46(d.tick(\42_tbnd\42,void 0,window.chrome.csi().startE),d.tick(\42tbnd_\42,\42_tbnd\42,b))),null\75\75a\46\46window.gtbExternal\46\46(a\75window.gtbExternal.pageT()),null\75\75a\46\46window.external\46\46(a\75window.external.pageT,d\46\0460\74b\46\46(d.tick(\42_tbnd\42,void 0,window.external.startE),d.tick(\42tbnd_\42,\42_tbnd\42,b))),a\46\46(window.jstiming.pt\75a)}catch(k){}})();window.tickAboveFold\75function(c){var a\0750;if(c.offsetParent){do a+\75c.offsetTop;while(c\75c.offsetParent)}c\75a;750\76\75c\46\46window.jstiming.load.tick(\42aft\42)};var f\75!1;function g(){f||(f\75!0,window.jstiming.load.tick(\42firstScrollTime\42))}window.addEventListener?window.addEventListener(\42scroll\42,g,!1):window.attachEvent(\42onscroll\42,g);\n })();\74/script\076', 'mobileHeadScript': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/37bc6460da44b327', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'sf': 'n', 'tf': ''}}, {'name': 'skin', 'data': {'vars': {}, 'override': ''}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\75classic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\75flipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\75magazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\75mosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\75sidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\75snapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\75timeslide'}}}]);
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/2807592153-lbx__en_gb.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/1185134592-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'main', null, document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'main', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading...'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_CustomSearchView', new _WidgetInfo('CustomSearch1', 'sidebar', null, document.getElementById('CustomSearch1'), {'title': 'Search', 'includeBlog': true, 'includePostLinks': false, 'includeWeb': false, 'linkLists': [], 'blogUrl': 'http://articles.runtings.co.uk/', 'loadingMsg': 'Loading...', 'thisBlogMsg': 'This Blog', 'linkedFromHereMsg': 'Linked From Here', 'theWebMsg': 'The Web', 'backgroundColor': '#fff', 'textColor': '#000', 'dateColor': '#6f6f6f', 'linkColor': '#00c', 'urlColor': '#00c', 'visitedLinkColor': '#00c', 'borderColor': '#6f6f6f', 'activeBorderColor': '#6f6f6f', 'cse_ua': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_StatsView', new _WidgetInfo('Stats1', 'sidebar', null, document.getElementById('Stats1'), {'title': 'Visitors', 'showGraphicalCounter': false, 'showAnimatedCounter': false, 'showSparkline': true, 'statsUrl': '//articles.runtings.co.uk/b/stats?style\75BLACK_TRANSPARENT\46timeRange\75ALL_TIME\46token\75NYsL-E8BAAA.gedpdAIMUQPUW5olPSb0IOEY2pj2r25Ld1RRHwO8Sjk.oAOQKu6HEBmtjTLWxvUIMA'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML5', 'sidebar', null, document.getElementById('HTML5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML7', 'sidebar', null, document.getElementById('HTML7'), {}, 'displayModeFull'));
+</script>
+</body>
+</html>

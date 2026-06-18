@@ -1,0 +1,806 @@
+Contents
+
+Beta 0.7
+Beta 0.8
+Beta 0.9
+Beta 0.93
+Beta 0.94
+Beta 0.95
+Beta 0.96
+Version 1.0
+Version 1.1
+Version 1.2
+Version 1.3
+Version 1.4
+Version 1.5
+Version 1.6
+Version 1.7
+Version 1.8
+Version 1.9
+Version 2.0
+Version 2.1
+Version 2.2
+Version 2.3
+Version 2.4
+Version 2.5
+Version 2.6
+Version 2.7
+Version 2.8
+Version 2.9
+Version 3.0
+Version 3.1
+Version 3.2
+Version 3.3
+Version 3.4
+Version 3.5
+Version 3.6
+Version 3.7
+Version 3.8
+Version 3.9
+----------
+
+Beta 0.7
+Released December 11, 2006
+
+Documentation now references the web page for downloading the .NET Framework version 2.0:
+http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5&amp;displaylang=en
+
+Fixed Hot Key Summary not showing Yield on Drive command, Alt+Y, or Beginning File command, Alt+B.  Alt+Y says the number of bytes occupied and free on the current drive.  Alt+B goes to the first file item, skipping over any folder items at the top of the list.
+
+Clarified that the Open Drive command is invoked with Alt+O rather than Shift+G.  Made the Open Special Folder command, Control+Shift+O, say "My Documents" instead of "Personal."
+
+Changed the status line so that it says the date and size of the current item rather than the current position and item count.  Implemented support for folder as well as file items in the Copy, Delete, and Move Tagged commands (Shift+C, Shift+D, and Shift+M).
+
+Added a query for the current file via the Apostrophe key, and one for the current folder via the Shift+Apostrophe key (Alt+Apostrophe queries the clipboard).
+
+Added the File Find command, Alt+Shift+F, to search for a file based on text it contains and/or a wild card pattern matching its name.  Files in the current folder and subfolders will be searched. Pick from a ListBox of matching files.  A new window will be opened for the associated folder, with focus placed on the matching file within it.
+----------
+
+Beta 0.8
+Released December 13, 2006
+
+Fixed the What command, invoked with question mark (Shift+Slash), not silencing speech after a key press.  It reads a maximum of about 20K of text from a file.
+
+The size of the current item on the status line is now expressed in an abbreviated manner using K for kilobytes, M for megabytes, or G for gigabytes.  Note that the size of a folder is -1 until a query command such as Size, Shift+S, or Yield Tagged, Shift+Y, forces it to be calculated (by recursively summing the sizes of all contained files and subfolders).
+
+The Copy or Move Tagged commands, Shift+C or Shift+M, now prompt whether to overwrite existing folders and files.  You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal.  You can choose to keep all targets with the same names, replace them, or replace them only with updated source items.
+
+FileDir remembers the directory, sort order, and filter specification at the end of the last session.  Use Control+Shift+C rather than Control+C to copy names but not full paths to the Windows clipboard.  The Open Drive command has been reassigned to Alt+Shift+O.
+
+The Send to Word Processor command, Control+W, and Send to Text Editor command, Control+T, are configurable by the Options command, Alt+O.  This modifies a standard .ini file, FileDir.ini, in the FileDir program folder.  By default, Microsoft Word is the word processor and TextPal is the text editor.  If another executable is specified, its full path may be needed if it is not located on the Windows search path.
+
+In addition to the backslash character indicating that an item is a folder and the greater than sign indicating it is tagged, special symbols are associated with folder and file attributes, and with new commands to manipulate them.  A right parenthesis after a list item means that the Hidden attribute is set.  As a memory aid, you may think of parenthesis hiding something from full view.  The RightParen key, Shift+0, sets the Hidden attribute of the current or tagged items.  The LeftParen key does the reverse, removing the Hidden attribute.  Similarly, the right bracket symbol means that an item has the ReadOnly attribute set.  You may think of a bracket protecting something from being modified.  The LeftBracket key removes the ReadOnly attribute.  Finally, the right brace symbol means the System attribute is set.  You may think of a brace as a character used in programming systems.  The LeftBrace key removes the System attribute.
+----------
+
+Beta 0.9
+Released December 15, 2006
+
+Fixed Tag or Untag All commands, Control+A or Control+Shift+A, affecting items not included in the current filter.  Changed how accelerator keys are displayed in the menu system so that screen readers will speak them more reliably.  Added extra speech messages via the default SAPI voice if neither JAWS nor Window-Eyes are detected.
+
+Enhanced the Jump command, Control+J, to recognize symbols FileDir associates with file attributes.  Thus, you can jump to a ReadOnly file by entering a single ] character as the search string.  A [ would find the next item without the ReadOnly attribute set.  Using the Jump Again command, Alt+J, you can efficiently hop from one match to the next.
+
+Enhanced the Filter command, Control+F, to match more than one specification.  For example, entering
+*.doc|*.pdf
+would limit the view to items having either a .doc or .pdf extension.  To view all items again, enter a single * character for the filter, or use the Clear Filter command, Control+Shift+F.
+
+Enhanced the Type Command, Shift+T, to announce file attributes as well as the extension.  Enhanced the Say Item command, Apostrophe, to indicate whether the current item is tagged.
+
+Introduced Burn to CD command, Alt+Shift+B, (like in TextPal) for adding tagged files or folders to a CD.  Added Paste command, Control+V, to copy files or folders listed on the clipboard to the current folder.  Thus, behavior similar to Windows Explorer is possible, where paths are copied to the clipboard with Control+C, and then the referenced items are pasted into another folder window with Control+V.
+
+Added navigational shortcuts.  The Initial Change command, Shift+I, goes to the next item that begins with a different letter.  The Extension Change command, Shift+X, goes to the next item with a different extension.  These are most useful when the sort order is by Alpha/Name or Type/Extension, respectively.
+
+Added a quick links feature for efficiently opening favorite files.  Press Control+Q to add a quick link for the current item.  A standard Windows shortcut (.lnk file) is created in the Quick subfolder of the FileDir program folder.  Press Shift+Q to open this folder at any time.  You can navigate it just like any other folder.  Press Enter to execute a shortcut item.
+
+FileDir now checks if you are trying to open a folder that already has an open window.  If so, it says "Returning and activates that window rather than starting a new one.   Press F4 to pick one of the currently open windows from a standard ListBox.  Use the Alternate Menu command, Alt+F10, to pick a FileDir command from a complete, alphabetical list.
+----------
+
+Beta 0.93
+Released December 20, 2006
+
+Strengthened error checking and reporting.  Fixed FileDir not producing enhanced speech messages through the Window-Eyes API.  Made the Filter command, Control+F, indicate if no items match a filter just entered.
+
+Made the Copy or Move commands, Shift+C or Shift+M, speak the comparison with a target having the same name rather than relying on a screen reader to say that part of the confirmation dialog.  Changed the technique of finding drives so that the Open Drive command, Alt+Shift+O, should identify all available ones (feedback sought).
+
+Pressing Enter on a Quick link shortcut that is a folder will now open it in FileDir rather than Windows Explorer.  Pressing Enter on a zip archive will open it as if it is a folder.  This lets you conveniently examine the contents of a zip archive.
+
+The new Zip command, Shift+Z, adds the current or tagged items to a zip archive.  The Unzip command, Shift+U, unarchives the current or tagged items.  The Unzip Test command, Control+U, checks whether the current item is a valid zip archive.
+
+Some commands work with a copy of a zipped item that is unarchived to a temporary folder as needed.  This lets you use the What command, Question Mark, to identify the content of a file without unzipping the archive that contains it.  The Send to Word Processor or Text Editor commands, Control+W or Control+T, also work in this way.
+
+Added the List Files command, Alt+L, to list file items but not folder items in the current directory view.  Similarly, Alt+Y sums the sizes of file but not folder items.  The Yield on Drive command has been reassigned to Alt+Shift+Y, providing the total size and space free on the current drive.
+
+The Mail command, Control+M, starts a new email message with the current or tagged files as attachments.
+----------
+
+Beta 0.94
+Released December 28, 2006
+
+The Filter command, Control+F, asks for confirmation if no file or folder items match the filter.  Commands that change files or folders say "Done!" when complete.  The dialog that prompts for a folder, invoked by various commands, now guesses the folder name as you type.
+
+The Keywords command, Control+K, now supports multiple conditions.  Use the vertical bar character (|) to separate words or phrases where any one of those terms can produce a match.  Use the ampersand character (&) as a separater where all terms must match.  For example, entering "C#|Visual Basic" would match files containing either language, whereas "C#&Visual Basic" would require both to match.  Press Alt+K to hop to the next matching file.
+
+The Recycle Toggle, Alt+Shift+R, determines whether deleted files or folders are moved to the recycle bin.  The default setting is On.  Regardless of the current setting, Control+X recycles deleted items, whereas Shift+Delete does not.  The Delete, Copy, and Move commands are significantly faster when deleted or replaced items are not moved to the recycle bin.
+
+Shift+R renames the current file or folder item.  Control+R renames all items in the current folder with wildcards you specify, similar to DOS commands.  Control+Shift+R renames items in the current directory view using regular expressions.  Control+Slash goes to a command prompt in the current directory.
+
+Pressing Enter when the current item is a zip archive will open it like a folder.  Commands such as Copy and Move are not available in this archive view, but most navigation and query commands are supported.  The Delete and Unzip commands operate on items within the archive.
+
+As before, the Unzip command, Shift+Z, preserves folder paths in the archive, whereas the new Control+U command does not.  It unzips all files to the chosen folder, but not subfolders below (ignoring folder paths, if any).  Alt+U tests whether an archive may be unzipped successfully.
+
+Control+M now starts a mail message with its body being the textual content of the current item.  For example, pressing Control+M when a Microsoft Word document is the current item will extract its text for the message body.  Control+Shift+M starts a message with the current or tagged items as attached files.
+
+Control+P sends current or tagged items to the default printer.  Alt+R lists recent shortcuts, which may be files or folders for which Windows has created a shortcut in the Recent special folder.  They are listed in reverse chronological order -- most recent first.  Choose an item from this standard listbox to open it.
+
+The Yield on Drive command has been reassigned to Control+Shift+Y.  The new Yield in Operating System command, Alt+Shift+Y, gives information about the version of Windows, physical memory, and virtual memory.
+----------
+
+Beta 0.95
+Released December 30, 2006
+
+Fixed prompt to confirm filter in empty folder.  Fixed Go to Parent Folder command, Backspace, not working in empty folder.  Fixed Copy, Cut, Paste, and Undo commands in optional JAWS scripts.
+
+Modified Recent Shortcuts command, Alt+R, to show a maximum of 100 shortcuts.  This improves load speed of the list box, since the Windows "Recent" special folder can contain many more shortcuts.  Enhanced dialog for choosing a folder so that it prompts whether to create one if the path entered is not found.  This makes it convenient to copy, move, or unzip files to a new folder with a single command.
+
+Added the Delete Recycle Now command, Control+D, and Delete Now Command, Control+Shift+D, for deleting a single file (but not folder) without a confirmation dialog.  Added the Path List to Clipboard command, Control+Shift+P, for copying to clipboard all file paths under the current folder item.  Added Say Folder command, Control+Apostrophe, to say full path of the current directory view, and Control+Shift+Apostrophe to copy it to the clipboard.  Added Percent Through command, Shift+5 (percent sign), to say the current position, item count, and percent through  the directory list.
+
+Use the New Folder command, Control+N, to create a new folder on disk.  Press Control+Shift+N to create a new copy of the current file or folder item within the same directory.  It will be assigned a similar name except for a numeric suffix that makes it unique, e.g., plan_01.doc for a copy of plan.doc, or plan_02.doc for the second copy.  This can be useful when you want to preserve an original version of a file before editing a copy.
+
+Added nine commands on the Window menu to quickly open or go to an existing view on a drive.  Drives A through I are associated with the digits 1 through 9.  For example, press Alt+1 to go to Drive A or Alt+3 to go to Drive C.
+
+Updated the documentation, F1, so that it accurately reflects the feature set and keyboard assignments that evolved during the beta development process.  Further explanations will respond to user feedback.
+----------
+
+Beta 0.96
+Privately released January 1, 2007
+
+Made the Mail Body command, Control+M, use the file name without extension as the subject of the message (the content of the file being the message body).  Made tF2 work like Shift+R for keystroke compatibility with Windows Explorer.  Improved visual appearance of directory view, including margins, font, alignment, and length of ListBox items.
+----------
+
+Version 1.0
+Released January 1, 2007
+
+Now available at
+http://www.EmpowermentZone.com/dirsetup.exe
+
+FileDir, a file and directory manager, is intended to be a generally superior alternative to Windows Explorer or My Computer for managing a computer file system in an efficient, accessible manner.  It is particularly designed to optimize productivity by users of the JAWS or Window-Eyes screen readers.  Familiar features of Windows Explorer are replicated for starting functionality and ease of learning.  FileDir then adds much in power and convenience.
+
+Developed in the C# language, the FileDir application requires the .NET Framework 2.0 to run.  This is a free Microsoft download from
+http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5&amp;displaylang=en
+
+FileDir features include the following:
+
+*  Open any number of directory views in a standard Multiple Document Interface (MDI), where Control+Tab cycles among open windows and Control+F4 closes one.  F4 also lets you pick from a list of those currently open.
+
+*  A standard ListBox rather than ListView control is used to display files and subfolders, so the interface is more streamlined and responsive then Windows Explorer.
+
+*  With single, mnemonic keystrokes, start verbalizing a file or inspect its size, date, or other attributes.
+
+*  Tag files or folders in various ways.  Unlike selection in Windows Explorer, an accidental change of focus in the list does not affect the set of tagged items, and the Control key does not have to be held down to preserve tags while navigating.
+
+*  Via speech, list all files in the current folder, or just the tagged ones -- regardless of how many are visible on the screen.
+
+*  Zip and unzip files, or navigate within a ZIP archive with the same interface as regular folders.
+
+*  Convert various file formats to plain text, including Microsoft Word, Excel, PowerPoint, Adobe PDF, Windows Help, Rich Text Format, and HTML.
+
+*  Capture the full path of a file or set of files to the clipboard for convenient pasting into dialogs of other applications.
+
+*  Combine multiple files into a single compound document.
+
+*  Filter files in the current folder based on a wild card specification.
+
+*  Jump to a file in the current folder based on part of its name or words in its body.  Multiple keyword terms are possible, where a match may require either all terms or any one of them.
+
+*  Navigate among the subset of tagged files, e.g, going to the next tagged file, skipping over untagged ones.
+
+*  Go quickly to another drive, arriving in the folder and on the file that last had focus there.
+
+*  Create a shortcut to any file or folder, and invoke a list of them with a single key.
+
+*  Start an email message with the textual content of a file as its body, or start a message with one or more tagged files as attachments.
+
+*  Burn files onto a CD.
+
+The number of FileDir commands exceeds 100.  Each is available by either menu selection or hot key.  If you have trouble remembering the menu or key associated with a command, try the Alternate Menu command, Alt+F10, which lets you pick from a single, alphabetized list of all commands in a standard list box.
+
+All commands are discussed in sections of the documentation organized by conceptual category.  The documentation is automatically displayed at the end of installation, and may be reopened by pressing F1 in the program.  Alt+Shift+H displays a summary of hot keys.
+
+This is the official, 1.0 release of FileDir, after several rounds of public beta testing and feedback.  I invite people to try it, ask questions, make suggestions, offer programming contributions, and spread the word on this free, open source project.
+----------
+
+Version 1.1
+Released January 4, 2007
+
+Fixed Come Up Level command, Comma or Backspace, not working in a zip archive view.  Made the New Folder command, Control+N, recognize when the new folder should be added as an item in the current directory view.  Silenced verbalization of the command name when toggling tagged state of the current item with Spacebar.  Made FileDir remember more values from the previous session, including those last used for the Copy, Find in Files, FTP, Go To, Jump, Keywords, Move, Open, Unzip, and Zip commands.
+
+Added the Context Menu command, Shift+F10, for choosing an action to perform on the current file based on those available for its type/extension in the Windows registry.  Added the Send To Menu, Control+F10, for choosing among SendTo shortcuts -- installed by various applications -- to perform on the current or tagged files.
+
+Added the capability to "put" or upload files to a directory on an FTP server, and to "get" or download from there.  For private directories, a user name and password may be stored in FileDir configuration settings with the Options command, Alt+O.  Note that these are stored in a plain text .ini file, so should not be considered secure against untrusted uses of the computer.  If you prefer to be prompted for this information instead, you can leave those settings blank.
+
+Use the FTP Put command, Shift+F, to upload files.  FileDir prompts for an FTP directory.  If the value entered does not contain the :// sequence of characters, FileDir adds an FTP:// prefix and a / suffix for more convenient typing.  For example, a value of
+smart.net
+would become
+ftp://smart.net/
+If you include the :// sequence of a protocol, however, FileDir accepts the value verbatim -- without making changes.  The URL is remembered as the default value for the next FTP command.
+
+The opposite command is Get FTP, Shift+G, which downloads files from a remote directory.  FileDir presents a multiple selection list box with all file names it found in that directory.  The files selected will be downloaded to the current directory view.  Any existing files with the same names are replaced and sent to the recycle bin according to the Recycle setting, Alt+Shift+R (on by default).
+----------
+
+Version 1.2
+Released January 9, 2007
+
+Fixed Unzip commands improperly applying ANSI encoding.  Added the Filter Query command, Star (Shift+8), for checking the current sort order and filter specification.  Improved scope and organization of documentation.
+
+Extended pairs of Open and Go To commands.  Open commands preserve the current directory view, including its tagged states, and then activate a different directory view in another window.  Go To commands reuse the current window, instead, for another directory view.  In the following pairs of commands, the shifted version is a Go To command, requiring more conscious effort due to a more destructive nature, since it discards the current directory view.  This difference is similar to how Shift+Delete is more destructive then Delete, since the shifted version does not permit recovery from the recycle bin.  Enter opens a subfolder whereas Shift+Enter goes to it.  Backspace opens the parent folder whereas Shift+Backspace goes to it.  Backslash opens the root folder of the current drive whereas Shift+Backslash goes to it.  As before, FileDir checks if a view of the target directory already exists, and if so, activates that window rather than creating another for the same directory.
+
+Switched key assignments for the Quick commands to be more consistent with the Open/Go To pattern.  Control+Q opens the Quick folder, whereas Shift+Q creates a quick link to the current file or folder item.  Made the Escape key duplicate Control+Q for opening the Quick folder even more easily.  Modified the Quick Link command to permit a new name for the shortcut when initially created.
+
+Added the Evaluate command, Control+E, which prompts for a mathematical expression and then copies the result to the clipboard.  Standard arithmetic operators may be used, as well as methods of the C# programming language.  Added the Export Clipboard command, Alt+Shift+E, which prompts for a new file name and then saves clipboard text to it.
+----------
+
+Version 1.3
+Released January 11, 2007
+
+Fixed problems discovered with the following commands:  Unzip (Shift+U), Come Up Level (Comma), Path List (Control+Shift+P), Filter (Control+F), FileFind (Alt+Shift+F), and Burn to CD (Alt+Shift+B).  Improved the visual appearance of a directory view.  Switched the grave accent key (`) for the Escape key (above it) as an alternative to Control+Q for the Quick folder, since it could be pressed extra times when dismissing dialogs, inadvertently changing the current directory view.
+
+Made the FileFind command remember the last search results if the same search is repeated-- by pressing Enter to accept previous search terms when in the same directory.  FileDir defaults to the next choice in the list of search results (like TextPal's FileFind command).
+
+Made commands that can cause a noticeable delay provide progress indications.  These commands involve copying, moving, or deleting a folder, and zipping, unzipping, uploading, or downloading a file.  FileDir no longer speaks, however, if it is not the active window, so you can work in another application window during an extended FileDir process without being interrupted by unrelated speech messages.
+----------
+
+Version 1.4
+Released January 12, 2007
+
+Fixed display of Yield on Drive keyboard assignment on the Query Menu (Control+Shift+Y).  Fixed key names being spoken by the optional JAWS scripts when no MDI child window is active (e.g., saying "Control+O Open" instead of just "Open").  Made FileDir more reliably become the active window when launched.
+
+FileDir has always been a "Multiple Document Interface" (MDI) application, so any number of directory views may be opened, cycled among with Control+Tab, or closed with Control+F4.  Now FileDir is also a "single instance" application, so the desktop shortcut key, Alt+Control+F, activates the same program when FileDir is found in memory, rather than opening a new copy.  This and other new features (which were always a goal) make FileDir an option as the default program for opening zip archives.  The .zip extension may be associated with FileDir through the standard dialogs of Windos Explorer or My Computer.
+
+For added convenience, new choices in the FileDir program group are also available to either set or clear such an association.  This setting also causes FileDir to opan a view of a zip archive after downloading it with Internet Explorer and choosing the Open button from the "Download Complete" dialog.  Use the new Shift+W command to hear the titles of all FileDir windows currently open.
+
+The new Stamp command is executed with Exclamation Point (! or Shift+5).  It stamps tagged items with a different modification date and time.  FileDir prompts for numeric values for the year, month, day, hour, minute, and second, defaulting to those of the current file or folder item.
+----------
+
+Version 1.5
+Released January 15, 2007
+
+Fixed comparison of file or folder names sometimes being case sensitive.  Fixed Windows prompting whether it is safe to open a file with FileDir when that prompt does not occur with Windows Explorer.  Reviewed all menu text and made changes to ensure appropriate display of hot keys and ellippses ( ...), indicating a command presents a dialog.  Fixed the last Zip target not being remembered at the start of the nextFileDir session.
+
+The new Control+Z command zips files like Shift+Z, but then deletes originals after confirming the integrity of the zip target.  Introduced a speech-friendly dialog that is triggered when a .NET runtime error occurs unexpectedly.   You are given the choice of exiting or continuing FileDir.
+
+Added the Web Download command, Alt+Shift+W, which lets you download files from a public web site.  FileDir prompts for a URL and inserts the http://prefix if no protocol is specified.  After running an external utility to extract links from the web page, FileDir presents them in a multiple selection ListBox for downloading to the current directory.  If the URL of a link does not end in a valid file name, FileDir creates a file name for the target on disk based on other characters in the URL.
+
+Made the Refresh command, Period or F5, remember the focused item and currently tagged items.  Added the Control+S command to save tags in the current directory view, and Control+Shift+S to restore them.  This could be useful if you need to temporarily change which items are tagged.
+
+Updating FileDir is now more convenient.  Use the Elevate Version command, F11, to download and install the latest version.  You are prompted for confirmation.  The installer is downloaded to the folder for temporary Internet files so it will be deleted automatically when Windows reclaims space in that folder.  The current FileDir version is then unloaded so that the installer can replace any files that were in use.  You can reload the updated version in the usual manner after installation, e.g., by pressing Alt+Control+F.
+----------
+
+Version 1.6
+Released January 20, 2007
+
+Pressing Enter on a file item now invokes the default action of its type, which is generally, but not always, the Open action.  For example, an application may have set the default action to Edit or Play instead.  The Context Menu, Shift+F10, lets you choose among available actions for the current file type/extension.
+
+FileDir now automatically refreshes a directory view if you return to it from another window.  Thus, if you copy or move a file to a directory being viewed in another window, and then return to that window, the file will appear in its directory view.
+
+Increased speed of FileFind command, Alt+Shift+F, when only the names, but not contents, of files are searched.  Made FileDir announce the number of items in a directory view when it is activated.  Modified the filter confirmation prompt so that it asks whether to clear a filter if no items match it.  Added the Current Time command, Alt+Semicolon, to query the current time and date.
+
+A new capability permits FileDir to be invoked instead of Windows Explorer when an application asks Windows to open a folder view.  The result of the shortcut in the FileDir program group off the Start Menu has been extended to associate FileDir with folders as well as zip archives.  Another shortcut clears these associations, restoring the default behavior of Windows Explorer.
+----------
+
+Version 1.7
+Released January 26, 2007
+
+Fixed the Zip command, Shift+Z, failing when the target archive is located in another directory.  As before, you can test whether a file can be unzipped successfully by pressing Alt+U.  Use the new Unzip Password command, Alt+Shift+U, to set a temporary password for creating, extracting, or viewing zip archives.  In such cases, FileDir says the phrase "with password" to remind you that it is applying a password to the zip archive.  To clear the password, press Alt+Shift+U again and enter a blank space.
+
+As before, you can use Control+C and Control+V to copy items from one folder to another.  Control+C copies the full paths of tagged files or folders to the clipboard, one per line (as plain text that may be reviewed with the Quote Clipboard command, Alt+Apostrophe).  Control+V copies paths listed on the clipboard into the current folder.  The new Paste Move command, Control+Shift+V, moves the originals rather than copying them.  This is equivalent to Control+X followed by Control+V in Windows Explorer.  FileDir no longer uses Control+X as the Cut Recycle command, because the differing behavior of that key from Windows Explorer could result in inadvertent deletion of files.
+
+Since FileDir is a program designed to be generally available while running others, it offers a few, simple utilities not directly related to file management.  As before, the Evaluate command, Control+E, prompts for a mathematical expression, and then copies the result to the clipboard.  The new F12 related keys provide timer and alarm features (you may associate the number 12 with a clock).
+
+Press F12 to start a timer.  FileDir prompts for the announcement interval and stop time.  The announcement interval , measured in seconds, is how often FileDir will announce the amount of time elapsed since the start of the timer, e.g., a value of 60 means to announce at minute intervals.  These verbal announcements occur regardless of what program is currently in the active window.  Use a blank or 0 value to run the timer without automatic announcements.  Press Alt+F12 at any time to check how much time has elapsed so far.  If a timer is already running, the F12 key pauses it.  If paused, F12 resumes.  Press Shift+F12 to stop the timer and hear the total time it was running.
+
+In the dialog that prompts for the announcement interval, another field is the stop time.  A blank or 0 value means that the timer will run until manually stopped by pressing Shift+F12 or exiting FileDir.  Instead, a stopping point may be specified as a date and time.  The date and time components are each optional.  If a date is used, it must include at least the month and day, separated by the forward slash character (/) -- or equivalent for non-U.S. formatting conventions.  If a time is used, it must include at least the hour and minute, separated by a colon character (:) -- or non-U.S. equivalent.  If both date and time components are used, type the date, a space, and then the time.  Without a time, today's date is assumed.  A time may use either the military, 24-hour convention, or the AM/PM suffix (otherwise AM is assumed if the hour is less than 13).  Examples of valid date/time values are as follows:
+2:00 PM
+14:00
+7/27 6:30
+2007/7/27 6:30:15
+
+When the stop time is reached, FileDir plays some chimes and ends the timer.  Such an alarm may be used either with or without intervening announcements of time intervals.  A timer runs independently of other FileDir operations, so you can continue working in FileDir while using this capability.
+----------
+
+Version 1.8
+Released February 1, 2007
+
+Fixed The Go to Parent Folder command, Backspace, not always working from an archive view when the .zip extension is associated with FileDir.  Note that if you set FileDir to be the default program for browsing folders on the computer, then choosing My Computer on the desktop will launch FileDir instead of Windows Explorer.  You can still launch Windows Explorer either by entering Explorer.exe at the Windows Start/Run prompt or by pressing WindowsKey+E.
+
+Adjusted the optional JAWS configuration file to reduce extraneous speech (particularly with JAWS 8.0) when navigating among items in a directory view.  Specifically, the Text Out Delay in the Advanced Options dialog of JAWS Configuration Manager was raised from a value of 0 to 50 milliseconds (thousandths of a second).
+
+The RecycleWithDelete setting is now remembered between FileDir sessions, and may be set via the general Options dialog, Alt+O.  As before, the Delete key recycles items according to the current setting, which may be toggled with Alt+Shift+R.  Regardless of this setting, the Shift+Delete combination deletes without recycling (like Windows Explorer).  Conversely, the new Control+Delete key always deletes and recycles.  This command was previously assigned to Control+X, but that assignment was subsequently removed because it works differently than the conventional Cut command, which for technical reasons, is not implemented in FileDir.
+
+Fixed the Get FTP command, Shift+G, presenting lines of HTML rather than file names to download with some Internet settings.  Also stopped this command from inserting an extra slash character between a source directory and file, which could cause a download to fail.  Revised the technique for providing progress messages with both this and the FTP Put command, Shift+F.
+
+For increased security, FileDir now prompts for the FTP Password and Unzip Password in edit boxes that hide their values.  FileDir also saves them between sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.  These passwords may be saved either with the specific FTP or Unzip-related dialogs, or with the general Options dialog, Alt+O.
+
+Added the OpenWith action to the Context Menu, Shift+F10.  This invokes the standard Windows dialog for associating a program with the current file type/extension.
+----------
+
+Version 1.9
+Released February 4, 2007
+
+Fixed the Options dialog, Alt+O, mismatching fields and values.  Modified the RenameWithWildcards command, Control+R, to confirm the intended action beforehand, and to automatically refresh the directory view afterward.
+
+The FileDir setup program now checks whether the required .NET Framework version 2.0 is installed, and if not, permits the user to conveniently do so.
+----------
+
+Version 2.0
+Released February 7, 2007
+
+Fixed some shortcut files (.lnk extension) not being executed properly.  Fixed Refresh Folder command, Period or F5, producing an error when the current directory is empty.
+
+Added features and key assignments to support conventional functionality of Windows Explorer and of JAWS, thereby easing a transition to FileDir as one's main file manager.  JAWS conventions now implemented by the scripts include saying selected (tagged) items with Shift+JAWSKey+DownArrow, as well as saying the position of the cursor in the current view with Alt+Delete.  Shift+Space also says the current selection, like TextPal.  This command is convenient for confirming selection before a batch operation, e.g., before copying or deleting multiple items.
+
+New Windows Explorer conventions support the Shift key plus UpArrow, DownArrow, Home, or End when tagging items for a subsequent batch command.  Adding the Alt modifier is an enhancement for untagging instead, e.g., Alt+Shift+End untags from the current item to the end of the list.  To tag or untag the current item without changing focus, press Shift+NumPad5 or Alt+Shift+NumPad5.
+
+Furthering use of the arrow keypad, the Control modifier facilitates navigation among the subset of tagged items, e.g., Control+DownArrow is equivalent to Shift+N for going to the next tagged item.  Alt+Home is a keypad synonym for Alt+B, going to the beginning file item, skipping over any preceding folder items.
+
+FileDir's Context Menu, Shift+F10, has been strengthened to offer almost every choice available from that menu of Windows Explorer.  An action may now also be performed on multiple items, not just the current one.
+
+The Quick Links feature as been extended to support .url as well as .lnk files, thereby letting you manage Internet favorites with FileDir.  As before, press Shift+Q to create a shortcut for the current file or folder item.  Press Alt+Shift+Q instead to create a link to an Internet resource.  FileDir prompts for a name and address after attempting to get default values from the current web page of Internet Explorer, if open.  To make this convenient retrieval more likely, ensure that the Address Bar setting is checked in the View menu of Internet Explorer.  The Web Download command, Alt+Shift+W, now also uses this mechanism for a default web address if the current value is blank.
+
+As before, press either Control+Q or the Accent key to open the Quick folder, which may be navigated and maintained like any other.  To review or modify the settings of a .lnk file, you can use the new Properties command, Alt+Enter, which invokes the same dialog as Windows Explorer.  A .url file contains readable text in the .ini format, so you can easily access such settings, e.g., via the Sent to Text Editor command, Control+T.
+----------
+
+Version 2.1
+Released February 14, 2007
+
+Fixed names of folder items not being displayed in a view of a zip archive.  Also fixed Beginning File command, Alt+B or Alt+Home, not working in an archive view.
+
+Use the Calculate Units command, number sign (#) or Shift+3, to convert between different units of measure, e.g., between metric and other units of distance, volume, weight, or temperature.  Pick the type of conversion from the list box and enter the input value in the edit box.  The output value is spoken and copied to the clipboard (and may be reviewed with the Quote Clipboard command, Alt+Apostrophe).  About 80 conversions are available as follows:
+
+Acre to hectare
+Atmosphere to psi
+BTU/hour to watt
+Celsius to Fahrenheit
+Celsius to Kelvin
+Centimeter to inch
+Cubic ft to cubic m
+Cubic m to cubic ft
+Day to hour
+Day to minute
+Degrees to radians
+Fahrenheit to Celsius
+Fathom to meter
+Foot to inch
+Foot to meter
+Ft/sec to meter/sec
+Gallon (US dry) to liter
+Gallon (US dry) to quart (US dry)
+Gallon (US liquid) to liter
+Gram to ounce (avoirdupois)
+Gram to ounce (troy)
+Hectare to acre
+Horsepower (elec.) to watt
+Horsepower (metric) to watt
+Hour to day
+Hour to minute
+Inch to centimeter
+Inch to foot
+Kelvin to Celsius
+Kg/sqcm to psi
+Kilogram to pound
+Kilogram to ton (UK)
+Kilogram to ton (US)
+Kilogram to ton (metric)
+Kilometer to mile
+Kilowatt to watt
+Knot to mph
+Kph to mph
+Light-year to mile
+Light-year to parsec
+Liter to gallon (US dry)
+Liter to gallon (US liquid)
+Liter to pint (US dry)
+Liter to pint (US liquid)
+Meter to fathom
+Meter to foot
+Meter to yard
+Meter/sec to ft/sec
+Mile to kilometer
+Mile to light-year
+Minute to day
+Minute to hour
+Minute to second
+Mph to knot
+Mph to kph
+Ounce (avoirdupois) to gram
+Ounce (troy) to gram
+Parsec to light-year
+Pascal to psi
+Pint to liter (US dry)
+Pint to liter (US liquid)
+Pound to kilogram
+Psi to atmosphere
+Psi to kg/sqcm
+Psi to pascal
+Quart (US dry) to gallon (US dry)
+Radians to degrees
+Second to minute
+Square cm to square in
+Square ft to square m
+Square in to square cm
+Square m to square ft
+Ton (UK) to Kilogram
+Ton (US) to Kilogram
+Ton (metric) to Kilogram
+Watt to BTU/hour
+Watt to horsepower (elec.)
+Watt to horsepower (metric)
+Watt to kilowatt
+Yard to meter
+
+Conversions may be added, modified, or deleted by editing the Convert.txt file in the FileDir program folder.  A new installation of FileDir will replace this file, however, so custom changes would need to be manually backed up and restored.
+----------
+
+Version 2.2
+Released February 21, 2007
+
+Modified the installer so that assignment of the system-wide hot key for launching FileDir, Alt+Control+F, is optional.  Uncheck the appropriate setting to prevent the assignment.  A FileDir shortcut on the Windows desktop is still created.
+
+Adjusted the optional JAWS scripts so that the top item in a directory view is reliably read by the SayLine command, JAWSKey+UpArrow.  This command is also more succinct since it no longer announces the position of the current item in the list, e.g., saying "eleven of 27."  If such information is desired, press the dedicated JAWS command for position information, Alt+Delete.  The same query is performed by FileDir's Percent Through command, Shift+5 (%).
+
+Made the dialog for choosing a folder (e.g., when copying or moving files), return to the edit box if an invalid path is entered and you choose not to create it.  To cancel the dialog instead of specifying another path, press Escape.
+
+Since FileDir is a Multiple Document Interface (MDI) application, Control+Tab cycles to the next open window, Control+Shift+Tab does the reverse, and Control+F4 closes the current window.  As before, F4 is an enhancement to pick an open window from a standard ListBox.  Additionally, the Windows Open command, Shift+W, lets you hear the titles of all windows without changing focus.  Duplicate keys have now been added to support FileDir operations from the numeric keypad:  Alt+RightArrow to go to the next window, Alt+LeftArrow to go to the previous one, and Alt+NumPad5 to say available windows.
+----------
+
+Version 2.3
+Released March 1, 2007
+
+The What command, invoked with the question mark, now extracts and speaks text of any size from the current file item -- it is not limited to 20K.  Thus, you could press question mark to identify or read a large .doc or .pdf file.  Since a setting of no punctuation may be preferred for such reading, the optional JAWS scripts now include a toggle to change speech between all and no punctuation.  Use the JAWSKey (Insert with the desktop keyboard layout) combined with the grave accent key at the top left of the main keypad (U.S. keyboard).  The JAWS SayLine command, JAWSKey+UpArrow, now spells the name of the current list item if pressed twice quickly in succession.
+
+Items in an archive view now appear with path information so you know what directory structure would be created by the Unzip command, Shift+U.  As before, you can press Control+U instead to unzip all items into a single folder -- without subfolders being created.  Internally, a zip archive uses the forward slash character (/) rather than backslash (\) to separate directory names.
+
+If a shortcut in the FileDir program group is used to associate directories generally with FileDir, the Recycle Bin option on the Windows desktop will no longer work.  This is because the Recycle Bin is a "virtual folder" rather than a standard one.  A new FileDir command has therefore been introduced to launch the Recycle Bin.  Press Control+B to go there for recovering deleted items.
+
+Use the new Play List command, Control+Shift+L, to create a .m3u file with references of tagged items to play sequentially.  Types may include .mp3, .wav, or .cda (the extension of a track on a standard audio CD).  FileDir prompts for the name of the play list to create, defaulting to PlayList.m3u in the current directory.  Focus is then placed on that file (if in the same directory), so you can simply press Enter to execute the play list.  Note that if you want to play tracks on an audio CD, however, you need to save the play list in another directory that permits the creation of new files.
+----------
+
+Version 2.4
+Released May 8, 2007
+
+Fixed the commands that change drives not remembering the last directory viewed on the drive.  Now the Open Drive command, Alt+Shift+O, and specific drive commands, Alt 1 through Alt+9, open either the root directory or last directory viewed.  The Go to Folder and Open Folder commands, Control+G and Control+O, behave similarly if a drive letter and colon are entered without additional path information.
+
+Reset the Text Out Delay setting to zero in the JAWS configuration file, since a higher number suppresses the guessing of names when in the FileDir dialog for specifying a directory.  The trade off is that JAWS speech will sometimes be repetitive when navigating a list of files or folders.  A user can raise the JAWS setting to balance these considerations according to personal preference.
+
+Made Control+C, Control+X, and Control+V work like Windows Explorer.  File and folder paths are placed on the clipboard, not as plain text, but in the binary format that now facilitates file transfers between FileDir and Explorer views.  For a plain text list of paths instead, press Alt+C, or Alt+Shift+C for names without the preceding parent folder.
+
+Use the Zip List command, Control+Shift+Z, to create or update a zip archive based on a list of files or folders in a text file.  For example, the file backup.lst would contain the full path of the target zip archive as the first line of text.  Subsequent lines would contain file or folder names to be added to the archive.  Paths are not needed before these names if they are in the same directory as the archive.
+
+As before, Control+F4 closes the current window.  A new command, Control+Shift+F4, closes all windows except the current one.  This may be useful if you have opened a lot of windows, making it challenging to choose one of particular interest.  The Windows Open command, Shift+W, now says the number of windows open before listing their titles.
+
+
+As before, Control+Slash opens a command prompt in the current directory.  Now Alt+Slash opens the directory in Windows Explorer.  The optional JAWS scripts support Control+Backslash and Alt+Backslash as synonyms for these commands for consistency with the "Homer editor interface."  This is part of a JAWS scripting toolkit available as an executable installer at
+http://www.EmpowermentZone.com/kitsetup.exe
+or as a zip archive at
+http://www.EmpowermentZone.com/kitsetup.zip
+----------
+
+Version 2.5
+Released May 11, 2007
+
+Fixed the Zip List command.  Added the Manual Options command, Alt+Shift+M, for adjusting FileDir settings directly in a text editor.  With the optional JAWS scripts, made Control+Equals a synonym of Control+E for the Evaluate command (for consistency with the Homer interface).
+
+Doubled the number of special folders available via the Open Special Folder command, Control+Shift+O.  You can now have greater control over your computer by conveniently examining and managing the following 35 folders as needed:
+
+Administrative Tools
+Application Data
+Common Administrative Tools
+Common Application Data
+Common Desktop
+Common Documents
+Common Favorites
+Common Files
+Common Programs
+Common Start Menu
+Common Startup
+Common Templates
+Cookies
+Desktop
+Favorites
+Fonts
+Internet Cache
+Internet History
+Local Application Data
+My Documents
+My Pictures
+MyMusic
+Network Neighborhood
+Printer Neighborhood
+Program Files
+Programs
+Recent
+SendTo
+Start Menu
+Startup
+system32
+Temp
+Templates
+UserName
+WINNT
+----------
+
+Version 2.6
+Released June 12, 2007
+
+Fixed the Yield on Drive command, Control+Shift+Y, reporting megabytes instead of gigabytes.  Fixed the Start Timer command, F12, announcing elapsed time every 60 seconds when 0 was specified for the announcement interval.  Fixed edit boxes within dialogs not always selecting text when receiving focus (such selection is efficient for typing a new entry that automatically replaces the previous one).
+
+Fixed pasting in FileDir causing a runtime error if no files were found on the clipboard.  Fixed files copied to the clipboard not being available for pasting by other applications after FileDir is closed.
+
+For consistency with the Homer interface (multiple JAWS script sets that give a consistent command structure to various applications), assigned Alt+Shift+C for configuring options of FileDir.  This dialog is still available with Alt+O as well.
+
+Made clipboard-related commands more powerful and convenient.  The revised interface is described in the following exerpt from the documentation.
+
+Like Windows Explorer, Control+C, Control+X, and Control+V copy, cut, and paste file or folder items between the current directory and clipboard.  FileDir enhances these commands with a plain text format in addition to the binary "drop list" that Windows Explorer uses to facilitate drag and drop transfers with a mouse.  Since the clipboard can actually hold multiple formats at the same time, FileDir creates both a binary and a text format when copying with Control+C or cutting with Control+X.  The text format is simply a list of file or folder paths, one per line.  Thus, paths on the clipboard are simultaneously available both to applications like Windows Explorer that look for the binary format, and applications like Notepad that look for plain text.
+
+When pasting, Control+V recognizes the text format as well as the binary one.  Since the text format does not indicate whether files had been copied or cut to the clipboard, this command copies, rather than moves, the originals when only text format is found.  With either format, you may ensure that the originals are copied with Alt+V, or that they are moved with Alt+Shift+V.
+
+Use the Copy Append command, Alt+C, to add items to the clipboard in both binary and text formats.  This lets you build a list on the clipboard from files in different directories.  It also lets you build a list by pressing Alt+C when focused on each item of interest, rather than first creating a set of tagged items and then copying them as a batch.  
+
+To put a list of file names on the clipboard without preceding paths, press Control+Shift+C.  To hear what files are on the clipboard, use the Quote Clipboard command, Alt+Apostrophe.  Before saying each path, FileDir says "Path drop list" if it finds this binary format.  Otherwise, FileDir only speaks text format -- other binary formats on the clipboard are not interpreted.
+----------
+
+Version 2.7
+Released June 26, 2007
+
+Fixed a corrupt zip archive being created when its location was in a subfolder of the current folder.  Fixed Home, End, PageUp, and PageDown not working with the JAWS cursor in the optional scripts.
+
+Enhanced the wild card capability of filters.  Previously, a * character could be at the beginning or end of a pattern, or both, but not in the middle (a limitation of the SQL parser built into the .NET Framework).  This restriction has been programmed around, thus allowing a pattern such as the following:
+calendar*.doc
+As before, multiple, alternate filters may be separated by a | character, e.g.,
+calendar*.doc|*bill*
+
+As before, Shift+T says the type of the current item in the Windows registry, as well as its attributes such as ReadOnly, Hidden, or System.  A new command, Control+Shift+T, shows all "extended properties" of a file or folder item that are available to Windows Explorer.  Depending on the type, 32 possible properties may be examined as follows:
+
+Name
+Size
+Type
+Date Modified
+Date Created
+Date Accessed
+Attributes
+Status
+Owner
+Author
+Title
+Subject
+Category
+Pages
+Comments
+Copyright
+Artist
+Album Title
+Year
+Track Number
+Genre
+Duration
+Bit Rate
+Protected
+Camera Model
+Date Picture Taken
+Dimensions
+Episode Name
+Program Description
+Audio sample size
+Audio sample rate
+Channels
+----------
+
+Version 2.8
+Released July 22, 2007
+
+Fixed a zip archive becoming corrupt if its target name was created in a subdirectory whose contents were being zipped.  Fixed being unable to move a zip archive just after it was created.
+
+Adjusted the optional scripts so that JAWS says the first item of a menu when it is opened.  Also changed the JAWS configuration file so that a list box does not say selection state before speaking an item.  This prevents unnecessary verbalization of state changes in a directory view, at the cost of no state information being automatically spoken in the multiple selection list box of the Web Download command, Alt+Shift+W.  In that command, stopped a couple of PowerBASIC message boxes used in debugging from appearing.
+
+Changed the output of the Type Extended command, Control+Shift+T, and Yield in Operating System command, Alt+Shift+Y, from a message box to a read-only, multiline edit box with all text selected by default.  This permits copying and pasting to the clipboard.  
+
+Made FileDir ignore blank lines in a ZipList definition file.  Modified dialogs with multiple list or field values so that they indicate the number of values at the end of the window title enclosed in parentheses.
+
+Added three commands:  Iterate Processes, Network Connections, and Batch Mail.  Use the Iterate Processes command, Alt+I, to list all processes currently running on your computer.  Each item displays the executable name without extension, followed by the title of its main window if available.  Buttons let you choose whether to activate a process (only possible if it has a window) or terminate it.  If Terminate is chosen, FileDir first sends a request for the process to close, and if that fails, asks whether to try to force it.  You are then returned to the list of processes in case you wish to examine the next one.  End this dialog either by activating a process or choosing Cancel (same as Escape).
+
+Press Alt+Shift+N to manage network connections.  A dialog lets you connect, disconnect, or restore mappings between physical storage and logical drives.
+
+Use the Batch Mail command, Control+Shift+B, to individually send a message to multiple recipients (please do not use this for spam).  FileDir prompts for a text file that defines a batch mail operation.  The first nonblank line is assumed to be the subject of the message.  The next nonblank line is the full path of a text file that contains the body.  Each subsequent line that contains an @ symbol is the address of a recipient.  Here is an example definition:
+
+[Content of Batch.eml File]
+This is the subject line
+C:\My Documents\Body.txt
+
+jane@doe.com
+"John Doe" <john.doe@mail.net
+[End of Content]
+
+Before sending a batch email, configure FileDir options for LogInUserName, Password (stored in an encrypted form), SenderAddress, and OutGoingServer (e.g., outgoing.verizon.net).  Test the command by sending yourself mail first.  This command only works with common SMTP protocol settings.
+----------
+
+Version 2.9
+Released November 1, 2007
+
+Fixed not being able to zip a subfolder of the root directory.
+
+As before, Alt+Period tags all files, but not subfolders, in the current directory view.  A new command, Alt+Shift+Period, tags duplicate files -- any file with the same content as a prior one in the list.  This may be useful for deleting after downloading files, where some are the same except for their name or date.
+
+As before, Alt+P says the full path of the focused file or folder item, and Alt+Shift+P copies it to the clipboard.  To copy its short path instead, press the Tilde key (Shift plus the Grave Accent at the top left of the main keyboard).  A short path contains no spaces and uses a suffix of a tilde symbol (~) and a number to abbreviate file or folder names.  This may be useful when pasting into a command line, since more characters and surrounding quotes are usually needed otherwise to specify a file.
+
+Enhanced ways of choosing a directory for greater convenience and efficiency.  The Current Windows command, F4, now lists names of open directories without their preceding paths, thus making arrowing through the list less verbose and permitting initial letter navigation to a directory of interest.  Press Shift+F4 to hear what directories are open without invoking the dialog to choose one from a listbox.
+
+The dialog for choosing a directory target -- e.g., in the Open, Copy, or Unzip commands -- now includes a row of buttons that present listboxes of choices.  You can pick from one of three lists:  directories open in current windows, those opened during this FileDir session, or those with shortcuts in the Quick folder.  To create a quick shortcut for a directory, press Shift+Q when it has focus.
+----------
+
+Version 3.0
+Released December 10, 2007
+
+Fixed the What command, Question Mark, not verbalizing files over 20K in size when using JAWS.  Fixed a root directory (e.g., C:\) displaying as blank in a list of current windows or recent folders.
+
+Made the delete confirmation dialog list the items that would be deleted.  Modified Alt+R to list recent folders rather than shortcuts.  It lets you pick any folder or zip archive opened since the start of the current FileDir session -- with the most recent shown first.  Added a button to list special folders in the dialog for choosing a directory (e.g., the one after Control+O to open or Shift+C to copy).  That dialog now has buttons for current, recent, quick, or special folders.  Added the Window Toggle command, Shift+W, for switching back and forth between the two most recently opened windows.
+
+Added settings to the Configuration Options dialog (Alt+Shift+C).  Setting DirsBeforeFiles to N (for No) causes files to be listed before subfolders in a directory view.  Setting ZipOpener to N causes zip archives to be opened by the default program associated with that extension (e.g., WinZip), rather than by FileDir, when Enter is pressed on a zip archive with focus.
+
+Reorganized and extended equivalence between "open" and "go to" commands.  An open command creates a new directory view whereas a go to command replaces the current one.  Control+O is Open Folder;  Control+Shift+O is Open Special Folder;  and Alt+O is Open Drive.  Substitute the G key for go to commands.  Thus, Control+G is Go to Folder;  Control+Shift+G is Go to Special Folder;  and Alt+G is Go to Drive.  Control+Q opens the Quick folder, whereas the Grave Accent key (top left of the main keyboard) goes to it.
+
+As before, Recycle with Delete, Alt+Shift+R, is a toggle that determines whether deleted items are copied to the Recycle Bin.  Turning off this setting increases efficiency since there is no delay for items to be copied.  Now this setting also makes directory navigation more efficient by discarding windows that are no longer needed.  Three pairs of commands are affected that perform an open or go to operation depending on whether the Shift key is used:  Enter for a subfolder with focus, Backspace for the parent folder, or Backslash for the root folder.  By default, The shifted version does a go to, requiring conscious effort for this more destructive version that replaces the current view rather than creating a new one with open.  If Recycle with Delete is off, however, then the roles of these keys are reversed -- e.g., Enter goes to a subfolder, whereas Shift+Enter opens it (similar to how Shift+Enter opens a new window when pressed on a link in Internet Explorer).
+
+Two new commands may be particularly helpful to users of the Victor Stream or similar devices.  Control+Shift+U unzips to a folder with the same name as the zip archive with focus.  For example, FileDir would propose a path ending in mag0712 if focused on mag0712.zip -- thereby making it convenient to organize Daisy books in separate subfolders, as recommended.  Use the Volume Format command, Control+Shift+V, to format a disk or storage card.
+
+The Windows Control Panel command, Control+Shift+W, launches Control Panel for configuring Windows.  Besides being a convenient hot key, this command may be needed, for technical reasons, as an alternative to navigating to Control Panel via the Windows Start Menu if you have set FileDir instead of Windows Explorer to generally open folders (an option in the FileDir program group of the Start Menu).
+
+The System Access screen reader, as well as JAWS or Window-Eyes, is now supported with enhanced verbalization:  extra messages by FileDir beyond the default verbosity of the screen reader in use.  Such messages may be turned off with the new Extra Speech Toggle, Control+Shift+X.  They are then redirected to a log file (re-initialized at the start of a FileDir session), which may be reviewed with the Alt+Shift+X command in the text editor that has been configured for use.  The default setting for that editor has been changed from TextPal to EdSharp, available at
+http://www.EmpowermentZone.com/edsetup.exe
+
+FileDir compatibility with Windows Vista has been improved by locating data files that are created or modified after installation in a subfolder of Documents and Settings rather than Program Files.  Quick shortcut or URL files already created would need to be manually copied to the new location, e.g., from
+C:\Program Files\FileDir\Quick
+to
+C:\Documents and Settings\Owner\Application Data\FileDir\Quick
+
+The installer for FileDir now compiles its code from "Intermediate Language" to a "native image" in the "Global Assembly Cache" of the .NET Framework.  This significantly speeds up initial loading and execution of a FileDir session.  The Elevate Version command, F11, now compares the currently running version with the web server, indicating whether a newer version is available.
+
+----------
+
+Version 3.1
+Released January 14, 2008
+
+Fixed conversions to text not working due to an inconsistent location for the temp file.  Fixed the Manual Options command (Alt+Shift+M) not finding the configuration file (FileDir.ini).
+
+As before, Control+Shift+M initiates a mail message with tagged files as attachments.  If no items are tagged, FileDir now both attaches the current file and includes its text in the message body.
+
+As before, Control+Shift+P copies the full paths of all items below a subfolder item in the directory hierarchy.  As an enhancement, after determining what file extensions are present, FileDir prompts for which ones to include in the resulting list.
+
+Strengthened the Web Download command (Alt+Shift+W) so that it works like the one in EdSharp.  Many hot keys are available for navigating and choosing files to download.  Target names on disk are made unique in case different links end similarly, e.g., with default.htm.  Duplicate files may subsequently be identified and deleted with the Tag Duplicate Files command (Alt+Shift+Period).  This command runs much faster than before.  Other list-based dialogs enhance navigation like Web Download, e.g., Open Drive (Alt+O) and Alternate Menu (Alt+F10).
+
+New commands include the following.  Control+Shift+I renames files to the initial line of text inside them (if found), which is often a convenient way of making the name of a file the same as the title of the document inside (e.g., useful after downloading files with cryptic names).  Control+Shift+Period tags files that match a regular expression you specify.
+
+FileDir now supports the concept of a "virtual folder" that does not exist as a physical directory on disk.  A virtual folder is defined by a path list in a text file.  It contains the full paths of files or folders, not necessarily in a single directory, but in any directory and on any drive.  You can create such a file in a text editor, or with the help of FileDir commands like Path List, Control+Shift+P, and Export Clipboard, Alt+Shift+E.  Press Alt+Shift+O to open a virtual folder definition in a new window, or Alt+Shift+G to go to it in the same window.  In general, you can then process its items as if they were in the same directory.
+----------
+
+Version 3.2
+Released February 18, 2008
+
+Fixed various visual aspects of menus, dialogs, and the status bar.  Fixed the Context Menu, Shift+F10, producing an error if no "verbs" were found in the Windows registry for the extension of the file with focus.  Fixed the Quick Folder command (Control+Q or GraveAccent) referring to an old location.  Used a more reliable method of detecting whether the Window-Eyes screen reader is running.
+
+Enhanced list-based dialogs with filter and order commands.  Control+F sets a filter to restrict what items are shown via wildcards (* to match any sequence of characters or ? to match a single one).  For example, you could browse replace-related commands in the Alternate Menu, Alt+F10, by pressing Control+F after invoking that list and then entering *replace* as the filter expression.  Control+Shift+F clears the filter so all items are shown again.  The order of items may also be changed:  Alt+A for alpha order, Alt+Shift+A for reverse alpha order, Alt+D for default order, or Alt+Shift+D for reverse default order.
+
+FileDir windows may now be visually organized according to common MDI (multiple document interface) patterns.  The Window menu includes the following commands:  Arrange Icons (Alt+F11), Cascade (Control+F11), Tile Horizontal (Alt+Shift+F11), and Tile Vertical (Control+Shift+F11).
+
+Use the new Environment Variables command, Control+E, to review or change such settings of Windows.  Choose those of the current process, user, or system as a whole.  Jump quickly to a particular variable based on its initial letter, e.g., Alt+P for the PATH setting that determines where Windows searches for an executable file that is not found in the current directory.  Changes to process settings affect the current session of FileDir, but not the next time it is run.  User settings take effect when you log in again.  System settings take affect when you restart the computer.
+----------
+
+Version 3.3
+Released June 27, 2008
+
+FileDir increases support for Window-Eyes 7.0, which is now available as a public beta at
+http://GWMicro.com
+
+The installer option for JAWS scripts is now unchecked by default.  To check it, down arrow and press Spacebar.  There is a new option to install a Window-Eyes script package, which is also unchecked by default.  The optional scripts and set files to fine tune Window-Eyes speech are in an early stage, so I invite feedback and suggestions to improve them.
+
+When FileDir is already open, and you open a folder with it from another program, FileDir should now reliably become the active application window.
+----------
+
+Version 3.4
+Released October 20, 2008
+
+Improved the optional script package to fine tune speech when using Window-Eyes.  Fixed the installer for the JAWS scripts so that it works with version 10.
+
+Strengthened the error reporting system so that an unexpected event now results in a dialog with options to email the report, copy it to the clipboard, or exit FileDir.  To continue work without further action, press Escape to cancel the dialog.
+
+As before, the copy, move, or paste commands prompt whether to overwrite existing folders and files.  You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal.  You can choose to keep all targets with the same names, replace them, or replace them only with updated source items.  A bug has been fixed that affected file comparisons after the first duplicate name was found in a target folder.  
+
+A new option lets you increment source names to eliminate conflicts.  This is helpful when files with the same names contain essentially different content rather than different versions of the same content.  For example, if the file ReadMe.Txt exists in both the source and target folders, the source would be copied to the name ReadMe_01.txt instead.  You might then use the Tag Duplicate Files command, Alt+Shift+Period, to tag and then delete files that actually have identical content.
+----------
+
+Version 3.5
+December 24, 2008
+
+Added the Extract with Regular Expression command, Control+Shift+E.  This is similar to Append to Clipboard, Shift+A, except that you are prompted for a regular expression, and then only matches in tagged files are copied to the clipboard.
+----------
+
+Version 3.6
+March 3, 2009
+
+The unzip commands are now broader, unarchive commands that work with almost any archive format, including .rar, .tar, .gz, .bz2, .chm, .cab, and .wepm (a Window-Eyes script package that is the same format as .cab).  FileDir does this with the free 7Zip utility behind the scenes, which is also available independently at
+http://7zip.com
+
+Although any archive may be viewed or extracted, it is still the case that only a zip archive may be created or modified.
+
+The What command, invoked with a question mark, now says the number of items in an archive or subfolder before saying their names.  As before, the Output Text command, Shift+O, converts other file formats to text.  It now does this with an updated conversion tool (GetText.exe).
+
+Inquire Differences, Alt+Shift+I, is a new command for comparing files in two folders.  The current folder is considered the source.  You are prompted for a target folder.  FileDir generates a report in structured text format and prompts you for where to save it.  The default name is Report.txt in the current folder.  The report contains three sections:  common target files, missing target files, and additional target files.  The first section lists target file names that also exist in the source folder, and indicates whether each is newer, older, or current (a time stamp comparison), as well whether it is larger, smaller, or equal (a size comparison).  The second section lists file names that are missing in the target folder.  The third section lists additional file names found in the target folder.
+
+For maximum functionality of FileDir under Windows Vista, you may wish to configure it to "run as administrator."  One way of doing this is by modifying the FileDir shortcut on the desktop.  Press Alt+Enter to open its properties, choose the Advanced button, and mark the checkbox to require administrative priviledges.  Otherwise, for example, the ability to view or change files under the directory tree 
+C:\Program Files
+will be considerably restricted.
+----------
+
+Version 3.7
+March 29, 2009
+
+I am pleased to associate my open source projects with the "Raising the Floor" initiative, located on the web at
+http://RaisingTheFloor.net
+
+This is the broadest community initiative I know on technology access regardless of disability or economic position.  participation is a way of enabling human potential at an international level.
+
+The spirit is hopefully expressed in the latest improvements to EdSharp and FileDir, which make significant improvements in international support, help options, and 64-bit compatibility, among other areas.
+
+Additional help options increase ways of learning these applications through both study and discovery.  Control+F1 is a new command that toggles a key describer mode in which pressing a key describes its action.  Switching to another application window also turns off the mode automatically.  
+
+In general, the wording of command names in EdSharp and FileDir has been made more consistent, thereby aiding memorization.  As before, complete documentation is available in your default web browser with F1, and a summary of hot keys is available with Alt+Shift+H.  The Alternate Menu command, Alt+F10, now shows descriptions of commands as well as their names and hotkeys.  As before, you can filter what commands are shownin the listbox, e.g., press Control+F for filter, type the *copy* string, and press Enter to show only commands related to a copy operation.  Press Control+Shift+F to clear the filter, showing all commands again.
+
+Recent changes were made for compatibility with 64-bit Windows.  An exception, however, is that the JAWS scripts to refine speech should be manually installed on 64-bit Windows at present, rather than by marking the checkbox at the end of installation.  To do this, choose the Explore Settings option from the JAWS program group of the Windows Start Menu to find the user script folder, and then unarchive the file called ed_scr.zip or dir_scr.zip from the appropriate program folder, e.g.,  
+C:\Program Files\FileDir\dir_scr.zip
+
+As before, when an archive file has focus in FileDir, pressing Enter presents a view of its items that is similar to a directory view.  You can now choose to open the archive with another program instead by pressing Shift+Enter.  This runs the default program associated with the file extension in the Windows registry, e.g., WinZip or WinRar.
+
+A new command, Alt+Shift+F4, restarts Windows after prompting for confirmation in a standard message box.
+----------
+
+Version 3.8
+April 8, 2009
+
+The free, open source screen reader for Windows called Nonvisual Desktop Access, NVDA, is now supported with direct speech messages, just like JAWS, System Access, and Window-Eyes.  NVDA is available either as an installer or portable version from
+http://nvda-project.org
+
+The Recent command, Alt+R, now prompts whether to show recent folders opened in FileDir, or recent shortcuts that Windows automatically creates in the special folder called Recent.  These are shortcuts to files or folders that you opened in almost any application.
+
+Web Client Utilities, Alt+Shift+Space, is a new command for tasks that conveniently retrieve information from web sources.  The collection of 35 utilities is described in a dedicated section of documentation.
+
+When navigating the menu system, a tooltip about the current menu item is now displayed on the status line.  This is the same summary information that appears in each list item of the Alternate Menu command, Alt+F10.
+
+The installer for optional JAWS scripts is now compatible with 64-bit versions of Windows.
+----------
+
+Version 3.9
+January 14, 2011
+
+Improved detection of and conversion among file encodings by incorporating the Encoding utility that is separately available at
+http://EmpowermentZone.com/Encoding.zip
+
+The Query Encoding command (Shift+2) now detects almost any file encoding, not just forms of Unicode.  It uses the same algorithm as Mozilla Firefox, which is usually correct, though not always.
+
+Convert Encoding (Control+3) is a new command for converting a text file to a different encoding.  A list of nearly 100 encodings is offerred.  A few are unofficial terms with special meaning.  UTF-8B means UTF-8 encoding with a byte order mark (BOM) at the beginning.  UTF-8N means UTF-8 without a BOM.  ASCIIFY means 7-bit ASCII except that an attempt is made to substitute ASCII characters or words that are equivalent in meaning to characters found with code points above 127.  DEFAULT means the default encoding or "code page" of the computer in use, e.g., Latin1 or CP1252.
+
+Additional encoding support is made possible by incorporating the Encoding.exe utility, distributed in the  WebClient subdirectory of the FileDir program directory.  This utility is also available separately at
+http://EmpowermentZone.com/Encoding.zip
+
+Added support for Microsoft Office 2007 file formats, which have extensions similar to prior versions except for an additional 'x' character, e.g., .docx for a Word document, .pptx for a PowerPoint presentation, or .xlsx for an Excel spreadsheet.  This affects the What command (invoked with the question mark symbol), the Output to Text command (Shift+O), and the Append Text to Clipboard command (Shift+A).  This support requires the installation of a Microsoft "filter pack," described on the web page
+http://www.microsoft.com/downloads/en/details.aspx?familyid=60c92a37-719c-4077-b5c6-cac34f4227cc&displaylang=en&tm
+
+The direct download link for 32-bit Windows is
+http://download.microsoft.com/download/b/e/6/be61cfa4-b59e-4f26-a641-5dbf906dee24/filterpackx86.exe
+
+and the one for 64-bit Windows is
+http://download.microsoft.com/download/b/e/6/be61cfa4-b59e-4f26-a641-5dbf906dee24/filterpackx64.exe
+
+An option at the end of the FileDir installer lets you install this by simply marking a checkbox.
+
+Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
+
+----------
+----------
+End of Document

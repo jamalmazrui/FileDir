@@ -1,0 +1,38 @@
+Subject:
+Oh thank God for that
+From:
+"Mushroom Fm" <peter@mushroomfm.com>
+Date:
+8/24/2011 11:54 AM
+To:
+"Jamal Mazrui" <jamal@empowermentzone.com>
+
+I'm back in business. In previous uninstalls  I had deleted the program files and directories but not the "data" directories.
+
+    After install it runs OK.
+    Thanks for your work on this program.
+     
+    P.
+     
+     
+    ----- Original Message -----
+    From: Jamal Mazrui
+    To: Peter Scanlon
+    Sent: Wednesday, August 24, 2011 11:46 PM
+    Subject: Re: Won't run FileDir error: The path is not of a legal form.
+
+    Try installing the latest FileDir after a complete uninstall, including the FileDir program directory and data directory trees.  I do not know what could cause such a problem, but doing this usually works.  If not, I do not know what to suggest, unfortunately.  I have neither Windows 7 nor 64-bit Windows to test with at present.
+
+    On 8/24/2011 6:21 AM, Peter Scanlon wrote:
+>     I am writing this from another copy of FileDir, on another computer, since
+>     FileDir won't run on the other one. 
+>     Every time I run FileDir from the Desktop or Program Menu, I get the
+>     following message. 
+>     Normally when I get this type of message with other programs, I can just
+>     close and run again, or at worst re-boot.
+>     "fileDir has encountered a problem and needs to close. We are sorry for the 
+>     Inconvenience.
+>     If you were in the middle of something, the information might be lost. 
+>     	
+>
+>

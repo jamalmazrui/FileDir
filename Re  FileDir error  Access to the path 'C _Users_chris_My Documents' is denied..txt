@@ -1,0 +1,81 @@
+Subject:
+Re: FileDir error: Access to the path 'C:\Users\chris\My Documents' is denied.
+From:
+Chris G <cgrabowski73@gmail.com>
+Date:
+12/12/2011 1:16 AM
+To:
+Jamal Mazrui <jamal@empowermentzone.com>
+
+Hi,
+
+I did run filedir as admin, and thanks to you i discovered the 64 bit
+exe file.
+
+Unfortunately the 64 bit process does not run.
+
+It will crash.  Here is the error I receive.
+---------------------------
+Error
+---------------------------
+Could not load file or assembly 'FileDir, Version=3.2.3098.18675, Culture=neutral, PublicKeyToken=null' or one of its dependencies. An attempt was made to load a program with an incorrect format.
+---------------------------
+OK   
+---------------------------
+
+
+
+Here is the file date and size of the installed.
+
+According to the f11 command I am running the latest version.
+
+Name Extension Size Attributes Modified
+FileDir64.exe	exe	167,936	---A-----	5/11/2011 1:10:44 PM
+
+
+
+On Sun, 11 Dec 2011 15:46:18 -0800
+Jamal Mazrui <jamal@empowermentzone.com> wrote:
+
+> > Try running FileDir as administrator.  I only just got 64-bit Windows 7, 
+> > myself, so hopefully I can better test and resolve such compatibility 
+> > issues.  Make sure you are running the latest FileDir.  You might also 
+> > try FileDir64.exe in the same directory, which runs as a 64-bit process.
+> > 
+> > 
+> > 
+> > On 12/7/2011 11:46 PM, Chris G wrote:
+>> > > I was in c:\users\myname and I wanted to open the my documents folder 
+>> > > from there.  hit enter on it and received this error.
+>> > > uusing windows 7X64.
+>> > > Access to the path 'C:\Users\chris\My Documents' is denied.
+>> > >
+>> > > Stack trace:
+>> > > at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+>> > > at System.IO.Directory.InternalGetFileDirectoryNames(String path, 
+>> > > String userPathOriginal, String searchPattern, Boolean includeFiles, 
+>> > > Boolean includeDirs, SearchOption searchOption)
+>> > > at System.IO.DirectoryInfo.GetFileSystemInfos(String searchPattern, 
+>> > > SearchOption searchOption)
+>> > > at System.IO.DirectoryInfo.GetFileSystemInfos()
+>> > > at FileDir.MdiChild.FillTableFromDir(DataTable tbl, String sDir)
+>> > > at FileDir.MdiChild..ctor(Frame frame, String sDir, String sOrder, 
+>> > > String sFilter, String sZip, String[] aPaths)
+>> > > at FileDir.Frame.Activate_Helper(String sDir, String sZip)
+>> > > at FileDir.Frame.Activate_Helper(String sPath)
+>> > > at FileDir.Frame.Item_Helper(String sLabel, Boolean bCloseWindow, 
+>> > > Boolean bZip)
+>> > > at FileDir.Frame.ProcessCmdKey_Helper(Message& msg, Keys keyData)
+>> > > at FileDir.MdiChild.ProcessCmdKey(Message& msg, Keys keyData)
+>> > > at System.Windows.Forms.Control.ProcessCmdKey(Message& msg, Keys keyData)
+>> > > at System.Windows.Forms.Control.PreProcessMessage(Message& msg)
+>> > > at 
+>> > > System.Windows.Forms.Control.PreProcessControlMessageInternal(Control 
+>> > > target, Message& msg)
+>> > > at 
+>> > > System.Windows.Forms.Application.ThreadContext.PreTranslateMessage(MSG& msg) 
+>> > >
+>> > >
+
+
+-- Chris G <cgrabowski73@gmail.com> 

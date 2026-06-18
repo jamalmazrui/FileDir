@@ -1,0 +1,222 @@
+Excel Programming : Excel Event Handling in C#   
+Welcome to MSDN Blogs Sign in | Join | Help 
+Excel Programming 
+An Excel Programmability blog by Gabhan Berry
+  RSS 2.0 Atom 1.0 Home About Email 
+Search
+ Go 
+
+
+Tags
+    .NET Addins Automation BI C# Functions OpenXML PivotTables Ribbon Statistics 
+    TechEd VBA XLL Archives
+  August 2008 (1) 
+  June 2008 (1) 
+  May 2008 (1) 
+  April 2008 (4) 
+  March 2008 (2) 
+  February 2008 (6) 
+  January 2008 (3) 
+Blogroll
+  Excel Team Blog 
+  Excel Services Programming 
+Wednesday, February 13, 2008 12:03 AM Gabhan Berry 
+Excel Event Handling in C# 
+After I posted about getting up-and-running with managed code and Excel, I 
+realised that I was really writing a brief introduction to coding a C# Excel 
+addin. Then I realised that there are two more areas that need to be covered 
+before we would be ready to start building a proper Excel addin in C# (and by 
+proper I mean one that can be used by real Excel users to do real stuff). These 
+are:
+  Customising the ribbon; 
+  Trapping Excel events;
+The ribbon is an Office-wide feature and has been covered in detail in other 
+blogs and MSDN articles, so we won't cover it in detail here. A good article 
+about the ribbon can be found here.
+Instead, we'll focus on event handling in C# and how it compares to VBA.
+Excel Event Overview
+Excel events are COM events. They are defined in COM interfaces exported from 
+Excel.exe. When we trap these events from VBA we're not really aware of the 
+underlying mechanisms that enable Excel to callback into our code. The sinking 
+and dispatching just happens automagically for us..
+There are two broad parts of event handling: the event source; and the event 
+handler. In the case of Excel, the event source is an instance of the Excel 
+class that defines the event, such as a Workbook instance or a Worksheet 
+instance. The event handler (or subscriber as some people call it) is the custom 
+code (i.e., our code) that is invoked by the event source when the event 
+happens. 
+The event source publishes a defined event signature which all event handlers 
+must adhere to. As long as a handler adheres to this signature, the event source 
+can invoke it when required.
+Let's take an example: the Workbook.Open event. 
+When we use the VBA object browser to look at the definition of the Workbook 
+class we can see that the event is called Open() and has a special lightning 
+bolt symbol next to it indicating that it is an event.
+ 
+What the object browser did was look at the COM type library metadata for the 
+Workbook class. As well as containing all the methods and properties of the 
+Workbook class the type library also contains the published event signatures. 
+The event signatures have special attributes applied to them. To see these, we 
+use the OleView.exe tool to generate IDL from Excel.exe (note that this is a 
+part of COM generally well hidden from Visual Basic. If you code COM components 
+in C++ then this is should be very familiar to you). 
+
+Notice that the Workbook class has two interfaces: _Workbook and WorkbookEvents. 
+Notice also that the WorkbookEvents interface has an attribute named: source. 
+This tells COM that the WorkbookEvents interface is an event source for the 
+Workbook class.
+COM has its way of handling events and .NET has its and, through the magic of 
+COM interop, we can tie these two disparate programming models together. This 
+means that we can have a COM event source and a .NET event handler.
+However, the code we need to write to handle events in C# is very different from 
+what we are used to writing in VBA. When we are coding in VBA, most of the event 
+mechanism and underlying framework is hidden from us ... but not so in C#.
+Delegates, Events and Excel
+To C#, a COM event looks very much like a .NET event. This greatly simplifies 
+things for .NET developers. However, if you are a VBA Excel developer moving to 
+C#, the event mechanism in .NET seems complex and doing something simple, like 
+handling the Workbook.Open event, can look like a mystery.  
+The first step to demystifying this is to understand what a delegate is. 
+A delegate is a special type of .NET class used in the .NET event mechanism. 
+Think of them as being wrappers of function pointers. In COM an event is defined 
+by its function signature whereas, in .NET, it is defined by a delegate but they 
+both play the same role: they both define the contract between the event source 
+and the event handler.
+Let's take an example. 
+Let's say we are defining an event in our C# class called OnClick. We have to 
+define the signature of the event. In C# this means defining a delegate and 
+declaring the event to be of that (delegate) type. 
+Here's an example delegate and event definition:
+public delegate void OnClickDelegate(string Title);
+public event OnClickDelegate OnClick;
+If we took out the delegate keyword, OnClickDelegate would look just like a 
+function definition. Having the keyword delegate there wraps the function 
+definition up into a type safe class. We then declare our OnClick event as being 
+of type OnClickDelegate. This is us saying: we want an event called OnClick that 
+has the signature defined by the OnClickDelegate thus, all event handlers have 
+to have the same signature as OnClickDelegate.
+At first, this seems overly complex ... but it's not really. It just takes a 
+little getting used to (especially if you are from a VB background). If you ever 
+coded in C/C++ and were used to passing around function pointers, this seems a 
+wonderful step forward. Actually, it's one of my favourite parts of .NET :o)
+So, what's this got to do with Excel programming? 
+Well, if you want to be able to handle Excel events in C# you have to understand 
+delegates.  
+Handling Excel Events
+So, let's take a look at what the C# code for handling Excel events looks like. 
+For example, how do we handle the SheetSelectionChange event of the Application 
+class? 
+_application.SheetSelectionChange += new 
+Excel.AppEvents_SheetSelectionChangeEventHandler(_application_SheetSelectionChange);
+        
+ 
+void _application_SheetSelectionChange(object Sh, Excel.Range Target) {
+  //event handler code here
+}
+The first line creates a delegate of type 
+Excel.AppEvents_SheetSelectionChangeEventHandler and adds to to the application 
+object's SheetSelectionChange event. In the constructor of the delegate we pass 
+the address of the function that the delegate encapsulates, in this case it is 
+the _application_SheetSelectionChange function but it could be any function that 
+has the same signature as the AppEvents_SheetSelectionChangeEventHandler 
+delegate. 
+This is a subtle but important point, especially if you are used to coding VBA. 
+In VBA we cannot specify the name of our event handler functions because the 
+name indicates which event is being handled on which object. But in C# the event 
+handler name is not important; what is important is the signature of the 
+function. So, although our event handler is called 
+_application_SheetSelectionChange which looks exactly like the name we'd use in 
+VBA, we are free to change its name to anything we like as long as it still 
+returns void and takes an object and Excel.Range  as parameters.
+So, to summarise: every time we want to handle an Excel event, we have to create 
+an instance of the corresponding delegate and supply the address of a compatible 
+function which the delegate encapsulates. This function is invoked by Excel when 
+the event occurs. 
+But how do we know which delegate to create? In the example above, we created an 
+instance of AppEvents_SheetSelectionChangeEventHandler but how did we know that 
+and where do we go to find out the delegate types?
+Excel's Delegate Names and COM Event Sources
+When it comes to knowing which delegate type to use, Visual Studio comes to our 
+rescue. Visual Studio detects that we are assigning a new delegate to an event 
+and offers to auto-complete; generating both the delegate creation code and also 
+an event handler function which complies to the delegate's signature. 
+So, consuming events is typically a case of typing <object name>.<event name> += 
+<press tab twice to accept auto complete's delegate creation and function 
+generation>. 
+But, its worth taking a deeper look at Excel's delegate names as it sheds some 
+light on the underlying COM event interfaces.
+If we look at the Application class's RCW (the ApplicationClass) in the Visual 
+Studio Object Browser we see that it implements a number of interfaces. 
+
+Notice that one of the interfaces is called AppEvents_Event. Remember that these 
+interfaces are proxies/wrappers of COM interfaces, so, let's now look at the COM 
+definition of the Application CoClass using OleView.exe. 
+
+The Application CoClass implements the AppEvents interface. Also, the IDL tells 
+us the the AppEvents COM interface is an event source interface for the 
+Application CoClass. So, it turns out that the events for the Application class 
+are actually all defined in one COM interface: the AppEvents interface. This is 
+also something that is hidden from us when we are coding in VBA. 
+If we take a look at the definition of the COM AppEvents interface and the .NET 
+AppEvents_Event interface we will see that they each define the Application 
+events in their respective ways.
+
+So, the AppEvents_Event interface in the PIA wraps up the AppEvents COM 
+interface; the ApplicationClass in the PIA implements the AppEvent_Event 
+interface and the Application CoClass in COM implements the AppEvents COM 
+interface.
+Given this we can now understand how the delegate names are generated, thus:
+<COM Interface Name>_<EventName>EventHandler
+i.e. AppEvents_SheetSelectionChangeEventHandler
+Summary
+Hopefully, this has laid out in clear terms out how we handle Excel events in 
+C#. I have stayed away from talking about the specifics of how COM events 
+actually work but this is a subject covered in detail on MSDN. What's more 
+important to us, from an Excel point of view, is understanding the Excel event 
+interfaces and how to use them from C#.
+The key points to take away are: 
+  Excel events are COM events;
+  Delegates are strongly typed wrappers of function pointers;
+  .NET events use delegates to invoke event handling functions;
+  The name of the event handling function is not important - it is the signature 
+  of the function that is important;
+  Excel's COM classes have COM event interfaces and these map to the .NET RCWs 
+  in the Excel PIA;
+ 
+Filed under: Addins, C#, .NET
+Comment Notification
+If you would like to receive an email when updates are made to this post, please 
+register here 
+Subscribe to this post's comments using RSS 
+Comments 
+# re: Excel Event Handling in C# 
+Thursday, February 21, 2008 11:43 AM by Jeremy 
+Thank you.  This is very helpful.
+# re: Excel Event Handling in C# 
+Wednesday, March 05, 2008 6:36 AM by Mousum Dutta 
+Thanks a lot for your useful article. 
+I want to know how to define a keyboard event. Actually I am to write a function 
+that will do some lengthy job. Meanwhile if user presses ESC then control will 
+come out from function. Please help me. 
+mousum_dutta@yahoo.com
+# re: Excel Event Handling in C# 
+Wednesday, May 07, 2008 3:13 AM by Ankit jain 
+i want to know how can i handle a button which is already in excel sheet and now 
+i want that after click the button a function will be call in c#(infopath form).
+Please tell me how can i write the code in c# for this application.
+# re: Excel Event Handling in C# 
+Saturday, September 27, 2008 7:28 AM by 2004.deepa@gmail.com 
+I want to hit the ALt+F8 key on active excel sheet using C# .net.
+Leave a Comment
+  Name (required)*
+   
+  Your URL (optional) 
+   
+  Comments (required)* 
+   
+  Remember Me? 
+   
+ 
+© 2009 Microsoft Corporation. All rights reserved. Terms of Use  |  Trademarks  
+|  Privacy Statement 
+ 

@@ -1,0 +1,815 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <!--SEARCHAROONOINDEX-->
+  <head>	
+    <title>VBScript tip: Working with an object list</title>
+    <meta name="description" content="A tip for working with VBScript in the Reliance SCADA/HMI system, which shows how to work with an object list.">
+    <meta name="Keywords" content="reliance, vbscript, scada, data, object, list, Scripting.Dictionary">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="alternate" type="application/rss+xml" href="http://www.reliance.cz/rss-cs.xml" title="Reliance RSS Feed">
+
+    <link rel="publisher" href="https://plus.google.com/u/0/b/116963237660608593586/116963237660608593586">
+    <link rel="shortcut icon" href="../../../../favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/print.css?v=1" media="print">
+    <link rel="stylesheet" type="text/css" href="../../../../css/styles.css?v=5" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/search.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/new_navigation.css?v=3" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/text.css?v=6" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/content.css?v=5" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/tables.css?v=5" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/forms.css?v=2" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/download_tables.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/members_section_messages.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/my_messages.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/licence_keys_table.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/pricelist_tables.css?v=2" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/old_style.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/header_images.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/tabs.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/tabs_test.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/new_footer.css?v=3" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/demo_buttons.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/new_download_section.css?v=3" media="screen">
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/jquery-ui-1.8.18.redmond.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/jquery.lightbox-0.5.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/jquery.cookiebar.css?v=1" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../../../css/FileUpload/jquery.fileupload-ui.css?v=1" media="screen">
+
+    
+     <!--Browser Update Script START-->	
+     <script> 
+	var $buoop = {
+		c:2,
+		l: false,
+		text_en: 'Your browser is out-of-date. Outdated browsers are a security threat and are blocking the advancement of the Reliance website. Please, <a href="https://browser-update.org/en/update.html">update your browser</a>.',
+	}; 
+	function $buo_f(){ 
+	 var e = document.createElement("script"); 
+	 e.src = "//browser-update.org/update.min.js"; 
+	 document.body.appendChild(e);
+	
+	};
+	try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+	catch(e){window.attachEvent("onload", $buo_f)}
+    </script>
+      <!--Browser Update Script END-->
+
+    <!--Google Webmaster Tools START-->
+    <meta name="google-site-verification" content="GhtP0xgvC9SZ1X_e2unAVtEQMRRQlJpIbDnaPhdh2XE">
+    <!--Google Webmaster Tools END-->
+    
+    <!--Google Analytics kód-->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-11065580-6', 'auto');
+      ga('require', 'displayfeatures');
+      ga('send', 'pageview');
+    </script>
+    <!--Google Analytics kód-->
+    	
+    <script type="text/javascript" src="../../../../js/en/strings.js" defer="defer"></script>
+    <!--[if IE]><script type="text/javascript" src="../../../../js/fix_eolas.js" defer="defer"></script><![endif]-->
+    <script type="text/javascript" src="../../../../js/ShowHideButtons.js" defer="defer"></script>
+    <script type="text/javascript" src="../../../../js/common.js" defer="defer"></script>	   
+    <script type="text/javascript" src="../../../../js/success-stories.js" defer="defer"></script>
+
+    <!-- Google jQuery START -->
+    <script type="text/javascript" src="../../../../js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery-ui-1.8.18.custom.min.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.cycle.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.lightbox-0.5-en.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.cookiebar-en.js"></script>
+    
+    <script type="text/javascript" src="../../../../js/FileUpload/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="../../../../js/FileUpload/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="../../../../js/FileUpload/jquery.iframe-transport.js"></script>
+
+    <!-- Google jQuery END -->
+
+    <!--Google reCaptcha-->
+	  <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    <!--Posuvna filtrace v referencich, tabulka v referencich a FAQ filtrace -->
+      <script type="text/javascript">
+        $(function() {
+		  var offset = $("#FollowSidebar").offset();
+          var topPadding = 15;
+          $(window).scroll(function() {
+              var followSidebar = $("#FollowSidebar");
+              if(followSidebar.length > 0){
+                  if ($(window).scrollTop() > offset.top) {
+                      followSidebar.stop().animate({
+                          marginTop: $(window).scrollTop() - offset.top + topPadding
+                      });
+                  } else {
+                      followSidebar.stop().animate({
+                          marginTop: 0
+                      });
+                  };
+              }
+          });
+        });
+    </script>
+    <!--Posuvna filtrace v referencich, tabulka v referencich a FAQ filtrace -->
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var key = getURLParam('show_detail');
+        if(key != ''){
+          if(document.getElementById(key)){
+            showDetails(key);
+          }
+        }
+      });
+    </script>
+  
+    <script type="text/javascript">
+      $(function() {
+        $('#gallery a').lightBox();
+      });
+    </script>
+
+    <script type="text/javascript">
+     $(function() {
+       $('.header_pictures')
+       .after('<div id="pager" style="font-weight:bold; text-align:right;">')
+       .cycle({fx:     'fade',
+               speed:  'slow', 
+               timeout: 10000, 
+               next: '#next',
+               prev: '#prev'});
+        });
+    </script>
+       
+    <script type="text/javascript">
+      var timeout         = 250;
+      var closetimer		= 0;
+      var ddmenuitem      = 0;
+      function jsddm_open(){
+    	jsddm_canceltimer();
+    	jsddm_close();
+    	ddmenuitem = $(this).find('ul').eq(0).css('visibility', 'visible');
+      }
+      function jsddm_close(){
+    	if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');
+      }
+    
+      function jsddm_timer(){
+        closetimer = window.setTimeout(jsddm_close, timeout);
+      }
+    
+      function jsddm_canceltimer(){
+        if(closetimer){
+          window.clearTimeout(closetimer);
+    	  	closetimer = null;
+        }
+      }
+    
+      $(document).ready(function(){
+        $('#main_menu > li').bind('mouseover', jsddm_open);
+    	  $('#main_menu > li').bind('mouseout',  jsddm_timer);
+        }
+      );
+      document.onclick = jsddm_close;
+    </script>
+
+  <script type="text/javascript">
+    $(function() {
+      $('#tabs').tabs();
+  	});
+  	
+    $(document).ready(function(){
+      var tabs = $("#tabs").tabs();
+
+      $(".link_tabs-1").click(function() {
+        tabs.tabs("select", "#overview");
+        return false;
+      });
+  
+      $(".link_tabs-2").click(function() {
+        tabs.tabs("select", "#structure");
+        return false;
+      });
+  
+      $(".link_tabs-3").click(function() {
+        tabs.tabs("select", "#screenshots");
+        /*
+        window.location.hash="#tabs-3";
+        $('html, body').animate({ scrollTop: 0 }, 1);
+        */
+        return false;  
+      });
+      
+      $(".link_tabs-4").click(function() {
+        tabs.tabs("select", "#licensing");
+        return false;
+      });
+      
+      $(".link_tabs-5").click(function() {
+        tabs.tabs("select", "#utility");
+        return false;
+      });
+    });
+  </script>
+  
+  
+  <!--Demo tlačítka hover efekt -->
+  <script type='text/javascript'>
+    $(document).ready(function(){
+	  $(".desktop_demo").hover(function() {
+		$(this).attr("src","../../../../images/products/reliance_demo_visualizations/desktop_demo_button_hover.png");
+			}, function() {
+		$(this).attr("src","../../../../images/products/reliance_demo_visualizations/desktop_demo_button.png");
+	  });
+    $(".mobile_demo").hover(function() {
+		$(this).attr("src","../../../../images/products/reliance_demo_visualizations/mobile_demo_button_hover.png");
+			}, function() {
+		$(this).attr("src","../../../../images/products/reliance_demo_visualizations/mobile_demo_button.png");
+	});
+    $(".reliance_server").hover(function() {
+		$(this).attr("src","../../../../images/products/reliance_demo_visualizations/reliance_server_button_hover.png");
+			}, function() {
+		$(this).attr("src","../../../../images/products/reliance_demo_visualizations/reliance_server_button.png");
+	});
+  });
+  </script>
+  <!--Demo tlačítka hover efekt -->
+  
+  <!--Odkaz a skript na touch-friendly menu, proměnná '#main-navigation je v tagu <nav> zde v menu  -->
+  <script type="text/javascript"  src="../../../../js/DoubleTapToGo.js"></script>
+  
+  <script type="text/javascript">
+	$( function()
+	{
+		$( '#main-navigation li:has(ul)' ).doubleTapToGo();
+	});
+	</script>
+	
+  <!--End touch-friendly menu -->
+  
+</head>
+<body>
+<div class="container">
+
+    <!-- Google Tag Manager -->
+    <noscript>
+      <iframe src="//www.googletagmanager.com/ns.html?id=GTM-XZ8NL" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XZ8NL');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Cookie Bar -->
+    <script type='text/javascript'>
+     $(document).ready(function(){
+     $.cookieBar();
+     });
+    </script>
+    <!-- End Cookie Bar -->
+
+    <div id="page_template_header">    
+      <div class="page_template_reliance_logo"><a href="../../../../en/main" target="_self" title="Home page"><img src="../../../../images/page_template/reliance_logo_retina.jpg" border="0" alt="Reliance – Industrial SCADA/HMI system" width="173" height="82"></a></div>    
+      <div class="page_template_header_right_div">
+
+      <div class="page_template_lang_icon"><img src="../../../../images/page_template/language.png" alt="Language icon" width="14" height="14"></div>
+      <div class="page_template_lang_cz_switch"><a href="http://www.reliance.cz/cs/support/articles/technical/vbscript-tip-working-with-an-object-list" title="Český jazyk" class="top-menu-odkaz-normal-underline" onclick="pageTracker._link(this.href); return false;">Česky</a></div>
+                 
+        <div id="page_template_header_search_div">
+        <form action="../../../../en/search" method="get" name="fSearchPanel">
+          <span class="page_template_search_span"><input type="text" name="search_panel" class="page_template_search_input" value="Search…" onfocus="if(this.value=='Search…'){this.value=''}"></span><span class="page_template_search_button_span"><input type="submit" value="" alt="Search" class="page_template_search_button" onclick="if(fSearchPanel.search_panel.value == 'Search…' || fSearchPanel.search_panel.value == '') return false;"></span></form></div>      
+        <div id="page_template_members_div"><span class="page_template_members_span"><a href="../../../../en/news-and-events/reliance-news-registration-form" class="top-menu-odkaz-normal" target="_self" title="Sign up for the Reliance News newsletter">Sign up for Newsletter</a> | <span class="display:inline-block;"><a href="../../../../en/login-to-members-section" class="top-menu-odkaz" title="Log in">Log in</a></span></span></div>         
+      </div>
+    </div>
+
+        <div class="page_template_banner_in_header">
+        <div id="banner">            
+          <div class="header_pictures">              
+            <img src="../../../../images/header_images/digital_park_bratislava_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/hvac/visualization-and-control-of-hvac-systems-in-digital-park-einsteinova-in-bratislava-slovakia');" class="header_image" alt=""><img src="../../../../images/header_images/digital_park_bratislava_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/hvac/visualization-and-control-of-hvac-systems-in-digital-park-einsteinova-in-bratislava-slovakia');" class="header_image" alt=""><img src="../../../../images/header_images/pendolino_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/transportation/visualization-and-control-of-the-railroad-electrical-substations-in-the-regions-of-pilsen-and-budweis');" class="header_image" alt=""><img src="../../../../images/header_images/pendolino_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/transportation/visualization-and-control-of-the-railroad-electrical-substations-in-the-regions-of-pilsen-and-budweis');" class="header_image" alt=""><img src="../../../../images/header_images/dalkia_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/heating-industry/visualization-and-control-of-the-processes-of-cooling-air-compressors-and-heating-hot-water-at-dalkia-industry-cz');" class="header_image" alt=""><img src="../../../../images/header_images/dalkia_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/heating-industry/visualization-and-control-of-the-processes-of-cooling-air-compressors-and-heating-hot-water-at-dalkia-industry-cz');" class="header_image" alt=""><img src="../../../../images/header_images/hps_brandov_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/gas-industry/visualization-and-archiving-of-data-from-gas-volume-conversion-devices-and-chromatographs-at-the-brandov-border-transfer-station');" class="header_image" alt=""><img src="../../../../images/header_images/hps_brandov_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/gas-industry/visualization-and-archiving-of-data-from-gas-volume-conversion-devices-and-chromatographs-at-the-brandov-border-transfer-station');" class="header_image" alt=""><img src="../../../../images/header_images/cyprus_cs_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/water-wastewater/visualization-and-control-of-the-water-supply-network-in-nicosia-and-larnaca-cyprus');" class="header_image" alt=""><img src="../../../../images/header_images/cyprus_cs_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/water-wastewater/visualization-and-control-of-the-water-supply-network-in-nicosia-and-larnaca-cyprus');" class="header_image" alt=""><img src="../../../../images/header_images/tunel_valik_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/transportation/visualization-and-control-of-the-valik-tunnel-the-first-highway-tunnel-in-the-czech-republic');" class="header_image" alt=""><img src="../../../../images/header_images/tunel_valik_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/transportation/visualization-and-control-of-the-valik-tunnel-the-first-highway-tunnel-in-the-czech-republic');" class="header_image" alt=""><img src="../../../../images/header_images/eon_jcp_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/gas-industry/control-system-of-gas-distribution-pipeline-system-for-eon-czech-republic');" class="header_image" alt=""><img src="../../../../images/header_images/eon_jcp_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/gas-industry/control-system-of-gas-distribution-pipeline-system-for-eon-czech-republic');" class="header_image" alt=""><img src="../../../../images/header_images/budvar_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories#food-processing');" class="header_image" alt=""><img src="../../../../images/header_images/budvar_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories#food-processing');" class="header_image" alt=""><img src="../../../../images/header_images/moskva_city_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/intelligent-buildings/hvac-control-system-of-the-north-tower-in-moscow');" class="header_image" alt=""><img src="../../../../images/header_images/moskva_city_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/intelligent-buildings/hvac-control-system-of-the-north-tower-in-moscow');" class="header_image" alt=""><img src="../../../../images/header_images/luxury_family_house_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/intelligent-buildings/complete-control-system-and-visualization-of-the-luxury-family-house-in-ceske-budejovice');" class="header_image" alt=""><img src="../../../../images/header_images/luxury_family_house_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/intelligent-buildings/complete-control-system-and-visualization-of-the-luxury-family-house-in-ceske-budejovice');" class="header_image" alt=""><img src="../../../../images/header_images/karlstejn_en_01_disallow.jpg" onClick="openLink('../../../../en/success-stories/other/visualization-of-air-treatment-units-in-the-chapel-of-the-holy-cross');" class="header_image" alt=""><img src="../../../../images/header_images/karlstejn_en_02_disallow.jpg" onClick="openLink('../../../../en/success-stories/other/visualization-of-air-treatment-units-in-the-chapel-of-the-holy-cross');" class="header_image" alt="">            
+          </div>            
+        </div>
+        </div>      
+
+
+          <div id="page_template_menu">
+	    <nav id="main-navigation" role="navigation">	
+            <ul>
+            <li><a href="../../../../en/products" target="_self">Products</a> 
+                <ul>
+                  <li><a href="../../../../en/products/reliance4-scada-hmi-system" target="_self">Reliance 4</a></li>
+                  <li><a href="../../../../en/products/opc-servers" target="_self">OPC Servers</a></li>
+                  <li><a href="../../../../en/products/reliance-demo-applications" target="_self">Reliance Demo Applications</a></li>        
+                </ul>
+              </li>
+              <li><a href="../../../../en/products/testimonials" target="_self">Testimonials</a></li>
+              <li><a href="../../../../en/success-stories" target="_self">Success Stories</a>        
+                <ul>
+                  <li><a href="../../../../en/success-stories#gas-industry" target="_self">Gas Industry</a></li>
+                  <li><a href="../../../../en/success-stories#power-industry" target="_self">Power Industry</a></li>
+                  <li><a href="../../../../en/success-stories#chemical-industry" target="_self">Chemical Industry</a></li>
+                  <li><a href="../../../../en/success-stories#water-wastewater" target="_self">Water &amp; Wastewater</a></li>
+                  <li><a href="../../../../en/success-stories#food-processing" target="_self">Food–processing Industry</a></li>
+                  <li><a href="../../../../en/success-stories#transportation" target="_self">Transportation</a></li>
+                  <li><a href="../../../../en/success-stories#production-lines" target="_self">Production Lines</a></li>
+                  <li><a href="../../../../en/success-stories#heavy-industry" target="_self">Heavy Industry</a></li>
+                  <li><a href="../../../../en/success-stories#heating-industry" target="_self">Heating Industry</a></li>
+                  <li><a href="../../../../en/success-stories#hvac-systems" target="_self">HVAC Systems</a></li>
+                  <li><a href="../../../../en/success-stories#intelligent-buildings" target="_self">Intelligent Buildings</a></li>
+                  <li><a href="../../../../en/success-stories#other" target="_self">Other</a></li>
+                </ul>
+              </li>
+              <li><a href="../../../../en/news-and-events" target="_self">News &amp; Events</a>        
+                <ul>
+                  <li><a href="../../../../en/news-and-events/news-of-2015" target="_self">News</a></li>
+                  <li><a href="../../../../en/news-and-events/events-of-2015" target="_self">Events</a></li>
+                  <li><a href="../../../../en/news-and-events/reliance-news" target="_self">Reliance News (newsletter)</a></li>
+                </ul>
+              </li>
+              <li><a href="../../../../en/pricelist" target="_self">Pricelist</a>        
+              </li>
+              <li><a href="../../../../en/download" target="_self">Download</a></li>        
+              <li><a href="../../../../en/support" target="_self">Support</a>        
+                <ul>
+                  <li><a href="../../../../en/members-section" target="_self">Members Section</a></li>
+                  <li><a href="../../../../en/download/reliance4/reliance4-example-projects" target="_self">Example Projects</a></li>
+                  <li><a href="../../../../en/support/video-tutorials" target="_self">Video Tutorials</a></li>
+                  <li><a href="../../../../en/support/technical-support" target="_self">Technical Support</a></li>
+                  <li><a href="../../../../en/support/articles/technical-articles" target="_self">Technical Articles</a></li>
+                  <li><a href="../../../../en/support/frequently-asked-questions" target="_self">Frequently Asked Questions</a></li>
+                  <li><a href="../../../../en/support/reliance-training" target="_self">Reliance Training</a></li>        
+                </ul>
+              </li>
+              <li><a href="../../../../en/contact">Contact</a>        
+                <ul>
+                  <li><a href="../../../../en/contact/about-us" target="_self">About Us</a></li>
+                  <li><a href="../../../../en/contact/contact-information" target="_self">Contact Information</a></li>
+                  <li><a href="../../../../en/contact/write-us" target="_self">Write Us</a></li>
+                  <li><a href="../../../../en/contact/how-to-find-us" target="_self">How to Find Us</a></li>
+                  <li><a href="../../../../en/contact/partners-and-distributors" target="_self">Partners and Distributors</a></li>
+               </ul>
+              </li>
+            </ul>
+	    </nav>
+	    
+          <span class="page_template_rss_icon"><a href="http://www.reliance-scada.com/rss-en.xml" title="Read Reliance RSS Feed" target="_blank"><img src="../../../../images/page_template/rss_feed_icon.png" border="0" alt="RSS Feed" width="20" height="20"></a></span>
+          
+	  </div>
+
+
+        <!--/SEARCHAROONOINDEX-->						 					
+        <div class="page_template_content"><div class="page_template_content_inside">
+<div class="content_navigation"><P class="navigation">Navigation: <a href="../../../../en/support" class="navigation_link" target="_self">Support</a> > <a href="../../../../en/support/articles/technical-articles" class="navigation_link" target="_self">Technical Articles</a> > VBScript tip: Working with an object list</P></div>
+
+<div class="content_left_div_wide">
+
+  <div class="content_left_div_wide_inside">
+
+	<H1>VBScript tip: Working with an object list</H1>
+
+  <P class="publish-date">November 26, 2014 | <a href="https://plus.google.com/u/0/109776131172755577282?rel=author" class="odkaz" target="_blank">Bretislav Valek</a></p>
+
+<P class="paragraph">In some Reliance applications, it is needed that data in a script should be stored in a list with a variable number of elements and then gone through, searched for, or deleted. To meet this need, you can create an array-type tag and program functions for the respective operations. However, this is laborious and especially useless because there are ready-to-use solutions in the form of <i>Scripting.Dictionary</i> objects or several .NET Framework classes, such as <i>System.Collections.ArrayList</i>.</p>
+
+<br>
+
+<P class="paragraph"><a href="http://msdn.microsoft.com/en-us/library/x4k5wbx4%28v=vs.84%29.aspx" class="odkaz" target="_blank" title="Dictionary Object">Scripting.Dictionary</a> is a list object that allows storing and then searching for paired data (key-value). The Scripting.Dictionary object is part of the VBScript scripting engine with no need for installation. The following example shows how to use the object when working with a list of users (user name = key, email address = value).</p>
+
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    Dim recipients, email, items, i, s
+    <br><br>
+    ' Creates an object.<br>
+    Set recipients = CreateObject("Scripting.Dictionary")
+    <br><br>
+    ' Fills the list.<br>
+    recipients.Add "bill", "bill.gates&commat;microsoft.com"<br>
+    recipients.Add "mark", "mark.zuckerberg&commat;facebook.com"<br>
+    recipients.Add "larry", "larry.page&commat;google.com"<br>
+    recipients.Add "steve", "steve.jobs&commat;apple.com"
+    <br><br>
+    ' Searches for the user larry.<br>
+    email = recipients.Item("larry")
+    <br><br>
+    ' Displays the search result.<br>
+    MsgBox "You can email larry on " & email, vbSystemModal
+
+  </span>
+</DIV>
+
+<br>
+
+<img src="../../../../images/articles/technical/vbsript-tip/Dictionary1.png" width="314" height="155" alt="Dictionary1">
+
+<br>
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    ' Changes the address of the user bill.<br>
+    recipients.Key("bill") = "bill&commat;gatesfoundation.org"
+    <br><br>
+    ' Removes the user mark.<br>
+    recipients.Remove "mark"
+    <br><br>
+    ' Carries out sorting.<br>
+    SortDict recipients
+    <br><br>
+    ' Goes through the list and finds out all addresses.<br>
+    s = ""<br>
+    items = recipients.Items<br>
+    For i = 0 To recipients.Count - 1<br>
+    &#160;&#160;s = s & " " & items(i)<br>
+    Next<br>
+    MsgBox "All recipents are: " & s, vbSystemModal
+
+  </span>
+</DIV>
+
+<br>
+
+<img src="../../../../images/articles/technical/vbsript-tip/Dictionary2.png" width="427" height="170" alt="Dictionary2">
+
+<br>
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    ' Releases the list.<br>
+    Set recipients = Nothing
+  </span>
+</DIV>
+
+<br>
+
+<P class="paragraph">The <a href="http://msdn.microsoft.com/en-us/library/x4k5wbx4%28v=vs.84%29.aspx" class="odkaz" target="_blank" title="Dictionary Object">Scripting.Dictionary</a> object does not support sorting the list elements. If you need to sort the list elements, the <i>SortDict</i> function can be implemented:</p>
+
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    ' A function for sorting elements within the Scripting.Dictionary object.<br>
+    Function SortDict(ByVal dict)<br>
+        &#160;&#160;Dim i, j, temp<br>
+        &#160;&#160;&#160;&#160;For Each i In dict<br>
+            &#160;&#160;&#160;&#160;&#160;&#160;For Each j In dict<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;If(dict.Item(i) <= dict.Item(j)) Then<br>
+                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;temp = dict.Item(i)<br>
+                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;dict.Item(i) = dict.Item(j)<br>
+                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;dict.Item(j) = temp<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;End If<br>
+            &#160;&#160;&#160;&#160;&#160;&#160;Next<br>
+        &#160;&#160;&#160;&#160;Next<br>
+        &#160;&#160;&#160;&#160;Set SortDict = dict<br>
+    End Function
+
+  </span>
+</DIV>
+
+<br>
+
+<P class="paragraph">The sorting itself is carried out by simply calling the <i>SortDict</i> function:</p>
+
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    SortDict recipients
+  </span>
+</DIV>
+
+<br>
+
+<P class="paragraph">The above example shows how to work with an object list of type string. Of course, objects of another type can be added to the list. They are, for example, numbers and predefined or user-defined objects (classes). But do not forget to adjust the program code accordingly.</p>
+
+<br>
+
+<P class="paragraph">The .NET Framework runtime environment contains other objects for working with the list. They can be used in VBScript, which means they can also be used in Reliance:</p>
+
+<br>
+
+<ul class="list_style">
+  
+    <li>System.Collections.ArrayList</li>
+    <li>System.Collections.SortedList</li>
+    <li>System.Collections.Stack</li>
+    <li>System.Collections.Queue</li>
+  
+</ul>
+
+<br>
+
+<P class="paragraph">All these objects require that .NET Framework (version 1.0 or higher) be installed.</p>
+
+<br>
+<br>
+
+<P class="paragraph"><a href="http://msdn.microsoft.com/en-us/library/system.collections.arraylist%28v=vs.110%29.aspx" class="odkaz" target="_blank" title="ArrayList Class">System.Collections.ArrayList</a> is a list of type array. Unlike the <i>Scripting.Dictionary</i> object, this one does not work with paired data (key-value).</p>
+
+
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    Dim Message, ArrayList
+    <br><br>
+    ' Initializes the message.<br>
+    Message = ""
+    <br><br>
+    ' Creates a list.<br>
+    Set ArrayList = CreateObject("System.Collections.ArrayList")
+    <br><br>
+    ' Fills the list.<br>
+    ArrayList.Add 6<br>
+    ArrayList.Add 8<br>
+    ArrayList.Add 2<br>
+    ArrayList.Add 4<br>
+    ArrayList.Add 1<br>
+    ArrayList.Add 5<br>
+    ArrayList.Add 3<br>
+    ArrayList.Add 3<br>
+    ArrayList.Add 7
+    <br><br>
+    ' Converts the list into an array.<br>
+    Message = Message & "1: " & Join(ArrayList.ToArray, ",") & vbCrLf
+    <br><br>
+    ' Returns the element at the specified index.<br>
+    Message = Message & "2: " & ArrayList(0) & vbCrLf
+    <br><br>
+    ' Returns the element count.<br>
+    Message = Message & "3: " & ArrayList.Count & vbCrLf
+    <br><br>
+    ' Finds out whether an element is contained in the list.<br>
+    Message = Message & "4: " & ArrayList.Contains(5) & vbCrLf
+    <br><br>
+    ' Sorts the list.<br>
+    ArrayList.Sort<br>
+    Message = Message & "5: " & Join(ArrayList.ToArray, ",") & vbCrLf
+    <br><br>
+    ' Reverses the sorting direction.<br>
+    ArrayList.Reverse<br>
+    Message = Message & "6: " & Join(ArrayList.ToArray, ",") & vbCrLf
+    <br><br>
+    ' Removes the element.<br>
+    ArrayList.Remove 8
+    <br><br>
+    ' Removes the element at the specified index.<br>
+    ArrayList.RemoveAt 6
+    <br><br>
+    ' Removes all elements.<br>
+    ArrayList.Clear
+    <br><br>
+    ' Releases the list.<br>
+    Set ArrayList = Nothing
+    <br><br>
+    ' Displays the result.<br>
+    MsgBox Message, vbSystemModal
+
+  </span>
+</DIV>
+
+<br>
+
+<img src="../../../../images/articles/technical/vbsript-tip/ArrayList.png" width="156" height="230" alt="ArrayList">
+
+<br>
+<br>
+<br>
+
+<P class="paragraph"><a href="http://msdn.microsoft.com/en-us/library/system.collections.sortedlist%28v=vs.100%29.aspx" class="odkaz" target="_blank" title="SortedList Class">System.Collections.SortedList</a> allows working with paired data and, at the same time, accessing the list items using an index. In terms of capabilities, it is a combination of <i>Scripting.Dictionary</i> and and <i>System.Collections.ArrayList</i>. Each time you add a pair to the list, the list is sorted automatically.</p>
+
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    Dim Message, SortedList, i, s
+    <br><br>
+    ' Initializes the message.<br>
+    Message = ""
+    <br><br>
+    ' Creates a list.<br>
+    Set SortedList = CreateObject("System.Collections.SortedList")
+    <br><br>
+    ' Fills the list.<br>
+    SortedList.Add "Point", 1<br>
+    SortedList.Add "Point Cloud", 2<br>
+    SortedList.Add "Curve", 4<br>
+    SortedList.Add "Surface", 8<br>
+    SortedList.Add "Polysurface", 16<br>
+    SortedList.Add "Mesh", 32
+    <br><br>
+    ' Returns the element count.<br>
+    Message = Message & "1: " & SortedList.Count & vbCrLf
+    <br><br>
+    ' Returns the value by key.<br>
+    Message = Message & "2: " & SortedList("Surface") & vbCrLf
+    <br><br>
+    ' Returns the value at the index.<br>
+    s = ""<br>
+    For i = 0 To SortedList.Count - 1<br>
+        &#160;&#160;s = s & CStr(SortedList.GetByIndex(i)) & " "<br>
+    Next<br>
+    Message = Message & "3: " & s & vbCrLf
+    <br><br>
+    ' Verifies the existence of the key.<br>
+    Message = Message & "4: " & SortedList.ContainsKey("Polysurface") & vbCrLf
+    <br><br>
+    ' Verifies the existence of the value.<br>
+    Message = Message & "5: " & SortedList.ContainsValue(16) & vbCrLf
+    <br><br>
+    ' Returns the index of the key (searches for the element by key).<br>
+    Message = Message & "6: " & SortedList.IndexOfKey("Polysurface") & vbCrLf
+    <br><br>
+    ' Returns the index of the value (searches for the element by value).<br>
+    Message = Message & "7: " & SortedList.IndexOfValue(16) & vbCrLf
+    <br><br>
+    ' Removes the element by key.<br>
+    SortedList.Remove "Polysurface" & vbCrLf
+    <br><br>
+    ' Removes the element at the specified index.<br>
+    SortedList.RemoveAt 0
+    <br><br>
+    ' Removes all elements.<br>
+    SortedList.Clear
+    <br><br>
+    ' Releases the list.<br>
+    Set SortedList = Nothing
+    <br><br>
+    ' Displays the result.<br>
+    MsgBox Message, vbSystemModal
+
+  </span>
+</DIV>
+
+<br>
+
+<img src="../../../../images/articles/technical/vbsript-tip/SortedList.png" width="154" height="245" alt="SortedList">
+
+<br>
+<br>
+<br>
+
+<P class="paragraph"><a href="http://msdn.microsoft.com/en-us/library/system.collections.stack%28v=vs.110%29.aspx" class="odkaz" target="_blank" title="Stack Class">System.Collections.Stack</a> is an object list of type stack, i.e., last-in-first-out (LIFO). The last elements inserted into the stack will be the first to be removed.</p>
+
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    Dim Message, Stack, Item, s
+    <br><br>
+    ' Initializes the message.<br>
+    Message = ""
+    <br><br>
+    ' Creates a list.<br>
+    Set Stack = CreateObject("System.Collections.Stack")
+    <br><br>
+    ' Fills the list.<br>
+    Stack.Push "Item_1"<br>
+    Stack.Push "Item_2"<br>
+    Stack.Push "Item_3"<br>
+    Stack.Push "Item_4"
+    <br><br>
+    ' Goes through the list elements.<br>
+    s = ""<br>
+    For Each Item In Stack<br>
+        &#160;&#160;s = s & Item & " "<br>
+    Next<br>
+    Message = Message & "1: " & s & vbCrLf
+    <br><br>
+    ' Converts the list into an array.<br>
+    Message = Message & "2: " & Join(Stack.ToArray, ",") & vbCrLf
+    <br><br>
+    ' Returns the element count.<br>
+    Message = Message & "3: " & Stack.Count & vbCrLf
+    <br><br>
+    ' Verifies the existence of the value.<br>
+    Message = Message & "4: " & Stack.Contains("Item_2") & vbCrLf
+    <br><br>
+    ' Removes and returns the last element.<br>
+    Message = Message & "5: " & Stack.Pop & vbCrLf
+    <br><br>
+    ' Returns the last element (without removing it).<br>
+    Message = Message & "6: " & Stack.Peek & vbCrLf
+    <br><br>
+    ' Empties the list.<br>
+    Stack.Clear
+    <br><br>
+    ' Releases the list.<br>
+    Set Stack = Nothing
+    <br><br>
+    ' Displays the result.<br>
+    MsgBox Message, vbSystemModal
+
+  </span>
+</DIV>
+
+<br>
+
+<img src="../../../../images/articles/technical/vbsript-tip/Stack.png" width="230" height="230" alt="Stack">
+
+<br>
+<br>
+<br>
+
+<P class="paragraph"><a href="http://msdn.microsoft.com/en-us/library/system.collections.queue%28v=vs.100%29.aspx" class="odkaz" target="_blank" title="Queue Class">System.Collections.Queue</a> is an object list of type queue, i.e., first-in-first-out (FIFO). The first elements inserted into the queue will be the first to be removed.</p>
+
+<br>
+
+<DIV class="source_code">
+  <span style="font-family:Courier New;">
+    Dim Message, Queue, Item, s
+    <br><br>
+    ' Initializes the message.<br>
+    Message = ""
+    <br><br>
+    ' Creates a list.<br>
+    Set Queue = CreateObject("System.Collections.Queue")
+    <br><br>
+    ' Fills the list.<br>
+    Queue.Enqueue  "Item_1"<br>
+    Queue.Enqueue  "Item_2"<br>
+    Queue.Enqueue  "Item_3"<br>
+    Queue.Enqueue  "Item_4"<br>
+    <br><br>
+    ' Goes through the list elements.<br>
+    s = ""<br>
+    For Each Item In Queue<br>
+    &#160;&#160;s = s & Item & " "<br>
+    Next<br>
+    Message = Message & "1: " & s & vbCrLf<br>
+    <br><br>
+    ' Converts the list into an array.<br>
+    Message = Message & "2: " & Join(Queue.ToArray, ",") & vbCrLf
+    <br><br>
+    ' Returns the element count.<br>
+    Message = Message & "3: " & Queue.Count & vbCrLf
+    <br><br>
+    ' Verifies the existence of the value.<br>
+    Message = Message & "4: " & Queue.Contains("Item_2") & vbCrLf
+    <br><br>
+    ' Removes and returns the first element.<br>
+    Message = Message & "5: " & Queue.Dequeue & vbCrLf
+    <br><br>
+    ' Returns the first element (without removing it).<br>
+    Message = Message & "6: " & Queue.Peek & vbCrLf
+    <br><br>
+    ' Empties the list.<br>
+    Queue.Clear
+    <br><br>
+    ' Releases the list.<br>
+    Set Queue = Nothing
+    <br><br>
+    ' Displays the result.<br>
+    MsgBox Message, vbSystemModal
+  </span>
+</DIV>
+
+<br>
+
+<img src="../../../../images/articles/technical/vbsript-tip/Queue.png" width="230" height="230" alt="Queue">
+
+</div>
+
+</div>
+
+<div class="content_right_div_small"><img src="../../../../images/articles/technical/earth.jpg" width="190" height="200" alt="Reliance Earth Icon"><br><br></div>
+
+<div class="to_the_top_div"><P class="paragraph">| <a href="#top" class="odkaz" title="Top">Top</a> |</P></div>
+
+</div></div>
+        <!--SEARCHAROONOINDEX-->
+
+    <div id="page_template_footer">
+      <div class="page_template_footer_line"></div>
+      <div class="footer_contact_box_en"><H3 class="footer_heading">Contact us</H3><P class="footer_text">Info:<br>Sales:<br>Support:</P><P class="info_email"><script type = "text/javascript"> var e="mail"; var t="to:";  var v0="info";  var v1="reliance-scada.com";  document.write('<a class="footer_emails" href="' + e + t +  v0 + '@' + v1 + '">');document.write( v0 + '@' + v1 + '<\/a>');</script><br><script type = "text/javascript"> var e="mail"; var t="to:";  var v0="sales";  var v1="reliance-scada.com";  document.write('<a class="footer_emails" href="' + e + t +  v0 + '@' + v1 + '">');document.write( v0 + '@' + v1 + '<\/a>');</script><br><script type = "text/javascript"> var e="mail"; var t="to:";  var v0="support";  var v1="reliance-scada.com";  document.write('<a class="footer_emails" href="' + e + t +  v0 + '@' + v1 + '">');document.write( v0 + '@' + v1 + '<\/a>');</script></P></div>
+      <div class="footer_social_networks_box_en"><H3 class="footer_heading">Social networks</H3><P class="footer_facebook_icon"><img src="../../../../images/page_template/facebook_icon2.jpg" width="13" height="13" alt="Facebook ikona"></P><P class="footer_googleplus_icon"><img src="../../../../images/page_template/google_plus_icon2.jpg" width="13" height="13" alt="Google+ icon"></P><P class="footer_twitter_icon"><img src="../../../../images/page_template/twitter_icon2.jpg" width="13" height="13" alt="Twitter icon"></P><P class="footer_linkedin_icon"><img src="../../../../images/page_template/linkedin_icon2.jpg" width="13" height="13" alt="LinkedIn icon"></P><P class="footer_youtube_icon"><img src="../../../../images/page_template/youtube_icon2.jpg" width="13" height="13" alt="YouTube icon"></P><P class="footer_facebook_link"><a href="http://www.facebook.com/reliance.scada" target="_blank" class="footer_odkaz" title="Reliance on Facebook">Facebook</a></P><P class="footer_googleplus_link"><a href="https://plus.google.com/116963237660608593586/posts" target="_blank" class="footer_odkaz" title="Reliance on Google&#43;">Google&#43;</a></P><P class="footer_twitter_link"><a href="https://twitter.com/RelianceSCADA" target="_blank" class="footer_odkaz" title="Reliance on Twitter">Twitter</a></P><P class="footer_linkedin_link"><a href="http://www.linkedin.com/company/geovap/reliance-scada-hmi-system-1209326/product?trk=biz_product" target="_blank" class="footer_odkaz" title="Reliance on LinkedIn">LinkedIn</a></P><P class="footer_youtube_link"><a href="http://www.youtube.com/playlist?list=PLD9459E2BC89F02C6&amp;feature=plcp" target="_blank" class="footer_odkaz" title="Reliance on YouTube">YouTube</a></P></div>
+      <div class="footer_reliancescada_box"><H3 class="footer_heading">Reliance SCADA/HMI system</H3><P class="footer_text">Reliance is a professional SCADA/HMI system designed for the monitoring and control of industrial processes and for building automation. The resulting visualization can be easily displayed on a PC, Web, tablet, or smartphone.</P></div>
+    	<div class="MS_gold_partner_logo"><a href="../../../../en/contact/about-us" target="_self" title="GEOVAP has been certified as a Microsoft Gold Application Development Partner"><img src="../../../../images/page_template/ms_gold_partner.png" border="0" alt="Microsoft Gold Application Development Partner" width="64" height="44"></a></div>
+      <div class="footertext"><a href="http://www.geovap.cz/geovapweb/en" target="_blank" class="footer_odkaz" title="GEOVAP website">&copy; 2015 GEOVAP, spol. s r.o.</a> <font color="black">|</font> <a href="../../../../en/contact/terms-of-use-and-privacy-policy" target="_self" class="footer_odkaz" title="Terms of Use and Privacy Policy">Terms of Use and Privacy Policy</a> <font color="black">|</font> <a href="../../../../en/contact/write-us" target="_self" class="footer_odkaz" title="Write Us">Write Us</a></div>
+      <div class="privacypolicytext"></div>
+    </div>
+
+    <!--/SEARCHAROONOINDEX-->
+    
+    <!-- Myx.cz měřicí kód -->
+      <script type="text/javascript">
+                window.__mYx = window.__mYx || { };
+                window.__mYx.code = 'ftf1600aYa1044L313C0yutUng1:2046:27';
+                var scriptTag = document.createElement('script');
+                scriptTag.type = 'text/javascript';
+                scriptTag.src = (('https:'==document.location.protocol)?'https://secure.myxheat.com':'http://api.myx.cz')+'/js/myx.js';
+                scriptTag.defer = true;
+                document.getElementsByTagName("head")[0].appendChild(scriptTag);
+      </script>
+      <!-- Myx.cz měřicí kód -->
+
+  </div>
+  </body>
+</html>

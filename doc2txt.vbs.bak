@@ -1,0 +1,275 @@
+Option Explicit
+
+Dim sSourceFile, sTargetFile
+Dim oApp, oDocs, oDoc
+
+Const msoEncodingUTF8 = 65001 ' &HFDE9
+Const wdFormatRTF = 6
+Const wdFormatUnicodeText = 7
+Const wdFormatPDF = 17 ' &H11
+Const wdFormatDocumentDefault = 16 ' &H10
+Const wdFormatDocument = 0
+Const wdFormatFilteredHTML = 10
+Const wdFormatText = 2
+Const wdFormatPlainText = 22 ' &H16
+
+Public Function PathCombine(sFolder, sName)
+' Combine folder and name to form a valid path
+
+Dim sPath
+
+sPath = Trim(sFolder) & "\" & Trim(sName)
+PathCombine = Replace(sPath, "\\", "\")
+End Function
+
+Public Function PathCreateTempFolder()
+' Create temporary folder and return its full path
+
+Dim sFolder
+
+PathCreateTempFolder = ""
+sFolder = PathGetTempFolder() & "\" & PathGetTempName()
+If FolderCreate(sFolder) Then PathCreateTempFolder = sFolder
+End Function
+
+Public Function PathExists(sPath)
+' Test whether path exists
+
+Dim oSystem
+
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+PathExists =oSystem.FolderExists(sPath) Or oSystem.FileExists(sPath)
+
+Set oSystem =Nothing
+End Function
+
+Public Function PathGetBase(sPath)
+' Get base/root name of a file or folder
+
+Dim oSystem
+
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+PathGetBase =oSystem.GetBaseName(sPath)
+
+Set oSystem = Nothing
+End Function
+
+Public Function PathGetCurrentDirectory()
+' Get current directory of active process
+
+Dim oShell
+
+Set oShell =CreateObject("Wscript.Shell")
+PathGetCurrentDirectory =oShell.CurrentDirectory
+
+Set oShell = Nothing
+End Function
+
+Public Function PathGetExtension(sPath)
+' Get extention of file or folder
+
+Dim oSystem
+
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+PathGetExtension =oSystem.GetExtensionName(sPath)
+
+Set oSystem = Nothing
+End Function
+
+Public Function PathGetFolder(sPath)
+' Get the parent folder of a file or folder
+
+Dim oSystem
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+PathGetFolder =oSystem.GetParentFolderName(sPath)
+
+Set oSystem = Nothing
+End Function
+
+Public Function PathGetLong(sPath)
+' Get long name of file or folder
+
+Dim oShell, oShortcut
+
+Set oShell = CreateObject("WScript.Shell")
+Set oShortcut = oShell.CreateShortcut("temp.lnk")
+oShortcut.TargetPath = sPath
+PathGetLong = oShortcut.TargetPath
+
+Set oShortcut = Nothing
+Set oShell = Nothing
+End Function
+
+Public Function PathGetName(sPath)
+' Get the file or folder name at the end of a path
+
+Dim oSystem
+
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+PathGetName =oSystem.GetFileName(sPath)
+
+Set oSystem = Nothing
+End Function
+
+Public Function PathGetShort(sPath)
+' Get short path (8.3 style) of a file or folder
+
+Dim oSystem, oFile, oFolder
+
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+If FolderExists(sPath) Then
+Set oFolder =oSystem.GetFolder(sPath)
+PathGetShort =oFolder.ShortPath
+Else
+Set oFile =oSystem.GetFile(sPath)
+PathGetShort =oFile.ShortPath
+End If
+
+Set oFile = Nothing
+Set oFolder = Nothing
+Set oSystem = Nothing
+End Function
+
+Public Function PathGetSpec(sDir, sWildcards, sFlags)
+' Get an Array of paths, specifying folder, wild card pattern, and sort order
+
+Const WindowStyle = 0 'hidden
+Const Wait = True
+Dim aReturn
+Dim i, iBound
+Dim s, sCommand,sTempFile, sReturn
+
+sCommand = "%COMSPEC% /c dir /b " &  sFlags & " " & Chr(34) & sDir & "\" & sWildcards & Chr(34)
+sTempFile = PathGetTempFile()
+sCommand = sCommand & " >" & sTempFile
+ShellRun sCommand, WindowStyle, Wait
+sReturn = StringTrimWhiteSpace(FileToString(sTempFile))
+FileDelete(sTempFile)
+PathGetSpec = Array()
+If Len(sReturn) = 0 Then Exit Function
+
+aReturn = Split(sReturn, vbCrLf)
+iBound = ArrayBound(aReturn)
+For i = 0 To iBound
+s = aReturn(i)
+If Not InStr(s, ":") Then aReturn(i) = PathCombine(sDir, s)
+Next
+PathGetSpec = aReturn
+End Function
+
+Public Function PathGetSpecialFolder(sFolder)
+' Get a special folder of Windows
+Dim oShell, oFolders
+Dim s
+
+PathGetSpecialFolder = ""
+Set oShell =CreateObject("WScript.Shell")
+Set oFolders =oShell.SpecialFolders
+For Each s In oFolders
+If StringTrail("\" & s, sFolder, False) Then
+PathGetSpecialFolder = s
+End If
+Next
+
+Set oFolders = Nothing
+Set oShell = Nothing
+End Function
+
+Public Function PathGetTempFile()
+' Get full path of a temporary file
+
+PathGetTempFile = PathGetTempFolder() & "\" & PathGetTempName()
+End Function
+
+Public Function PathGetTempFolder()
+' Get Windows folder for temporary files
+
+Const TempFolder = 2
+Dim oSystem
+
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+PathGetTempFolder =oSystem.GetSpecialFolder(TempFolder).path
+
+Set oSystem = Nothing
+End Function
+
+Public Function PathGetTempName()
+' Get Name for temporary file or folder
+
+Dim oSystem
+
+Set oSystem =CreateObject("Scripting.FileSystemObject")
+PathGetTempName = oSystem.GetTempName()
+
+Set oSystem = Nothing
+End Function
+
+Public Function PathGetValid(sDir, sBase, sExt, bUnique)
+Dim i, iCount
+Dim s, sIllegal, sLine, sPrintable, sSourceDir, sSourceExt, sSourceBase, sTargetDir, sTargetExt, sTargetFile, sTargetBase, sViewable
+
+sIllegal = "@%*+\|':'<>/?" & Chr(34)
+sViewable = "!#$%&'()*+,-./0123456789:'<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+sPrintable = " " & sViewable
+
+sSourceDir = sDir
+sSourceBase = sBase
+sSourceExt = sExt
+If Len(sSourceExt) > 0 And Not StringLead(sSourceExt, ".", False) Then sSourceExt = "." & sSourceExt
+sLine = sSourceBase
+iCount = Len(sIllegal)
+For i = 1 To iCount
+s = Mid(sIllegal, i, 1)
+If InStr(sLine, s) Then sLine = Replace(sLine, s, " ")
+Next
+
+sLine = StringReplaceAll(sLine, "  ", " ")
+sLine = Trim(sLine)
+
+sTargetBase = sLine
+sTargetFile = sSourceDir & "\" & sTargetBase & sSourceExt
+If bUnique And FileExists(sTargetFile) Then
+s = "_01"
+sTargetFile = sSourceDir & "\" & sTargetBase & s &sSourceExt
+i = 1
+Do While FileExists(sTargetFile) And i <= 99
+If i < 10 Then
+s = "_0" & i
+Else
+s = "_" & i
+End If
+
+sTargetFile = sSourceDir & "\" & sTargetBase & s & sSourceExt
+i = i +1
+Loop
+End If
+PathGetValid = sTargetFile
+End Function
+
+Public Function PathSetCurrentDirectory(sDir)
+' Set current directory of active process
+
+Dim oShell
+
+Set oShell =CreateObject("Wscript.Shell")
+oShell.CurrentDirectory = sDir
+
+Set oShell = Nothing
+End Function
+
+
+' Main program
+sSourceFile = WScript.Arguments(0)
+sTargetFile = PathCombine(PathGetFolder(sSourceFile), PathGetBase(sSourceFile) & ".txt")
+Set oApp = CreateObject("Word.Application")
+oApp.Visible = False
+oApp.DisplayAlerts = False
+oApp.ScreenUpdating = False
+
+Set oDocs = oApp.Documents
+' Set oDoc = oDocs.Open(sSourceFile, AddToRecentFiles = False, ReadOnly = True, ConfirmConversions = False)
+Set oDoc = oDocs.Open(sSourceFile, False, True, False)
+' oDoc.SaveAs(FileName, FileFormat, LockComments, Password, AddToRecentFiles, WritePassword, ReadOnlyRecommended, EmbedTrueTypeFonts, SaveNativePictureFormat, SaveFormsData, SaveAsAOCELetter, Encoding, InsertLineBreaks, AllowSubstitutions, LineEnding, AddBiDiMarks)
+Call oDoc.SaveAs(sTargetFile, wdFormatText, False, "", False, "", False, False, False, False, False, msoEncodingUTF8  )
+oDoc.Close()
+oApp.Quit()

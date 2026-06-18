@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=8" /><title>
+	TextFileEncodingDetector project - Architect Shack
+</title><link rel="alternate" title="Architect Shack" href="http://www.architectshack.com/RSS.aspx" type="application/rss+xml" />
+<link rel="alternate" title="Architect Shack - Discussions" href="http://www.architectshack.com/RSS.aspx?Discuss=1" type="application/rss+xml" />
+<link rel="stylesheet" media="print" href="Themes/DefaultCustomized/Print_Styles.css" type="text/css" />
+<link rel="stylesheet" media="screen" href="Themes/DefaultCustomized/Screen_Styles.css" type="text/css" />
+<link rel="stylesheet" href="Themes/Editor.css" type="text/css" />
+<link rel="search" href="Search.aspx?OpenSearch=1" type="application/opensearchdescription+xml" title="Architect Shack - Search" /><script src="Themes/DefaultCustomized/Scripts.js" type="text/javascript"></script>
+<link rel="shortcut icon" href="Themes/DefaultCustomized/Icon.ico" type="image/x-icon" />
+<script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="JS/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="JS/jquery-ui-1.8.13.custom.min.js"></script>
+<script type="text/javascript" src="JS/Scripts.js"></script>
+<script type="text/javascript" src="JS/SearchHighlight.js"></script>
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
+
+<style>
+/* vertical header code adapted from Lars Gunter's work on general angled headers here:
+http://itpastorn.blogspot.com/2010/07/rotating-table-headers-now-in-4-of-top.html
+http://keryx.se/dev/rotate-th-2.html
+*/
+
+.VerticalHeaderTable {
+  border-collapse: collapse;
+  /* Screen real estate for our headers */
+  margin-top: 350px;
+}
+
+.VerticalHeaderTable th {
+  /* Must text-align left in order to rotate in the right corner */
+  text-align: left;
+  padding: 0;
+}
+
+.VerticalHeaderTable td {
+  border: 1px solid;
+  padding: 0;
+}
+
+.VerticalHeaderTable tbody th {
+  border: 1px solid;
+  padding: 0 4px;
+}
+
+/* Outer span is just a reference for the inner span */
+.VerticalHeaderTable th > span {
+  position: relative;
+}
+
+.VerticalHeaderTable th > span > span {
+  /* Must remove span from normal flow in order to keep columns from widening */
+  position: absolute;
+  left: -0.5px; 
+  white-space: nowrap;
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -moz-transform-origin: 0% 0%;
+  -o-transform-origin: 0% 0%;
+  -webkit-transform-origin: 0% 0%;
+
+  border: 1px solid;
+  padding: 9px;
+  height: 11px;
+  width: 340px;
+  text-align: left;
+}
+
+.VerticalHeaderTable td {
+  padding: 5px;
+  text-align: right;
+  width: 19px;
+}
+</style> 
+
+<!--[if IE]>
+<style>
+.VerticalHeaderTable th > span > span {
+  filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  /* can't figure out how to control the rotation origin, see below - so reposition afterwards. */
+  top: -348px; 
+  zoom: 1;
+
+/* Other approach using matrix calculator at http://www.boogdesign.com/examples/transforms/matrix-calculator.html, 
+didn't solve the origin issue either. I suspect the matrix approach CAN control the origin of the transformation,
+but I don't feel like going back to high school, so the "top" hack will work fine for now.
+
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.00000000, M12=1.00000000, M21=-1.00000000, M22=0.00000000,sizingMethod='auto expand')";
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.00000000, M12=1.00000000, M21=-1.00000000, M22=0.00000000,sizingMethod='auto expand');
+*/
+}
+</style>
+<![endif]-->
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2015490-3']);
+  _gaq.push(['_setDomainName', '.architectshack.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+    <form name="aspnetForm" method="post" action="Default.aspx?Page=TextFileEncodingDetector&amp;NS=" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJMTQ3NjA4MDI2D2QWAmYPZBYCAgEPZBYCAgkPZBYEAhsPDxYCHg1BbnRoZW1WaXNpYmxlaGRkAicPDxYCHgdWaXNpYmxlaGQWAmYPFgIeC18hSXRlbUNvdW50ZmRkpFWNb8UJA6gIEJzG6ieHIKa+imc=" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var Anthem_FormID = "aspnetForm";
+//]]>
+</script>
+<script src="/as/WebResource.axd?d=rNme7YpGkgYzUmJiv_gJxH8pf2jEMGqNSZE2FzliuJ4xMCZSSrkqXXwaZNpqTGiFPmhjQWZSZbhIOUi4SnPWrEFtWEClyF9EaiGlSCWtpluAd9CH0&amp;t=634416329792204606" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="7F157613" />
+</div>
+		<script type="text/javascript">
+<!--
+__BaseName = "ctl00_CphMaster_";
+__ConfirmMessage = "Are you sure you want to proceed?";
+// -->
+</script>
+		<script type="text/javascript">
+		<!--
+			function __GetServerElementById(id) {
+				return document.getElementById(__BaseName + id);
+			}
+			function __RequestConfirm() {
+				return confirm(__ConfirmMessage);
+			}
+		// -->
+		</script>
+    
+        <div id="HeaderDiv">
+            <h1>Architect Shack</h1>
+
+        </div>
+                   
+        <div id="ContainerDiv">
+                 
+            <div id="SidebarDiv">
+                <div id="SidebarHeaderDiv">
+                    <!-- Used for layout purposes only -->
+                </div>
+                <div id="SidebarContentDiv">
+                    <h3 class="separator">Navigation<a class="headeranchor" id="Navigation_0" href="#Navigation_0" title="Link to this Section"></a></h3><ul><li><b><a class="pagelink" href="WelcomePage.ashx" title="Welcome!">Welcome</a></b></li><li><b><a class="pagelink" href="ProjectsPage.ashx" title="Projects">Projects</a></b></li><li><a class="pagelink" href="ContactMe.ashx" title="Contact Me">Contact Me</a><br /></li></ul><br /><ul><li><a class="systemlink" href="RandPage.aspx" title="Random Page">Random Page</a></li><li><a class="systemlink" href="AllPages.aspx" title="All Pages">All Pages</a></li><li><a class="systemlink" href="Category.aspx" title="Categories">Categories</a><br /></li></ul><br /><small><b>Quick Search</b></small><br />
+<script type="text/javascript"><!--
+function _DoSearch_SB7155162ed4d04b319080a7358d2c7a10() { document.location = 'Search.aspx?AllNamespaces=1&FilesAndAttachments=1&Query=' + encodeURI(document.getElementById('SB7155162ed4d04b319080a7358d2c7a10').value); }
+// -->
+</script><input class="txtsearchbox" type="text" id="SB7155162ed4d04b319080a7358d2c7a10" onkeydown="javascript:var keycode; if(window.event) keycode = event.keyCode; else keycode = event.which; if(keycode == 10 || keycode == 13) { _DoSearch_SB7155162ed4d04b319080a7358d2c7a10(); return false; }" /> <big><a href="#" onclick="javascript:_DoSearch_SB7155162ed4d04b319080a7358d2c7a10(); return false;">&raquo;</a></big><br />
+<small><a class="internallink" href="Search.aspx?FullText=1" title="Advanced Search &raquo;">Advanced Search &raquo;</a></small><br /><br /><a href="http://www.screwturn.eu" title="PoweredBy" target="_blank"><img src="Images/PoweredBy.png" alt="PoweredBy" /></a>
+
+                </div>
+                <div id="SidebarFooterDiv">
+                    <!-- Used for layout purposes only -->
+                </div>
+            </div>
+            <div id="MainDiv">
+                <div id="MainHeaderDiv">
+                    <!-- Used for layout purposes only -->
+                </div>
+                <div id="PageInternalHeaderDiv">
+</div>
+                
+
+    <script type="text/javascript">
+    <!--
+        function __ShowAllTrail() {
+            try {
+                document.getElementById("BreadcrumbsDivMin").style["display"] = "none";
+                document.getElementById("BreadcrumbsDivAll").style["display"] = "";
+                __SetStatus("1");
+            }
+            catch(ex) { }
+            return false;
+        }
+        function __HideTrail() {
+            try {
+                document.getElementById("BreadcrumbsDivMin").style["display"] = "";
+                document.getElementById("BreadcrumbsDivAll").style["display"] = "none";
+                __SetStatus("0");
+            }
+            catch(ex) { }
+            return false;
+        }
+        
+        function __SetStatus(open) {
+            __CreateCookie("ScrewTurnWikiBCT", open, 365);
+        }
+        function __GetStatus() {
+            var value = __ReadCookie("ScrewTurnWikiBCT");
+            if(value) return value;
+            else return "0";
+        }
+
+        function __InitBCT() {
+        	if(__GetStatus() == "1") {
+        		__ShowAllTrail();
+        	}
+        }
+
+        var __attachmentsMenuJustShown = false;
+        var __adminToolsMenuJustShown = false;
+        var __ie7Mode = false;
+
+        function __ToggleAttachmentsMenu(cx, cy) {
+        	var element = document.getElementById("PageAttachmentsDiv");
+        	if(element) {
+        		if(element.style["display"] == "none") {
+        			element.style["display"] = "";
+        			var pos = __AbsolutePosition(element);
+        			if(pos.left - cx > 0) {
+        				__ie7Mode = true;
+        				element.style["position"] = "absolute";
+        				element.style["top"] = cy + "px";
+        				element.style["left"] = (cx - pos.width) + "px";
+        			}
+        			else {
+        				__RepositionDiv(document.getElementById("PageAttachmentsLink"), element);
+        			}
+        			__attachmentsMenuJustShown = true;
+        		}
+        	}
+        	return false;
+        }
+        function __HideAttachmentsMenu() {
+        	var element = document.getElementById("PageAttachmentsDiv");
+        	if(element && !__attachmentsMenuJustShown) {
+        		element.style["display"] = "none";
+        		if (__ie7Mode) element.style["left"] = "10000px";
+        	}
+        	__attachmentsMenuJustShown = false;
+        	return true; // Needed to enabled next clicks' action (file download)
+        }
+
+        function __ToggleAdminToolsMenu(cx, cy) {
+        	var element = document.getElementById("AdminToolsDiv");
+        	if(element) {
+        		if(element.style["display"] == "none") {
+        			element.style["display"] = "";
+        			var pos = __AbsolutePosition(element);
+        			if(pos.left - cx > 0) {
+        				__ie7Mode = true;
+        				element.style["position"] = "absolute";
+        				element.style["top"] = cy + "px";
+        				element.style["left"] = (cx - pos.width) + "px";
+        			}
+        			else {
+        				__RepositionDiv(document.getElementById("AdminToolsLink"), element);
+        			}
+        			__adminToolsMenuJustShown = true;
+        		}
+        	}
+        	return false;
+        }
+        function __HideAdminToolsMenu() {
+        	var element = document.getElementById("AdminToolsDiv");
+        	if(element && !__adminToolsMenuJustShown) {
+        		element.style["display"] = "none";
+        		if(__ie7Mode) element.style["left"] = "10000px";
+        	}
+        	__adminToolsMenuJustShown = false;
+        	return true; // Needed to enable next clicks' action (admin tools)
+        }
+
+        function __HideAllMenus() {
+        	__HideAttachmentsMenu();
+        	__HideAdminToolsMenu();
+        }
+
+        document.body.onclick = __HideAllMenus;
+
+        function __AbsolutePosition(obj) {
+        	var pos = null;
+        	if(obj != null) {
+        		pos = new Object();
+        		pos.top = obj.offsetTop;
+        		pos.left = obj.offsetLeft;
+        		pos.width = obj.offsetWidth;
+        		pos.height = obj.offsetHeight;
+
+        		obj = obj.offsetParent;
+        		while(obj != null) {
+        			pos.top += obj.offsetTop;
+        			pos.left += obj.offsetLeft;
+        			obj = obj.offsetParent;
+        		}
+        	}
+        	return pos;
+        }
+
+        var __showTimer = null;
+        var __hideTimer = null;
+
+        function __ShowDropDown(e, divId, parent) {
+           	// Set a timer
+        	// On mouse out, cancel the timer and start a 2nd timer that hides the menu
+        	// When the 1st timer elapses
+        	//   show the drop-down
+        	//   on menu mouseover, cancel the 2nd timer
+        	//   on menu mouse out, hide the menu
+        	__showTimer = setTimeout('__ShowDropDownForReal(' + e.clientX + ', ' + e.clientY + ', "' + divId + '", "' + parent.id + '");', 200);
+        }
+
+        function __ShowDropDownForReal(cx, cy, divId, parentId) {
+        	var pos = __AbsolutePosition(document.getElementById(parentId));
+        	var menu = document.getElementById(divId);
+
+			// This is needed to trick IE7 which, for some reason,
+			// does not position the drop-down correctly with the new Default theme
+        	if(pos.left - cx > 30) {
+        		menu.style["display"] = "";
+        		menu.style["position"] = "absolute";
+        		menu.style["top"] = cy + "px";
+        		menu.style["left"] = (cx - 10) + "px";
+        	}
+        	else {
+        		menu.style["display"] = "";
+        		menu.style["position"] = "absolute";
+        		menu.style["top"] = (pos.top + pos.height) + "px";
+        		menu.style["left"] = pos.left + "px";
+        	}
+        	__showTimer = null;
+        }
+
+        function __HideDropDown(divId) {
+        	if(__showTimer) clearTimeout(__showTimer);
+        	__hideTimer = setTimeout('__HideDropDownForReal("' + divId + '");', 200);
+        }
+
+        function __HideDropDownForReal(divId) {
+        	document.getElementById(divId).style["display"] = "none";
+        	__hideTimer = null;
+        }
+
+        function __CancelHideTimer() {
+        	if(__hideTimer) clearTimeout(__hideTimer);
+        }
+        
+    // -->
+    </script>
+
+	<a id="PageTop"></a>
+	
+	<div id="PageHeaderDiv">
+	
+		<!-- Change this to PageToolbarDiv -->
+		<div id="EditHistoryLinkDiv">
+			<a id="DiscussLink" title="Discuss" href="TextFileEncodingDetector.ashx?Discuss=1">Discuss (0)</a>
+			
+			<a id="ViewCodeLink" title="View Page Code" href="TextFileEncodingDetector.ashx?Code=1">View Page Code</a>
+			<a id="HistoryLink" title="View Page edit history" href="History.aspx?Page=TextFileEncodingDetector">History</a>
+			
+			
+			
+			
+			
+		</div>
+		
+		<h1 class="pagetitle">
+			
+			TextFileEncodingDetector project
+			
+		</h1>
+		
+		<div id="PrintLinkDiv">
+			<a id="PrintLink" href="Print.aspx?Page=TextFileEncodingDetector" title="Printer friendly version" target="_blank">Print</a>
+		</div>
+		
+		<div id="RssLinkDiv">
+			<a id="RssLink" href="RSS.aspx?Page=TextFileEncodingDetector" title="Update notifications for this Page (RSS 2.0)" target="_blank">RSS</a>
+		</div>
+		
+		<div id="EmailNotificationDiv">
+			<span id="Anthem_ctl00_CphMaster_btnEmailNotification__"></span>
+		</div>
+		
+		<div id="ctl00_CphMaster_pnlPageInfo">
+	
+			<div id="PageInfoDiv">
+				<span id="ModificationSpan">
+					Modified on 
+					2012-05-02 08:00
+				</span>
+				<span id="AuthorSpan">
+					 by 
+					<a href="User.aspx?Username=TaoK">TaoK</a>
+				</span>
+				<span id="NavPathsSpan">
+					
+				</span>
+				<span id="CategoriesSpan">
+					Categorized as 
+					<a href="AllPages.aspx?Cat=C%23" title="C#">C#</a>, <a href="AllPages.aspx?Cat=dotNet%202" title="dotNet 2">dotNet 2</a>
+				</span>
+				
+				<span id="PageDiscussionSpan">
+					
+					
+				</span>
+			</div>
+		
+</div>
+		
+		
+		
+		
+	
+	</div>
+	
+	<div id="PageContentDiv">
+		There's an awkward situation on Windows machines (and, I suspect, more generally) - text files, and text-based files like CSV files, etc, can be saved in any number of encodings: windows codepages, less-common encodings such as EBCDIC, and more modern encodings like UTF-8 and UTF-16.<br /><br />The newer Unicode formats have a standard for "self-describing" the encoding, in the form of a Byte Order Mark, but this is often not present, and in fact actively discouraged by the unicode consortium, in the case of UTF-8.<br /><br />For UTF-8 in particular, this poses a problem because UTF-8 encoding looks a whole lot like ASCII/ANSI/Windows-1252/Latin-1, a family of related encodings commonly used and confused on Windows systems and nowadays globally.<br /><br />The "Correct" thing to do, when presented with a text file, is to:
+<ol><li>Check for a BOM, indicating a Unicode file of some specific type</li><li>If not found, ask the user what encoding was used (preferably providing suggestions with a "most likely) order). <br /></li></ol><br />Or at least, this is the opinion of many developers, see <a class="externallink" href="http://stackoverflow.com/questions/90838/how-can-i-detect-the-encoding-codepage-of-a-text-file" title="this stack overflow question" target="_blank">this stack overflow question</a> and the linked seminal rant by Joel Spolsky, <a class="externallink" href="http://www.joelonsoftware.com/printerFriendly/articles/Unicode.html" title="The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)" target="_blank">The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)</a>.<br /><br />Now in the real world, most users don't know what encoding their files use, and on windows machines in western and particularly english-speaking countries, the number of options commonly encountered is quite limited:
+<ul><li>Windows-1252 (a superset of Latin-1, which itself is a superset of US-ASCII)</li><li>UTF-8, with or without BOM</li><li>UTF-16, LE or BE, with or without BOM<br /></li></ul><br />Automatically determining which of these a text file uses is, 99% of the time, quite straightforward, but I couldn't find any libraries that do it - nothing in the .Net framework, no usable code snippets online (beyond trivial BOM detection), simply no easy way to do it.<br /><br />So there it is. A simple class that automatically detects with of these encodings a file probably uses, for when your users don't have a clue. If they do get a choice, please please get them to use Unicode or UTF-8 with BOM! It makes things sooo much easier...<br /><br />Now, some caveats:
+<ul><li>If your application design permits it, it's still preferable to provide some sort of preview and selection dialog.</li><li>After writing this, I came across a library on codeproject that wraps MLang to do something very similar: <a class="externallink" href="http://www.codeproject.com/KB/recipes/DetectEncoding.aspx" title="Detect Encoding for In- and Outgoing Text" target="_blank">Detect Encoding for In- and Outgoing Text</a>. I haven't tested this, but it may be more appropriate in some situations (especially in multi-lingual environments).</li><li>Just today, I read about another project that does something that sounds very similar: <a class="externallink" href="http://utf8checker.codeplex.com/" title="UTF8Checker" target="_blank">UTF8Checker</a> on codeplex. Again, I haven't tested this, although it sounds like a subset of what the class below does.<br /></li></ul><br />I may take the time to run some tests and turn this snippet into an actual library (assuming the MLang-based solution doesn't beat the pants off it) at some point.<br /><br />Any feedback would be wonderful! (note: this is a Gist on GitHub, feel free to fork/edit/etc)<br /><br /><b>Please Note:</b> A couple of additional considerations have come up recently:
+<ul><li>Eric Popivker reported an exception under some circumstances, the fix should be checked in soon.</li><li>He also noted that MLang doesn't always detect Unicode encodings correctly, and that a hybrid approach worked best for him; first checking for unicode encodings with the code below, and then using unmanaged MLang (nicely wrapped in <a class="externallink" href="http://www.codeproject.com/Articles/17201/Detect-Encoding-for-In-and-Outgoing-Text" title="Carsten Zeumer's famous "EncodingTools.dll" project" target="_blank">Carsten Zeumer's famous "EncodingTools.dll" project</a>). This is done in <a class="externallink" href="http://findandreplace.codeplex.com/workitem/2" title="his open-source find-and-replace tool, fnr.exe" target="_blank">his open-source find-and-replace tool, fnr.exe</a>.</li><li>He's also noted that the code below (and MLang) doesn't do anything to avoid binary files, which you <u>usually</u> don't want to treat as text files (chances are that if you're trying to auto-detect the encoding, you're not planning to handle arbitrary binary content). <a class="externallink" href="http://www.entechsolutions.com/how-to-detect-if-file-is-text-or-binary-using-c" title="He mentions" target="_blank">He mentions</a> a simple detection heuristic, looking for a sequence of 4 binary nulls in the raw bytestream, as a so-far-reliable way to separate binary files from text files.</li><li>I'm hoping / planning to wrap this hybrid-and-binary-detection approach into a small encoding-detection library at some point, but I have no timeline established (weeks/months/years).<br /></li></ul><br /><script src="https://gist.github.com/945127.js?file=TextFileEncodingDetector.cs"></script>
+
+	</div>
+	
+	
+	
+	<div id="PageAttachmentsDiv" style="position: absolute; left: 10000px;">
+		
+    </div>
+    
+    <div id="AdminToolsDiv" style="position: absolute; left: 10000px;">
+		
+		
+		
+    </div>
+    
+    <script type="text/javascript">
+    <!--
+    	function __RepositionDiv(link, element) {
+    		var absPos = __AbsolutePosition(link);
+    		var elemAbsPos = __AbsolutePosition(element);
+
+    		element.style["top"] = (absPos.top + absPos.height) + "px";
+    		element.style["left"] = (absPos.left - (elemAbsPos.width - absPos.width)) + "px";
+    		element.style["position"] = "absolute";
+    	}
+
+		// Hide attachments and admin tools divs
+    	// This is needed because __RepositionDiv cannot calculate the width of the element when it's hidden
+    	var __elem = document.getElementById("PageAttachmentsDiv");
+    	if(document.getElementById("PageAttachmentsLink")) {
+    		__RepositionDiv(document.getElementById("PageAttachmentsLink"), __elem);
+    	}
+    	__elem.style["display"] = "none";
+
+    	__elem = document.getElementById("AdminToolsDiv");
+    	if(document.getElementById("AdminToolsLink")) {
+    		__RepositionDiv(document.getElementById("AdminToolsLink"), __elem);
+    	}
+    	__elem.style["display"] = "none";
+
+    	__InitBCT();
+    // -->
+    </script>
+
+
+                <div id="PageInternalFooterDiv">
+</div>
+                <div id="MainFooterDiv">
+                    <!-- Used for layout purposes only -->
+                </div>
+            </div>
+
+        </div>
+            
+        <div id="FooterDiv">
+            <p class="small">&copy; 2007-2012 Tao Klerks | <a class="pagelink" href="WelcomePage.ashx" title="Welcome!">Home</a> | <a class="pagelink" href="ContactMe.ashx" title="Contact Me">Contact Me</a></p>
+
+        </div>
+
+    </form>  
+</body>
+</html>

@@ -1,0 +1,1568 @@
+﻿<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "" ""><HTML lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=11.0000" http-equiv="X-UA-Compatible">
+
+<META name="WT.seg_1" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"><LINK href="https://msdn.microsoft.com/en-us/library/system.web.httputility(v=vs.110).aspx" 
+rel="canonical">         <TITLE>HttpUtility Class (System.Web)</TITLE> 
+<META name="DCS.dcsuri" content="/en-us/library/1e55w41w(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="NormalizedUrl" content="https://msdn.microsoft.com/en-us/library/1e55w41w(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="ms.normalizedurl" content="https://msdn.microsoft.com/en-us/library/1e55w41w(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="DCSext.ProductFamily" content="LIB_DG"> 
+<META name="DCSext.Product" content="NDP_ASPNET"> 
+<META name="DCSext.Title" content="HttpUtility Class"> 
+<META name="ms.devlang" content="dotnet"> 
+<META name="ms.prod" content=".net-framework-4.6"> 
+<META name="ms.service" content=""> 
+<META name="ms.topic" content="managed-reference"> 
+<META name="AmbientContext" content='{"AmbientContextId":"6777E035-D3ED-4728-AE71-4CA086D77C3B","AmbientContextDownstream":{}}'> 
+<META name="VotingContextUrl" content="https://msdn.microsoft.com/en-us/library/1e55w41w(d=default,l=en-us,v=vs.110).aspx"> 
+<META name="MN" content="FB361392-12:40:33 PM"> 
+<META name="Search.ShortId" content="1e55w41w"> 
+<META name="ms.shortidmsdn" content="1e55w41w"> 
+<META name="Ms.Locale" content="en-us"> 
+<META name="ms.prodver" content="VS.110"> 
+<META name="ms.contentlang" content="EN"> 
+<META name="ms.lang" content="EN"> 
+<META name="ms.loc" content="US"> 
+<META name="ms.sitever" content="2015.09.14.1"> 
+<META name="ms.assetid" content="T:System.Web.HttpUtility"> 
+<META name="ms.auth" content="0"> 
+<META name="ms.author" content="REDMOND\keithn"> 
+<META name="ms.custom" content=""> 
+<META name="ms.date" content="2013/07/24"> 
+<META name="ms.technology" content=""> 
+<META name="viewport" content="width=device-width, initial-scale=1.0">           
+              <LINK href="https://i-msdn.sec.s-msft.com/Combined.css?resources=0:ImageSprite,0:TopicResponsive,0:TopicResponsive.MediaQueries,1:CodeSnippet,1:ProgrammingSelector,1:ExpandableCollapsibleArea,0:CommunityContent,1:TopicNotInScope,1:FeedViewerBasic,1:ImageSprite,2:Header,2:HeaderFooterSprite,2:Header.MediaQueries,3:Banner.MediaQueries,4:LinkList,0:Breadcrumbs,0:Breadcrumbs.MediaQueries,0:ResponsiveToc,0:ResponsiveToc.MediaQueries,1:VersionSelector,0:LibraryMemberFilter,5:SkinnyRating,2:Footer,2:Footer.MediaQueries,4:FooterSock,4:FooterSock.MediaQueries,0:BaseResponsive,6:MsdnResponsive;/Areas/Library/Content:0,/Areas/Epx/Content/Css:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Epx/Shared/Content:3,/Areas/Epx/Themes/Base/Content:4,/Areas/Library/Themes/Base/Content:5,/Areas/Library/Themes/Msdn/Content:6&amp;amp;v=C095E67EC215988DCA7BF7D689D03CFF" 
+rel="stylesheet" type="text/css">
+<SCRIPT src="//az416426.vo.msecnd.net/scripts/a/ai.0.js" type="text/javascript" async=""></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+/**/
+(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { 
+	"image": "https://i-msdn.sec.s-msft.com", 
+	"js": "https://i2-msdn.sec.s-msft.com", 
+	"css": "https://i-msdn.sec.s-msft.com", 
+	"xap": "https://msdn.microsoft.com"
+});
+/**/
+} finally { MTPS._injectNextScript_0 && MTPS._injectNextScript_0(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+//
+  var literalNormalizedUrl = '/en-us/library/1e55w41w(l=en-us,v=vs.110).aspx';
+  var wt_nvr_ru = 'WT_NVR_RU';
+  var wt_fpcdom = '.microsoft.com';
+  var wt_domlist = 'msdn.microsoft.com';
+  var wt_pathlist = '';
+  var wt_paramlist = 'DCSext.mtps_devcenter';
+  var wt_siteid = 'MSDN';
+  var gDomain = 'm.webtrends.com';
+  var gDcsId = 'dcsmgru7m99k7mqmgrhudo0k8_8c6m';
+  var gFpc = 'WT_FPC';
+
+
+
+  if (document.cookie.indexOf(gFpc + "=") == -1) {
+    var wtidJs = document.createElement("script");
+    wtidJs.src = "//" + gDomain + "/" + gDcsId + "/wtid.js";
+    document.getElementsByTagName("head")[0].appendChild(wtidJs);
+  }
+
+
+
+  var detectedLocale = 'en-us';
+  var wtsp = 'msdnlib_dotnet';
+  var gTrackEvents = '0';
+/**/
+} finally { MTPS._injectNextScript_2 && MTPS._injectNextScript_2(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+//
+
+        window.appInsightsId = '60854590-027a-4ae4-98be-2741a40f355f';
+        //
+} finally { MTPS._injectNextScript_3 && MTPS._injectNextScript_3(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5&amp;amp;hashKey=0B41D28E6726B4E716D72FB5060856F6&amp;amp;v=39C43C7786CEFC417EBC779FDB2447B4"></SCRIPT>
+<LINK href="/Areas/Epx/Content/Css/PrintView.css" rel="stylesheet" type="text/css" 
+media="print">
+<SCRIPT src="https://c.microsoft.com/ms.js" type="text/javascript"></SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox&amp;btnid=HeaderSearchButton&amp;brand=Msdn&amp;loc=en-us&amp;focusOnInit=false&amp;emptyWatermark=true&amp;searchButtonTooltip=Search MSDN"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = 'Expand'; MTPS.LocalizedStrings.CollapseButtonTooltip = 'Collapse'; MTPS.LocalizedStrings.EnhancedExpandTooltip = 'Click to expand. Double-click to expand all.'; MTPS.LocalizedStrings.EnhancedCollapseTooltip = 'Click to collapse. Double-click to collapse all.'; MTPS.LocalizedStrings.ExpandAllButtonTooltip = 'Expand All'; MTPS.LocalizedStrings.CollapseAllButtonTooltip = 'Collapse All';
+} finally { MTPS._injectNextScript_6 && MTPS._injectNextScript_6(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1&amp;amp;hashKey=16381DF0927C75E12C62EAD23C017874&amp;amp;v=39C43C7786CEFC417EBC779FDB2447B4"></SCRIPT>
+
+<SCRIPT src="https://www.microsoft.com/library/svy/sto/https/broker.js"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+$(document).ready(function() {
+        try {
+            var token = $("#globalRequestVerification input[name='__RequestVerificationToken']").clone();
+            $("#siteFeedbackForm").append(token);
+        } catch(err) {
+            
+        }
+    });
+} finally { MTPS._injectNextScript_8 && MTPS._injectNextScript_8(); }</SCRIPT>
+</HEAD> 
+<BODY class="library IE IE11">
+<DIV id="page"><LINK rel="stylesheet" type="text/css">                         
+<INPUT id="isHeaderBleeding" type="hidden" value="true">     
+<DIV class="ltr msdn" id="ux-header" dir="ltr" data-device-type="tablet"><HEADER 
+class="mobile" ms.pgarea="header"><SPAN id="singleCol"></SPAN>         <SPAN id="doubleCol"></SPAN> 
+        <SPAN id="isMobile"></SPAN>
+<DIV>
+<DIV class="row topRow">
+<DIV class="top">
+<DIV class="left"><A class="msdnLogoImg" 
+href="https://msdn.microsoft.com/en-us">
+<DIV class="tablet-msft-logo" id="msft-logo"></DIV></A>                 
+<DIV class="GrayPipe"></DIV>                   <A class="DevCenterFullNameNonMegaBlade" 
+href="https://msdn.microsoft.com/en-us">Developer Network</A>                 <A 
+class="DevCenterFullName" href="https://msdn.microsoft.com/en-us">Developer 
+Network</A>                 <A class="DevCenterShortName" href="https://msdn.microsoft.com/en-us">Developer</A> 
+              </DIV>
+<DIV class="right">
+<DIV id="signIn"><IMG class="profileImage" src="https://i-msdn.sec.s-msft.com/Areas/Centers/Themes/StandardDevCenter/Content/Images/profile.jpg?v=635777873377454672"> 
+</DIV>                 </DIV></DIV></DIV>
+<DIV class="row middleRow">
+<DIV class="expandTop" style="display: none;">
+<DIV class="left">
+<DIV class="auxNav">
+<DIV>
+<DIV id="Fragment_Subscriptions" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="Subscriptions"><A id="Subscriptions_2153_1" href="https://msdn.microsoft.com/subscriptions/manage/hh442900" 
+xmlns="http://www.w3.org/1999/xhtml">MSDN subscriptions</A> </DIV>
+<DIV id="Fragment_GetTools" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="GetTools"><A id="GetTools_2153_3" href="http://go.microsoft.com/fwlink/?LinkId=309297&amp;clcid=0x409&amp;slcid=0x409&amp;campaign=o~msft~msdn~gettools-header~dn308572" 
+xmlns="http://www.w3.org/1999/xhtml">Get tools</A> </DIV></DIV>
+<DIV>
+<DIV id="Fragment_SocialLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SocialLinks">
+<DIV class="linkList">
+<UL class="links horizontal">
+  <LI><A class="facebook" id="SocialLinks_2152_4" href="http://www.facebook.com/microsoftdeveloper" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">http://www.facebook.com/microsoftdeveloper</A> 
+        </LI>
+  <LI><A class="twitter" id="SocialLinks_2152_5" href="https://twitter.com/msdev" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">https://twitter.com/msdev</A>       </LI>
+  <LI><A class="googlePlus" id="SocialLinks_2152_6" href="http://plus.google.com/111221966647232053570/" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">http://plus.google.com/111221966647232053570/</A> 
+        </LI></UL></DIV></DIV></DIV></DIV></DIV>
+<DIV class="right"><A title="Sign in" class="scarabLink" href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1442864433&amp;rver=6.0.5276.0&amp;wp=MCMBI&amp;wlcxt=MSDN%24MSDN%24MSDN&amp;wreply=https%3a%2f%2fmsdn.microsoft.com%2fen-us%2flibrary%2fsystem.web.httputility%2528v%3dvs.110%2529.aspx&amp;lc=1033&amp;id=254354&amp;mkt=en-US">Sign 
+in</A></DIV></DIV></DIV></DIV>
+<DIV class="bg_default" id="buttomRowWrapper">
+<DIV class="row buttomRow bg_default">
+<DIV class="bottom">
+<DIV class="left"><A class="menu-icon" id="grip" href="javascript:void(0)"></A>  
+                               </DIV>               
+<DIV class="right">
+<DIV id="Fragment_SearchBox" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SearchBox">
+<DIV class="SearchBox">
+<FORM name="HeaderSearchForm" id="HeaderSearchForm" method="get"><BUTTON class="header-search-button" 
+id="FakeHeaderSearchButton" type="submit" value="Search">
+<DIV class="search-finder" id="search-finder"></DIV></BUTTON>       <BUTTON 
+title="Search MSDN" id="HeaderSearchButton" style="display: none;" 
+data-searchtype="icon"></BUTTON>       
+<DIV id="searchSplitter"></DIV>
+<DIV class="search-clear-x" id="searchCloseIcon"></DIV>
+<DIV id="searchTextContainer" style="width: 0px; display: none;"><INPUT name="query" id="HeaderSearchTextBox" onfocus="Epx.Controls.SearchBox.watermarkFocus(event, this.title)" onblur="Epx.Controls.SearchBox.watermarkBlur(event, this.title)" type="text" maxlength="200" autocomplete="off" data-searchtype="searchbox"> 
+      
+<DIV id="SearchFlyoutContainer" style='padding: 2px; border: 1px solid buttonshadow; border-image: none; text-align: left; color: rgb(255, 255, 255); font-family: "Segoe UI",Tahoma,Helvetica,Sans-Serif; font-size: 16px; display: none; position: absolute; z-index: 1000; background-color: rgb(255, 255, 255);'>
+<DIV id="SuggestionContainer">
+<UL style="list-style: none; margin: 1px; padding: 4px 2px 0px 1px; white-space: nowrap; cursor: pointer;"></UL></DIV></DIV></DIV></FORM></DIV></DIV></DIV></DIV>
+<DIV id="drawer" style="display: none;">
+<DIV class="toc"><NAV>
+<UL class="navL1" ms.cmpgrp="main nav">
+  <LI class="inactive toggle"><A title="Technologies" 
+  href="javascript:void(0)">Technologies</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Cloud" href="https://msdn.microsoft.com/cloud-app-development-msdn">Cloud</A></LI>
+    <LI class="inactive"><A title="App Development" href="https://msdn.microsoft.com/app-development-msdn">App 
+    Development</A></LI>
+    <LI class="inactive"><A title="Web" href="https://msdn.microsoft.com/web-app-development-msdn">Web</A></LI>
+    <LI class="inactive"><A title="Data" href="https://msdn.microsoft.com/big-data-development-msdn">Data</A></LI>
+    <LI class="inactive"><A title="Gaming" href="https://msdn.microsoft.com/games-development-msdn">Gaming</A></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Downloads" 
+  href="javascript:void(0)">Downloads</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Visual Studio" href="https://www.visualstudio.com/downloads/download-visual-studio-vs">Visual 
+    Studio</A></LI>
+    <LI class="inactive"><A title="MSDN subscription access" href="https://msdn.microsoft.com/subscriptions">MSDN 
+    subscription access</A></LI>
+    <LI class="inactive"><A title="SDKs" href="https://msdn.microsoft.com/microsoft-sdks-msdn">SDKs</A></LI>
+    <LI class="inactive toggle"><A title="Trial software" href="javascript:void(0)">Trial 
+    software</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Free downloads" href="https://msdn.microsoft.com/evalcenter">Free 
+      downloads</A></LI>
+      <LI class="inactive"><A title="Office resources" href="https://msdn.microsoft.com/officeevaluationresources">Office 
+      resources</A></LI>
+      <LI class="inactive"><A title="SharePoint Server 2013 resources" href="https://msdn.microsoft.com/sharepoint2013resources">SharePoint 
+      Server 2013 resources</A></LI>
+      <LI class="inactive"><A title="SQL Server 2014 Express resources" href="https://msdn.microsoft.com/sqlserver2014expressresources">SQL 
+      Server 2014 Express resources</A></LI>
+      <LI class="inactive"><A title="Windows Server 2012 resources" href="https://msdn.microsoft.com/windowsserver2012r2resources">Windows 
+      Server 2012 resources</A></LI></UL></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Programs" 
+  href="javascript:void(0)">Programs</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Rewards" href="https://rewards.msdn.microsoft.com/">Rewards</A></LI>
+    <LI class="inactive"><A title="Startups" href="https://www.microsoft.com/bizspark">Startups</A></LI>
+    <LI class="inactive toggle"><A title="Students" 
+    href="javascript:void(0)">Students</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Microsoft Imagine" href="https://msdn.microsoft.com/imagine/imagine-home">Microsoft 
+      Imagine</A></LI>
+      <LI class="inactive"><A title="Microsoft Student Partners" href="https://msdn.microsoft.com/microsoftstudentpartners">Microsoft 
+      Student Partners</A></LI></UL></LI>
+    <LI class="inactive toggle"><A title="Architects" 
+    href="javascript:void(0)">Architects</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Overview" href="https://msdn.microsoft.com/architects-overview-msdn">Overview</A></LI>
+      <LI class="inactive"><A title="Case studies" href="https://msdn.microsoft.com/architects-case-studies-msdn">Case 
+      studies</A></LI>
+      <LI class="inactive"><A title="Blueprints" href="https://msdn.microsoft.com/architects-blueprints-msdn">Blueprints</A></LI>
+      <LI class="inactive"><A title="Blog" href="http://blogs.msdn.com/b/msarchitecture/">Blog</A></LI>
+      <LI class="inactive"><A title="Forums" href="http://social.msdn.microsoft.com/forums/en-us/home?brandignore=true&amp;sort=relevancedesc&amp;searchterm=architecture+or+architect">Forums</A></LI></UL></LI>
+    <LI class="inactive"><A title="Events" href="http://events.msdn.microsoft.com/">Events</A></LI>
+    <LI class="inactive toggle"><A title="MSDN Subscriptions" href="javascript:void(0)">MSDN 
+    Subscriptions</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Overview" href="https://msdn.microsoft.com/msdn-subscriptions-overview">Overview</A></LI>
+      <LI class="inactive"><A title="Benefits" href="https://msdn.microsoft.com/benefits-overview">Benefits</A></LI>
+      <LI class="inactive"><A title="Administrators" href="https://msdn.microsoft.com/msdn-subscriptions-administration">Administrators</A></LI></UL></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Community" 
+  href="javascript:void(0)">Community</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Magazine" href="https://msdn.microsoft.com/magazine/dd767791">Magazine</A></LI>
+    <LI class="inactive"><A title="Forums" href="https://social.msdn.microsoft.com/forums/">Forums</A></LI>
+    <LI class="inactive"><A title="Blogs" href="http://blogs.msdn.com/b/developer-tools/">Blogs</A></LI>
+    <LI class="inactive"><A title="Tech Advisors" href="http://tech-advisors.msdn.microsoft.com/en-us">Tech 
+    Advisors</A></LI>
+    <LI class="inactive"><A title="Channel 9" 
+    href="http://channel9.msdn.com/">Channel 9</A></LI></UL></LI>
+  <LI class="inactive current toggle"><A title="Documentation" href="javascript:void(0)">Documentation</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive current"><A title="APIs and reference" href="https://msdn.microsoft.com/library">APIs 
+    and reference</A></LI>
+    <LI class="inactive"><A title="Dev centers" href="https://msdn.microsoft.com/developer-centers-msdn">Dev 
+    centers</A></LI></UL></LI>
+  <LI class="inactive"><A title="Samples" href="https://code.msdn.microsoft.com/">Samples</A></LI></UL></NAV></DIV></DIV></DIV></DIV></HEADER>
+<DIV id="overlayMaskHeader"></DIV></DIV><LINK rel="stylesheet" type="text/css"> 
+<LINK rel="stylesheet" type="text/css">     
+<DIV id="breadcrumbs">
+<DIV class="breadCrumb" id="breadcrumbDesktop"><SPAN 
+class="breadcrumbEllipsis"><A title=".NET Framework 4.6 and 4.5" href="https://msdn.microsoft.com/en-us/library/w0x726c2(v=vs.110).aspx"></A></SPAN> 
+                        <SPAN><A title=".NET Framework Class Library" href="https://msdn.microsoft.com/en-us/library/mt472912(v=vs.110).aspx"><SPAN>.NET 
+Framework Class Library</SPAN></A></SPAN>                         <SPAN><A 
+title="System.Web Namespaces" href="https://msdn.microsoft.com/en-us/library/mt481589(v=vs.110).aspx"><SPAN>System.Web 
+Namespaces</SPAN></A></SPAN>                         <SPAN class="breadcrumbDropSmall"><A 
+title="System.Web" id="breadcrumbDropDownButton" href="#" targethref="https://msdn.microsoft.com/en-us/library/mt481589(v=vs.110).aspx"><SPAN>System.Web</SPAN></A> 
+                        </SPAN>         </DIV>
+<DIV id="breadcrumbDropDownMenu" style="display: none;"></DIV>
+<DIV id="tocDropDownMenu" style="display: none;"></DIV>
+<DIV class="breadCrumb" id="breadcrumbTablet"><SPAN 
+class="breadcrumbEllipsis"><A title="System.Web Namespaces" href="https://msdn.microsoft.com/en-us/library/mt481589(v=vs.110).aspx"></A></SPAN> 
+                    <SPAN><A title="System.Web" href="https://msdn.microsoft.com/en-us/library/System.Web(v=vs.110).aspx"><SPAN>System.Web</SPAN></A></SPAN> 
+                <SPAN class="breadcrumbDropSmall"><A title="HttpUtility Class" 
+id="tocDropDownButton" href="#"><SPAN>HttpUtility Class</SPAN></A></SPAN>        
+ 
+<DIV id="navigationButtons"><A id="provideFeedback1" 
+href="javascript:void(0)"><INS class="suggestion"></INS>Any Suggestions?</A>     
+        <A id="isd_print" href="https://msdn.microsoft.com/en-us/library/system.web.httputility(d=printer,v=vs.110).aspx" 
+rel="nofollow"><INS class="print"></INS>Print </A>             <A id="isd_printABook" 
+href="/en-us/library/export/help/?returnUrl=%2fen-us%2flibrary%2fsystem.web.httputility(v%3dvs.110).aspx"><INS 
+class="export"></INS>Export (<SPAN class="count">0</SPAN>)             </A>      
+   </DIV></DIV>
+<DIV class="breadCrumb" id="breadcrumbMobile"><SPAN 
+class="breadcrumbEllipsis"><A title="System.Web" href="https://msdn.microsoft.com/en-us/library/System.Web(v=vs.110).aspx"></A></SPAN> 
+            <SPAN class="breadcrumbDropSmall"><A title="HttpUtility Class" id="tocPopupButton" 
+href="#"><SPAN>HttpUtility Class</SPAN></A></SPAN>         </DIV></DIV>
+<DIV id="tocPopupMenu" style="display: none;">
+<DIV class="tocCloseLarge" id="tocPopMenuClose"></DIV>
+<DIV id="tocTitle">HttpUtility Class</DIV>
+<DIV class="hide-archive" id="tocnav" style="top: 60px; width: 255px; position: fixed;" 
+ms.pgarea="left toc">
+<DIV class="tocunselected">
+<DIV id="tocExpandArea" style="display: block;"><SPAN class="toc_empty"></SPAN>  
+           <SPAN id="tocExpandButton"><A href="#"></A></SPAN>         </DIV>
+<DIV id="tocExpand">
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="ApplicationShutdownReason Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.applicationshutdownreason(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">ApplicationShutdownReason 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="AspNetHostingPermission Class" id="mt543384_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.aspnethostingpermission(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">AspNetHostingPermission Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="AspNetHostingPermissionAttribute Class" id="mt532292_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.aspnethostingpermissionattribute(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">AspNetHostingPermissionAttribute Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="AspNetHostingPermissionLevel Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.aspnethostingpermissionlevel(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">AspNetHostingPermissionLevel 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="BeginEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.begineventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">BeginEventHandler 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="DefaultHttpHandler Class" id="mt543497_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.defaulthttphandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">DefaultHttpHandler Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="EndEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.endeventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">EndEventHandler Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="EventHandlerTaskAsyncHelper Class" id="mt532301_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.eventhandlertaskasynchelper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">EventHandlerTaskAsyncHelper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HtmlString Class" id="mt532276_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.htmlstring(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HtmlString Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpApplication Class" id="mt543400_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpapplication(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpApplication Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpApplicationState Class" id="mt543392_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpapplicationstate(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpApplicationState Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpApplicationStateBase Class" id="mt543406_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpapplicationstatebase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpApplicationStateBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpApplicationStateWrapper Class" id="mt543390_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpapplicationstatewrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpApplicationStateWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpBrowserCapabilities Class" id="mt543398_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpbrowsercapabilities(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpBrowserCapabilities Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpBrowserCapabilitiesBase Class" id="mt543430_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpbrowsercapabilitiesbase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpBrowserCapabilitiesBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpBrowserCapabilitiesWrapper Class" id="mt543419_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpbrowsercapabilitieswrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpBrowserCapabilitiesWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HttpCacheability Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.httpcacheability(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HttpCacheability 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCachePolicy Class" id="mt543413_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpcachepolicy(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCachePolicy Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCachePolicyBase Class" id="mt543409_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcachepolicybase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCachePolicyBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCachePolicyWrapper Class" id="mt543404_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcachepolicywrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCachePolicyWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HttpCacheRevalidation Enumeration" href="https://msdn.microsoft.com/en-us/library/w3shzhd9(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HttpCacheRevalidation 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HttpCacheValidateHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.httpcachevalidatehandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HttpCacheValidateHandler 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCacheVaryByContentEncodings Class" id="mt532291_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcachevarybycontentencodings(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCacheVaryByContentEncodings Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCacheVaryByHeaders Class" id="mt543383_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcachevarybyheaders(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCacheVaryByHeaders Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCacheVaryByParams Class" id="mt543389_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcachevarybyparams(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCacheVaryByParams Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpClientCertificate Class" id="mt543405_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpclientcertificate(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpClientCertificate Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCompileException Class" id="mt543496_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcompileexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCompileException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpContext Class" id="mt543574_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpcontext(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpContext Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpContextBase Class" id="mt543468_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpcontextbase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpContextBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpContextWrapper Class" id="mt543478_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcontextwrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpContextWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCookie Class" id="mt543450_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpcookie(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCookie Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpCookieCollection Class" id="mt543442_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpcookiecollection(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpCookieCollection Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HttpCookieMode Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.httpcookiemode(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HttpCookieMode 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpException Class" id="mt543451_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpFileCollection Class" id="mt543432_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpfilecollection(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpFileCollection Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpFileCollectionBase Class" id="mt543470_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpfilecollectionbase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpFileCollectionBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpFileCollectionWrapper Class" id="mt543454_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpfilecollectionwrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpFileCollectionWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpModuleCollection Class" id="mt543476_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpmodulecollection(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpModuleCollection Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpParseException Class" id="mt543505_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpparseexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpParseException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpPostedFile Class" id="mt543475_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httppostedfile(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpPostedFile Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpPostedFileBase Class" id="mt543498_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httppostedfilebase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpPostedFileBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpPostedFileWrapper Class" id="mt543492_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httppostedfilewrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpPostedFileWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpRequest Class" id="mt543572_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httprequest(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpRequest Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpRequestBase Class" id="mt543546_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httprequestbase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpRequestBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpRequestValidationException Class" id="mt543499_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httprequestvalidationexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpRequestValidationException Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpRequestWrapper Class" id="mt543517_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httprequestwrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpRequestWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpResponse Class" id="mt543573_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpresponse(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpResponse Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpResponseBase Class" id="mt543542_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpresponsebase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpResponseBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HttpResponseSubstitutionCallback Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.httpresponsesubstitutioncallback(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HttpResponseSubstitutionCallback 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpResponseWrapper Class" id="mt543561_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpresponsewrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpResponseWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpRuntime Class" id="mt543530_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpruntime(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpRuntime Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpServerUtility Class" id="mt543578_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpserverutility(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpServerUtility Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpServerUtilityBase Class" id="mt543625_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpserverutilitybase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpServerUtilityBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpServerUtilityWrapper Class" id="mt543637_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpserverutilitywrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpServerUtilityWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpSessionStateBase Class" id="mt532319_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpsessionstatebase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpSessionStateBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpSessionStateWrapper Class" id="mt543613_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpsessionstatewrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpSessionStateWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpStaticObjectsCollection Class" id="mt543601_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpstaticobjectscollection(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpStaticObjectsCollection Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpStaticObjectsCollectionBase Class" id="mt532314_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpstaticobjectscollectionbase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpStaticObjectsCollectionBase Class</A></DIV></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpStaticObjectsCollectionWrapper Class" id="mt543605_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpstaticobjectscollectionwrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpStaticObjectsCollectionWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpTaskAsyncHandler Class" id="mt543600_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httptaskasynchandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpTaskAsyncHandler Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpUnhandledException Class" id="mt543596_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.httpunhandledexception(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpUnhandledException Class</A></DIV></DIV>
+<DIV class="tocselected">
+<DIV class="toclevel current" data-toclevel="1" data-childrenloaded="true"><A 
+class="toc_expanded" aria-label="Collapse the table of content" href="#"></A><A 
+title="HttpUtility Class" id="mt543612_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httputility(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpUtility Class</A></DIV>
+<DIV class="tocPadding">
+<DIV class="toclevel " data-toclevel="2"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpUtility Methods" id="mt543619_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httputility_methods(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpUtility Methods</A></DIV>
+<DIV class="toclevel " data-toclevel="2"><SPAN class="toc_empty"></SPAN><A 
+title="HttpUtility Constructor" href="https://msdn.microsoft.com/en-us/library/system.web.httputility.httputility(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HttpUtility 
+Constructor</A></DIV></DIV></DIV>
+<DIV class="tocunselected">
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HttpValidationStatus Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.httpvalidationstatus(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">HttpValidationStatus 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpWorkerRequest Class" id="mt532338_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpworkerrequest(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpWorkerRequest Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="HttpWorkerRequest.EndOfSendNotification Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.httpworkerrequest.endofsendnotification(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" 
+mtpsaliasid="">HttpWorkerRequest.EndOfSendNotification Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="HttpWriter Class" id="mt468561_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.httpwriter(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">HttpWriter Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IHtmlString Interface" id="mt543629_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.ihtmlstring(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IHtmlString Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IHttpAsyncHandler Interface" id="mt543623_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.ihttpasynchandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IHttpAsyncHandler Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IHttpHandler Interface" id="mt543617_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.ihttphandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IHttpHandler Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IHttpHandlerFactory Interface" id="mt543621_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.ihttphandlerfactory(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IHttpHandlerFactory Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IHttpModule Interface" id="mt543627_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.ihttpmodule(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IHttpModule Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IisTraceListener Class" id="mt532309_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.iistracelistener(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IisTraceListener Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="IPartitionResolver Interface" id="mt468541_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.ipartitionresolver(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">IPartitionResolver Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="ISubscriptionToken Interface" id="mt543630_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.isubscriptiontoken(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">ISubscriptionToken Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="ITlsTokenBindingInfo Interface" id="mt532305_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.itlstokenbindinginfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">ITlsTokenBindingInfo Interface</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="MimeMapping Class" id="mt532335_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.mimemapping(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">MimeMapping Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="ParserError Class" id="mt532332_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.parsererror(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">ParserError Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="ParserErrorCollection Class" id="mt532355_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.parsererrorcollection(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">ParserErrorCollection Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="PreApplicationStartMethodAttribute Class" id="mt532344_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.preapplicationstartmethodattribute(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">PreApplicationStartMethodAttribute Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="ProcessInfo Class" id="mt532352_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.processinfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">ProcessInfo Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="ProcessModelInfo Class" id="mt532327_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.processmodelinfo(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">ProcessModelInfo Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="ProcessShutdownReason Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.processshutdownreason(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">ProcessShutdownReason 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="ProcessStatus Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.processstatus(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">ProcessStatus Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="ReadEntityBodyMode Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.readentitybodymode(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">ReadEntityBodyMode 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="RequestNotification Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.requestnotification(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">RequestNotification 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="RequestNotificationStatus Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.requestnotificationstatus(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">RequestNotificationStatus 
+Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="SiteMap Class" id="mt532341_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.sitemap(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">SiteMap 
+Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="SiteMapNode Class" id="mt532358_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.sitemapnode(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">SiteMapNode Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="SiteMapNodeCollection Class" id="mt532349_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.sitemapnodecollection(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">SiteMapNodeCollection Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="SiteMapProvider Class" id="mt532370_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.sitemapprovider(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">SiteMapProvider Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="SiteMapProviderCollection Class" id="mt532374_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.sitemapprovidercollection(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">SiteMapProviderCollection Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="SiteMapResolveEventArgs Class" id="mt532364_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.sitemapresolveeventargs(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">SiteMapResolveEventArgs Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="SiteMapResolveEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.sitemapresolveeventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">SiteMapResolveEventHandler 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="StaticSiteMapProvider Class" id="mt532369_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.staticsitemapprovider(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">StaticSiteMapProvider Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="TaskEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.taskeventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">TaskEventHandler Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="TraceContext Class" id="mt532391_VS.110_en-us" href="https://msdn.microsoft.com/en-us/library/system.web.tracecontext(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">TraceContext Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="TraceContextEventArgs Class" id="mt532376_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.tracecontexteventargs(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">TraceContextEventArgs Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="TraceContextEventHandler Delegate" href="https://msdn.microsoft.com/en-us/library/system.web.tracecontexteventhandler(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">TraceContextEventHandler 
+Delegate</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="TraceContextRecord Class" id="mt532368_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.tracecontextrecord(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">TraceContextRecord Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="TraceMode Enumeration" href="https://msdn.microsoft.com/en-us/library/system.web.tracemode(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">TraceMode Enumeration</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="UnvalidatedRequestValues Class" id="mt532401_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.unvalidatedrequestvalues(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">UnvalidatedRequestValues Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="UnvalidatedRequestValuesBase Class" id="mt532394_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.unvalidatedrequestvaluesbase(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">UnvalidatedRequestValuesBase Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="UnvalidatedRequestValuesWrapper Class" id="mt532381_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.unvalidatedrequestvalueswrapper(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">UnvalidatedRequestValuesWrapper Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="VirtualPathUtility Class" id="mt532386_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.virtualpathutility(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">VirtualPathUtility Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="WebPageTraceListener Class" id="mt532395_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.webpagetracelistener(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">WebPageTraceListener Class</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="XmlSiteMapProvider Class" id="mt532408_VS.110_en-us" 
+href="https://msdn.microsoft.com/en-us/library/system.web.xmlsitemapprovider(v=vs.110).aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" 
+data-tochassubtree="true">XmlSiteMapProvider Class</A></DIV></DIV></DIV></DIV>
+<DIV id="body"><SPAN id="tabletView_large"></SPAN>             <SPAN id="tabletView_small"></SPAN> 
+            <SPAN id="mobileView"></SPAN>                 
+<DIV id="leftNav" style="height: 0px;">
+<DIV style="display: none;">
+<DIV id="CollapseLocalizeString">Collapse the table of content</DIV>
+<DIV id="ExpandLocalizeString">Expand the table of content</DIV></DIV>
+<DIV><A id="isd_archiveControlResponsive" style="display: none;" 
+data-exclude-archive="Exclude Previous Version" data-include-archive="Include Previous Version"></A> 
+        </DIV></DIV>
+<DIV class="content" id="content">
+<DIV xmlns="http://www.w3.org/1999/xhtml">
+<DIV class="topic" xmlns="http://www.w3.org/1999/xhtml" xmlns:cs="http://msdn.microsoft.com/en-us/" 
+xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:mtps="http://msdn2.microsoft.com/mtps">
+<H1 class="title">HttpUtility Class</H1>
+<DIV class="lw_vs">
+<DIV id="curversion"><STRONG>            .NET Framework 4.6 and 4.5         
+</STRONG>       </DIV>
+<DIV id="versionclick">
+<DIV class="cl_lw_vs_seperator" id="vsseperator"></DIV>
+<DIV>
+<DIV><A id="vsLink" href="javascript:;">                        Other Versions   
+                  </A>           </DIV>
+<DIV class="cl_vs_arrow clip10x10"><IMG class="cl_lw_vs_arrow" id="vsArrow" alt="" 
+src="https://i-msdn.sec.s-msft.com/Areas/Epx/Content/Images/ImageSprite.png?v=635777873432767956"> 
+          </DIV></DIV>
+<UL id="vsPanel">
+  <LI><A href="/en-us/library/system.web.httputility(v=vs.100).aspx">.NET 
+  Framework 4</A>           </LI>
+  <LI><A href="/en-us/library/system.web.httputility(v=vs.90).aspx">.NET 
+  Framework 3.5</A>           </LI>
+  <LI><A href="/en-us/library/system.web.httputility(v=vs.85).aspx">.NET 
+  Framework 3.0</A>           </LI>
+  <LI><A href="/en-us/library/system.web.httputility(v=vs.80).aspx">.NET 
+  Framework 2.0</A>           </LI>
+  <LI><A href="/en-us/library/system.web.httputility(v=vs.71).aspx">.NET 
+  Framework 1.1</A>           </LI></UL></DIV></DIV>
+<DIV style="clear: both;"></DIV>
+<DIV id="mainSection">
+<DIV id="mainBody">
+<P></P>
+<DIV>
+<DIV class="summary">
+<P>Provides methods for encoding and decoding URLs when processing Web requests. 
+This class cannot be inherited. </P></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN>              
+   <SPAN class="LW_CollapsibleArea_Title">Inheritance Hierarchy</SPAN></A>       
+        
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+               </DIV></DIV></H2>
+<DIV class="sectionblock"><A id="familyToggle"></A>             <A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">System<SPAN 
+xmlns="">.</SPAN>Object</A>             <BR>&nbsp;&nbsp;<SPAN 
+class="selflink">System.Web<SPAN 
+xmlns="">.</SPAN>HttpUtility</SPAN><BR></DIV></DIV>
+<P></P><STRONG>Namespace:</STRONG>   &nbsp;<A href="https://msdn.microsoft.com/en-us/library/system.web(v=vs.110).aspx">System.Web</A><BR><STRONG>Assembly:</STRONG> 
+ &nbsp; <SPAN>System.Web</SPAN> (in System.Web.dll)
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Syntax</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="syntaxToggle"></A> 
+<DIV class="codeSnippetContainer" id="code-snippet-1" xmlns="">
+<DIV class="codeSnippetContainerTabs">
+<DIV class="codeSnippetContainerTabActive" dir="ltr"><A>C#</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=cpp#code-snippet-1">C++</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=fsharp#code-snippet-1">F#</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=jscript#code-snippet-1">JScript</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-1">VB</A></DIV></DIV>
+<DIV class="codeSnippetContainerCodeContainer">
+<DIV class="codeSnippetToolBar">
+<DIV class="codeSnippetToolBarText"><A name="CodeSnippetCopyLink" title="Copy to clipboard." 
+style="display: block;" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_2d5dc35b-229d-41ad-9efb-1aab962e95cd');">Copy</A></DIV></DIV>
+<DIV class="codeSnippetContainerCode" id="CodeSnippetContainerCode_2d5dc35b-229d-41ad-9efb-1aab962e95cd" 
+dir="ltr">
+<DIV style="color: black;">
+<PRE><SPAN style="color: blue;">public</SPAN>&nbsp;<SPAN style="color: blue;">sealed</SPAN>&nbsp;<SPAN style="color: blue;">class</SPAN>&nbsp;HttpUtility
+</PRE></DIV></DIV></DIV></DIV></DIV></DIV>
+<P>The <SPAN class="selflink">HttpUtility</SPAN> type exposes the following 
+members.</P>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Constructors</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="constructorTableToggle"></A>
+<DIV class="libraryMemberFilter" style="display: block;">     
+<DIV class="filterContainer"><SPAN>Show:</SPAN>         <LABEL><INPUT class="libraryFilterInherited" 
+type="checkbox" checked="checked" value="Inherit">Inherited         </LABEL>     
+    <LABEL><INPUT class="libraryFilterProtected" type="checkbox" checked="checked" 
+value="Protected">Protected         </LABEL>     </DIV></DIV>
+<DIV class="contentTableWrapper">
+<TABLE class="members" id="memberList">
+  <TBODY>
+  <TR>
+    <TH class="iconColumn">              &nbsp;            </TH>
+    <TH class="nameColumn">Name</TH>
+    <TH class="descriptionColumn">Description</TH></TR>
+  <TR data="public;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.httputility(v=vs.110).aspx">HttpUtility</A></TD>
+    <TD><SPAN>Initializes a new instance of the <SPAN><SPAN 
+      class="selflink">HttpUtility</SPAN></SPAN> 
+class.</SPAN></TD></TR></TBODY></TABLE></DIV><A 
+href="#mainBody">Top</A></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Methods</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="methodTableToggle"></A>
+<DIV class="libraryMemberFilter" style="display: block;">     
+<DIV class="filterContainer"><SPAN>Show:</SPAN>         <LABEL><INPUT class="libraryFilterInherited" 
+type="checkbox" checked="checked" value="Inherit">Inherited         </LABEL>     
+    <LABEL><INPUT class="libraryFilterProtected" type="checkbox" checked="checked" 
+value="Protected">Protected         </LABEL>     </DIV></DIV>
+<DIV class="contentTableWrapper">
+<TABLE class="members" id="memberList1">
+  <TBODY>
+  <TR>
+    <TH class="iconColumn">              &nbsp;            </TH>
+    <TH class="nameColumn">Name</TH>
+    <TH class="descriptionColumn">Description</TH></TR>
+  <TR data="public;inherited;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Equals(Object)</A></TD>
+    <TD><SPAN>Determines whether the specified object is equal to the current 
+      object.</SPAN> (Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</A>.)</TD></TR>
+  <TR data="public;inherited;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.object.gethashcode(v=vs.110).aspx">GetHashCode</A></TD>
+    <TD><SPAN>Serves as the default hash function. </SPAN> (Inherited from <A 
+      href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</A>.)</TD></TR>
+  <TR data="public;inherited;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.object.gettype(v=vs.110).aspx">GetType</A></TD>
+    <TD><SPAN>Gets the <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx">Type</A></SPAN> 
+      of the current instance.</SPAN> (Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</A>.)</TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/wdek0zbf(v=vs.110).aspx">HtmlAttributeEncode(String)</A></TD>
+    <TD><SPAN>Minimally converts a string to an HTML-encoded 
+  string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/8439dd99(v=vs.110).aspx">HtmlAttributeEncode(String, 
+      TextWriter)</A></TD>
+    <TD><SPAN>Minimally converts a string into an HTML-encoded string and 
+      sends the encoded string to a <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.io.textwriter(v=vs.110).aspx">TextWriter</A></SPAN> 
+      output stream.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/7c5fyk1k(v=vs.110).aspx">HtmlDecode(String)</A></TD>
+    <TD><SPAN>Converts a string that has been HTML-encoded for HTTP 
+      transmission into a decoded string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/3ykbs7dz(v=vs.110).aspx">HtmlDecode(String, 
+      TextWriter)</A></TD>
+    <TD><SPAN>Converts a string that has been HTML-encoded into a decoded 
+      string, and sends the decoded string to a <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.io.textwriter(v=vs.110).aspx">TextWriter</A></SPAN> 
+      output stream.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/ee360286(v=vs.110).aspx">HtmlEncode(Object)</A></TD>
+    <TD><SPAN>Converts an object's string representation into an HTML-encoded 
+      string, and returns the encoded string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/73z22y6h(v=vs.110).aspx">HtmlEncode(String)</A></TD>
+    <TD><SPAN>Converts a string to an HTML-encoded string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/1ew0dw8s(v=vs.110).aspx">HtmlEncode(String, 
+      TextWriter)</A></TD>
+    <TD><SPAN>Converts a string into an HTML-encoded string, and returns the 
+      output as a <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.io.textwriter(v=vs.110).aspx">TextWriter</A></SPAN> 
+      stream of output.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/dd991914(v=vs.110).aspx">JavaScriptStringEncode(String)</A></TD>
+    <TD><SPAN>Encodes a string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/dd784638(v=vs.110).aspx">JavaScriptStringEncode(String, 
+      Boolean)</A></TD>
+    <TD><SPAN>Encodes a string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/ms150046(v=vs.110).aspx">ParseQueryString(String)</A></TD>
+    <TD><SPAN>Parses a query string into a <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.collections.specialized.namevaluecollection(v=vs.110).aspx">NameValueCollection</A></SPAN> 
+      using <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.text.encoding.utf8(v=vs.110).aspx">UTF8</A></SPAN> 
+      encoding.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/ms150047(v=vs.110).aspx">ParseQueryString(String, 
+      Encoding)</A></TD>
+    <TD><SPAN>Parses a query string into a <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.collections.specialized.namevaluecollection(v=vs.110).aspx">NameValueCollection</A></SPAN> 
+      using the specified <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.text.encoding(v=vs.110).aspx">Encoding</A></SPAN>. 
+      </SPAN></TD></TR>
+  <TR data="public;inherited;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.object.tostring(v=vs.110).aspx">ToString</A></TD>
+    <TD><SPAN>Returns a string that represents the current object.</SPAN> 
+      (Inherited from <A href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</A>.)</TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/adwtk1fy(v=vs.110).aspx">UrlDecode(String)</A></TD>
+    <TD><SPAN>Converts a string that has been encoded for transmission in a 
+      URL into a decoded string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/79cw2d9b(v=vs.110).aspx">UrlDecode(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>, Encoding)</A></TD>
+    <TD><SPAN>Converts a URL-encoded byte array into a decoded string using 
+      the specified decoding object.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/sacf9e4b(v=vs.110).aspx">UrlDecode(String, 
+      Encoding)</A></TD>
+    <TD><SPAN>Converts a URL-encoded string into a decoded string, using the 
+      specified encoding object.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/4w3df661(v=vs.110).aspx">UrlDecode(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>, Int32, Int32, 
+    Encoding)</A></TD>
+    <TD><SPAN>Converts a URL-encoded byte array into a decoded string using 
+      the specified encoding object, starting at the specified position in the 
+      array, and continuing for the specified number of bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/3d0fat2t(v=vs.110).aspx">UrlDecodeToBytes(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>)</A></TD>
+    <TD><SPAN>Converts a URL-encoded array of bytes into a decoded array of 
+      bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/8tzbke5e(v=vs.110).aspx">UrlDecodeToBytes(String)</A></TD>
+    <TD><SPAN>Converts a URL-encoded string into a decoded array of 
+      bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/853zyk4h(v=vs.110).aspx">UrlDecodeToBytes(String, 
+      Encoding)</A></TD>
+    <TD><SPAN>Converts a URL-encoded string into a decoded array of bytes 
+      using the specified decoding object.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/wskcxwht(v=vs.110).aspx">UrlDecodeToBytes(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>, Int32, Int32)</A></TD>
+    <TD><SPAN>Converts a URL-encoded array of bytes into a decoded array of 
+      bytes, starting at the specified position in the array and continuing for 
+      the specified number of bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/3221zfcx(v=vs.110).aspx">UrlEncode(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>)</A></TD>
+    <TD><SPAN>Converts a byte array into an encoded URL string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/4fkewx0t(v=vs.110).aspx">UrlEncode(String)</A></TD>
+    <TD><SPAN>Encodes a URL string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/h10z5byc(v=vs.110).aspx">UrlEncode(String, 
+      Encoding)</A></TD>
+    <TD><SPAN>Encodes a URL string using the specified encoding 
+    object.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/c5y5x63c(v=vs.110).aspx">UrlEncode(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>, Int32, Int32)</A></TD>
+    <TD><SPAN>Converts a byte array into a URL-encoded string, starting at the 
+      specified position in the array and continuing for the specified number of 
+      bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/wbfybk7x(v=vs.110).aspx">UrlEncodeToBytes(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>)</A></TD>
+    <TD><SPAN>Converts an array of bytes into a URL-encoded array of 
+      bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/9s1sz54z(v=vs.110).aspx">UrlEncodeToBytes(String)</A></TD>
+    <TD><SPAN>Converts a string into a URL-encoded array of 
+bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/x9k7dtsa(v=vs.110).aspx">UrlEncodeToBytes(String, 
+      Encoding)</A></TD>
+    <TD><SPAN>Converts a string into a URL-encoded array of bytes using the 
+      specified encoding object.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/5fh6k9zd(v=vs.110).aspx">UrlEncodeToBytes(<SPAN 
+      xmlns=""></SPAN>Byte<SPAN xmlns="">[]</SPAN>, Int32, Int32)</A></TD>
+    <TD><SPAN>Converts an array of bytes into a URL-encoded array of bytes, 
+      starting at the specified position in the array and continuing for the 
+      specified number of bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.urlencodeunicode(v=vs.110).aspx">UrlEncodeUnicode</A></TD>
+    <TD><STRONG>Obsolete. </STRONG><SPAN>Converts a string into a Unicode 
+      string.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.urlencodeunicodetobytes(v=vs.110).aspx">UrlEncodeUnicodeToBytes</A></TD>
+    <TD><STRONG>Obsolete. </STRONG><SPAN>Converts a Unicode string into an 
+      array of bytes.</SPAN></TD></TR>
+  <TR data="public;static;declared;">
+    <TD><IMG title="Public method" class="cl_IC91302" id="pubmethod" alt="Public method" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""><IMG 
+      title="Static member" class="cl_IC130242" id="static" alt="Static member" 
+      src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" xmlns=""></TD>
+    <TD><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.urlpathencode(v=vs.110).aspx">UrlPathEncode</A></TD>
+    <TD><SPAN>Do not use; intended only for browser compatibility. Use 
+      <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.urlencode(v=vs.110).aspx">UrlEncode</A></SPAN>.</SPAN></TD></TR></TBODY></TABLE></DIV><A 
+href="#mainBody">Top</A></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Remarks</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="remarksToggle"></A>
+<P>The <SPAN><SPAN class="selflink">HttpUtility</SPAN></SPAN> class is used 
+internally by the <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httpserverutility(v=vs.110).aspx">HttpServerUtility</A></SPAN> 
+class, whose methods and properties are exposed through the intrinsic ASP.NET 
+<SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httpcontext.server(v=vs.110).aspx">Server</A></SPAN> 
+object. Additionally, the <SPAN><SPAN class="selflink">HttpUtility</SPAN></SPAN> 
+class contains encoding and decoding utility methods that are not accessible 
+from the <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httpcontext.server(v=vs.110).aspx">Server</A></SPAN>. 
+</P>
+<P>To encode or decode values outside of a web application, use the <SPAN><A 
+href="https://msdn.microsoft.com/en-us/library/system.net.webutility(v=vs.110).aspx">WebUtility</A></SPAN> 
+class.</P></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Examples</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="exampleToggle"></A>
+<P>The following code example demonstrates the use of the <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.urlencode(v=vs.110).aspx">UrlEncode</A></SPAN>, 
+<SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.urldecode(v=vs.110).aspx">UrlDecode</A></SPAN> 
+and <SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility.parsequerystring(v=vs.110).aspx">ParseQueryString</A></SPAN> 
+methods of the <SPAN><SPAN class="selflink">HttpUtility</SPAN></SPAN> class.</P>
+<DIV>
+<DIV class="codeSnippetContainer" id="code-snippet-2" xmlns="">
+<DIV class="codeSnippetContainerTabs">
+<DIV class="codeSnippetContainerTabActive" dir="ltr"><A>C#</A></DIV>
+<DIV class="codeSnippetContainerTab" dir="ltr"><A href="https://msdn.microsoft.com/en-us/library/system.web.httputility(v=vs.110).aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-2">VB</A></DIV></DIV>
+<DIV class="codeSnippetContainerCodeContainer">
+<DIV class="codeSnippetToolBar">
+<DIV class="codeSnippetToolBarText"><A name="CodeSnippetCopyLink" title="Copy to clipboard." 
+style="display: block;" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_4ee079f5-e269-4833-b777-c3ddfe3db5e8');">Copy</A></DIV></DIV>
+<DIV class="codeSnippetContainerCode" id="CodeSnippetContainerCode_4ee079f5-e269-4833-b777-c3ddfe3db5e8" 
+dir="ltr">
+<DIV style="color: black;">
+<PRE>&lt;%@ Page Language=<SPAN style="color: rgb(163, 21, 21);">"C#"</SPAN> %&gt;
+
+&lt;!DOCTYPE html PUBLIC <SPAN style="color: rgb(163, 21, 21);">"-//W3C//DTD XHTML 1.0 Transitional//EN"</SPAN> <SPAN style="color: rgb(163, 21, 21);">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</SPAN>&gt;
+
+&lt;script runat=<SPAN style="color: rgb(163, 21, 21);">"server"</SPAN>&gt;
+
+    <SPAN style="color: blue;">protected</SPAN> <SPAN style="color: blue;">void</SPAN> Page_Load(<SPAN style="color: blue;">object</SPAN> sender, EventArgs e)
+    {
+        String currurl = HttpContext.Current.Request.RawUrl;
+        String querystring = <SPAN style="color: blue;">null</SPAN>;
+
+        <SPAN style="color: green;">// Check to make sure some query string variables</SPAN>
+        <SPAN style="color: green;">// exist and if not add some and redirect.</SPAN>
+        <SPAN style="color: blue;">int</SPAN> iqs = currurl.IndexOf(<SPAN style="color: rgb(163, 21, 21);">'?'</SPAN>);
+        <SPAN style="color: blue;">if</SPAN> (iqs == -1)
+        {
+            String redirecturl = currurl + <SPAN style="color: rgb(163, 21, 21);">"?var1=1&amp;var2=2+2%2f3&amp;var1=3"</SPAN>;
+            Response.Redirect(redirecturl, <SPAN style="color: blue;">true</SPAN>);
+        }
+        <SPAN style="color: green;">// If query string variables exist, put them in</SPAN>
+        <SPAN style="color: green;">// a string.</SPAN>
+        <SPAN style="color: blue;">else</SPAN> <SPAN style="color: blue;">if</SPAN> (iqs &gt;= 0)
+        {
+            querystring = (iqs &lt; currurl.Length - 1) ? currurl.Substring(iqs + 1) : String.Empty;
+        }
+
+        <SPAN style="color: green;">// Parse the query string variables into a NameValueCollection.</SPAN>
+        NameValueCollection qscoll = HttpUtility.ParseQueryString(querystring);
+
+        <SPAN style="color: green;">// Iterate through the collection.</SPAN>
+        StringBuilder sb = <SPAN style="color: blue;">new</SPAN> StringBuilder();
+        <SPAN style="color: blue;">foreach</SPAN> (String s <SPAN style="color: blue;">in</SPAN> qscoll.AllKeys)
+        {
+            sb.Append(s + <SPAN style="color: rgb(163, 21, 21);">" - "</SPAN> + qscoll[s] + <SPAN style="color: rgb(163, 21, 21);">"&lt;br /&gt;"</SPAN>);
+        }
+
+        <SPAN style="color: green;">// Write the results to the appropriate labels.</SPAN>
+        ParseOutput.Text = sb.ToString();
+        UrlRawOutput.Text = currurl;
+        UrlEncodedOutput.Text = HttpUtility.UrlEncode(currurl);
+        UrlDecodedOutput.Text = HttpUtility.UrlDecode(currurl);
+    }
+&lt;/script&gt;
+
+
+&lt;html xmlns=<SPAN style="color: rgb(163, 21, 21);">"http://www.w3.org/1999/xhtml"</SPAN> &gt;
+&lt;head runat=<SPAN style="color: rgb(163, 21, 21);">"server"</SPAN>&gt;
+    &lt;title&gt;HttpUtility Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form id=<SPAN style="color: rgb(163, 21, 21);">"form1"</SPAN> runat=<SPAN style="color: rgb(163, 21, 21);">"server"</SPAN>&gt;
+    &lt;div&gt;
+      The raw url <SPAN style="color: blue;">is</SPAN>: &lt;br /&gt;
+      &lt;asp:Label  id=<SPAN style="color: rgb(163, 21, 21);">"UrlRawOutput"</SPAN>
+                  runat=<SPAN style="color: rgb(163, 21, 21);">"server"</SPAN> /&gt;
+      &lt;br /&gt;&lt;br /&gt;
+      The url encoded <SPAN style="color: blue;">is</SPAN>: &lt;br /&gt;
+      &lt;asp:Label  id=<SPAN style="color: rgb(163, 21, 21);">"UrlEncodedOutput"</SPAN>
+                  runat=<SPAN style="color: rgb(163, 21, 21);">"server"</SPAN> /&gt;
+      &lt;br /&gt;&lt;br /&gt;
+      The url decoded <SPAN style="color: blue;">is</SPAN>: &lt;br /&gt;
+      &lt;asp:Label  id=<SPAN style="color: rgb(163, 21, 21);">"UrlDecodedOutput"</SPAN>
+                  runat=<SPAN style="color: rgb(163, 21, 21);">"server"</SPAN> /&gt;
+      &lt;br /&gt;&lt;br /&gt;
+      The query <SPAN style="color: blue;">string</SPAN> NameValueCollection <SPAN style="color: blue;">is</SPAN>: &lt;br /&gt;
+      &lt;asp:Label  id=<SPAN style="color: rgb(163, 21, 21);">"ParseOutput"</SPAN>
+                  runat=<SPAN style="color: rgb(163, 21, 21);">"server"</SPAN> /&gt;
+    &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</PRE></DIV></DIV></DIV></DIV></DIV></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Version 
+Information</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="versionsTitleToggle"></A>
+<H4 class="subHeading">.NET Framework</H4>Supported in: 4.6, 4.5, 4, 3.5, 3.0, 
+2.0, 1.1<BR></DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Thread 
+Safety</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="threadSafetyToggle"></A>Any public <SPAN class="input">static</SPAN> 
+(<SPAN class="input">Shared</SPAN> in Visual Basic)  members of this type are 
+thread safe. Any instance members are not guaranteed to be thread 
+safe.</DIV></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">See 
+Also</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock"><A id="seeAlsoToggle"></A>
+<H4 class="subHeading">Reference</H4>
+<DIV class="seeAlsoStyle"><A href="https://msdn.microsoft.com/en-us/library/system.web(v=vs.110).aspx">System.Web 
+Namespace</A></DIV>
+<DIV class="seeAlsoStyle"><SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httpserverutility(v=vs.110).aspx">HttpServerUtility</A></SPAN></DIV>
+<DIV class="seeAlsoStyle"><SPAN><A href="https://msdn.microsoft.com/en-us/library/system.web.httpcontext.server(v=vs.110).aspx">Server</A></SPAN></DIV>
+<H4 class="subHeading">Other Resources</H4>
+<DIV class="seeAlsoStyle"><SPAN><A href="https://msdn.microsoft.com/en-us/library/a2a4yykt(v=vs.110).aspx">How 
+to: Protect Against Script Exploits in a Web Application by Applying HTML 
+Encoding to 
+Strings</A></SPAN></DIV></DIV></DIV></DIV></DIV></DIV></DIV><INPUT id="libraryMemberFilterEmptyWarning" type="hidden" value="There are no members available with your current filter settings."> 
+    </DIV> 
+<DIV id="rightNavigationMenu" ms.pgarea="right nav">
+<DIV id="mobileButtons"></DIV>
+<DIV id="navMain" style="top: 60px; position: fixed;">
+<DIV id="closeNavigation"><A class="tocCloseSmall" id="closeButton"></A></DIV>
+<DIV id="navigationButtons"><A id="provideFeedback2" 
+href="javascript:void(0)"><INS class="suggestion"></INS>Any Suggestions?</A><A 
+id="isd_print" href="https://msdn.microsoft.com/en-us/library/system.web.httputility(d=printer,v=vs.110).aspx" 
+rel="nofollow"><INS class="print"></INS>Print </A><A id="isd_printABook2" href="/en-us/library/export/help/?returnUrl=%2fen-us%2flibrary%2fsystem.web.httputility(v%3dvs.110).aspx"><INS 
+class="export"></INS>Export (<SPAN class="count">0</SPAN>)             
+</A></DIV>
+<DIV id="indoc_toc" ms.cmpgrp="indoc toc">
+<DIV id="indoc_title">IN THIS ARTICLE</DIV>
+<UL id="indoc_toclist">
+  <LI data-index="0">Inheritance Hierarchy</LI>
+  <LI data-index="1">Syntax</LI>
+  <LI data-index="2">Constructors</LI>
+  <LI data-index="3">Methods</LI>
+  <LI data-index="4">Remarks</LI>
+  <LI data-index="5">Examples</LI>
+  <LI data-index="6">Version Information</LI>
+  <LI class="active" data-index="7">Thread Safety</LI>
+  <LI data-index="8">See Also</LI></UL></DIV></DIV></DIV>
+<DIV class="rightNavigationMenuThumbnail" 
+id="rightNavigationMenuThumbnail"></DIV></DIV>
+<DIV 
+class="clear"></DIV><INPUT name="__RequestVerificationToken" type="hidden" value="oy71c9RkzzapeNjZHBXMezbm470qHCyBcDZpW5UQpYlgeYcM92gp0eOF80a_9YSn5EkHERVT2kvh_l9upQtPTsr9-XM1"> 
+<INPUT id="ratingSubmitUrl" type="hidden" value="https://msdn.microsoft.com/en-us/library/feedback/add/system.web.httputility(v=vs.110).aspx"> 
+<INPUT id="isTopicRated" type="hidden" value="false">     
+<DIV id="lib-footer">
+<DIV class="show static-position" id="responsiveRating" ms.pgarea="rating">
+<DIV id="skinnyRating">
+<DIV class="closeSmallWhite"></DIV>
+<DIV class="rating">
+<DIV id="s_ratingSection1">
+<DIV class="title">                Was this page helpful?             </DIV>     
+        
+<DIV class="description">                Your feedback about this content is 
+important. Let us know what you think.             </DIV>
+<DIV class="buttons"><BUTTON class="button" id="s_ratingYes" aria-label="Yes, this page was helpful">Yes</BUTTON> 
+                <BUTTON class="button" id="s_ratingNo" aria-label="No, this page was not helpful">No</BUTTON> 
+            </DIV>             <INPUT id="s_ratingValue" type="hidden" value=""> 
+        </DIV>
+<DIV id="s_ratingSection2">
+<DIV id="s_skinnyRatingForm">
+<DIV class="title">                    Additional feedback?                 
+</DIV><TEXTAREA id="s_ratingText" maxlength="1500" rows="6" cols="20"></TEXTAREA>
+<DIV class="counter right"><SPAN id="feedbackTextCounter">1500</SPAN> characters 
+remaining                 </DIV></DIV>
+<DIV class="buttons left"><BUTTON class="button" id="s_ratingSubmit" aria-label="Submit my additional feedback">Submit</BUTTON> 
+                <BUTTON class="button" id="s_ratingSkipThis" aria-label="Skip additional feedback">Skip 
+this</BUTTON>             </DIV></DIV>
+<DIV id="s_ratingSection3" style="display: none;">
+<DIV class="title">                Thank you!             </DIV>             
+<DIV class="description">                We appreciate your feedback.            
+ </DIV></DIV>
+<DIV id="contentFeedbackQAContainer" 
+style="display: none;"></DIV></DIV></DIV></DIV><LINK rel="stylesheet" type="text/css"> 
+                
+<DIV id="ux-footer" dir="ltr">
+<DIV class="both" id="footerSock">
+<DIV id="footerSockInner"><A name="feedback"></A> 
+<DIV class="rating">
+<DIV id="ratingSection1">
+<DIV class="title">            Was this page helpful?         </DIV>
+<DIV class="description">            Your feedback about this content is 
+important.<BR>Let us know what you think.         </DIV>
+<DIV class="buttons"><BUTTON class="button" id="ratingYes" aria-label="Yes, this page was helpful">Yes</BUTTON> 
+            <BUTTON class="button" id="ratingNo" aria-label="No, this page was not helpful">No</BUTTON> 
+        </DIV><INPUT id="ratingValue" type="hidden" value="">     </DIV>
+<DIV id="ratingSection2">
+<DIV class="title">            Additional feedback?         </DIV><TEXTAREA id="ratingText" maxlength="1500" rows="6" cols="20"></TEXTAREA> 
+        
+<DIV class="counter right"><SPAN id="feedbackTextCounter">1500</SPAN> characters 
+remaining         </DIV>
+<DIV class="buttons left"><BUTTON class="button" id="ratingSubmit" aria-label="Submit my additional feedback">Submit</BUTTON> 
+            <BUTTON class="button" id="ratingSkipThis" aria-label="Skip additional feedback">Skip 
+this</BUTTON>         </DIV></DIV>
+<DIV id="ratingSection3">
+<DIV class="title">            Thank you!         </DIV>
+<DIV class="description">            We appreciate your feedback.         
+</DIV></DIV>
+<DIV id="contentFeedbackQAContainer" style="display: none;"></DIV></DIV>
+<DIV class="userVoice">
+<DIV class="title">        Have a suggestion to improve MSDN Library?     </DIV>
+<DIV class="description">            Visit our UserVoice Page to submit and vote 
+on ideas!         </DIV>
+<DIV class="buttons"><A class="button" id="userVoiceButton" href="http://feedback.msdn.com/forums/257782-msdn-feature-suggestions/category/83975" 
+target="_blank">Make a suggestion</A>     </DIV></DIV>
+<DIV class="clear"></DIV></DIV></DIV><FOOTER class="top">
+<DIV id="Fragment_LeftLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="LeftLinks">
+<DIV class="linkList">
+<DIV class="linkListTitle">Dev centers</DIV>
+<UL class="links">
+  <LI><A class="windowsBlue" id="LeftLinks_2148_1" href="https://dev.windows.com" 
+  xmlns="http://www.w3.org/1999/xhtml">Windows</A>       </LI>
+  <LI><A class="office" id="LeftLinks_2148_3" href="http://dev.office.com" 
+  xmlns="http://www.w3.org/1999/xhtml">Office</A>       </LI>
+  <LI><A class="visualStudio" id="LeftLinks_2148_4" href="https://msdn.microsoft.com/vstudio" 
+  xmlns="http://www.w3.org/1999/xhtml">Visual Studio</A>       </LI>
+  <LI><A id="LeftLinks_2148_12" href="http://azure.microsoft.com/en-us/documentation/" 
+  target="_blank" xmlns="http://www.w3.org/1999/xhtml">Microsoft Azure</A>       
+  </LI>
+  <LI><A id="LeftLinks_2148_5" href="https://msdn.microsoft.com/aa937802" xmlns="http://www.w3.org/1999/xhtml">More...</A> 
+        </LI></UL></DIV></DIV>
+<DIV id="rightLinks">
+<DIV id="Fragment_CenterLinks1" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks1">
+<DIV class="linkList">
+<DIV class="linkListTitle">Learning resources</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks1_2151_4" href="http://www.microsoftvirtualacademy.com/" 
+  xmlns="http://www.w3.org/1999/xhtml">Microsoft Virtual Academy</A>       </LI>
+  <LI><A id="CenterLinks1_2151_5" href="http://channel9.msdn.com/" xmlns="http://www.w3.org/1999/xhtml">Channel 
+  9</A>       </LI>
+  <LI><A id="CenterLinks1_2151_6" href="http://www.interoperabilitybridges.com/" 
+  xmlns="http://www.w3.org/1999/xhtml">Interoperability Bridges</A>       </LI>
+  <LI><A id="CenterLinks1_2151_7" href="https://msdn.microsoft.com/magazine/" 
+  xmlns="http://www.w3.org/1999/xhtml">MSDN Magazine</A>       
+</LI></UL></DIV></DIV>
+<DIV id="Fragment_CenterLinks2" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks2">
+<DIV class="linkList">
+<DIV class="linkListTitle">Community</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks2_2151_8" href="https://social.msdn.microsoft.com/forums/en-us/home" 
+  xmlns="http://www.w3.org/1999/xhtml">Forums</A>       </LI>
+  <LI><A id="CenterLinks2_2151_9" href="http://blogs.msdn.com/b/developer-tools/" 
+  xmlns="http://www.w3.org/1999/xhtml">Blogs</A>       </LI>
+  <LI><A id="CenterLinks2_2151_10" href="http://www.codeplex.com" xmlns="http://www.w3.org/1999/xhtml">Codeplex</A> 
+        </LI></UL></DIV></DIV>
+<DIV id="Fragment_CenterLinks3" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks3">
+<DIV class="linkList">
+<DIV class="linkListTitle">Support</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks3_2151_11" href="https://msdn.microsoft.com/hh361695" 
+  xmlns="http://www.w3.org/1999/xhtml">Self support</A>       
+</LI></UL></DIV></DIV>
+<DIV class="nth-child-4n" id="Fragment_CenterLinks4" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks4">
+<DIV class="linkList">
+<DIV class="linkListTitle">Programs</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks4_2151_13" href="https://www.microsoft.com/bizspark/" 
+  xmlns="http://www.w3.org/1999/xhtml">BizSpark (for startups)</A>       </LI>
+  <LI><A id="CenterLinks4_2151_14" href="https://www.dreamspark.com/" xmlns="http://www.w3.org/1999/xhtml">DreamSpark</A> 
+        </LI>
+  <LI><A id="CenterLinks4_2151_17" href="http://www.imaginecup.com" xmlns="http://www.w3.org/1999/xhtml">Imagine 
+  Cup</A>       </LI></UL></DIV></DIV></DIV></FOOTER><FOOTER class="bottom"><SPAN 
+class="localeContainer">
+<FORM class="selectLocale" id="selectLocaleForm" action="https://msdn.microsoft.com/en-us/selectlocale-dmc"><INPUT name="fromPage" type="hidden" value="https%3a%2f%2fmsdn.microsoft.com%2fen-us%2flibrary%2fsystem.web.httputility(v%3dvs.110).aspx"> 
+        <A title="Change your language" onclick="$('#selectLocaleForm').submit();return false;" 
+href="#">United States (English)</A>     </FORM></SPAN>
+<DIV id="Fragment_BottomLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="BottomLinks">
+<DIV class="linkList">
+<UL class="links horizontal">
+  <LI><A id="BottomLinks_2148_7" href="https://msdn.microsoft.com/newsletter.aspx" 
+  xmlns="http://www.w3.org/1999/xhtml">Newsletter</A>       </LI>
+  <LI><A id="BottomLinks_2148_8" href="https://msdn.microsoft.com/dn529288" 
+  xmlns="http://www.w3.org/1999/xhtml">Privacy &amp; cookies</A>       </LI>
+  <LI><A id="BottomLinks_2148_9" href="https://msdn.microsoft.com/cc300389" 
+  xmlns="http://www.w3.org/1999/xhtml">Terms of use</A>       </LI>
+  <LI><A id="BottomLinks_2148_10" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" 
+  xmlns="http://www.w3.org/1999/xhtml">Trademarks</A>       
+</LI></UL></DIV></DIV><SPAN class="logoLegal"><SPAN class="logo"></SPAN><SPAN 
+class="copyright">© 2015 Microsoft</SPAN>             
+</SPAN></FOOTER></DIV></DIV>
+<DIV class="footerPrintView">
+<DIV class="footerCopyrightPrintView">© 2015 Microsoft</DIV></DIV><INPUT id="tocPaddingPerLevel" type="hidden" value="17"> 
+        <INPUT id="MtpsDevice" type="hidden" value="Default"> <!--[CDATA[ Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]--> 
+                                            <NOSCRIPT>&lt;div&gt;&lt;img 
+alt="DCSIMG" id="Img1" width="1" height="1" 
+src="https://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;amp;WT.js=No" 
+/&gt;&lt;/div&gt;</NOSCRIPT> 
+<DIV 
+id="globalRequestVerification"><INPUT name="__RequestVerificationToken" type="hidden" value="NVV5w3bOWZd2tNpBx1qeT9KG0RsNMIfWI11fKKSNGkvCkR7rE_GrAKNdv9Uza2it_hzZzCIYlEEp9OOo8TSQl20HLkI1"> 
+</DIV></DIV>
+<SCRIPT class="mtps-injected" type="text/javascript">
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-msdn.sec.s-msft.com\", \r\n\t\"css\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"xap\": \"https://msdn.microsoft.com\"\r\n});\r\n/**/" },
+	{ url: "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js" },
+	{ txt: "//\n  var literalNormalizedUrl = \u0027/en-us/library/1e55w41w(l=en-us,v=vs.110).aspx\u0027;\n  var wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n  var wt_fpcdom = \u0027.microsoft.com\u0027;\n  var wt_domlist = \u0027msdn.microsoft.com\u0027;\n  var wt_pathlist = \u0027\u0027;\n  var wt_paramlist = \u0027DCSext.mtps_devcenter\u0027;\n  var wt_siteid = \u0027MSDN\u0027;\n  var gDomain = \u0027m.webtrends.com\u0027;\n  var gDcsId = \u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n  var gFpc = \u0027WT_FPC\u0027;\n\n\n\n  if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n    var wtidJs = document.createElement(\"script\");\n    wtidJs.src = \"//\" + gDomain + \"/\" + gDcsId + \"/wtid.js\";\n    document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n  }\n\n\n\n  var detectedLocale = \u0027en-us\u0027;\n  var wtsp = \u0027msdnlib_dotnet\u0027;\n  var gTrackEvents = \u00270\u0027;\n/**/" },
+	{ txt: "//\n\n        window.appInsightsId = \u002760854590-027a-4ae4-98be-2741a40f355f\u0027;\n        //" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5\u0026amp;hashKey=0B41D28E6726B4E716D72FB5060856F6\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4" },
+	{ url: "https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=Msdn\u0026loc=en-us\u0026focusOnInit=false\u0026emptyWatermark=true\u0026searchButtonTooltip=Search MSDN" },
+	{ txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = \u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = \u0027Collapse\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027Click to expand. Double-click to expand all.\u0027; MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027Click to collapse. Double-click to collapse all.\u0027; MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027Expand All\u0027; MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027Collapse All\u0027;" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1\u0026amp;hashKey=16381DF0927C75E12C62EAD23C017874\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4" },
+	{ txt: "$(document).ready(function() {\n        try {\n            var token = $(\"#globalRequestVerification input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n            $(\"#siteFeedbackForm\").append(token);\n        } catch(err) {\n            \n        }\n    });" }
+]);
+
+/*]]>*/
+</SCRIPT>
+ 
+<DIV id="overlayMask"></DIV>
+<SCRIPT src="https://www.microsoft.com/library/svy/sto/https/broker-config.js?1442864433789"></SCRIPT>
+</BODY></HTML>

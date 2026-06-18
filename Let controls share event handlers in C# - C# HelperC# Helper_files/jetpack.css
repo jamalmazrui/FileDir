@@ -1,0 +1,1938 @@
+.jp-carousel-wrap * {
+	line-height: inherit;
+}
+.jp-carousel-overlay {
+	background: rgb(0, 0, 0);
+}
+div.jp-carousel-fadeaway {
+	width: 100%; height: 15px; bottom: 0px; position: fixed; z-index: 2147483647;
+}
+.jp-carousel-next-button span {
+	background: url("../modules/carousel/images/arrows.png") no-repeat center / 200px 126px;
+}
+.jp-carousel-previous-button span {
+	background: url("../modules/carousel/images/arrows.png") no-repeat center / 200px 126px;
+}
+.jp-carousel-msg {
+	margin: 25px 20px 0px 2px; padding: 11px 15px; text-align: center; line-height: 19px; font-family: "Open Sans",sans-serif; font-size: 14px; font-style: normal; border-left-color: rgb(255, 186, 0); border-left-width: 4px; border-left-style: solid; display: inline-block; box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1); background-color: rgb(255, 255, 255);
+}
+@media not all, not all, not all, not all
+{
+.jp-carousel-next-button span {
+	background-image: url("../modules/carousel/images/arrows-2x.png");
+}
+.jp-carousel-previous-button span {
+	background-image: url("../modules/carousel/images/arrows-2x.png");
+}
+}
+.jp-carousel-wrap {
+	font-family: "Helvetica Neue",sans-serif !important;
+}
+.jp-carousel-info {
+	text-align: left !important; bottom: 0px; position: absolute; -webkit-font-smoothing: subpixel-antialiased;
+}
+.jp-carousel-info ::selection {
+	background: rgb(104, 201, 232); color: rgb(255, 255, 255);
+}
+.jp-carousel-photo-info {
+	left: 25%; width: 50%; position: relative;
+}
+.jp-carousel-transitions .jp-carousel-photo-info {
+	transition:400ms ease-out; -webkit-transition: 400ms ease-out;
+}
+.jp-carousel-info h2 {
+	background: none !important; font: 400 13px/1.25em "Helvetica Neue", sans-serif !important; margin: 7px 0px 0px !important; padding: 10px 0px 0px !important; border: currentColor !important; border-image: none !important; text-align: left; color: rgb(153, 153, 153); text-transform: none !important; letter-spacing: 0px !important; overflow: hidden; display: block !important; font-size-adjust: none !important; font-stretch: normal !important; text-shadow: none !important; -webkit-font-smoothing: subpixel-antialiased;
+}
+.jp-carousel-next-button {
+	text-indent: -9999px; overflow: hidden; cursor: pointer;
+}
+.jp-carousel-previous-button {
+	text-indent: -9999px; overflow: hidden; cursor: pointer;
+}
+.jp-carousel-next-button span {
+	top: 0px; width: 82px; bottom: 0px; position: absolute; -ms-zoom: 1; opacity: 0.2;
+}
+.jp-carousel-previous-button span {
+	top: 0px; width: 82px; bottom: 0px; position: absolute; -ms-zoom: 1; opacity: 0.2;
+}
+.jp-carousel-transitions .jp-carousel-next-button span {
+	transition:opacity 500ms ease-out; -webkit-transition: 500ms opacity ease-out;
+}
+.jp-carousel-transitions .jp-carousel-previous-button span {
+	transition:opacity 500ms ease-out; -webkit-transition: 500ms opacity ease-out;
+}
+.jp-carousel-next-button:hover span {
+	opacity: 0.6;
+}
+.jp-carousel-previous-button:hover span {
+	opacity: 0.6;
+}
+.jp-carousel-next-button span {
+	background-position: -110px; right: 0px;
+}
+.jp-carousel-previous-button span {
+	background-position: -10px; left: 0px;
+}
+.jp-carousel-buttons {
+	background: rgb(34, 34, 34); margin: -18px -20px 15px; padding: 8px 10px; text-align: center; border-bottom-color: rgb(34, 34, 34); border-bottom-width: 1px; border-bottom-style: solid;
+}
+div.jp-carousel-buttons a {
+	font: 400 11px/1.2em "Helvetica Neue", sans-serif !important; padding: 5px 2px 5px 0px; border: currentColor !important; border-image: none !important; color: rgb(153, 153, 153); letter-spacing: 0px !important; text-decoration: none !important; vertical-align: middle; font-size-adjust: none !important; font-stretch: normal !important; text-shadow: none !important; -webkit-font-smoothing: subpixel-antialiased;
+}
+div.jp-carousel-buttons a:hover {
+	border: currentColor !important; border-image: none !important; color: rgb(104, 201, 232);
+}
+.jp-carousel-transitions div.jp-carousel-buttons a:hover {
+	transition:none !important; -webkit-transition: none;
+}
+.jp-carousel-next-button {
+	transform: translate3d(0px, 0px, 0px); -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0); -o-transform: translate3d(0, 0, 0);
+}
+.jp-carousel-previous-button {
+	transform: translate3d(0px, 0px, 0px); -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0); -o-transform: translate3d(0, 0, 0);
+}
+.jp-carousel-slide {
+	transform: translate3d(0px, 0px, 0px); -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0); -o-transform: translate3d(0, 0, 0);
+}
+.jp-carousel-slide img {
+	transform: translate3d(0px, 0px, 0px); -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0); -o-transform: translate3d(0, 0, 0);
+}
+.jp-carousel-slide {
+	border-radius: 2px; width: 0px; bottom: 0px; position: fixed; background-color: rgb(0, 0, 0); -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; -o-border-radius: 2px;
+}
+.selected.jp-carousel-slide {
+	position: absolute !important; opacity: 1;
+}
+.jp-carousel-slide {
+	opacity: 0.25;
+}
+.jp-carousel-slide img {
+	background: none !important; padding: 0px !important; border: currentColor !important; border-image: none !important; width: 100% !important; height: 100% !important; display: block; -ms-zoom: 1; max-height: 100% !important; max-width: 100% !important; box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+.jp-carousel-transitions .jp-carousel-slide {
+	transition:opacity 400ms linear; -webkit-transition: opacity 400ms linear;
+}
+.jp-carousel-close-hint {
+	padding: 0.35em 0px 0px; width: 90%; text-align: left; color: rgb(153, 153, 153); letter-spacing: 0px !important; position: absolute; cursor: default;
+}
+.jp-carousel-transitions .jp-carousel-close-hint {
+	transition:color 200ms linear; -webkit-transition: color 200ms linear;
+}
+.jp-carousel-close-hint span {
+	font: 400 24px "Helvetica Neue", sans-serif !important; margin: 0px 0px 0px 0.4em; border-radius: 4px; width: 22px; height: 22px; text-align: center; vertical-align: middle; display: block; cursor: pointer; font-size-adjust: none !important; font-stretch: normal !important; background-color: rgba(0, 0, 0, 0.8);
+}
+.jp-carousel-transitions .jp-carousel-close-hint span {
+	transition:border-color 200ms linear; -webkit-transition: border-color 200ms linear;
+}
+.jp-carousel-close-hint:hover {
+	color: rgb(255, 255, 255); cursor: default;
+}
+.jp-carousel-close-hint:hover span {
+	border-color: rgb(255, 255, 255);
+}
+a.jp-carousel-image-download {
+	background: url("../modules/carousel/images/carousel-sprite.png?5") no-repeat 0px 0px / 16px 200px;
+}
+div.jp-carousel-buttons a.jp-carousel-commentlink {
+	background: url("../modules/carousel/images/carousel-sprite.png?5") no-repeat 0px 0px / 16px 200px;
+}
+div.jp-carousel-buttons a.jp-carousel-like {
+	background: url("../modules/carousel/images/carousel-sprite.png?5") no-repeat 0px 0px / 16px 200px;
+}
+div.jp-carousel-buttons a.jp-carousel-reblog {
+	background: url("../modules/carousel/images/carousel-sprite.png?5") no-repeat 0px 0px / 16px 200px;
+}
+div.jp-carousel-buttons a.jp-carousel-commentlink {
+	margin: 0px 14px 0px 0px !important;
+}
+div.jp-carousel-buttons a.jp-carousel-reblog {
+	margin: 0px 14px 0px 0px !important;
+}
+div.jp-carousel-buttons a.liked.jp-carousel-like {
+	border-radius: 2px; padding-right: 8px !important; background-color: rgb(48, 48, 48); -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; -o-border-radius: 2px;
+}
+div.jp-carousel-buttons a.reblogged.jp-carousel-reblog {
+	border-radius: 2px; padding-right: 8px !important; background-color: rgb(48, 48, 48); -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; -o-border-radius: 2px;
+}
+div.jp-carousel-buttons a.reblogged.jp-carousel-reblog {
+	margin: 0px 2px 0px -12px !important;
+}
+div.jp-carousel-buttons a.jp-carousel-reblog {
+	background-position: 6px -36px; color: rgb(153, 153, 153); padding-left: 26px !important;
+}
+div.jp-carousel-buttons a.reblogged.jp-carousel-reblog:hover {
+	background-position: 6px -36px; color: rgb(153, 153, 153); padding-left: 26px !important;
+}
+div.jp-carousel-buttons a.jp-carousel-commentlink {
+	background-position: 0px -156px; padding-left: 19px !important;
+}
+div.jp-carousel-buttons a.reblogged.jp-carousel-reblog:hover {
+	cursor: default;
+}
+div.jp-carousel-buttons a.jp-carousel-reblog:hover {
+	background-position: 6px -56px; color: rgb(104, 201, 232);
+}
+div.jp-carousel-buttons a.jp-carousel-like {
+	background-position: 5px 5px; padding-left: 24px !important;
+}
+div.jp-carousel-buttons a.jp-carousel-like:hover {
+	background-position: 5px -15px;
+}
+@media not all, not all, not all, not all
+{
+a.jp-carousel-image-download {
+	background-image: url("../modules/carousel/images/carousel-sprite-2x.png?5");
+}
+div.jp-carousel-buttons a.jp-carousel-commentlink {
+	background-image: url("../modules/carousel/images/carousel-sprite-2x.png?5");
+}
+div.jp-carousel-buttons a.jp-carousel-like {
+	background-image: url("../modules/carousel/images/carousel-sprite-2x.png?5");
+}
+div.jp-carousel-buttons a.jp-carousel-reblog {
+	background-image: url("../modules/carousel/images/carousel-sprite-2x.png?5");
+}
+}
+div#carousel-reblog-box {
+	background: rgb(34, 34, 34); margin: 5px auto 0px; padding: 3px 0px 0px; border-radius: 2px; width: 565px; height: 74px; display: none; box-shadow: 0px 0px 20px rgba(0,0,0,0.9);
+}
+#carousel-reblog-box textarea {
+	background: rgb(153, 153, 153); font: 13px/1.4 "Helvetica Neue", sans-serif !important; margin: 6px 9px 0px; padding: 3px 6px; border-radius: 2px; border: 1px solid rgb(102, 102, 102); border-image: none; width: 370px; height: 48px; color: rgb(68, 68, 68); float: left; font-size-adjust: none !important; font-stretch: normal !important; box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2);
+}
+#carousel-reblog-box textarea:focus {
+	background: rgb(204, 204, 204); color: rgb(34, 34, 34);
+}
+#carousel-reblog-box label {
+	color: rgb(170, 170, 170); padding-right: 2px; padding-left: 2px; font-size: 11px; font-weight: 400; display: inline;
+}
+#carousel-reblog-box select {
+	background: rgb(51, 51, 51); padding: 0px; border: 1px solid rgb(68, 68, 68); border-image: none; width: 110px; color: rgb(238, 238, 238); font-family: "Helvetica Neue",sans-serif !important; font-size: 12px; margin-top: 5px;
+}
+#carousel-reblog-box .submit {
+	margin: 3px 0px 0px 2px !important; width: 154px; height: 34px; overflow: hidden; padding-top: 0px; padding-left: 1px; float: left;
+}
+#wrapper #carousel-reblog-box p.response {
+	margin: 3px 0px 0px 2px !important; width: 154px; height: 34px; overflow: hidden; padding-top: 0px; padding-left: 1px; float: left;
+}
+#wrapper #carousel-reblog-box p.response {
+	height: 34px; color: rgb(170, 170, 170); padding-left: 2px; clear: none; font-size: 13px;
+}
+#carousel-reblog-box input#carousel-reblog-submit {
+	background: rgb(170, 170, 170); font: 13px/24px "Helvetica Neue", sans-serif !important; padding: 0px 10px !important; border-radius: 1em; border: 1px solid rgb(68, 68, 68); border-image: none; height: 24px; color: rgb(51, 51, 51); margin-top: 8px; cursor: pointer; font-size-adjust: none !important; font-stretch: normal !important;
+}
+#jp-carousel-comment-form-button-submit {
+	background: rgb(170, 170, 170); font: 13px/24px "Helvetica Neue", sans-serif !important; padding: 0px 10px !important; border-radius: 1em; border: 1px solid rgb(68, 68, 68); border-image: none; height: 24px; color: rgb(51, 51, 51); margin-top: 8px; cursor: pointer; font-size-adjust: none !important; font-stretch: normal !important;
+}
+#carousel-reblog-box input#carousel-reblog-submit:hover {
+	background: rgb(204, 204, 204);
+}
+#jp-carousel-comment-form-button-submit:hover {
+	background: rgb(204, 204, 204);
+}
+#carousel-reblog-box .canceltext {
+	color: rgb(170, 170, 170); line-height: 24px; font-size: 11px;
+}
+#carousel-reblog-box .canceltext a {
+	color: rgb(255, 255, 255);
+}
+.jp-carousel-titleanddesc {
+	color: rgb(153, 153, 153); padding-top: 24px; font-size: 15px; font-weight: 400; margin-bottom: 20px; border-top-color: rgb(34, 34, 34); border-top-width: 1px; border-top-style: solid;
+}
+.jp-carousel-titleanddesc-title {
+	font: 300 1.5em/1.1 "Helvetica Neue", sans-serif !important; margin: 0px 0px 15px; padding: 0px; color: rgb(255, 255, 255); text-transform: none !important; font-size-adjust: none !important; font-stretch: normal !important;
+}
+.jp-carousel-titleanddesc-desc p {
+	color: rgb(153, 153, 153); line-height: 1.4; margin-bottom: 0.75em;
+}
+.jp-carousel-comments p a {
+	border: currentColor !important; border-image: none !important; color: rgb(255, 255, 255) !important; font-style: normal !important; font-weight: 400 !important; text-decoration: underline !important;
+}
+.jp-carousel-info h2 a {
+	border: currentColor !important; border-image: none !important; color: rgb(255, 255, 255) !important; font-style: normal !important; font-weight: 400 !important; text-decoration: underline !important;
+}
+.jp-carousel-titleanddesc p a {
+	border: currentColor !important; border-image: none !important; color: rgb(255, 255, 255) !important; font-style: normal !important; font-weight: 400 !important; text-decoration: underline !important;
+}
+.jp-carousel-titleanddesc p b {
+	color: rgb(153, 153, 153); font-weight: 700;
+}
+.jp-carousel-titleanddesc p strong {
+	color: rgb(153, 153, 153); font-weight: 700;
+}
+.jp-carousel-titleanddesc p em {
+	color: rgb(153, 153, 153); font-style: italic;
+}
+.jp-carousel-titleanddesc p i {
+	color: rgb(153, 153, 153); font-style: italic;
+}
+.jp-carousel-comments p a:hover {
+	color: rgb(104, 201, 232) !important;
+}
+.jp-carousel-info h2 a:hover {
+	color: rgb(104, 201, 232) !important;
+}
+.jp-carousel-titleanddesc p a:hover {
+	color: rgb(104, 201, 232) !important;
+}
+.jp-carousel-titleanddesc p:empty {
+	display: none;
+}
+.jp-carousel-left-column-wrapper h1::after {
+	content: none !important;
+}
+.jp-carousel-left-column-wrapper h1::before {
+	content: none !important;
+}
+.jp-carousel-photo-info h1::after {
+	content: none !important;
+}
+.jp-carousel-photo-info h1::before {
+	content: none !important;
+}
+.jp-carousel-image-meta {
+	background: rgb(17, 17, 17); font: 12px/1.4 "Helvetica Neue", sans-serif !important; padding: 18px 20px; border: 1px solid rgb(34, 34, 34); border-image: none; width: 209px !important; color: rgb(255, 255, 255); overflow: hidden; font-size-adjust: none !important; font-stretch: normal !important;
+}
+.jp-carousel-image-meta h5 {
+	background: none !important; border: currentColor !important; border-image: none !important; left: auto !important; top: auto !important; right: auto !important; bottom: auto !important; line-height: 1.3em !important; font-family: "Helvetica Neue",sans-serif !important; font-weight: 400 !important; position: inherit !important;
+}
+.jp-carousel-image-meta li {
+	background: none !important; border: currentColor !important; border-image: none !important; left: auto !important; top: auto !important; right: auto !important; bottom: auto !important; line-height: 1.3em !important; font-family: "Helvetica Neue",sans-serif !important; font-weight: 400 !important; position: inherit !important;
+}
+.jp-carousel-image-meta ul {
+	list-style: none !important; margin: 0px !important; padding: 0px !important;
+}
+.jp-carousel-image-meta li {
+	margin: 0px 2% 15px 0px !important; width: 48% !important; color: rgb(255, 255, 255) !important; font-size: 13px !important; float: left !important;
+}
+.jp-carousel-image-meta h5 {
+	margin: 0px 0px 2px !important; color: rgb(153, 153, 153) !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; font-size: 10px !important;
+}
+a.jp-carousel-image-download {
+	background-position: 0px -82px; color: rgb(153, 153, 153); line-height: 1; padding-left: 23px; clear: both; font-size: 13px; font-weight: 400; text-decoration: none; display: inline-block;
+}
+a.jp-carousel-image-download span.photo-size {
+	border-radius: 1em; font-size: 11px; margin-left: 2px; display: inline-block;
+}
+a.jp-carousel-image-download span.photo-size-times {
+	padding: 0px 1px 0px 2px;
+}
+a.jp-carousel-image-download:hover {
+	background-position: 0px -122px; border: currentColor !important; border-image: none !important; color: rgb(104, 201, 232);
+}
+.jp-carousel-image-map {
+	margin: -20px -20px 20px; height: 154px; border-bottom-color: rgba(255, 255, 255, 0.17); border-bottom-width: 1px; border-bottom-style: solid; position: relative;
+}
+.jp-carousel-image-map img.gmap-main {
+	border-right-color: rgba(255, 255, 255, 0.17); border-right-width: 1px; border-right-style: solid; border-top-left-radius: 6px;
+}
+.jp-carousel-image-map div.gmap-topright {
+	top: 0px; width: 94px; height: 154px; right: 0px; position: absolute;
+}
+.jp-carousel-image-map div.imgclip {
+	overflow: hidden; border-top-right-radius: 6px;
+}
+.jp-carousel-image-map div.gmap-topright img {
+	margin-left: -40px;
+}
+.jp-carousel-image-map img.gmap-bottomright {
+	top: 96px; right: 0px; position: absolute;
+}
+.jp-carousel-comments {
+	background: none; font: 15px/1.7 "Helvetica Neue", sans-serif !important; font-size-adjust: none !important; font-stretch: normal !important;
+}
+.jp-carousel-comments p a:active {
+	color: rgb(104, 201, 232) !important;
+}
+.jp-carousel-comments p a:focus {
+	color: rgb(104, 201, 232) !important;
+}
+.jp-carousel-comments p a:hover {
+	color: rgb(104, 201, 232) !important;
+}
+.jp-carousel-comment {
+	background: none; width: 100%; color: rgb(153, 153, 153); overflow: auto; clear: left; margin-bottom: 20px;
+}
+.jp-carousel-comment p {
+	color: rgb(153, 153, 153) !important;
+}
+.jp-carousel-comment .comment-author {
+	margin: 0px; padding: 0px; border: currentColor; border-image: none; width: auto; font-size: 13px; font-weight: 400; float: none; display: inline;
+}
+.jp-carousel-comment .comment-author a {
+	color: rgb(255, 255, 255);
+}
+.jp-carousel-comment .comment-gravatar {
+	float: left;
+}
+.jp-carousel-comment .comment-content {
+	padding: 0px; border: currentColor; border-image: none; margin-left: 85px;
+}
+.jp-carousel-comment .avatar {
+	margin: 0px 20px 0px 0px; padding: 0px !important; border-radius: 4px; border: currentColor !important; border-image: none !important; background-color: transparent !important;
+}
+.jp-carousel-comment .comment-date {
+	color: rgb(153, 153, 153); font-size: 11px; margin-top: 4px; float: right; display: inline;
+}
+#jp-carousel-comment-form {
+	margin: 0px 0px 10px !important; width: 100%; float: left;
+}
+textarea#jp-carousel-comment-form-comment-field {
+	background: rgba(34, 34, 34, 0.9); font: 15px/1.4 "Helvetica Neue", sans-serif !important; margin: 0px; padding: 10px 10px 5px; border-radius: 3px; border: 1px solid rgb(58, 58, 58); border-image: none; width: 100%; height: 147px; color: rgb(170, 170, 170); overflow: hidden; float: none; box-sizing: border-box; font-size-adjust: none !important; font-stretch: normal !important; box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2); -moz-box-sizing: border-box;
+}
+textarea#jp-carousel-comment-form-comment-field:focus {
+	background: rgb(204, 204, 204); color: rgb(34, 34, 34);
+}
+#jp-carousel-comment-form-spinner {
+	margin: 22px 0px 0px 10px; width: 20px; height: 20px; color: rgb(255, 255, 255); float: left; display: block;
+}
+#jp-carousel-comment-form-submit-and-info-wrapper {
+	width: 100%; overflow: hidden; display: none;
+}
+#jp-carousel-comment-form-commenting-as input {
+	background: rgba(34, 34, 34, 0.9); font: 13px/1.4 "Helvetica Neue", sans-serif !important; padding: 3px 6px; border-radius: 2px; border: 1px solid rgb(58, 58, 58); border-image: none; width: 285px; color: rgb(170, 170, 170); float: left; font-size-adjust: none !important; font-stretch: normal !important; box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2);
+}
+#jp-carousel-comment-form-commenting-as input:focus {
+	background: rgb(204, 204, 204); color: rgb(34, 34, 34);
+}
+#jp-carousel-comment-form-commenting-as p {
+	font: 400 13px/1.7 "Helvetica Neue", sans-serif !important; margin: 22px 0px 0px; float: left; font-size-adjust: none !important; font-stretch: normal !important;
+}
+#jp-carousel-comment-form-commenting-as fieldset {
+	margin: 20px 0px 0px; padding: 0px; border: currentColor; border-image: none; clear: both; float: left;
+}
+#jp-carousel-comment-form-commenting-as label {
+	font: 400 13px/1.7 "Helvetica Neue", sans-serif !important; margin: 0px 20px 3px 0px; width: 100px; float: left; font-size-adjust: none !important; font-stretch: normal !important;
+}
+#jp-carousel-comment-form-button-submit {
+	margin-top: 20px; float: right;
+}
+#jp-carousel-comment-form-container {
+	width: 100%; overflow: auto; margin-bottom: 15px;
+}
+#js-carousel-comment-form-container {
+	width: 100%; overflow: auto; margin-bottom: 15px;
+}
+#jp-carousel-comment-post-results {
+	width: 100%; overflow: auto; display: none;
+}
+#jp-carousel-comment-post-results span {
+	background: rgba(0, 0, 0, 0.7); font: 13px/1.4 "Helvetica Neue", sans-serif !important; padding: 1em 0px; border-radius: 2px; border: 1px solid rgba(255, 255, 255, 0.17); border-image: none; width: 100%; text-align: center; overflow: auto; margin-top: 20px; display: block; box-sizing: border-box; font-size-adjust: none !important; font-stretch: normal !important; box-shadow: inset 0px 0px 5px 5px rgba(0,0,0,1); -moz-box-sizing: border-box;
+}
+.jp-carousel-comment-post-error {
+	color: rgb(223, 73, 38);
+}
+#jp-carousel-comments-closed {
+	color: rgb(153, 153, 153); display: none;
+}
+#jp-carousel-comments-loading {
+	font: 400 15px/1.7 "Helvetica Neue", sans-serif !important; text-align: left; color: rgb(153, 153, 153); margin-bottom: 20px; display: none; font-size-adjust: none !important; font-stretch: normal !important;
+}
+.jp-carousel-light .jp-carousel-overlay {
+	background: rgb(255, 255, 255);
+}
+.jp-carousel-light .jp-carousel-next-button:hover span {
+	opacity: 0.8;
+}
+.jp-carousel-light .jp-carousel-previous-button:hover span {
+	opacity: 0.8;
+}
+.jp-carousel-light .jp-carousel-close-hint:hover {
+	color: rgb(0, 0, 0) !important;
+}
+.jp-carousel-light .jp-carousel-titleanddesc div {
+	color: rgb(0, 0, 0) !important;
+}
+.jp-carousel-light .jp-carousel-comment .comment-author a {
+	color: rgb(30, 140, 190) !important;
+}
+.jp-carousel-light .jp-carousel-comments p a {
+	color: rgb(30, 140, 190) !important;
+}
+.jp-carousel-light .jp-carousel-info h2 a {
+	color: rgb(30, 140, 190) !important;
+}
+.jp-carousel-light .jp-carousel-titleanddesc p a {
+	color: rgb(30, 140, 190) !important;
+}
+.jp-carousel-light .jp-carousel-comment .comment-author a:hover {
+	color: rgb(241, 131, 30) !important;
+}
+.jp-carousel-light .jp-carousel-comments p a:hover {
+	color: rgb(241, 131, 30) !important;
+}
+.jp-carousel-light .jp-carousel-info h2 a:hover {
+	color: rgb(241, 131, 30) !important;
+}
+.jp-carousel-light .jp-carousel-titleanddesc p a:hover {
+	color: rgb(241, 131, 30) !important;
+}
+.jp-carousel-light .jp-carousel-comment {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-comment p {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-info h2 {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-titleanddesc {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-titleanddesc p {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-titleanddesc p b {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-titleanddesc p em {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-titleanddesc p i {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-titleanddesc p strong {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light div.jp-carousel-buttons a {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light .jp-carousel-buttons {
+	background: rgb(245, 245, 245); border-bottom-color: rgb(240, 240, 240);
+}
+.jp-carousel-light div.jp-carousel-buttons a:hover {
+	color: rgb(241, 131, 30); text-decoration: none;
+}
+.jp-carousel-light div.jp-carousel-buttons a.jp-carousel-reblog {
+	background-position: 4px -56px; padding-left: 24px !important;
+}
+.jp-carousel-light div.jp-carousel-buttons a.jp-carousel-reblog:hover {
+	background-position: 4px -56px; padding-left: 24px !important;
+}
+.jp-carousel-light div.jp-carousel-buttons a.liked.jp-carousel-like {
+	color: rgb(255, 255, 255); background-color: rgb(46, 162, 204);
+}
+.jp-carousel-light div.jp-carousel-buttons a.reblogged.jp-carousel-reblog {
+	color: rgb(255, 255, 255); background-color: rgb(46, 162, 204);
+}
+.jp-carousel-light div.jp-carousel-buttons a.jp-carousel-commentlink {
+	background-position: 0px -176px;
+}
+.jp-carousel-light div.jp-carousel-buttons a.jp-carousel-like {
+	background-position: 5px -15px; padding-left: 23px !important;
+}
+.jp-carousel-light div.jp-carousel-buttons a.jp-carousel-like:hover {
+	background-position: 5px -15px; padding-left: 23px !important;
+}
+.jp-carousel-light div.jp-carousel-buttons a.reblogged.jp-carousel-reblog {
+	background-position: 5px -36px;
+}
+.jp-carousel-light div.jp-carousel-buttons a.liked.jp-carousel-like {
+	background-position: 5px 5px;
+}
+.jp-carousel-light div#carousel-reblog-box {
+	background: rgb(238, 238, 238); border: 1px solid rgb(221, 221, 221); border-image: none; box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+.jp-carousel-light #carousel-reblog-box textarea {
+	background: rgb(255, 255, 255); border: 1px solid rgb(207, 207, 207); border-image: none; color: rgb(102, 102, 102);
+}
+.jp-carousel-light #carousel-reblog-box .canceltext {
+	color: rgb(136, 136, 136);
+}
+.jp-carousel-light #carousel-reblog-box .canceltext a {
+	color: rgb(102, 102, 102);
+}
+.jp-carousel-light #carousel-reblog-box select {
+	background: rgb(238, 238, 238); border: 1px solid rgb(170, 170, 170); border-image: none; color: rgb(51, 51, 51);
+}
+#jp-carousel-comment-form-button-submit {
+	background: rgb(255, 255, 255); border: 1px solid rgb(170, 170, 170); border-image: none; color: rgb(51, 51, 51);
+}
+.jp-carousel-light #carousel-reblog-box input#carousel-reblog-submit {
+	background: rgb(255, 255, 255); border: 1px solid rgb(170, 170, 170); border-image: none; color: rgb(51, 51, 51);
+}
+.jp-carousel-light .jp-carousel-image-meta {
+	background: rgb(250, 250, 250); border-width: 1px; border-style: solid; border-color: rgb(245, 245, 245) rgb(238, 238, 238) rgb(238, 238, 238) rgb(245, 245, 245); border-image: none; color: rgb(51, 51, 51);
+}
+.jp-carousel-light .jp-carousel-image-meta li {
+	color: rgb(0, 0, 0) !important;
+}
+.jp-carousel-light .jp-carousel-close-hint {
+	color: rgb(204, 204, 204);
+}
+.jp-carousel-light .jp-carousel-close-hint span {
+	border-color: rgb(204, 204, 204); background-color: rgb(255, 255, 255);
+}
+.jp-carousel-light #jp-carousel-comment-form-comment-field:focus {
+	color: rgb(51, 51, 51);
+}
+.jp-carousel-light a.jp-carousel-image-download {
+	background-position: 0px -122px;
+}
+.jp-carousel-light a.jp-carousel-image-download:hover {
+	background-position: 0px -122px; color: rgb(241, 131, 30);
+}
+.jp-carousel-light textarea#jp-carousel-comment-form-comment-field {
+	background: rgb(251, 251, 251); border: 1px solid rgb(223, 223, 223); border-image: none; color: rgb(51, 51, 51); box-shadow: inset 2px 2px 2px rgba(0,0,0,0.1);
+}
+.jp-carousel-light #jp-carousel-comment-form-commenting-as input {
+	background: rgb(251, 251, 251); border: 1px solid rgb(223, 223, 223); border-image: none; color: rgb(51, 51, 51); box-shadow: inset 2px 2px 2px rgba(0,0,0,0.1);
+}
+.jp-carousel-light #jp-carousel-comment-form-commenting-as input:focus {
+	background: rgb(251, 251, 251); color: rgb(51, 51, 51);
+}
+.jp-carousel-light #jp-carousel-comment-post-results span {
+	background: rgb(247, 247, 247); border: 1px solid rgb(223, 223, 223); border-image: none; box-shadow: inset 0px 0px 5px rgba(0,0,0,0.05);
+}
+.jp-carousel-light .jp-carousel-slide {
+	background-color: rgb(255, 255, 255);
+}
+.jp-carousel-light .jp-carousel-titleanddesc {
+	border-top-color: rgb(238, 238, 238); border-top-width: 1px; border-top-style: solid;
+}
+.jp-carousel-light .jp-carousel-fadeaway {
+	
+}
+@media only screen and (max-width:760px)
+{
+.jp-carousel-info {
+	margin: 0px 10px !important;
+}
+.jp-carousel-buttons {
+	display: none !important;
+}
+.jp-carousel-next-button {
+	display: none !important;
+}
+.jp-carousel-previous-button {
+	display: none !important;
+}
+.jp-carousel-image-meta {
+	width: 100% !important; float: none !important; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.jp-carousel-close-hint {
+	top: -10px; font-size: 26px !important; font-weight: 800 !important; position: fixed !important;
+}
+.jp-carousel-slide img {
+	opacity: 1;
+}
+.jp-carousel-wrap {
+	background-color: rgb(0, 0, 0);
+}
+.jp-carousel-fadeaway {
+	display: none;
+}
+#jp-carousel-comment-form-container {
+	display: none !important;
+}
+.jp-carousel-titleanddesc {
+	border: currentColor !important; border-image: none !important; padding-top: 0px !important;
+}
+.jp-carousel-titleanddesc-title {
+	font-size: 1em !important;
+}
+.jp-carousel-left-column-wrapper {
+	padding: 0px; width: 100% !important;
+}
+.jp-carousel-photo-info {
+	left: 0px !important; width: 100% !important;
+}
+}
+.contact-form .clear-form {
+	clear: both;
+}
+.contact-form input[type=email] {
+	width: 300px; margin-bottom: 13px; max-width: 98%;
+}
+.contact-form input[type=text] {
+	width: 300px; margin-bottom: 13px; max-width: 98%;
+}
+.contact-form select {
+	margin-bottom: 13px;
+}
+.contact-form textarea {
+	width: 80%; height: 200px; margin-bottom: 13px; float: none;
+}
+.contact-form input[type=checkbox] {
+	margin-bottom: 13px; float: none;
+}
+.contact-form input[type=radio] {
+	margin-bottom: 13px; float: none;
+}
+.contact-form label {
+	font-weight: 700; margin-bottom: 3px; float: none; display: block;
+}
+.contact-form label.checkbox {
+	font-weight: 700; margin-bottom: 3px; float: none; display: inline-block;
+}
+.contact-form label.radio {
+	font-weight: 700; margin-bottom: 3px; float: none; display: inline-block;
+}
+.contact-form label span {
+	color: rgb(170, 170, 170); font-weight: 400; margin-left: 4px;
+}
+.form-errors .form-error-message {
+	color: red;
+}
+.textwidget .contact-form input[type=email] {
+	width: 250px; max-width: 100%; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.textwidget .contact-form input[type=text] {
+	width: 250px; max-width: 100%; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.textwidget .contact-form textarea {
+	width: 250px; max-width: 100%; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+#jetpack-check-feedback-spam {
+	margin: 1px 8px 0px 0px;
+}
+.jetpack-check-feedback-spam-spinner {
+	margin-top: 7px; display: inline-block;
+}
+.infinite-loader {
+	height: 28px; color: rgb(0, 0, 0); text-indent: -9999px; display: block;
+}
+#infinite-handle span {
+	background: rgb(51, 51, 51); padding: 6px 16px; border-radius: 1px; color: rgb(238, 238, 238); font-size: 13px; cursor: pointer;
+}
+#infinite-handle span button {
+	background: 0px 0px; margin: 0px; padding: 0px; border: currentColor; border-image: none; color: inherit; line-height: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; display: inline; position: static; cursor: inherit;
+}
+#infinite-handle span button:focus {
+	background: 0px 0px; margin: 0px; padding: 0px; border: currentColor; border-image: none; color: inherit; line-height: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; display: inline; position: static; cursor: inherit;
+}
+#infinite-handle span button:hover {
+	background: 0px 0px; margin: 0px; padding: 0px; border: currentColor; border-image: none; color: inherit; line-height: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; display: inline; position: static; cursor: inherit;
+}
+@media all and (max-width:800px)
+{
+#infinite-handle span::before {
+	display: none;
+}
+#infinite-handle span {
+	display: block;
+}
+}
+#infinite-footer {
+	left: 0px; width: 100%; bottom: -50px; position: fixed;
+}
+#infinite-footer a {
+	text-decoration: none;
+}
+#infinite-footer .blog-credits a:hover {
+	color: rgb(68, 68, 68); text-decoration: underline;
+}
+#infinite-footer .blog-info a:hover {
+	color: rgb(68, 68, 68); text-decoration: underline;
+}
+#infinite-footer .container {
+	background: rgba(255, 255, 255, 0.8); border-width: 1px 0px 0px; border-style: solid; border-color: rgba(0, 0, 0, 0.1); margin: 0px auto; padding: 1px 20px; width: 780px; overflow: hidden; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+#infinite-footer .blog-credits {
+	line-height: 25px; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+#infinite-footer .blog-info {
+	line-height: 25px; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+#infinite-footer .blog-info {
+	width: 40%; text-align: left; overflow: hidden; float: left; white-space: nowrap; -ms-text-overflow: ellipsis;
+}
+#infinite-footer .blog-credits {
+	width: 60%; font-weight: 400; float: right;
+}
+#infinite-footer .blog-info a {
+	color: rgb(17, 17, 17); font-size: 14px; font-weight: 700;
+}
+#infinite-footer .blog-credits {
+	text-align: right; color: rgb(136, 136, 136); font-size: 12px;
+}
+#infinite-footer .blog-credits a {
+	color: rgb(102, 102, 102);
+}
+.neverending.infinity-end #infinite-footer {
+	display: none;
+}
+@media all and (max-width:640px)
+{
+#infinite-footer .container {
+	width: 100%; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+#infinite-footer .blog-info {
+	width: 30%;
+}
+#infinite-footer .blog-credits {
+	width: 70%;
+}
+#infinite-footer .blog-credits {
+	font-size: 10px;
+}
+#infinite-footer .blog-info a {
+	font-size: 10px;
+}
+}
+@media all and (max-width:640px)
+{
+#infinite-footer {
+	position: static;
+}
+}
+#wpadminbar li#wp-admin-bar-admin-bar-likes-widget {
+	width: 61px; overflow: hidden;
+}
+#wpadminbar iframe.admin-bar-likes-widget {
+	border-width: 0px; top: 0px; width: 61px; height: 28px; position: absolute; min-height: 28px;
+}
+div.jetpack-likes-widget-wrapper {
+	width: 100%; position: relative; min-height: 50px;
+}
+div.jetpack-likes-widget-wrapper .sd-link-color {
+	font-size: 12px;
+}
+div.slim-likes-widget.jetpack-likes-widget-wrapper {
+	width: 1px; min-height: 0px;
+}
+#likes-other-gravatars {
+	border-width: 0px; padding: 10px 10px 12px; display: none; position: absolute; z-index: 1000; min-width: 130px; box-shadow: 0px 0px 10px rgba(46,68,83,0.6); background-color: rgb(46, 68, 83);
+}
+#likes-other-gravatars * {
+	line-height: normal;
+}
+#likes-other-gravatars .likes-text {
+	color: rgb(255, 255, 255); padding-bottom: 8px; font-size: 12px;
+}
+#likes-other-gravatars li {
+	margin: 0px; padding: 0px; text-indent: 0px; list-style-type: none;
+}
+#likes-other-gravatars ul {
+	margin: 0px; padding: 0px; text-indent: 0px; list-style-type: none;
+}
+#likes-other-gravatars li::before {
+	content: "";
+}
+#likes-other-gravatars ul.wpl-avatars {
+	overflow: auto; display: block; max-height: 190px;
+}
+#likes-other-gravatars ul.wpl-avatars li {
+	margin: 0px 5px 5px 0px; width: 32px; height: 32px; float: left;
+}
+#likes-other-gravatars ul.wpl-avatars li a {
+	margin: 0px 2px 0px 0px; border-bottom-color: currentColor !important; border-bottom-width: medium !important; border-bottom-style: none !important; display: block;
+}
+#likes-other-gravatars ul.wpl-avatars li a img {
+	background: 0px 0px; margin: 0px !important; padding: 0px !important; border: currentColor; border-image: none; position: static;
+}
+div.sd-box {
+	border-top-color: rgba(0, 0, 0, 0.13); border-top-width: 1px; border-top-style: solid;
+}
+.comment-likes-widget {
+	border-width: 0px; margin: 0px; display: block;
+}
+.entry-content .post-likes-widget {
+	border-width: 0px; margin: 0px; display: block;
+}
+.post-likes-widget {
+	border-width: 0px; margin: 0px; display: block;
+}
+.post-likes-widget-placeholder {
+	border-width: 0px; margin: 0px; position: relative;
+}
+.post-likes-widget-placeholder .button {
+	display: none;
+}
+.post-likes-widget-placeholder .loading {
+	color: rgb(153, 153, 153); font-size: 12px;
+}
+.slim-likes-widget .post-likes-widget {
+	width: auto; float: none;
+}
+div.sd-like-enabled.sharedaddy .sd-like h3 {
+	display: none;
+}
+div.sd-like-enabled.sharedaddy .sd-like .post-likes-widget {
+	top: 0px; width: 100%; float: none; position: absolute;
+}
+.comment-likes-widget {
+	width: 100%;
+}
+.pd-rating {
+	display: block !important;
+}
+.sd-gplus .sd-title {
+	display: none;
+}
+#jp-relatedposts {
+	margin: 1em 0px; padding-top: 1em; clear: both; display: none; position: relative;
+}
+.jp-relatedposts::after {
+	clear: both; display: block; content: "";
+}
+#jp-relatedposts h3.jp-relatedposts-headline {
+	margin: 0px 0px 1em; font-family: inherit; font-size: 9pt; font-weight: 700; float: left; display: inline-block;
+}
+#jp-relatedposts h3.jp-relatedposts-headline em::before {
+	width: 100%; margin-bottom: 1em; border-top-color: rgba(0, 0, 0, 0.2); border-top-width: 1px; border-top-style: solid; display: block; min-width: 30px; content: "";
+}
+#jp-relatedposts h3.jp-relatedposts-headline em {
+	font-style: normal; font-weight: 700;
+}
+#jp-relatedposts .jp-relatedposts-items {
+	clear: left;
+}
+#jp-relatedposts .jp-relatedposts-items-visual {
+	margin-right: -20px;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post {
+	margin: 0px 0px 1em; width: 33%; float: left; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post {
+	padding-right: 20px; opacity: 0.8; -moz-opacity: .8;
+}
+#jp-relatedposts .jp-relatedposts-items :nth-child(3n+4).jp-relatedposts-post {
+	clear: both;
+}
+#jp-relatedposts .jp-relatedposts-items-visual :nth-child(3n+4).jp-relatedposts-post {
+	clear: both;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post:hover .jp-relatedposts-post-title a {
+	text-decoration: underline;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post:hover {
+	opacity: 1; -moz-opacity: 1;
+}
+#jp-relatedposts .jp-relatedposts-items p {
+	margin: 0px; line-height: 20px; font-size: 14px;
+}
+#jp-relatedposts .jp-relatedposts-items-visual h4.jp-relatedposts-post-title {
+	margin: 0px; line-height: 20px; font-size: 14px;
+}
+#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post-nothumbs {
+	position: relative;
+}
+#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post-nothumbs a.jp-relatedposts-post-aoverlay {
+	left: 0px; top: 0px; right: 0px; bottom: 0px; display: block; position: absolute;
+}
+#jp-relatedposts .jp-relatedposts-items p {
+	margin-bottom: 0px;
+}
+#jp-relatedposts .jp-relatedposts-items-visual h4.jp-relatedposts-post-title {
+	margin: 0px; text-transform: none; font-family: inherit; display: block; max-width: 100%;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-title a {
+	font-size: inherit; font-weight: 400; text-decoration: none; opacity: 1; -moz-opacity: 1;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-title a:hover {
+	text-decoration: underline;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post img.jp-relatedposts-post-img {
+	overflow: hidden; display: block; -ms-text-overflow: ellipsis; max-width: 90%;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post span {
+	overflow: hidden; display: block; -ms-text-overflow: ellipsis; max-width: 90%;
+}
+#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post img.jp-relatedposts-post-img {
+	max-width: 100%;
+}
+#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post span {
+	max-width: 100%;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-context {
+	opacity: 0.6;
+}
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-date {
+	opacity: 0.6;
+}
+#jp-relatedposts .jp-relatedposts-items-visual div.jp-relatedposts-post-thumbs p.jp-relatedposts-post-excerpt {
+	display: none;
+}
+.jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-date {
+	display: none;
+}
+#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post-nothumbs p.jp-relatedposts-post-excerpt {
+	overflow: hidden;
+}
+#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post-nothumbs span {
+	margin-bottom: 1em;
+}
+@media only screen and (max-width:640px)
+{
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post {
+	width: 50%;
+}
+#jp-relatedposts .jp-relatedposts-items :nth-child(3n).jp-relatedposts-post {
+	clear: left;
+}
+#jp-relatedposts .jp-relatedposts-items-visual {
+	margin-right: 20px;
+}
+}
+@media only screen and (max-width:320px)
+{
+#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post {
+	margin: 0px 0px 1em; width: 100%; clear: both;
+}
+}
+#jp-post-flair {
+	padding-top: 0.5em;
+}
+#content div.sharedaddy {
+	clear: both;
+}
+#main div.sharedaddy {
+	clear: both;
+}
+div.sharedaddy {
+	clear: both;
+}
+div.sharedaddy h3.sd-title {
+	margin: 0px 0px 1em; line-height: 1.2; font-size: 9pt; font-weight: 700; display: inline-block;
+}
+div.sharedaddy h3.sd-title::before {
+	width: 100%; margin-bottom: 1em; border-top-color: rgb(221, 221, 221); border-top-width: 1px; border-top-style: solid; display: block; min-width: 30px; content: "";
+}
+body.highlander-light h3.sd-title::before {
+	border-top-color: rgba(0, 0, 0, 0.2); border-top-width: 1px; border-top-style: solid;
+}
+body.highlander-dark h3.sd-title::before {
+	border-top-color: rgba(255, 255, 255, 0.4); border-top-width: 1px; border-top-style: solid;
+}
+.sd-content ul {
+	list-style: none !important; margin: 0px 0px 0.7em !important; padding: 0px !important;
+}
+.sd-content ul li {
+	display: inline-block;
+}
+.sd-gplus.sd-block {
+	margin: 0px 0px 0.5em;
+}
+.sd-gplus .sd-content {
+	font-size: 12px;
+}
+#sharing_email .sharing_send {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-content ul li .option a.share-ustom {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-content ul li a.sd-button {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-content ul li.advanced a.share-more {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-content ul li.preview-item div.option-smart-off.option a {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-social-icon .sd-content ul li a.sd-button {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-social-icon-text .sd-content ul li a.sd-button {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-social-official .sd-content > ul > li .digg_button > a {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-social-official .sd-content > ul > li > a.sd-button {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-social-text .sd-content ul li a.sd-button {
+	background: rgb(248, 248, 248); margin: 0px 5px 5px 0px; padding: 1px 8px 0px 5px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(119, 119, 119) !important; line-height: 23px; font-family: "Open Sans",sans-serif; font-size: 12px; font-weight: 400; text-decoration: none !important; display: inline-block; box-shadow: 0px 1px 0px rgba(0,0,0,0.08); text-shadow: none;
+}
+.sd-content ul li .option a.share-ustom span {
+	line-height: 23px;
+}
+.sd-content ul li a.sd-button > span {
+	line-height: 23px;
+}
+.sd-content ul li.advanced a.share-more span {
+	line-height: 23px;
+}
+.sd-content ul li.preview-item div.option-smart-off.option a span {
+	line-height: 23px;
+}
+.sd-social-icon-text .sd-content ul li a.sd-button > span {
+	line-height: 23px;
+}
+.sd-social-official .sd-content > ul > li .digg_button > a span {
+	line-height: 23px;
+}
+.sd-social-official .sd-content > ul > li > a.sd-button span {
+	line-height: 23px;
+}
+.sd-social-text .sd-content ul li a.sd-button span {
+	line-height: 23px;
+}
+.sd-social-official .sd-content .sharing-hidden .inner > ul > li .digg_button > a {
+	line-height: 17px; vertical-align: top; box-shadow: none;
+}
+.sd-social-official .sd-content .sharing-hidden .inner > ul > li > a.sd-button {
+	line-height: 17px; vertical-align: top; box-shadow: none;
+}
+.sd-social-official .sd-content > ul > li .digg_button > a {
+	line-height: 17px; vertical-align: top; box-shadow: none;
+}
+.sd-social-official .sd-content > ul > li > a.sd-button {
+	line-height: 17px; vertical-align: top; box-shadow: none;
+}
+.sd-social-official .sd-content .sharing-hidden .inner > ul > li .digg_button > a::before {
+	top: 0px; margin-bottom: -1px;
+}
+.sd-social-official .sd-content .sharing-hidden .inner > ul > li > a.sd-button::before {
+	top: 0px; margin-bottom: -1px;
+}
+.sd-social-official .sd-content > ul > li .digg_button > a::before {
+	top: 0px; margin-bottom: -1px;
+}
+.sd-social-official .sd-content > ul > li > a.sd-button::before {
+	top: 0px; margin-bottom: -1px;
+}
+.sd-social-icon .sd-content ul li a.sd-button:active {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-icon .sd-content ul li a.sd-button:hover {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-icon-text .sd-content ul li a.sd-button:active {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-icon-text .sd-content ul li a.sd-button:hover {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-official .sd-content > ul > li .digg_button > a:active {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-official .sd-content > ul > li .digg_button > a:hover {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-official .sd-content > ul > li > a.sd-button:active {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-official .sd-content > ul > li > a.sd-button:hover {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-text .sd-content ul li a.sd-button:active {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-text .sd-content ul li a.sd-button:hover {
+	background: rgb(250, 250, 250); border: 1px solid rgb(153, 153, 153); border-image: none; color: rgb(85, 85, 85);
+}
+.sd-social-icon .sd-content ul li a.sd-button:active {
+	box-shadow: inset 0px 1px 0px rgba(0,0,0,0.16);
+}
+.sd-social-icon-text .sd-content ul li a.sd-button:active {
+	box-shadow: inset 0px 1px 0px rgba(0,0,0,0.16);
+}
+.sd-social-official .sd-content > ul > li .digg_button > a:active {
+	box-shadow: inset 0px 1px 0px rgba(0,0,0,0.16);
+}
+.sd-social-official .sd-content > ul > li > a.sd-button:active {
+	box-shadow: inset 0px 1px 0px rgba(0,0,0,0.16);
+}
+.sd-social-text .sd-content ul li a.sd-button:active {
+	box-shadow: inset 0px 1px 0px rgba(0,0,0,0.16);
+}
+.sd-content ul li a.sd-button::before {
+	font: 400 16px Genericons; top: 3px; text-align: center; vertical-align: top; display: inline-block; position: relative; font-size-adjust: none; font-stretch: normal; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+}
+.sd-content ul li {
+	margin: 0px !important; padding: 0px;
+}
+.sd-content ul li.preview-item a.sd-button span {
+	margin-left: 3px;
+}
+.sd-social-icon-text .sd-content ul li a span {
+	margin-left: 3px;
+}
+.sd-social-official .sd-content ul li a.sd-button span {
+	margin-left: 3px;
+}
+.sd-content ul li.no-icon.preview-item a.sd-button span {
+	margin-left: 0px;
+}
+.sd-content ul li.no-icon a::before {
+	display: none;
+}
+.sd-social-text .sd-content ul li a::before {
+	display: none;
+}
+body .sd-content ul li.no-icon.share-custom a span {
+	background-position: -500px -500px !important; height: 0px; line-height: inherit; padding-left: 0px; background-image: none; background-repeat: no-repeat !important;
+}
+body .sd-social-text .sd-content ul li.share-custom a span {
+	background-position: -500px -500px !important; height: 0px; line-height: inherit; padding-left: 0px; background-image: none; background-repeat: no-repeat !important;
+}
+.sd-social-icon .sd-content ul li a.share-more {
+	top: 2px; position: relative;
+}
+.sd-social-icon .sd-content ul li a.share-more span {
+	margin-left: 3px;
+}
+.sd-content ul li.share-print div.option-smart-off.option a::before {
+	content: "\f469";
+}
+.sd-social-icon .sd-content ul li.share-print a::before {
+	content: "\f469";
+}
+.sd-social-icon-text .sd-content li.share-print a::before {
+	content: "\f469";
+}
+.sd-social-official .sd-content li.share-print a::before {
+	content: "\f469";
+}
+.sd-social-text .sd-content ul li.share-print a::before {
+	content: "\f469";
+}
+.sd-content ul li.share-email div.option-smart-off.option a::before {
+	content: "\f410";
+}
+.sd-social-icon .sd-content ul li.share-email a::before {
+	content: "\f410";
+}
+.sd-social-icon-text .sd-content li.share-email a::before {
+	content: "\f410";
+}
+.sd-social-official .sd-content li.share-email a::before {
+	content: "\f410";
+}
+.sd-social-text .sd-content ul li.share-email a::before {
+	content: "\f410";
+}
+.sd-content ul li.share-linkedin div.option-smart-off.option a::before {
+	content: "\f207";
+}
+.sd-social-icon .sd-content ul li.share-linkedin a::before {
+	content: "\f207";
+}
+.sd-social-icon-text .sd-content li.share-linkedin a::before {
+	content: "\f207";
+}
+.sd-social-text .sd-content ul li.share-linkedin a::before {
+	content: "\f207";
+}
+.sd-content ul li.share-twitter div.option-smart-off.option a::before {
+	content: "\f202";
+}
+.sd-social-icon .sd-content ul li.share-twitter a::before {
+	content: "\f202";
+}
+.sd-social-icon-text .sd-content li.share-twitter a::before {
+	content: "\f202";
+}
+.sd-social-text .sd-content ul li.share-twitter a::before {
+	content: "\f202";
+}
+.sd-content ul li.share-reddit div.option-smart-off.option a::before {
+	content: "\f222";
+}
+.sd-social-icon .sd-content ul li.share-reddit a::before {
+	content: "\f222";
+}
+.sd-social-icon-text .sd-content li.share-reddit a::before {
+	content: "\f222";
+}
+.sd-social-text .sd-content ul li.share-reddit a::before {
+	content: "\f222";
+}
+.sd-content ul li.share-tumblr div.option-smart-off.option a::before {
+	content: "\f214";
+}
+.sd-social-icon .sd-content ul li.share-tumblr a::before {
+	content: "\f214";
+}
+.sd-social-icon-text .sd-content li.share-tumblr a::before {
+	content: "\f214";
+}
+.sd-social-text .sd-content ul li.share-tumblr a::before {
+	content: "\f214";
+}
+.sd-content ul li.share-pocket div.option-smart-off.option a::before {
+	content: "\f224";
+}
+.sd-social-icon .sd-content ul li.share-pocket a::before {
+	content: "\f224";
+}
+.sd-social-icon-text .sd-content li.share-pocket a::before {
+	content: "\f224";
+}
+.sd-social-text .sd-content ul li.share-pocket a::before {
+	content: "\f224";
+}
+.sd-content ul li.share-pinterest div.option-smart-off.option a::before {
+	content: "\f209";
+}
+.sd-social-icon .sd-content ul li.share-pinterest a::before {
+	content: "\f209";
+}
+.sd-social-icon-text .sd-content li.share-pinterest a::before {
+	content: "\f209";
+}
+.sd-social-text .sd-content ul li.share-pinterest a::before {
+	content: "\f209";
+}
+.sd-content ul li.share-google-plus-1 div.option-smart-off.option a::before {
+	content: "\f218";
+}
+.sd-social-icon .sd-content ul li.share-google-plus-1 a::before {
+	content: "\f218";
+}
+.sd-social-icon-text .sd-content li.share-google-plus-1 a::before {
+	content: "\f218";
+}
+.sd-social-text .sd-content ul li.share-google-plus-1 a::before {
+	content: "\f218";
+}
+.sd-content ul li.share-facebook div.option-smart-off.option a::before {
+	content: "\f204";
+}
+.sd-social-icon .sd-content ul li.share-facebook a::before {
+	content: "\f204";
+}
+.sd-social-icon-text .sd-content li.share-facebook a::before {
+	content: "\f204";
+}
+.sd-social-text .sd-content ul li.share-facebook a::before {
+	content: "\f204";
+}
+.sd-content ul li.share-press-this div.option-smart-off.option a::before {
+	content: "\f205";
+}
+.sd-social-icon .sd-content ul li.share-press-this a::before {
+	content: "\f205";
+}
+.sd-social-icon-text .sd-content li.share-press-this a::before {
+	content: "\f205";
+}
+.sd-social-official .sd-content li.share-press-this a::before {
+	content: "\f205";
+}
+.sd-social-text .sd-content ul li.share-press-this a::before {
+	content: "\f205";
+}
+.sd-social-official .sd-content li.share-press-this a::before {
+	color: rgb(43, 161, 203);
+}
+.sd-content ul li.advanced a.share-more::before {
+	content: "\f415";
+}
+.sd-social-icon .sd-content ul a.share-more::before {
+	content: "\f415";
+}
+.sd-social-icon-text .sd-content a.share-more::before {
+	content: "\f415";
+}
+.sd-social-official .sd-content a.share-more::before {
+	content: "\f415";
+}
+.sd-social-text .sd-content ul a.share-more::before {
+	content: "\f415";
+}
+.sd-social-official .sd-content a.share-more::before {
+	color: rgb(43, 161, 203);
+}
+.sd-social .sd-button .share-count {
+	background: rgb(46, 162, 204); padding: 1px 3px; border-radius: 10px; text-align: center; color: rgb(255, 255, 255); line-height: 1; font-size: 10px; display: inline-block;
+}
+.sd-social-official .sd-content ul {
+	line-height: 25px !important;
+}
+.sd-social-official .sd-content ul li {
+	line-height: 25px !important;
+}
+.sd-social-official .sd-content > ul > li > a.sd-button span {
+	line-height: 1;
+}
+.sd-social-official .sd-content ul::after {
+	height: 0px; clear: both; display: block; visibility: hidden; content: ".";
+}
+.sd-social-official .sd-content li.share-press-this a {
+	margin: 0px 0px 5px;
+}
+.sd-social-official .sd-content ul > li {
+	margin: 0px 10px 5px 0px !important; height: 25px; float: left; display: block;
+}
+.sd-social-official .fb-share-button > span {
+	vertical-align: top !important;
+}
+.sd-social-official .sd-content .pocket_button iframe {
+	width: 98px;
+}
+.sd-social-official .sd-content .twitter_button iframe {
+	width: 96px;
+}
+.reddit_button iframe {
+	margin-top: 1px;
+}
+.googleplus1_button iframe {
+	margin: 0px !important;
+}
+.linkedin_button > span {
+	margin: 0px !important;
+}
+.pinterest_button {
+	margin: 0px !important;
+}
+.pocket_button iframe {
+	margin: 0px !important;
+}
+.twitter_button {
+	margin: 0px !important;
+}
+body .sd-social-official li a.share-more {
+	top: 0px; position: relative;
+}
+body .sd-social-official li.share-custom a {
+	top: 0px; position: relative;
+}
+body .sd-social-official li.share-digg a {
+	top: 0px; position: relative;
+}
+body .sd-social-official li.share-email a {
+	top: 0px; position: relative;
+}
+body .sd-social-official li.share-press-this a {
+	top: 0px; position: relative;
+}
+body .sd-social-official li.share-print {
+	top: 0px; position: relative;
+}
+body .sd-social-icon .sd-content li.share-custom > a {
+	padding: 2px 3px 0px; top: 4px; position: relative;
+}
+body .sd-content ul li.share-custom a.share-icon span {
+	padding: 0px 0px 0px 19px; height: 16px; line-height: 16px; margin-left: 0px; display: inline-block; background-repeat: no-repeat; background-size: 16px 16px;
+}
+body .sd-social-icon .sd-content li.share-custom a span {
+	padding: 0px 0px 0px 19px; height: 16px; line-height: 16px; margin-left: 0px; display: inline-block; background-repeat: no-repeat; background-size: 16px 16px;
+}
+body .sd-social-icon-text .sd-content li.share-custom a span {
+	padding: 0px 0px 0px 19px; height: 16px; line-height: 16px; margin-left: 0px; display: inline-block; background-repeat: no-repeat; background-size: 16px 16px;
+}
+body .sd-social-official .sd-content li.share-custom a span {
+	padding: 0px 0px 0px 19px; height: 16px; line-height: 16px; margin-left: 0px; display: inline-block; background-repeat: no-repeat; background-size: 16px 16px;
+}
+body .sd-social-text .sd-content li.share-custom a span {
+	padding: 0px 0px 0px 19px; height: 16px; line-height: 16px; margin-left: 0px; display: inline-block; background-repeat: no-repeat; background-size: 16px 16px;
+}
+body .sd-social-icon .sd-content li.share-custom a span {
+	width: 0px;
+}
+body .sd-social-icon .sd-content li.share-custom a span {
+	padding-left: 16px !important;
+}
+.sharing-hidden .inner {
+	background: rgb(255, 255, 255); padding: 10px; border-radius: 2px; border: 1px solid rgb(204, 204, 204); border-image: none; margin-top: 5px; position: absolute; z-index: 2; max-width: 400px; box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+}
+.sharing-hidden .inner ul {
+	margin: 0px !important;
+}
+.sd-social-official .sd-content .sharing-hidden ul > li.share-end {
+	margin: 0px; height: 0px; clear: both;
+}
+.sharing-hidden .inner::after {
+	left: 20px; top: -8px; width: 0px; height: 0px; border-right-color: transparent; border-bottom-color: rgb(204, 204, 204); border-left-color: transparent; border-right-width: 6px; border-bottom-width: 8px; border-left-width: 6px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; display: block; position: absolute; z-index: 1; content: "";
+}
+.sharing-hidden .inner::before {
+	left: 20px; top: -8px; width: 0px; height: 0px; border-right-color: transparent; border-bottom-color: rgb(204, 204, 204); border-left-color: transparent; border-right-width: 6px; border-bottom-width: 8px; border-left-width: 6px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; display: block; position: absolute; z-index: 1; content: "";
+}
+.sharing-hidden .inner::after {
+	top: -7px; border-right-color: transparent; border-bottom-color: rgb(255, 255, 255); border-left-color: transparent; border-right-width: 6px; border-bottom-width: 8px; border-left-width: 6px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; z-index: 2;
+}
+.sharing-hidden ul {
+	margin: 0px;
+}
+.sd-social-icon .sd-content ul li[class*=share-] a {
+	padding: 8px; border-radius: 50%; border: 0px currentColor; border-image: none; top: -2px; width: auto; height: auto; line-height: 1; margin-bottom: 0px; position: relative; box-shadow: none; -webkit-border-radius: 50%;
+}
+.sd-social-icon .sd-content ul li[class*=share-] a:hover {
+	padding: 8px; border-radius: 50%; border: 0px currentColor; border-image: none; top: -2px; width: auto; height: auto; line-height: 1; margin-bottom: 0px; position: relative; box-shadow: none; -webkit-border-radius: 50%;
+}
+.sd-social-icon .sd-content ul li[class*=share-] div.option a {
+	padding: 8px; border-radius: 50%; border: 0px currentColor; border-image: none; top: -2px; width: auto; height: auto; line-height: 1; margin-bottom: 0px; position: relative; box-shadow: none; -webkit-border-radius: 50%;
+}
+.sd-social-icon .sd-content ul li[class*=share-] a.sd-button > span {
+	line-height: 1;
+}
+.sd-social-icon .sd-content ul li[class*=share-] div.option a span {
+	line-height: 1;
+}
+.sd-social-icon .sd-content ul li[class*=share-] a:hover {
+	border: currentColor; border-image: none; opacity: 0.6;
+}
+.sd-social-icon .sd-content ul li[class*=share-] div.option a:hover {
+	border: currentColor; border-image: none; opacity: 0.6;
+}
+.sd-social-icon .sd-content ul li[class*=share-] a.sd-button::before {
+	top: 0px;
+}
+.sd-social-icon .sd-content ul li[class*=share-] a.share-custom.sd-button {
+	padding: 8px 8px 6px; top: 5px;
+}
+.sd-social-icon .sd-content ul li a.share-more.sd-button {
+	margin-left: 10px;
+}
+.sd-social-icon .sd-content ul li:first-child a.share-more.sd-button {
+	margin-left: 0px;
+}
+.sd-social-icon .sd-button span.share-count {
+	background: rgb(85, 85, 85); border-radius: 0px; right: 0px; bottom: 0px; font-size: 9px; position: absolute;
+}
+.sd-social-icon .sd-content ul li[class*=share-] a.sd-button {
+	background: rgb(233, 233, 233); text-indent: 0px; margin-top: 2px;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-tumblr a.sd-button {
+	background: rgb(44, 71, 98); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-facebook a.sd-button {
+	background: rgb(59, 89, 152); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-twitter a.sd-button {
+	background: rgb(0, 172, 238); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-pinterest a.sd-button {
+	background: rgb(202, 31, 39); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-digg a.sd-button {
+	color: rgb(85, 85, 85) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-press-this a.sd-button {
+	background: rgb(30, 140, 190); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-linkedin a.sd-button {
+	background: rgb(0, 119, 181); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-google-plus-1 a.sd-button {
+	background: rgb(221, 75, 57); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-pocket a.sd-button {
+	background: rgb(238, 64, 86); color: rgb(255, 255, 255) !important;
+}
+.sd-social-icon .sd-content ul li[class*=share-].share-reddit a.sd-button {
+	background: rgb(206, 227, 248); color: rgb(85, 85, 85) !important;
+}
+.sharing-screen-reader-text {
+	width: 1px; height: 1px; overflow: hidden; position: absolute !important; clip: rect(1px, 1px, 1px, 1px);
+}
+.sharing-screen-reader-text:active {
+	padding: 15px 23px 14px; border-radius: 3px; left: 5px; top: 5px; width: auto; height: auto; color: rgb(33, 117, 155); line-height: normal; font-size: 14px; font-weight: 700; text-decoration: none; display: block; z-index: 100000; clip: auto !important; box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6); background-color: rgb(241, 241, 241);
+}
+.sharing-screen-reader-text:focus {
+	padding: 15px 23px 14px; border-radius: 3px; left: 5px; top: 5px; width: auto; height: auto; color: rgb(33, 117, 155); line-height: normal; font-size: 14px; font-weight: 700; text-decoration: none; display: block; z-index: 100000; clip: auto !important; box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6); background-color: rgb(241, 241, 241);
+}
+.sharing-screen-reader-text:hover {
+	padding: 15px 23px 14px; border-radius: 3px; left: 5px; top: 5px; width: auto; height: auto; color: rgb(33, 117, 155); line-height: normal; font-size: 14px; font-weight: 700; text-decoration: none; display: block; z-index: 100000; clip: auto !important; box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6); background-color: rgb(241, 241, 241);
+}
+#sharing_email {
+	background: rgb(255, 255, 255); padding: 15px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 342px; text-align: left; position: absolute; z-index: 1001; box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+}
+div.sharedaddy-dark.sharedaddy #sharing_email {
+	border-color: rgb(255, 255, 255);
+}
+#sharing_email .errors {
+	margin: 10px 0px 0px; padding: 5px 8px; color: rgb(255, 255, 255); line-height: 1; font-size: 12px; background-color: rgb(119, 26, 9);
+}
+#sharing_email label {
+	padding: 0px 0px 4px; text-align: left; color: rgb(51, 51, 51); font-size: 12px; font-weight: 700; display: block; text-shadow: none;
+}
+#sharing_email form {
+	margin: 0px;
+}
+#sharing_email input[type=email] {
+	background: rgb(255, 255, 255); padding: 1px 3px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 100%; color: rgb(51, 51, 51); font-size: 12px; margin-bottom: 1em; max-width: none; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+#sharing_email input[type=text] {
+	background: rgb(255, 255, 255); padding: 1px 3px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 100%; color: rgb(51, 51, 51); font-size: 12px; margin-bottom: 1em; max-width: none; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+#jetpack-source_f_name {
+	left: -9000px; display: none !important; position: absolute !important;
+}
+#sharing_email .sharing_cancel {
+	padding: 0px 0px 0px 1em; font-size: 12px; text-shadow: none;
+}
+#sharing_email .recaptcha {
+	margin: 0px 0px 1em; width: 312px; height: 123px;
+}
+.slideshow-window {
+	border-radius: 10px; border: 20px solid rgb(34, 34, 34); border-image: none; height: 0px; overflow: hidden; padding-top: 30px !important; padding-bottom: 56.25% !important; margin-bottom: 20px; position: relative; z-index: 1; background-color: rgb(34, 34, 34);
+}
+.slideshow-white.slideshow-window {
+	border-color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);
+}
+.slideshow-window {
+	box-sizing: content-box; -moz-box-sizing: content-box;
+}
+.slideshow-window * {
+	box-sizing: content-box; -moz-box-sizing: content-box;
+}
+.slideshow-loading {
+	margin: auto; height: 100%; text-align: center;
+}
+body div.slideshow-window * img {
+	border-width: 0px !important; margin: 0px auto; padding: 0px !important; top: 50%; display: block; position: relative; max-height: 100%; max-width: 100%; transform: translateY(-50%); background-image: none !important; background-color: transparent !important; -webkit-transform: translateY(-50%);
+}
+.slideshow-loading img {
+	vertical-align: middle;
+}
+.slideshow-slide {
+	margin: auto; left: 0px; top: 0px; width: 100% !important; height: 100% !important; text-align: center; display: none; position: absolute;
+}
+.slideshow-slide img {
+	vertical-align: middle;
+}
+.slideshow-line-height-hack {
+	width: 0px; overflow: hidden; font-size: 0px;
+}
+.slideshow-slide-caption {
+	left: 0px; width: 100%; height: 25px; text-align: center; bottom: 5px; color: rgb(247, 247, 247); line-height: 25px; font-family: "Helvetica Neue",sans-serif; font-size: 13px; position: absolute; z-index: 100; text-shadow: 1px 1px 2px #222;
+}
+.slideshow-controls {
+	margin: auto; transition:opacity 300ms ease-out; width: 100%; text-align: center; bottom: 30px; position: absolute; z-index: 1000; direction: ltr; opacity: 0.5; -webkit-transition: 300ms opacity ease-out;
+}
+.slideshow-window:hover .slideshow-controls {
+	opacity: 1;
+}
+body div div.slideshow-controls a {
+	background-position: -34px 8px !important; margin: 0px 5px !important; padding: 0px !important; border-radius: 10em !important; border: 2px solid rgba(255, 255, 255, 0.1) !important; transition:border-color 300ms ease-out; border-image: none !important; width: 32px !important; height: 32px !important; text-align: center !important; color: rgb(34, 34, 34) !important; line-height: 32px !important; display: inline-block !important; -ms-zoom: 1; background-image: url("../modules/shortcodes/img/slideshow-controls.png") !important; background-repeat: no-repeat; background-size: 142px 16px !important; background-color: rgba(0, 0, 0, 0.6) !important; -webkit-transition: 300ms border-color ease-out; -khtml-border-radius: 10em;
+}
+body div div.slideshow-controls a:hover {
+	background-position: -34px 8px !important; margin: 0px 5px !important; padding: 0px !important; border-radius: 10em !important; border: 2px solid rgba(255, 255, 255, 0.1) !important; transition:border-color 300ms ease-out; border-image: none !important; width: 32px !important; height: 32px !important; text-align: center !important; color: rgb(34, 34, 34) !important; line-height: 32px !important; display: inline-block !important; -ms-zoom: 1; background-image: url("../modules/shortcodes/img/slideshow-controls.png") !important; background-repeat: no-repeat; background-size: 142px 16px !important; background-color: rgba(0, 0, 0, 0.6) !important; -webkit-transition: 300ms border-color ease-out; -khtml-border-radius: 10em;
+}
+@media not all
+{
+body div div.slideshow-controls a {
+	background-image: url("../modules/shortcodes/img/slideshow-controls-2x.png") !important;
+}
+body div div.slideshow-controls a:hover {
+	background-image: url("../modules/shortcodes/img/slideshow-controls-2x.png") !important;
+}
+}
+body div div.slideshow-controls a:hover {
+	border-color: rgba(255, 255, 255, 1) !important;
+}
+body div div.slideshow-controls a:first-child {
+	background-position: -76px 8px !important;
+}
+body div div.slideshow-controls a:last-child {
+	background-position: -117px 8px !important;
+}
+body div div.slideshow-controls a.running {
+	background-position: -34px 8px !important;
+}
+body div div.slideshow-controls a:nth-child(2) {
+	background-position: -34px 8px !important;
+}
+body div div.slideshow-controls a.paused {
+	background-position: 9px 8px !important;
+}
+.slideshow-controls a img {
+	border: 50px dotted rgb(255, 0, 255); border-image: none;
+}
+body.presentation-wrapper-fullscreen-parent {
+	overflow: hidden !important;
+}
+html.presentation-wrapper-fullscreen-parent {
+	overflow: hidden !important;
+}
+.presentation-wrapper-fullscreen-parent #wpadminbar {
+	display: none;
+}
+.presentation-wrapper-fullscreen {
+	margin: 0px !important; padding: 0px !important; left: 0px !important; top: 0px !important; right: 0px !important; bottom: 0px !important; position: absolute !important; z-index: 10000 !important; min-height: 100% !important; min-width: 100% !important;
+}
+.presentation-wrapper-fullscreen-parent {
+	margin: 0px !important; padding: 0px !important; left: 0px !important; top: 0px !important; right: 0px !important; bottom: 0px !important; position: absolute !important; z-index: 10000 !important; min-height: 100% !important; min-width: 100% !important;
+}
+.presentation-wrapper-fullscreen {
+	border: currentColor !important; border-image: none !important; background-color: gray;
+}
+.presentation-wrapper-fullscreen .nav-arrow-left {
+	z-index: 20001;
+}
+.presentation-wrapper-fullscreen .nav-arrow-right {
+	z-index: 20001;
+}
+.presentation-wrapper-fullscreen .nav-fullscreen-button {
+	z-index: 20002;
+}
+.presentation-wrapper {
+	margin: 20px auto; border: 1px solid rgb(229, 229, 229); border-image: none; line-height: normal; overflow: hidden;
+}
+.presentation {
+	margin: 0px; outline: 0px; overflow: hidden; position: relative;
+}
+.presentation {
+	background-position: center; background-repeat: no-repeat; background-size: 100% 100%;
+}
+.presentation .step {
+	background-position: center; background-repeat: no-repeat; background-size: 100% 100%;
+}
+.presentation :not(.active).fade.step {
+	opacity: 0;
+}
+.presentation .slide-content {
+	padding: 30px;
+}
+.presentation .nav-arrow-left {
+	transition:opacity 0.25s; width: 34px; position: absolute; z-index: 2; opacity: 0; background-repeat: no-repeat; -webkit-transition: opacity .25s;
+}
+.presentation .nav-arrow-right {
+	transition:opacity 0.25s; width: 34px; position: absolute; z-index: 2; opacity: 0; background-repeat: no-repeat; -webkit-transition: opacity .25s;
+}
+.presentation .nav-fullscreen-button {
+	transition:opacity 0.25s; width: 34px; position: absolute; z-index: 2; opacity: 0; background-repeat: no-repeat; -webkit-transition: opacity .25s;
+}
+.presentation .nav-arrow-left {
+	height: 100%; background-image: url("../modules/shortcodes/images/slide-nav.png"); background-size: 450% 61px;
+}
+.presentation .nav-arrow-right {
+	height: 100%; background-image: url("../modules/shortcodes/images/slide-nav.png"); background-size: 450% 61px;
+}
+.presentation .nav-arrow-left {
+	background-position: 4px 50%; left: 0px;
+}
+.presentation .nav-arrow-right {
+	background-position: -120px 50%; right: 0px;
+}
+.presentation .nav-fullscreen-button {
+	margin: 4px; width: 32px; height: 32px; right: 0px; bottom: 0px; z-index: 3; background-image: url("../modules/shortcodes/images/expand.png"); background-size: 100% 100%;
+}
+.presentation:hover .nav-arrow-left {
+	opacity: 1;
+}
+.presentation:hover .nav-arrow-right {
+	opacity: 1;
+}
+.presentation:hover .nav-fullscreen-button {
+	opacity: 0.8;
+}
+.presentation-wrapper-fullscreen .nav-fullscreen-button {
+	background-image: url("../modules/shortcodes/images/collapse.png");
+}
+.presentation .autoplay-overlay {
+	margin: 30% 10%; border-radius: 50px; transition:opacity 0.5s; width: 80%; height: 15%; display: table; position: relative; z-index: 100; background-color: rgba(0, 0, 0, 0.75); -webkit-transition: opacity .5s;
+}
+.presentation .autoplay-overlay .overlay-msg {
+	text-align: center; color: rgb(255, 255, 255); vertical-align: middle; display: table-cell; position: relative;
+}
+.presentation .will-fade {
+	opacity: 0;
+}
+.presentation .do-fade {
+	transition:opacity 0.5s; opacity: 1; -webkit-transition: opacity .5s;
+}
+#subscribe-email input {
+	padding: 1px 2px; width: 95%;
+}
+.comment-subscription-form .subscribe-label {
+	display: inline !important;
+}
+.jetpack-video-wrapper {
+	margin-bottom: 1.6em;
+}
+.jetpack-video-wrapper > .wp-video {
+	margin-bottom: 0px;
+}
+.jetpack-video-wrapper > embed {
+	margin-bottom: 0px;
+}
+.jetpack-video-wrapper > iframe {
+	margin-bottom: 0px;
+}
+.jetpack-video-wrapper > object {
+	margin-bottom: 0px;
+}
+.tiled-gallery {
+	margin: 0px 0px 20px; overflow: hidden; clear: both;
+}
+.tiled-gallery img {
+	margin: 2px !important;
+}
+.tiled-gallery .gallery-group {
+	float: left; position: relative;
+}
+.tiled-gallery .tiled-gallery-item {
+	margin: 0px; width: inherit; float: left; position: relative;
+}
+.tiled-gallery .gallery-row {
+	overflow: hidden;
+}
+.tiled-gallery .tiled-gallery-item a {
+	background: 0px 0px; margin: 0px; padding: 0px; border: currentColor; border-image: none; width: auto; color: inherit; text-decoration: none;
+}
+.tiled-gallery .tiled-gallery-item img {
+	background: 0px 0px; padding: 0px; border: currentColor; border-image: none; vertical-align: middle; max-width: 100%; box-shadow: none;
+}
+.tiled-gallery .tiled-gallery-item img:hover {
+	background: 0px 0px; padding: 0px; border: currentColor; border-image: none; vertical-align: middle; max-width: 100%; box-shadow: none;
+}
+.tiled-gallery-caption {
+	background: rgba(255, 255, 255, 0.8); padding: 10px 0px; width: 100%; bottom: 0px; color: rgb(51, 51, 51); text-indent: 10px; overflow: hidden; font-size: 13px; font-weight: 400; white-space: nowrap; position: absolute; -ms-text-overflow: ellipsis;
+}
+.tiled-gallery .tiled-gallery-item-small .tiled-gallery-caption {
+	font-size: 11px;
+}
+.widget-gallery .tiled-gallery-unresized {
+	height: 0px; overflow: hidden; visibility: hidden;
+}
+.tiled-gallery .tiled-gallery-item img.grayscale {
+	left: 0px; top: 0px; position: absolute;
+}
+.tiled-gallery .tiled-gallery-item img.grayscale:hover {
+	opacity: 0;
+}
+.type-circle.tiled-gallery .tiled-gallery-item img {
+	border-radius: 50% !important;
+}
+.type-circle.tiled-gallery .tiled-gallery-caption {
+	display: none; opacity: 0;
+}
+.jetpack-display-remote-posts {
+	margin: 5px 0px 20px;
+}
+.jetpack-display-remote-posts h4 {
+	margin: 5px 0px; padding: 0px; font-size: 90%;
+}
+.jetpack-display-remote-posts h4 a {
+	text-decoration: none;
+}
+.jetpack-display-remote-posts p {
+	margin: 0px !important; padding: 0px; line-height: 1.4em !important; font-size: 90%;
+}
+.jetpack-display-remote-posts img {
+	max-width: 100%;
+}
+.widget-grofile h4 {
+	margin: 1em 0px 0.5em;
+}
+.widget-grofile ul.grofile-urls {
+	overflow: hidden; margin-left: 0px;
+}
+.widget-grofile ul.grofile-accounts li {
+	list-style: none; display: inline;
+}
+.widget-grofile ul.grofile-accounts li::before {
+	content: "" !important;
+}
+.widget-grofile .grofile-accounts-logo {
+	width: 16px; height: 16px; margin-right: 8px; margin-bottom: 8px; float: left; background-image: url("//0.gravatar.com/images/grav-share-sprite.png"); background-repeat: no-repeat;
+}
+.rtl .widget-grofile .grofile-accounts-logo {
+	margin-right: 0px; margin-left: 8px;
+}
+.grofile-thumbnail {
+	width: 500px; max-width: 100%;
+}
+@media not all, not all, not all, not all
+{
+.widget-grofile .grofile-accounts-logo {
+	background-image: url("//0.gravatar.com/images/grav-share-sprite-2x.png"); background-size: 16px 784px;
+}
+}
+div[class^=gr_custom_container] {
+	padding: 10px 5px; border-radius: 10px; border: 1px solid gray; border-image: none; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);
+}
+div[class^=gr_custom_container] a {
+	color: rgb(0, 0, 0);
+}
+h2[class^=gr_custom_header] {
+	display: none;
+}
+div[class^=gr_custom_each_container] {
+	width: 100%; overflow: auto; padding-bottom: 4px; clear: both; margin-bottom: 10px; border-bottom-color: rgb(170, 170, 170); border-bottom-width: 1px; border-bottom-style: solid;
+}
+div[class^=gr_custom_book_container] {
+	width: 39px; height: 60px; overflow: hidden; margin-left: 4px; float: right;
+}
+div[class^=gr_custom_author] {
+	font-size: 10px;
+}
+div[class^=gr_custom_tags] {
+	color: gray; font-size: 10px;
+}
+div[class^=gr_custom_rating] {
+	display: none;
+}
+.widget_wpcom_social_media_icons_widget ul {
+	margin-left: 0px; list-style-type: none;
+}
+.widget_wpcom_social_media_icons_widget li {
+	border: 0px currentColor; border-image: none; margin-right: 0.5em; display: inline;
+}
+.widget_wpcom_social_media_icons_widget li a {
+	border: 0px currentColor; border-image: none; text-decoration: none;
+}
+.widget_wpcom_social_media_icons_widget .genericon {
+	font-family: Genericons;
+}
+.widget_wpcom_social_media_icons_widget .screen-reader-text {
+	width: 1px; height: 1px; overflow: hidden; position: absolute !important; clip: rect(1px, 1px, 1px, 1px);
+}
+.widget_wpcom_social_media_icons_widget .screen-reader-text:active {
+	padding: 15px 23px 14px; border-radius: 3px; left: 5px; top: 5px; width: auto; height: auto; color: rgb(33, 117, 155); line-height: normal; font-size: 0.87rem; font-weight: 700; text-decoration: none; display: block; z-index: 100000; clip: auto !important; box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6); background-color: rgb(241, 241, 241);
+}
+.widget_wpcom_social_media_icons_widget .screen-reader-text:focus {
+	padding: 15px 23px 14px; border-radius: 3px; left: 5px; top: 5px; width: auto; height: auto; color: rgb(33, 117, 155); line-height: normal; font-size: 0.87rem; font-weight: 700; text-decoration: none; display: block; z-index: 100000; clip: auto !important; box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6); background-color: rgb(241, 241, 241);
+}
+.widget_wpcom_social_media_icons_widget .screen-reader-text:hover {
+	padding: 15px 23px 14px; border-radius: 3px; left: 5px; top: 5px; width: auto; height: auto; color: rgb(33, 117, 155); line-height: normal; font-size: 0.87rem; font-weight: 700; text-decoration: none; display: block; z-index: 100000; clip: auto !important; box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6); background-color: rgb(241, 241, 241);
+}
+.widgets-grid-layout {
+	width: 100%;
+}
+.widgets-grid-layout::after {
+	display: table; content: " ";
+}
+.widgets-grid-layout::before {
+	display: table; content: " ";
+}
+.widgets-grid-layout::after {
+	clear: both;
+}
+.widget-grid-view-image {
+	float: left; max-width: 50%;
+}
+.widget-grid-view-image a {
+	margin: 0px 2px 4px 0px; display: block;
+}
+:nth-child(2n).widget-grid-view-image a {
+	margin: 0px 0px 4px 2px;
+}
+.widgets-grid-layout .widget-grid-view-image img {
+	height: auto; max-width: 100%;
+}
+.widgets-multi-column-grid ul {
+	margin: 0px; padding: 0px; overflow: hidden; list-style-type: none;
+}
+.widgets-multi-column-grid ul li {
+	background: 0px 0px; margin: 0px -5px -3px 0px; padding: 0px 8px 6px 0px; border: currentColor; border-image: none; clear: none; float: left; list-style-type: none !important;
+}
+.widgets-multi-column-grid ul li a {
+	background: 0px 0px; margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+.widgets-multi-column-grid .avatar {
+	vertical-align: middle;
+}
+.widgets-list-layout {
+	margin: 0px; padding: 0px; list-style-type: none;
+}
+.widgets-list-layout li::after {
+	display: table; content: "";
+}
+.widgets-list-layout li::before {
+	display: table; content: "";
+}
+.widgets-list-layout li::after {
+	clear: both;
+}
+.widgets-list-layout li {
+	margin-bottom: 1em; list-style-type: none !important; -ms-zoom: 1;
+}
+.widgets-list-layout .widgets-list-layout-blavatar {
+	width: 21.27%; height: auto; float: left; max-width: 40px;
+}
+.widgets-list-layout-links {
+	width: 73.4%; float: right;
+}
+.widgets-list-layout span {
+	opacity: 0.5;
+}
+.widgets-list-layout span:hover {
+	opacity: 0.8;
+}

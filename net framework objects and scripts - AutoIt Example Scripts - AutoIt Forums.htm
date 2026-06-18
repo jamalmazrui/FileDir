@@ -1,0 +1,2835 @@
+
+
+<!DOCTYPE html><html lang="en-US" dir="ltr"><head><title>net framework objects and scripts - AutoIt Example Scripts - AutoIt Forums</title>
+<!--[if lt IE 9]>
+			<link rel="stylesheet" type="text/css" href="https://www.autoitscript.com/forum/uploads/css_built_1/5e61784858ad3c11f00b5706d12afe52_ie8.css.6a2769f2c20b09a631479da31af1df94.css">
+		    <script src="//www.autoitscript.com/forum/applications/core/interface/html5shiv/html5shiv.js"></script>
+		<![endif]-->
+		
+<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+	
+		
+			<meta name="description" content="I found this articlenet framework and vbscript (sorry, it is in italian).The meaning is that you can use some classes of the net framework in your script.So ...">
+		
+	
+
+	
+		
+			<meta property="og:title" content="net framework objects and scripts">
+		
+	
+
+	
+		
+			<meta property="og:type" content="object">
+		
+	
+
+	
+		
+			<meta property="og:url" content="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/">
+		
+	
+
+	
+		
+			<meta property="og:description" content="I found this articlenet framework and vbscript (sorry, it is in italian).The meaning is that you can use some classes of the net framework in your script.So ...">
+		
+	
+
+	
+		
+			<meta property="og:updated_time" content="2014-01-18T16:49:01Z">
+		
+	
+
+	
+		
+			<meta property="og:site_name" content="AutoIt Forums">
+		
+	
+
+	
+		
+			<meta property="og:locale" content="en_US">
+		
+	
+
+<link rel="canonical" href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/" />
+
+
+		
+
+	<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/341e4a57816af3ba440d891ca87450ff_framework.css.52056ea5359388c47264a5cec1bc33aa.css?v=a281549dc0" media="all">
+
+	<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/05e81b71abe4f22d6eb8d1a929494829_responsive.css.bed4d7f9db8440b768a9b093a0bc1354.css?v=a281549dc0" media="all">
+
+	<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/ec0c06d47f161faa24112e8cbf0665bc_chatbox.css.5bc3e5306932cd3d671aca5a773cdb7a.css?v=a281549dc0" media="all">
+
+	<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/90eb5adf50a8c640f633d47fd7eb1778_core.css.2c48e2eb044f7bd79e370e1b23dfa32c.css?v=a281549dc0" media="all">
+
+	<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/5a0da001ccc2200dc5625c3f3934497d_core_responsive.css.f72b3ed6e074b1bafb6c7a5f3d2498f1.css?v=a281549dc0" media="all">
+
+	<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/62e269ced0fdab7e30e026f1d30ae516_forums.css.b0aaff0e6ca2ef5ecbef063f1fa12d60.css?v=a281549dc0" media="all">
+
+	<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/76e62c573090645fb99a15a363d8620e_forums_responsive.css.c8a6a315f9894809383d3b83cea04798.css?v=a281549dc0" media="all">
+
+
+
+
+<link rel="stylesheet" href="https://www.autoitscript.com/forum/uploads/css_built_1/258adbb6e4f3e83cd3b355f84e3fa002_custom.css.f612dadda75ecbd9ffed3fe47bae5d8b.css?v=a281549dc0" media="all">
+
+
+
+		
+		
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
+
+
+</head><body class="ipsApp ipsApp_front ipsJS_none ipsClearfix" data-controller="core.front.core.app"  data-message=""  data-pageapp="forums" data-pagelocation="front" data-pagemodule="forums" data-pagecontroller="topic" itemscope itemtype="http://schema.org/WebSite"><meta itemprop="url" content="https://www.autoitscript.com/forum/">
+<a href="#elContent" class="ipsHide" title="Go to main content on this page" accesskey="m">Jump to content</a>
+		
+		<div id="ipsLayout_header" class="ipsClearfix">
+			
+
+
+			
+<ul id='elMobileNav' class='ipsList_inline ipsResponsive_hideDesktop ipsResponsive_block' data-controller='core.front.core.mobileNav'>
+	
+		
+			
+			
+				
+				
+			
+				
+					<li id='elMobileBreadcrumb'>
+						<a href='https://www.autoitscript.com/forum/forum/9-autoit-example-scripts/'>
+							<span>AutoIt Example Scripts</span>
+						</a>
+					</li>
+				
+				
+			
+				
+				
+			
+		
+	
+	
+	
+		<li class='ipsJS_show'>
+			<a href='https://www.autoitscript.com/forum/search/' data-action="mobileSearch"><i class='fa fa-search'></i></a>
+		</li>
+	
+	<li data-ipsDrawer data-ipsDrawer-drawerElem='#elMobileDrawer'>
+		<a href='#'>
+			
+			
+				
+			
+			
+			
+			<i class='fa fa-navicon'></i>
+		</a>
+	</li>
+</ul>
+			<header><div class="ipsLayout_container">
+					
+<a href='https://www.autoitscript.com/forum/' id='elLogo' accesskey='1'><img src="https://www.autoitscript.com/forum/cdn/images/logo_autoit_210x72.png" srcset="https://www.autoitscript.com/forum/cdn/images/logo_autoit_210x72@2x.png 2x" alt=''></a>
+					
+
+	<ul id='elUserNav' class='ipsList_inline cSignedOut ipsClearfix ipsResponsive_hidePhone ipsResponsive_block'>
+		<li id='elSignInLink'>
+			<a href='https://www.autoitscript.com/forum/login/' data-ipsMenu-closeOnClick="false" data-ipsMenu id='elUserSignIn'>
+				Existing user? Sign In &nbsp;<i class='fa fa-caret-down'></i>
+			</a>
+			
+<div id='elUserSignIn_menu' class='ipsMenu ipsMenu_auto ipsHide' data-controller='core.front.core.loginMenu'>
+	<div data-role="loginForm">
+		
+			<div class='ipsColumns ipsColumns_noSpacing'>
+				<div class='ipsColumn ipsColumn_wide' id='elUserSignIn_internal'>
+		
+		
+			
+				
+<form accept-charset='utf-8' class="ipsPad ipsForm ipsForm_vertical" method='post' action='https://www.autoitscript.com/forum/login/' data-ipsValidation novalidate>
+	<input type="hidden" name="login__standard_submitted" value="1">
+	
+		<input type="hidden" name="csrfKey" value="9f274cfa13c86b6c8f7d84449bdfcdec">
+	
+	<h4 class="ipsType_sectionHead">Sign In</h4>
+	<br><br>
+	<ul class='ipsList_reset'>
+		
+			
+				
+					<li class="ipsFieldRow ipsFieldRow_noLabel ipsFieldRow_fullWidth">
+						<input type="text" required placeholder="Display Name or Email Address" name='auth' id='auth'>
+					</li>
+				
+			
+				
+					<li class="ipsFieldRow ipsFieldRow_noLabel ipsFieldRow_fullWidth">
+						<input type="password" required placeholder="Password" name='password' id='password'>
+					</li>
+				
+			
+				
+					
+<li class='ipsFieldRow ipsFieldRow_checkbox ipsClearfix ' id="a29c5b2ffe1cde319e818a3fa019b3dd">
+	
+		
+		
+<input type="hidden" name="remember_me" value="0">
+	<input
+		type='checkbox'
+		role='checkbox'
+		name='remember_me_checkbox'
+		value='1'
+		id="check_a29c5b2ffe1cde319e818a3fa019b3dd"
+		checked aria-checked='true'
+		
+		
+		
+		
+		
+		
+	>
+
+		
+		<div class='ipsFieldRow_content'>
+			<label class='ipsFieldRow_label' for='check_a29c5b2ffe1cde319e818a3fa019b3dd'>Remember me </label>
+			
+
+
+<span class='ipsFieldRow_desc'>
+	Not recommended on shared computers
+</span>
+			
+			
+		</div>
+	
+</li>
+				
+			
+				
+					
+<li class='ipsFieldRow ipsFieldRow_checkbox ipsClearfix ' id="ffa183cc8284b7f863675da6c6b7a1ed">
+	
+		
+		
+<input type="hidden" name="signin_anonymous" value="0">
+	<input
+		type='checkbox'
+		role='checkbox'
+		name='signin_anonymous_checkbox'
+		value='1'
+		id="check_ffa183cc8284b7f863675da6c6b7a1ed"
+		aria-checked='false'
+		
+		
+		
+		
+		
+		
+	>
+
+		
+		<div class='ipsFieldRow_content'>
+			<label class='ipsFieldRow_label' for='check_ffa183cc8284b7f863675da6c6b7a1ed'>Sign in anonymously </label>
+			
+			
+			
+		</div>
+	
+</li>
+				
+			
+		
+		<li class="ipsFieldRow ipsFieldRow_fullWidth">
+			<br>
+			<button type="submit" class="ipsButton ipsButton_primary ipsButton_small" id="elSignIn_submit">Sign In</button>
+			<br>
+			<p class="ipsType_right ipsType_small">
+				<a href='https://www.autoitscript.com/forum/lostpassword/' data-ipsDialog data-ipsDialog-title='Forgot your password?'>Forgot your password?</a>
+			</p>
+		</li>
+	</ul>
+</form>
+			
+		
+			
+		
+		
+				</div>
+				<div class='ipsColumn ipsColumn_wide'>
+					<div class='ipsPad' id='elUserSignIn_external'>
+						<div class='ipsAreaBackground_light ipsPad_half'>
+							<p class='ipsType_reset ipsType_small ipsType_center'><strong>Or sign in with one of these services</strong></p>
+							<br>
+							
+								
+							
+								
+									<div class='ipsPad_half ipsType_center'>
+										
+
+<a href='https://www.facebook.com/dialog/oauth?client_id=162893687084166&amp;scope=email&amp;redirect_uri=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Fapplications%2Fcore%2Finterface%2Ffacebook%2Fauth.php&amp;state=front-9f274cfa13c86b6c8f7d84449bdfcdec' class='ipsButton ipsButton_verySmall ipsButton_fullWidth ipsSocial ipsSocial_facebook'>
+	<span class='ipsSocial_icon'><i class='fa fa-facebook'></i></span>
+	<span class='ipsSocial_text'>Sign in with Facebook</span>
+</a>
+									</div>
+								
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		
+	</div>
+</div>
+		</li>
+		
+			<li>
+				<a href='https://www.autoitscript.com/forum/register/' id='elRegisterButton' class='ipsButton ipsButton_normal ipsButton_primary'>
+					Sign Up
+				</a>
+			</li>
+		
+	</ul>
+
+				</div>
+			</header>
+			
+<nav class='ipsLayout_container'>
+	<div class='ipsClearfix' id='elSearchNavContainer' data-controller='core.front.core.navBar'>
+		
+			<div id='elSearch' class='ipsPos_right' data-controller='core.front.core.quickSearch' itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
+				<form accept-charset='utf-8' action='https://www.autoitscript.com/forum/search/' method='get'>
+					<meta itemprop="target" content="https://www.autoitscript.com/forum/search/?q={q}">
+					<a href='#' id='elSearchFilter' data-ipsMenu data-ipsMenu-selectable='radio' data-ipsMenu-appendTo='#elSearch' class="ipsHide">
+						<span data-role='searchingIn'>
+							All Content
+						</span>
+						<i class='fa fa-caret-down'></i>
+					</a>
+					<ul id='elSearchFilter_menu' class='ipsMenu ipsMenu_selectable ipsMenu_narrow ipsHide'>
+						<li class='ipsMenu_item ipsMenu_itemChecked' data-ipsMenuValue='all'>
+							<a href='https://www.autoitscript.com/forum/?app=core&amp;module=search&amp;controller=search&amp;csrfKey=9f274cfa13c86b6c8f7d84449bdfcdec' title='All Content'>All Content</a>
+						</li>
+						<li class='ipsMenu_sep'><hr></li>
+						
+							
+								<li class='ipsMenu_item' data-ipsMenuValue='{&quot;type&quot;:&quot;forums_topic&quot;,&quot;item&quot;:38611}' data-options='{&quot;type&quot;:&quot;forums_topic&quot;,&quot;item&quot;:38611}'>
+									<a href='#'>This Topic</a>
+								</li>
+							
+								<li class='ipsMenu_item' data-ipsMenuValue='{&quot;type&quot;:&quot;forums_topic&quot;,&quot;nodes&quot;:9}' data-options='{&quot;type&quot;:&quot;forums_topic&quot;,&quot;nodes&quot;:9}'>
+									<a href='#'>This Forum</a>
+								</li>
+							
+							<li class='ipsMenu_sep'><hr></li>
+						
+						<li data-role='globalSearchMenuOptions'></li>
+						<li class='ipsMenu_item ipsMenu_itemNonSelect'>
+							<a href='https://www.autoitscript.com/forum/search/' accesskey='4'><i class='fa fa-cog'></i> Advanced Search</a>
+						</li>
+					</ul>
+					<input type='search' id='elSearchField' placeholder='Search...' name='q' itemprop="query-input">
+					<button type='submit'><i class='fa fa-search'></i></button>
+				</form>
+			</div>
+		
+		<ul id='ipsLayout_mainNav' class='ipsPos_left'>
+			
+					
+					
+					
+				
+					
+						
+						<li data-role='navItem'>
+							<a id="elNavigation_app_forums_56017b9e2e180" href='https://www.autoitscript.com/forum/' class='elNavigation_app_forums_Forums ipsNavActive' >
+								Forums
+								
+							</a>
+							
+						</li>
+					
+				
+					
+						
+						<li data-role='navItem'>
+							<a id="elNavigation_app_downloads_56017b9e2e2a5" href='https://www.autoitscript.com/forum/files/' class='elNavigation_app_downloads_Downloads' >
+								Downloads
+								
+							</a>
+							
+						</li>
+					
+				
+					
+						
+						<li data-role='navItem'>
+							<a id="elNavigation_app_cms_56017b9e2e3b4" href='#' class='elNavigation_app_cms_0' data-ipsMenu data-ipsMenu-activeClass='ipsNavActive_menu'>
+								AutoIt Resources
+								
+									&nbsp;<i class='fa fa-caret-down'></i>
+								
+							</a>
+							
+								<ul id="elNavigation_app_cms_56017b9e2e3b4_menu" class="ipsMenu ipsMenu_auto ipsHide">
+									
+
+	
+		
+			<li class='ipsMenu_item'>
+				<a href='https://www.autoitscript.com/site/'>
+					AutoIt Main Website
+				</a>
+			</li>
+		
+	
+
+	
+		
+			<li class='ipsMenu_item'>
+				<a href='https://www.autoitscript.com/forum/files/file/270-autoit-latest-stable-version/'>
+					AutoIt Installer (Stable)
+				</a>
+			</li>
+		
+	
+
+	
+		
+			<li class='ipsMenu_item'>
+				<a href='https://www.autoitscript.com/autoit3/docs/'>
+					AutoIt Helpfile (Stable)
+				</a>
+			</li>
+		
+	
+
+	
+		
+			<li class='ipsMenu_item'>
+				<a href='https://www.autoitscript.com/site/autoit-script-editor/downloads/'>
+					AutoIt Script Editor (SciTE)
+				</a>
+			</li>
+		
+	
+
+	
+		
+			<li class='ipsMenu_item'>
+				<a href='http://www.autoitscript.com/forum/files/category/5-beta/'>
+					AutoIt Installer (Beta)
+				</a>
+			</li>
+		
+	
+
+	
+		
+			<li class='ipsMenu_item'>
+				<a href='https://www.autoitscript.com/autoit3/files/beta/autoit/docs/'>
+					AutoIt Helpfile (Beta)
+				</a>
+			</li>
+		
+	
+
+								</ul>
+							
+						</li>
+					
+				
+					
+						
+						<li data-role='navItem'>
+							<a id="elNavigation_app_cms_56017b9e2ef51" href='https://www.autoitscript.com/wiki' class='elNavigation_app_cms_1' >
+								Wiki
+								
+							</a>
+							
+						</li>
+					
+				
+					
+						
+						<li data-role='navItem'>
+							<a id="elNavigation_app_cms_56017b9e2f109" href='https://www.autoitscript.com/trac/autoit' class='elNavigation_app_cms_2' >
+								Bug Tracker
+								
+							</a>
+							
+						</li>
+					
+				
+					
+						
+						<li data-role='navItem'>
+							<a id="elNavigation_app_cms_56017b9e2f2bc" href='https://www.autoitscript.com/forum/guides/' class='elNavigation_app_cms_3' >
+								Guides
+								
+							</a>
+							
+						</li>
+					
+				
+					
+				
+					
+						
+						<li data-role='navItem'>
+							<a id="elNavigation_app_calendar_56017b9e2f53b" href='https://www.autoitscript.com/forum/calendar/' class='elNavigation_app_calendar_Calendar' >
+								Calendar
+								
+							</a>
+							
+						</li>
+					
+				
+			
+			<li class='ipsHide' id='elNavigationMore' data-role='navMore'>
+				<a href='#' data-ipsMenu data-ipsMenu-appendTo='#elNavigationMore' id='elNavigationMore_dropdown'>More <i class='fa fa-caret-down'></i></a>
+				<ul class='ipsHide ipsMenu ipsMenu_auto' id='elNavigationMore_dropdown_menu'></ul>
+			</li>
+			
+				<li class='ipsHide cCommunityHome'><a href='https://www.autoitscript.com/forum/' title='Go to the community homepage'><i class='fa fa-angle-left'></i> Community Home</a></li>
+			
+		</ul>
+	</div>
+</nav>
+		</div>
+		<main role="main" id="ipsLayout_body" class="ipsLayout_container"><div id="ipsLayout_contentArea">
+				<div id="elHeaderNavigation" class="ipsSubNavigation">
+					
+<div id='elHeaderSubLinks' class='ipsPos_right'>
+	<ul class='ipsList_inline'>
+		
+		
+			<li>
+				<a href='#elNavMore_menu' id='elNavMore' data-ipsMenu data-ipsMenu-appendTo='#elHeaderSubLinks' data-ipsMenu-align-center>More <i class='fa fa-caret-down'></i></a>
+			</li>
+		
+	</ul>
+	<ul id='elNavMore_menu' class='ipsMenu ipsHide'>
+		
+		
+			<li class='ipsMenu_item'><a href='https://www.autoitscript.com/forum/topic/169097-forum-rules/'>Forum Rules</a></li>
+		
+		
+		
+		
+			<li class='ipsMenu_item'><a href='https://www.autoitscript.com/forum/online/'>Online Users</a></li>
+		
+	</ul>
+</div>
+					
+<nav class='ipsBreadcrumb'>
+	<ul>
+		<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+			<a href='https://www.autoitscript.com/forum/' itemprop="url">
+				<span itemprop="title"><i class='fa fa-home'></i> Home <i class='fa fa-angle-right'></i></span>
+			</a>
+		</li>
+		
+		
+			<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+				
+					<a href='https://www.autoitscript.com/forum/forum/12-autoit-v3/' itemprop="url">
+						<span itemprop="title">AutoIt v3 <i class='fa fa-angle-right'></i></span>
+					</a>
+				
+			</li>
+			
+		
+			<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+				
+					<a href='https://www.autoitscript.com/forum/forum/9-autoit-example-scripts/' itemprop="url">
+						<span itemprop="title">AutoIt Example Scripts <i class='fa fa-angle-right'></i></span>
+					</a>
+				
+			</li>
+			
+		
+			<li >
+				
+					net framework objects and scripts
+				
+			</li>
+			
+		
+	</ul>
+</nav>
+				</div>
+				<div id="ipsLayout_contentWrapper">
+					
+					<div id="ipsLayout_mainArea">
+						<a id="elContent"></a>
+						<div class="ipsType_center">
+<br>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- AutoIt Forum Header Responsive -->
+<ins class="adsbygoogle adfix"
+     style="display:block"
+     data-ad-client="ca-pub-2584082051607049"
+     data-ad-slot="4890339436"
+     data-ad-format="horizontal"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<br>
+</div>
+
+						
+						
+
+
+						
+
+
+
+
+
+
+<div class="ipsPageHeader ipsClearfix">
+	
+		<div class='ipsPos_right ipsResponsive_noFloat ipsResponsive_hidePhone'>
+			
+
+<div data-followApp='forums' data-followArea='topic' data-followID='38611' data-controller='core.front.core.followButton'>
+	
+		<span class='ipsType_light ipsType_blendLinks ipsResponsive_hidePhone ipsResponsive_inline'><i class='fa fa-info-circle'></i> <a href='https://www.autoitscript.com/forum/login/' title='Go to the sign in page'>Sign in to follow this</a>&nbsp;&nbsp;</span>
+	
+	
+
+	<div class="ipsFollow ipsPos_middle ipsButton ipsButton_light ipsButton_verySmall ipsButton_disabled" data-role="followButton">
+		
+				<span>Followers</span>
+				<span class='ipsCommentCount'>0</span>
+		
+	</div>
+
+</div>
+		</div>
+	
+	<div class='ipsPhotoPanel ipsPhotoPanel_small ipsPhotoPanel_notPhone ipsClearfix'>
+		
+
+	<span class='ipsUserPhoto ipsUserPhoto_small '>
+		<img src='https://www.autoitscript.com/forum/uploads/set_resources_1/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png' alt=''>
+	</span>
+
+		<div>
+			<h1 class='ipsType_pageTitle'>
+					
+				
+					net framework objects and scripts
+				
+						
+			</h1>
+			<p class='ipsType_reset ipsType_blendLinks'>
+				<span class='ipsType_normal'>Started by 
+gadzail</span>, <span class='ipsType_light ipsType_noBreak'><time datetime='2006-12-29T10:25:54Z' title='12/29/2006 10:25  AM' data-short='Dec 06'>29 Dec 2006</time></span><br>
+			</p>
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<div class='ipsClearfix'>
+	
+		<div class='ipsAreaBackground ipsAreaBackground_rounded ipsPad_half ipsPos_left ipsType_light ipsResponsive_hidePhone'>
+			
+			
+<ul class='ipsList_inline ipsClearfix ipsRating ipsRating_veryLarge'>
+	
+		<li class='ipsRating_off'>
+			<i class='fa fa-star'></i>
+		</li>
+	
+		<li class='ipsRating_off'>
+			<i class='fa fa-star'></i>
+		</li>
+	
+		<li class='ipsRating_off'>
+			<i class='fa fa-star'></i>
+		</li>
+	
+		<li class='ipsRating_off'>
+			<i class='fa fa-star'></i>
+		</li>
+	
+		<li class='ipsRating_off'>
+			<i class='fa fa-star'></i>
+		</li>
+	
+</ul>
+		</div>
+	
+	
+	<ul class="ipsToolList ipsToolList_horizontal ipsClearfix ipsSpacer_both ipsResponsive_hidePhone">
+		
+		
+		
+	</ul>
+</div>
+
+<div data-controller='core.front.core.commentFeed,forums.front.topic.view' data-baseURL='https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/' data-lastPage data-feedID='topic-38611' class='cTopic ipsClear ipsSpacer_top'>
+	
+		<h2 class='ipsType_sectionTitle ipsType_reset ipsType_medium' data-role="comment_count" data-commentCountString="js_num_topic_posts">9 posts in this topic</h2>
+		
+	
+
+	<div data-role='commentFeed' data-controller='core.front.core.moderation'>
+		<form action="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?csrfKey=9f274cfa13c86b6c8f7d84449bdfcdec&amp;do=multimodComment" method="post" data-ipsPageAction data-role='moderationTools'>
+			
+			
+				
+					
+					
+					
+
+
+
+
+<a id='comment-287315'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_287315' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+gadzail</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Wayfarer</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/set_resources_1/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png' alt=''>
+	</span>
+
+			</li>
+			<li><span class="useractive">Active Members</span></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>50 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-287315_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="287315" data-quotedata="{&quot;userid&quot;:18155,&quot;username&quot;:&quot;gadzail&quot;,&quot;timestamp&quot;:1167387954,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:287315}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287315" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_287315"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#1 · </span>
+			Posted <time datetime='2006-12-29T10:25:54Z' title='12/29/2006 10:25  AM' data-short='Dec 06'>29 Dec 2006</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>I found this article</p><p><a href="http://www.microsoft.com/technet/technetmag/issues/2007/01/HeyScriptingGuy/default.aspx?loc=it/" rel="external nofollow">net framework and vbscript</a> (sorry, it is in italian).</p><p>The meaning is that you can use some classes of the net framework in your script.</p><p>So i tried to do something like that:</p><p></p><p></p><pre class="geshi geshiprinted lang-autoit ipsCode"><a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Func</span></a> F<span class="sy1">_</span>test<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">=</span><a href="https://www.autoitscript.com/autoit3/docs/functions/ObjCreate.htm"><span class="kw3">ObjCreate</span></a><span class="br0">&#40;</span><span class="st0">&quot;System.Collections.sortedlist&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;z&quot;</span><span class="sy0">,</span><span class="st0">&quot;sappa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;f&quot;</span><span class="sy0">,</span><span class="st0">&quot;asa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;a&quot;</span><span class="sy0">,</span><span class="st0">&quot;dfdsappa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;h&quot;</span><span class="sy0">,</span><span class="st0">&quot;qqwrtsappa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;test: &quot;</span><span class="sy0">&amp;</span><span class="re0">$list</span><span class="sy0">.</span><span class="me1">count</span><span class="sy0">&amp;</span><a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@crlf</span></a><span class="br0">&#41;</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">for</span></a> <span class="re0">$i</span><span class="sy0">=</span><span class="nu0">0</span> <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">to</span></a> <span class="re0">$list</span><span class="sy0">.</span><span class="me1">count</span><span class="sy0">-</span><span class="nu0">1</span>
+&nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="re0">$list</span><span class="sy0">.</span><span class="me1">GetKey</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="br0">&#41;</span><span class="sy0">&amp;</span><span class="st0">&quot; - &quot;</span><span class="sy0">&amp;</span><span class="re0">$list</span><span class="sy0">.</span><span class="me1">Getbyindex</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="br0">&#41;</span><span class="sy0">&amp;</span><a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@crlf</span></a><span class="br0">&#41;</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Next</span></a>
+<a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">EndFunc</span></a></pre><p></p><p><strong>IT works. It could be very helpful.</strong></p><p></p><p></p><p>Someone knows something about that?</p><p>Someone knows other net classes we can use in scripting?</p>
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+				<div class='ipsLikeRep ipsPos_right ipsResponsive_noFloat'>
+					
+						<span class='ipsLike_contents'>1 person likes this</span>
+					
+
+					
+					
+				</div>
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_287315_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287315" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287315&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287315" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287315" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287315" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D287315" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+						<div class="ipsType_center">
+<br>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- AutoIt Forum First Post Responsive -->
+<ins class="adsbygoogle adfix"
+     style="display:block"
+     data-ad-client="ca-pub-2584082051607049"
+     data-ad-slot="1936873037"
+     data-ad-format="horizontal"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<br><br>
+</div>
+
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-287317'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_287317' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+ptrex</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 22
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Universalist</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/profile/photo-thumb-6305.gif' alt=''>
+	</span>
+
+			</li>
+			<li><span class="usermvp">MVPs</span></li>
+			
+				<li class='ipsResponsive_hidePhone'><img src='https://www.autoitscript.com/forum/uploads/monthly_2015_07/team_mvp.png.06ed2c34c6eb9c9c23af5b7693950853.png' alt='' class='cAuthorGroupIcon'></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 22
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>2,403 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-287317_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="287317" data-quotedata="{&quot;userid&quot;:6305,&quot;username&quot;:&quot;ptrex&quot;,&quot;timestamp&quot;:1167388857,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:287317}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287317" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_287317"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#2 · </span>
+			Posted <time datetime='2006-12-29T10:40:57Z' title='12/29/2006 10:40  AM' data-short='Dec 06'>29 Dec 2006</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>@gadzail</p><p>
+</p><p>
+I like this one. I am constantly looking for new objects myself, and this one I didn't have yet.</p><p>
+</p><p>
+Good job.</p><p>
+</p><p>
+Better next time is to post your examples in the EXAMPLE SCRIPT section of the forum.</p><p>
+</p><p>
+Ciao !!</p><p>
+</p><p>
+ptrex</p>
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+			
+
+
+
+<div data-role="memberSignature" class='ipsResponsive_hidePhone'>
+  <hr class='ipsHr'>
+  <div class='ipsType_light ipsType_richText'>
+    <span style="color:#FF0000">Contributions :</span><a href="https://www.autoitscript.com/forum/index.php?showtopic=12682">Firewall Log Analyzer for XP</a>  -									  <a href="https://www.autoitscript.com/forum/index.php?showtopic=38671">Creating COM objects without a need of DLL&#39;s</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=57022">UPnP support in AU3</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=12813">Crystal Reports Viewer</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42776&amp;hl=">PDFCreator in AutoIT</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=58617">Duplicate File Finder</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=17099">SQLite3 Database functionality</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42580&amp;hl=">USB Monitoring</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=58941">Reading Excel using SQL</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=17581">Run Au3 as a Windows Service</a>  - <a href="https://www.autoitscript.com/forum/index.php?showtopic=42511&amp;hl=">File Monitor</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=65027">Embedded Flash Player</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=17728">Dynamic Functions</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42400&amp;hl=">Control Panel Applets</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=66202&amp;st=0#entry490962">Digital Signing Code</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=17802">Excel Grid In AutoIT</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42394&amp;hl=">Constants for Special Folders in Windows</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=24877&amp;pid=175645&amp;st=0&amp;#entry175645">Read data from Any Windows Edit Control</a>  - <a href="https://www.autoitscript.com/forum/index.php?showtopic=45904&amp;st=0#entry342453">SOAP and Web Services in AutoIT</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=67539">Barcode Printing Using PS</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=66639">AU3 on LightTD Webserver</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=25304&amp;st=0&amp;gopid=177797&amp;">MS LogParser SQL Engine in AutoIT</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=49065">ImageMagick Image Processing</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=70507">Converter @ Dec - Hex - Bin</a> -<a href="https://www.autoitscript.com/forum/index.php?showtopic=26150">Email Address Encoder</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=50375">MSI Editor</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=70759&amp;st=0&amp;p=518204&amp;#entry518204">SNMP - MIB Protocol</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=26216">Financial Functions UDF</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=50880&amp;st=0#entry385049">Set ACL Permissions</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=70837&amp;st=0&amp;p=518716&amp;#entry518716">Syntax HighLighter for AU3</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=26804&amp;hl=">ADOR.RecordSet approach</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=50608">Real OCR</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=73175">HTTP Disk</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=75832">PDF Reader</a> <a href="https://www.autoitscript.com/forum/index.php?showtopic=31457&amp;hl=">Personal Worldclock</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=52577">MS Indexing Engine</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=78757">Printing Controls</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=27727&amp;st=0&amp;gopid=196855&amp;">GuiListView - Navigation (break the 4000 Limit barrier)</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=54110">Registration Free COM DLL Distribution</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=81525&amp;st=0#entry584974">WinRM</a>  <a href="https://www.autoitscript.com/forum/index.php?showtopic=27755">SMART Analysis</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=54227&amp;st=0&amp;p=410812&amp;#entry410812">COM Object Browser</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=86955">Excel PivotTable Object</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=91316&amp;st=0&amp;p=657003&amp;#entry657003">VLC Media Player</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=91319&amp;st=0&amp;p=657017&amp;#entry657017">Windows LogOnOff Gui</a> -<a href="https://www.autoitscript.com/forum/index.php?showtopic=34865">Extract Data from Outlook to Word &amp; Excel</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=56422">Analyze Event ID 4226</a> - <a href="https://www.autoitscript.com/forum/topic/128013-dotnet-compiler-wrapper">DotNet Compiler Wrapper</a> - <a href="https://www.autoitscript.com/forum/topic/147273-powershell-com/">Powershell_COM</a> <span style="color:#ff0000">New </span>
+  </div>
+</div>
+
+
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_287317_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287317" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287317&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287317" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287317" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287317" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D287317" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-287321'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_287321' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+gadzail</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Wayfarer</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/set_resources_1/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png' alt=''>
+	</span>
+
+			</li>
+			<li><span class="useractive">Active Members</span></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>50 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-287321_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="287321" data-quotedata="{&quot;userid&quot;:18155,&quot;username&quot;:&quot;gadzail&quot;,&quot;timestamp&quot;:1167389704,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:287321}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287321" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_287321"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#3 · </span>
+			Posted <time datetime='2006-12-29T10:55:04Z' title='12/29/2006 10:55  AM' data-short='Dec 06'>29 Dec 2006</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p></p><blockquote data-ipsquote="" class="ipsQuote" data-ipsquote-contentcommentid="287317" data-ipsquote-contenttype="forums" data-ipsquote-contentclass="forums_Forums" data-ipsquote-contentid="38611" data-ipsquote-username="ptrex" data-cite="ptrex"><div><p>@gadzail</p><p></p><p>I like this one. I am constantly looking for new objects myself, and this one I didn't have yet.</p><p></p><p>Good job.</p><p></p><p>Better next time is to post your examples in the EXAMPLE SCRIPT section of the forum.</p><p></p><p>Ciao !!</p><p></p><p>ptrex</p></div></blockquote><p>OKS ptrex. </p><p>You are right, It is better. I don't want to duplicate the post, maybe the admin can move it.</p><p></p><p>I would like to know which net classes we can use in scripting.</p><p>if someone find something please reply...</p>
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_287321_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287321" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287321&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287321" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287321" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287321" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D287321" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-287509'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_287509' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+ptrex</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 22
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Universalist</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/profile/photo-thumb-6305.gif' alt=''>
+	</span>
+
+			</li>
+			<li><span class="usermvp">MVPs</span></li>
+			
+				<li class='ipsResponsive_hidePhone'><img src='https://www.autoitscript.com/forum/uploads/monthly_2015_07/team_mvp.png.06ed2c34c6eb9c9c23af5b7693950853.png' alt='' class='cAuthorGroupIcon'></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 22
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>2,403 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-287509_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="287509" data-quotedata="{&quot;userid&quot;:6305,&quot;username&quot;:&quot;ptrex&quot;,&quot;timestamp&quot;:1167421547,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:287509}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287509" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_287509"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#4 · </span>
+			Posted <time datetime='2006-12-29T19:45:47Z' title='12/29/2006  7:45  PM' data-short='Dec 06'>29 Dec 2006</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>this might give you a hint :</p><p></p><p><a href="http://msdn2.microsoft.com/en-us/library/system.collections.aspx" rel="external nofollow">COM System collections Interface</a></p><p></p><p>Enjoy !!</p><p></p><p>ptrex</p>
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+			
+
+
+
+<div data-role="memberSignature" class='ipsResponsive_hidePhone'>
+  <hr class='ipsHr'>
+  <div class='ipsType_light ipsType_richText'>
+    <span style="color:#FF0000">Contributions :</span><a href="https://www.autoitscript.com/forum/index.php?showtopic=12682">Firewall Log Analyzer for XP</a>  -									  <a href="https://www.autoitscript.com/forum/index.php?showtopic=38671">Creating COM objects without a need of DLL&#39;s</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=57022">UPnP support in AU3</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=12813">Crystal Reports Viewer</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42776&amp;hl=">PDFCreator in AutoIT</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=58617">Duplicate File Finder</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=17099">SQLite3 Database functionality</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42580&amp;hl=">USB Monitoring</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=58941">Reading Excel using SQL</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=17581">Run Au3 as a Windows Service</a>  - <a href="https://www.autoitscript.com/forum/index.php?showtopic=42511&amp;hl=">File Monitor</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=65027">Embedded Flash Player</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=17728">Dynamic Functions</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42400&amp;hl=">Control Panel Applets</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=66202&amp;st=0#entry490962">Digital Signing Code</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=17802">Excel Grid In AutoIT</a>  -  <a href="https://www.autoitscript.com/forum/index.php?showtopic=42394&amp;hl=">Constants for Special Folders in Windows</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=24877&amp;pid=175645&amp;st=0&amp;#entry175645">Read data from Any Windows Edit Control</a>  - <a href="https://www.autoitscript.com/forum/index.php?showtopic=45904&amp;st=0#entry342453">SOAP and Web Services in AutoIT</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=67539">Barcode Printing Using PS</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=66639">AU3 on LightTD Webserver</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=25304&amp;st=0&amp;gopid=177797&amp;">MS LogParser SQL Engine in AutoIT</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=49065">ImageMagick Image Processing</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=70507">Converter @ Dec - Hex - Bin</a> -<a href="https://www.autoitscript.com/forum/index.php?showtopic=26150">Email Address Encoder</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=50375">MSI Editor</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=70759&amp;st=0&amp;p=518204&amp;#entry518204">SNMP - MIB Protocol</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=26216">Financial Functions UDF</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=50880&amp;st=0#entry385049">Set ACL Permissions</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=70837&amp;st=0&amp;p=518716&amp;#entry518716">Syntax HighLighter for AU3</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=26804&amp;hl=">ADOR.RecordSet approach</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=50608">Real OCR</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=73175">HTTP Disk</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=75832">PDF Reader</a> <a href="https://www.autoitscript.com/forum/index.php?showtopic=31457&amp;hl=">Personal Worldclock</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=52577">MS Indexing Engine</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=78757">Printing Controls</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=27727&amp;st=0&amp;gopid=196855&amp;">GuiListView - Navigation (break the 4000 Limit barrier)</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=54110">Registration Free COM DLL Distribution</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=81525&amp;st=0#entry584974">WinRM</a>  <a href="https://www.autoitscript.com/forum/index.php?showtopic=27755">SMART Analysis</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=54227&amp;st=0&amp;p=410812&amp;#entry410812">COM Object Browser</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=86955">Excel PivotTable Object</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=91316&amp;st=0&amp;p=657003&amp;#entry657003">VLC Media Player</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=91319&amp;st=0&amp;p=657017&amp;#entry657017">Windows LogOnOff Gui</a> -<a href="https://www.autoitscript.com/forum/index.php?showtopic=34865">Extract Data from Outlook to Word &amp; Excel</a> - <a href="https://www.autoitscript.com/forum/index.php?showtopic=56422">Analyze Event ID 4226</a> - <a href="https://www.autoitscript.com/forum/topic/128013-dotnet-compiler-wrapper">DotNet Compiler Wrapper</a> - <a href="https://www.autoitscript.com/forum/topic/147273-powershell-com/">Powershell_COM</a> <span style="color:#ff0000">New </span>
+  </div>
+</div>
+
+
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_287509_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287509" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287509&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287509" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287509" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287509" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D287509" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-287758'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_287758' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+Gyatso</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_neutral'>
+	
+			<i class='fa fa-circle'></i> 0
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Seeker</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/set_resources_1/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png' alt=''>
+	</span>
+
+			</li>
+			<li><span class="usernormal">Members</span></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_neutral'>
+	
+			<i class='fa fa-circle'></i> 0
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>6 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-287758_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="287758" data-quotedata="{&quot;userid&quot;:18397,&quot;username&quot;:&quot;Gyatso&quot;,&quot;timestamp&quot;:1167486482,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:287758}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287758" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_287758"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#5 · </span>
+			Posted <time datetime='2006-12-30T13:48:02Z' title='12/30/2006  1:48  PM' data-short='Dec 06'>30 Dec 2006</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>here is your link to microsoft, but in the english version</p><p><a href="http://www.microsoft.com/technet/technetmag/issues/2007/01/HeyScriptingGuy/default.aspx?loc=en" rel="external nofollow">http://www.microsoft.com/.../HeySc...ult.aspx?loc=en</a></p>
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+			
+
+
+
+<div data-role="memberSignature" class='ipsResponsive_hidePhone'>
+  <hr class='ipsHr'>
+  <div class='ipsType_light ipsType_richText'>
+    How can someone use Windows without using AutoIt?That one would properly don&#39;t know how to handle a computer&#33;<strong><span style="color:#FF0000">My scripts:</span></strong><a href="https://www.autoitscript.com/forum/index.php?showtopic=19411">Send files over internet</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=19462">Kind of RSS reader</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=30045">3Draw Pro</a><a href="https://www.autoitscript.com/forum/index.php?showtopic=32257">UDF: convert a character string to a binary one and back</a>
+  </div>
+</div>
+
+
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_287758_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287758" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287758&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287758" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287758" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287758" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D287758" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-287846'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_287846' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+NELyon</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Do you wanna brew my avatar?</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/profile/photo-thumb-12929.jpg' alt=''>
+	</span>
+
+			</li>
+			<li><span class="useractive">Active Members</span></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>3,374 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-287846_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="287846" data-quotedata="{&quot;userid&quot;:12929,&quot;username&quot;:&quot;NELyon&quot;,&quot;timestamp&quot;:1167505096,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:287846}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287846" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_287846"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#6 · </span>
+			Posted <time datetime='2006-12-30T18:58:16Z' title='12/30/2006  6:58  PM' data-short='Dec 06'>30 Dec 2006</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>Hmm... This could prove Very useful. Nice find</p>
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_287846_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=287846" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287846&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287846" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287846" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D287846" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D287846" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-288204'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_288204' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+sohfeyr</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Prodigy</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/set_resources_1/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png' alt=''>
+	</span>
+
+			</li>
+			<li><span class="useractive">Active Members</span></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 1
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>183 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-288204_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="288204" data-quotedata="{&quot;userid&quot;:5427,&quot;username&quot;:&quot;sohfeyr&quot;,&quot;timestamp&quot;:1167598552,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:288204}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=288204" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_288204"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#7 · </span>
+			Posted <time datetime='2006-12-31T20:55:52Z' title='12/31/2006  8:55  PM' data-short='Dec 06'>31 Dec 2006</time>
+			
+				(edited)
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>This is FANTASTIC!!! I wish I'd known about this a year ago!</p><p></p><p>It looks like .Net members in registered DLLs with the COMVisible(True) attribute or an assigned GUID are available for scripting. This includes the following potentially useful items:</p><ul><li>System.Collections.ArrayList</li><li>System.Collections.HashTable</li><li>System.Collections.SortedList</li><li>System.Collections.Stack</li><li>System.Collections.Queue</li><li>System.Diagnostics.Debugger </li><li>System.Diagnostics.StackFrame</li><li>System.Diagnostics.StackTrace</li><li>various calendars and Info classes in System.Globalization</li><li>System.IO.MemoryStream</li><li>System.IO.StringWriter</li><li>System.Random</li><li>a LOT of things in System.Runtime.InteropServices and System.Runtime.Remoting</li><li>System.Text.ASCIIEncoding</li><li>System.Text.StringBuilder</li><li>System.Text.UnicodeEncoding</li><li>System.Threading.Mutex</li><li>System.Threading.OverLapped</li><li>System.Threading.ReaderWriterLock</li></ul>I just did a bit of experimenting to see if SortedList would handle AutoIt-style arrays and DLLStruct variables. It turns out, Arrays work great, but DLLStructCreate seems to return something that can't be stored. One way around that is to use Assign() and Eval():<p></p><div class="geshiCodeTop"><button type="button" onclick="geshiExpand(this);">expand</button><button type="button" onclick="geshiCollapse(this)" style="display: none">collapse</button> <button type="button" onclick="geshiPopup(this)">popup</button></div><pre class="geshi geshiprinted lang-autoit ipsCode"><a href="https://www.autoitscript.com/autoit3/docs/keywords/include.htm"><span class="kw8">#include</span></a><span class="co0"> &lt;array.au3&gt;</span>
+&nbsp; &nbsp; <span class="re0">$rect</span><span class="sy0">=</span><a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructCreate.htm"><span class="kw3">DllStructCreate</span></a><span class="br0">&#40;</span><span class="st0">&quot;int;int;int;int&quot;</span><span class="br0">&#41;</span>
+<span class="co1">;~ &nbsp;MsgBox(0,&quot;DLLStructCreate errorlevel&quot;, @error)</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructSetData.htm"><span class="kw3">DllStructSetData</span></a><span class="br0">&#40;</span><span class="re0">$rect</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">10</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructSetData.htm"><span class="kw3">DllStructSetData</span></a><span class="br0">&#40;</span><span class="re0">$rect</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructSetData.htm"><span class="kw3">DllStructSetData</span></a><span class="br0">&#40;</span><span class="re0">$rect</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">64</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructSetData.htm"><span class="kw3">DllStructSetData</span></a><span class="br0">&#40;</span><span class="re0">$rect</span><span class="sy0">,</span><span class="nu0">4</span><span class="sy0">,</span><span class="nu0">48</span><span class="br0">&#41;</span>
+<span class="co1">;~ &nbsp;MsgBox(0,$rect &amp; &quot;[ 3 ]&quot;, DllStructGetData($rect,3))</span>
+
+&nbsp; &nbsp; <span class="co1">; Assign the structure to a named variable. The DLLStruct can't be serialized effectively with this technique, but it can be dereferenced using Eval.</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/Assign.htm"><span class="kw3">Assign</span></a><span class="br0">&#40;</span><span class="st0">&quot;rectstructure&quot;</span><span class="sy0">,</span><span class="re0">$rect</span><span class="br0">&#41;</span> 
+&nbsp; &nbsp; 
+&nbsp; &nbsp; <span class="re0">$array</span><span class="sy0">=</span><span class="sy1">_</span>ArrayCreate<span class="br0">&#40;</span><span class="st0">&quot;1&quot;</span><span class="sy0">,</span><span class="st0">&quot;2&quot;</span><span class="sy0">,</span><span class="st0">&quot;3&quot;</span><span class="sy0">,</span><span class="st0">&quot;4&quot;</span><span class="sy0">,</span><span class="st0">&quot;a&quot;</span><span class="sy0">,</span><span class="st0">&quot;b&quot;</span><span class="sy0">,</span><span class="st0">&quot;c&quot;</span><span class="sy0">,</span><span class="st0">&quot;d&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; 
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">=</span><a href="https://www.autoitscript.com/autoit3/docs/functions/ObjCreate.htm"><span class="kw3">ObjCreate</span></a><span class="br0">&#40;</span><span class="st0">&quot;System.Collections.SortedList&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;z&quot;</span><span class="sy0">,</span><span class="st0">&quot;sappa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;f&quot;</span><span class="sy0">,</span><span class="st0">&quot;asa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;a&quot;</span><span class="sy0">,</span><span class="st0">&quot;dfdsappa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;h&quot;</span><span class="sy0">,</span><span class="st0">&quot;qqwrtsappa&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;autoitarray&quot;</span><span class="sy0">,</span><span class="re0">$array</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; <span class="re0">$list</span><span class="sy0">.</span><span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;rectstruct&quot;</span><span class="sy0">,</span><span class="st0">&quot;rectstructure&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; 
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;test: &quot;</span> <span class="sy0">&amp;</span> <span class="re0">$list</span><span class="sy0">.</span><span class="me1">count</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@crlf</span></a><span class="br0">&#41;</span>
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">for</span></a> <span class="re0">$i</span><span class="sy0">=</span><span class="nu0">0</span> <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">to</span></a> <span class="re0">$list</span><span class="sy0">.</span><span class="me1">count</span><span class="sy0">-</span><span class="nu0">1</span>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$key</span><span class="sy0">=</span><span class="re0">$list</span><span class="sy0">.</span><span class="me1">GetKey</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$value</span><span class="sy0">=</span><span class="re0">$list</span><span class="sy0">.</span><span class="me1">Getbyindex</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">If</span></a> <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Not</span></a> <a href="https://www.autoitscript.com/autoit3/docs/functions/IsArray.htm"><span class="kw3">IsArray</span></a><span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#41;</span> <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Then</span></a> 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="re0">$key</span> <span class="sy0">&amp;</span> <span class="st0">&quot; - &quot;</span> <span class="sy0">&amp;</span> <span class="re0">$value</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@crlf</span></a><span class="br0">&#41;</span>
+&nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Else</span></a>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="re0">$key</span> <span class="sy0">&amp;</span> <span class="st0">&quot; - &quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">For</span></a> <span class="re0">$j</span><span class="sy0">=</span><span class="nu0">0</span> <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">to</span></a> <a href="https://www.autoitscript.com/autoit3/docs/functions/UBound.htm"><span class="kw3">UBound</span></a><span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#41;</span><span class="sy0">-</span><span class="nu0">1</span>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#91;</span><span class="re0">$j</span><span class="br0">&#93;</span> <span class="sy0">&amp;</span> <span class="st0">&quot; &nbsp; &nbsp;&quot;</span><span class="br0">&#41;</span>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Next</span></a>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@crlf</span></a><span class="br0">&#41;</span>
+&nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">EndIf</span></a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; <a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Next</span></a>
+&nbsp; &nbsp; 
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;Rect structure with reference stored in sorted list:&quot;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span>
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;x1: &quot;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructGetData.htm"><span class="kw3">DllStructGetData</span></a><span class="br0">&#40;</span><a href="https://www.autoitscript.com/autoit3/docs/functions/Eval.htm"><span class="kw3">Eval</span></a><span class="br0">&#40;</span><span class="re0">$list</span><span class="br0">&#40;</span><span class="st0">&quot;rectstruct&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span>
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;y1: &quot;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructGetData.htm"><span class="kw3">DllStructGetData</span></a><span class="br0">&#40;</span><a href="https://www.autoitscript.com/autoit3/docs/functions/Eval.htm"><span class="kw3">Eval</span></a><span class="br0">&#40;</span><span class="re0">$list</span><span class="br0">&#40;</span><span class="st0">&quot;rectstruct&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#41;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span>
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;x2: &quot;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructGetData.htm"><span class="kw3">DllStructGetData</span></a><span class="br0">&#40;</span><a href="https://www.autoitscript.com/autoit3/docs/functions/Eval.htm"><span class="kw3">Eval</span></a><span class="br0">&#40;</span><span class="re0">$list</span><span class="br0">&#40;</span><span class="st0">&quot;rectstruct&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#41;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span>
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;y2: &quot;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/functions/DllStructGetData.htm"><span class="kw3">DllStructGetData</span></a><span class="br0">&#40;</span><a href="https://www.autoitscript.com/autoit3/docs/functions/Eval.htm"><span class="kw3">Eval</span></a><span class="br0">&#40;</span><span class="re0">$list</span><span class="br0">&#40;</span><span class="st0">&quot;rectstruct&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="nu0">4</span><span class="br0">&#41;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span></pre><p></p><p>This outputs:</p><p></p><pre class="geshi geshiprinted lang-text ipsCode">test: 6
+a - dfdsappa
+autoitarray - 1 2 &nbsp; 3 &nbsp; 4 &nbsp; a &nbsp; b &nbsp; c &nbsp; d &nbsp; 
+f - asa
+h - qqwrtsappa
+rectstruct - rectstructure
+z - sappa
+Rect structure with reference stored in sorted list:
+x1: 10
+y1: 20
+x2: 64
+y2: 48
++&gt;AutoIT3.exe ended.rc:0
+&gt;Exit code: 0 &nbsp; Time: 10.077</pre><p></p><p>(Yes, I know, the time on that is ridiculous - I think it is counting the compilation time from AU3Wrapper, though. A message box at the start of the script gives a reference point from which execution is almost instantaneous. Has anyone else noticed this?)</p><p></p><p>I look forward to hearing others' experiences with this. This is an incredible discovery, gadzail!</p>
+
+
+			
+				
+
+<span class='ipsType_reset ipsType_medium ipsType_light' data-excludequote>
+	<strong>Edited <time datetime='2006-12-31T21:01:08Z' title='12/31/2006  9:01  PM' data-short='Dec 06'>31 Dec 2006</time> by sohfeyr</strong>
+	
+	
+</span>
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+			
+
+
+
+<div data-role="memberSignature" class='ipsResponsive_hidePhone'>
+  <hr class='ipsHr'>
+  <div class='ipsType_light ipsType_richText'>
+    Mine:<a href="https://www.autoitscript.com/forum/index.php?showtopic=31761">Time Functions - Manipulate the system clock&#33;</a> | <a href="https://www.autoitscript.com/forum/index.php?s=&amp;showtopic=32077&amp;view=findpost&amp;p=230214">WinControlList (WinGetClassList++)</a> | <a href="https://www.autoitscript.com/forum/index.php?s=&amp;showtopic=24612&amp;view=findpost&amp;p=172236">.Net Setup Wrapper, Detect or install .Net</a> | <a href="https://www.autoitscript.com/forum/index.php?s=&amp;showtopic=40136&amp;view=findpost&amp;p=298746">Writing and using a VB .NET COM object in AutoIt</a>Not mine, but highly recommended:<a href="https://www.autoitscript.com/forum/index.php?showtopic=9988&amp;st=30&amp;p=188849&amp;#">AutoItTreeViewExtension plugin</a> | <a href="https://www.autoitscript.com/forum/index.php?showtopic=6577">Menu code</a> | <a href="https://www.autoitscript.com/forum/index.php?s=&amp;showtopic=30253&amp;view=findpost&amp;p=216066">Callback helper dll</a> | <a href="https://www.autoitscript.com/forum/index.php?s=&amp;showtopic=33677&amp;view=findpost&amp;p=243973">Auto3Lib - Control the uncontrollable</a> | <a href="https://www.autoitscript.com/forum/index.php?showtopic=38671">Creating COM objects in AutoIt</a> | <a href="https://www.autoitscript.com/forum/index.php?showtopic=38611">Using .Net framework classes in AutoIt</a>
+  </div>
+</div>
+
+
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_288204_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=288204" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D288204&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D288204" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D288204" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D288204" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D288204" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-293941'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_293941' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+nobbe</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 2
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Universalist</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/set_resources_1/84c1e40ea0e759e3f1505eb1788ddf3c_default_photo.png' alt=''>
+	</span>
+
+			</li>
+			<li><span class="useractive">Active Members</span></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_positive'>
+	
+			<i class='fa fa-plus-circle'></i> 2
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>427 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-293941_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="293941" data-quotedata="{&quot;userid&quot;:19580,&quot;username&quot;:&quot;nobbe&quot;,&quot;timestamp&quot;:1168796584,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:293941}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=293941" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_293941"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#8 · </span>
+			Posted <time datetime='2007-01-14T17:43:04Z' title='01/14/2007  5:43  PM' data-short='Jan 07'>14 Jan 2007</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>hi </p><p>
+this is awesome !! </p><p>
+</p><p>
+i like to have hashtables in auto it , now i can :-)) </p><p>
+</p><p>
+</p><pre class="geshi geshiprinted lang-autoit ipsCode"><span class="co1">; http://msdn2.microsoft.com/en-us/library/system.collections.hashtable.aspx</span>
+
+<span class="re0">$hash</span> <span class="sy0">=</span> <a href="https://www.autoitscript.com/autoit3/docs/functions/ObjCreate.htm"><span class="kw3">ObjCreate</span></a><span class="br0">&#40;</span><span class="st0">&quot;System.Collections.Hashtable&quot;</span><span class="br0">&#41;</span>
+<span class="re0">$hash</span><span class="sy0">.</span><span class="me1">add</span> <span class="br0">&#40;</span><span class="st0">&quot;txt&quot;</span><span class="sy0">,</span> <span class="st0">&quot;notepad.exe&quot;</span><span class="br0">&#41;</span>
+<span class="re0">$hash</span><span class="sy0">.</span><span class="me1">add</span> <span class="br0">&#40;</span><span class="st0">&quot;bmp&quot;</span><span class="sy0">,</span> <span class="st0">&quot;paint.exe&quot;</span><span class="br0">&#41;</span>
+<span class="re0">$hash</span><span class="sy0">.</span><span class="me1">add</span> <span class="br0">&#40;</span><span class="st0">&quot;dib&quot;</span><span class="sy0">,</span> <span class="st0">&quot;paint.exe&quot;</span><span class="br0">&#41;</span>
+<span class="re0">$hash</span><span class="sy0">.</span><span class="me1">add</span> <span class="br0">&#40;</span><span class="st0">&quot;rtf&quot;</span><span class="sy0">,</span> <span class="st0">&quot;wordpad.exe&quot;</span><span class="br0">&#41;</span>
+
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;For key = 'bmp', value = &quot;</span> <span class="sy0">&amp;</span> <span class="re0">$hash</span> <span class="br0">&#40;</span><span class="st0">&quot;bmp&quot;</span><span class="br0">&#41;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span>
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="st0">&quot;For key = 'rtf', value = &quot;</span> <span class="sy0">&amp;</span> <span class="re0">$hash</span> <span class="br0">&#40;</span><span class="st0">&quot;rtf&quot;</span><span class="br0">&#41;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span></pre>
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_293941_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=293941" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D293941&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D293941" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D293941" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D293941" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D293941" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+					
+					
+					
+
+
+
+
+<a id='comment-1145480'></a>
+<article itemscope itemtype="http://schema.org/Comment" id='elComment_1145480' class='cPost ipsBox  ipsComment  ipsComment_parent ipsClearfix ipsClear ipsColumns ipsColumns_noSpacing ipsColumns_collapsePhone  '>
+	
+	<aside class='ipsComment_author cAuthorPane ipsAreaBackground_light ipsColumn ipsColumn_medium'>
+		<h3 class='ipsType_sectionHead cAuthorPane_author ipsType_blendLinks ipsType_break' itemprop="creator" itemscope itemtype="http://schema.org/Person"><strong itemprop="name">
+vortexed</strong> <span class='ipsResponsive_showPhone ipsResponsive_inline'>&nbsp;&nbsp;
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_neutral'>
+	
+			<i class='fa fa-circle'></i> 0
+	
+		</span>
+	
+</span></h3>
+		<ul class='cAuthorPane_info ipsList_reset'>
+			
+				<li class='ipsResponsive_hidePhone'>Seeker</li>
+			
+			
+
+			<li class='cAuthorPane_photo'>
+				
+
+	<span class='ipsUserPhoto ipsUserPhoto_large '>
+		<img src='https://www.autoitscript.com/forum/uploads/profile/photo-78414.jpg' alt=''>
+	</span>
+
+			</li>
+			<li><span class="useractive">Active Members</span></li>
+			
+			
+				<li class='ipsResponsive_hidePhone'>
+
+	
+		<span title="Member's total reputation" data-ipsTooltip class='ipsRepBadge ipsRepBadge_neutral'>
+	
+			<i class='fa fa-circle'></i> 0
+	
+		</span>
+	
+</li>
+				<li class='ipsType_light'>25 posts</li>
+				
+				
+
+			
+		</ul>
+	</aside>
+	<div class='ipsColumn ipsColumn_fluid'>
+		
+
+<div id="comment-1145480_wrap" data-controller="core.front.core.comment" data-commentapp="forums" data-commenttype="forums" data-commentid="1145480" data-quotedata="{&quot;userid&quot;:78414,&quot;username&quot;:&quot;vortexed&quot;,&quot;timestamp&quot;:1390063741,&quot;contentapp&quot;:&quot;forums&quot;,&quot;contenttype&quot;:&quot;forums&quot;,&quot;contentid&quot;:38611,&quot;contentclass&quot;:&quot;forums_Topic&quot;,&quot;contentcommentid&quot;:1145480}" class="ipsComment_content ipsType_medium  ipsFaded_withHover">
+	<div class="ipsComment_meta ipsType_light">
+		<p class="ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more">
+			
+			<a href="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=1145480" data-ipstooltip title="Share this post" data-ipsmenu data-ipsmenu-closeonclick="false" id="elSharePost_1145480"><i class="fa fa-share-alt"></i></a>
+			
+		</p>
+
+		<p class="ipsType_reset"><span class="ipsPos_right ipsFaded ipsFaded_more">
+	#9 · </span>
+			Posted <time datetime='2014-01-18T16:49:01Z' title='01/18/2014  4:49  PM' data-short='Jan 14'>18 Jan 2014</time>
+			
+			
+			
+		</p>
+	</div>
+
+	
+
+
+	<div class="cPost_contentWrap ipsPad">
+		
+		
+		<div data-role="commentContent" itemprop="text" class="ipsType_normal ipsType_richText ipsContained" data-controller="core.front.core.lightboxedImages">
+			<p>Good find thanks guys!</p>
+<span></span>
+<p>This is an example that don't think has been discussed before. I had a need to add items to a specific index within the collection and came up with this.</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/system.collections.arraylist.insert.aspx" rel="external nofollow">http://msdn.microsoft.com/en-us/library/system.collections.arraylist.insert.aspx</a></p>
+<pre class="geshi geshiprinted lang-autoit ipsCode"><a href="https://www.autoitscript.com/autoit3/docs/keywords.htm"><span class="kw1">Global</span></a> <span class="re0">$Collection</span> <span class="sy0">=</span> <a href="https://www.autoitscript.com/autoit3/docs/functions/ObjCreate.htm"><span class="kw3">ObjCreate</span></a><span class="br0">&#40;</span><span class="st0">&quot;System.Collections.ArrayList&quot;</span><span class="br0">&#41;</span>
+<span class="re0">$Collection</span><span class="sy0">.</span><a href="https://www.autoitscript.com/autoit3/docs/appendix/SendKeys.htm#KeysList"><span class="kw7">Insert</span></a><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="st0">&quot;Hello&quot;</span><span class="br0">&#41;</span>
+<a href="https://www.autoitscript.com/autoit3/docs/functions/ConsoleWrite.htm"><span class="kw3">ConsoleWrite</span></a><span class="br0">&#40;</span><span class="re0">$Collection</span><span class="sy0">.</span><span class="me1">Item</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span> <span class="sy0">&amp;</span> <a href="https://www.autoitscript.com/autoit3/docs/macros.htm#%40CRLF"><span class="kw2">@CRLF</span></a><span class="br0">&#41;</span></pre>
+
+
+
+			
+		</div>
+
+		
+			
+				
+
+	<div data-controller='core.front.core.reputation' class='ipsClearfix ipsPos_right ipsResponsive_noFloat'>
+		
+			
+		
+	</div>
+
+
+			
+		
+
+		<ul class="ipsComment_controls ipsClearfix" data-role="commentControls">
+			
+				
+				
+				
+			
+			<li class="ipsHide" data-role="commentLoading">
+				<span class="ipsLoading ipsLoading_tiny ipsLoading_noAnim"></span>
+			</li>
+		</ul>
+		
+	</div>
+
+	<div class="ipsMenu ipsMenu_wide ipsHide cPostShareMenu" id="elSharePost_1145480_menu">
+		<div class="ipsPad">
+			<h4 class="ipsType_sectionHead">Share this post</h4>
+			<hr class="ipsHr">
+<h5 class="ipsType_normal ipsType_reset">Link to post</h5>
+			<input type="text" value="https://www.autoitscript.com/forum/topic/38611-net-framework-objects-and-scripts/?do=findComment&amp;comment=1145480" class="ipsField_fullWidth">
+			
+				<h5 class="ipsType_normal ipsType_reset ipsSpacer_top">Share on other sites</h5>
+				
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D1145480&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D1145480" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D1145480" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F%3Fdo%3DfindComment%26comment%3D1145480" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F%253Fdo%253DfindComment%2526comment%253D1145480" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+			
+		</div>
+	</div>
+</div>
+
+	</div>
+</article>
+					
+				
+			
+			
+<input type="hidden" name="csrfKey" value="9f274cfa13c86b6c8f7d84449bdfcdec" />
+
+
+		</form>
+	</div>
+
+	
+	
+
+	
+		<a id='replyForm'></a>
+		<div data-role='replyArea' class='cTopicPostArea ipsBox ipsBox_transparent ipsAreaBackground ipsPad cTopicPostArea_noSize ipsSpacer_top'>
+			
+				
+				
+
+
+
+	<div class='ipsType_center ipsPad'>
+		<h2 class='ipsType_pageTitle'>Create an account or sign in to comment</h2>
+		<p class='ipsType_light ipsType_normal ipsType_reset'>You need to be a member in order to leave a comment</p>
+		
+		<div class='ipsGrid ipsGrid_collapsePhone ipsSpacer_top'>
+			<div class='ipsGrid_span6 ipsAreaBackground_light ipsPad'>
+				<h2 class='ipsType_sectionHead'>Create an account</h2>
+				<p class='ipsType_normal ipsType_reset ipsType_light'>Sign up for a new account in our community. It's easy!</p>
+				<br>
+				<a href='https://www.autoitscript.com/forum/register/' class='ipsButton ipsButton_primary ipsButton_small'>Register a new account</a>
+			</div>
+			<div class='ipsGrid_span6 ipsAreaBackground_light ipsPad'>
+				<h2 class='ipsType_sectionHead'>Sign in</h2>
+				<p class='ipsType_normal ipsType_reset ipsType_light'>Already have an account? Sign in here.</p>
+				<br>
+				<a href='https://www.autoitscript.com/forum/login/?ref=aHR0cHM6Ly93d3cuYXV0b2l0c2NyaXB0LmNvbS9mb3J1bS90b3BpYy8zODYxMS1uZXQtZnJhbWV3b3JrLW9iamVjdHMtYW5kLXNjcmlwdHMvI3JlcGx5Rm9ybQ%3D%3D' data-ipsDialog data-ipsDialog-size='medium' data-ipsDialog-title="Sign In Now" class='ipsButton ipsButton_primary ipsButton_small'>Sign In Now</a>
+			</div>
+		</div>
+	</div>
+
+
+			
+		</div>
+	
+
+	
+		<div class='ipsResponsive_noFloat ipsResponsive_showPhone ipsResponsive_block ipsSpacer_top'>
+			
+
+<div data-followApp='forums' data-followArea='topic' data-followID='38611' data-controller='core.front.core.followButton'>
+	
+		<span class='ipsType_light ipsType_blendLinks ipsResponsive_hidePhone ipsResponsive_inline'><i class='fa fa-info-circle'></i> <a href='https://www.autoitscript.com/forum/login/' title='Go to the sign in page'>Sign in to follow this</a>&nbsp;&nbsp;</span>
+	
+	
+
+	<div class="ipsFollow ipsPos_middle ipsButton ipsButton_light ipsButton_verySmall ipsButton_disabled" data-role="followButton">
+		
+				<span>Followers</span>
+				<span class='ipsCommentCount'>0</span>
+		
+	</div>
+
+</div>
+		</div>
+	
+</div>
+
+
+
+<div class='ipsGrid ipsGrid_collapsePhone ipsPager ipsClearfix ipsSpacer_top'>
+	<div class="ipsGrid_span6 ipsType_left ipsPager_prev">
+		<a href="https://www.autoitscript.com/forum/forum/9-autoit-example-scripts/" title="Go to AutoIt Example Scripts" rel="up">
+			<span class="ipsPager_type">Go To Topic Listing</span>
+			<span class="ipsPager_title ipsType_light ipsType_break">AutoIt Example Scripts</span>
+		</a>
+	</div>
+	
+</div>
+
+
+	<hr class='ipsHr'>
+	
+
+	<ul class='ipsList_inline ipsList_noSpacing ipsClearfix' data-controller="core.front.core.sharelink">
+		
+			<li>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F&amp;title=net+framework+objects+and+scripts" class="cShareLink cShareLink_linkedin" target="_blank" data-role="shareLink" title='Share on LinkedIn' data-ipsTooltip>
+	<i class="fa fa-linkedin"></i>
+</a></li>
+		
+			<li>
+<a href="http://twitter.com/share?text=net+framework+objects+and+scripts+autoit&amp;url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F" class="cShareLink cShareLink_twitter" target="_blank" data-role="shareLink" title='Share on Twitter' data-ipsTooltip>
+	<i class="fa fa-twitter"></i>
+</a></li>
+		
+			<li>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F" class="cShareLink cShareLink_facebook" target="_blank" data-role="shareLink" title='Share on Facebook' data-ipsTooltip>
+	<i class="fa fa-facebook"></i>
+</a></li>
+		
+			<li>
+<a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.autoitscript.com%2Fforum%2Ftopic%2F38611-net-framework-objects-and-scripts%2F" class="cShareLink cShareLink_google" target="_blank" data-role="shareLink" title='Share on Google+' data-ipsTooltip>
+	<i class="fa fa-google-plus"></i>
+</a></li>
+		
+			<li>
+<a href="http://www.reddit.com/submit?url=https%253A%252F%252Fwww.autoitscript.com%252Fforum%252Ftopic%252F38611-net-framework-objects-and-scripts%252F" class="cShareLink cShareLink_reddit" target="_blank" title='Share on Reddit' data-ipsTooltip>
+	<i class="fa fa-reddit"></i>
+</a></li>
+		
+	</ul>
+
+
+						
+
+
+	<div class='cWidgetContainer '  data-role='widgetReceiver' data-orientation='horizontal' data-widgetArea='footer'>
+		<ul class='ipsList_reset'>
+			
+				
+					<li class='ipsWidget ipsWidget_horizontal ipsBox ipsWidgetHide ipsHide' data-blockID='app_core_relatedContent_tby32xc9o' data-blockConfig="true" data-blockTitle="Similar Content" data-controller='core.front.widgets.block'></li>
+				
+			
+		</ul>
+	</div>
+
+						<div class="ipsType_center">
+<br>
+<br>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- AutoIt Forum Footer Responsive -->
+<ins class="adsbygoogle adfix"
+     style="display:block"
+     data-ad-client="ca-pub-2584082051607049"
+     data-ad-slot="8821011430"
+     data-ad-format="horizontal"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<br>
+</div>
+
+					</div>
+					
+
+				</div>
+				<div id="elFooterNavigation" class="ipsSubNavigation">
+					
+
+
+					
+<nav class='ipsBreadcrumb'>
+	<ul>
+		<li >
+			<a href='https://www.autoitscript.com/forum/' >
+				<span ><i class='fa fa-home'></i> Home <i class='fa fa-angle-right'></i></span>
+			</a>
+		</li>
+		
+		
+			<li >
+				
+					<a href='https://www.autoitscript.com/forum/forum/12-autoit-v3/' >
+						<span >AutoIt v3 <i class='fa fa-angle-right'></i></span>
+					</a>
+				
+			</li>
+			
+		
+			<li >
+				
+					<a href='https://www.autoitscript.com/forum/forum/9-autoit-example-scripts/' >
+						<span >AutoIt Example Scripts <i class='fa fa-angle-right'></i></span>
+					</a>
+				
+			</li>
+			
+		
+			<li >
+				
+					net framework objects and scripts
+				
+			</li>
+			
+		
+	</ul>
+</nav>
+				</div>
+			</div>
+			
+		
+    
+    
+        
+    
+
+    
+    <a id="backtoTop" onclick="$('body').animatescroll();" title="Back To Top"><i class="fa fa-chevron-circle-up"></i></a>
+   
+</main><footer id="ipsLayout_footer" class="ipsClearfix"><div class="ipsLayout_container">
+				
+
+<ul class='ipsList_inline ipsType_center' id="elFooterLinks">
+
+	
+	
+	
+	
+		<li>
+			<a href='#elNavTheme_menu' id='elNavTheme' data-ipsMenu data-ipsMenu-above>Theme <i class='fa fa-caret-down'></i></a>
+			<ul id='elNavTheme_menu' class='ipsMenu ipsMenu_selectable ipsHide'>
+			
+				
+					<li class='ipsMenu_item ipsMenu_itemChecked'>
+						<form action="//www.autoitscript.com/forum/theme/?csrfKey=9f274cfa13c86b6c8f7d84449bdfcdec" method="post">
+						<button type='submit' name='id' value='1' class='ipsButton ipsButton_link'>Default (Default)</button>
+						</form>
+					</li>
+				
+			
+				
+					<li class='ipsMenu_item'>
+						<form action="//www.autoitscript.com/forum/theme/?csrfKey=9f274cfa13c86b6c8f7d84449bdfcdec" method="post">
+						<button type='submit' name='id' value='3' class='ipsButton ipsButton_link'>Default (Forced Desktop View) </button>
+						</form>
+					</li>
+				
+			
+			</ul>
+		</li>
+	
+	
+		<li><a href='https://www.autoitconsulting.com/site/privacy-policy/'>Privacy Policy</a></li>
+	
+	
+		<li><a href='https://www.autoitscript.com/forum/contact/' data-ipsdialog data-ipsDialog-remoteSubmit data-ipsDialog-flashMessage='Thanks, your message has been sent to the administrators.' data-ipsdialog-title="Contact Us">Contact Us</a></li>
+	
+</ul>	
+
+
+<p id='elCopyright'>
+	<span id='elCopyright_userLine'></span>
+	<a title='Community Software by Invision Power Services, Inc.' href='http://www.invisionpower.com/'>Community Software by Invision Power Services, Inc.</a>
+</p>
+			</div>
+		</footer>
+		
+<div id='elMobileDrawer' class='ipsDrawer ipsHide'>
+	<div class='ipsDrawer_menu'>
+		<div class='ipsDrawer_content'>
+			
+
+			<p class='ipsPad'>
+				
+					<a href='https://www.autoitscript.com/forum/login/' class='ipsButton ipsButton_light ipsButton_small ipsButton_fullWidth'>Existing user? Sign In</a><br>
+					
+						<a href='https://www.autoitscript.com/forum/register/' id='elRegisterButton_mobile' class='ipsButton ipsButton_small ipsButton_fullWidth ipsButton_important'>Sign Up</a>
+					
+				
+			</p>
+
+			<ul class='ipsDrawer_list'>
+				
+				
+				
+					
+				
+					
+						
+							<li><a href='https://www.autoitscript.com/forum/' class='active'>Forums</a></li>
+						
+					
+				
+					
+						
+							<li><a href='https://www.autoitscript.com/forum/files/' >Downloads</a></li>
+						
+					
+				
+					
+						
+							<li class='ipsDrawer_itemParent'>
+								<h4 class='ipsDrawer_title'><a href='#'>AutoIt Resources</a></h4>
+								<ul class='ipsDrawer_list'>
+									
+<li data-action="back"><a href='#'>Back</a></li>
+
+	
+		
+			<li><a href='https://www.autoitscript.com/site/'>AutoIt Main Website</a></li>
+		
+	
+
+	
+		
+			<li><a href='https://www.autoitscript.com/forum/files/file/270-autoit-latest-stable-version/'>AutoIt Installer (Stable)</a></li>
+		
+	
+
+	
+		
+			<li><a href='https://www.autoitscript.com/autoit3/docs/'>AutoIt Helpfile (Stable)</a></li>
+		
+	
+
+	
+		
+			<li><a href='https://www.autoitscript.com/site/autoit-script-editor/downloads/'>AutoIt Script Editor (SciTE)</a></li>
+		
+	
+
+	
+		
+			<li><a href='http://www.autoitscript.com/forum/files/category/5-beta/'>AutoIt Installer (Beta)</a></li>
+		
+	
+
+	
+		
+			<li><a href='https://www.autoitscript.com/autoit3/files/beta/autoit/docs/'>AutoIt Helpfile (Beta)</a></li>
+		
+	
+
+								</ul>
+							</li>
+						
+					
+				
+					
+						
+							<li><a href='https://www.autoitscript.com/wiki' >Wiki</a></li>
+						
+					
+				
+					
+						
+							<li><a href='https://www.autoitscript.com/trac/autoit' >Bug Tracker</a></li>
+						
+					
+				
+					
+						
+							<li><a href='https://www.autoitscript.com/forum/guides/' >Guides</a></li>
+						
+					
+				
+					
+				
+					
+						
+							<li><a href='https://www.autoitscript.com/forum/calendar/' >Calendar</a></li>
+						
+					
+				
+				<li class='ipsDrawer_itemParent'>
+					<h4 class='ipsDrawer_title'><a href='#'>More</a></h4>
+					<ul class='ipsDrawer_list'>
+						<li data-action="back"><a href='#'>Back</a></li>
+						
+						<li><a href='https://www.autoitscript.com/forum/activity/'>Activity Stream</a></li>
+						
+							<li><a href='https://www.autoitscript.com/forum/topic/169097-forum-rules/'>Forum Rules</a></li>
+						
+						<li><a href='https://www.autoitscript.com/forum/staff/'>Staff</a></li>
+						
+                        
+							<li><a href='https://www.autoitscript.com/forum/online/'>Online Users</a></li>
+						
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+		
+
+	<script type='text/javascript'>
+		var ipsDebug = false;		
+	
+		var CKEDITOR_BASEPATH = '//www.autoitscript.com/forum/applications/core/interface/ckeditor/ckeditor/';
+	
+		var ipsSettings = {
+			
+			
+			cookie_domain: "",
+			
+			
+			cookie_path: "/",
+			
+			
+			cookie_prefix: "ips4_",
+			
+			
+			cookie_ssl: true,
+			
+			imgURL: "",
+			baseURL: "//www.autoitscript.com/forum/",
+			jsURL: "//www.autoitscript.com/forum/applications/core/interface/js/js.php",
+			csrfKey: "9f274cfa13c86b6c8f7d84449bdfcdec",
+			antiCache: "a281549dc0",
+			useCompiledFiles: true,
+			links_external: 1
+		};
+	</script>
+
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_global/root_library.js.3c8308b902c95a387a822d5cb7c67b92.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_global/root_js_lang_1.js.3c5f670d6f63f86b608946fe2a069ab6.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_global/root_framework.js.974098a086b61d77dfbdb0250d7c83e3.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_core/global_global_core.js.d9ada4ddbbe5e0495b96b947768b8b04.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_core/plugins_plugins.js.cead1935da81c9b4a284e7623ee10e89.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='//www.autoitscript.com/forum/applications/autoitcodehighlighting/interface/pre/geshi_expand_popup.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='//www.autoitscript.com/forum/applications/bimchatbox/interface/buzz/buzz.min.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='//www.autoitscript.com/forum/applications/bimchatbox/interface/chat/chatbox111.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_global/root_front.js.1d6ef0814758fafb14e4f30b1bec2aa2.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_forums/front_front_topic.js.a07e106c3e0f09ec1483f8933471b7da.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_core/front_front_core.js.d425d8055406c920f343c92a27dc309e.js?v=a281549dc0' data-ips></script>
+
+
+<script type='text/javascript' src='https://www.autoitscript.com/forum/uploads/javascript_global/root_map.js.b3146666d3214d0f885c5c2a6b4409ed.js?v=a281549dc0' data-ips></script>
+
+
+
+	<script type='text/javascript'>
+		
+			ips.setSetting( 'date_format', jQuery.parseJSON('"mm\/dd\/yy"') );
+		
+			ips.setSetting( 'date_first_day', jQuery.parseJSON('0') );
+		
+		
+	</script>
+
+
+		
+		
+		
+		<!--ipsQueryLog-->
+		<!--ipsCachingLog-->
+		
+	<script type="text/javascript" src="//www.autoitscript.com/forum/cdn/js/prettify/lang-autoit.js"></script>
+
+<!-- Begin Cookie Consent -->
+<script type="text/javascript">
+    window.cookieconsent_options = {"message":"Cookies help us deliver our services. By using our services, you agree to our use of cookies","dismiss":"Got it","learnMore":"Learn more","link":"https://www.autoitconsulting.com/site/cookie-policy/","theme":"//www.autoitscript.com/cdn/js/cookieconsent/cookieconsent-dark.css"};
+</script>
+
+<script type="text/javascript" src="//www.autoitscript.com/cdn/js/cookieconsent/cookieconsent.min.js"></script>
+<!-- End Cookie Consent plugin --></body></html>

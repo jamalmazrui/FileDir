@@ -1,0 +1,873 @@
+﻿                _uacct = "UA-141188-1"; urchinTracker();    Downloading Files 
+C# - Haissam [MCAD]  
+
+   
+//<![CDATA[ var theForm = document.forms['aspnetForm']; if (!theForm) { theForm 
+= document.aspnetForm; } function __doPostBack(eventTarget, eventArgument) { if 
+(!theForm.onsubmit || (theForm.onsubmit() != false)) { 
+theForm.__EVENTTARGET.value = eventTarget; theForm.__EVENTARGUMENT.value = 
+eventArgument; theForm.submit(); } } //]]>      
+
+
+Haissam [MCAD]
+
+Posting Technical problems/solutions through out my personal experience
+
+
+
+
+Downloading Files C#
+
+A lot of questions are being asked about downloading a file from the web server 
+to the client in ASP.NET. I have updated this blog post due to the high number 
+of view & comments. You will realize i added a function called "ReturnExtension" 
+which will return the proper content type and set it to the Response.ContentType 
+property. Almost well known file types are supported. 
+
+C# Code
+
+   // Get the physical Path of the file(test.doc)
+   string filepath = Server.MapPath("test.doc");
+
+   // Create New instance of FileInfo class to get the properties of the file 
+being downloaded
+   FileInfo file = new FileInfo(filepath);
+  
+   // Checking if file exists
+   if (file.Exists)
+   {
+    // Clear the content of the response
+    Response.ClearContent();
+    
+    // LINE1: Add the file name and attachment, which will force the 
+open/cance/save dialog to show, to the header
+    Response.AddHeader("Content-Disposition", "attachment; filename=" + 
+file.Name);
+    
+    // Add the file size into the response header
+    Response.AddHeader("Content-Length", file.Length.ToString());
+
+    // Set the ContentType
+    Response.ContentType = ReturnExtension(file.Extension.ToLower());
+
+    // Write the file into the response (TransmitFile is for ASP.NET 2.0. In 
+ASP.NET 1.1 you have to use WriteFile instead)
+    Response.TransmitFile(file.FullName);
+
+    // End the response
+    Response.End();
+   }
+
+private string ReturnExtension(string fileExtension)
+{
+     switch (fileExtension)
+            {
+                case ".htm":
+                case ".html":
+                case ".log":
+                    return "text/HTML";
+                case ".txt":
+                    return "text/plain";
+                case ".doc":
+                    return "application/ms-word";
+                case ".tiff":
+                case ".tif":
+                    return "image/tiff";
+                case ".asf":
+                    return "video/x-ms-asf";
+                case ".avi":
+                    return "video/avi";
+                case ".zip":
+                    return "application/zip";
+                case ".xls":
+                case ".csv":
+                    return "application/vnd.ms-excel";
+                case ".gif":
+                    return "image/gif";
+                case ".jpg":
+                case "jpeg":
+                    return "image/jpeg";
+                case ".bmp":
+                    return "image/bmp";
+                case ".wav":
+                    return "audio/wav";
+                case ".mp3":
+                    return "audio/mpeg3";
+                case ".mpg":
+                case "mpeg":
+                    return "video/mpeg";
+                case ".rtf":
+                    return "application/rtf";
+                case ".asp":
+                    return "text/asp";
+                case ".pdf":
+                    return "application/pdf";
+                case ".fdf":
+                    return "application/vnd.fdf";
+                case ".ppt":
+                    return "application/mspowerpoint";
+                case ".dwg":
+                    return "image/vnd.dwg";
+                case ".msg":
+                    return "application/msoutlook";
+                case ".xml":
+                case ".sdxl":
+                    return "application/xml";
+                case ".xdp":
+                    return "application/vnd.adobe.xdp+xml";
+                default:
+                    return "application/octet-stream";
+}
+
+N.B:  If you want to bypass the Open/Save/Cancel dialog you just need to replace 
+LINE1 by the below code
+
+Response.AddHeader("Content-Disposition", "inline; filename=" + file.Name);
+
+Response.TransmitFile VS Response.WriteFile: 
+ 1- TransmitFile: This method sends the file to the client without loading it to 
+the Application memory on the server. It is the ideal way to use it if the file 
+size being download is large.
+ 2- WriteFile: This method loads the file being download to the server's memory 
+before sending it to the client. If the file size is large, you might the ASPNET 
+worker process might get restarted.
+
+Hope this helps,
+
+Published 03 April 2007 10:35 AM by haissam  
+
+Comments
+  # JoshStodola said on 20 April, 2007 09:50 AM 
+  Response.End() calls Response.Flush().
+
+  Therefore, you only need to call Response.End
+  # JoshStodola said on 20 April, 2007 11:35 AM 
+  Also, you better clear the headers or you will never be able to open the file 
+  in IE6 without saving it first!
+  # JTang said on 10 May, 2007 09:05 AM 
+  Thank you for your advice. I tried your code and I could be able to download a 
+  file to my local PC. However, when I try to open the file instead of saving 
+  it, I could see that it is downloading. After the downloading is done, the MS 
+  Word popped up an error message saying:
+
+  The file could not be found.
+
+  Try one or more of the following:
+
+  * Check the spelling of the name of the document.
+
+  * Try a different file name.
+
+  (C:\...\test[1].doc)
+
+  Would you help me to solve this issue?
+
+  Thank you very much.
+  # haissam said on 12 May, 2007 07:00 AM 
+  Hello Jtang,
+
+  Please send me your code to my email to check it out
+
+  Best Regards,
+
+  HC
+  # Manish said on 24 May, 2007 10:57 PM 
+  Thanks for this code. i was stuct in my project for this problem since 
+  yesterday. thank u very much
+  # Vinod said on 31 May, 2007 01:03 AM 
+  Thank u for ur help, this will help me out only for single file to downlod.
+
+  i want n number of selected files  to download  at a time.
+
+  how can i?
+
+  tHANKING YOU IN ADVANCE
+
+  mail me the code to vinod.vbv@gmail.com
+  # Neil said on 05 June, 2007 06:30 AM 
+  Hi Haissam,
+
+  Did you have any luck solving Jtang's problem? I'm having the same trouble, 
+  and I was hoping you could publish a fix for me and anyone else with the same 
+  problem.
+
+  Thanks very much!
+
+  Neil.
+  # haissam said on 05 June, 2007 08:15 AM 
+  Can you send your project to my inbox to test what is going on and how to fix 
+  it! 
+
+  haissam@dotnetslackers.com
+
+  Best Regards,
+  # bhushan said on 14 June, 2007 07:26 AM 
+  hi all.
+
+  plz give me solution on following problem.
+
+  how to execute code or display any message after comlete downloading file.
+  # varun said on 18 June, 2007 04:44 AM 
+  hi this code is working in a simple web from but this code throw error when u 
+  try that code in Model Dialog from(popup) in case of target ="_self".
+
+  plz advice
+  # haissam said on 18 July, 2007 04:42 AM 
+  Varun which type of error you are facing!! just email me the project and your 
+  problem... 
+  # LingZ said on 23 July, 2007 10:28 PM 
+  Thank you, I have tested the code, for saving file, it works ok.
+
+  But for opening (in IE6), the word editor doesn't show up, only the xml 
+  scripts are displayed in IE.
+
+  Here's my code:
+
+             string fileName = 
+  @"D:\rptTest\AspNet_Html\WordInHtml\WordInHtml\output\report.xml";
+
+             Response.Clear();
+
+             Response.ClearHeaders();
+
+             Response.ClearContent();            
+
+             Response.AddHeader("Content-Disposition", 
+  "attachment;filename=new.xml");
+
+             Response.ContentType = "application/ms-word";
+
+             Response.WriteFile(fileName);           
+
+             //Response.Flush();
+
+             Response.End();
+  # Jhed said on 19 September, 2007 07:33 AM 
+  i have a project, i make a intranet webpage i use c# in my script, i page for 
+  uploading a file, then i want to view the file that i upload and download it 
+  can u help with the script . can you help me. yo can reply me in email add 
+  jhd_nightfire@yahoo.com
+  # Navin S. said on 25 September, 2007 09:35 AM 
+  Hi, 
+
+  I'm new to C# and I just wanted to know what a response is?
+
+  Thank you!
+
+  navinsukhdeo@gmail.com
+  # Claudio V said on 27 September, 2007 11:14 AM 
+  Hello,
+
+  Is there a way to make this code work for files located in a network drive? 
+  This would be for a web application that runs only in the intranet.
+  # Kaladevi said on 09 October, 2007 02:57 AM 
+  Hi,
+
+     I'm also facing the same problem (ie)
+
+  The file could not be found.
+
+  Try one or more of the following:
+
+  * Check the spelling of the name of the document.
+
+  * Try a different file name.
+
+  (C:\...\Sample[1].doc)
+
+  Please let me know the solution.
+  # Chicago_Lar said on 09 October, 2007 11:25 AM 
+  A note on Response.End() versus Response.Flush(). 
+
+  The Microsoft documentation says that Response.End() calls Response.Flush() if 
+  Response.Buffer =is set to true. E.g.,
+
+  Response.Buffer = true;
+
+  Response.End();
+
+  Also, newbies (like me) who wish to convert the code Haissam graciously 
+  provided into a C# class, may need to add the following two lines to the C# 
+  class code file:
+
+  using System.Collections;
+
+  using System.IO;
+
+  Visual Studio adds these to a code behind file, in my version (VWDE 2008 beta) 
+  did not automatically add them to the class file in the App_Code folder.
+  # haissam said on 09 October, 2007 03:40 PM 
+  Chicago_lar your comment is appreciated....
+  # Rajesh said on 01 November, 2007 03:28 AM 
+  Your code is help to me
+
+  Thanks
+  # Sunny said on 16 November, 2007 06:14 AM 
+  Wonderful post Helped a lot ! Thanks
+  # butters said on 27 November, 2007 04:54 PM 
+  Worked for me.  I'd also like to add that if you want to delete the file after 
+  it has downloaded, then change response.end to response.close then do a delete
+
+  response.close();
+
+  file.delete();
+  # alv said on 10 December, 2007 07:32 PM 
+  Hi, I would like to know how to download files if I know the directory, but 
+  not the filename?
+  # nellai said on 19 December, 2007 12:07 AM 
+  best
+  # Premanand said on 31 December, 2007 03:59 AM 
+  It is working 
+
+  but while downloading it converts " " into 
+
+  "_" it is not requirement
+  # Christo said on 08 January, 2008 08:34 AM 
+  At last!! Posted code that works!!  I just dont get what application/ms-word 
+  is for?  I can save pdf and exe files.
+
+  Anyway, thanx a lot!
+
+  Christo
+  # haissam said on 08 January, 2008 08:59 AM 
+  We assign "application/ms-word" to the response content type property to tell 
+  the browser that the content is a microsoft word.
+  # Christo said on 08 January, 2008 09:52 AM 
+  Ok, but why does it still work, even if it is not a .doc file?
+  # nitin said on 09 January, 2008 05:43 AM 
+  very good article ,it helped me a lot ,thanks for the same.
+  # alv said on 13 January, 2008 08:48 PM 
+  hi, i would like to download multiple file. may i know how can i do that?
+  # Manmohan said on 14 January, 2008 05:46 AM 
+  Very Good article. It solved my problem instantly.. Thanks for such a helpful 
+  article.
+  # Christo said on 14 January, 2008 06:23 AM 
+  You can add them into a zip or rar and just download that.  Or use a download 
+  manager that can download multiple files.  No other help, sorry
+  # haissam said on 15 January, 2008 02:45 PM 
+  The code above works perfectly however for best practices i recommend to use 
+  Response.TransmitFile instead of Response.WriteFile. The only difference 
+  between these two is
+
+  1- Response.WriteFile: Buffers the file to the server memory before being sent 
+  to the client
+
+  2- Response.TransmitFile: send the file to the client without buffering.
+  # Ruchir said on 25 January, 2008 11:13 AM 
+  thanks, ur code was very helpfull, but there is one question, i am able to 
+  save a file but not able to open it in browser, can u help me in this . I m 
+  getting error as file is corrupted.
+  # Mansoor said on 31 January, 2008 07:15 AM 
+  Hey thank you.......Thanks for the code.I was worried how to do and to my luck 
+  i found it and that too without much difficulty you delivered the code. Keep 
+  going.
+  # Humaira said on 31 January, 2008 07:18 AM 
+  hi Haissam!
+
+  im making a project in which a user can download file which i have saved in my 
+  database table. how can i?
+  # anisia said on 04 February, 2008 07:06 AM 
+  the method is very nice but I would like to know how to do a download without 
+  using the Response object.THKS a Lot
+  # haissam said on 04 February, 2008 04:16 PM 
+  Ruchir 
+
+  Please send me by email the code you are working and on which file type this 
+  error is generated
+  # jl said on 11 February, 2008 08:31 PM 
+  Haissam, I reviewed the code you posted and had a couple questions that stem 
+  from a problem I found.  The problem was non-existent in IE7 but when using 
+  IE6 when I click on the "Save" button on the save file dialog it said the file 
+  was missing.  I noticed at the top a gentlemen named JoshStodola said the 
+  header needs to be cleared.  I call Response.Clear() but wasn't sure if that 
+  included clearing the header as well.  I now added Response.ClearHeaders() 
+  along with Response.ClearContent().
+
+  I'm wondering what the intricacies of this are in terms of whether it is the 
+  solution I'm looking for and also what it is that causes this different 
+  behavior in IE6.
+
+  Thanks
+  # haissam said on 13 February, 2008 07:00 AM 
+  anisia you could use the WebClient class to download the file
+
+  msdn2.microsoft.com/.../system.net.webclient.aspx
+  # arno said on 14 February, 2008 01:41 PM 
+  how do you do when you do not know the content type of file.
+
+  My website allow users to upload any type of file and then a link is created 
+  to download  those files.
+
+  So how do I  configure the contenttype in this case?
+  # haissam said on 14 February, 2008 05:06 PM 
+  You can set a predefined list of the popular content types. you get the file 
+  extension and using a switch statement u set the content type.
+
+  It is a basic idea, i will try to find a more generic way.
+  # alter said on 15 February, 2008 02:14 AM 
+  your code for bypassing Open/Save/Cancel dailog box does not work on IE7..
+
+  got idea?..thanks
+  # lavanya said on 15 February, 2008 12:22 PM 
+  thank you for your code. i think it will help me a lot.
+  # Vimal said on 21 February, 2008 12:43 AM 
+  Hi Haissam, 
+
+  Your code is working perfectly when i am running the application from Dotnet, 
+  but the same pdf when i am trying to open from my Localhost (i.e from IIS) i 
+  am getting the following error:
+
+  Adobe Reader could not open '2_21_2008doc[1].pdf' because it is either not a 
+  supported file type or because the file has been damaged (for example, it was 
+  sent as an email attachment and wasn't correctly decoded).
+
+  Please suggest some solution for this problem!!
+  # Nodirbek said on 21 February, 2008 11:12 AM 
+  Hi,
+
+  I have same problem ['test[1].pdf' because it is either not a supported file 
+  type or because the file has been damaged] when i try to delete the file after 
+  WriteFile method. I couldn't delete file even by Async call.
+
+  Here is part of my code :
+
+  delegate void BeginWriteFile(string filename);
+
+  private void SendFile()
+
+  {
+
+    .....
+
+    BeginWriteFile writeasync = new  BeginWriteFile(context.Response.WriteFile);
+
+         writeasync.BeginInvoke(path, delegate(IAsyncResult result) { 
+  if(result.IsCompleted)System.IO.File.Delete(path); }, null);
+
+  }
+
+  Thanks.
+  # Lorin said on 26 February, 2008 05:40 PM 
+  would changing the content type to "application/octet-stream" make it more 
+  general purpose?
+  # haissam said on 28 February, 2008 08:48 AM 
+  application/octet-stream is a general content type which is Binary.
+  # ashis said on 12 March, 2008 01:20 AM 
+  thanks it excellent code , it works with me.
+
+  I am novice programmer, it helps too much for my day to day tasks.
+
+  keep on writing.
+
+  thanks 
+  # Michael said on 24 March, 2008 11:54 AM 
+  Can you translate this code to VB?
+  # Wango said on 24 March, 2008 02:37 PM 
+  Haissam,
+
+  thanks for the code and hint.  What I actually wanted was to be able to splash 
+  the MS Word document into a browser without. What I am getting from your code 
+  is the ability to programatically open or save a word document after being 
+  prompted to do so.
+
+  The reason I am asking for this functionality is because I do not want to 
+  tamper with the application everytime the contents of a document changes.
+
+  Do you have code that can accomplish that?
+
+  Thanks,  Wango
+  # haissam said on 24 March, 2008 07:25 PM 
+  Michael, 
+
+  There are some online tools you can use to convert codes between c# and 
+  VB.NET. below is a good link
+
+  labs.developerfusion.co.uk/.../csharp-to-vb.aspx
+  # Wango said on 25 March, 2008 10:58 AM 
+  haissam,
+
+  was I was looking for is code that can grab an MS Word document or any other 
+  document and splash it on the browser while retaining the format!
+
+  If an MS Word doc contains the following:
+
+  Company News
+
+  We'll add some news later.
+
+  Company Events
+
+  We'll add company events later.
+
+  I would like to lay my hands on code that would grab that file and produce the 
+  same results as the code caption below would produce:
+
+   <h1>Company News</h1>
+
+   <p>We'll add some news later.</p>
+
+   <h1>Company Events</h1>
+
+   <p>We'll add company events later.</p>
+
+  In other words, I want to avoid writing HTML tags as above.
+
+  Wango.
+  # haissam said on 29 March, 2008 03:16 AM 
+  Wango, Please email me the code you are using and the exact details of what 
+  you are trying to achieve in order to be able to help.
+
+  Regards,
+  # vijay garg said on 07 May, 2008 04:22 AM 
+  I am getting error while trying to open the file as:
+
+  File could not be found. Check the spelling of the file name... But 
+  surprisingly if i save the file there are no issues. Please help.
+
+  Here is my sample code:
+
+  FileInfo file = new FileInfo(fileCompletePath);
+
+  HttpResponse response = HttpContext.Current.Response;
+
+  response.ClearContent();
+
+  response.ClearHeaders();
+
+  response.AppendHeader("Content-Disposition:", "attachment; filename =" + 
+  file.Name);
+
+  response.AppendHeader("Content-Length:", file.Length.ToString());
+
+  response.ContentType = "application/vnd.ms-excel";
+
+  response.TransmitFile(fileCompletePath);
+
+  response.Flush();
+
+  response.End();
+  # janleroux said on 11 December, 2008 04:40 AM 
+  Hi Haissam,
+
+  Thanks for this article - it really helped me understand a couple of issues 
+  that I did not manage to resolve before.
+
+  But, if I want my web application to download a file (Xml - zipped) from 
+  another server (so the zip file is located at a URI). So basically downloading 
+  from a URL to some directory in my hosting web server file structure. 
+
+  Can you maybe give me a couple of idea's/pointers?
+
+  Jan
+  # pprasadravi said on 16 December, 2008 06:38 PM 
+  Hi haissam,
+
+         Excelent Article.
+
+  Thanks
+
+  Ravi
+  # haissam said on 19 December, 2008 05:32 AM 
+  @janleroux 
+
+  In your case, you should be using the WebClient class to download the file to 
+  the server. For more information check link
+
+  msdn.microsoft.com/.../system.net.webclient(VS.80).aspx
+  # mikener said on 19 March, 2009 03:45 PM 
+  Thanks so much for the code. It solved 99% of the issues that I had. I was 
+  wondering if you could answer two questions for me.
+
+  1. When I used the following line of code:
+
+  Response.AddHeader("Content-Disposition", "inline; filename=" + file.Name);
+
+  ms-word documents displayed my login page as a word document instead of the 
+  actual document that I wanted to display.
+
+  I have no idea why (I am using Forms Authentication if that makes any 
+  difference).  
+
+  The only way that I could solve this problem was to replace that line of code 
+  with this line of code:
+
+  Response.AddHeader("Content-Disposition", "attachment; filename=" + 
+file.Name);
+
+  2.  For some reason when using 
+
+  Response.AddHeader("Content-Disposition", "inline; filename=" + file.Name);
+
+  excel files still prompt for the file open(pdf's work fine).
+
+  Any help would be much appreciated.  
+
+  Thanks again for the great article.
+  # vida said on 07 September, 2009 01:51 AM 
+  hi 
+
+  how can i download file which i have saved in my database table.
+  # pm said on 09 September, 2009 05:52 AM 
+  how to download text files using c# source code
+  # hopefullyhelpful said on 15 September, 2009 12:39 PM 
+  For the benefit of others:
+
+  I was receiving the error below others were receiving above when attempting to 
+  open the file and not save it to disk first.  I experienced this only in 
+  Internet Explorer.  The resolution for me was unchecking the "do not save 
+  encrypted pages to disk" setting under security settings in Internet Explorer.
+
+  "The file could not be found.
+
+  Try one or more of the following:
+
+  * Check the spelling of the name of the document.
+
+  * Try a different file name.
+
+  (C:\...\test[1].doc)"
+  # fiscan said on 25 September, 2009 02:55 PM 
+  Seems to be working quite well for me. Thanks.
+
+  For the mime types, I'm going to store those in a mimetypes configuration 
+  section instead.
+  # Сварга said on 30 September, 2009 09:31 AM 
+  Good getmimetype() function : 
+  www.koders.com/.../fid1919C20DFBF345C3CD4DC5FCDFE550B4406B9A61.aspx 
+  # c#beginner said on 02 November, 2009 04:10 AM 
+  Huge thanks man, really you like solved a huge chunk of my problem,  that blog 
+  straight to favorites, peace.
+  # Mikener said on 04 November, 2009 08:38 AM 
+  Does anyone have an ideas on how to solve the problems I posted on 19 March, 
+  2009?  I am  stumped.
+
+  Thanks
+  # Jonathan Jones said on 12 November, 2009 01:16 PM 
+  This code was awesome.  Exactly what i needed.  Thank you so much. 
+  # Spyware Removal Tips said on 18 November, 2009 09:10 AM 
+  Just  wanted to say thank you! for all the great info found on your blog, even 
+  helped me with my work recently :) keep it up!
+  # sangeeta said on 18 November, 2009 10:16 PM 
+  Hi,
+
+    Will you please tell me how to convert an aspx page into a ppt. i.e , If I 
+  click a button in an aspx page,  I want that particular page to open in a ppt.
+
+  TIA.
+  # NIkeeta said on 20 November, 2009 01:35 PM 
+  hi all.. its gr8 article, but still i have problem.. the problem is , when 
+  diolog comes with open, save and cancel button,
+
+  then user(visitors of the site) has clicked, then which button and accordingly 
+  which action has occured how do we know programatically ?
+  # alex said on 25 November, 2009 10:17 AM 
+  this code saved my ass, thanx buddy
+  # cmmaung said on 30 March, 2010 05:48 AM 
+  Hi,
+
+  I got an error, how can i solve?
+
+  --
+
+  Webpage error details
+
+  User Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; 
+  .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; CMDTDF; 
+  InfoPath.2; OfficeLiveConnector.1.3; OfficeLivePatch.0.0)
+
+  Timestamp: Tue, 30 Mar 2010 09:28:55 UTC
+
+  Message: Sys.WebForms.PageRequestManagerParserErrorException: The message 
+  received from the server could not be parsed. Common causes for this error are 
+  when the response is modified by calls to Response.Write(), response filters, 
+  HttpModules, or server trace is enabled.
+
+  Details: Error parsing near '￿ࡱ￿'.
+
+  Line: 976
+
+  Char: 13
+
+  Code: 0
+
+  URI: 146.51.221.245/.../ScriptResource.axd
+
+  --
+
+  thanks... pls reply
+  # cmmaung said on 30 March, 2010 05:49 AM 
+  Hi, I got an error... message is like this
+
+  Webpage error details
+
+  User Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; 
+  .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; CMDTDF; 
+  InfoPath.2; OfficeLiveConnector.1.3; OfficeLivePatch.0.0)
+
+  Timestamp: Tue, 30 Mar 2010 09:28:55 UTC
+
+  Message: Sys.WebForms.PageRequestManagerParserErrorException: The message 
+  received from the server could not be parsed. Common causes for this error are 
+  when the response is modified by calls to Response.Write(), response filters, 
+  HttpModules, or server trace is enabled.
+
+  Details: Error parsing near '￿ࡱ￿'.
+
+  Line: 976
+
+  Char: 13
+
+  Code: 0
+
+  URI: 146.51.221.245/.../ScriptResource.axd
+
+  thanks for reply
+
+         
+
+
+
+
+
+
+
+
+ 
+This site
+  DotNetSlackers home
+
+ <!-- var browName = navigator.appName; var browDateTime = (new 
+Date()).getTime(); var browVersion = parseInt(navigator.appVersion); var 
+ua=navigator.userAgent.toLowerCase(); var adcode=''; if (browName=='Netscape'){ 
+if (browVersion>=5) { document.write('<ifr'+'ame 
+src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;Browser=NETSCAPE6&amp;SiteID=1&amp;X='m
++ browDateTime + '" width=120 height=80 Marginwidth=0 Marginheight=0 Hspace=0 
+Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); } else if 
+((browVersion>=4)&&(ua.indexOf("mac")==-1)) { document.write('<s'+'cript 
+src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;Browser=NETSCAPE4&amp;SiteID=1">');o
+document.write('</'+'scr'+'ipt>'); document.write(adcode); } else if 
+(browVersion>=3) { document.write('<a 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID='6
++ browDateTime + '&RandomNumber=' + browDateTime + '" target="_blank"><img 
+src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&PageID=' 
++ browDateTime + '&RandomNumber=' + browDateTime + '" width="120" height="80" 
+border="0" alt=""></a>'); } } else { document.write('<ifr'+'ame 
+src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;SiteID=1&amp;X='e
++ browDateTime + '" width=120 height=80 Marginwidth=0 Marginheight=0 Hspace=0 
+Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); } // -->  <a 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=79511"p
+target="_blank"> <img 
+src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&amp;PageID=79511"'
+width="120" height="80" border="0" alt=""></a>   
+
+
+Search
+ Go 
+
+
+
+This Blog
+  Home
+  Contact
+  About
+
+
+Navigation
+  Home
+  Blogs
+  Forums
+  Downloads
+
+
+Archives
+  November 2008 (2)
+  September 2008 (5)
+  August 2008 (2)
+  July 2008 (3)
+  May 2008 (1)
+  April 2008 (2)
+  March 2008 (2)
+  February 2008 (3)
+  January 2008 (6)
+  December 2007 (5)
+  November 2007 (10)
+  October 2007 (2)
+  September 2007 (2)
+  August 2007 (6)
+  July 2007 (5)
+  June 2007 (1)
+  May 2007 (4)
+  April 2007 (8)
+  March 2007 (8)
+  February 2007 (4)
+  January 2007 (3)
+  December 2006 (1)
+  November 2006 (1)
+
+
+Articles
+  Creating a Menu Using XSLT, XML, and JavaScript
+  Create a Resizable Div Layer
+  Rich Text Editor- Part I
+  Rich Text Editor - Part II
+  Uploading Multiple Files At Once
+  Transform XML into HTML Using XSLT
+  Validate XSL Against XML
+  Building a Custom Confirmation Dialog Box
+  Upload Multiple Files in ASP.NET
+  The Template Pattern
+  Extending Datalist Control's Functionality
+
+
+
+Syndication
+  RSS
+  Atom
+  Comments RSS
+ 
+Sponsors
+
+
+  MaximumASP
+
+   <!-- var browName = navigator.appName; var SiteID = 1; var ZoneID = 15; var 
+  browDateTime = (new Date()).getTime(); if (browName=='Netscape') {
+   document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" 
+  src="http://ads.dotnetslackers.com/a.aspx?ZoneID=' + ZoneID + 
+  '&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=87761&amp;SiteID='r
+  + SiteID + '&amp;Random=' + browDateTime + '">'); 
+  document.write('</'+'scr'+'ipt>'); } if (browName!='Netscape') {
+   document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" 
+  src="http://ads.dotnetslackers.com/a.aspx?ZoneID=' + ZoneID + 
+  '&amp;Task=Get&amp;IFR=False&amp;PageID=87761&amp;SiteID=' + SiteID + 
+  '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>'); } // 
+  -->  <a 
+  href="http://ads.dotnetslackers.com/a.aspx?ZoneID=15&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=87761"l
+  target="_blank"> <img 
+  src="http://ads.dotnetslackers.com/a.aspx?ZoneID=15&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&amp;PageID=87761"S
+  width="125" height="125" border="0" alt=""></a>   
+
+
+ 
+ 
+
+Privacy Policy | Link to us
+ All material is copyrighted by its respective authors. Site design and layout 
+is copyrighted by DotNetSlackers.
+©Copyright 2005-2015 DotNetSlackers.com
+Advertising Software by Ban Man Pro 
+ // <![CDATA[
+ Telligent_Modal.Configure('/Community/utility/loading.htm',['Modal'],['ModalTitle'],['ModalClose'],['ModalContent'],['ModalFooter'],['ModalResize'],['ModalMask'],100);
+ // ]]>  // <![CDATA[ var ctl00_Main_ctl06=new 
+PostRating('ctl00_Main_ctl06','ctl00_Main_ctl06','ctl00_Main_ctl06_Value', 5, 
+'/Community/Themes/default/images/common/', false, 
+'CommonRateControl','CommonRateControlActive','CommonRateControlReadOnly',['Terrible','Poor','Fair','Average','Good','Excellent'],true,true);
+ // ]]>  //<![CDATA[ WebForm_InitCallback();//]]>  // <![CDATA[ var 
+ctl00_Main_ctl06_ajax={"SaveRating":function(rating,successFunction,failureFunction){WebForm_DoCallback('ctl00$Main$ctl06',rating,successFunction,rating,failureFunction,false)}};i
+// ]]>  <!-- function 
+KeyDownHandlerctl00_SideBar_ctl00_ctl00_SearchButton(event) { if (event.keyCode 
+== 13) { event.returnValue = false; event.cancel = true; 
+__doPostBack('ctl00$SideBar$ctl00$ctl00$SearchButton','') return false; } }
+ //-->  
+ var dc_AdLinkColor = '#0000c8'; var dc_PublisherID = 20992 ; var 
+dc_isBoldActive= 'no';     

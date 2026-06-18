@@ -1,0 +1,1836 @@
+﻿ WebClient Class (System.Net)                          try { /**/ (window.MTPS 
+|| (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { "image": 
+"https://i-msdn.sec.s-msft.com", "js": "https://i2-msdn.sec.s-msft.com", "css": 
+"https://i-msdn.sec.s-msft.com", "xap": "https://msdn.microsoft.com" }); /**/ } 
+finally { MTPS._injectNextScript_0 && MTPS._injectNextScript_0(); }try { // var 
+literalNormalizedUrl = '/en-us/library/tt0f69eh(l=en-us,v=vs.110).aspx'; var 
+wt_nvr_ru = 'WT_NVR_RU'; var wt_fpcdom = '.microsoft.com'; var wt_domlist = 
+'msdn.microsoft.com'; var wt_pathlist = ''; var wt_paramlist = 
+'DCSext.mtps_devcenter'; var wt_siteid = 'MSDN'; var gDomain = 
+'m.webtrends.com'; var gDcsId = 'dcsmgru7m99k7mqmgrhudo0k8_8c6m'; var gFpc = 
+'WT_FPC'; if (document.cookie.indexOf(gFpc + "=") == -1) { var wtidJs = 
+document.createElement("script"); wtidJs.src = "//" + gDomain + "/" + gDcsId + 
+"/wtid.js"; document.getElementsByTagName("head")[0].appendChild(wtidJs); } var 
+detectedLocale = 'en-us'; var wtsp = 'msdnlib_dotnet'; var gTrackEvents = '0';
+ /**/ } finally { MTPS._injectNextScript_2 && MTPS._injectNextScript_2(); }try {
+ // window.appInsightsId = '60854590-027a-4ae4-98be-2741a40f355f'; // } finally 
+{ MTPS._injectNextScript_3 && MTPS._injectNextScript_3(); }try { MTPS = 
+window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; 
+MTPS.LocalizedStrings.ExpandButtonTooltip = 'Expand'; 
+MTPS.LocalizedStrings.CollapseButtonTooltip = 'Collapse'; 
+MTPS.LocalizedStrings.EnhancedExpandTooltip = 'Click to expand. Double-click to 
+expand all.'; MTPS.LocalizedStrings.EnhancedCollapseTooltip = 'Click to 
+collapse. Double-click to collapse all.'; 
+MTPS.LocalizedStrings.ExpandAllButtonTooltip = 'Expand All'; 
+MTPS.LocalizedStrings.CollapseAllButtonTooltip = 'Collapse All'; } finally { 
+MTPS._injectNextScript_6 && MTPS._injectNextScript_6(); }try {
+ $(document).ready(function() { try { var token = $("#globalRequestVerification 
+input[name='__RequestVerificationToken']").clone(); 
+$("#siteFeedbackForm").append(token); } catch(err) { } }); } finally { 
+MTPS._injectNextScript_8 && MTPS._injectNextScript_8(); } 
+  
+
+  
+
+
+
+
+
+ 
+ Developer Network Developer Network Developer 
+
+ 
+ 
+
+
+
+
+
+MSDN subscriptions 
+
+Get tools 
+
+
+
+  http://www.facebook.com/microsoftdeveloper 
+  https://twitter.com/msdev 
+  http://plus.google.com/111221966647232053570/ 
+
+
+Sign in
+
+
+
+
+ 
+ 
+
+
+
+
+  
+
+
+ 
+
+
+
+
+
+  Technologies
+
+    Cloud
+
+
+    App Development
+
+
+    Web
+
+
+    Data
+
+
+    Gaming
+
+
+
+  Downloads
+
+    Visual Studio
+
+
+    MSDN subscription access
+
+
+    SDKs
+
+
+    Trial software
+
+      Free downloads
+
+
+      Office resources
+
+
+      SharePoint Server 2013 resources
+
+
+      SQL Server 2014 Express resources
+
+
+      Windows Server 2012 resources
+
+
+
+
+  Programs
+
+    Rewards
+
+
+    Startups
+
+
+    Students
+
+      Microsoft Imagine
+
+
+      Microsoft Student Partners
+
+
+
+    Architects
+
+      Overview
+
+
+      Case studies
+
+
+      Blueprints
+
+
+      Blog
+
+
+      Forums
+
+
+
+    Events
+
+
+    MSDN Subscriptions
+
+      Overview
+
+
+      Benefits
+
+
+      Administrators
+
+
+
+
+  Community
+
+    Magazine
+
+
+    Forums
+
+
+    Blogs
+
+
+    Tech Advisors
+
+
+    Channel 9
+
+
+
+  Documentation
+
+    APIs and reference
+
+
+    Dev centers
+
+
+
+  Samples
+
+
+  
+
+ .NET Framework Class Library System.Net Namespaces System.Net  
+
+
+
+
+
+  
+
+
+
+AuthenticationManager Class
+
+
+AuthenticationSchemes Enumeration
+
+
+AuthenticationSchemeSelector Delegate
+
+
+Authorization Class
+
+
+BindIPEndPoint Delegate
+
+
+Cookie Class
+
+
+CookieCollection Class
+
+
+CookieContainer Class
+
+
+CookieException Class
+
+
+CredentialCache Class
+
+
+DecompressionMethods Enumeration
+
+
+Dns Class
+
+
+DnsEndPoint Class
+
+
+DnsPermission Class
+
+
+DnsPermissionAttribute Class
+
+
+DownloadDataCompletedEventArgs Class
+
+
+DownloadDataCompletedEventHandler Delegate
+
+
+DownloadProgressChangedEventArgs Class
+
+
+DownloadProgressChangedEventHandler Delegate
+
+
+DownloadStringCompletedEventArgs Class
+
+
+DownloadStringCompletedEventHandler Delegate
+
+
+EndPoint Class
+
+
+EndpointPermission Class
+
+
+FileWebRequest Class
+
+
+FileWebResponse Class
+
+
+FtpStatusCode Enumeration
+
+
+FtpWebRequest Class
+
+
+FtpWebResponse Class
+
+
+GlobalProxySelection Class
+
+
+HttpContinueDelegate Delegate
+
+
+HttpListener Class
+
+
+HttpListener.ExtendedProtectionSelector Delegate
+
+
+HttpListenerBasicIdentity Class
+
+
+HttpListenerContext Class
+
+
+HttpListenerException Class
+
+
+HttpListenerPrefixCollection Class
+
+
+HttpListenerRequest Class
+
+
+HttpListenerResponse Class
+
+
+HttpListenerTimeoutManager Class
+
+
+HttpRequestHeader Enumeration
+
+
+HttpResponseHeader Enumeration
+
+
+HttpStatusCode Enumeration
+
+
+HttpVersion Class
+
+
+HttpWebRequest Class
+
+
+HttpWebResponse Class
+
+
+IAuthenticationModule Interface
+
+
+ICertificatePolicy Interface
+
+
+ICredentialPolicy Interface
+
+
+ICredentials Interface
+
+
+ICredentialsByHost Interface
+
+
+INetworkProgress Interface
+
+
+IPAddress Class
+
+
+IPEndPoint Class
+
+
+IPEndPointCollection Class
+
+
+IPHostEntry Class
+
+
+IUnsafeWebRequestCreate Interface
+
+
+IWebProxy Interface
+
+
+IWebProxyScript Interface
+
+
+IWebRequestCreate Interface
+
+
+NetworkAccess Enumeration
+
+
+NetworkCredential Class
+
+
+NetworkProgressChangedEventArgs Class
+
+
+OpenReadCompletedEventArgs Class
+
+
+OpenReadCompletedEventHandler Delegate
+
+
+OpenWriteCompletedEventArgs Class
+
+
+OpenWriteCompletedEventHandler Delegate
+
+
+ProtocolViolationException Class
+
+
+SecurityProtocolType Enumeration
+
+
+ServicePoint Class
+
+
+ServicePointManager Class
+
+
+SocketAddress Class
+
+
+SocketPermission Class
+
+
+SocketPermissionAttribute Class
+
+
+TransportContext Class
+
+
+TransportType Enumeration
+
+
+UiSynchronizationContext Class
+
+
+UploadDataCompletedEventArgs Class
+
+
+UploadDataCompletedEventHandler Delegate
+
+
+UploadFileCompletedEventArgs Class
+
+
+UploadFileCompletedEventHandler Delegate
+
+
+UploadProgressChangedEventArgs Class
+
+
+UploadProgressChangedEventHandler Delegate
+
+
+UploadStringCompletedEventArgs Class
+
+
+UploadStringCompletedEventHandler Delegate
+
+
+UploadValuesCompletedEventArgs Class
+
+
+UploadValuesCompletedEventHandler Delegate
+
+
+
+WebClient Class
+
+
+
+WebClient Methods
+
+
+WebClient Properties
+
+
+WebClient Events
+
+
+WebClient Constructor
+
+
+
+WebException Class
+
+
+WebExceptionStatus Enumeration
+
+
+WebHeaderCollection Class
+
+
+WebPermission Class
+
+
+WebPermissionAttribute Class
+
+
+WebProxy Class
+
+
+WebRequest Class
+
+
+WebRequestMethods Class
+
+
+WebRequestMethods.File Class
+
+
+WebRequestMethods.Ftp Class
+
+
+WebRequestMethods.Http Class
+
+
+WebResponse Class
+
+
+WebUtility Class
+
+
+WriteStreamClosedEventArgs Class
+
+
+WriteStreamClosedEventHandler Delegate
+
+ System.Net WebClient Class 
+Any Suggestions? Print  Export (0)  
+
+ WebClient Class 
+
+
+
+WebClient Class
+
+   
+
+
+Collapse the table of content
+
+Expand the table of content
+
+ 
+
+
+
+
+WebClient Class
+
+
+ .NET Framework 4.6 and 4.5  
+
+
+
+
+ Other Versions  
+
+ 
+  .NET Framework 4 
+  Silverlight  
+  .NET Framework 3.5 
+  .NET Framework 3.0 
+  .NET Framework 2.0 
+  .NET Framework 1.1 
+
+
+
+ 
+
+
+Provides common methods for sending data to and receiving data from a resource 
+identified by a URI.
+Namespace:    System.Net
+Assembly:  System (in System.dll)
+
+
+
+
+
+Inheritance Hierarchy
+
+
+
+
+
+System.Object
+  System.MarshalByRefObject
+    System.ComponentModel.Component
+      System.Net.WebClient
+
+
+
+
+
+
+Syntax
+
+
+
+
+
+
+
+
+C#
+
+C++
+
+F#
+
+VB
+
+
+
+
+Copy
+
+
+[ComVisibleAttribute(true)]
+public class WebClient : Component
+
+
+
+
+Constructors
+
+
+
+
+
+
+
+
+
+    Name
+
+    Description
+
+      WebClient()
+
+      Initializes a new instance of the WebClient class.
+
+
+
+
+
+Properties
+
+
+
+
+
+
+
+
+
+    Name
+
+    Description
+
+      AllowReadStreamBuffering
+
+      Obsolete.Gets or sets a value that indicates whether to buffer the data 
+      read from the Internet resource for a WebClient instance.
+
+      AllowWriteStreamBuffering
+
+      Obsolete.Gets or sets a value that indicates whether to buffer the data 
+      written to the Internet resource for a WebClient instance.
+
+      BaseAddress
+
+      Gets or sets the base URI for requests made by a WebClient.
+
+      CachePolicy
+
+      Gets or sets the application's cache policy for any resources obtained by 
+      this WebClient instance using WebRequest objects.
+
+      CanRaiseEvents
+
+      Gets a value indicating whether the component can raise an 
+      event.(Inherited from Component.)
+
+      Container
+
+      Gets the IContainer that contains the Component.(Inherited from 
+Component.)
+
+      Credentials
+
+      Gets or sets the network credentials that are sent to the host and used to 
+      authenticate the request.
+
+      DesignMode
+
+      Gets a value that indicates whether the Component is currently in design 
+      mode.(Inherited from Component.)
+
+      Encoding
+
+      Gets and sets the Encoding used to upload and download strings.
+
+      Events
+
+      Gets the list of event handlers that are attached to this 
+      Component.(Inherited from Component.)
+
+      Headers
+
+      Gets or sets a collection of header name/value pairs associated with the 
+      request.
+
+      IsBusy
+
+      Gets whether a Web request is in progress.
+
+      Proxy
+
+      Gets or sets the proxy used by this WebClient object.
+
+      QueryString
+
+      Gets or sets a collection of query name/value pairs associated with the 
+      request.
+
+      ResponseHeaders
+
+      Gets a collection of header name/value pairs associated with the response.
+
+      Site
+
+      Gets or sets the ISite of the Component.(Inherited from Component.)
+
+      UseDefaultCredentials
+
+      Gets or sets a Boolean value that controls whether the DefaultCredentials 
+      are sent with requests.
+
+
+
+
+
+Methods
+
+
+
+
+
+
+
+
+
+    Name
+
+    Description
+
+      CancelAsync()
+
+      Cancels a pending asynchronous operation.
+
+      CreateObjRef(Type)
+
+      Creates an object that contains all the relevant information required to 
+      generate a proxy used to communicate with a remote object.(Inherited from 
+      MarshalByRefObject.)
+
+      Dispose()
+
+      Releases all resources used by the Component.(Inherited from Component.)
+
+      Dispose(Boolean)
+
+      Releases the unmanaged resources used by the Component and optionally 
+      releases the managed resources.(Inherited from Component.)
+
+      DownloadData(String)
+
+      Downloads the resource as a Byte array from the URI specified.
+
+      DownloadData(Uri)
+
+      Downloads the resource as a Byte array from the URI specified.
+
+      DownloadDataAsync(Uri)
+
+      Downloads the resource as a Byte array from the URI specified as an 
+      asynchronous operation. 
+
+      DownloadDataAsync(Uri, Object)
+
+      Downloads the resource as a Byte array from the URI specified as an 
+      asynchronous operation. 
+
+      DownloadDataTaskAsync(String)
+
+      Downloads the resource as a Byte array from the URI specified as an 
+      asynchronous operation using a task object.
+
+      DownloadDataTaskAsync(Uri)
+
+      Downloads the resource as a Byte array from the URI specified as an 
+      asynchronous operation using a task object.
+
+      DownloadFile(String, String)
+
+      Downloads the resource with the specified URI to a local file.
+
+      DownloadFile(Uri, String)
+
+      Downloads the resource with the specified URI to a local file.
+
+      DownloadFileAsync(Uri, String)
+
+      Downloads, to a local file, the resource with the specified URI. This 
+      method does not block the calling thread.
+
+      DownloadFileAsync(Uri, String, Object)
+
+      Downloads, to a local file, the resource with the specified URI. This 
+      method does not block the calling thread.
+
+      DownloadFileTaskAsync(String, String)
+
+      Downloads the specified resource to a local file as an asynchronous 
+      operation using a task object.
+
+      DownloadFileTaskAsync(Uri, String)
+
+      Downloads the specified resource to a local file as an asynchronous 
+      operation using a task object.
+
+      DownloadString(String)
+
+      Downloads the requested resource as a String. The resource to download is 
+      specified as a String containing the URI.
+
+      DownloadString(Uri)
+
+      Downloads the requested resource as a String. The resource to download is 
+      specified as a Uri.
+
+      DownloadStringAsync(Uri)
+
+      Downloads the resource specified as a Uri. This method does not block the 
+      calling thread.
+
+      DownloadStringAsync(Uri, Object)
+
+      Downloads the specified string to the specified resource. This method does 
+      not block the calling thread.
+
+      DownloadStringTaskAsync(String)
+
+      Downloads the resource as a String from the URI specified as an 
+      asynchronous operation using a task object.
+
+      DownloadStringTaskAsync(Uri)
+
+      Downloads the resource as a String from the URI specified as an 
+      asynchronous operation using a task object.
+
+      Equals(Object)
+
+      Determines whether the specified object is equal to the current 
+      object.(Inherited from Object.)
+
+      Finalize()
+
+      Releases unmanaged resources and performs other cleanup operations before 
+      the Component is reclaimed by garbage collection.(Inherited from 
+      Component.)
+
+      GetHashCode()
+
+      Serves as the default hash function. (Inherited from Object.)
+
+      GetLifetimeService()
+
+      Retrieves the current lifetime service object that controls the lifetime 
+      policy for this instance.(Inherited from MarshalByRefObject.)
+
+      GetService(Type)
+
+      Returns an object that represents a service provided by the Component or 
+      by its Container.(Inherited from Component.)
+
+      GetType()
+
+      Gets the Type of the current instance.(Inherited from Object.)
+
+      GetWebRequest(Uri)
+
+      Returns a WebRequest object for the specified resource.
+
+      GetWebResponse(WebRequest)
+
+      Returns the WebResponse for the specified WebRequest.
+
+      GetWebResponse(WebRequest, IAsyncResult)
+
+      Returns the WebResponse for the specified WebRequest using the specified 
+      IAsyncResult.
+
+      InitializeLifetimeService()
+
+      Obtains a lifetime service object to control the lifetime policy for this 
+      instance.(Inherited from MarshalByRefObject.)
+
+      MemberwiseClone()
+
+      Creates a shallow copy of the current Object.(Inherited from Object.)
+
+      MemberwiseClone(Boolean)
+
+      Creates a shallow copy of the current MarshalByRefObject object.(Inherited 
+      from MarshalByRefObject.)
+
+      OnDownloadDataCompleted(DownloadDataCompletedEventArgs)
+
+      Raises the DownloadDataCompleted event.
+
+      OnDownloadFileCompleted(AsyncCompletedEventArgs)
+
+      Raises the DownloadFileCompleted event.
+
+      OnDownloadProgressChanged(DownloadProgressChangedEventArgs)
+
+      Raises the DownloadProgressChanged event.
+
+      OnDownloadStringCompleted(DownloadStringCompletedEventArgs)
+
+      Raises the DownloadStringCompleted event.
+
+      OnOpenReadCompleted(OpenReadCompletedEventArgs)
+
+      Raises the OpenReadCompleted event.
+
+      OnOpenWriteCompleted(OpenWriteCompletedEventArgs)
+
+      Raises the OpenWriteCompleted event.
+
+      OnUploadDataCompleted(UploadDataCompletedEventArgs)
+
+      Raises the UploadDataCompleted event.
+
+      OnUploadFileCompleted(UploadFileCompletedEventArgs)
+
+      Raises the UploadFileCompleted event.
+
+      OnUploadProgressChanged(UploadProgressChangedEventArgs)
+
+      Raises the UploadProgressChanged event.
+
+      OnUploadStringCompleted(UploadStringCompletedEventArgs)
+
+      Raises the UploadStringCompleted event.
+
+      OnUploadValuesCompleted(UploadValuesCompletedEventArgs)
+
+      Raises the UploadValuesCompleted event.
+
+      OnWriteStreamClosed(WriteStreamClosedEventArgs)
+
+      Obsolete.Raises the WriteStreamClosed event.
+
+      OpenRead(String)
+
+      Opens a readable stream for the data downloaded from a resource with the 
+      URI specified as a String.
+
+      OpenRead(Uri)
+
+      Opens a readable stream for the data downloaded from a resource with the 
+      URI specified as a Uri
+
+      OpenReadAsync(Uri)
+
+      Opens a readable stream containing the specified resource. This method 
+      does not block the calling thread.
+
+      OpenReadAsync(Uri, Object)
+
+      Opens a readable stream containing the specified resource. This method 
+      does not block the calling thread.
+
+      OpenReadTaskAsync(String)
+
+      Opens a readable stream containing the specified resource as an 
+      asynchronous operation using a task object.
+
+      OpenReadTaskAsync(Uri)
+
+      Opens a readable stream containing the specified resource as an 
+      asynchronous operation using a task object.
+
+      OpenWrite(String)
+
+      Opens a stream for writing data to the specified resource.
+
+      OpenWrite(String, String)
+
+      Opens a stream for writing data to the specified resource, using the 
+      specified method.
+
+      OpenWrite(Uri)
+
+      Opens a stream for writing data to the specified resource.
+
+      OpenWrite(Uri, String)
+
+      Opens a stream for writing data to the specified resource, by using the 
+      specified method.
+
+      OpenWriteAsync(Uri)
+
+      Opens a stream for writing data to the specified resource. This method 
+      does not block the calling thread.
+
+      OpenWriteAsync(Uri, String)
+
+      Opens a stream for writing data to the specified resource. This method 
+      does not block the calling thread.
+
+      OpenWriteAsync(Uri, String, Object)
+
+      Opens a stream for writing data to the specified resource, using the 
+      specified method. This method does not block the calling thread.
+
+      OpenWriteTaskAsync(String)
+
+      Opens a stream for writing data to the specified resource as an 
+      asynchronous operation using a task object.
+
+      OpenWriteTaskAsync(String, String)
+
+      Opens a stream for writing data to the specified resource as an 
+      asynchronous operation using a task object.
+
+      OpenWriteTaskAsync(Uri)
+
+      Opens a stream for writing data to the specified resource as an 
+      asynchronous operation using a task object.
+
+      OpenWriteTaskAsync(Uri, String)
+
+      Opens a stream for writing data to the specified resource as an 
+      asynchronous operation using a task object.
+
+      ToString()
+
+      Returns a String containing the name of the Component, if any. This method 
+      should not be overridden.(Inherited from Component.)
+
+      UploadData(String, Byte[])
+
+      Uploads a data buffer to a resource identified by a URI.
+
+      UploadData(String, String, Byte[])
+
+      Uploads a data buffer to the specified resource, using the specified 
+      method.
+
+      UploadData(Uri, Byte[])
+
+      Uploads a data buffer to a resource identified by a URI.
+
+      UploadData(Uri, String, Byte[])
+
+      Uploads a data buffer to the specified resource, using the specified 
+      method.
+
+      UploadDataAsync(Uri, Byte[])
+
+      Uploads a data buffer to a resource identified by a URI, using the POST 
+      method. This method does not block the calling thread.
+
+      UploadDataAsync(Uri, String, Byte[])
+
+      Uploads a data buffer to a resource identified by a URI, using the 
+      specified method. This method does not block the calling thread.
+
+      UploadDataAsync(Uri, String, Byte[], Object)
+
+      Uploads a data buffer to a resource identified by a URI, using the 
+      specified method and identifying token.
+
+      UploadDataTaskAsync(String, Byte[])
+
+      Uploads a data buffer that contains a Byte array to the URI specified as 
+      an asynchronous operation using a task object.
+
+      UploadDataTaskAsync(String, String, Byte[])
+
+      Uploads a data buffer that contains a Byte array to the URI specified as 
+      an asynchronous operation using a task object. 
+
+      UploadDataTaskAsync(Uri, Byte[])
+
+      Uploads a data buffer that contains a Byte array to the URI specified as 
+      an asynchronous operation using a task object. 
+
+      UploadDataTaskAsync(Uri, String, Byte[])
+
+      Uploads a data buffer that contains a Byte array to the URI specified as 
+      an asynchronous operation using a task object. 
+
+      UploadFile(String, String)
+
+      Uploads the specified local file to a resource with the specified URI.
+
+      UploadFile(String, String, String)
+
+      Uploads the specified local file to the specified resource, using the 
+      specified method.
+
+      UploadFile(Uri, String)
+
+      Uploads the specified local file to a resource with the specified URI.
+
+      UploadFile(Uri, String, String)
+
+      Uploads the specified local file to the specified resource, using the 
+      specified method.
+
+      UploadFileAsync(Uri, String)
+
+      Uploads the specified local file to the specified resource, using the POST 
+      method. This method does not block the calling thread.
+
+      UploadFileAsync(Uri, String, String)
+
+      Uploads the specified local file to the specified resource, using the POST 
+      method. This method does not block the calling thread.
+
+      UploadFileAsync(Uri, String, String, Object)
+
+      Uploads the specified local file to the specified resource, using the POST 
+      method. This method does not block the calling thread.
+
+      UploadFileTaskAsync(String, String)
+
+      Uploads the specified local file to a resource as an asynchronous 
+      operation using a task object. 
+
+      UploadFileTaskAsync(String, String, String)
+
+      Uploads the specified local file to a resource as an asynchronous 
+      operation using a task object.
+
+      UploadFileTaskAsync(Uri, String)
+
+      Uploads the specified local file to a resource as an asynchronous 
+      operation using a task object. 
+
+      UploadFileTaskAsync(Uri, String, String)
+
+      Uploads the specified local file to a resource as an asynchronous 
+      operation using a task object.
+
+      UploadString(String, String)
+
+      Uploads the specified string to the specified resource, using the POST 
+      method.
+
+      UploadString(String, String, String)
+
+      Uploads the specified string to the specified resource, using the 
+      specified method.
+
+      UploadString(Uri, String)
+
+      Uploads the specified string to the specified resource, using the POST 
+      method.
+
+      UploadString(Uri, String, String)
+
+      Uploads the specified string to the specified resource, using the 
+      specified method.
+
+      UploadStringAsync(Uri, String)
+
+      Uploads the specified string to the specified resource. This method does 
+      not block the calling thread.
+
+      UploadStringAsync(Uri, String, String)
+
+      Uploads the specified string to the specified resource. This method does 
+      not block the calling thread.
+
+      UploadStringAsync(Uri, String, String, Object)
+
+      Uploads the specified string to the specified resource. This method does 
+      not block the calling thread.
+
+      UploadStringTaskAsync(String, String)
+
+      Uploads the specified string to the specified resource as an asynchronous 
+      operation using a task object.
+
+      UploadStringTaskAsync(String, String, String)
+
+      Uploads the specified string to the specified resource as an asynchronous 
+      operation using a task object.
+
+      UploadStringTaskAsync(Uri, String)
+
+      Uploads the specified string to the specified resource as an asynchronous 
+      operation using a task object.
+
+      UploadStringTaskAsync(Uri, String, String)
+
+      Uploads the specified string to the specified resource as an asynchronous 
+      operation using a task object.
+
+      UploadValues(String, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI.
+
+      UploadValues(String, String, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI, using the specified method.
+
+      UploadValues(Uri, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI.
+
+      UploadValues(Uri, String, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI, using the specified method.
+
+      UploadValuesAsync(Uri, NameValueCollection)
+
+      Uploads the data in the specified name/value collection to the resource 
+      identified by the specified URI. This method does not block the calling 
+      thread.
+
+      UploadValuesAsync(Uri, String, NameValueCollection)
+
+      Uploads the data in the specified name/value collection to the resource 
+      identified by the specified URI, using the specified method. This method 
+      does not block the calling thread.
+
+      UploadValuesAsync(Uri, String, NameValueCollection, Object)
+
+      Uploads the data in the specified name/value collection to the resource 
+      identified by the specified URI, using the specified method. This method 
+      does not block the calling thread, and allows the caller to pass an object 
+      to the method that is invoked when the operation completes.
+
+      UploadValuesTaskAsync(String, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI as an asynchronous operation using a task object.
+
+      UploadValuesTaskAsync(String, String, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI as an asynchronous operation using a task object.
+
+      UploadValuesTaskAsync(Uri, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI as an asynchronous operation using a task object.
+
+      UploadValuesTaskAsync(Uri, String, NameValueCollection)
+
+      Uploads the specified name/value collection to the resource identified by 
+      the specified URI as an asynchronous operation using a task object.
+
+
+
+
+
+Events
+
+
+
+
+
+
+
+
+
+    Name
+
+    Description
+
+      Disposed
+
+      Occurs when the component is disposed by a call to the Dispose method. 
+      (Inherited from Component.)
+
+      DownloadDataCompleted
+
+      Occurs when an asynchronous data download operation completes.
+
+      DownloadFileCompleted
+
+      Occurs when an asynchronous file download operation completes.
+
+      DownloadProgressChanged
+
+      Occurs when an asynchronous download operation successfully transfers some 
+      or all of the data.
+
+      DownloadStringCompleted
+
+      Occurs when an asynchronous resource-download operation completes.
+
+      OpenReadCompleted
+
+      Occurs when an asynchronous operation to open a stream containing a 
+      resource completes.
+
+      OpenWriteCompleted
+
+      Occurs when an asynchronous operation to open a stream to write data to a 
+      resource completes.
+
+      UploadDataCompleted
+
+      Occurs when an asynchronous data-upload operation completes.
+
+      UploadFileCompleted
+
+      Occurs when an asynchronous file-upload operation completes.
+
+      UploadProgressChanged
+
+      Occurs when an asynchronous upload operation successfully transfers some 
+      or all of the data.
+
+      UploadStringCompleted
+
+      Occurs when an asynchronous string-upload operation completes.
+
+      UploadValuesCompleted
+
+      Occurs when an asynchronous upload of a name/value collection completes.
+
+      WriteStreamClosed
+
+      Obsolete.Occurs when an asynchronous operation to write data to a resource 
+      using a write stream is closed.
+
+
+
+
+
+Remarks
+
+
+
+
+
+
+
+The WebClient class provides common methods for sending data to or receiving 
+data from any local, intranet, or Internet resource identified by a URI.
+
+The WebClient class uses the WebRequest class to provide access to resources. 
+WebClient instances can access data with any WebRequest descendant registered 
+with the WebRequest.RegisterPrefix method.
+
+
+
+
+    Note 
+
+
+      By default, the .NET Framework supports URIs that begin with http:, 
+      https:, ftp:, and file: scheme identifiers.
+
+
+The following table describes WebClient methods for uploading data to a 
+resource.
+
+
+
+
+    Method
+
+
+  Description
+
+
+    OpenWrite
+
+    Retrieves a Stream used to send data to the resource.
+
+
+    OpenWriteAsync
+
+    Retrieves a Stream used to send data to the resource, without blocking the 
+    calling thread.
+
+
+    UploadData
+
+    Sends a byte array to the resource and returns a Byte array containing any 
+    response.
+
+
+    UploadDataAsync
+
+    Sends a Byte array to the resource, without blocking the calling thread.
+
+
+    UploadFile
+
+    Sends a local file to the resource and returns a Byte array containing any 
+    response.
+
+
+    UploadFileAsync
+
+    Sends a local file to the resource, without blocking the calling thread.
+
+
+    UploadValues
+
+    Sends a NameValueCollection to the resource and returns a Byte array 
+    containing any response.
+
+
+    UploadValuesAsync
+
+    Sends a NameValueCollection to the resource and returns a Byte array 
+    containing any response, without blocking the calling thread.
+
+
+    UploadString
+
+    Sends a String to the resource, without blocking the calling thread.
+
+
+    UploadStringAsync
+
+    Sends a String to the resource, without blocking the calling thread.
+
+
+The following table describes WebClient methods for downloading data from a 
+resource. 
+
+
+
+
+    Method
+
+
+  Description
+
+
+    OpenRead
+
+    Returns the data from a resource as a Stream.
+
+
+    OpenReadAsync
+
+    Returns the data from a resource, without blocking the calling thread.
+
+
+    DownloadData
+
+    Downloads data from a resource and returns a Byte array.
+
+
+    DownloadDataAsync
+
+    Downloads data from a resource and returns a Byte array, without blocking 
+    the calling thread.
+
+
+    DownloadFile
+
+    Downloads data from a resource to a local file.
+
+
+    DownloadFileAsync
+
+    Downloads data from a resource to a local file, without blocking the calling 
+    thread.
+
+
+    DownloadString
+
+    Downloads a String from a resource and returns a String.
+
+
+    DownloadStringAsync
+
+    Downloads a String from a resource, without blocking the calling thread.
+
+
+You can use the CancelAsync method to cancel asynchronous operations that have 
+not completed.
+
+A WebClient instance does not send optional HTTP headers by default. If your 
+request requires an optional header, you must add the header to the Headers 
+collection. For example, to retain queries in the response, you must add a 
+user-agent header. Also, servers may return 500 (Internal Server Error) if the 
+user agent header is missing.
+
+AllowAutoRedirect is set to true in WebClient instances.
+
+
+Notes to Inheritors: 
+
+Derived classes should call the base class implementation of WebClient to ensure 
+the derived class works as expected.
+
+
+
+
+Examples
+
+
+
+
+
+
+
+
+Legacy Code Example
+
+
+The following code example takes the URI of a resource, retrieves it, and 
+displays the response.
+
+
+
+C#
+
+C++
+
+VB
+
+
+
+
+Copy
+
+
+using System;
+using System.Net;
+using System.IO;
+
+public class Test
+{
+    public static void Main (string[] args)
+    {
+        if (args == null || args.Length == 0)
+        {
+            throw new ApplicationException ("Specify the URI of the resource to retrieve.");
+        }
+        WebClient client = new WebClient ();
+
+        // Add a user agent header in case the 
+        // requested URI contains a query.
+
+        client.Headers.Add ("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+
+        Stream data = client.OpenRead (args[0]);
+        StreamReader reader = new StreamReader (data);
+        string s = reader.ReadToEnd ();
+        Console.WriteLine (s);
+        data.Close ();
+        reader.Close ();
+    }
+}
+WebPermission
+
+to access the requested URI or any URI that the request is redirected to. 
+Associated enumeration: Connect. 
+
+
+
+
+Version Information
+
+
+
+
+
+.NET Framework
+Available since 1.1
+Silverlight
+Available since 2.0
+Windows Phone Silverlight
+Available since 7.0
+
+
+
+
+
+Thread Safety
+
+
+
+
+
+
+Any public static (Shared in Visual Basic) members of this type are thread safe. 
+Any instance members are not guaranteed to be thread safe. 
+
+
+
+
+See Also
+
+
+
+
+
+
+WebRequest
+WebResponse
+HttpWebRequest
+HttpWebResponse
+System.Net Namespace
+
+Return to top
+
+
+Show: Inherited  Protected  
+  
+
+
+
+
+
+
+
+Any Suggestions?
+
+Print 
+
+Export (0) 
+
+
+IN THIS ARTICLE
+  Inheritance Hierarchy
+  Syntax
+  Constructors
+  Properties
+  Methods
+  Events
+  Remarks
+  Examples
+  Version Information
+  Thread Safety
+  See Also
+
+
+
+   
+
+
+
+
+
+ Was this page helpful?  
+Your feedback about this content is important. Let us know what you think. 
+Yes No   
+
+
+Additional feedback? 
+
+1500 characters remaining 
+
+Submit Skip this 
+
+Thank you!  
+We appreciate your feedback. 
+
+ 
+
+
+ 
+
+
+Was this page helpful? 
+
+Your feedback about this content is important.
+Let us know what you think. 
+
+Yes No 
+ 
+
+Additional feedback? 
+ 
+1500 characters remaining 
+
+Submit Skip this 
+
+
+Thank you! 
+
+We appreciate your feedback. 
+
+
+
+Have a suggestion to improve MSDN Library? 
+
+Visit our UserVoice Page to submit and vote on ideas! 
+
+Make a suggestion 
+
+
+
+
+
+Dev centers
+  Windows 
+  Office 
+  Visual Studio 
+  Microsoft Azure 
+  More... 
+
+
+
+
+Learning resources
+  Microsoft Virtual Academy 
+  Channel 9 
+  Interoperability Bridges 
+  MSDN Magazine 
+
+
+
+Community
+  Forums 
+  Blogs 
+  Codeplex 
+
+
+
+Support
+  Self support 
+
+
+
+Programs
+  BizSpark (for startups) 
+  DreamSpark 
+  Imagine Cup 
+
+
+
+ United States (English) 
+
+
+  Newsletter 
+  Privacy & cookies 
+  Terms of use 
+  Trademarks 
+
+
+© 2015 Microsoft 
+
+© 2015 Microsoft
+   <div><img alt="DCSIMG" id="Img1" width="1" height="1" 
+src="https://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;WT.js=No"t
+/></div> 
+ 
+/*<![CDATA[*/ (function(window,document){"use strict";function 
+preload(scripts){for(var 
+result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return1
+result}function inject(scripts,index){var 
+script,elem;if(index>=scripts.length){delete 
+mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;vari
+isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&deletet
+mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="tryn
+{\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && 
+MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var 
+mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+ MTPS.injectScripts([ { txt: "/**/\r\n(window.MTPS || (window.MTPS = 
+{})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": 
+\"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": 
+\"https://i2-msdn.sec.s-msft.com\", \r\n\t\"css\": 
+\"https://i-msdn.sec.s-msft.com\", \r\n\t\"xap\": 
+\"https://msdn.microsoft.com\"\r\n});\r\n/**/" }, { url: 
+"https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js" }, { txt: "//\n var 
+literalNormalizedUrl = 
+\u0027/en-us/library/tt0f69eh(l=en-us,v=vs.110).aspx\u0027;\n var wt_nvr_ru = 
+\u0027WT_NVR_RU\u0027;\n var wt_fpcdom = \u0027.microsoft.com\u0027;\n var 
+wt_domlist = \u0027msdn.microsoft.com\u0027;\n var wt_pathlist = \u0027\u0027;\n 
+var wt_paramlist = \u0027DCSext.mtps_devcenter\u0027;\n var wt_siteid = 
+\u0027MSDN\u0027;\n var gDomain = \u0027m.webtrends.com\u0027;\n var gDcsId = 
+\u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n var gFpc = 
+\u0027WT_FPC\u0027;\n\n\n\n if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n 
+var wtidJs = document.createElement(\"script\");\n wtidJs.src = \"//\" + gDomain 
++ \"/\" + gDcsId + \"/wtid.js\";\n 
+document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n }\n\n\n\n var 
+detectedLocale = \u0027en-us\u0027;\n var wtsp = \u0027msdnlib_dotnet\u0027;\n 
+var gTrackEvents = \u00270\u0027;\n/**/" }, { txt: "//\n\n window.appInsightsId 
+= \u002760854590-027a-4ae4-98be-2741a40f355f\u0027;\n //" }, { url: 
+"https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5\u0026amp;hashKey=0B41D28E6726B4E716D72FB5060856F6\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4"a
+}, { url: 
+"https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=Msdn\u0026loc=en-us\u0026focusOnInit=false\u0026emptyWatermark=true\u0026searchButtonTooltip=SearchS
+MSDN" }, { txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = 
+window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = 
+\u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = 
+\u0027Collapse\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027Click 
+to expand. Double-click to expand all.\u0027; 
+MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027Click to collapse. 
+Double-click to collapse all.\u0027; 
+MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027Expand All\u0027; 
+MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027Collapse All\u0027;" }, { 
+url: 
+"https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1\u0026amp;hashKey=16381DF0927C75E12C62EAD23C017874\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4"6
+}, { txt: "$(document).ready(function() {\n try {\n var token = 
+$(\"#globalRequestVerification 
+input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n 
+$(\"#siteFeedbackForm\").append(token);\n } catch(err) {\n \n }\n });" } ]);
+ /*]]>*/  

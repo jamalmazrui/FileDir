@@ -1,0 +1,253 @@
+_Document.SaveAs Method (Microsoft.Office.Interop.Word)Home Library Learn 
+      Downloads Support Community Sign in | United States - English |  |  
+       
+
+        
+ MSDN Library  Office Development  Microsoft Office 2003  Office 2003  Primary 
+Interop Assembly References  Microsoft Office Word Primary Interop Reference  
+Microsoft.Office.Interop.Word  _Document Interface  _Document Methods  
+AcceptAllRevisions Method  AcceptAllRevisionsShown Method  Activate Method  
+AddDocumentWorkspaceHeader Method  AddToFavorites Method  ApplyTheme Method  
+AutoFormat Method  AutoSummarize Method  CanCheckin Method  CheckConsistency 
+Method  CheckGrammar Method  CheckIn Method  CheckNewSmartTags Method  
+CheckSpelling Method  Close Method  ClosePrintPreview Method  Compare Method  
+Compare2000 Method  Compare2002 Method  ComputeStatistics Method  
+ConvertNumbersToText Method  ConvertVietDoc Method  CopyStylesFromTemplate 
+Method  CountNumberedItems Method  CreateLetterContent Method  DataForm Method  
+DeleteAllComments Method  DeleteAllCommentsShown Method  DeleteAllEditableRanges 
+Method  DeleteAllInkAnnotations Method  DetectLanguage Method  EditionOptions 
+Method  EndReview Method  FitToPages Method  FollowHyperlink Method  
+ForwardMailer Method  GetCrossReferenceItems Method  GetLetterContent Method  
+GoTo Method  MakeCompatibilityDefault Method  ManualHyphenation Method  Merge 
+Method  Merge2000 Method  Post Method  PresentIt Method  PrintOut Method  
+PrintOut2000 Method  PrintOutOld Method  PrintPreview Method  Protect Method  
+Protect2002 Method  Range Method  RecheckSmartTags Method  Redo Method  
+RejectAllRevisions Method  RejectAllRevisionsShown Method  Reload Method  
+ReloadAs Method  RemoveDocumentWorkspaceHeader Method  RemoveLockedStyles Method 
+ RemoveNumbers Method  RemoveSmartTags Method  RemoveTheme Method  Repaginate 
+Method  Reply Method  ReplyAll Method  ReplyWithChanges Method  ResetFormFields 
+Method  Route Method  RunAutoMacro Method  RunLetterWizard Method  Save Method  
+SaveAs Method  SaveAs2000 Method  sblt Method  Select Method  
+SelectAllEditableRanges Method  SelectNodes Method  SelectSingleNode Method  
+SendFax Method  SendFaxOverInternet Method  SendForReview Method  SendMail 
+Method  SendMailer Method  SetDefaultTableStyle Method  SetLetterContent Method  
+SetPasswordEncryptionOptions Method  ToggleFormsDesign Method  TransformDocument 
+Method  Undo Method  UndoClear Method  Unprotect Method  UpdateStyles Method  
+UpdateSummaryProperties Method  ViewCode Method  ViewPropertyBrowser Method  
+WebPagePreview Method  
+Community Content
+ Automated C# SaveAs code...
+  The code below is written in C# ...
+More...   
+ _Document.SaveAs Method  
+Office 2003 Other Versions  Office 2010 
+Saves the specified document with a new name or format. Some of the arguments 
+for this method correspond to the options in the Save Asdialog box (File menu). 
+Namespace: Microsoft.Office.Interop.Word
+Assembly: Microsoft.Office.Interop.Word (in 
+microsoft.office.interop.word.dll)Usage
+
+
+VBCopy
+ 'Usage
+Dim FileName As Object
+Dim FileFormat As Object
+Dim LockComments As Object
+Dim Password As Object
+Dim AddToRecentFiles As Object
+Dim WritePassword As Object
+Dim ReadOnlyRecommended As Object
+Dim EmbedTrueTypeFonts As Object
+Dim SaveNativePictureFormat As Object
+Dim SaveFormsData As Object
+Dim SaveAsAOCELetter As Object
+Dim Encoding As Object
+Dim InsertLineBreaks As Object
+Dim AllowSubstitutions As Object
+Dim LineEnding As Object
+Dim AddBiDiMarks As Object
+Dim _Document1 As _Document
+_Document1.SaveAs(FileName, FileFormat, LockComments, Password, AddToRecentFiles, WritePassword, ReadOnlyRecommended, EmbedTrueTypeFonts, SaveNativePictureFormat, SaveFormsData, SaveAsAOCELetter, Encoding, InsertLineBreaks, AllowSubstitutions, LineEnding, AddBiDiMarks)
+Syntax
+
+
+C#C++VBCopy
+ void SaveAs(
+	[In, Optional] ref object FileName, 
+	[In, Optional] ref object FileFormat, 
+	[In, Optional] ref object LockComments, 
+	[In, Optional] ref object Password, 
+	[In, Optional] ref object AddToRecentFiles, 
+	[In, Optional] ref object WritePassword, 
+	[In, Optional] ref object ReadOnlyRecommended, 
+	[In, Optional] ref object EmbedTrueTypeFonts, 
+	[In, Optional] ref object SaveNativePictureFormat, 
+	[In, Optional] ref object SaveFormsData, 
+	[In, Optional] ref object SaveAsAOCELetter, 
+	[In, Optional] ref object Encoding, 
+	[In, Optional] ref object InsertLineBreaks, 
+	[In, Optional] ref object AllowSubstitutions, 
+	[In, Optional] ref object LineEnding, 
+	[In, Optional] ref object AddBiDiMarks
+);
+J#Copy
+ public void SaveAs(
+	/*in*/System.Object FileName, 
+	/*in*/System.Object FileFormat, 
+	/*in*/System.Object LockComments, 
+	/*in*/System.Object Password, 
+	/*in*/System.Object AddToRecentFiles, 
+	/*in*/System.Object WritePassword, 
+	/*in*/System.Object ReadOnlyRecommended, 
+	/*in*/System.Object EmbedTrueTypeFonts, 
+	/*in*/System.Object SaveNativePictureFormat, 
+	/*in*/System.Object SaveFormsData, 
+	/*in*/System.Object SaveAsAOCELetter, 
+	/*in*/System.Object Encoding, 
+	/*in*/System.Object InsertLineBreaks, 
+	/*in*/System.Object AllowSubstitutions, 
+	/*in*/System.Object LineEnding, 
+	/*in*/System.Object AddBiDiMarks
+);
+JScriptCopy
+ function SaveAs(
+	 FileName : Object, 
+	 FileFormat : Object, 
+	 LockComments : Object, 
+	 Password : Object, 
+	 AddToRecentFiles : Object, 
+	 WritePassword : Object, 
+	 ReadOnlyRecommended : Object, 
+	 EmbedTrueTypeFonts : Object, 
+	 SaveNativePictureFormat : Object, 
+	 SaveFormsData : Object, 
+	 SaveAsAOCELetter : Object, 
+	 Encoding : Object, 
+	 InsertLineBreaks : Object, 
+	 AllowSubstitutions : Object, 
+	 LineEnding : Object, 
+	 AddBiDiMarks : Object
+);
+Parameters
+  FileName
+  Optional Object. The name for the document. The default is the current folder 
+  and file name. If the document has never been saved, the default name is used 
+  (for example, Doc1.doc). If a document with the specified file name already 
+  exists, the document is overwritten without the user being prompted first.
+  FileFormat
+  Optional Object. The format in which the document is saved. Can be any 
+  WdSaveFormat constant. To save a document in another format, specify the 
+  appropriate value for the SaveFormat property of the FileConverter object.
+  LockComments
+  Optional Object. True to lock the document for comments. The default is False.
+  Password
+  Optional Object. A password string for opening the document. (See Remarks 
+  below.)
+  AddToRecentFiles
+  Optional Object. True to add the document to the list of recently used files 
+  on the File menu. The default is True.
+  WritePassword
+  Optional Object. A password string for saving changes to the document. (See 
+  Remarks below.)
+  ReadOnlyRecommended
+  Optional Object. True to have Microsoft Word suggest read-only status whenever 
+  the document is opened. The default is False.
+  EmbedTrueTypeFonts
+  Optional Object. True to save TrueType fonts with the document. If omitted, 
+  the EmbedTrueTypeFonts argument assumes the value of the EmbedTrueTypeFonts 
+  property.
+  SaveNativePictureFormat
+  Optional Object. If graphics were imported from another platform (for example, 
+  Macintosh), True to save only the Windows version of the imported graphics.
+  SaveFormsData
+  Optional Object. True to save the data entered by a user in a form as a data 
+  record.
+  SaveAsAOCELetter
+  Optional Object. If the document has an attached mailer, True to save the 
+  document as an AOCE letter (the mailer is saved).
+  Encoding
+  Optional Microsoft.Office.Core.MsoEncoding. The code page, or character set, 
+  to use for documents saved as encoded text files. The default is the system 
+  code page.
+  InsertLineBreaks
+  Optional Object. If the document is saved as a text file, True to insert line 
+  breaks at the end of each line of text.
+  AllowSubstitutions
+  Optional Object. If the document is saved as a text file, True allows Word to 
+  replace some symbols with text that looks similar. For example, displaying the 
+  copyright symbol as (c). The default is False.
+  LineEnding
+  Optional Object. The way Word marks the line and paragraph breaks in documents 
+  saved as text files. Can be any WdLineEndingType constant.
+  AddBiDiMarks
+  Optional Object. True adds control characters to the output file to preserve 
+  bi-directional layout of the text in the original document.
+Remarks
+
+
+Avoid using hard-coded passwords in your applications. If a password is required 
+in a procedure, request the password from the user, store it in a variable, and 
+then use the variable in your code.
+
+
+Thread Safety
+
+
+Any public static (Shared in Visual Basic) members of this type are thread safe. 
+Any instance members are not guaranteed to be thread safe.
+Platforms
+
+
+Development Platforms
+Windows XP Home Edition, Windows XP Professional, Windows Server 2003, and 
+Windows 2000
+Target Platforms
+See Also
+
+
+Reference
+_Document Interface 
+Microsoft.Office.Interop.Word Namespace 
+
+Other Resources
+_Document Members 
+
+Community Content Add  FAQ Automated C# SaveAs code 
+The code below is written in C# and will create a new line at the end of a word 
+document.  In this example the only item in the document will be the line since 
+we start word and create a blank document.
+/* \endofdoc is a predefined bookmark for the end of the document in word */
+object oEndOfDoc = "\\endofdoc";
+Word._Document oDoc;Word._Application oWord = new Word.Application();
+oWord.Visible = false;
+/* DocumentName is the path to a document template that I was using in this 
+particular application generatinga word document from Sharepoint data */
+string DocumentName = 
+System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\templates" + 
+"DocumentName.doc";
+object fileName = DocumentName;
+object readOnly = false;
+object isVisible = true;
+object oMissing = System.Reflection.Missing.Value;
+oDoc = oWord.Documents(ref fileName, ref oMissing, ref readOnly, ref oMissing, 
+ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref 
+oMissing, ref oMissing, ref isVisible, ref oMissing, ref oMissing, ref oMissing, 
+ref oMissing);
+oDoc.Activate();
+Word.Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+/* this is the actual line that adds the Horizontal Line to the document */
+Word.InLineShape horizontalLine = 
+oDoc.InLineShapes.AddHorizontalLineStandard(ref oRng);
+oDoc.SaveAs(ref fileName, ref oMissing, ref oMissing, ref oMissing, ref 
+oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, 
+ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref 
+oMissing);
+History 
+ 
+ 
+  12/11/2006
+  Jason Fortner 
+© 2011 Microsoft. All rights reserved.Terms of Use | Trademarks | Privacy 
+Statement | Feedback Feedback  Feedbackx Tell us about your experience... Did 
+the page load quickly? Yes  No  Do you like the page design? Yes  No  How useful 
+is this topic?       Tell us more  Enter description here.           

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8" />
+<title>Format file sizes in KB, MB, GB, and so forth in C# - C# HelperC# Helper</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="http://csharphelper.com/blog/wp-content/themes/twentyten/style.css" />
+<link rel="pingback" href="http://csharphelper.com/blog/xmlrpc.php" />
+
+<!-- This site is optimized with the Yoast SEO plugin v2.3.5 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Use extension methods to format file sizes in KB, MB, GB, and so forth in C#."/>
+<link rel="canonical" href="http://csharphelper.com/blog/2014/07/format-file-sizes-in-kb-mb-gb-and-so-forth-in-c/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Format file sizes in KB, MB, GB, and so forth in C# - C# Helper" />
+<meta property="og:description" content="Use extension methods to format file sizes in KB, MB, GB, and so forth in C#." />
+<meta property="og:url" content="http://csharphelper.com/blog/2014/07/format-file-sizes-in-kb-mb-gb-and-so-forth-in-c/" />
+<meta property="og:site_name" content="C# Helper" />
+<meta property="article:tag" content="algorithms" />
+<meta property="article:tag" content="C#" />
+<meta property="article:tag" content="C# programming" />
+<meta property="article:tag" content="example" />
+<meta property="article:tag" content="example program" />
+<meta property="article:tag" content="file sizes" />
+<meta property="article:tag" content="files" />
+<meta property="article:tag" content="GB" />
+<meta property="article:tag" content="gigabytes" />
+<meta property="article:tag" content="KB" />
+<meta property="article:tag" content="kilobytes" />
+<meta property="article:tag" content="mathematics" />
+<meta property="article:tag" content="MB" />
+<meta property="article:tag" content="megabytes" />
+<meta property="article:tag" content="TB" />
+<meta property="article:tag" content="terabytes" />
+<meta property="article:tag" content="Windows Forms programming" />
+<meta property="article:section" content="algorithms" />
+<meta property="article:published_time" content="2014-07-22T14:40:00+00:00" />
+<meta property="article:modified_time" content="2014-07-22T20:41:58+00:00" />
+<meta property="og:updated_time" content="2014-07-22T20:41:58+00:00" />
+<meta property="og:image" content="http://www.csharphelper.com/howto_file_size_in_words.png" />
+<meta property="og:image" content="http://www.csharphelper.com/Download.png" />
+<meta property="og:image" content="http://www.csharphelper.com/twitter.png" />
+<meta property="og:image" content="http://www.csharphelper.com/rss.png" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="C# Helper &raquo; Feed" href="http://csharphelper.com/blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="C# Helper &raquo; Comments Feed" href="http://csharphelper.com/blog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="C# Helper &raquo; Format file sizes in KB, MB, GB, and so forth in C# Comments Feed" href="http://csharphelper.com/blog/2014/07/format-file-sizes-in-kb-mb-gb-and-so-forth-in-c/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/csharphelper.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.3.1"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='contact-form-7-css'  href='http://csharphelper.com/blog/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=4.3' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://csharphelper.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.7.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://csharphelper.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://csharphelper.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://csharphelper.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://csharphelper.com/blog/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.3.1" />
+<link rel='shortlink' href='http://wp.me/p59KzP-ix' />
+<style type='text/css'>img#wpstats{display:none}</style><!-- All in one Favicon 4.3 --><link rel="shortcut icon" href="http://csharphelper.com/blog/wp-content/uploads/2014/07/favicon.ico" />
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #c0c0ff; }
+</style>
+</head>
+
+<body class="single single-post postid-1149 single-format-standard custom-background">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+						<a href="http://csharphelper.com/blog/" title="C# Helper" rel="home">C# Helper</a>
+					</span>
+				</div>
+				<div id="site-description">Tips, tricks, and example programs for C# programmers.</div>
+
+										<img src="http://csharphelper.com/blog/wp-content/uploads/2014/06/banner_thin2.png" width="900" height="123" alt="" />
+								</div><!-- #branding -->
+
+			<div id="access" role="navigation">
+			  				<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+								<div class="menu-header"><ul id="menu-navigation" class="menu"><li id="menu-item-94" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-94"><a href="http://www.csharphelper.com">Home</a></li>
+<li id="menu-item-93" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-93"><a href="http://csharphelper.com/blog/">Blog</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-43"><a href="http://www.csharphelper.com/howto_index.html">Index</a></li>
+<li id="menu-item-92" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-92"><a href="http://csharphelper.com/blog/search/">Search</a></li>
+<li id="menu-item-45" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-45"><a href="http://www.csharphelper.com/articles.html">Articles</a></li>
+<li id="menu-item-44" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-44"><a href="http://www.csharphelper.com/books.html">Books</a></li>
+<li id="menu-item-49" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-49"><a href="http://csharphelper.com/blog/contact/">Contact Me</a></li>
+<li id="menu-item-85" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-85"><a href="http://csharphelper.com/blog/rod/">About Rod</a></li>
+</ul></div>			</div><!-- #access -->
+		</div><!-- #masthead -->
+	</div><!-- #header -->
+
+	<div id="main">
+
+		<div id="container">
+			<div id="content" role="main">
+
+			
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="http://csharphelper.com/blog/2014/07/easily-save-and-restore-a-forms-settings-in-the-registry-in-c/" rel="prev"><span class="meta-nav">&larr;</span> Easily save and restore a form&#8217;s settings in the Registry in C#</a></div>
+					<div class="nav-next"><a href="http://csharphelper.com/blog/2014/07/optimize-jpeg-compression-levels-and-file-sizes-in-c/" rel="next">Optimize JPEG compression levels and file sizes in C# <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-above -->
+
+				<div id="post-1149" class="post-1149 post type-post status-publish format-standard hentry category-algorithms category-files category-mathematics tag-algorithms tag-c tag-c-programming tag-example tag-example-program tag-file-sizes tag-files tag-gb tag-gigabytes tag-kb tag-kilobytes tag-mathematics tag-mb tag-megabytes tag-tb tag-terabytes tag-windows-forms-programming">
+					<h1 class="entry-title">Format file sizes in KB, MB, GB, and so forth in C#</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="http://csharphelper.com/blog/2014/07/format-file-sizes-in-kb-mb-gb-and-so-forth-in-c/" title="2:40 pm" rel="bookmark"><span class="entry-date">July 22, 2014</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="http://csharphelper.com/blog/author/rod-stephens/" title="View all posts by Rod Stephens">Rod Stephens</a></span>					</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p><img src="http://www.csharphelper.com/howto_file_size_in_words.png" alt="example" align="right" hspace="5" vspace="5" border="0"></p>
+<p>This example shows how to format file sizes in KB, MB, GB, and so forth. It defines two extension methods that convert numeric values into strings representing a number of bytes in bytes, KB, MB, and so forth. The first extension method uses an API function. The second method uses only C# code.</p>
+<h1>Using an API Function</h1>
+<p>The <tt>ToFileSizeApi</tt> extension method applies to the <tt>long</tt> class. It starts by including the following <tt>using</tt> statement:</p>
+<pre><tt>using System.Runtime.InteropServices;</tt></pre>
+<p>The <tt>SizeExtensions</tt> class also includes the following declaration of the <tt>StrFormatByteSize</tt> API function:</p>
+<pre><tt>[DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]
+public static extern Int32 StrFormatByteSize(
+    long fileSize,
+    [MarshalAs(UnmanagedType.LPTStr)] StringBuilder buffer,
+    int bufferSize);</tt></pre>
+<p>This API function returns a string similar to the one that Windows uses when it needs to display the size of a file. For example, it should give results similar to those displayed by Windows Explorer.</p>
+<p>The following code shows the <tt>ToFileSizeApi</tt> extension method.</p>
+<pre><tt>// Return a file size created by the StrFormatByteSize API function.
+public static string ToFileSizeApi(this long file_size)
+{
+    StringBuilder sb = new StringBuilder(20);
+    StrFormatByteSize(file_size, sb, 20);
+    return sb.ToString();
+}</tt></pre>
+<h1>Using C# Code</h1>
+<p>The <tt>StrFormatByteSize</tt> API function has one <i>tiny</i> drawback: it only works with sizes up to petabytes. Admittedly this is a lot (1 petabyte = 1,000 terabytes), but some day you might want to display values that are even larger.</p>
+<p>To handle larger file sizes, the <tt>SizeExtensions</tt> class also provides an extension method that converts <tt>double</tt>s into file size strings, and it can handle values up to yottabytes (1,000<sup>8</sup> bytes or 1 trillion terabytes).</p>
+<p>(As of 2011, the sum of the storage on every computer in the world was estimated at around 295 exabytes or 295 billion gigabytes, so this should be enough for a while, at least if you&#8217;re measuring real file sizes.)</p>
+<p>The following code shows the <tt>ToFileSize</tt> extension method.</p>
+<pre><tt>// Return a string describing the value as a file size.
+// For example, 1.23 MB.
+public static string ToFileSize(this double value)
+{
+    string[] suffixes = { "bytes", "KB", "MB", "GB",
+        "TB", "PB", "EB", "ZB", "YB"};
+    for (int i = 0; i &lt; suffixes.Length; i++)
+    {
+        if (value &lt;= (Math.Pow(1024, i + 1)))
+        {
+            return ThreeNonZeroDigits(value /
+                Math.Pow(1024, i)) +
+                " " + suffixes[i];
+        }
+    }
+
+    return ThreeNonZeroDigits(value /
+        Math.Pow(1024, suffixes.Length - 1)) + 
+        " " + suffixes[suffixes.Length - 1];
+}</tt></pre>
+<p>This method compares the value to larger and larger powers of 1024. When it finds a power of 1024 greater than or equal to the value, the code divides the value by the next smaller power and adds the appropriate suffix.</p>
+<p>For example, suppose the number is 10,000,000. This values is between 1024<sup>2</sup> = 1,048,576 and 1024<sup>3</sup> = 1,073,741,824. So the program divides the value by 1024<sup>2</sup> to get 10,000,000 &divide; 1024<sup>2</sup> &asymp; 9.5361328125. It passes that value and the corresponding suffix MB to the following <tt>ThreeNonZeroDigits</tt> method.</p>
+<pre><tt>// Return the value formatted to include at most three
+// non-zero digits and at most two digits after the
+// decimal point. Examples:
+//         1
+//       123
+//        12.3
+//         1.23
+//         0.12
+private static string ThreeNonZeroDigits(double value)
+{
+    if (value &gt;= 100)
+    {
+        // No digits after the decimal.
+        return value.ToString("0,0");
+    }
+    else if (value &gt;= 10)
+    {
+        // One digit after the decimal.
+        return value.ToString("0.0");
+    }
+    else
+    {
+        // Two digits after the decimal.
+        return value.ToString("0.00");
+    }
+}</tt></pre>
+<p>The <tt>ThreeNonZeroDigits</tt> method returns up to three non-zero digits for a number.</p>
+<p>If the value is at least 100, then it needs three digits anyway so the method simply returns the value formatted as a string with no values after the decimal point.</p>
+<p>If the value is at least 10 but less than 100, the method returns the value formatted as a string with two digits before the decimal point and one after.</p>
+<p>Finally if the value is less than 10, the method returns the value formatted as a string with one digit before the decimal point and two after.</p>
+<h1>Using the Methods</h1>
+<p>Using the extension methods is easy. If <tt>size</tt> is a <tt>long</tt>, then the following code calls the two extension methods to display the value as a file size.</p>
+<pre><tt>long long_size = 1234567890;
+double double_size = 1234567890;
+Console.WriteLine(long_size.ToFileSizeApi());
+Console.WriteLine(double_size.ToFileSize());</tt></pre>
+<h1>Notes</h1>
+<p>Note that there is some ambiguity here. Some people define a kilobyte as 1024 bytes but others (particularly disk drive manufacturers who like to make you think your drive is bigger than it really is) define it as 1000 bytes.</p>
+<p>The <tt>ToFileSize</tt> method assumes a kilobyte is 1024 bytes. You can easily change this if you want to work with 1000 byte kilobytes.</p>
+<p>Note also that the <tt>StrFormatByteSize</tt> API function doesn&#8217;t return the same result as <tt>ToFileSize</tt>. For some reason, the API function seems to be truncating. For example, 12,345,000 is approximately 11.77 MB but <tt>StrFormatByteSize</tt> returns 11.7 MB instead of 11.8 MB.</p>
+<p>The example program displays several numbers with their file size strings using both of these extension methods so you can compare the results.</p>
+<p>Download the example to see exactly how it uses the methods to display its results.</p>
+<p><center><br />
+<a href="http://www.csharphelper.com/examples/howto_file_size_in_words.zip"><img border="0" hspace="10" width="109" height="59" src="http://www.csharphelper.com/Download.png" alt="Download Example"></a> &nbsp; <a href="http://twitter.com/CSharpHelper"><img border="0" hspace="10" width="73" height="60" src="http://www.csharphelper.com/twitter.png" alt="Follow me on Twitter"></a> &nbsp; <a href="http://csharphelper.com/blog/feed/"><img hspace="10" border="0" width="62" height="62" src="http://www.csharphelper.com/rss.png" alt="RSS feed"></a><br />
+</center></p>
+<p><center><br />
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6627515316741006";
+/* PostBottom */
+google_ad_slot = "8932984896";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script><br />
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><br />
+</center></p>
+											</div><!-- .entry-content -->
+
+
+					<div class="entry-utility">
+						This entry was posted in <a href="http://csharphelper.com/blog/category/algorithms/" rel="category tag">algorithms</a>, <a href="http://csharphelper.com/blog/category/files/" rel="category tag">files</a>, <a href="http://csharphelper.com/blog/category/mathematics/" rel="category tag">mathematics</a> and tagged <a href="http://csharphelper.com/blog/tag/algorithms/" rel="tag">algorithms</a>, <a href="http://csharphelper.com/blog/tag/c/" rel="tag">C#</a>, <a href="http://csharphelper.com/blog/tag/c-programming/" rel="tag">C# programming</a>, <a href="http://csharphelper.com/blog/tag/example/" rel="tag">example</a>, <a href="http://csharphelper.com/blog/tag/example-program/" rel="tag">example program</a>, <a href="http://csharphelper.com/blog/tag/file-sizes/" rel="tag">file sizes</a>, <a href="http://csharphelper.com/blog/tag/files/" rel="tag">files</a>, <a href="http://csharphelper.com/blog/tag/gb/" rel="tag">GB</a>, <a href="http://csharphelper.com/blog/tag/gigabytes/" rel="tag">gigabytes</a>, <a href="http://csharphelper.com/blog/tag/kb/" rel="tag">KB</a>, <a href="http://csharphelper.com/blog/tag/kilobytes/" rel="tag">kilobytes</a>, <a href="http://csharphelper.com/blog/tag/mathematics/" rel="tag">mathematics</a>, <a href="http://csharphelper.com/blog/tag/mb/" rel="tag">MB</a>, <a href="http://csharphelper.com/blog/tag/megabytes/" rel="tag">megabytes</a>, <a href="http://csharphelper.com/blog/tag/tb/" rel="tag">TB</a>, <a href="http://csharphelper.com/blog/tag/terabytes/" rel="tag">terabytes</a>, <a href="http://csharphelper.com/blog/tag/windows-forms-programming/" rel="tag">Windows Forms programming</a>. Bookmark the <a href="http://csharphelper.com/blog/2014/07/format-file-sizes-in-kb-mb-gb-and-so-forth-in-c/" title="Permalink to Format file sizes in KB, MB, GB, and so forth in C#" rel="bookmark">permalink</a>.											</div><!-- .entry-utility -->
+				</div><!-- #post-## -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://csharphelper.com/blog/2014/07/easily-save-and-restore-a-forms-settings-in-the-registry-in-c/" rel="prev"><span class="meta-nav">&larr;</span> Easily save and restore a form&#8217;s settings in the Registry in C#</a></div>
+					<div class="nav-next"><a href="http://csharphelper.com/blog/2014/07/optimize-jpeg-compression-levels-and-file-sizes-in-c/" rel="next">Optimize JPEG compression levels and file sizes in C# <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+			<div id="comments">
+
+
+			<h3 id="comments-title">3 Responses to <em>Format file sizes in KB, MB, GB, and so forth in C#</em></h3>
+
+
+			<ol class="commentlist">
+					<li class="post pingback">
+		<p>Pingback: <a href='http://csharphelper.com/blog/2014/07/optimize-jpeg-compression-levels-and-file-sizes-in-c/' rel='external nofollow' class='url'>Optimize JPEG compression levels and file sizes in C# |</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback: <a href='http://csharphelper.com/blog/2014/08/use-linq-to-list-files-and-file-sizes-in-a-directory-in-c/' rel='external nofollow' class='url'>Use LINQ to list files and file sizes in a directory in C# -</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback: <a href='http://csharphelper.com/blog/2015/06/make-an-html-table-of-thumbnail-images-in-c/' rel='external nofollow' class='url'>Make an HTML table of thumbnail images in C# - C# HelperC# Helper</a></p>
+	</li><!-- #comment-## -->
+			</ol>
+
+
+	
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/blog/2014/07/format-file-sizes-in-kb-mb-gb-and-so-forth-in-c/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://csharphelper.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																			<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8"  aria-required="true" required="required"></textarea></p>						
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='1149' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="d374e4b3fc" /></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" /> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" /> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="56"/></p>					</form>
+							</div><!-- #respond -->
+			
+</div><!-- #comments -->
+
+
+			</div><!-- #content -->
+		</div><!-- #container -->
+
+
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+
+<li id="text-3" class="widget-container widget_text">			<div class="textwidget"><center>
+<font color="green">Recent Books:</font>
+<br>
+<a href="http://www.wrox.com/WileyCDA/WroxTitle/Beginning-Software-Engineering.productCd-1118969146.html">
+<img src="http://www.csharphelper.com/sw_eng_tiny.png" border="0" alt="[Beginning Software Engineering]" vspace="5">
+</a>
+<a href="http://www.wrox.com/WileyCDA/WroxTitle/C-5-0-Programmer-s-Reference.productCd-1118847288.html">
+<img src="http://www.csharphelper.com/csharp_prog_ref_80x100.png" border="0" alt="[C# 5.0 Programmer's Reference]" vspace="5">
+</a>
+<br>
+<a href="http://www.csharphelper.com/algorithms.html">
+<img src="http://www.csharphelper.com/essential_algs_81x100.jpg" border="0" alt="[Essential Algorithms: A Practical Approach to Computer Algorithms]" vspace="5">
+</a>
+<a href="http://www.wrox.com/WileyCDA/WroxTitle/MCSD-Certification-Toolkit-Exam-70-483-Programming-in-C-.productCd-1118612094.html">
+<img src="http://www.csharphelper.com/c_cert_tiny.jpg" border="0" alt="[MCSD Certification Toolkit (Exam 70-483): Programming in C#]" vspace="5">
+</a>
+<br>
+<font color="green">Recent Videos:</font>
+<br>
+<a href="http://www.infiniteskills.com/training/learning-data-structures-and-algorithms.html">
+<img src="http://www.csharphelper.com/algs_video_tiny.png" border="0" alt="[Learning Data Structures and Algorithms]" vspace="5">
+</a>
+<a href="http://www.infiniteskills.com/training/learning-visual-basic-.net.html">
+<img src="http://www.csharphelper.com/vb_video_tiny.png" border="0" alt="[Learning Visual Basic .NET]" vspace="5">
+</a>
+</center>
+</div>
+		</li><li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" class="searchform" action="http://csharphelper.com/blog/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s" />
+					<input type="submit" id="searchsubmit" value="Search" />
+				</div>
+			</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="http://csharphelper.com/blog/2015/10/make-a-windows-forms-application-display-icons-at-appropriate-sizes-in-c/">Make a Windows Forms application display icons at appropriate sizes in C#</a>
+						</li>
+					<li>
+				<a href="http://csharphelper.com/blog/2015/10/extract-comments-from-a-c-file-in-c/">Extract comments from a C# file in C#</a>
+						</li>
+					<li>
+				<a href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-multiple-images-with-different-sizes-in-c/">Use steganography to hide multiple images with different sizes in C#</a>
+						</li>
+					<li>
+				<a href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-multiple-images-in-c/">Use steganography to hide multiple images in C#</a>
+						</li>
+					<li>
+				<a href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-message-bytes-in-an-image-in-c/">Use steganography to hide Unicode message bytes in an image in C#</a>
+						</li>
+				</ul>
+		</li><li id="text-8" class="widget-container widget_text">			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- RightSide -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:120px;height:240px"
+     data-ad-client="ca-pub-6627515316741006"
+     data-ad-slot="4930090895"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href='http://www.csharphelper.com' rel='external nofollow' class='url'>RodStephens</a></span> on <a href="http://csharphelper.com/blog/2015/09/survey-what-should-be-in-my-upcoming-graphics-book/#comment-159291">Survey: What should be in my upcoming graphics book?</a></li><li class="recentcomments"><span class="comment-author-link">Phan Sang</span> on <a href="http://csharphelper.com/blog/2015/09/survey-what-should-be-in-my-upcoming-graphics-book/#comment-159209">Survey: What should be in my upcoming graphics book?</a></li><li class="recentcomments"><span class="comment-author-link"><a href='http://csharphelper.com/blog/2015/09/use-steganography-to-hide-multiple-images-in-c/' rel='external nofollow' class='url'>Use steganography to hide multiple images in C# - C# HelperC# Helper</a></span> on <a href="http://csharphelper.com/blog/2015/03/use-steganography-to-hide-one-picture-inside-another-in-c/#comment-158472">Use steganography to hide one picture inside another in C#</a></li><li class="recentcomments"><span class="comment-author-link"><a href='http://www.csharphelper.com' rel='external nofollow' class='url'>RodStephens</a></span> on <a href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-messages-in-an-image-in-c/#comment-158470">Use steganography to hide Unicode messages in an image in C#</a></li><li class="recentcomments"><span class="comment-author-link"><a href='http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-message-bytes-in-an-image-in-c/' rel='external nofollow' class='url'>Use steganography to hide Unicode message bytes in an image in C# - C# HelperC# Helper</a></span> on <a href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-messages-in-an-image-in-c/#comment-158469">Use steganography to hide Unicode messages in an image in C#</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+	<li><a href='http://csharphelper.com/blog/2015/10/'>October 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/09/'>September 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/08/'>August 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/07/'>July 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/06/'>June 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/05/'>May 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/04/'>April 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/03/'>March 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/02/'>February 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2015/01/'>January 2015</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/12/'>December 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/11/'>November 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/10/'>October 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/09/'>September 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/08/'>August 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/07/'>July 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/06/'>June 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/05/'>May 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/03/'>March 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/02/'>February 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2014/01/'>January 2014</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/12/'>December 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/11/'>November 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/10/'>October 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/09/'>September 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/08/'>August 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/07/'>July 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/06/'>June 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/05/'>May 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/04/'>April 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/03/'>March 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/02/'>February 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2013/01/'>January 2013</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/12/'>December 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/11/'>November 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/10/'>October 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/09/'>September 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/08/'>August 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/07/'>July 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/06/'>June 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/05/'>May 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/04/'>April 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/03/'>March 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/02/'>February 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2012/01/'>January 2012</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/12/'>December 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/11/'>November 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/10/'>October 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/09/'>September 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/08/'>August 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/07/'>July 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/06/'>June 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/05/'>May 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/04/'>April 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/03/'>March 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/02/'>February 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2011/01/'>January 2011</a></li>
+	<li><a href='http://csharphelper.com/blog/2010/12/'>December 2010</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-10"><a href="http://csharphelper.com/blog/category/net/" >.NET</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://csharphelper.com/blog/category/ado-net/" >ADO.NET</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://csharphelper.com/blog/category/algorithms/" >algorithms</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://csharphelper.com/blog/category/animation/" >animation</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://csharphelper.com/blog/category/api/" >API</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://csharphelper.com/blog/category/arrays/" >arrays</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://csharphelper.com/blog/category/attributes/" >attributes</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://csharphelper.com/blog/category/audio/" >audio</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://csharphelper.com/blog/category/books/" >books</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://csharphelper.com/blog/category/calculations/" >calculations</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://csharphelper.com/blog/category/challenges/" >challenges</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://csharphelper.com/blog/category/classes/" >classes</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://csharphelper.com/blog/category/clipboard/" >clipboard</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://csharphelper.com/blog/category/coding/" >coding</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://csharphelper.com/blog/category/combinatorics/" >combinatorics</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://csharphelper.com/blog/category/console/" >console</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://csharphelper.com/blog/category/controls/" >controls</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://csharphelper.com/blog/category/cryptography/" >cryptography</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://csharphelper.com/blog/category/curve-fitting/" >curve fitting</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://csharphelper.com/blog/category/database/" >database</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://csharphelper.com/blog/category/debugging/" >debugging</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://csharphelper.com/blog/category/dialogs/" >dialogs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://csharphelper.com/blog/category/directories/" >directories</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://csharphelper.com/blog/category/drag-and-drop/" >Drag and Drop</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://csharphelper.com/blog/category/drawing/" >drawing</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://csharphelper.com/blog/category/enums/" >enums</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://csharphelper.com/blog/category/event/" >Event</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://csharphelper.com/blog/category/events/" >events</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://csharphelper.com/blog/category/excel/" >Excel</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://csharphelper.com/blog/category/extension-methods/" >extension methods</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://csharphelper.com/blog/category/extensions/" >extensions</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://csharphelper.com/blog/category/files/" >files</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://csharphelper.com/blog/category/finance/" >finance</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://csharphelper.com/blog/category/fonts/" >fonts</a>
+</li>
+	<li class="cat-item cat-item-605"><a href="http://csharphelper.com/blog/category/formatting/" >formatting</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://csharphelper.com/blog/category/forms/" >forms</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://csharphelper.com/blog/category/fractals/" >fractals</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://csharphelper.com/blog/category/ftp/" >ftp</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://csharphelper.com/blog/category/games/" >games</a>
+</li>
+	<li class="cat-item cat-item-1576"><a href="http://csharphelper.com/blog/category/gdi/" >GDI+</a>
+</li>
+	<li class="cat-item cat-item-1515"><a href="http://csharphelper.com/blog/category/generic/" >generic</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://csharphelper.com/blog/category/geometry/" >geometry</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://csharphelper.com/blog/category/globalization/" >globalization</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://csharphelper.com/blog/category/graphics/" >graphics</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://csharphelper.com/blog/category/html/" >html</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://csharphelper.com/blog/category/ide/" >IDE</a>
+</li>
+	<li class="cat-item cat-item-256"><a href="http://csharphelper.com/blog/category/image-processing/" >image processing</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://csharphelper.com/blog/category/inheritance/" >inheritance</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://csharphelper.com/blog/category/interfaces/" >interfaces</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://csharphelper.com/blog/category/internationalization/" >internationalization</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://csharphelper.com/blog/category/internet/" >internet</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://csharphelper.com/blog/category/interoperability/" >interoperability</a>
+</li>
+	<li class="cat-item cat-item-46"><a href="http://csharphelper.com/blog/category/linq/" >LINQ</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://csharphelper.com/blog/category/lists/" >lists</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://csharphelper.com/blog/category/localization/" >localization</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://csharphelper.com/blog/category/mathematics/" >mathematics</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://csharphelper.com/blog/category/memory/" >memory</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://csharphelper.com/blog/category/menus/" >menus</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://csharphelper.com/blog/category/messagebox/" >MessageBox</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://csharphelper.com/blog/category/methods/" >methods</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://csharphelper.com/blog/category/miscellany/" >miscellany</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://csharphelper.com/blog/category/multimedia/" >multimedia</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://csharphelper.com/blog/category/network/" >network</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://csharphelper.com/blog/category/office/" >Office</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://csharphelper.com/blog/category/oop/" >OOP</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://csharphelper.com/blog/category/oops/" >OOPS</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://csharphelper.com/blog/category/operators/" >operators</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://csharphelper.com/blog/category/parsing/" >parsing</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://csharphelper.com/blog/category/performance/" >performance</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://csharphelper.com/blog/category/phone/" >phone</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://csharphelper.com/blog/category/powerpoint/" >PowerPoint</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://csharphelper.com/blog/category/printers/" >printers</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://csharphelper.com/blog/category/printing/" >printing</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://csharphelper.com/blog/category/productivity/" >productivity</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://csharphelper.com/blog/category/programs/" >programs</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://csharphelper.com/blog/category/recursion/" >recursion</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://csharphelper.com/blog/category/reflection/" >reflection</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://csharphelper.com/blog/category/registry/" >registry</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://csharphelper.com/blog/category/regular-expressions/" >regular expressions</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://csharphelper.com/blog/category/serialization/" >serialization</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://csharphelper.com/blog/category/settings/" >settings</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://csharphelper.com/blog/category/sql/" >SQL</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://csharphelper.com/blog/category/stories/" >stories</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://csharphelper.com/blog/category/strings/" >strings</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://csharphelper.com/blog/category/syntax/" >syntax</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://csharphelper.com/blog/category/system/" >system</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://csharphelper.com/blog/category/threading/" >threading</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://csharphelper.com/blog/category/tips/" >tips</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://csharphelper.com/blog/category/tools/" >tools</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://csharphelper.com/blog/category/transformations/" >transformations</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://csharphelper.com/blog/category/uncategorized/" >Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://csharphelper.com/blog/category/user-interface/" >user interface</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://csharphelper.com/blog/category/variables/" >variables</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://csharphelper.com/blog/category/vba/" >VBA</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://csharphelper.com/blog/category/web/" >web</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://csharphelper.com/blog/category/wmi/" >WMI</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://csharphelper.com/blog/category/word/" >Word</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://csharphelper.com/blog/category/wpf/" >wpf</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://csharphelper.com/blog/category/xaml/" >XAML</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://csharphelper.com/blog/category/xml/" >XML</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a rel="nofollow" href="http://csharphelper.com/blog/wp-login.php">Log in</a></li>
+			<li><a href="http://csharphelper.com/blog/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://csharphelper.com/blog/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+<li><a href="https://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>			</ul>
+</li>			</ul>
+		</div><!-- #primary .widget-area -->
+
+	</div><!-- #main -->
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="footer-widget-area" role="complementary">
+
+				<div id="first" class="widget-area">
+					<ul class="xoxo">
+						<li id="text-4" class="widget-container widget_text">			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Bottom -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-6627515316741006"
+     data-ad-slot="6406824097"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+		</li>					</ul>
+				</div><!-- #first .widget-area -->
+
+
+
+
+			</div><!-- #footer-widget-area -->
+
+			<div id="site-info">
+				<a href="http://csharphelper.com/blog/" title="C# Helper" rel="home">
+					C# Helper				</a>
+			</div><!-- #site-info -->
+
+			<div id="site-generator">
+								<a href="https://wordpress.org/" title="Semantic Personal Publishing Platform">Proudly powered by WordPress.</a>
+			</div><!-- #site-generator -->
+
+		</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+	<div style="display:none">
+	</div>
+<script type='text/javascript' src='http://csharphelper.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.4'></script>
+<script type='text/javascript' src='http://csharphelper.com/blog/wp-includes/js/comment-reply.min.js?ver=4.3.1'></script>
+<script type='text/javascript' src='http://csharphelper.com/blog/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.51.0-2014.06.20'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"http:\/\/csharphelper.com\/blog\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","sending":"Sending ..."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://csharphelper.com/blog/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=4.3'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201540'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2015Octaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://csharphelper.com/blog/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.3.1'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201540.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.7.2',blog:'76205677',post:'1149',tz:'-6',srv:'csharphelper.com'} ]);
+	_stq.push([ 'clickTrackerInit', '76205677', '1149' ]);
+</script>
+</body>
+</html>

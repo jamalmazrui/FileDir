@@ -1,0 +1,108 @@
+NonvisualDevelopment.org announces updates to several free, open source projects.  Below is a short description of each project, including links to its download package and user guide, followed by a summary of recent changes.
+
+Nearly all of these are Windows-based programs published under the GNU Lesser General Public License (LGPL), which  is explained at
+http://gnu.org
+
+Some programs are written in cross-platform languages, so may be adaptable to run on other operating systems as  well.  Anyone may use the programs in either binary or source code form.  I welcome feedback, suggestions, and code  contributions.
+
+Jamal
+
+----------
+
+EdSharp -- A productive text editor, word processor, file converter, and code editor.
+http://EmpowermentZone.com/edsetup.exe
+
+Documentation
+http://EmpowermentZone.com/EdSharp.htm
+
+Version 3.3 adds the Format Code command, Control+4, to format source code of C-like languages based on file  extension.  This incorporates the free Artistic Style utility, which is also available separately at
+http://astyle.sourceforge.net
+
+Added an unofficial encoding, UTF-8N, meaning UTF-8 encoding without a Byte Order Mark (BOM).  If this code is used  in the YieldEncoding configuration setting (Alt+Shift+C for Configuration Options), that default encoding will be  assumed.  This maximizes compatibility of files uploaded to Linux-based web servers  -- Windows programs typically  add a BOM, but it is often not recognized by cross-platform programs with Linux origin.
+
+A file saved on the Recent Files list (Alt+R) now includes the last cursor position when the file window was closed  (Control+F4 or Alt+F4).  This position is automatically restored the next time the file is opened -- unless an  explicit bookmark was set (Control+K), which takes precedence as the initial location in the file.
+
+Added many more import (Control+Shift+O) and output (Alt+Shift+E) format options, supporting conversions among HTML  (.htm), LaTeX (.tex), Markdown (.md), rich text format (.rtf), and txt2tags (.tt) formats.  These conversions are  made possible by incorporating free utilities called Pandoc
+http://johnmacfarlane.net/pandoc/
+
+and txt2tags
+http://txt2tags.org
+
+In addition, Microsoft Office 2007 formats such as .docx may be imported if you install a Microsoft "filter pack"  that is offered at the end of the EdSharp installer.  Sped up time for subsequent invocations of EdSharp after the  initial one.  Improved the optional JAWS scripts for EdSharp so that titles of top-level windows are more reliably  read.
+
+----------
+
+Encoding -- Check and convert among various file encodings, including versions of ANSI and Unicode.
+http://EmpowermentZone.com/Encoding.zip
+
+Documentation
+http://EmpowermentZone.com/Encoding.htm
+
+Version 1.1 adds an unofficial encoding called ASCIIFY.  This works similar to the ASCII encoding in that only 7- bit characters having an ordinal value less than 128 are included in the resulting file.  A significant difference,  however, is that rather than just dropping each non-ASCII character, an attempt is made to substitute an ASCII  character or word with equivalent meaning.  For example, the single Unicode character for an ellipses symbol is  replaced with three consecutive period characters.  The Encoding.exe utility is now also distributed in the  WebClient subdirectory of the EdSharp and FileDir applications, which make use of it for detecting encodings  automatically, or converting among different ones.
+
+----------
+
+FileDir -- A file and directory manager that does much more than Windows Explorer.
+http://EmpowermentZone.com/dirsetup.exe
+
+Documentation
+http://EmpowermentZone.com/FileDir.htm
+
+Version 3.9 strengthens the Query Encoding command, Shift+2, so that it automatically detects an encoding using the  Encoding.exe utility previously mentioned.  Convert Encoding , Control+2, is a new command for converting the  current or tagged files to another encoding.  You can pick among nearly 100 encodings, including the unofficial  ASCIIFY, UTF-8B, and UTF-8N ones previously mentioned.  As a safety measure, original files are automatically  backed up to files with the same names and an additional .bak extension.  Microsoft Office 2007 formats are now  supported with the What command (Question Mark), Output to Text command (Shift+O), and Append Text to Clipboard  command (Shift+A).  This support requires installation of the Microsoft "filter pack" previously mentioned, which  is offered at the end of the FileDir installer, and also available separately at
+http://www.microsoft.com/downloads/en/details.aspx?familyid=60c92a37-719c-4077-b5c6-cac34f4227cc&displaylang=en&tm
+
+----------
+
+JAWS Script Exchange -- A program for installing 3rd party JAWS scripts from a zip archive, or for Creating an  executable package of scripts to distribute to others.
+http://EmpowermentZone.com/jsxsetup.exe
+
+Documentation
+http://EmpowermentZone.com/jsx.htm
+
+Version 3.3 finds the appropriate user script directory more reliably, regardless of whether JAWS is running as a  Windows service or user process (typically determined by whether JAWS is configured to run at Windows startup or  not).  A conflict is eliminated between the optional HomerKit scripts for Internet Explorer and the IEMax scripts  available separately at
+http://EmpowermentZone.com/IEMax.exe
+(or .zip for a manual install)
+
+Comprehensive documentation for JAWS 12, rather than JAWS 11, is now included.  JSX also now incorporates the  latest, 5.4.0 version of Inno Setup, which is also available separately from
+http://InnoSetup.org
+
+----------
+
+PDF2TXT -- A program for single or batch conversion of PDFs to text, including OCR capability.
+http://EmpowermentZone.com/p2tsetup.exe
+
+Documentation
+http://EmpowermentZone.com/pdf2txt.htm
+
+Version 2.3 supports enhanced speech messages with NVDA, in addition to JAWS, System Access, and Window-Eyes.  This  is done via a new version of the SayLine.exe utility that is part of the updated SayTools package mentioned below.
+
+----------
+
+SayTools -- A COM server and set of executable utilities for developers to add speech to an application, using  either the default screen reader or SAPI voice.
+http://EmpowermentZone.com/saysetup.exe
+
+Documentation
+http://EmpowermentZone.com/SayTools.htm
+
+Version 1.9 adds support for NVDA, a free, open source screen reader available from
+http://nvda-project.org
+
+----------
+
+Let me also mention that the web site of the "fruit basket" project has recently been revised to take advantage of  features of the Drupal content management system:
+http://FruitBasketDemos.org
+
+A fruit basket program is a simple, but nontrivial program with a graphical user interface (GUI).   This community  project offers many samples that meet the same criteria using different programming languages, thereby allowing  programmers to compare various aspects when considering a development approach.
+
+----------
+
+I edit a set of answers to frequently asked questions about nonvisual development at
+http://EmpowermentZone.com/NonvisualDevelopmentFAQ.htm
+
+----------
+
+A complete list of my open source projects (excluding screen reader-specific scripts) is available at
+http://EmpowermentZone.com/OpenSourceProjects.htm
+
+
+

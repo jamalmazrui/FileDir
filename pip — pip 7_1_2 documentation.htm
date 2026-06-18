@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pip &mdash; pip 7.1.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="pip 7.1.2 documentation" href="#"/>
+        <link rel="next" title="Quickstart" href="quickstart/"/>
+ 
+<!-- RTD Extra Head -->
+
+
+
+  
+  <!-- 
+  Always link to the latest version, as canonical.
+  http://docs.readthedocs.org/en/latest/canonical.html
+  -->
+  <link rel="canonical" href="https://pip.pypa.io//en/latest/" />
+  
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "pip",
+    version: "latest",
+    language: "en",
+    page: "index",
+    builder: "sphinx",
+    theme: "sphinx_rtd_theme",
+    docroot: "docs",
+    
+    source_suffix: ".rst",
+    
+    api_host: "https://readthedocs.org/",
+    commit: "3dfa1f9a55d25587e9e97a27d8c87943e4b6aa54"
+  }
+  // Old variables
+  var doc_version = "latest";
+  var doc_slug = "pip";
+  var page_name = "index";
+  var html_theme = "sphinx_rtd_theme";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="#" class="icon icon-home"> pip
+        
+
+        
+        </a>
+
+        
+          
+          
+          
+            <div class="version">
+              latest
+            </div>
+          
+        
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart/">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing/">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/">Reference Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development/">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="news/">Release Notes</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">pip</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>pip</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/pypa/pip/blob/masterdocsindex.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pip">
+<h1>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://groups.google.com/group/python-virtualenv">User list</a> |
+<a class="reference external" href="http://groups.google.com/group/pypa-dev">Dev list</a> |
+<a class="reference external" href="https://github.com/pypa/pip">Github</a> |
+<a class="reference external" href="https://pypi.python.org/pypi/pip/">PyPI</a> |
+User IRC: #pypa |
+Dev IRC: #pypa-dev</p>
+<p>The <a class="reference external" href="https://python-packaging-user-guide.readthedocs.org/en/latest/current.html">PyPA recommended</a>
+tool for installing Python packages.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart/">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing/">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installing/#python-os-support">Python &amp; OS Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing/#pip-included-with-python">pip included with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing/#install-pip">Install pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing/#upgrade-pip">Upgrade pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing/#using-os-package-managers">Using OS Package Managers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#installing-packages">Installing Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#requirements-files">Requirements Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#constraints-files">Constraints Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#installing-from-wheels">Installing from Wheels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#uninstalling-packages">Uninstalling Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#listing-packages">Listing Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#searching-for-packages">Searching for Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#fast-local-installs">Fast &amp; Local Installs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#only-if-needed-recursive-upgrade">&quot;Only if needed&quot; Recursive Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#user-installs">User Installs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#ensuring-repeatability">Ensuring Repeatability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/#create-an-installation-bundle-with-compiled-dependencies">Create an Installation Bundle with Compiled Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/">Reference Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip/">pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip_install/">pip install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip_uninstall/">pip uninstall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip_freeze/">pip freeze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip_list/">pip list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip_show/">pip show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip_search/">pip search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pip_wheel/">pip wheel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development/">Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="development/#pull-requests">Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/#automated-testing">Automated Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/#running-tests">Running tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/#getting-involved">Getting Involved</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/#release-process">Release Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/#creating-a-bugfix-release">Creating a Bugfix Release</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="news/">Release Notes</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quickstart/" class="btn btn-neutral float-right" title="Quickstart" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2014, PyPA.
+      
+        <span class="commit">
+          Revision <code>3dfa1f9a55d25587e9e97a27d8c87943e4b6aa54</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: latest
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/pip/downloads/pdf/latest/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/pip/downloads/htmlzip/latest/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/pip/downloads/epub/latest/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/pip/?fromdocs=pip">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/pip/?fromdocs=pip">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'',
+            VERSION:'7.1.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

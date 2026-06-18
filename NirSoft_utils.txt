@@ -1,0 +1,31 @@
+﻿WebBrowserPassView now extracts the passwords from Internet Explorer 10.0
+New address book viewer for Outlook
+ is a new utility for Windows operating system that collects information from various sources on a running system, and displays a log of actions made by
+New CSV/Tab-Delimited file viewer and converter
+New utility that shows the hosting/owner information of a domain
+OutlookAttachView now allows you to search Outlook attachments only in the selected folders
+videocacheview.zip	
+nircmd.zip	
+myuninst.zip	
+• RegScanner (Registry Scanner)
+• SysExporter
+Nir Sofer.
+• WebBrowserPassView
+• Mail PassView - Recover the passwords of popular email clients:
+ - Recover the password of Outlook PST file. 
+• DownTester
+• IPNetInfo
+• SiteShoter
+• HTMLAsText (HTML To Text Converter)
+• WhoisThisDomain
+• OutlookAttachView
+• OutlookStatView
+• OutlookAddressBookView
+duplicate files search.
+• SearchMyFiles
+• MyUninstaller
+• FileTypesMan
+• WhatInStartup
+• ShellExView
+• SysExporter
+• BlueScreenView

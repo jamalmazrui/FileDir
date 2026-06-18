@@ -1,0 +1,2537 @@
+Contents
+
+Contents
+Magic CD/DVD Burner (.NET 1.x/2.x)
+Namespace BinaryMagic
+Class MCDBControl
+MCDBControl New
+MCDBControl Constructor
+MCDBControl.OnEraseDone
+MCDBControl.OnSmartReferencesGenDone
+MCDBControl.OnVerifyDone
+MCDBControl.OnWriteDone
+MCDBControl.AbortOperation
+MCDBControl.BlocksWritten
+MCDBControl.BootImage
+MCDBControl.BuildISOImage
+MCDBControl.Burn
+MCDBControl.BurnISOImage
+MCDBControl.CachePosition
+MCDBControl.ClearAll
+MCDBControl.ClearAllEx
+MCDBControl.CreateDir
+MCDBControl.CreateSmartReference
+MCDBControl.DestinationPath
+MCDBControl.DeviceBufferPosition
+MCDBControl.DeviceBufferSize
+MCDBControl.DeviceCan
+MCDBControl.DeviceCount
+MCDBControl.DeviceIsBurner
+MCDBControl.DeviceMaxReadSpeed
+MCDBControl.DeviceMaxWriteSpeed
+MCDBControl.DeviceName
+MCDBControl.DeviceOperationSpeed
+MCDBControl.DeviceSpeed
+MCDBControl.DirsCount
+MCDBControl.DirName
+MCDBControl.DisableSmartReference
+MCDBControl.DiscIs
+MCDBControl.EjectMedium
+MCDBControl.Erasable
+MCDBControl.EraseDisc
+MCDBControl.ErrorNumber
+MCDBControl.ErrorString
+MCDBControl.FilesCount
+MCDBControl.FileName
+MCDBControl.FileSize
+MCDBControl.FreeBlocksOnDisc
+MCDBControl.GenerateSmartReferences
+MCDBControl.ImageSize
+MCDBControl.ImportSession
+MCDBControl.InitializeASPI
+MCDBControl.InitializeASPI
+MCDBControl.InsertDir
+MCDBControl.InsertFile
+MCDBControl.InsertFileWithName
+MCDBControl.IsDirectory
+MCDBControl.LoadMedium
+MCDBControl.LockMedium
+MCDBControl.MaxWriteSpeed
+MCDBControl.Prepare
+MCDBControl.ReadSpeed
+MCDBControl.ReadVolumeLabelOfDisc
+MCDBControl.SelectDevice
+MCDBControl.SelectDeviceByLetter
+MCDBControl.SessionsOnDisc
+MCDBControl.ShortFileName
+MCDBControl.SmartReferencesProgress
+MCDBControl.SmartReferencesSize
+MCDBControl.SourcePath
+MCDBControl.State
+MCDBControl.TestUnitReady
+MCDBControl.TotalBlocksOnDisc
+MCDBControl.UnlockDrive
+MCDBControl.UnlockMedium
+MCDBControl.VerifyDataSize
+MCDBControl.VerifyDisc
+MCDBControl.VerifyProgress
+MCDBControl.Writable
+MCDBControl.WriteSpeed
+MCDBControl.BurnProof
+MCDBControl.CacheSize
+MCDBControl.FinalizeDisc
+MCDBControl.JolietFS
+MCDBControl.MCDBVersion
+MCDBControl.PerformCloseTrackOnly
+MCDBControl.PerformOPC
+MCDBControl.PostGapSize
+MCDBControl.ReplaceFile
+MCDBControl.TestWrite
+MCDBControl.UDFBridge
+MCDBControl.VolumeIDTop  Previous
+Namespace BinaryMagic
+Welcome to Binary Magic's Magic CD/DVD Burner.
+
+----------
+
+Contents
+AbortOperation
+BlocksWritten
+BootImage
+BuildISOImage
+Burn
+BurnISOImage
+BurnProof
+CachePosition
+CacheSize
+Class MCDBControl
+ClearAll
+ClearAllEx
+CreateDir
+CreateSmartReference
+DestinationPath
+DeviceBufferPosition
+DeviceBufferSize
+DeviceCan
+DeviceCount
+DeviceIsBurner
+DeviceMaxReadSpeed
+DeviceMaxWriteSpeed
+DeviceName
+DeviceOperationSpeed
+DeviceSpeed
+DirsCount
+DirName
+DisableSmartReference
+DiscIs
+EjectMedium
+Erasable
+EraseDisc
+ErrorNumber
+ErrorString
+FilesCount
+FileName
+FileSize
+FinalizeDisc
+FreeBlocksOnDisc
+GenerateSmartReferences
+ImageSize
+ImportSession
+InitializeASPI (Class MCDBControl)
+InsertDir
+InsertFile
+InsertFileWithName
+IsDirectory
+JolietFS
+LoadMedium
+LockMedium
+MCDBControl New
+MCDBControl.AbortOperation
+MCDBControl.BlocksWritten
+MCDBControl.BootImage
+MCDBControl.BuildISOImage
+MCDBControl.Burn
+MCDBControl.BurnISOImage
+MCDBControl.BurnProof
+MCDBControl.CachePosition
+MCDBControl.CacheSize
+MCDBControl.ClearAll
+MCDBControl.ClearAllEx
+MCDBControl.CreateDir
+MCDBControl.CreateSmartReference
+MCDBControl.DestinationPath
+MCDBControl.DeviceBufferPosition
+MCDBControl.DeviceBufferSize
+MCDBControl.DeviceCan
+MCDBControl.DeviceCount
+MCDBControl.DeviceIsBurner
+MCDBControl.DeviceMaxReadSpeed
+MCDBControl.DeviceMaxWriteSpeed
+MCDBControl.DeviceName
+MCDBControl.DeviceOperationSpeed
+MCDBControl.DeviceSpeed
+MCDBControl.DirsCount
+MCDBControl.DirName
+MCDBControl.DisableSmartReference
+MCDBControl.DiscIs
+MCDBControl.EjectMedium
+MCDBControl.Erasable
+MCDBControl.EraseDisc
+MCDBControl.ErrorNumber
+MCDBControl.ErrorString
+MCDBControl.FilesCount
+MCDBControl.FileName
+MCDBControl.FileSize
+MCDBControl.FinalizeDisc
+MCDBControl.FreeBlocksOnDisc
+MCDBControl.GenerateSmartReferences
+MCDBControl.ImageSize
+MCDBControl.ImportSession
+MCDBControl.InitializeASPI (Class MCDBControl)
+MCDBControl.InsertDir
+MCDBControl.InsertFile
+MCDBControl.InsertFileWithName
+MCDBControl.IsDirectory
+MCDBControl.JolietFS
+MCDBControl.LoadMedium
+MCDBControl.LockMedium
+MCDBControl.MCDBVersion
+MCDBControl.MaxWriteSpeed
+MCDBControl.OnEraseDone
+MCDBControl.OnSmartReferencesGenDone
+MCDBControl.OnVerifyDone
+MCDBControl.OnWriteDone
+MCDBControl.PerformCloseTrackOnly
+MCDBControl.PerformOPC
+MCDBControl.PostGapSize
+MCDBControl.Prepare
+MCDBControl.ReadSpeed
+MCDBControl.ReadVolumeLabelOfDisc
+MCDBControl.ReplaceFile
+MCDBControl.SelectDevice
+MCDBControl.SelectDeviceByLetter
+MCDBControl.SessionsOnDisc
+MCDBControl.ShortFileName
+MCDBControl.SmartReferencesProgress
+MCDBControl.SmartReferencesSize
+MCDBControl.SourcePath
+MCDBControl.State
+MCDBControl.TestUnitReady
+MCDBControl.TestWrite
+MCDBControl.TotalBlocksOnDisc
+MCDBControl.UDFBridge
+MCDBControl.UnlockDrive
+MCDBControl.UnlockMedium
+MCDBControl.VerifyDataSize
+MCDBControl.VerifyDisc
+MCDBControl.VerifyProgress
+MCDBControl.VolumeID
+MCDBControl.Writable
+MCDBControl.WriteSpeed
+MCDBVersion
+MaxWriteSpeed
+Namespace BinaryMagic
+New (Class MCDBControl)
+OnEraseDone
+OnSmartReferencesGenDone
+OnVerifyDone
+OnWriteDone
+PerformCloseTrackOnly
+PerformOPC
+PostGapSize
+Prepare
+ReadSpeed
+ReadVolumeLabelOfDisc
+ReplaceFile
+SelectDevice
+SelectDeviceByLetter
+SessionsOnDisc
+ShortFileName
+SmartReferencesProgress
+SmartReferencesSize
+SourcePath
+State
+TestUnitReady
+TestWrite
+TotalBlocksOnDisc
+UDFBridge
+UnlockDrive
+UnlockMedium
+VerifyDataSize
+VerifyDisc
+VerifyProgress
+VolumeID
+Writable
+WriteSpeed
+----------
+
+Magic CD/DVD Burner (.NET 1.x/2.x)
+
+Welcome to Binary Magic's Magic CD/DVD Burner (.NET 1.x/2.x)
+To get started:
+
+..
+
+..
+
+n  mn n,./.[=--76yrnmlli`11112125`13`123469Binary Magic, 2006
+----------
+
+Namespace BinaryMagic
+Namespace BinaryMagic
+
+This topic tree describes the BinaryMagic namespace.
+
+TypeDescription
+
+----------
+
+Class MCDBControl
+System.Object
+System.MarshalByRefObject
+System.ComponentModel.Component
+BinaryMagic.MCDBControl
+
+Public Class MCDBControl
+Inherits Component
+
+Class Members
+
+MemberDescription
+New
+
+OnEraseDone
+
+OnSmartReferencesGenDone
+
+OnVerifyDone
+
+OnWriteDone
+
+AbortOperationPublic Sub AbortOperation()
+BlocksWrittenPublic Function BlocksWritten() as Integer
+BootImagePublic Function BootImage(ByVal Path as String) as Boolean
+BuildISOImagePublic Function BuildISOImage(ByVal ISOFileName as String) as Boolean
+BurnPublic Function Burn() as Boolean
+BurnISOImagePublic Function BurnISOImage(ByVal ISOFileName as String) as Boolean
+CachePositionPublic Function CachePosition() as Integer
+ClearAllPublic Sub ClearAll()
+ClearAllExPublic Sub ClearAllEx(ByVal Reserved1 as Integer, _
+ByRef Reserved2 as String)
+CreateDirPublic Function CreateDir(ByVal Path as String, _
+ByVal DirName as String) as Integer
+CreateSmartReferencePublic Function CreateSmartReference(ByVal ReferenceToFile as String, _
+ByVal DestinationDir as String, _
+ByVal LongFileName as String, _
+ByVal ShortFileName as String) as Integer
+DestinationPathPublic Function DestinationPath(ByVal FileId as Integer) as String
+DeviceBufferPositionPublic Function DeviceBufferPosition() as Integer
+DeviceBufferSizePublic Function DeviceBufferSize() as Integer
+DeviceCanPublic Function DeviceCan(ByVal cId as Byte) as Boolean
+DeviceCountPublic Function DeviceCount() as Integer
+DeviceIsBurnerPublic Function DeviceIsBurner() as Boolean
+DeviceMaxReadSpeedPublic Function DeviceMaxReadSpeed() as Integer
+DeviceMaxWriteSpeedPublic Function DeviceMaxWriteSpeed() as Integer
+DeviceNamePublic Function DeviceName(ByVal Id as Byte) as String
+DeviceOperationSpeedPublic Function DeviceOperationSpeed() as Integer
+DeviceSpeedPublic Sub DeviceSpeed(ByVal ReadSpeed as Integer, ByVal WriteSpeed as Integer)
+DirsCountPublic Function DirsCount() as Integer
+DirNamePublic Function DirName(ByVal FileId as Integer) as String
+DisableSmartReferencePublic Sub DisableSmartReference(ByVal SmartReferences as Boolean)
+DiscIsPublic Function DiscIs() as Byte
+EjectMediumPublic Function EjectMedium() as Boolean
+ErasablePublic Function Erasable() as Boolean
+EraseDiscPublic Function EraseDisc(ByVal Quick as Boolean) as Boolean
+ErrorNumberPublic Function ErrorNumber() as Integer
+ErrorStringPublic Function ErrorString() as String
+FileNamePublic Function FileName(ByVal FileId as Integer) as String
+FileSizePublic Function FileSize(ByVal FileId as Integer) as Long
+FreeBlocksOnDiscPublic Function FreeBlocksOnDisc() as Integer
+GenerateSmartReferencesPublic Function GenerateSmartReferences() as Boolean
+ImageSizePublic Function ImageSize() as Integer
+ImportSessionPublic Function ImportSession(ByVal SessionNo as Byte, _
+ByVal DestinationDir as String) as Integer
+InitializeASPI
+
+InitializeASPI (overload)Public Function InitializeASPI(ByVal NoInternalASPI as Boolean, _
+ByVal wnASPIDLLPath as String, _
+ByVal Reserved1 as Integer, _
+ByVal Reserved2 as String) as Boolean
+
+Public Function InitializeASPI() as Boolean
+InsertDirPublic Function InsertDir(ByVal DestinationPath as String, _
+ByVal FilesPath as String, _
+ByVal FilesSpecs as String, _
+ByVal Recursive as Boolean, _
+ByVal SavePath as Boolean) as Integer
+InsertFilePublic Function InsertFile(ByVal Path as String, _
+ByVal FileName as String) as Integer
+InsertFileWithNamePublic Function InsertFileWithName(ByVal Path as String, _
+ByVal FileName as String, _
+ByVal LongNameOnDisc as String, _
+ByVal ShortNameOnDisc as String) as Integer
+IsDirectoryPublic Function IsDirectory(ByVal FileId as Integer) as Boolean
+LoadMediumPublic Function LoadMedium() as Boolean
+LockMediumPublic Function LockMedium() as Boolean
+MaxWriteSpeedPublic Function MaxWriteSpeed() as Integer
+PreparePublic Function Prepare() as Integer
+ReadSpeedPublic Function ReadSpeed() as Integer
+ReadVolumeLabelOfDiscPublic Function ReadVolumeLabelOfDisc(ByVal SessionNo as Integer) as String
+SelectDevicePublic Function SelectDevice(ByVal Id as Byte) as Boolean
+SelectDeviceByLetterPublic Function SelectDeviceByLetter(ByVal DriveLetter as Byte) as Boolean
+SessionsOnDiscPublic Function SessionsOnDisc() as Byte
+ShortFileNamePublic Function ShortFileName(ByVal FileId as Integer) as String
+SmartReferencesProgressPublic Function SmartReferencesProgress() as Integer
+SmartReferencesSizePublic Function SmartReferencesSize() as Integer
+SourcePathPublic Function SourcePath(ByVal FileId as Integer) as String
+StatePublic Function State() as Integer
+TestUnitReadyPublic Function TestUnitReady() as Boolean
+TotalBlocksOnDiscPublic Function TotalBlocksOnDisc() as Integer
+UnlockDrivePublic Function UnlockDrive() as Boolean
+UnlockMediumPublic Function UnlockMedium() as Boolean
+VerifyDataSizePublic Function VerifyDataSize() as Integer
+VerifyDiscPublic Function VerifyDisc(ByVal StopOnMismatch as Boolean, _
+ByVal FireVerifyEventOnAllFiles as Boolean) as Boolean
+VerifyProgressPublic Function VerifyProgress() as Integer
+WritablePublic Function Writable() as Boolean
+WriteSpeedPublic Function WriteSpeed() as Integer
+BurnProof
+
+CacheSize
+
+FinalizeDisc
+
+JolietFS
+
+MCDBVersion
+
+PerformCloseTrackOnly
+
+PerformOPC
+
+PostGapSize
+
+ReplaceFile
+
+TestWrite
+
+UDFBridge
+
+VolumeID
+
+Requirements
+Namespace: BinaryMagic
+Assembly: mcdbnet1.dll
+
+----------
+
+MCDBControl New
+
+Visual Basic (Declaration)
+
+Public Sub New()
+
+C# (Declaration)
+
+Example
+Me.mcdb = New BinaryMagic.MCDBControl
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl Constructor
+
+See also:
+Class MCDBControl
+----------
+
+MCDBControl.OnEraseDone
+
+Visual Basic (Declaration)
+
+Private Sub OnEraseDone(ByVal DeviceId as Integer, ByVal Failed as Boolean)
+
+Parameters
+ByVal DeviceId as Integer
+ByVal Failed as Boolean
+
+Example
+Private Sub McdbControl1_OnEraseDone(ByVal DeviceId As Integer, ByVal Failed As Boolean) Handles mcdb.OnEraseDone
+If Failed Then
+RichTextBox1.AppendText("!!! EraseDisc Failed!!" + Chr(13))
+Else
+RichTextBox1.AppendText(">>> EraseDisc Done !!!" + Chr(13))
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.OnSmartReferencesGenDone
+
+Visual Basic (Declaration)
+
+Private Sub OnSmartReferencesGenDone (ByVal Failed as Boolean,  ByVal SavedBytes as Long)
+
+Parameters
+ByVal Failed as Boolean
+ByVal SavedBytes as Long
+
+Example
+Private Sub McdbControl1_OnSmartReferencesGenDone(ByVal Failed As Boolean, ByVal SavedBytes As Long) Handles mcdb.OnSmartReferencesGenDone
+If Failed Then
+RichTextBox1.AppendText("!!! SmartReferences Failed")
+If MsgBox("GenerateSmartReferences  failed, Still want to continue?", MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+Exit Sub
+End If
+End If
+RichTextBox1.AppendText(">>> SmartReferencesGeneration Done,  will save " & SavedBytes & " Bytes")
+' Now BurnFiles()
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.OnVerifyDone
+
+Visual Basic (Declaration)
+
+Public Sub OnVerifyDone(ByVal DeviceId as Integer, ByVal FileId as Integer, ByVal Failed as Boolean)
+
+Parameters
+ByVal DeviceId as Integer
+ByVal FileId as Integer
+ByVal Failed as Boolean
+
+Example
+Private Sub McdbControl1_OnVerifyDone(ByVal DeviceId As Integer, ByVal FileId As Integer, ByVal Failed As Boolean) Handles mcdb.OnVerifyDone
+If FileId <> -1 Then
+If Failed Then
+RichTextBox1.AppendText("!!! " + mcdb.FileName(FileId) + " Failed")
+Else
+RichTextBox1.AppendText(">>> " + mcdb.FileName(FileId) + " Okay !!!")
+End If
+Else
+If Failed Then
+RichTextBox1.AppendText(Chr(13) + "!!! Verify Done Failed !!!" + Chr(13))
+Else
+RichTextBox1.AppendText(Chr(13) + ">>> Verify Done, No error found!" + Chr(13))
+End If
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.OnWriteDone
+
+Visual Basic (Declaration)
+
+Private Sub OnWriteDone(ByVal DeviceId as Integer, ByVal Failed as Boolean)
+
+Parameters
+ByVal DeviceId as Integer
+ByVal Failed as Boolean
+
+Example
+Private Sub McdbControl1_OnWriteDone(ByVal DeviceId As Integer, ByVal Failed As Boolean) Handles mcdb.OnWriteDone
+If Failed Then
+RichTextBox1.AppendText("!!! Write Done called, Failed !!!" + Chr(13))
+Else
+RichTextBox1.AppendText(">>> Write Done, Success!!!" + Chr(13))
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.AbortOperation
+Abort Burn, BuildISOImage, BurnISOImage or VerifyDisc operation.
+
+Visual Basic (Declaration)
+
+Public Sub AbortOperation()
+
+This method is used to abort the on-going operation. It instantly stops writing data to the disc and leaves the disc as-is. This method should be used with care, as the disc will be left in an open state.
+
+Note: This method will not abort an EraseDisc operation.
+
+Example
+
+See also:
+Class MCDBControl, Burn, BuildISOImage, BurnISOImage, VerifyDisc
+
+----------
+
+MCDBControl.BlocksWritten
+
+Visual Basic (Declaration)
+
+Public Function BlocksWritten() as Integer
+
+Returns the number of Blocks (1 Block = 2048 Bytes) written to the disc, this method is only available during Burn, BuildISOImage, BurnISOImage Operation.
+
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.BootImage
+Sets the boot image path, for media.
+
+Visual Basic (Declaration)
+
+Public Function BootImage(ByVal Path as String) as Boolean
+
+Set the BootImage file path. If sets, the Disc will be bootable.
+
+Parameters
+ByVal Path as String
+
+Example
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.BuildISOImage
+Builds ISO image file.
+
+Visual Basic (Declaration)
+
+Public Function BuildISOImage(ByVal ISOFileName as String) as Boolean
+
+This method is used to build ISO image file from the data, added to layout. ISOFileName is the name of ISO image file, to be built.
+Parameters
+ByVal ISOFileName as String
+Return Value
+Return value is TRUE if ISO image file started successfully otherwise a FALSE value is return.
+Example
+mcdb.ClearAll()
+mcdb.InsertFile("\", "c:\boot.ini")
+mcdb.Prepare()
+If mcdb.BuildISOImage("C:\test.iso") Then
+AppendLog(">>> Now Burning ...")
+Else
+AppendLog(">>> Burn() Failed")
+End If
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.Burn
+Starts the process of burning files/directories on Disc.
+
+Visual Basic (Declaration)
+
+Public Function Burn() as Boolean
+
+This method begins the disc writing operation. Files/Directories, to be burnt on a media, should be added to disc layout, prior to calling this method. This operation is asynchronous i.e. this method will return a TRUE or a FALSE immediately, as soon as the writing process is initiated. An OnWriteDone event will be triggered when write process is finished (whether successfully or not).
+
+Example
+mcdb.ClearAll()
+mcdb.InsertFile("\", "c:\boot.ini")
+mcdb.Prepare()
+If mcdb.Burn() Then
+AppendLog(">>> Now Burning ...")
+Else
+AppendLog(">>> Burn() Failed")
+End If
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.BurnISOImage
+Starts the process of burning ISO image on media.
+
+Visual Basic (Declaration)
+
+Public Function BurnISOImage(ByVal ISOFileName as String) as Boolean
+
+This method begins the disc writing operation. To be burnt on a media, should be built, prior to calling this method. This operation is asynchronous i.e. this method will return a TRUE or a FALSE immediately, as soon as the writing process is initiated. An OnWriteDone event will be triggered when write process is finished (whether successfully or not).
+
+Parameters
+ByVal ISOFileName as String
+FileName is the name of ISO image file, to be burned. ISO image file,
+Example
+mcdb.BurnISOImage("C:\test.iso")
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.CachePosition
+Gets the software's internal cache buffer status.
+
+Visual Basic (Declaration)
+
+Public Function CachePosition() as Integer
+
+Returns the Position of Cache (Cache used).
+
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ClearAll
+Clear all files and directories from disc layout.
+
+Visual Basic (Declaration)
+
+Public Sub ClearAll()
+
+Clears the Disc layout.
+
+Example
+mcdb.ClearAll()
+mcdb.InsertFile("\", "c:\boot.ini")
+mcdb.Prepare()
+If mcdb.Burn() Then
+AppendLog(">>> Now Burning ...")
+Else
+AppendLog(">>> Burn() Failed")
+End If
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ClearAllEx
+Clear all files and directories from disc layout.
+
+Visual Basic (Declaration)
+
+Public Sub ClearAllEx(ByVal Reserved1 as Integer, _
+ByVal Reserved2 as String)
+
+Parameters
+ByVal Reserved1 as Integer
+ByVal Reserved2 as String*
+
+Example
+example
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.CreateDir
+Creates a directory in disc layout.
+
+Visual Basic (Declaration)
+
+Public Function CreateDir(ByVal Path as String, ByVal DirName as String) as Integer
+
+Create a Directory on Disc Layout.
+
+Example
+mcdb.ClearAll()
+mcdb.CreateDir("\", "Dir1")
+mcdb.CreateDir("\Dir1", "Dir2")
+mcdb.InsertFile("\Dir1\Dir2", "c:\boot.ini")
+mcdb.Prepare()
+If mcdb.Burn() Then
+AppendLog(">>> Now Burning ...")
+Else
+AppendLog(">>> Burn() Failed")
+End If
+
+Parameters
+ByVal Path as String
+ByVal DirName as String
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.CreateSmartReference
+
+Visual Basic (Declaration)
+
+Public Function CreateSmartReference(ByVal ReferenceToFile as String, _
+ByVal DestinationDir as String, ByVal LongFileName as String, ByVal ShortFileName as String) as Integer
+
+Example
+
+Parameters
+ByVal ReferenceToFile as String
+ByVal DestinationDir as String
+ByVal LongFileName as String
+ByVal ShortFileName as String
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DestinationPath
+
+Visual Basic (Declaration)
+
+Public Function DestinationPath(ByVal FileId as Integer) as String
+
+Parameters
+ByVal FileId as Integer
+
+Example
+example
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceBufferPosition
+Gets the device's internal cache buffer status.
+
+Visual Basic (Declaration)
+
+Public Function DeviceBufferPosition() as Integer
+
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceBufferSize
+Gets the size of device cache buffer.
+
+Visual Basic (Declaration)
+
+Public Function DeviceBufferSize() as Integer
+
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceCan
+Validates the selected device as capable of performing an operation.
+
+Visual Basic (Declaration)
+
+Public Function DeviceCan(ByVal cId as Byte) as Boolean
+
+This method is used to validate that the currently selected device is capable of performaing an operation, specified by cId.
+Possible cID values
+
+DC_READ_CDR            1
+DC_READ_CDRW           2
+DC_READ_DVDRAM         3
+DC_READ_DVDR           4
+DC_READ_DVDRW          5
+DC_READ_DVDPLUSR       6
+DC_READ_DVDPLUSRW      7
+DC_READ_DVDPLUSRDL     8
+
+DC_WRITE_CDR           11
+DC_WRITE_CDRW          12
+DC_WRITE_DVDRAM        13
+DC_WRITE_DVDR          14
+DC_WRITE_DVDRW         15
+DC_WRITE_DVDPLUSR      16
+DC_WRITE_DVDPLUSRW     17
+DC_WRITE_DVDPLUSRDL    18
+
+DC_TEST_WRITE          21
+DC_UNDERRUNPROTECTION  22
+
+Example
+' Following example will display that device can write on CD-R or not
+if DeviceCan(DC_WRITE_CDR) Then
+Print "Device can write on CD-R"
+Else
+Print "This device can not write on CD-R"
+
+End If
+
+Parameters
+ByVal cId as Byte
+
+Return Value:
+Return value is TRUE if the device is capable of performing the specified operation otherwise a FALSE value is return.
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceCount
+Gets the total number of devices (burners), attached to the system.
+
+Visual Basic (Declaration)
+
+Public Function DeviceCount() as Integer
+
+Example
+' Following sample will fill the Combo Box with available CD/DVD Burners
+ComboBox1.Items.Clear()
+For i = 0 To mcdb.DeviceCount - 1
+ComboBox1.Items.Add(mcdb.DeviceName(i))
+Next
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceIsBurner
+Validates the selected device as burner.
+
+Visual Basic (Declaration)
+
+Public Function DeviceIsBurner() as Boolean
+
+This method is used to validate that the selected device is capable of burning.
+
+Return Value
+Return value is TRUE if the selected device is capable of burning otherwise a FALSE value is return.
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceMaxReadSpeed
+Returns the maximum read speed of selected device.
+
+Visual Basic (Declaration)
+
+Public Function DeviceMaxReadSpeed() as Integer
+
+This is a method returns the maximum physical read speed of the currently selected CD/DVD device in KB/sec.
+
+Note: 1x of CD equals 176.46 KB/sec. 1x of DVD equals 1385 KB/sec.
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceMaxWriteSpeed
+Returns the maximum write speed of selected device.
+
+Visual Basic (Declaration)
+
+Public Function DeviceMaxWriteSpeed() as Integer
+
+This is a method returns the maximum physical write speed of the currently selected CD/DVD device in KB/sec.
+
+Note: 1x of CD equals 176.46 KB/sec. 1x of DVD equals 1385 KB/sec.
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceName
+Gets name and model of the currently selected device.
+
+Visual Basic (Declaration)
+
+Public Function DeviceName(ByVal Id as Byte) as String
+
+Example
+' Following sample will fill the Combo Box with available CD/DVD Burners
+ComboBox1.Items.Clear()
+For i = 0 To mcdb.DeviceCount - 1
+ComboBox1.Items.Add(mcdb.DeviceName(i))
+Next
+
+Parameters
+ByVal Id as Byte
+
+See also:
+Class MCDBControl, DeviceCount
+
+----------
+
+MCDBControl.DeviceOperationSpeed
+Returns the actual speed of Burning, Verify.
+
+Visual Basic (Declaration)
+
+Public Function DeviceOperationSpeed() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DeviceSpeed
+Set the Read or Write Speed of the Device
+
+Visual Basic (Declaration)
+
+Public Sub DeviceSpeed(ByVal ReadSpeed as Integer, ByVal WriteSpeed as Integer)
+
+Parameters
+ByVal ReadSpeed as Integer
+ByVal WriteSpeed as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DirsCount
+Returns the count of directories added to the image, to be burnt on media.
+
+Visual Basic (Declaration)
+
+Public Function DirsCount() as Integer
+
+See also:
+Class MCDBControl, FilesCount
+
+----------
+
+MCDBControl.DirName
+
+Visual Basic (Declaration)
+
+Public Function DirName(ByVal FileId as Integer) as String
+
+Example
+' Following sample will fill the Combo Box with available CD/DVD Burners
+ComboBox1.Items.Clear()
+For i = 0 To mcdb.DeviceCount - 1
+ComboBox1.Items.Add(mcdb.DeviceName(i))
+Next
+
+Parameters
+ByVal FileId as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DisableSmartReference
+Set not to include the files/folders for Smart Reference.
+
+Visual Basic (Declaration)
+
+Public Sub DisableSmartReference(ByVal SmartReferences as Boolean)
+
+Parameters
+ByVal SmartReferences as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.DiscIs
+Gets the type of media inserted in the device.
+
+Visual Basic (Declaration)
+
+Public Function DiscIs() as Byte
+
+Example
+Dim mediums(18) As String
+mediums(0) = "UNKNOWN"
+mediums(1) = "CD-ROM"
+mediums(2) = "CD-R"
+mediums(3) = "CD-RW"
+mediums(4) = "DVD-ROM"
+mediums(5) = "DVD-R"
+mediums(6) = "DVD-RAM"
+mediums(7) = "DVD-RW"
+mediums(8) = "DVD-RWRO"
+mediums(9) = "DVD-RWSR"
+mediums(10) = "DVD+RW"
+mediums(11) = "DVD+R"
+mediums(12) = "DVD+R (Dual Layer)"
+mediums(13) = "DVD+RW (Dual Layer)"
+mediums(14) = "DVD-R (Dual Layer)"
+mediums(15) = "Double Density CD-ROM"
+mediums(16) = "Double Density CD-R"
+mediums(17) = "Double Density CD-RW"
+Print ">>> Disc in Drive is " & mediums(mcdb.DiscIs)
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.EjectMedium
+Ejects media from the currently selected device.
+
+Visual Basic (Declaration)
+
+Public Function EjectMedium() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.Erasable
+Validates the media as Erasable/Rewriteable.
+
+Visual Basic (Declaration)
+
+Public Function Erasable() as Boolean
+
+Example
+If mcdb.Erasable() Then        ' check wether disc is erasable or not
+mcdb.EraseDisc(True)
+End If
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.EraseDisc
+Starts the process of erasing media.
+
+Visual Basic (Declaration)
+
+Public Function EraseDisc(ByVal Quick as Boolean) as Boolean
+
+Example
+If mcdb.Erasable() Then        ' check wether disc is erasable or not
+mcdb.EraseDisc(True)
+End If
+
+Parameters
+ByVal Quick as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ErrorNumber
+Gets the last error number.
+
+Visual Basic (Declaration)
+
+Public Function ErrorNumber() as Integer
+
+This method returns the last error number of the Operation. The returned value is a Long. This can be used in conjunction with ErrorString. It can be matched against one of the following values to determine the exact error type:
+
+0          "NO ERROR"
+1          "DATA NOT PREPARED FOR BURNING/WRITING"
+2          "CAN'T OPEN FILE FOR READ"
+3          "CAN'T CREATE FILE"
+4          "ABORTED BY USER"
+512        "NO SEEK COMPLETE"
+1024       "LOGICAL UNIT NOT READY, CAUSE NOT REPORTABLE"
+1025       "LOGICAL UNIT IS IN PROCESS OF BECOMING READY"
+1026       "LOGICAL UNIT NOT READY, INITIALIZING CMD. REQUIRED"
+1027       "LOGICAL UNIT NOT READY, MANUAL INTERVENTION REQUIRED"
+1028       "LOGICAL UNIT NOT READY, FORMAT IN PROGRESS"
+1031       "LOGICAL UNIT NOT READY, OPERATION IN PROGRESS"
+1032       "LOGICAL UNIT NOT READY, LONG WRITE IN PROGRESS"
+1033       "LOGICAL UNIT NOT READY, SELF-TEST IN PROGRESS"
+1280       "LOGICAL UNIT DOES NOT RESPOND TO SELECTION"
+1536       "NO REFERENCE POSITION FOUND"
+1792       "MULTIPLE PERIPHERAL DEVICES SELECTED"
+2048       "LOGICAL UNIT COMMUNICATION FAILURE"
+2049       "LOGICAL UNIT COMMUNICATION TIME-OUT"
+2050       "LOGICAL UNIT COMMUNICATION PARITY ERROR"
+2051       "LOGICAL UNIT COMMUNICATION CRC ERROR (ULTRA-DMA/32)"
+2052       "UNREACHABLE COPY TARGET"
+2304       "TRACK FOLLOWING ERROR"
+2305       "TRACKING SERVO FAILURE"
+2306       "FOCUS SERVO FAILURE"
+2307       "SPINDLE SERVO FAILURE"
+2308       "HEAD SELECT FAULT"
+2560       "ERROR LOG OVERFLOW"
+2816       "WARNING"
+2817       "WARNING - SPECIFIED TEMPERATURE EXCEEDED"
+2818       "WARNING - ENCLOSURE DEGRADED"
+3072       "WRITE ERROR"
+3079       "WRITE ERROR - RECOVERY NEEDED"
+3080       "WRITE ERROR - RECOVERY FAILED"
+3081       "WRITE ERROR - LOSS OF STREAMING"
+3082       "WRITE ERROR - PADDING BLOCKS ADDED"
+3328       "ERROR DETECTED BY THIRD PARTY TEMPORARY INITIATOR"
+3329       "THIRD PARTY DEVICE FAILURE"
+3330       "COPY TARGET DEVICE NOT REACHABLE"
+3331       "INCORRECT COPY TARGET DEVICE TYPE"
+3332       "COPY TARGET DEVICE DATA UNDERRUN"
+3333       "COPY TARGET DEVICE DATA OVERRUN"
+4352       "UNRECOVERED READ ERROR"
+4353       "READ RETRIES EXHAUSTED"
+4354       "ERROR TOO LONG TO CORRECT"
+4357       "L-EC UNCORRECTABLE ERROR"
+4358       "CIRC UNRECOVERED ERROR"
+4365       "DE-COMPRESSION CRC ERROR"
+4366       "CANNOT DECOMPRESS USING DECLARED ALGORITHM"
+4367       "ERROR READING UPC/EAN NUMBER"
+4368       "ERROR READING ISRC NUMBER"
+4369       "READ ERROR - LOSS OF STREAMING"
+5120       "RECORDED ENTITY NOT FOUND"
+5121       "RECORD NOT FOUND"
+5376       "RANDOM POSITIONING ERROR"
+5377       "MECHANICAL POSITIONING ERROR"
+5378       "POSITIONING ERROR DETECTED BY READ OF MEDIUM"
+5888       "RECOVERED DATA WITH NO ERROR CORRECTION APPLIED"
+5889       "RECOVERED DATA WITH RETRIES"
+5890       "RECOVERED DATA WITH POSITIVE HEAD OFFSET"
+5891       "RECOVERED DATA WITH NEGATIVE HEAD OFFSET"
+5892       "RECOVERED DATA WITH RETRIES AND/OR CIRC APPLIED"
+5893       "RECOVERED DATA USING PREVIOUS SECTOR ID"
+5895       "RECOVERED DATA WITHOUT ECC - RECOMMEND REASSIGNMENT"
+5896       "RECOVERED DATA WITHOUT ECC - RECOMMEND REWRITE"
+5897       "RECOVERED DATA WITHOUT ECC - DATA REWRITTEN"
+6144       "RECOVERED DATA WITH ERROR CORRECTION APPLIED"
+6145       "RECOVERED DATA WITH ERROR CORR. & RETRIES APPLIED"
+6146       "RECOVERED DATA - DATA AUTO-REALLOCATED"
+6147       "RECOVERED DATA WITH CIRC"
+6148       "RECOVERED DATA WITH L-EC"
+6149       "RECOVERED DATA - RECOMMEND REASSIGNMENT"
+6150       "RECOVERED DATA - RECOMMEND REWRITE"
+6152       "RECOVERED DATA WITH LINKING"
+6656       "PARAMETER LIST LENGTH ERROR"
+6912       "SYNCHRONOUS DATA TRANSFER ERROR"
+7424       "MISCOMPARE DURING VERIFY OPERATION"
+8192       "INVALID COMMAND OPERATION CODE"
+8448       "LOGICAL BLOCK ADDRESS OUT OF RANGE"
+8449       "INVALID ELEMENT ADDRESS"
+8450       "INVALID ADDRESS FOR WRITE"
+9216       "INVALID FIELD IN CDB"
+9217       "CDB DECRYPTION ERROR"
+9472       "LOGICAL UNIT NOT SUPPORTED"
+9728       "INVALID FIELD IN PARAMETER LIST"
+9729       "PARAMETER NOT SUPPORTED"
+9730       "PARAMETER VALUE INVALID"
+9731       "THRESHOLD PARAMETERS NOT SUPPORTED"
+9732       "INVALID RELEASE OF PERSISTENT RESERVATION"
+9733       "DATA DECRYPTION ERROR"
+9734       "TOO MANY TARGET DESCRIPTORS"
+9735       "UNSUPPORTED TARGET DESCRIPTOR TYPE CODE"
+9736       "TOO MANY SEGMENT DESCRIPTORS"
+9737       "UNSUPPORTED SEGMENT DESCRIPTOR TYPE CODE"
+9738       "UNEXPECTED INEXACT SEGMENT"
+9739       "INLINE DATA LENGTH EXCEEDED"
+9740       "INVALID OPERATION FOR COPY SOURCE OR DESTINATION"
+9741       "COPY SEGMENT GRANULARITY VIOLATION"
+9984       "WRITE PROTECTED"
+9985       "HARDWARE WRITE PROTECTED"
+9986       "LOGICAL UNIT SOFTWARE WRITE PROTECTED"
+9987       "ASSOCIATED WRITE PROTECT"
+9988       "PERSISTENT WRITE PROTECT"
+9989       "PERMANENT WRITE PROTECT"
+9990       "CONDITIONAL WRITE PROTECT"
+10240      "NOT READY TO READY CHANGE, MEDIUM MAY HAVE CHANGED"
+10241      "IMPORT OR EXPORT ELEMENT ACCESSED"
+10496      "POWER ON, RESET, OR BUS DEVICE RESET OCCURRED"
+10497      "POWER ON OCCURRED"
+10498      "SCSI BUS RESET OCCURRED"
+10499      "BUS DEVICE RESET FUNCTION OCCURRED"
+10500      "DEVICE INTERNAL RESET"
+10501      "TRANSCEIVER MODE CHANGED TO SINGLE-ENDED"
+10502      "TRANSCEIVER MODE CHANGED TO LVD"
+10752      "PARAMETERS CHANGED"
+10753      "MODE PARAMETERS CHANGED"
+10754      "LOG PARAMETERS CHANGED"
+10755      "RESERVATIONS PREEMPTED"
+10756      "RESERVATIONS RELEASED"
+10757      "REGISTRATIONS PREEMPTED"
+11008      "COPY CANNOT EXECUTE SINCE HOST CANNOT DISCONNECT"
+11264      "COMMAND SEQUENCE ERROR"
+11267      "CURRENT PROGRAM AREA IS NOT EMPTY"
+11268      "CURRENT PROGRAM AREA IS EMPTY"
+11270      "PERSISTENT PREVENT CONFLICT"
+11776      "INSUFFICIENT TIME FOR OPERATION"
+12032      "COMMANDS CLEARED BY ANOTHER INITIATOR"
+12288      "INCOMPATIBLE MEDIUM INSTALLED"
+12289      "CANNOT READ MEDIUM - UNKNOWN FORMAT"
+12290      "CANNOT READ MEDIUM - INCOMPATIBLE FORMAT"
+12291      "CLEANING CARTRIDGE INSTALLED"
+12292      "CANNOT WRITE MEDIUM - UNKNOWN FORMAT"
+12293      "CANNOT WRITE MEDIUM - INCOMPATIBLE FORMAT"
+12294      "CANNOT FORMAT MEDIUM - INCOMPATIBLE MEDIUM"
+12295      "CLEANING FAILURE"
+12296      "CANNOT WRITE - APPLICATION CODE MISMATCH"
+12297      "CURRENT SESSION NOT FIXATED FOR APPEND"
+12304      "MEDIUM NOT FORMATTED"
+12544      "MEDIUM FORMAT CORRUPTED"
+12545      "FORMAT COMMAND FAILED"
+12546      "ZONED FORMATTING FAILED DUE TO SPARE LINKING"
+13312      "ENCLOSURE FAILURE"
+13568      "ENCLOSURE SERVICES FAILURE"
+13569      "UNSUPPORTED ENCLOSURE FUNCTION"
+13570      "ENCLOSURE SERVICES UNAVAILABLE"
+13571      "ENCLOSURE SERVICES TRANSFER FAILURE"
+13572      "ENCLOSURE SERVICES TRANSFER REFUSED"
+14080      "ROUNDED PARAMETER"
+14592      "SAVING PARAMETERS NOT SUPPORTED"
+14848      "MEDIUM NOT PRESENT"
+14849      "MEDIUM NOT PRESENT - TRAY CLOSED"
+14850      "MEDIUM NOT PRESENT - TRAY OPEN"
+14851      "MEDIUM NOT PRESENT - LOADABLE"
+14852      "MEDIUM NOT PRESENT - MEDIUM AUXILIARY MEMORY ACCESSIBLE"
+15117      "MEDIUM DESTINATION ELEMENT FULL"
+15118      "MEDIUM SOURCE ELEMENT EMPTY"
+15119      "END OF MEDIUM REACHED"
+15121      "MEDIUM MAGAZINE NOT ACCESSIBLE"
+15122      "MEDIUM MAGAZINE REMOVED"
+15123      "MEDIUM MAGAZINE INSERTED"
+15124      "MEDIUM MAGAZINE LOCKED"
+15125      "MEDIUM MAGAZINE UNLOCKED"
+15126      "MECHANICAL POSITIONING OR CHANGER ERROR"
+15616      "INVALID BITS IN IDENTIFY MESSAGE"
+15872      "LOGICAL UNIT HAS NOT SELF-CONFIGURED YET"
+15873      "LOGICAL UNIT FAILURE"
+15874      "TIMEOUT ON LOGICAL UNIT"
+15875      "LOGICAL UNIT FAILED SELF-TEST"
+15876      "LOGICAL UNIT UNABLE TO UPDATE SELF-TEST LOG"
+16128      "TARGET OPERATING CONDITIONS HAVE CHANGED"
+16129      "MICROCODE HAS BEEN CHANGED"
+16130      "CHANGED OPERATING DEFINITION"
+16131      "INQUIRY DATA HAS CHANGED"
+16132      "COMPONENT DEVICE ATTACHED"
+16133      "DEVICE IDENTIFIER CHANGED"
+16134      "REDUNDANCY GROUP CREATED OR MODIFIED"
+16135      "REDUNDANCY GROUP DELETED"
+16136      "SPARE CREATED OR MODIFIED"
+16137      "SPARE DELETED"
+16138      "VOLUME SET CREATED OR MODIFIED"
+16139      "VOLUME SET DELETED"
+16140      "VOLUME SET DEASSIGNED"
+16141      "VOLUME SET REASSIGNED"
+16142      "REPORTED LUNS DATA HAS CHANGED"
+16143      "ECHO BUFFER OVERWRITTEN"
+16144      "MEDIUM LOADABLE"
+16145      "MEDIUM AUXILIARY MEMORY ACCESSIBLE"
+17152      "MESSAGE ERROR"
+17408      "INTERNAL TARGET FAILURE"
+17664      "SELECT OR RESELECT FAILURE"
+17920      "UNSUCCESSFUL SOFT RESET"
+18176      "SCSI PARITY ERROR"
+18177      "DATA PHASE CRC ERROR DETECTED"
+18178      "SCSI PARITY ERROR DETECTED DURING ST DATA PHASE"
+18179      "INFORMATION UNIT CRC ERROR DETECTED"
+18180      "ASYNCHRONOUS INFORMATION PROTECTION ERROR DETECTED"
+18432      "INITIATOR DETECTED ERROR MESSAGE RECEIVED"
+18688      "INVALID MESSAGE ERROR"
+18944      "COMMAND PHASE ERROR"
+19200      "DATA PHASE ERROR"
+19456      "LOGICAL UNIT FAILED SELF-CONFIGURATION"
+19968      "OVERLAPPED COMMANDS ATTEMPTED"
+20736      "ERASE FAILURE"
+20737      "ERASE FAILURE - INCOMPLETE ERASE OPERATION DETECTED"
+21248      "MEDIA LOAD OR EJECT FAILED"
+21250      "MEDIUM REMOVAL PREVENTED"
+21762      "INSUFFICIENT RESERVATION RESOURCES"
+21763      "INSUFFICIENT RESOURCES"
+21764      "INSUFFICIENT REGISTRATION RESOURCES"
+22272      "UNABLE TO RECOVER TABLE-OF-CONTENTS"
+23040      "OPERATOR REQUEST OR STATE CHANGE INPUT"
+23041      "OPERATOR MEDIUM REMOVAL REQUEST"
+23042      "OPERATOR SELECTED WRITE PROTECT"
+23043      "OPERATOR SELECTED WRITE PERMIT"
+23296      "LOG EXCEPTION"
+23297      "THRESHOLD CONDITION MET"
+23298      "LOG COUNTER AT MAXIMUM"
+23299      "LOG LIST CODES EXHAUSTED"
+23808      "FAILURE PREDICTION THRESHOLD EXCEEDED"
+23809      "MEDIA FAILURE PREDICTION THRESHOLD EXCEEDED"
+23810      "LOGICAL UNIT FAILURE PREDICTION THRESHOLD EXCEEDED"
+23811      "SPARE AREA EXHAUSTION PREDICTION THRESHOLD EXCEEDED"
+24063      "FAILURE PREDICTION THRESHOLD EXCEEDED (FALSE)"
+24064      "LOW POWER CONDITION ON"
+24065      "IDLE CONDITION ACTIVATED BY TIMER"
+24066      "STANDBY CONDITION ACTIVATED BY TIMER"
+24067      "IDLE CONDITION ACTIVATED BY COMMAND"
+24068      "STANDBY CONDITION ACTIVATED BY COMMAND"
+25344      "END OF USER AREA ENCOUNTERED ON THIS TRACK"
+25345      "PACKET DOES NOT FIT IN AVAILABLE SPACE"
+25600      "ILLEGAL MODE FOR THIS TRACK"
+25601      "INVALID PACKET SIZE"
+25856      "VOLTAGE FAULT"
+28416      "COPY PROTECTION KEY EXCHANGE FAILURE - AUTHENTICATION FAILURE"
+28417      "COPY PROTECTION KEY EXCHANGE FAILURE - KEY NOT PRESENT"
+28418      "COPY PROTECTION KEY EXCHANGE FAILURE - KEY NOT ESTABLISHED"
+28419      "READ OF SCRAMBLED SECTOR WITHOUT AUTHENTICATION"
+28420      "MEDIA REGION CODE IS MISMATCHED TO LOGICAL UNIT REGION"
+28421      "DRIVE REGION MUST BE PERMANENT/REGION RESET COUNT ERROR"
+29184      "SESSION FIXATION ERROR"
+29185      "SESSION FIXATION ERROR WRITING LEAD-IN"
+29186      "SESSION FIXATION ERROR WRITING LEAD-OUT"
+29187      "SESSION FIXATION ERROR - INCOMPLETE TRACK IN SESSION"
+29188      "EMPTY OR PARTIALLY WRITTEN RESERVED TRACK"
+29189      "NO MORE TRACK RESERVATIONS ALLOWED"
+29440      "CD CONTROL ERROR"
+29441      "POWER CALIBRATION AREA ALMOST FULL"
+29442      "POWER CALIBRATION AREA IS FULL"
+29443      "POWER CALIBRATION AREA ERROR"
+29444      "PROGRAM MEMORY AREA UPDATE FAILURE"
+29445      "PROGRAM MEMORY AREA IS FULL"
+29446      "RMA/PMA IS ALMOST FULL"
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ErrorString
+Returns the description of last error.
+
+Visual Basic (Declaration)
+
+Public Function ErrorString() as String
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.FilesCount
+Returns the count of files added to the image, to be burnt on media.
+
+Visual Basic (Declaration)
+
+Public Function FilesCount() as Integer
+
+See also:
+Class MCDBControl, DirsCount
+
+----------
+
+MCDBControl.FileName
+
+Visual Basic (Declaration)
+
+Public Function FileName(ByVal FileId as Integer) as String
+
+Parameters
+ByVal FileId as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.FileSize
+
+Visual Basic (Declaration)
+
+Public Function FileSize(ByVal FileId as Integer) as Long
+
+Parameters
+ByVal FileId as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.FreeBlocksOnDisc
+Returns the count of free blocks on media.
+
+Visual Basic (Declaration)
+
+Public Function FreeBlocksOnDisc() as Integer
+
+Returns the number of Blocks (1 Block = 2048 Bytes) available on the Disc.
+
+Note: This property will return 0 Blocks if disk is finalized.
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.GenerateSmartReferences
+
+Visual Basic (Declaration)
+
+Public Function GenerateSmartReferences() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ImageSize
+Returns the total Image size of the Data to be burn.
+
+Visual Basic (Declaration)
+
+Public Function ImageSize() as Integer
+
+This method returns the actual image size in blocks (2048 bytes in each block). The image size is the size of data that will be written to the media or the size of the .ISO image file, if it is saved to the hard drive. The image size is only available after Prepare method has been invoked.
+
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ImportSession
+Imports a previously created session.
+
+Visual Basic (Declaration)
+
+Public Function ImportSession(ByVal SessionNo as Byte, _
+ByVal DestinationDir as String) as Integer
+
+This method is used to import a previously created session
+
+Note: Multi-session and importing of any previous session is restricted for UDF sessions on DVD+RW, DVD-RW and DVD-RAM.
+Parameters
+ByVal SessionNo as Byte
+Specify the session number to import, To import last sessions, set SessionNo as 0.
+ByVal DestinationDir as String
+specifies the path on media where the session[s] will be imported.
+
+Return Value: Return value is non-zero if session is imported successfully otherwise a 0 value is return.
+See also:
+Class MCDBControl, SessionsOnDisc
+
+----------
+
+MCDBControl.InitializeASPI
+Initialize the ASPI Layer.
+
+Visual Basic (Declaration)
+
+Public Function InitializeASPI(ByVal NoInternalASPI as Boolean, ByVal wnASPIDLLPath as String, _
+ByVal Reserved1 as Integer, ByVal Reserved2 as String) as Boolean
+
+Parameters
+ByVal NoInternalASPI as Boolean
+Set NoInternalASPI parameter to True if you don't want to use the internal ASPI Layer.
+ByVal wnASPIDLLPath as String
+To User your own ASPI Layer,
+ByVal Reserved1 as Integer
+Reserved, Set it to 0
+ByVal Reserved2 as String
+Reserved, Set it to ""
+
+Return Value:
+Return value is TRUE if the Initialization operation is successful otherwise a FALSE value is return.
+Overloads:
+Public Function InitializeASPI() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.InitializeASPI
+
+Visual Basic (Declaration)
+
+Public Function InitializeASPI() as Boolean
+
+Overloads:
+Public Function InitializeASPI(ByVal NoInternalASPI as Boolean, ByVal wnASPIDLLPath as String, ByVal Reserved1 as Integer, ByVal Reserved2 as String) as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.InsertDir
+Adds a directory, to be burnt on media.
+
+Visual Basic (Declaration)
+
+Public Function InsertDir(ByVal DestinationPath as String, ByVal FilesPath as String, _
+ByVal FilesSpecs as String, ByVal Recursive as Boolean, ByVal SavePath as Boolean) as Integer
+
+This method is used to add directories, to be burnt on a CD/DVD. At least one file/directory is required before calling Burn method. DestinationPath is the path on media where the directory is inserted while FilesPath is the path of actual directory, to be inserted. FilesSpecs describes the file mask. Recursive enforces insertion of all underlying contents of source directory. SavePath specifies that the actual path of source directory is used when inserting the directory at destination location.
+Parameters
+ByVal DestinationPath as String
+ByVal FilesPath as String
+ByVal FilesSpecs as String
+ByVal Recursive as Boolean
+ByVal SavePath as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.InsertFile
+Adds single file, to be burnt on media.
+
+Visual Basic (Declaration)
+
+Public Function InsertFile(ByVal Path as String, _
+ByVal FileName as String) as Integer
+
+This method is used to add files, to be burnt on a CD/DVD. At least one file/directory is required before calling Burn method. Path is the path on media where the file is inserted while FileName is the path of actual file, to be inserted.
+Example
+mcdb.ClearAll()
+mcdb.InsertFile("\", "c:\boot.ini")
+mcdb.Prepare()
+If mcdb.Burn() Then
+AppendLog(">>> Now Burning ...")
+Else
+AppendLog(">>> Burn() Failed")
+End If
+
+Parameters
+ByVal Path as String
+ByVal FileName as String
+
+Return Value: Return value is non-zero if the insertion operation is successful otherwise a 0 value is return.
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.InsertFileWithName
+
+Visual Basic (Declaration)
+
+Public Function InsertFileWithName(ByVal Path as String, ByVal FileName as String, _
+ByVal LongNameOnDisc as String, ByVal ShortNameOnDisc as String) as Integer
+
+Parameters
+ByVal Path as String
+ByVal FileName as String
+ByVal LongNameOnDisc as String
+ByVal ShortNameOnDisc as String
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.IsDirectory
+
+Visual Basic (Declaration)
+
+Public Function IsDirectory(ByVal FileId as Integer) as Boolean
+
+Parameters
+ByVal FileId as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.LoadMedium
+Loads media from the currently selected device.
+
+Visual Basic (Declaration)
+
+Public Function LoadMedium() as Boolean
+
+This method is used to invoke a Load operation of the currently selected device.
+
+See also:
+Class MCDBControl, EjectMedium
+
+----------
+
+MCDBControl.LockMedium
+
+Visual Basic (Declaration)
+
+Public Function LockMedium() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.MaxWriteSpeed
+
+Visual Basic (Declaration)
+
+Public Function MaxWriteSpeed() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.Prepare
+
+Visual Basic (Declaration)
+
+Public Function Prepare() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ReadSpeed
+
+Visual Basic (Declaration)
+
+Public Function ReadSpeed() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ReadVolumeLabelOfDisc
+
+Visual Basic (Declaration)
+
+Public Function ReadVolumeLabelOfDisc(ByVal SessionNo as Integer) as String
+
+Parameters
+ByVal SessionNo as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.SelectDevice
+
+Visual Basic (Declaration)
+
+Public Function SelectDevice(ByVal Id as Byte) as Boolean
+
+Parameters
+ByVal Id as Byte
+
+See also:
+Class MCDBControl, SelectDeviceByLetter
+
+----------
+
+MCDBControl.SelectDeviceByLetter
+
+Visual Basic (Declaration)
+
+Public Function SelectDeviceByLetter(ByVal DriveLetter as Byte) as Boolean
+
+Parameters
+ByVal DriveLetter as Byte
+
+See also:
+Class MCDBControl, SelectDevice
+
+----------
+
+MCDBControl.SessionsOnDisc
+
+Visual Basic (Declaration)
+
+Public Function SessionsOnDisc() as Byte
+
+See also:
+Class MCDBControl, ImportSession
+
+----------
+
+MCDBControl.ShortFileName
+
+Visual Basic (Declaration)
+
+Public Function ShortFileName(ByVal FileId as Integer) as String
+
+Parameters
+ByVal FileId as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.SmartReferencesProgress
+
+Visual Basic (Declaration)
+
+Public Function SmartReferencesProgress() as Integer
+
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.SmartReferencesSize
+
+Visual Basic (Declaration)
+
+Public Function SmartReferencesSize() as Integer
+
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.SourcePath
+
+Visual Basic (Declaration)
+
+Public Function SourcePath(ByVal FileId as Integer) as String
+
+Parameters
+ByVal FileId as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.State
+
+Visual Basic (Declaration)
+
+Public Function State() as Integer
+
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+
+See also:
+Class MCDBControl
+
+Last Updated: 6/7/2007
+----------
+
+MCDBControl.TestUnitReady
+
+Visual Basic (Declaration)
+
+Public Function TestUnitReady() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.TotalBlocksOnDisc
+
+Visual Basic (Declaration)
+
+Public Function TotalBlocksOnDisc() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.UnlockDrive
+
+Visual Basic (Declaration)
+
+Public Function UnlockDrive() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.UnlockMedium
+
+Visual Basic (Declaration)
+
+Public Function UnlockMedium() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.VerifyDataSize
+
+Visual Basic (Declaration)
+
+Public Function VerifyDataSize() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.VerifyDisc
+
+Visual Basic (Declaration)
+
+Public Function VerifyDisc(ByVal StopOnMismatch as Boolean, ByVal FireVerifyEventOnAllFiles as Boolean) as Boolean
+
+Parameters
+ByVal StopOnMismatch as Boolean
+ByVal FireVerifyEventOnAllFiles as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.VerifyProgress
+
+Visual Basic (Declaration)
+
+Public Function VerifyProgress() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.Writable
+
+Visual Basic (Declaration)
+
+Public Function Writable() as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.WriteSpeed
+
+Visual Basic (Declaration)
+
+Public Function WriteSpeed() as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.BurnProof
+
+Visual Basic (Declaration)
+
+Public BurnProof as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.CacheSize
+Sets or Gets the size of software cache buffer.
+
+Visual Basic (Declaration)
+
+Public CacheSize as Integer
+
+This property is used to set or get the size of internal software cache buffer. It should be more than 2 MB.
+
+This property is used to give a basic level of Buffer Under Run Error Protection using software buffers. The data, to be burnt, is kept in the system RAM, before it is burnt to the disc.
+Example
+Private Sub Timer1_Elapsed(ByVal sender As System.Object, ByVal e As System.Timers.ElapsedEventArgs) Handles Timer1.Elapsed
+Const CS_IDLE As Integer = 0
+Const CS_WRITING As Integer = 1
+Const CS_ERASING As Integer = 2
+Const CS_BACKGROUNDFORMAT As Integer = 3
+Const CS_CLOSINGTRACK As Integer = 4
+Const CS_PREPARING As Integer = 5
+Const CS_ABORTING As Integer = 6
+Const CS_IMPORTINGSESSION As Integer = 7
+Const CS_BURNERROR_ABORTING As Integer = 8
+Const CS_VERIFYING As Integer = 9
+Const CS_CLOSINGDISC As Integer = 10
+Const CS_GEN_SM_REFERENCES As Integer = 11
+If mcdb.State = CS_IDLE Then
+msg.Text = "Idle"
+ElseIf mcdb.State = CS_ERASING Then
+msg.Text = "Erasing ..."
+ElseIf mcdb.State = CS_CLOSINGTRACK Then
+msg.Text = "Closing Track ..."
+ElseIf mcdb.State = CS_PREPARING Then
+msg.Text = "Preparing ..."
+ElseIf mcdb.State = CS_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_BURNERROR_ABORTING Then
+msg.Text = "Aborting ..."
+ElseIf mcdb.State = CS_GEN_SM_REFERENCES Then
+pb.Maximum = mcdb.SmartReferencesSize
+pb.Value = mcdb.SmartReferencesProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Gen Sm References ..."
+ElseIf mcdb.State = CS_WRITING Then
+pb.Maximum = mcdb.ImageSize
+pb.Value = mcdb.BlocksWritten
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002)) '& "( at " & mcdb.DeviceOperationSpeed & " KB/s"
+pbDB.Maximum = mcdb.DeviceBufferSize
+pbDB.Value = mcdb.DeviceBufferPosition
+pbSB.Maximum = mcdb.CacheSize
+pbSB.Value = mcdb.CachePosition
+msg.Text = "Writing ..."
+ElseIf mcdb.State = CS_VERIFYING Then
+pb.Maximum = mcdb.VerifyDataSize
+pb.Value = mcdb.VerifyProgress
+lSize.Text = Trim(Str((pb.Value * 0.002))) + "/" + Trim(Str(pb.Maximum * 0.002))
+msg.Text = "Verifying ..."
+End If
+End Sub
+
+See also:
+Class MCDBControl, CachePosition
+
+----------
+
+MCDBControl.FinalizeDisc
+
+Visual Basic (Declaration)
+
+Public FinalizeDisc as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.JolietFS
+
+Visual Basic (Declaration)
+
+Public JolietFS as Boolean
+
+See also:
+Class MCDBControl, UDFBridge
+
+----------
+
+MCDBControl.MCDBVersion
+
+Visual Basic (Declaration)
+
+Public MCDBVersion as String
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.PerformCloseTrackOnly
+
+Visual Basic (Declaration)
+
+Public PerformCloseTrackOnly as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.PerformOPC
+
+Visual Basic (Declaration)
+
+Public PerformOPC as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.PostGapSize
+
+Visual Basic (Declaration)
+
+Public PostGapSize as Integer
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.ReplaceFile
+
+Visual Basic (Declaration)
+
+Public ReplaceFile as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.TestWrite
+
+Visual Basic (Declaration)
+
+Public TestWrite as Boolean
+
+See also:
+Class MCDBControl
+
+----------
+
+MCDBControl.UDFBridge
+
+Visual Basic (Declaration)
+
+Public UDFBridge as Boolean
+
+See also:
+Class MCDBControl, JolietFS
+
+----------
+
+MCDBControl.VolumeIDTop  Previous
+
+Visual Basic (Declaration)
+
+Public VolumeID as String
+
+See also:
+Class MCDBControl, ReadVolumeLabelOfDisc
+
+----------
+
+Namespace BinaryMagic
+Class MCDBControl
+New
+OnEraseDone
+OnSmartReferencesGenDone
+OnVerifyDone
+OnWriteDone
+AbortOperation
+BlocksWritten
+BootImage
+BuildISOImage
+Burn
+BurnISOImage
+CachePosition
+ClearAll
+ClearAllEx
+CreateDir
+CreateSmartReference
+DestinationPath
+DeviceBufferPosition
+DeviceBufferSize
+DeviceCan
+DeviceCount
+DeviceIsBurner
+DeviceMaxReadSpeed
+DeviceMaxWriteSpeed
+DeviceName
+DeviceOperationSpeed
+DeviceSpeed
+DirsCount
+DirName
+DisableSmartReference
+DiscIs
+EjectMedium
+Erasable
+EraseDisc
+ErrorNumber
+ErrorString
+FilesCount
+FileName
+FileSize
+FreeBlocksOnDisc
+GenerateSmartReferences
+ImageSize
+ImportSession
+InitializeASPI
+InitializeASPI
+InsertDir
+InsertFile
+InsertFileWithName
+IsDirectory
+LoadMedium
+LockMedium
+MaxWriteSpeed
+Prepare
+ReadSpeed
+ReadVolumeLabelOfDisc
+SelectDevice
+SelectDeviceByLetter
+SessionsOnDisc
+ShortFileName
+SmartReferencesProgress
+SmartReferencesSize
+SourcePath
+State
+TestUnitReady
+TotalBlocksOnDisc
+UnlockDrive
+UnlockMedium
+VerifyDataSize
+VerifyDisc
+VerifyProgress
+Writable
+WriteSpeed
+BurnProof
+CacheSize
+FinalizeDisc
+JolietFS
+MCDBVersion
+PerformCloseTrackOnly
+PerformOPC
+PostGapSize
+ReplaceFile
+TestWrite
+UDFBridge
+VolumeID
+----------
+
+Welcome to Binary Magic's Magic CD/DVD Burner.
+To get started:
+
+.
+
+.
+
+Binary Magic, 2006
+----------
+

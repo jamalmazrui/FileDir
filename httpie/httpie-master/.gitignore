@@ -1,0 +1,11 @@
+dist
+httpie.egg-info
+build
+*.pyc
+*.egg
+.tox
+README.html
+.coverage
+htmlcov
+.idea
+.DS_Store

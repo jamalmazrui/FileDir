@@ -1,0 +1,1564 @@
+<!DOCTYPE HTML>
+
+
+<html>
+<head>
+	<title>Scraping HTML DOM elements using HtmlAgilityPack (HAP) in ASP.NET - CodeProject</title> 
+	<link type="text/css" rel="stylesheet" href="//codeproject.cachefly.net/App_Themes/CodeProject/Css/Main.min.css?dt=2.8.1509020.2">
+
+	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Description" content="Scrap/Parse the DOM elements of a website.; Author: Ashad Shanto; Updated: 6 Jan 2014; Section: ASP.NET; Chapter: Web Development; Updated: 6 Jan 2014" />
+<meta name="Keywords" content="ASP.NET, Intermediate, C#4.0, .NET4.5, webscraping,ASP.NET,Web Development,Free source code, tutorials" />
+<meta name="Author" content="Ashad Shanto" />
+<meta name="Rating" content="General" />
+<meta name="Revisit-After" content="1 days" />
+<meta name="application-name" content="CodeProject" />
+<meta name="google-translate-customization" content="d908bb7ce7aff658-4c2f3a504525c916-g629383f736781a8a-13" />
+
+<meta name="msapplication-navbutton-color" content="#FF9900" />
+<meta name="msapplication-tooltip" content="Your Development Resource." />
+<meta name="msapplication-starturl" content="http://www.codeproject.com/?pinned=true" />
+<meta name="msapplication-task" content="name=Homepage;action-uri=http://www.codeproject.com/;icon-uri=http://www.codeproject.com/favico.ico" />
+<meta name="msapplication-task" content="name=Latest Articles;action-uri=http://www.codeproject.com/script/articles/Latest.aspx;icon-uri=http://www.codeproject.com/favico.ico" />
+<meta name="msapplication-task" content="name=Questions and Answers;action-uri=http://www.codeproject.com/script/Answers/;icon-uri=http://www.codeproject.com/favico.ico" />
+<meta name="msapplication-task" content="name=The Lounge;action-uri=http://www.codeproject.com/Lounge.aspx;icon-uri=http://www.codeproject.com/favico.ico" />
+
+<link rel="dns-prefetch" href="//ajax.googleapis.com" /> 
+<link rel="canonical" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H" />
+
+
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - All Topics" href="http://www.codeproject.com/WebServices/ArticleRSS.aspx?cat=1" />
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - Android" href="http://www.codeproject.com/WebServices/ArticleRSS.aspx?cat=22" />
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - iOS" href="http://www.codeproject.com/WebServices/ArticleRSS.aspx?cat=25" />
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - C++" href="http://www.codeproject.com/WebServices/ArticleRSS.aspx?cat=2" />
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - C#" href="http://www.codeproject.com/WebServices/ArticleRSS.aspx?cat=3" />
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - Web" href="http://www.codeproject.com/WebServices/ArticleRSS.aspx?cat=23" />
+<link rel="alternate" type="application/rss+xml" title="CodeProject Lounge Postings" href="http://www.codeproject.com/webservices/LoungeRSS.aspx" />
+<meta name="robots" content="index, follow" />
+<link rel="search" type="application/opensearchdescription+xml" title="CodeProject" href="http://www.codeproject.com/info/OpenSearch.xml" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<base target="_top" />
+	<link rel="icon" href="/favicon.ico" type="image/ico" >
+<link rel="shortcut icon" href="/favicon.ico"  type="image/ico" >
+<link rel="apple-touch-icon" href="/images/FavIcon-Apple.png" type="image/png" >
+<script type="text/javascript" language="Javascript">//<![CDATA[
+function defrm () { /* thanks twitter */ document.write = ''; window.top.location = window.self.location;  setTimeout(function() { document.body.innerHTML = ''; }, 0);  window.self.onload = function(evt) { document.body.innerHTML = ''; }; }if (window.top !== window.self) {  try {  if (window.top.location.host) { /* will throw */ } else { defrm(); /* chrome */ }  } catch (ex) { defrm(); /* everyone else */ } }if (typeof(DemoUrl)!='undefined')   document.write(unescape('%3Cme')+'ta http'+'-equiv="re'+'fresh"                  con'+'tent="1;url='+DemoUrl+unescape('"%3CE'));
+(function() { 
+	var _dma = document.createElement('script');
+        _dma.type = 'text/javascript';
+        _dma.async = true;
+        _dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn2.developermedia.com/a.min.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+})();
+
+//]]>
+</script>
+
+	
+
+
+
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-1735123-1']);
+	_gaq.push(['_trackPageview']);
+	_gaq.push(['_setDomainName', 'www.codeproject.com']);
+	_gaq.push(['_setSessionTimeout', '1200']); 
+
+	(function () {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})(); 
+</script>
+
+
+</head>	
+
+<body class="ie ie11">
+
+<a class="access-link" href="#Main"><img alt="Click here to Skip to main content" src="//codeproject.cachefly.net/Images/t.gif" /></a>
+
+
+
+
+
+<div class="page-background">
+
+	
+	
+
+	
+<div class="alert-bar  overlay " style="display: none;">
+	<a href="#" class="close-notify">×</a>
+	<div>Sign up for our free weekly <a href="/feature/web-newsletter">Web Developer Newsletter</a>.</div>
+</div>
+
+	
+    <div id="ctl00_STM" class="site-top-menu fixed">
+        <div class="main-content">
+            
+
+<div class="container memberbar clearfix">
+
+	<div id="ctl00_MemberMenu_GenInfo" class="float-left">11,762,519 members (71,678 online)</div>
+
+	<div class="float-left">
+		
+	</div>
+
+	<div class="float-right">
+
+		
+
+		
+
+		
+
+			<script type="text/javascript">//<!--
+			function doSubmit(secure)
+			{
+				if (secure)
+					document.subForm.action = "https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H"
+				else
+					document.subForm.action = "https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H"
+				document.subForm.submit();
+				return true;
+			}//-->
+			</script>
+
+			<a name="SignUp"></a>
+			<span class="member-signin tooltip openable">
+				<span><a href="https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign in</a></span>
+
+				<div class="tooltip-flyout">
+					<form name="subForm" id="subForm" action="https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H" method="post" 
+						class="tight">
+
+						
+						<input id="FormName" name="FormName" value="MenuBarForm" type="hidden" />
+
+						<div>Email</div>
+						<div><input class="small-text" type="email" name="Email" id="Email" /></div>
+						<div>Password</div>
+						<div><input class="small-text" type="password" name="Password" id="Password" /></div>
+						<div class="action">
+							
+<script type="text/javascript">
+function Join(){
+ var url = 'http://www.codeproject.com/script/Membership/Modify.aspx?meml=' + document.subForm.Email.value;
+ document.location.href=url;return false;
+}
+document.write('<input type="button" class="create" onclick="return Join();" value="Join"');
+document.write('<input type="hidden" name="fld_quicksign" value="true" />');
+</script>
+							<input type="submit" value="Sign in" class="signin" 
+								onclick="return doSubmit(false);" />
+						</div>
+
+						<div class="container">
+							
+							&nbsp;
+							<a id="ctl00_MemberMenu_SendPassword" class="forgot float-right" href="/script/Membership/SendPassword.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Forgot your password?</a>
+						</div>
+					</form>
+
+					<hr class="divider-dark" />
+
+					Sign in using <a class="oauth" title="Sign in using Facebook" href="/script/Membership/OAuthLogOn.aspx?auth=Facebook"><img src="/script/Membership/Images/facebook.png" style="vertical-align:middle;padding-right:3px;border:0;" /></a>
+<a class="oauth" title="Sign in using Google" href="/script/Membership/OAuthLogOn.aspx?auth=Google"><img src="/script/Membership/Images/google-plus.png" style="vertical-align:middle;padding-right:3px;border:0;" /></a>
+<a class="oauth" title="Sign in using Linkedin" href="/script/Membership/OAuthLogOn.aspx?auth=LinkedIn"><img src="/script/Membership/Images/linkedin.png" style="vertical-align:middle;padding-right:3px;border:0;" /></a>
+<a class="oauth" title="Sign in using Microsoft" href="/script/Membership/OAuthLogOn.aspx?auth=Microsoft"><img src="/script/Membership/Images/microsoft.png" style="vertical-align:middle;padding-right:3px;border:0;" /></a>
+
+				</div>
+            </span>
+		
+	</div>
+</div>
+        </div>
+    </div>
+
+	
+    <div id="ctl00_SH" class="site-header fixed">
+        <div class="main-content">
+            <div class="logo"><a href="/"><img id="ctl00_Logo" tabindex="1" title="CodeProject" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/logo250x135.gif" alt="Home" style="height:135px;width:250px;border-width:0px;" /></a></div>
+            <div class="promo"><div class="msg-728x90" data-format="728x90" data-type="ad" data-publisher="lqm.codeproject.site" data-zone="Web-Development/ASP-NET/Samples"  data-tags='ASP.NET, Intermediate, C#4.0, .NET4.5, webscraping,rating4.5'><noscript><a href="http://ad.doubleclick.net/N6839/jump/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=728x90;ord=635785279427355662?"><img src="http://ad.doubleclick.net/N6839/ad/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=728x90;ord=635785279427355662?"  width="728px" height="90px" /></a></noscript></div></div>
+        </div>
+    </div>
+
+	<a href="#Main"><img alt="Click here to Skip to main content" class="access-link" 
+        src="//codeproject.cachefly.net/Images/t.gif" /></a>
+
+	
+	<div id="ctl00_TPR" class="sub-headerbar clearfix fixed">
+    <div class="float-right">
+		
+
+<div class="searchbar">
+
+<form method="get" action="/search.aspx?sbo=kw" name="Search" class="tight">
+
+
+<table border="0" cellspacing="0" cellpadding="0" class="search"><tr><td><input TabIndex="2" class="search " id="sb_tb" value="" name="q" /></td><td><input type="image" src="//codeproject.cachefly.net/images/search.gif" /></td></tr></table>
+
+<div class="hover-container">
+	<div id="SearchFilter" class="search-advanced popup small-text align-left">
+	<b>Search within:<br /></b>
+		
+		<input type="radio" id="sb_kw" name="sbo" value="kw" checked="true"><label for="sb_kw">Articles</label><br>
+<input type="radio" id="sb_qa" name="sbo" value="qa"><label for="sb_qa">Quick Answers</label><br>
+<input type="radio" id="sb_fm" name="sbo" value="fm"><label for="sb_fm">Messages</label><br>
+
+
+		
+		
+
+		
+		
+	</div>
+</div>
+</form>
+
+</div>
+    </div>
+    <div class="float-left">
+		
+
+<div class="navbar clearfix">
+<ul class="navmenu openable">
+
+<li class="desktop-only"><a id="ctl00_TopNavBar_Home" href="http://www.codeproject.com">home</a>
+
+
+<li class="openable"><a id="ctl00_TopNavBar_Art" class="down selected" href="/script/Articles/Latest.aspx">articles</a>
+
+	<ul>
+		<li class="openable"><a id="ctl00_TopNavBar_ArtTopicList" class="fly" onmouseover="navBarMenu.ShowMap(this, &#39;ctl00_TopNavBar_MapFlyout&#39;);" href="/script/Content/SiteMap.aspx">Chapters and Sections<span class="has-submenu">&gt;</span></a><ul id="ctl00_TopNavBar_MapFlyout">
+			<li>
+				<div id="siteMap">
+					<img src="//codeproject.cachefly.net/images/animated.gif" alt="loading" style="margin:150px;width:100px;height:100px;" />
+				</div>
+			</li>
+			</ul>
+		</li>
+		<li><a id="ctl00_TopNavBar_ArtSearch" class="fly break" href="/search.aspx?sbo=kw">Search</a></li>
+		<li><a id="ctl00_TopNavBar_ArtLatestArts" class="fly" href="/script/Articles/Latest.aspx?at=1,3,7">Latest Articles</a></li>
+		<li><a id="ctl00_TopNavBar_ArtLatestTips" class="fly" href="/script/Articles/Latest.aspx?at=6">Latest Tips/Tricks</a></li>
+		<li><a id="ctl00_TopNavBar_ArtTop" class="fly" href="/script/Articles/TopArticles.aspx?ta_so=5">Top Articles</a></li>
+		<li><a id="ctl00_TopNavBar_ArtBeginner" class="fly" href="/search.aspx?sbo=kw?aidlst=152&amp;sa_us=True">Beginner Articles</a></li>
+		<li><a id="ctl00_TopNavBar_ArtBlogArticles" class="fly break" href="/script/Articles/BlogArticleList.aspx">Technical Blogs</a></li>
+		<li><a id="ctl00_TopNavBar_ArtGuide" class="fly" href="/info/Submit.aspx">Posting/Update Guidelines</a></li>
+		<li><a id="ctl00_TopNavBar_ArtHelpForum" class="fly" href="/Forums/1641/Article-Writing.aspx">Article Help Forum</a></li>
+		<li><a id="ctl00_TopNavBar_ArtCompetition" class="fly break" href="/script/Awards/CurrentCompetitions.aspx?cmpTpId=1">Article Competition</a></li>
+		<li><a id="ctl00_TopNavBar_ArtPostArticle" class="fly highlight1" href="/script/Articles/Submit.aspx">
+			<img src="//codeproject.cachefly.net/images/write13.png" width="13px" height="13px" /> Submit an article or tip
+			</a></li>
+		<li><a id="ctl00_TopNavBar_ArtPostBlog" class="fly highlight2" href="/script/Articles/BlogFeed.aspx">
+			<img src="//codeproject.cachefly.net/images/write13.png" width="13px" height="13px" /> Post your Blog
+			</a></li>		<li class="last"></li>
+	</ul>
+
+</li>
+
+
+
+<li class="openable">
+<a id="ctl00_TopNavBar_Answers" href="/script/Answers/List.aspx?tab=active">
+    <span class="desktop-only tablet-only">quick answers</span><span class="mobile-only">Q&amp;A</span>
+</a>
+	<ul>
+		<li id="ctl00_TopNavBar_AQL"><a id="ctl00_TopNavBar_ArticleQuestion" class="fly highlight1" href="#_comments">
+			<img src="//codeproject.cachefly.net/images/write13.png" width="13px" height="13px" /> Ask a Question about this 
+			article</a>
+		</li>
+
+		<li><a id="ctl00_TopNavBar_QAAsk" class="fly highlight2" href="/Questions/ask.aspx"><img 
+			src="//codeproject.cachefly.net/images/write13.png" width="13px" height="13px" /> Ask a Question</a></li>
+
+		
+		<li><a id="ctl00_TopNavBar_QAUnanswered" class="fly" href="/script/Answers/List.aspx?tab=unanswered">View Unanswered Questions</a></li>
+		<li><a id="ctl00_TopNavBar_QALatest" class="fly" href="/script/Answers/List.aspx?tab=active">View All Questions...</a></li>
+		
+				<li><a id="ctl00_TopNavBar_QATR_ctl00_Tag" class="fly" href="/script/Answers/List.aspx?tab=active&amp;alltags=true&amp;tags=120" style="padding-left:30px">Linux questions</a></li>
+			
+				<li><a id="ctl00_TopNavBar_QATR_ctl01_Tag" class="fly" href="/script/Answers/List.aspx?tab=active&amp;alltags=true&amp;tags=81" style="padding-left:30px">C# questions</a></li>
+			
+				<li><a id="ctl00_TopNavBar_QATR_ctl02_Tag" class="fly" href="/script/Answers/List.aspx?tab=active&amp;alltags=true&amp;tags=85" style="padding-left:30px">ASP.NET questions</a></li>
+			
+				<li><a id="ctl00_TopNavBar_QATR_ctl03_Tag" class="fly" href="/script/Answers/List.aspx?tab=active&amp;alltags=true&amp;tags=1223" style="padding-left:30px">C#5 questions</a></li>
+			
+				<li><a id="ctl00_TopNavBar_QATR_ctl04_Tag" class="fly" href="/script/Answers/List.aspx?tab=active&amp;alltags=true&amp;tags=93" style="padding-left:30px">SQL questions</a></li>
+			
+		<li class="last"></li>
+	</ul>
+
+</li>
+
+
+
+<li class="openable"><a id="ctl00_TopNavBar_Forums" href="/script/Forums/List.aspx">
+        <span class="desktop-only tablet-only">discussions</span><span class="mobile-only">forums</span>
+</a>
+
+	<ul>
+		<li><a id="ctl00_TopNavBar_MessageBoardsAll" class="fly" href="/script/Forums/List.aspx">All Message Boards...</a></li>
+		<li class="openable"><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1580997/Application-Lifecycle.aspx">Application Lifecycle<span class="has-submenu">&gt;</span></a>
+<ul class="openable"><li><a class="fly" href="http://www.codeproject.com/Forums/1533717/Running-a-Business.aspx">Running a Business</a></li>
+<li><a class="fly" href="http://www.codeproject.com/Forums/1533716/Sales-Marketing.aspx">Sales / Marketing</a></li>
+<li><a class="fly" href="http://www.codeproject.com/Forums/1651/Collaboration-Beta-Testing.aspx">Collaboration / Beta Testing</a></li>
+<li><a class="fly" href="http://www.codeproject.com/Forums/3304/Work-Issues.aspx">Work  Issues</a></li>
+</ul></li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/369270/Design-and-Architecture.aspx">Design and Architecture</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/12076/ASP-NET.aspx">ASP.NET</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1580226/JavaScript.aspx">JavaScript</a>
+</li>
+<li class="openable"><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1647/C-Cplusplus-MFC.aspx">C / C++ / MFC<span class="has-submenu">&gt;</span></a>
+<ul class="openable"><li><a class="fly" href="http://www.codeproject.com/Forums/4486/ATL-WTL-STL.aspx">ATL /  WTL / STL</a></li>
+<li><a class="fly" href="http://www.codeproject.com/Forums/3785/Managed-Cplusplus-CLI.aspx">Managed C++/CLI</a></li>
+</ul></li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1649/Csharp.aspx">C#</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1627782/Free-Tools.aspx">Free Tools</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1827460/Objective-C-and-Swift.aspx">Objective-C and Swift</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1725/Database.aspx">Database</a>
+</li>
+<li class="openable"><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/186301/Hardware-Devices.aspx">Hardware &amp; Devices<span class="has-submenu">&gt;</span></a>
+<ul class="openable"><li><a class="fly" href="http://www.codeproject.com/Forums/1644/System-Admin.aspx">System Admin</a></li>
+</ul></li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1606152/Hosting-and-Servers.aspx">Hosting and Servers</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1643/Java.aspx">Java</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1650/NET-Framework.aspx">.NET Framework</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1848626/Android.aspx">Android</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1876716/iOS.aspx">iOS</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/13695/Mobile.aspx">Mobile</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1540733/Sharepoint.aspx">Sharepoint</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1004257/Silverlight-WPF.aspx">Silverlight / WPF</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1646/Visual-Basic.aspx">Visual Basic</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/Forums/1640/Web-Development.aspx">Web Development</a>
+</li>
+<li><a class="fly" style="padding-left:30px" href="http://www.codeproject.com/suggestions.aspx">Site Bugs / Suggestions</a>
+</li>
+
+		<li class="last"></li>
+	</ul>
+
+</li>
+
+<li class="openable desktop-only"><a id="ctl00_TopNavBar_Features" href="/Feature/">features</a>
+
+	<ul>
+		<li><a id="ctl00_TopNavBar_Comps" class="fly" href="/script/Awards/CurrentCompetitions.aspx?cmpTpId=1&amp;awsac=true">Competitions</a></li>
+		<li><a id="ctl00_TopNavBar_News" class="fly" href="/script/News/List.aspx">News</a></li>
+		<li><a id="ctl00_TopNavBar_Insider" class="fly" href="/Feature/Insider/">The Insider Newsletter</a></li>
+    	<li><a id="ctl00_TopNavBar_DailyBuild" class="fly" href="/Feature/DailyBuild">The Daily Build Newsletter</a></li>
+		<li><a id="ctl00_TopNavBar_Newsletters" class="fly" href="/script/Mailouts/Archive.aspx?mtpid=1">Newsletter archive</a></li>
+		<li><a id="ctl00_TopNavBar_Surveys" class="fly" href="/script/Surveys/List.aspx">Surveys</a></li>
+		<li><a id="ctl00_TopNavBar_Showcase" class="fly" href="/KB/showcase/">Product Showcase</a></li>
+		<li><a id="ctl00_TopNavBar_Research" class="fly" href="/script/ResearchLibrary/Index.aspx">Research Library</a></li>
+
+		<li><a id="ctl00_TopNavBar_Stuff" class="fly" href="/Info/Stuff.aspx">CodeProject Stuff</a></li>
+		<li class="last"></li>
+	</ul>
+
+</li>
+
+
+<li  class="openable"><a id="ctl00_TopNavBar_Lounge" href="/Lounge.aspx">
+            <span class="desktop-only tablet-only">community</span><span class="mobile-only">lounge</span>
+</a>
+
+	<ul>
+		<li><a id="ctl00_TopNavBar_WhosWho" class="fly" href="/script/Membership/Profiles.aspx">Who's Who</a></li>
+		<li><a id="ctl00_TopNavBar_MVPs" class="fly break" href="/script/Awards/MVPWinners.aspx">Most Valuable Professionals</a></li>
+		
+
+		<li><a id="ctl00_TopNavBar_LoungeLnk" class="fly highlight2" href="/Lounge.aspx">The Lounge  </a></li>
+		<li><a id="ctl00_TopNavBar_InsiderLnk" class="fly" href="/Insider.aspx">The Insider News</a></li>
+		<li><a id="ctl00_TopNavBar_WeirdWonderful" class="fly" href="/Feature/WeirdAndWonderful.aspx">The Weird & The Wonderful</a></li>
+		<li><a id="ctl00_TopNavBar_SoapBoxLnk" class="fly" href="/Forums/1536756/The-Soapbox.aspx">The Soapbox</a></li>
+		<li><a id="ctl00_TopNavBar_PRLnk" class="fly break" href="/Forums/1738007/Press-Releases.aspx">Press Releases</a></li>
+
+		
+		<li class="openable"><a class="fly" href="/Forums/1580229/Hindi.aspx">Non-English Language
+			<span class="has-submenu">&gt;</span></a>
+		<ul>
+		<li><a class="fly" href="/Forums/1580229/Hindi.aspx">General Indian Topics</a></li>
+		<li><a class="fly" href="/Forums/1580230/Chinese.aspx">General Chinese Topics</a></li>
+		</ul>
+		<li class="last"></li>
+		
+	</ul>
+
+</li>
+
+
+<li class="openable desktop-only tablet-only" style="margin-left:20px"><a id="ctl00_TopNavBar_Help" href="/KB/FAQs/">help</a>
+
+	<ul>
+		<li><a id="ctl00_TopNavBar_HelpWhatIs" class="fly" href="/info/guide.aspx">What is 'CodeProject'?</a></li>
+		<li><a id="ctl00_TopNavBar_HelpGeneral" class="fly break" href="/KB/FAQs/">General FAQ</a></li>
+		<li><a id="ctl00_TopNavBar_HelpPostQuestion" class="fly break highlight2" href="/Questions/ask.aspx">Ask a Question</a></li>
+		<li><a id="ctl00_TopNavBar_HelpBugs" class="fly" href="/suggestions.aspx">Bugs and Suggestions</a></li>
+		<li><a id="ctl00_TopNavBar_HelpArticles" class="fly" href="/Forums/1641/Article-Writing.aspx">Article Help Forum</a></li>
+		<li><a id="ctl00_TopNavBar_HelpSiteMap" class="fly" href="/script/Content/SiteMap.aspx">Site Map</a></li>
+		<li><a id="ctl00_TopNavBar_HelpAdvertise" class="fly" href="http://developermedia.com/">Advertise with us</a></li>
+		<li><a id="ctl00_TopNavBar_HelpJobs" class="fly" href="/info/Jobs/">Employment Opportunities</a></li>
+		<li><a id="ctl00_TopNavBar_HelpAboutUs" class="fly" href="/info/about.aspx">About Us</a></li>
+		<li class="last"></li>
+	</ul>
+
+</li>
+
+</ul>
+
+</div>
+    </div>
+	<div class="sub-headerbar-divider"></div>
+	</div>		
+	
+
+	<div id="A" class="container-content-wrap fixed"> 
+
+	<div itemscope itemtype="http://schema.org/Article" class="container-content"> 
+
+
+		<div class="clearfix">
+			<div class="container-breadcrumb float-left ">
+				<div><a href="/script/Content/SiteMap.aspx">Articles</a> &#187; <a href="/Chapters/2/Web-Development.aspx">Web Development</a> &#187; <a href="/KB/aspnet/"><span itemprop="articleSection">ASP.NET</span></a> &#187; <a href="/KB/aspnet/#Samples">Samples</a></div>
+			</div>
+
+			<div class="float-left">
+				
+			</div>
+
+			<div class="edit-links float-right">
+				
+
+
+ 
+&nbsp;
+
+
+
+
+
+
+
+
+
+
+			</div>
+
+			<div class="article-nav float-right">
+					
+		        
+		        
+					
+
+                
+				
+
+<a id="ctl00_ActionLinks_BookmarkMd_ImgBt" title="Bookmark" AlternateText="Bookmark" name="bm_659019_2" onclick="return bookmarkMe(659019,2,&#39;/script/Bookmarks/Ajax/Add.aspx?obid=659019&amp;obtid=2&amp;action=AddBookmark&amp;bio=true&amp;bis=medium&#39;,&#39;medium&#39;);" href="/script/Bookmarks/Add.aspx?obid=659019&amp;obtid=2&amp;action=AddBookmark&amp;bio=true&amp;bis=medium" style="display:inline-block;height:24px;width:24px;"><img title="Bookmark" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/bookmark24.png" alt="" style="border-width:0px;" /></a>
+
+
+<span id="ctl00_ActionLinks_BookmarkMd_StatusMsg" class="tiny-text" style="display:none" name="bm_659019_2"></span>
+<a id="ctl00_ActionLinks_PrintMd" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?display=Print">
+	<img src="//codeproject.cachefly.net/images/print24.png" title="Print"
+		width="24px" height="24px" style="border:0">
+</a>
+			</div>
+		</div>
+
+		<table class="extended container-article-parts" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+		<td width="117px" class="article-wing-left">
+
+			<div id="ctl00_Nav" class="container-article-tabs">
+				<div class="tabs">
+					
+
+<div class="">
+	<div class="selected">Article</div><div class="unselected"><a href="/script/Articles/ViewDownloads.aspx?aid=659019">Browse Code</a></div><div class="unselected"><a href="/script/Articles/Statistics.aspx?aid=659019">Stats</a></div><div class="unselected"><a href="/script/Articles/ListVersions.aspx?aid=659019">Revisions (21)</a></div><div class="unselected"><a href="/script/Articles/ListAlternatives.aspx?aid=659019">Alternatives</a></div>
+
+	<div class="unselected"><a href="WebControls/#_comments" id="ctl00_ArticleTabs_CommentLink" class="anchorLink">Comments 
+        <span id="ctl00_ArticleTabs_CmtCnt">(10)</span></a>
+	</div>
+</div>	
+
+				</div>
+
+				
+
+			    <div class="tags"> 
+                    <h4>Tagged as</h4>
+			        <span id="ctl00_TagsList_TagWrp" class="tags">
+	
+	
+	
+	<span id="ctl00_TagsList_VisibleTags"><div class="t"><a rel="tag" href="/Tags/ASP.NET">ASP.NET</a></div><div class="t"><a rel="tag" href="/Tags/Intermediate">Intermediate</a></div><div class="t"><a rel="tag" href="/Tags/C--hash--4.0">C#4.0</a></div><div class="t"><a rel="tag" href="/Tags/.NET4.5">.NET4.5</a></div><div class="t"><a rel="tag" href="/Tags/webscraping">webscraping</a></div></span> 
+
+	
+	
+</span>
+
+			    </div>
+                
+			</div>
+
+		</td>
+		<td>
+			
+			<div id="AT" class="container-article  fixed"> 
+
+				<div class="article">
+
+					<form name="aspnetForm" method="post" action="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H" id="aspnetForm" style="margin:0;padding:0">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="wqgSCvoUoQKiBv3sc97/u8VLncoAW/16ytMaX9xVh10RqB0WpyEWk4Dqcqa2+ulUhX83w7054ZpUmVz6C9gla1Ff1aIJ7q0cqsdIquIPCErVHAiBPnmuP8J2GvN6vx0OEs55LCea2pBNw9YdHH6cd5tQ67kfmvcQE1u9Ff1G2D0nInpgnA0He16WsOWDlSbVGz3OA2JIuCZZqQiF9BADMdTsFTbbNYkfGxtkg2Bp9HeAovKVoeDUzZxhHexnJwHSLFAbBJ4FlIKg/1LtCFzB3xTctJybuuvB16ii9UW/Pfkpth/J8g9HSXzmey/V2Qt4qOdqsBQ+56eiXxfMzlcYBtzEHs9h+JeWWYcR3W2E5ZpfQKLi29OjKKHigp12utMkkle/RfijLkLbca6pi7FNN/g3AIy1Y10YAc0oBpc1pzSwpyijv/3ZBxAschDomU92sUSh1/QjdzRNcjiE/wpBiaQ7mJAMFaHFnsDbtcnziEgmCcsdQ/KEW76a80wzYAoiIapcuPr8eMJ+37rQNu8RPLaZ4KpFMCf01ITzgeiiL/IsdWFs1gHzRo/xE03HdTcQ0RYiTGcxMvlv2nFlnxpKHVT0eQ+rHNmjiIyabhyMYcjaAS/N/DkzRwVJEDW7bQGjYCTY0CNiav2fDabOCWgDRq5ES3N2MVD7+Ecx/whg1IQIN5oKpp1vnge0L8KKSTkUIe2YhCZgr+JqMXJXDNZaG/rO2TknyPWW+ueMNUaADiDEptfj/fqKEbHgT1rKQ6v7tO+sz7g1vr9+fxsHDC3xaolY2ptK85PUqtPLeoIY8WkQZTNmz2GzJldaf/g45lpQ3O1YOQollAzq4yDp8acebUDVzDf8KP5fvvoEzXfU6skFGE5E2gByFjvGpMi2g9bZbbHhKefbuqKIPCZUxJRzh7F4GoTKdoC1ayJMKYdK5soRQ0HJzyRUkTQm0atrlrQQnYUGLAlzfN6rJEzsgG50mPrLaBDX5BgdJUID0hnRuqR6s6idxwTIEQl35B2ojIgshaY6DbYj6e+1lrjLLfPv7VoN+zgA8ijnN0uR/Hzil2Luvd44guu7seb0yYNvJ+G/7yV0guji6cy1ikNOVk6KznjhAZqzgINJbdRfFrs5feCB8sr/W1BTrRGGJxaze5wcukPzcPtA04zqCRWc53+hDM08CJvpKAJ2upwhubkvkBLHL//gz217fNRnqnb1d9Ht76jOBti27rEm8BqCOpsjnTYWR7pthW6eCYfQ8yq5DV53In195Mdg42oQLyD0IeHQ8ZRiAOOlylG/6gl9S/kOhIRDlKXHueDx37rs7nf1R7wfie685YcHl5GA8RlXrgylSOJvvnzAzyv10h47TOtYOZb3KHqAfJslXRp81y8nSN/lC5V7rLl/yPe0HVRTCZyKMwXtr2RceA4xo5rkzKTjO5jzdPEIyaQ48yuzzilXshRC4ug4pRElKAADsESu2Cu2BkpQW3BHgEVvhExKIjvgzNRfC09XQzEruw9vMwVBBIt8uRncHDgrgLJHHetNG3CddBNgl6XyhXJgsxY5MaqA7swaEVhVss4YUsFOKAHw4KeOCXPSl/lUivAL8qNNZM0eCVA4Ib9MAjBXyxeg/O5pkSKFcGqORTfGDX4TpFzqrIQJHff7P2Bxezf5VqEV/SqKXVqkeB3he3GU0ZJULqXZEEkBBm18rV1f1L66jYIcOdoi2zoKQLpvIP3jiDu3RzDPeGjW1/zFtZ1/frw3NMbiwQIvWAVDM7cLevJkxYI5DjqnWtCzNp3QlXJZHfMdHP/umeEXYiTlXpkn0nSZX1IdiJNRCQFeOyD5boJc5vKD69umkpPQERYy42AnYzu1i3sjdi9J8LMg5OQKTF9SX21b9Rz34RcXpr7NvtrJJD2o8FyqcUQV3tXI0Ylu0to5+bYBMaaayQAI8m7MY0wnMlZ+fzJVILWgZWjC9EuRdO2zgPEhLjJ8zDDVabCiwI3jxpL6cQRRyUYlTt0QzIgH8R+w/CxMI3XAlbsQZmPBVH383rFm7EujQ8isTqDXmLPwvX+3uGP4i6D9gRKCXGKdahFqWPAjzT5KO13gSfiWHYwSD81TMCCpb4IJLSmOm4IR/3SL4ceLx+mECmHPOA91GMnGSZy5D0NIu8bubYgk60Xp3mJ0LGQcVwevU2d03EcXO4ITaOLsX5BZN+kuJTlBet/WgemUEJVa6mUOxQBdJArgtxnIhHyw+G+IFItTQV2GwHAVe9cxcghyVgNU0IiVZnd4SLsKQxRDBq0iagKXSKfSV7fqy612uNfuBmh5RLRLMfa+2Xj/fSpK669tP3Pz96qAqyHqykZ1Ri5GhZlLPZvED52l/EKpU/izvxgemdqMtRxpeXqaDZ94+yTHMJlhqvPKybl2xEoDZdZQtJxYWNUWAX7IJabH1FRR17qruaxqzjkkfRfgIfhgfZRh2sEJEqpOVAOj3OZFsCojvuoQR/SWkCK5x3Da" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="10C1FD69" />
+</div>
+
+					
+					 
+					<div class="header">
+					    <a name="Main"></a>
+
+					    
+					    <a name="_articleTop" id="_articleTop"></a>
+					    <div class="title">
+					        
+					        <h1 id="ctl00_ArticleTitle" itemprop="name">Scraping HTML DOM elements using HtmlAgilityPack (HAP) in ASP.NET</h1> 
+					    </div>
+
+                        <div style="height:34px">
+					        
+					        <div class="entry float-left">
+                                <img src="https://www.gravatar.com/avatar/b9e079611e58d5823a25428b1d045c0f.jpg?d=identicon&s=150&r=pg" id="ctl00_avatar" class="float-left avatar" />
+                                <div class="float-left">
+
+						            <span class="author"><a href="/script/Membership/View.aspx?mid=9567233" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Ashad Shanto</span></span></a></span>, 
+						            <span class="date" itemprop="dateModified" 
+                                        content="2014-01-06 10:26:00">
+							            6 Jan 2014</span>
+			
+                                    <a id="ctl00_LicenseLink" title="The Code Project Open License (CPOL)" class="license" href="http://www.codeproject.com/info/cpol10.aspx">CPOL</a><span id="ctl00_ArtStats" class="stats"><img title="views" src="/App_Themes/CodeProject/Img/read32.png" style="width:16px;height:16px;" /> 69.3K<img title="downloads" src="/App_Themes/CodeProject/Img/download32.png" style="width:16px;height:16px;" /> 2.2K<img title="bookmarks" src="/App_Themes/CodeProject/Img/bookmark32.png" style="width:16px;height:16px;" /> 53</span><div id="ctl00_CurRat" class="tooltip anchorLink" style="cursor:pointer;margin-top: 5px" name="CurRat_659019">
+				
+							            
+
+<table cellpadding="0" cellspacing="0" class="small-text" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"> 
+<tr>
+	
+	<td class="nowrap">
+
+		
+			<meta itemprop="bestRating" content="5"> 
+			<meta itemprop="worstRating" content="1">
+		
+
+		<span id="ctl00_ArticleRating_VI">
+		<div class="nowrap rating-stars-large" style="height:21px;width:119px;position:relative;">
+	<div class="clipped align-left float-left" style="height:19px;width:114px;">
+		<img src="//codeproject.cachefly.net/script/Ratings/Images/stars-fill-lg.png" style="border-width:0px;" />
+	</div><div class="clipped" style="height:19px;width:5px;position:relative;">
+		<img src="//codeproject.cachefly.net/script/Ratings/Images/stars-empty-lg.png" style="border-width:0px;position:absolute;top:0;right:0;" />
+	</div>
+</div>
+		</span>
+
+		
+	</td>
+	
+	<td id="ctl00_ArticleRating_VR" class="nowrap">
+		&nbsp;
+		<span id="ctl00_ArticleRating_VotesR">&nbsp;<span itemprop="ratingValue" class="rating">4.75</span> (<span itemprop="ratingCount" class="count">24</span> votes)</span>
+		
+	</td>
+
+</tr>
+
+</table>
+
+
+							            <div id="ctl00_RB" class="speech-bubble-container-up">
+								            <div class="speech-bubble-up" style="width:150px !important">
+									                        
+<div>
+<table class="feature" width="100%" height="50px" title="Voting Distribution. Recent data only" cellpadding="0" cellspacing="0"><tr class="chart-row"><td class="chart-column"><span title="0 votes">1</span></td>
+<td class="chart-column"><span title="0 votes">2</span></td>
+<td class="chart-column"><span title="0 votes">3</span></td>
+<td class="chart-column"><div><img src="//codeproject.cachefly.net/script/Ratings/Images/pollcol.gif" width="20pxpx" height="16px" border="0px" alt="6 votes, 25.0%" title="6 votes, 25.0%" /></div><span title="6 votes">4</span></td>
+<td class="chart-column"><div><img src="//codeproject.cachefly.net/script/Ratings/Images/pollcol.gif" width="20pxpx" height="50px" border="0px" alt="18 votes, 75.0%" title="18 votes, 75.0%" /></div><span title="18 votes">5</span></td>
+</tr></table><div class="small-text align-center">4.75/5 - 24 votes</div><div class="small-text align-center subdue">μ 4.75, σ<sub>a</sub> 0.76 [<a href="/KB/FAQs/RatingReputationFAQ.aspx#noisefilter">?</a>]</div>
+</div>
+								            </div>
+								            <div class="speech-bubble-pointer-up">
+									            <div class="speech-bubble-pointer-up-inner"></div>
+								            </div>
+							            </div>
+						            </div>
+                                </div>
+					        </div>
+
+                            
+						    <div id="ctl00_RateArticleRow" class="float-right align-right voting-bar">
+						        <div id="ctl00_RateArticle_RateItemWrapper" class="container-rating small-text" name="RateItem_659019">
+
+	<table width="100%" cellpadding="0" cellspacing="0" class="small-text">
+	<tr>
+		<td id="ctl00_RateArticle_VoteResultDiv" class="rating-result align-right">
+			<span class="align-right"></span>
+			<img class="loaderImg" width="16px" alt="loading..." height="16px" 
+				src="/Images/animated_loading_blue.gif" style="display:none;" /> 
+		</td>
+
+	
+		<td class="voteTbl" style="white-space:nowrap" align="right">
+			<table class="small-text">
+			<tr>
+				<td id="ctl00_RateArticle_RateText" class="rating-prompt">
+					Rate this:
+				</td>
+
+				
+				<td id="ctl00_RateArticle_VoteFormDiv" class="nowrap rating-stars-voter-large">
+					
+
+					<span id="ctl00_RateArticle_RB" class="tooltip ajaxHist radio voting">
+						<span id="ctl00_RateArticle_VoteRBL"><input id="ctl00_RateArticle_VoteRBL_0" type="radio" name="ctl00$RateArticle$VoteRBL" value="1" /><input id="ctl00_RateArticle_VoteRBL_1" type="radio" name="ctl00$RateArticle$VoteRBL" value="2" /><input id="ctl00_RateArticle_VoteRBL_2" type="radio" name="ctl00$RateArticle$VoteRBL" value="3" /><input id="ctl00_RateArticle_VoteRBL_3" type="radio" name="ctl00$RateArticle$VoteRBL" value="4" /><input id="ctl00_RateArticle_VoteRBL_4" type="radio" name="ctl00$RateArticle$VoteRBL" value="5" /></span> 
+
+						
+					</span>
+
+				</td>
+
+				
+				<td style="padding-left:5px">	
+					<input type="submit" name="ctl00$RateArticle$SubmitRateBtn" value="Vote!" id="ctl00_RateArticle_SubmitRateBtn" class="button" />
+				</td>
+			</tr>
+			</table>
+			
+		</td>
+	</tr>
+	</table>
+	<div class="hover-container">
+		
+        <div id="ctl00_RateArticle_RSU" class="rating-comment align-left float-right">
+            <div class="padded">
+            Please <a id="ctl00_RateArticle_SignUp" href="https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign up or sign in</a> to vote.
+            </div>
+        </div>
+	</div>
+</div>
+						    </div>
+						    	
+                        </div>
+
+   					    
+                        <div id="ctl00_description" class="summary" itemprop="headline">Scrap/Parse the DOM elements of a website.</div><span id="ctl00_thumbnailUrl" class="date" itemprop="image" content="http://www.codeproject.com/KB/aspnet/659019/Thumb-659019.png"></span>			
+
+                    </div>
+                    
+					
+					
+
+					
+
+					
+					
+					
+
+						
+					
+
+					
+
+						
+						<div id="contentdiv" class="text" itemprop="articleBody">
+						
+
+
+
+<ul class="download">
+<li><a href="/KB/aspnet/659019/HTMLAgilityPackStartUp.zip">Download source code - 1.54 MB</a></li>
+</ul>
+<h2>Introduction (What is screen scraping?)</h2>
+<p>To parse HTML from a website is otherwise called Screen Scraping. It’s a process to access external website information (the information must be public – public data) 
+and processing it as required. For instance, if we want to get the average ratings of Nokia Lumia 1020 from different websites we can scrap the ratings from all the websites 
+and calculate the average in our code. So we can say, as a general “User” what you can have as “Public Data”, you’ll be able to scrap that using HTML Agility Pack easily.&nbsp;</p>
+<h2>Background</h2>
+<p>Previously it was harder to scrap a website as the hold DOM elements used to be downloaded as string. So it wasn't a pleasure to work with strings and find out individual nodes 
+by iterating through at and matching tags and attributes to specify your requirements. Gradually the way has improved and now it has become too easy using HtmlAgilityPack library. 
+That's why this article will give you a simple demonstration on how to start with HAP.</p>
+<p>You need to have the basics of programming and must know writing code in C# and ASP.NET.&nbsp;&nbsp;</p>
+<h2>How it works</h2>
+<p>Before HTML Agility Pack we had to use different built-in classes in .NET Framework to pull out HTML from a website. But now we don’t have to use such loads of classes rather 
+we’ll use the HAP library and order it to do the task for us. </p>
+<p>It’s pretty simple. Your code will make an HTTP request to the server and parse/store the returned HTML.&nbsp;</p><p>First HAP creates a DOM view of the parsed HTML of a particular website. Then it’s really some lines of code that will allow you to pass through the DOM, selecting nodes as you like. Using 
+an XPath expression, HAP also can give you a specific node and its attributes. HAP also includes 
+a class to download a remote website.</p>
+<h2>Let's get started</h2>
+<p>In this example we'll parse all the links of a particular webpage and display it in our webpage using <strong>HtmlAgilityPack</strong>. So let's start:</p>
+<ol><li>Run <strong>Visual Studio 2012</strong></li>
+<li>Go to <strong>File </strong>-&gt; <strong>New </strong>-&gt; <strong>Project</strong>, select <strong>Web </strong>from<strong> Visual C#</strong> template and on right side select 
+<strong>ASP.NET Empty Web Application</strong>. Name the Application <strong>HTMLAgilityPackStartUp</strong>&nbsp;and click <strong>OK</strong>.</li>
+<p><img src="/KB/aspnet/659019/1.png" /></p>
+<p><img src="/KB/aspnet/659019/2.png" /></p>
+<li>From <strong>Solution Explorer</strong> right click on <strong>References</strong> that’s within your project. And click on <strong>Manage Nuget Packages</strong>.</li>
+<p><img src="/KB/aspnet/659019/3.png" /></p>
+<li><strong>Manage Nuget Packages</strong> window will appear. Click on the <strong>search bar</strong> on right side and search for <strong>HtmlAgilityPack</strong>. 
+It’ll give you the libraries and extensions related to this name. On Middle tab of the window you’ll find <strong>HtmlAgilityPack</strong> library on first row. Click <strong>Install</strong>. 
+It’ll download and install the library in your project and after finishing installation click <strong>OK</strong>.</li>
+<p><img src="/KB/aspnet/659019/4.png" /></p>
+<p>Check if the library has been added to the <strong>References</strong>.</p>
+<p><img src="/KB/aspnet/659019/4a.png" /></p>
+<li>Now let's take a new<strong> Web Form</strong> and Name it <em>MyScraper.aspx</em>&nbsp;and click <strong>Add</strong>.</li>
+<p><img src="/KB/aspnet/659019/5.png" /></p>
+<li>We’ll edit the <em>MyScraper.aspx</em> file as follows taking some labels, a textbox and a button and <strong>Save</strong> it.&nbsp;</li>
+<p>
+
+
+</p><pre lang="cs"><span class="code-pagedirective">&lt;%@</span> <span class="code-leadattribute">Page</span> <span class="code-attribute">Language</span><span class="code-keyword">="</span><span class="code-keyword">C#"</span> <span class="code-attribute">AutoEventWireup</span><span class="code-keyword">="</span><span class="code-keyword">true"</span> <span class="code-attribute">CodeBehind</span><span class="code-keyword">="</span><span class="code-keyword">MyScraper.aspx.cs"</span> <span class="code-attribute">Inherits</span><span class="code-keyword">="</span><span class="code-keyword">HTMLAgilityPackStartUp.MyScraper"</span> <span class="code-pagedirective">%&gt;</span> 
+<span class="code-keyword">&lt;</span><span class="code-leadattribute">!DOCTYPE</span> <span class="code-attribute">html</span><span class="code-keyword">&gt;</span> 
+<span class="code-keyword">&lt;</span><span class="code-leadattribute">html</span> <span class="code-attribute">xmlns</span><span class="code-keyword">="</span><span class="code-keyword">http://www.w3.org/1999/xhtml"</span><span class="code-keyword">&gt;</span> 
+   <span class="code-keyword">&lt;</span><span class="code-leadattribute">head</span> <span class="code-attribute">runat</span><span class="code-keyword">="</span><span class="code-keyword">server"</span><span class="code-keyword">&gt;</span> <span class="code-keyword">&lt;</span><span class="code-leadattribute">title</span><span class="code-keyword">&gt;</span><span class="code-keyword">&lt;</span><span class="code-leadattribute">/title</span><span class="code-keyword">&gt;</span> 
+   <span class="code-keyword">&lt;</span><span class="code-leadattribute">/head</span><span class="code-keyword">&gt;</span> 
+   <span class="code-keyword">&lt;</span><span class="code-leadattribute">body</span><span class="code-keyword">&gt;</span>     
+      <span class="code-keyword">&lt;</span><span class="code-leadattribute">form</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">form1"</span> <span class="code-attribute">runat</span><span class="code-keyword">="</span><span class="code-keyword">server"</span><span class="code-keyword">&gt;</span> 
+         <span class="code-keyword">&lt;</span><span class="code-leadattribute">div</span><span class="code-keyword">&gt;</span> 
+	    <span class="code-keyword">&lt;</span><span class="code-leadattribute">asp:Label</span> <span class="code-attribute">ID</span><span class="code-keyword">="</span><span class="code-keyword">InputHereLabel"</span> <span class="code-attribute">runat</span><span class="code-keyword">="</span><span class="code-keyword">server"</span> <span class="code-attribute">Text</span><span class="code-keyword">="</span><span class="code-keyword">Input Here"</span> <span class="code-keyword">/</span><span class="code-keyword">&gt;</span> 
+	    <span class="code-keyword">&lt;</span><span class="code-leadattribute">asp:TextBox</span> <span class="code-attribute">ID</span><span class="code-keyword">="</span><span class="code-keyword">InputTextBox"</span> <span class="code-attribute">runat</span><span class="code-keyword">="</span><span class="code-keyword">server"</span> <span class="code-keyword">/</span><span class="code-keyword">&gt;</span> <span class="code-keyword">&lt;</span><span class="code-leadattribute">br</span> <span class="code-keyword">/</span><span class="code-keyword">&gt;</span> 
+	    <span class="code-keyword">&lt;</span><span class="code-leadattribute">asp:Button</span> <span class="code-attribute">ID</span><span class="code-keyword">="</span><span class="code-keyword">ClickMeButton"</span> <span class="code-attribute">runat</span><span class="code-keyword">="</span><span class="code-keyword">server"</span> <span class="code-attribute">Text</span><span class="code-keyword">="</span><span class="code-keyword">Click Me"</span> <span class="code-attribute">OnClick</span><span class="code-keyword">="</span><span class="code-keyword">ClickMeButton_Click"</span> <span class="code-keyword">/</span><span class="code-keyword">&gt;</span> <span class="code-keyword">&lt;</span><span class="code-leadattribute">br</span> <span class="code-keyword">/</span><span class="code-keyword">&gt;</span> <span class="code-keyword">&lt;</span><span class="code-leadattribute">br</span> <span class="code-keyword">/</span><span class="code-keyword">&gt;</span> 
+            <span class="code-keyword">&lt;</span><span class="code-leadattribute">asp:Label</span> <span class="code-attribute">ID</span><span class="code-keyword">="</span><span class="code-keyword">OutputLabel"</span> <span class="code-attribute">runat</span><span class="code-keyword">="</span><span class="code-keyword">server"</span> <span class="code-keyword">/</span><span class="code-keyword">&gt;</span> 
+	<span class="code-keyword">&lt;</span><span class="code-leadattribute">/div</span><span class="code-keyword">&gt;</span> 
+      <span class="code-keyword">&lt;</span><span class="code-leadattribute">/form</span><span class="code-keyword">&gt;</span> 
+   <span class="code-keyword">&lt;</span><span class="code-leadattribute">/body</span><span class="code-keyword">&gt;</span> 
+<span class="code-keyword">&lt;</span><span class="code-leadattribute">/html</span><span class="code-keyword">&gt;</span> </pre>
+
+<p>
+</p><li>Switch to the <strong>Design view</strong> of <em>MyScraper.aspx</em> page, click on the <strong>ClickMeButton&nbsp;</strong>Button, press <strong>f4</strong> to switch 
+to the properties window and click on the <strong>Events </strong>tab and then double click on the <strong>Click Action</strong>. 
+It’ll create a handler on <em>MyScraper.aspx.cs</em>.</li>
+<p><img src="/KB/aspnet/659019/5b.png" /></p>
+<li>Now as we want to get all the links of a particular page of a website. To do that add the following using statement <code>using HtmlAgilityPack;</code> 
+inside <em>MyScraper.aspx.cs</em> page and update the <code>ClickMeButton_Click</code> handler as follows:&nbsp;</li><pre lang="cs"><span class="code-keyword">using</span> System;
+<span class="code-keyword">using</span> System.Collections.Generic;
+<span class="code-keyword">using</span> System.Linq;
+<span class="code-keyword">using</span> System.Web;
+<span class="code-keyword">using</span> System.Web.UI;
+<span class="code-keyword">using</span> System.Web.UI.WebControls;
+<span class="code-keyword">using</span> HtmlAgilityPack; 
+
+<span class="code-keyword">namespace</span> HTMLAgilityPackStartUp
+{
+   <span class="code-keyword">public</span> <span class="code-keyword">partial</span> <span class="code-keyword">class</span> MyScraper : System.Web.UI.Page
+   {
+      <span class="code-keyword">protected</span> <span class="code-keyword">void</span> Page_Load(<span class="code-keyword">object</span> sender, EventArgs e)
+      {
+      }
+      <span class="code-keyword">protected</span> <span class="code-keyword">void</span> ClickMeButton_Click(<span class="code-keyword">object</span> sender, EventArgs e)
+      {
+	 <span class="code-keyword">var</span> getHtmlWeb = <span class="code-keyword">new</span> HtmlWeb();
+	 <span class="code-keyword">var</span> document = getHtmlWeb.Load(InputTextBox.Text);
+	 <span class="code-keyword">var</span> aTags = document.DocumentNode.SelectNodes(<span class="code-string">"</span><span class="code-string">//a"</span>);
+	 <span class="code-keyword">int</span> counter = <span class="code-digit">1</span>;
+	 <span class="code-keyword">if</span> (aTags != <span class="code-keyword">null</span>)
+	 {
+		 <span class="code-keyword">foreach</span> (<span class="code-keyword">var</span> aTag <span class="code-keyword">in</span> aTags)
+		 {
+		    OutputLabel.Text += counter + <span class="code-string">"</span><span class="code-string">. "</span> + aTag.InnerHtml + <span class="code-string">"</span><span class="code-string"> - "</span> + aTag.Attributes[<span class="code-string">"</span><span class="code-string">href"</span>].Value + <span class="code-string">"</span><span class="code-string">\t"</span> + <span class="code-string">"</span><span class="code-string">&lt;br /&gt;"</span>;
+		    counter++;
+		 }
+	 }
+      }
+   }
+}   </pre>&nbsp;<br /><h4><strong>Explaining the code (MyScraper.aspx.cs)</strong></h4><p>
+</p><p>
+</p><p>
+
+</p></ol>
+
+<pre lang="cs"><span class="code-keyword">var</span> getHtmlWeb = <span class="code-keyword">new</span> HtmlWeb(); </pre>
+<p>Get an instance of <code>HtmlWeb()</code> to use the <code>Load</code> method to get the DOM elements of a URL.</p>
+<pre lang="cs"><span class="code-keyword">var</span> document = getHtmlWeb.Load(InputTextBox.Text); </pre>
+<p>Getting the DOM elements using <code>Load</code> method.</p>
+<pre lang="cs"><span class="code-keyword">var</span> aTags = document.DocumentNode.SelectNodes(<span class="code-string">"</span><span class="code-string">//a"</span>);</pre>
+<p>After getting the DOM elements as an <code>HtmlDocument</code> format we use
+<code>DocumentNode</code> to select all nodes using <code>SelectNodes</code> of a particular tag 
+(in our case it’s the “a” tag).</p>
+<pre lang="cs"><span class="code-keyword">int</span> counter = <span class="code-digit">1</span>;</pre>
+<p>We put a counter to count the number of links we found.</p>
+<pre lang="cs"><span class="code-keyword">if</span> (aTags != <span class="code-keyword">null</span>)
+{
+    <span class="code-keyword">foreach</span> (<span class="code-keyword">var</span> aTag <span class="code-keyword">in</span> aTags)
+    {
+       OutputLabel.Text += counter + <span class="code-string">"</span><span class="code-string">. "</span> + aTag.InnerHtml + <span class="code-string">"</span><span class="code-string"> - "</span> + 
+         aTag.Attributes[<span class="code-string">"</span><span class="code-string">href"</span>].Value + <span class="code-string">"</span><span class="code-string">\t"</span> + <span class="code-string">"</span><span class="code-string">&lt;br /&gt;"</span>;
+       counter++;
+    }
+}</pre>
+<p>Then we check if the nodes exist or not. It it exists the we loop through the nodes and print the 
+<code>InnerHtml</code> of that node that is <code>&lt;a&gt;</code> 
+(tag) and the “<code>href</code>” attributes value of that node incrementing the value each time it finds a new node.</p>
+<p>After that press F6 to build the project and f5 to run it. Give the following input <em>https://htmlagilitypack.codeplex.com/</em> and click on <strong>Click Me</strong>. 
+You'll see that it'll bring all the<strong> </strong><code>href</code>'s and
+<code>innerHtml</code><strong> </strong>of 
+<code>&lt;a&gt;</code> tags of that URL and the output will be as following:</p>
+<p><img src="/KB/aspnet/659019/output.png" /><br /><br />So, this is how we used HtmlAgilityPack with ASP.NET to parse DOM elements from a webpage. You can parse all the tags in different formats, traverse them as ParentNode 
+or ChildNodes or many more ways using the built-in classes and functions. HAP gives you more flexibility on going through the DOM elements and selecting which one you want 
+to play with. Hope you like it.</p>
+<h2>Tips</h2>
+<p>Go to <a href="https://htmlagilitypack.codeplex.com/">https://htmlagilitypack.codeplex.com/</a> and follow the forum and discussions. In the documentation tab you'll find 
+no help when I am writing this article. So you can come up with more better contribution to this open source project. Try to go through all the features and functionality HAP provides. 
+The more you'll know it'll be more easier for you to Scrap more easily.</p>
+<h2>History&nbsp;</h2><p>N/A.</p>
+
+
+						</div>
+						
+
+						<div class="float-right" style="margin:20px 0 0 10px;border:1px solid #ccc">
+						<div class="msg-300x250" data-format="300x250" data-type="ad" data-publisher="lqm.codeproject.site" data-zone="Web-Development/ASP-NET/Samples"  data-loadOnView='true'  data-tags='ASP.NET, Intermediate, C#4.0, .NET4.5, webscraping,rating4.5'><noscript><a href="http://ad.doubleclick.net/N6839/jump/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=300x250;ord=635785279427355662?"><img src="http://ad.doubleclick.net/N6839/ad/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=300x250;ord=635785279427355662?"  width="300px" height="250px" /></a></noscript></div>
+						</div>
+                        
+                        
+						
+						<h2>License</h2>
+						<div id="LicenseTerms"><p>This article, along with any associated source code and files, is licensed under <a href="http://www.codeproject.com/info/cpol10.aspx" rel="license">The Code Project Open License (CPOL)</a></p></div>
+						
+
+                        
+						<h2>Share</h2>
+				        <div class="share-list">
+					        
+
+
+
+<!-- Buttons start here. Copy this ul to your document. -->
+<ul class="rrssb-buttons clearfix">
+    <li class="email">
+
+        <a href="mailto:?subject=Scraping%20HTML%20DOM%20elements%20using%20HtmlAgilityPack%20(HAP)%20in%20ASP.NET%20-%20CodeProject&amp;body=Here%27s%20an%20interesting%20article%20on%20for%20you%20on%20codeproject.com%0a%0ahttp%3a%2f%2fwww.codeproject.com%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H%0a">
+            <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    version="1.1" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" 
+                    enable-background="new 0 0 28 28" xml:space="preserve"><g>
+                        <path d="M20.111 26.147c-2.336 1.051-4.361 1.401-7.125 1.401c-6.462 0-12.146-4.633-12.146-12.265 
+                            c0-7.94 5.762-14.833 14.561-14.833c6.853 0 11.8 4.7 11.8 11.252c0 5.684-3.194 9.265-7.399 
+                            9.3 c-1.829 0-3.153-0.934-3.347-2.997h-0.077c-1.208 1.986-2.96 2.997-5.023 2.997c-2.532 
+                            0-4.361-1.868-4.361-5.062 c0-4.749 3.504-9.071 9.111-9.071c1.713 0 3.7 0.4 4.6 0.973l-1.169 
+                            7.203c-0.388 2.298-0.116 3.3 1 3.4 c1.673 0 3.773-2.102 3.773-6.58c0-5.061-3.27-8.994-9.303-8.994c-5.957 
+                            0-11.175 4.673-11.175 12.1 c0 6.5 4.2 10.2 10 10.201c1.986 0 4.089-0.43 5.646-1.245L20.111 
+                            26.147z M16.646 10.1 c-0.311-0.078-0.701-0.155-1.207-0.155c-2.571 0-4.595 2.53-4.595 5.529c0 
+                            1.5 0.7 2.4 1.9 2.4 c1.441 0 2.959-1.828 3.311-4.087L16.646 10.068z"/></g>
+                </svg>
+            </span>
+            <span class="text">email</span>
+        </a>
+    </li>
+    <li class="twitter">
+        <!-- Replace href with your Meta and URL information  -->
+        <a href="http://twitter.com/home?status=Scraping+HTML+DOM+elements+using+HtmlAgilityPack+(HAP)+in+ASP.NET+-+CodeProject+-+http%3a%2f%2fwww.codeproject.com%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H" class="popup">
+            <span class="icon">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
+                <path d="M24.253,8.756C24.689,17.08,18.297,24.182,9.97,24.62c-3.122,0.162-6.219-0.646-8.861-2.32
+                    c2.703,0.179,5.376-0.648,7.508-2.321c-2.072-0.247-3.818-1.661-4.489-3.638c0.801,0.128,1.62,0.076,2.399-0.155
+                    C4.045,15.72,2.215,13.6,2.115,11.077c0.688,0.275,1.426,0.407,2.168,0.386c-2.135-1.65-2.729-4.621-1.394-6.965
+                    C5.575,7.816,9.54,9.84,13.803,10.071c-0.842-2.739,0.694-5.64,3.434-6.482c2.018-0.623,4.212,0.044,5.546,1.683
+                    c1.186-0.213,2.318-0.662,3.329-1.317c-0.385,1.256-1.247,2.312-2.399,2.942c1.048-0.106,2.069-0.394,3.019-0.851
+                    C26.275,7.229,25.39,8.196,24.253,8.756z"/>
+                </svg>
+            </span>
+            <span class="text">twitter</span>
+        </a>
+    </li>
+
+    <li class="facebook">
+        <!-- Replace with your URL. For best results, make sure you page has the proper FB Open Graph tags in header: 
+        https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content/ -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fwww.codeproject.com%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H" class="popup">
+            <span class="icon">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
+                    <path d="M27.825,4.783c0-2.427-2.182-4.608-4.608-4.608H4.783c-2.422,0-4.608,2.182-4.608,4.608v18.434
+                        c0,2.427,2.181,4.608,4.608,4.608H14V17.379h-3.379v-4.608H14v-1.795c0-3.089,2.335-5.885,5.192-5.885h3.718v4.608h-3.726
+                        c-0.408,0-0.884,0.492-0.884,1.236v1.836h4.609v4.608h-4.609v10.446h4.916c2.422,0,4.608-2.188,4.608-4.608V4.783z"/>
+                </svg>
+            </span>
+            <span class="text">facebook</span>
+        </a>
+    </li>
+    
+    <li class="linkedin">
+        <!-- Replace href with your meta and URL information -->
+        <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fwww.codeproject.com%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H&amp;title=Scraping+HTML+DOM+elements+using+HtmlAgilityPack+(HAP)+in+ASP.NET+-+CodeProject&amp;summary=&amp;source=codeproject.com" class="popup">
+            <span class="icon">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
+                    <path d="M25.424,15.887v8.447h-4.896v-7.882c0-1.979-0.709-3.331-2.48-3.331c-1.354,0-2.158,0.911-2.514,1.803
+                        c-0.129,0.315-0.162,0.753-0.162,1.194v8.216h-4.899c0,0,0.066-13.349,0-14.731h4.899v2.088c-0.01,0.016-0.023,0.032-0.033,0.048
+                        h0.033V11.69c0.65-1.002,1.812-2.435,4.414-2.435C23.008,9.254,25.424,11.361,25.424,15.887z M5.348,2.501
+                        c-1.676,0-2.772,1.092-2.772,2.539c0,1.421,1.066,2.538,2.717,2.546h0.032c1.709,0,2.771-1.132,2.771-2.546
+                        C8.054,3.593,7.019,2.501,5.343,2.501H5.348z M2.867,24.334h4.897V9.603H2.867V24.334z"/>
+                </svg>
+            </span>
+            <span class="text">linkedin</span>
+        </a>
+    </li>
+    <li class="reddit">
+        <a href="http://www.reddit.com/submit?url=http%3a%2f%2fwww.codeproject.com%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H&amp;title=Scraping+HTML+DOM+elements+using+HtmlAgilityPack+(HAP)+in+ASP.NET+-+CodeProject">
+            <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+                    x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" 
+                    enable-background="new 0 0 28 28" xml:space="preserve"><g>
+                <path d="M11.794 15.316c0-1.029-0.835-1.895-1.866-1.895c-1.03 0-1.893 0.865-1.893 1.895s0.863 1.9 1.9 1.9 C10.958 17.2 11.8 16.3 11.8 15.316z"/>
+                <path d="M18.1 13.422c-1.029 0-1.895 0.864-1.895 1.895c0 1 0.9 1.9 1.9 1.865c1.031 0 1.869-0.836 1.869-1.865 C19.969 14.3 19.1 13.4 18.1 13.422z"/>
+                <path d="M17.527 19.791c-0.678 0.678-1.826 1.006-3.514 1.006c-0.004 0-0.009 0-0.014 0c-0.004 0-0.01 0-0.015 0 
+                c-1.686 0-2.834-0.328-3.51-1.005c-0.264-0.265-0.693-0.265-0.958 0c-0.264 0.265-0.264 0.7 0 1 c0.943 0.9 2.4 1.4 
+                4.5 1.402c0.005 0 0 0 0 0c0.005 0 0 0 0 0c2.066 0 3.527-0.459 4.47-1.402 c0.265-0.264 0.265-0.693 0.002-0.958C18.221 
+                19.5 17.8 19.5 17.5 19.791z"/><path d="M27.707 13.267c0-1.785-1.453-3.237-3.236-3.237c-0.793 0-1.518 0.287-2.082 
+                0.761c-2.039-1.295-4.646-2.069-7.438-2.219 l1.483-4.691l4.062 0.956c0.071 1.4 1.3 2.6 2.7 2.555c1.488 0 2.695-1.208 
+                2.695-2.695C25.881 3.2 24.7 2 23.2 2 c-1.059 0-1.979 0.616-2.42 1.508l-4.633-1.091c-0.344-0.081-0.693 0.118-0.803 
+                0.455l-1.793 5.7 C10.548 8.6 7.7 9.4 5.6 10.75C5.006 10.3 4.3 10 3.5 10.029c-1.785 0-3.237 1.452-3.237 3.2 c0 1.1 0.6 
+                2.1 1.4 2.69c-0.04 0.272-0.061 0.551-0.061 0.831c0 2.3 1.3 4.4 3.7 5.9 c2.299 1.5 5.3 2.3 8.6 2.325c3.228 0 6.271-0.825 
+                8.571-2.325c2.387-1.56 3.7-3.66 3.7-5.917 c0-0.26-0.016-0.514-0.051-0.768C27.088 15.5 27.7 14.4 27.7 13.267z M23.186 
+                3.355c0.74 0 1.3 0.6 1.3 1.3 c0 0.738-0.6 1.34-1.34 1.34s-1.342-0.602-1.342-1.34C21.844 4 22.4 3.4 23.2 3.355z M1.648 
+                13.3 c0-1.038 0.844-1.882 1.882-1.882c0.31 0 0.6 0.1 0.9 0.209c-1.049 0.868-1.813 1.861-2.26 2.9 C1.832 14.2 1.6 13.8 1.6 
+                13.267z M21.773 21.57c-2.082 1.357-4.863 2.105-7.831 2.105c-2.967 0-5.747-0.748-7.828-2.105 
+                c-1.991-1.301-3.088-3-3.088-4.782c0-1.784 1.097-3.484 3.088-4.784c2.081-1.358 4.861-2.106 7.828-2.106 c2.967 0 5.7 
+                0.7 7.8 2.106c1.99 1.3 3.1 3 3.1 4.784C24.859 18.6 23.8 20.3 21.8 21.57z M25.787 14.6 
+                c-0.432-1.084-1.191-2.095-2.244-2.977c0.273-0.156 0.59-0.245 0.928-0.245c1.035 0 1.9 0.8 1.9 1.9 
+                C26.354 13.8 26.1 14.3 25.8 14.605z"/></g></svg>
+            </span>
+            <span class="text">reddit</span>
+        </a>
+    </li>
+    <li class="googleplus">
+        <!-- Replace href with your meta and URL information.  -->
+        <a href="https://plus.google.com/share?url=http%3a%2f%2fwww.codeproject.com%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H" class="popup">
+            <span class="icon">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
+                    <g>
+                        <g>
+                            <path d="M14.703,15.854l-1.219-0.948c-0.372-0.308-0.88-0.715-0.88-1.459c0-0.748,0.508-1.223,0.95-1.663
+                                c1.42-1.119,2.839-2.309,2.839-4.817c0-2.58-1.621-3.937-2.399-4.581h2.097l2.202-1.383h-6.67c-1.83,0-4.467,0.433-6.398,2.027
+                                C3.768,4.287,3.059,6.018,3.059,7.576c0,2.634,2.022,5.328,5.604,5.328c0.339,0,0.71-0.033,1.083-0.068
+                                c-0.167,0.408-0.336,0.748-0.336,1.324c0,1.04,0.551,1.685,1.011,2.297c-1.524,0.104-4.37,0.273-6.467,1.562
+                                c-1.998,1.188-2.605,2.916-2.605,4.137c0,2.512,2.358,4.84,7.289,4.84c5.822,0,8.904-3.223,8.904-6.41
+                                c0.008-2.327-1.359-3.489-2.829-4.731H14.703z M10.269,11.951c-2.912,0-4.231-3.765-4.231-6.037c0-0.884,0.168-1.797,0.744-2.511
+                                c0.543-0.679,1.489-1.12,2.372-1.12c2.807,0,4.256,3.798,4.256,6.242c0,0.612-0.067,1.694-0.845,2.478
+                                c-0.537,0.55-1.438,0.948-2.295,0.951V11.951z M10.302,25.609c-3.621,0-5.957-1.732-5.957-4.142c0-2.408,2.165-3.223,2.911-3.492
+                                c1.421-0.479,3.25-0.545,3.555-0.545c0.338,0,0.52,0,0.766,0.034c2.574,1.838,3.706,2.757,3.706,4.479
+                                c-0.002,2.073-1.736,3.665-4.982,3.649L10.302,25.609z"/>
+                            <polygon points="23.254,11.89 23.254,8.521 21.569,8.521 21.569,11.89 18.202,11.89 18.202,13.604 21.569,13.604 21.569,17.004
+                                23.254,17.004 23.254,13.604 26.653,13.604 26.653,11.89      "/>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+            <span class="text">google+</span>
+        </a>
+    </li>
+    
+</ul>
+<!-- Buttons end here -->
+
+				        </div> 
+    			        
+
+
+						
+						<h2 id="ctl00_AboutHeading">About the Author</h2>
+						    
+
+
+<div class="author-wrapper">
+
+    <div class="pic-wrapper"> 
+        <img id="ctl00_AboutAuthorRptr_ctl00_AboutAuthor_memberPhoto" class="profile-pic" src="https://www.gravatar.com/avatar/b9e079611e58d5823a25428b1d045c0f.jpg?d=identicon&amp;s=150&amp;r=pg" style="border-width:0px;transform:rotate(-1deg);" />
+
+    </div>
+
+    <div class="container-member">  
+        <b><a id="ctl00_AboutAuthorRptr_ctl00_AboutAuthor_memberProfileLink" class="author" href="/Members/AshadShanto">Ashad Shanto</a></b>
+
+        <table class="extended">
+        <tr>
+            <td rowspan="2" nowrap valign="middle">
+            <div id="ctl00_AboutAuthorRptr_ctl00_AboutAuthor_FollowOn" class="follow">
+	            
+	            <a href="https://plus.google.com/112212537563657711168"><img style="vertical-align:middle;border:0;height:24px;width246px" alt="Google+" src="/images/googleplus32.png"/></a> 
+	            <a href="http://www.linkedin.com/profile/view?id=310711228"><img style="vertical-align:middle;border:0;height:24px;width:24px" alt="LinkedIn" src="/images/linkedin-32.png"/></a> 
+            </div>
+            </td>
+            <td width="100%">
+                <div class="company">
+                    <span id="ctl00_AboutAuthorRptr_ctl00_AboutAuthor_memberJobTitle">Software Developer (Junior)</span>
+	                <span id="ctl00_AboutAuthorRptr_ctl00_AboutAuthor_memberCompany">Secure Link Services</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span id="ctl00_AboutAuthorRptr_ctl00_AboutAuthor_memberLocation">Bangladesh <img src="/script/Geo/Images/BD.gif" alt="Bangladesh" width="16px" height="11px" /></span>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+    <div class="description">
+        No Biography provided
+
+        
+    </div>
+
+</div><br />
+						
+						
+
+						<div class="clearfix"></div>
+
+						<div style="padding-top:8px">
+							
+						</div>
+
+					
+
+				    
+					</form>
+
+				</div>
+
+				
+				<div class="bottom-promo"> 
+				    <div class="msg-728x90" data-format="728x90" data-type="ad" data-publisher="lqm.codeproject.site" data-zone="Web-Development/ASP-NET/Samples"  data-loadOnView='true'  data-tags='ASP.NET, Intermediate, C#4.0, .NET4.5, webscraping,rating4.5,pos_bottom'><noscript><a href="http://ad.doubleclick.net/N6839/jump/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=728x90;ord=635785279427355662?"><img src="http://ad.doubleclick.net/N6839/ad/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=728x90;ord=635785279427355662?"  width="728px" height="90px" /></a></noscript></div>
+				</div>
+				
+
+                
+        <h2 id="ctl00_AlsoRead_RelatedResults_ctl00_Header" class="also-read">You may also be interested in...</h2>
+        <table class="spaced content-list also-read">
+    
+	    <tr>
+        <td class="content-list-item" width="50%" valign="top">
+            <div class="thumbnail"><a id="ctl00_AlsoRead_RelatedResults_ctl01_Thumbnail" href="//www.codeproject.com/Articles/228832/HTTP-Data-Client"><img src="//codeproject.cachefly.net/script/Articles/Images/article100x80.png" alt="" style="border-width:0px;" /></a></div>
+            <div class="text">
+                <div class="title"><a id="ctl00_AlsoRead_RelatedResults_ctl01_Link" href="//www.codeproject.com/Articles/228832/HTTP-Data-Client">HTTP Data Client - Web Scraping</a></div>
+                
+            </div>
+        </td>
+	
+        <td class="content-list-item" width="50%" valign="top">
+            <div class="thumbnail"><a id="ctl00_AlsoRead_RelatedResults_ctl02_Thumbnail" href="http://www.codeproject.com/ResearchLibrary/140/Will-Mobile-Application-Development-Follow-the-Pat"><img src="http://www.codeproject.com/script/ResearchLibrary/Logos/LibraryItemThumbnail_140_100x129.jpg" alt="" style="border-width:0px;" /></a></div>
+            <div class="text">
+                <div class="title"><a id="ctl00_AlsoRead_RelatedResults_ctl02_Link" href="http://www.codeproject.com/ResearchLibrary/140/Will-Mobile-Application-Development-Follow-the-Pat">Will Mobile Application Development Follow the Path of Web Development?</a></div>
+                
+            </div>
+        </td>
+	    </tr>
+	
+	    <tr>
+        <td class="content-list-item" width="50%" valign="top">
+            <div class="thumbnail"><a id="ctl00_AlsoRead_RelatedResults_ctl03_Thumbnail" href="//www.codeproject.com/Articles/1915/Screen-Scraping-with-C-for-ASP-NET"><img src="/KB/aspnet/weather/Thumb-1915.jpg" alt="" style="border-width:0px;" /></a></div>
+            <div class="text">
+                <div class="title"><a id="ctl00_AlsoRead_RelatedResults_ctl03_Link" href="//www.codeproject.com/Articles/1915/Screen-Scraping-with-C-for-ASP-NET">Screen Scraping with C# for ASP.NET</a></div>
+                
+            </div>
+        </td>
+	
+        <td class="content-list-item" width="50%" valign="top">
+            <div class="thumbnail"><a id="ctl00_AlsoRead_RelatedResults_ctl04_Thumbnail" href="http://www.codeproject.com/ResearchLibrary/166/Red-Hat-JBoss-BPM-Suite-Compared-to-Pegasystems-Pe"><img src="http://www.codeproject.com/script/ResearchLibrary/Logos/LibraryItemThumbnail_166_100x129.png" alt="" style="border-width:0px;" /></a></div>
+            <div class="text">
+                <div class="title"><a id="ctl00_AlsoRead_RelatedResults_ctl04_Link" href="http://www.codeproject.com/ResearchLibrary/166/Red-Hat-JBoss-BPM-Suite-Compared-to-Pegasystems-Pe">Red Hat JBoss BPM Suite 6 Compared to Pegasystems Pega 7 BPM</a></div>
+                
+            </div>
+        </td>
+	    </tr>
+	
+	    <tr>
+        <td class="content-list-item" width="50%" valign="top">
+            <div class="thumbnail"><a id="ctl00_AlsoRead_RelatedResults_ctl05_Thumbnail" href="//www.codeproject.com/Articles/568502/Scraping-Dynamic-WebSite-data-using-Watin"><img src="/KB/applications/568502/Thumb-568502.png" alt="" style="border-width:0px;" /></a></div>
+            <div class="text">
+                <div class="title"><a id="ctl00_AlsoRead_RelatedResults_ctl05_Link" href="//www.codeproject.com/Articles/568502/Scraping-Dynamic-WebSite-data-using-Watin">WebSite Scraping</a></div>
+                
+            </div>
+        </td>
+	
+        <td class="content-list-item" width="50%" valign="top">
+            <div class="thumbnail"><a id="ctl00_AlsoRead_RelatedResults_ctl06_Thumbnail" href="http://www.codeproject.com/ResearchLibrary/164/Red-Hat-JBoss-BPM-Suite-compared-to-Appian-BPM-Sui"><img src="http://www.codeproject.com/script/ResearchLibrary/Logos/LibraryItemThumbnail_164_100x129.png" alt="" style="border-width:0px;" /></a></div>
+            <div class="text">
+                <div class="title"><a id="ctl00_AlsoRead_RelatedResults_ctl06_Link" href="http://www.codeproject.com/ResearchLibrary/164/Red-Hat-JBoss-BPM-Suite-compared-to-Appian-BPM-Sui">Red Hat JBoss BPM Suite 6 compared to Appian 7 BPM Suite</a></div>
+                
+            </div>
+        </td>
+	    </tr>
+	
+		</table>
+	
+
+
+
+				
+				
+
+					<h2>Comments and Discussions</h2>
+					<a class="float-left" name="_comments" id="_comments">&nbsp;</a><div id="_MessageBoardctl00_MessageBoard" onclick="return SwitchMessage(event, null)">
+<table id="ForumTable" class="forum relaxed" cellpadding="0" cellspacing="0">
+<tr>
+<td class="header1 callout"><b>You must <a href="https://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H%3ffid%3d1843296%26df%3d10000%26mpp%3d50%26prof%3dFalse%26sort%3dPosition%26view%3dThread%26spc%3dRelaxed">Sign In</a> to use this message board.</b></td>
+</tr><tr>
+<td><table width="100%" border="0" cellpadding="3px" cellspacing="0">
+<tr class="header1">
+<td colspan="2" style="white-space:nowrap;"><div class="container">
+<div class="float-right">
+<form action="/Search.aspx?sbo=fm" method="get" class="searchbar">
+<input type="hidden" name="fid" value="1843296" /><input type="hidden" name="sbo" value="fm" /><b>Search Comments </b><input type="search" class="search" name="qf" />&nbsp;<input type="submit" value="Go" class="button" />
+</form>
+</div>
+</div></td>
+</tr><tr class="header2">
+<td></td><td style="width:100%;"><div style="text-align:right;">
+<form action="/script/Forums/SetOptions.aspx?floc=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H&amp;fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed" method="get" style="margin:0;padding:0;">
+<input type="hidden" name="fid" value="1843296" /><input type="hidden" name="currentQS" value="?floc=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H&amp;fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed" /><input type="hidden" name="floc" value="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H" /><input type="checkbox" name="prof" id="prof" style="vertical-align:middle;" /><label for="prof">Profile popups</label>&nbsp;&nbsp;&nbsp;&nbsp;Spacing<select size="1" class="dropdown" name="spc">
+<option selected value="Relaxed">Relaxed</option><option value="Compact">Compact</option><option value="Tight">Tight</option>
+</select>&nbsp;&nbsp;Layout<select size="1" class="dropdown" name="view">
+<option value="Normal">Normal</option><option value="Topic">Open Topics</option><option value="Expanded">Open All</option><option selected value="Thread">Thread View</option>
+</select>&nbsp;&nbsp;Per page<select size="1" class="dropdown" name="mpp">
+<option value="10">10</option><option value="25">25</option><option selected value="50">50</option>
+</select>&nbsp;&nbsp;&nbsp;<input type="submit" value="Update" name="SetOpt" class="button" />
+</form>
+</div></td>
+</tr>
+</table></td>
+</tr><tr>
+<td><a name="xx0xx"></a><table border="0" cellpadding="2px" cellspacing="0" width="100%">
+<tr class="navbar">
+<td></td><td style="text-align:right;width:50%;"></td><td style="text-align:right;white-space:nowrap;"><span class="nav-link disabled">First</span> <span class="nav-link disabled">Prev</span> <span class="nav-link disabled">Next</span></td>
+</tr>
+</table></td>
+</tr><tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%" class="fixed-layout blank-background">
+<tr>
+<td><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" border="0" width="1px" height="5px" alt="" /></td>
+</tr><tr id="F5090685_h0" class="header hover-row root">
+<td class="subject-line thread " width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="20px" class="indent"><a name="xx5090685xx"></a><img height="16px" width="16px" align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_idea.gif" alt="Suggestion" /></td><td class="subject hover-container"><a class="message-link" name="5090685" parent="0" thread="5090685" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed&amp;select=5090685#xx5090685xx">Step 5: if you are confused, MSDN has an explanation:</a> <a onclick="return Pin(this);" rel="nofollow" href="#" title="Click to pin message"><img src="//codeproject.cachefly.net/script/Forums/Images/pin.png" border="0" align="top" alt="Pin" width="13px" height="13px" /></a><div class="mobile-only">
+	<span class="author">Tom Dane</span><span class="date">13-Jul-15  0:01</span>
+</div></td><td class="icon"><img border="0" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/icn-member-16.gif" title="member" alt="member" height="16px" /></td><td class="author"><span><a href="/script/Membership/View.aspx?mid=11370817">Tom Dane</a></span></td><td class="date"><span>13-Jul-15  0:01&nbsp;</span></td><td class="count">1&nbsp;</td>
+</tr>
+</table></td>
+</tr><tr id="F5090685_h1" class="content root selected" style="display:none;">
+<td class="thread" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr valign="top">
+<td class="indent align-right" style="width:20px;"><div class="voteform vertical" ownerid="11370817" msgid="5090685" votingType="GoodOrBad">
+
+</div><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" height="1px" width="20px" alt="" /></td><td class="text"><table border="0" cellpadding="0" cellspacing="5px" width="100%">
+<tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2">if you are confused by step 5, add a new item to your project with the steps here <a href="https://msdn.microsoft.com/en-us/library/vstudio/w0572c5b(v=vs.100).aspx">https://msdn.microsoft.com/en-us/library/vstudio/w0572c5b(v=vs.100).aspx</a>[<a href="https://msdn.microsoft.com/en-us/library/vstudio/w0572c5b(v=vs.100).aspx" target="_blank" title="New Window">^</a>]<br /></td>
+</tr><tr class="footer" style="vertical-align:top;">
+<td><a href="http://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign In</a>·<wbr><a href="/Messages/5090685/Step-if-you-are-confused-MSDN-has-an-explanation.aspx" title="Get permanent link">Permalink</a></td><td style="text-align:right;"><span id="MVF5090685" data-ref="3_5090685" class="rating-label" style="white-space:nowrap;"></span></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr><tr id="F4925396_h0" class="header hover-row root">
+<td class="subject-line thread " width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="20px" class="indent"><a name="xx4925396xx"></a><img height="16px" width="16px" align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_question.gif" alt="Question" /></td><td class="subject hover-container"><a class="message-link" name="4925396" parent="0" thread="4925396" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed&amp;select=4925396#xx4925396xx">Could not found whole HTML document</a> <a onclick="return Pin(this);" rel="nofollow" href="#" title="Click to pin message"><img src="//codeproject.cachefly.net/script/Forums/Images/pin.png" border="0" align="top" alt="Pin" width="13px" height="13px" /></a><div class="mobile-only">
+	<span class="author">sahukuldeep</span><span class="date">18-Oct-14  3:01</span>
+</div></td><td class="icon"><img border="0" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/icn-member-16.gif" title="member" alt="member" height="16px" /></td><td class="author"><span><a href="/script/Membership/View.aspx?mid=8856304">sahukuldeep</a></span></td><td class="date"><span>18-Oct-14  3:01&nbsp;</span></td><td class="count">1&nbsp;</td>
+</tr>
+</table></td>
+</tr><tr id="F4925396_h1" class="content root selected" style="display:none;">
+<td class="thread" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr valign="top">
+<td class="indent align-right" style="width:20px;"><div class="voteform vertical" ownerid="8856304" msgid="4925396" votingType="GoodOrBad">
+
+</div><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" height="1px" width="20px" alt="" /></td><td class="text"><table border="0" cellpadding="0" cellspacing="5px" width="100%">
+<tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2">Hi,<br />
+<br />
+I am working on a html scraping task , i am using method are below:<br />
+                var getHtmlWeb = new HtmlWeb();<br />
+                var document = getHtmlWeb.Load("https://www.url.com");<br />
+but we do not get whole html in document , since webpage have use ajax posting and js for show and hide content .<br />
+please suggest me how to found whole html from webpage.<br />
+<br />
+thanks<br /></td>
+</tr><tr class="footer" style="vertical-align:top;">
+<td><a href="http://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign In</a>·<wbr><a href="/Messages/4925396/Could-not-found-whole-HTML-document.aspx" title="Get permanent link">Permalink</a></td><td style="text-align:right;"><span id="MVF4925396" data-ref="3_4925396" class="rating-label" style="white-space:nowrap;"></span></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr><tr id="F4856229_h0" class="header hover-row root">
+<td class="subject-line thread " width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="20px" class="indent"><a name="xx4856229xx"></a><img height="16px" width="16px" align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_question.gif" alt="Question" /></td><td class="subject hover-container"><a class="message-link" name="4856229" parent="0" thread="4856229" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed&amp;select=4856229#xx4856229xx">Extracting all items without clicking 'More' button</a> <a onclick="return Pin(this);" rel="nofollow" href="#" title="Click to pin message"><img src="//codeproject.cachefly.net/script/Forums/Images/pin.png" border="0" align="top" alt="Pin" width="13px" height="13px" /></a><div class="mobile-only">
+	<span class="author">SweetNeetu</span><span class="date">7-Jul-14  5:16</span>
+</div></td><td class="icon"><img border="0" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/icn-member-16.gif" title="member" alt="member" height="16px" /></td><td class="author"><span><a href="/script/Membership/View.aspx?mid=7407755">SweetNeetu</a></span></td><td class="date"><span>7-Jul-14  5:16&nbsp;</span></td><td class="count">2&nbsp;</td>
+</tr>
+</table></td>
+</tr><tr id="F4856229_h1" class="content root selected" style="display:none;">
+<td class="thread" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr valign="top">
+<td class="indent align-right" style="width:20px;"><div class="voteform vertical" ownerid="7407755" msgid="4856229" votingType="GoodOrBad">
+
+</div><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" height="1px" width="20px" alt="" /></td><td class="text"><table border="0" cellpadding="0" cellspacing="5px" width="100%">
+<tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2">I have a web page that displays a list of 10 items at one point. If I click on 'More' it displays another set of 10 items. Can we use this pack to extract all items in the list without clicking 'More' button many times?  I have 300,000 items in my list. <br />
+<br />
+Thanks!<br /></td>
+</tr><tr class="footer" style="vertical-align:top;">
+<td><a href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;sort=Position&amp;spc=Relaxed&amp;tid=4856229" title="View&nbsp;Thread"><b>View the reply to this message</b></a><br /><a href="http://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign In</a>·<wbr><a href="/Messages/4856229/Extracting-all-items-without-clicking-More-button.aspx" title="Get permanent link">Permalink</a></td><td style="text-align:right;"><span id="MVF4856229" data-ref="3_4856229" class="rating-label" style="white-space:nowrap;"></span></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr><tr id="F4754998_h0" class="header hover-row root">
+<td class="subject-line thread " width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="20px" class="indent"><a name="xx4754998xx"></a><img height="16px" width="16px" align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_question.gif" alt="Question" /></td><td class="subject hover-container"><a class="message-link" name="4754998" parent="0" thread="4754998" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed&amp;select=4754998#xx4754998xx">Help</a> <a onclick="return Pin(this);" rel="nofollow" href="#" title="Click to pin message"><img src="//codeproject.cachefly.net/script/Forums/Images/pin.png" border="0" align="top" alt="Pin" width="13px" height="13px" /></a><div class="mobile-only">
+	<span class="author">Member 10583350</span><span class="date">9-Feb-14  13:23</span>
+</div></td><td class="icon"><img border="0" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/icn-member-16.gif" title="member" alt="member" height="16px" /></td><td class="author"><span><a href="/script/Membership/View.aspx?mid=10583350">Member 10583350</a></span></td><td class="date"><span>9-Feb-14  13:23&nbsp;</span></td><td class="count">2&nbsp;</td>
+</tr>
+</table></td>
+</tr><tr id="F4754998_h1" class="content root selected" style="display:none;">
+<td class="thread" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr valign="top">
+<td class="indent align-right" style="width:20px;"><div class="voteform vertical" ownerid="10583350" msgid="4754998" votingType="GoodOrBad">
+
+</div><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" height="1px" width="20px" alt="" /></td><td class="text"><table border="0" cellpadding="0" cellspacing="5px" width="100%">
+<tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2">Please I want to buil a small app that gets data from a website, but firstly I need to login. Please if you can help my, beacuse I ran all over the internet and I can't understand because I am only 16 years old. So if anybody could help me I will be very grateful!<br /></td>
+</tr><tr class="footer" style="vertical-align:top;">
+<td><a href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;sort=Position&amp;spc=Relaxed&amp;tid=4754998" title="View&nbsp;Thread"><b>View the reply to this message</b></a><br /><a href="http://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign In</a>·<wbr><a href="/Messages/4754998/Help.aspx" title="Get permanent link">Permalink</a></td><td style="text-align:right;"><span id="MVF4754998" data-ref="3_4754998" class="rating-label" style="white-space:nowrap;"></span></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr><tr id="F4731024_h0" class="header hover-row root">
+<td class="subject-line thread " width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="20px" class="indent"><a name="xx4731024xx"></a><img height="16px" width="16px" align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_question.gif" alt="Question" /></td><td class="subject hover-container"><a class="message-link" name="4731024" parent="0" thread="4731024" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed&amp;select=4731024#xx4731024xx">Remove the images containing source code</a> <a onclick="return Pin(this);" rel="nofollow" href="#" title="Click to pin message"><img src="//codeproject.cachefly.net/script/Forums/Images/pin.png" border="0" align="top" alt="Pin" width="13px" height="13px" /></a><div class="mobile-only">
+	<span class="author">Manfred R. Bihy</span><span class="date">2-Jan-14  22:54</span>
+</div></td><td class="icon"><img border="0" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/icn-pro-16.png" title="professional" alt="professional" height="16px" /></td><td class="author"><span><a href="/script/Membership/View.aspx?mid=3762091">Manfred R. Bihy</a></span></td><td class="date"><span>2-Jan-14  22:54&nbsp;</span></td><td class="count">2&nbsp;</td>
+</tr>
+</table></td>
+</tr><tr id="F4731024_h1" class="content root selected" style="display:none;">
+<td class="thread" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr valign="top">
+<td class="indent align-right" style="width:20px;"><div class="voteform vertical" ownerid="3762091" msgid="4731024" votingType="GoodOrBad">
+
+</div><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" height="1px" width="20px" alt="" /></td><td class="text"><table border="0" cellpadding="0" cellspacing="5px" width="100%">
+<tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2">Please do remove the images containing source code and put the relevant source code within <code>pre</code> tags.<br />
+<br />
+Thank you!<br />
+<div class="signature"><div>
+<i>"I had the right to remain silent, but I didn't have the ability!"</i><br />
+<dd><a href="http://tatersalad.com/home">Ron White</a>, Comedian</dd><br />
+</div>
+</div><br /></td>
+</tr><tr class="footer" style="vertical-align:top;">
+<td><a href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;sort=Position&amp;spc=Relaxed&amp;tid=4731024" title="View&nbsp;Thread"><b>View the reply to this message</b></a><br /><a href="http://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign In</a>·<wbr><a href="/Messages/4731024/Remove-the-images-containing-source-code.aspx" title="Get permanent link">Permalink</a></td><td style="text-align:right;"><span id="MVF4731024" data-ref="3_4731024" class="rating-label" style="white-space:nowrap;"></span></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr><tr id="F4671639_h0" class="header hover-row root">
+<td class="subject-line thread " width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td width="20px" class="indent"><a name="xx4671639xx"></a><img height="16px" width="16px" align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_general.gif" alt="General" /></td><td class="subject hover-container"><a class="message-link" name="4671639" parent="0" thread="4671639" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed&amp;select=4671639#xx4671639xx">My vote of 5</a> <a onclick="return Pin(this);" rel="nofollow" href="#" title="Click to pin message"><img src="//codeproject.cachefly.net/script/Forums/Images/pin.png" border="0" align="top" alt="Pin" width="13px" height="13px" /></a><div class="mobile-only">
+	<span class="author">newton.saber</span><span class="date">2-Oct-13  2:53</span>
+</div></td><td class="icon"><img border="0" src="//codeproject.cachefly.net/App_Themes/CodeProject/Img/icn-member-16.gif" title="member" alt="member" height="16px" /></td><td class="author"><span><a href="/script/Membership/View.aspx?mid=8945726">newton.saber</a></span></td><td class="date"><span>2-Oct-13  2:53&nbsp;</span></td><td class="count">2&nbsp;</td>
+</tr>
+</table></td>
+</tr><tr id="F4671639_h1" class="content root selected" style="display:none;">
+<td class="thread" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr valign="top">
+<td class="indent align-right" style="width:20px;"><div class="voteform vertical" ownerid="8945726" msgid="4671639" votingType="GoodOrBad">
+
+</div><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" height="1px" width="20px" alt="" /></td><td class="text"><table border="0" cellpadding="0" cellspacing="5px" width="100%">
+<tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2">Very well written, succinct but very explanatory.  Interesting and useful topic.<br /></td>
+</tr><tr class="footer" style="vertical-align:top;">
+<td><a href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;sort=Position&amp;spc=Relaxed&amp;tid=4671639" title="View&nbsp;Thread"><b>View the reply to this message</b></a><br /><a href="http://www.codeproject.com/script/Membership/LogOn.aspx?rp=%2fArticles%2f659019%2fScraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Sign In</a>·<wbr><a href="/Messages/4671639/My-vote-of.aspx" title="Get permanent link">Permalink</a></td><td style="text-align:right;"><span id="MVF4671639" data-ref="3_4671639" class="rating-label" style="white-space:nowrap;"></span></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr><tr>
+<td><img src="//codeproject.cachefly.net/script/Forums/Images/t.gif" border="0" width="1px" height="5px" alt="" /></td>
+</tr><tr>
+<td><table width="100%" cellpadding="2px" cellspacing="0">
+<tr class="footer">
+<td><span class="last-visit desktop-only tablet-only">Last Visit: 31-Dec-99  18:00 &nbsp; &nbsp; Last Update: 22-Sep-15  4:12</span></td><td><a rel="nofollow" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed">Refresh</a></td><td style="text-align:right;white-space:nowrap;"><input id="_mbnUrl" type="hidden" value="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?fid=1843296&amp;df=10000&amp;mpp=50&amp;prof=False&amp;sort=Position&amp;view=Thread&amp;spc=Relaxed&amp;fr=7" /><span class="nav-link selected">1</span></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div><p class="small-text"><img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_general.gif" width="16px" height="16px" alt="General" /> General &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_news.gif" width="16px" height="16px" alt="News" /> News &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_idea.gif" width="16px" height="16px" alt="Suggestion" /> Suggestion &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_question.gif" width="16px" height="16px" alt="Question" /> Question &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_bug.gif" width="16px" height="16px" alt="Bug" /> Bug &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_answer.gif" width="16px" height="16px" alt="Answer" /> Answer &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_joke.gif" width="16px" height="16px" alt="Joke" /> Joke &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_rant.gif" width="16px" height="16px" alt="Rant" /> Rant &nbsp;&nbsp; <img align="top" src="//codeproject.cachefly.net/script/Forums/Images/msg_admin.gif" width="16px" height="16px" alt="Admin" /> Admin &nbsp;&nbsp; </p>
+				
+
+			</div>
+			
+		</td>
+		<td width="170px" class="article-wing-right">
+			<div id="ctl00_RightSideBar" class="container-article-info">
+
+                <div id="RHSticky" class="container-article-info-sticky">
+        			
+
+<div class="header">Info</div>
+<div class="article-summary">
+
+<a id="ctl00_InfoBox_ParentLink"></a>
+
+<table cellpadding="0" cellspacing="0" class="article-info">
+
+    
+
+    
+	
+
+	
+
+    
+
+	<tr><td nowrap>First Posted&nbsp;</td><td nowrap="nowrap" class="value"><span itemprop="datePublished" content="2013-09-26">25 Sep 2013</span></td></tr>
+    
+
+	<tr><td colspan="2"></td></tr>
+	
+	
+</table>
+</div>
+
+				    
+
+				    <div style="width:160px;margin: 10px auto;">
+					    <div class="msg-160x600" data-format="160x600" data-type="ad" data-publisher="lqm.codeproject.site" data-zone="Web-Development/ASP-NET/Samples"  data-tags='ASP.NET, Intermediate, C#4.0, .NET4.5, webscraping,rating4.5'><noscript><a href="http://ad.doubleclick.net/N6839/jump/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=160x600;ord=635785279428136604?"><img src="http://ad.doubleclick.net/N6839/ad/lqm.codeproject.site/Web-Development/ASP-NET/Samples;sz=160x600;ord=635785279428136604?"  width="160px" height="600px" /></a></noscript></div>
+				    </div>
+
+                    
+
+				    
+
+				    
+
+				    
+
+                    <div class="anchorLink gototop" id="gototop">
+                        <a id="ctl00_GoToTop" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H#_articleTop">Go to top</a>
+                    </div>
+
+				</div>
+
+			</div>
+		</td>
+		</tr></table>
+
+		
+		<div class="theme1-background" style="height:2px" id="stickyStop"></div>
+
+		<div class="extended tiny-text">
+			<div class="row">
+				<div class="float-left">
+					<a id="ctl00_PermaLink" itemprop="url" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H">Permalink</a> | 
+					<a id="ctl00_AdvertiseLink" href="http://developermedia.com/">Advertise </a> |
+					<a id="ctl00_PrivacyLink" href="/info/privacy.aspx">Privacy</a> |
+                    <a id="ctl00_TermsOfUseLink" href="/info/TermsOfUse.aspx">Terms of Use</a> |
+					<a id="ctl00_Mobile" rel="nofollow" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?display=Mobile">Mobile</a>
+					<br />
+								
+					
+					Web03 |
+					2.8.1509020.2 |
+					Last Updated 6 Jan 2014								
+				</div>
+
+                <div id="ctl00_GoogleTranslate" class="translate float-left"></div>      
+
+				<div class="float-right align-right">
+					Article Copyright 2013 by Ashad Shanto<br />Everything else
+					Copyright &copy; <a href="mailto:webmaster@codeproject.com">CodeProject</a>, 1999-2015 <br />
+				</div>
+
+				
+
+
+<div class="page-width">
+Layout: <a id="ctl00_PageWidth_FixedT" title="Fixed width layout" rel="nofollow" class=" active" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?PageFlow=FixedWidth">fixed</a>
+|
+<a id="ctl00_PageWidth_FluidT" title="Fluid layout" rel="nofollow" href="/Articles/659019/Scraping-HTML-DOM-elements-using-HtmlAgilityPack-H?PageFlow=Fluid">fluid</a>
+</div>
+
+
+
+			</div>
+		</div>
+		
+
+		<br clear="all" />
+		
+			
+
+	</div> 
+	</div>
+</div>
+
+
+<div style="display:none;" id="dm_AdTable">
+	
+</div>
+<img id="ctl00_Audience" src="http://pubads.g.doubleclick.net/activity;dc_iu=/6839/DFPAudiencePixel;ord=&#39;635785279426418188&#39;;dc_seg=33704650?" style="border-width:0px;height:1px;width:1px;" />
+
+
+
+<script type="text/javascript" language="Javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script><script type='text/javascript'>//<![CDATA[
+if (typeof jQuery == 'undefined') {
+    document.write(unescape("%3Cscript src='/script/JS/jquery-1.6.2.min.js' type='text/javascript' %3E%3C/script%3E"));
+}//]]></script>
+<script type="text/javascript" language="Javascript" src="//codeproject.cachefly.net/script/Articles/JS/article.min.js?dt=2.8.1509020.2"></script>
+<script type="text/javascript" language="Javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript" language="Javascript" src="//codeproject.cachefly.net/script/JS/navbar.min.js?dt=2.8.1509020.2"></script>
+<script type="text/javascript" language="Javascript" src="//codeproject.cachefly.net/script/Membership/JS/Notifications.min.js?dt=2.8.1509020.2"></script>
+<script type="text/javascript" language="Javascript">//<![CDATA[
+$(document).ready(function () { processCodeBlocks.Initialise('#contentdiv'); });
+function googleTranslateElementInit() {  new google.translate.TranslateElement({   pageLanguage: 'en',   layout: google.translate.TranslateElement.InlineLayout.SIMPLE,   autoDisplay: false,   gaTrack: true,   gaId: 'UA-1735123-1'},  'ctl00_GoogleTranslate');}
+$(document).ready(function() { anchorAnimate();
+$('#RHSticky').sticky($('#stickyStop'));
+$('#ctl00_Nav').sticky($('#stickyStop'));
+});
+$(document).ready(function() {   $('.alert-bar').fadeIn('slow');   $('.alert-bar a.close-notify').click(function() {      $('.alert-bar').fadeOut('fast');        return false;    });});
+$(function ()
+                {
+                    $('.oauth').click(function () {
+                        $this = $(this);
+                        href = $this.attr('href');
+                        var myWindow = window.open(href, 'popup',
+                                    'width=800,height=600,location=0,menubar=0,resizeable=0,scrollbars=0,toolbar=0');
+                        myWindow.focus();
+                        var timer = setInterval(function () {
+                                        if (myWindow.closed) {
+                                            clearInterval(timer);
+                                            // window.location.reload(); // May do a POST reload, shows a warning
+                                            window.location = window.location; // force a GET reload
+                                        }
+                                    }, 200);
+                        return false;
+                    });
+                });
+var oSrchFlt = false, oSrchBox=false,srchBoxFoc=false;
+$(document).ready(function() {
+ if(InitWatermark)InitWatermark('sb_tb', 'Search for articles, questions, tips');
+ var sbar = $('#sb_tb'); 
+ var sfilter = $('#SearchFilter');
+ if (sbar && sfilter) {
+  sfilter.removeClass('popup'); sfilter.hide(); sfilter.removeClass('open');
+  sbar.blur(function() {
+ if (!oSrchFlt) {sfilter.hide(); sfilter.removeClass('open');}
+ srchBoxFoc=false;
+ });
+  sbar.focus(function() {
+ oSrchFlt=false; srchBoxFoc=true;
+ sfilter.show(); sfilter.addClass('open');
+ });
+  sbar.mouseleave(function() { oSrchBox=false; });
+  sbar.mouseover(function() { oSrchBox=true; });
+  sfilter.mouseleave(function() { oSrchFlt=false; if (!srchBoxFoc&&!oSrchBox) { sfilter.hide(); sfilter.removeClass('open'); }});
+  sfilter.mouseover(function() { oSrchFlt=true; });
+ }
+});
+$('#clear-rate_ctl00_RateArticle_RSU').click(function () {    $('#ctl00_RateArticle_RSU').hide(); return false;});$("#ctl00_RateArticle_RateItemWrapper")   .removeClass("container-rating")   .hover( function() { $('#ctl00_RateArticle_RSU').fadeIn('fast'); },            function() { $('#ctl00_RateArticle_RSU').fadeOut('fast'); } );
+function PostBack_ctl00_RateArticle_RateItemWrapper() {
+  return rateItem(659019,2,1,true,true,0,'LargeStars');
+}
+
+                        function getVotesHistogram(objectId, objectTypeId, containerId, loadingId) {
+                            if (!$('#' + containerId).attr('alreadyRequested')){
+                                $.ajax({
+                                    url: '/script/Ratings/Ajax/Histogram.aspx?obid=' + objectId + '&obtid='+objectTypeId,
+                                    success: function (data) {
+                                        $('#' + containerId).html(data);
+                                        $('#' + loadingId).hide();
+                                    }
+                                });
+                                $('#' + containerId).attr('alreadyRequested', 'true');
+                            }
+                        }
+$(document).ready(function() {   new starRating('#ctl00_RateArticle_VoteFormDiv', PostBack_ctl00_RateArticle_RateItemWrapper,'ctl00_RateArticle');
+  $('#ctl00_RateArticle_RB').mouseenter(function() {     getVotesHistogram(659019,2   ,'ctl00_RateArticle_Histogram','ctl00_RateArticle_Loading');  })})
+$(document).ready(function() { $('#ctl00_RateArticle_SubmitRateBtn').hide(); });
+$(document).ready(function() { $('#ctl00_RateArticle_SubmitRateBtn').hide(); });function ChkRtctl00_RateArticle(){}
+
+forumDir = '/script/Forums/';
+allowReporting = false;
+allowRating = false;
+allowRatingDisplay = true;
+var smoothScroll = true;
+Selected        = -1;
+oldTitle        = document.title;
+minMessageScore = 1;
+minMessageScore = 5;
+abuseScore      = -2;
+spamScore       = -1;
+getRatingUrl    = '/script/Ratings/Ajax/GetRatings.aspx';
+getRatingRefKey = 'obrs';
+
+
+//]]>
+</script>
+
+
+</body>
+</html>

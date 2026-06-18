@@ -1,0 +1,466 @@
+Did you know...
+
+1. Welcome to xplorer² !! We've got some great tips and tricks for you, so please leave this option on for a while. You'll learn about many small details with big impact on your daily productivity.
+
+1a. You can try all the recommended tips & tricks as you read them. Just put this dialog to the side and follow the instructions, selecting menu commands etc from the main program window. Menu command instructions are in blue text.
+
+1b. If you prefer a more engaging way to learn about xplorer² tricks, checkout the short demo videos in the various tour pages found at http://zabkat.com/tour1.htm. Each page has a Play Demo button near the top right. Also click on the demo videos in the How do I? pane.
+
+1c. To arrange your dual folder panes left-right use View| Tile horizontally menu command.
+
+2. All menu commands show a descriptive line of text on the status bar as you are traversing the menu system. They help you understand commands and see the effects of slight variants when keyboard modifiers like <Shift> or <Ctrl> are pressed.
+
+2a. If you want to find a menu command but can't remember where it is located use Help| Command finder with a 1-2 keywords that may describe the command.
+
+3. The status bar also shows short messages about command outcomes and errors. These messages go away after a while automatically.
+
+4. You can move toolbars around, dragging them from their handles on their left side. View| Toolbars allows you to show or hide any toolbar separately.
+
+4a. [PRO version] The peripheral panes like the folder tree and the quickviewer can be moved around grabbing them from their titlebar with the mouse. So if you prefer you can have the tree docked to the right and the quickviewer at the bottom edge of the window. Double click on the quickviewer's titlebar to have it floating! (toggle).
+
+5. You can customize a toolbar by right-clicking on it and selecting which command buttons you want, text labels etc. You can reorder buttons by dragging them while holding the <Shift> key.
+
+5a. Bored with your toolbar icons? Get a new skin! There are a few available to download from this page: http://zabkat.com/x2skin.htm. Or even better, grab the skin designer pack and create your own icons.
+
+6. If you find xplorer² menus too taxing, you can switch to a simpler set with fewer commands, checking Plain menus in the Window property page (Tools| Options). Even in this plain mode you can use commands you can't see pressing their shortcut keys or placing their buttons on the toolbar.
+
+6a. [PRO version] If you are used to windows explorer and prefer <F5> key to refresh folders instead of xplorer² default command, use Customize| Keyboard to change the key mapping for View| Refresh command. You can change all other keyboard shortcuts to your taste too!
+
+7. Some input fields in dialogs may be hard to understand. Just hover the mouse over them and a balloon help tip will pop-up with a brief description. You can turn off this dialog help from Tools| Options.
+
+7a. The user interface has been translated to a number of locales (check the website for availability). You select your language as part of the installation process. If you missed the language drop-down box in the first place, you can run the installer again at any time.
+
+8. You can see the contents of up to two folders in a single window (View| dual pane mode) but you can work with only one at a time. The active panel has a lighter background color. You can swap the active/inactive folders hitting <Tab> or just clicking on the folder you want to work with.
+
+9. You can have the dual view panes stacked one below the other instead of the default left-right arrangement. For changing this and many other options please use Tools| Options menu.
+
+9a. To see more folders in a single pane use File| New tab. This is an alternative to dual pane file management. You can still see only one folder at a time but switching folders is as easy as clicking on a tab. Using the keyboard you can cycle with <Ctrl+Alt+arrows>.
+
+9b. Tabs can be rearranged with mouse drag-drop. To remove a tab click on the X to the right of the tab-strip or pick close from the right-click menu.
+
+9c. Double-click on a tab to close it; double-click on an empty spot within the tab strip to create a new tab.
+
+9d. If you have many tabs with similar names you can often improve clarity by renaming some of them - using the right click menu. Forced names will stick even when you change folders.
+
+9e. To copy the path names of all tabs in a comma separated list, right click on the tab strip and pick Copy all paths. Have you tried pasting the result in a scrap container?
+
+10. Filenames and other column text may be cropped if wider than the available space. If you hover the mouse over such clipped names a tooltip is shown revealing the obscured text. If you enable infotips from Tools| Options then the tooltip will additionally include information like size and modification date.
+
+11. You can use the arrow keys to change the active item (focus) of the active view. You can also use <PageUp> and <PageDown> to move a page at a time and <Home> & <End> to quickly go to the start or end of long listings.
+
+12. To arrange items while in detailed view mode just click on the column header of interest. This is the only way to sort items by extended columns like Comment etc. Clicking on the same column again will flip the ascending/descending order.
+
+12a. [PRO version] You can sort by more than one attribute using <Shift+click> on a column header. The first column you click will be the major one; items identical with respect to this column will be ordered according to the second column, and so on. To cancel this multi-way sort mode just click without holding <Shift>.
+
+12b. [PRO version] In large folders you can use item grouping to view and manage your content. View| Arrange by| Show in groups uses the primary sort column to bunch similar items together. For example a date column will group together items changed today, yesterday, last week and so on. Within each group items are sorted alphabetically; if you need a different in-group sorting order just <Shift+click> on a column header, even the same one that generated the grouping.
+
+13. When you type letters or digits the focus moves to the first matching filename; e.g. typing sa will take you to the first file whose name matches this substring (e.g. sample.txt). This feature is called incremental search.
+
+14. You can use incremental search to locate files with particular extensions, too. Typing e.g. tx while holding down <Shift> will take you to the first filename that matches this extension (e.g. readme.txt). This comes handy when you sort items by type.
+
+14a. If the multi-purpose box next to the addressbar is set to plain filter mode, and after you type 4 or more characters, the incremental search will turn into a filter. Only items that match the partial string will be visible.
+
+15. Incremental search is not limited to filenames. Just bring any column in the leftmost (first) position and its contents will be used to match the partial strings you type.
+
+16. Press <Space> to toggle the selection status of the focused item on/off. Pressing <Insert> does the same but moves the focus to the next item at the same time. This way you can select a lot of items using just one key.
+
+17. If you want to move the focus without affecting the existing selection, keep the <Ctrl> key pressed while using the keyboard or mouse. Or you can turn the sticky mode on from Mark menu to avoid pressing <Ctrl>. Thus you can roam large lists hand-selecting items safely.
+
+18. You have several ways to select files using the mouse. To grab many consecutive items, click on the first and then <Shift>-click on the last. <Ctrl>-click to select/unselect individual items. Finally you may click and hold the left button to draw a rectangle around the items you want selected. This is called "lasso" selection.
+
+19. Before you execute a command you must select the items you want to be affected. There is an abundance of methods to select items, using the keyboard, selection filters, synchronization, etc (see Mark menu for commands comprising the selection engine). Using a combination of selection and unselection elementary procedures you can build up a set of files that perfectly match your criteria. Vivid imagination is all that's required!
+
+19a. [PRO version] If item grouping is enabled (View| Arrange by| Show in groups) you can use the keyboard to select <Ctrl+Alt+Shift+GreyPlus> (or GreyMinus to unselect) all items in the current group - where the focused  item is located.
+
+20. Whereas more than one items may be selected at any time, there is a single item with a unique status called the active or focused item. You can tell it apart by the dotted rectangle that surrounds its name. Its details (size/date) are shown on the status bar, and it is the one that gets launched when you press <Return>. Note that the focus does not necessarily have to be selected, e.g. if you move around while holding <Ctrl> pressed.
+
+21. When a command is unavailable the respective toolbar button and menu item will be disabled. As soon as you select a few items it will usually be enabled, unless the command is meant for filesystem folders only and you are currently browsing a virtual folder like Control Panel.
+
+22. You can save the current selection using Mark| Selection submenu. You can reuse this special "clipboard" at a later stage to select (or unselect) items with the same names in a different folder or even in a different window managed by the same process!
+
+23. You can reuse a previously saved selection as a mask via Mark| Selection| Combine. This advanced mode combines the existing and saved selection so that only items that are in both lists end up selected (boolean AND operation). So an item must be both already selected and part of the list stored with <Ctrl+F11> to remain selected; otherwise it is cleared. This command is handy for refining selection patterns.
+
+24. Mark| Select group command is additive. If there is an existing selection items matching the new wildcard will be added on top. To start from a clean slate just unselect everything in advance (e.g. click "nowhere"). When you aren't sure whether there is a previous selection you can check the rightmost status bar pane.
+
+25. When you have finished entering information in any of the program dialog windows, you can usually dismiss the dialog pressing <Return> instead of clicking on OK button. If you want to cancel, just hit <Esc>.
+
+26. Selection can be assisted by intelligent use of sorting. E.g. the easiest way to select all files modified within the last day is to sort by date, click on the first (topmost) item and <Shift>-click on the last file whose date is within the last 24-hour range.
+
+26a. If you are unsure whether there are any selected items outside the visible portion of the active folder, either check the reading of the selection pane on the statusbar or use Mark| Selection| Show to ensure that whatever is selected will be brought into view.
+
+27. If you have many non-consecutive items selected, you can quickly jump to the next or previous selection using <Alt+DownArrow> and <Alt+UpArrow>, respectively. The command will also cycle to the first selection if you use it when the focus is on the last item (and vice-versa for the reverse direction).
+
+27a. [PRO version] When items are arranged in groups (View| Arrange by| Show in groups) you can use the keyboard shortcuts <Ctrl+Alt+DownArrow> and <Ctrl+Alt+UpArrow> to jump to the next and previous groups, respectively.
+
+27b. [PRO version] In grouped view mode, you can collapse or expand a whole group by clicking on the little [-] or [+] box to the right of the group header. 
+
+28. If you want to know the "row number" of an item (its order within the list) you can use Mark| Select range and read its position from the dialog window title. We are sure there must be a good use for this information only we can't think of it right now! :)
+
+29. To calculate the total size of a folder use Mark| Select all <Ctrl+A> and read the number on the rightmost part of the status bar. If you have previously used Tools| Subfolder size to get the size of all subfolders' contents, the tally will include those too!
+
+30. You can map network drives by right clicking on "My Computer" icon in the tree. To format a removable disc right-click on its icon (e.g. A:\). In general you'll find different commands in such context menus depending on the type of object clicked. Try right-clicking on several items and see what you get!
+
+31. Before you can format a floppy disk you must ensure no program is accessing it, including xplorer²! Make sure you are not browsing A:\ in any pane and collapse any tree nodes. If windows still cannot format it, browse a folder like c:\ ensuring that xplorer² isn't locking the drive.
+
+32. The context menu for most shell items has a Properties command. Different files have different kind of properties, so e.g. executable files have a program version tab, zip files have information about the compression, etc. Checkout the properties of various items and see what you'll discover!
+
+33. If you press <Shift> as you are right-clicking on a file, the context menu will include some extra commands, depending on the file type. For example, the context menu of executable files will include a Run As command that allows you to run a program impersonating a different user.
+
+33a. If you want to access the background menu of a view pane full of files, and cannot find any "empty" space, right click on the little folder icon situated at the top left side of the pane's titlebar.
+
+34. Press <Shift> while deleting files to avoid placing them in the recycle bin. WARNING: you cannot recover files permanently deleted so be careful! Some files can't be placed in the bin anyway, e.g. those deleted from floppy discs. Use the recycle bin properties to ensure that the delete confirmation is enabled for safety.
+
+35. In detailed mode you can select which columns you want by right-clicking on the list header. You can reorder columns via drag-drop. Double-clicking on the divider between columns will autosize the one on the left to fit the largest name. To autosize all columns use the respective command from View menu.
+
+36. The comment column shows file descriptions that you may set using the command from Actions menu. NOTE: the comment feature is only available for files on NTFS formatted partitions. If you subsequently move a file to a FAT volume (e.g. floppy disc) you will lose the comment; you may or may not receive a warning for this. The workaround is to use Actions| ADS| Bundle to go to pack the file including its alternate streams during the transport.
+
+37. You can set comments for many files simultaneously. Actions| Set comment will insert the text you provide in the comment of all selected files, on top of any existing keywords. To clear the comments just supply an empty text string.
+
+38. The checksum column shows a plain numeric sum of the file contents. It may be used to check for modifications and to quickly compare files. If 2 files have different checksums then they are definitely not same. On the other hand, same checksums do not necessarily imply identity; further checks are advisable.
+
+39. The creation date of files can be newer than the date last modified! When you create a new copy of a file, its creation date is updated whereas the modification (last edit) date remains unchanged. You can use these facts with the creation & modification date columns to figure out special situations.
+
+40. The modification date of folders (NTFS) will tell you the last time some of its immediate contents was modified by copying, creating or renaming. It will not change if you merely edit an existing file or if you change contents in deep subfolders. Unfortunately folders on FAT32 formatted disks do not convey this information at all!
+
+41. The difference between Size and Size on disk columns is that the latter shows the actual space occupied for storing each file. This is usually larger due to the way hard disks are organized. However for compressed files size on disk will be smaller!
+
+42. On NTFS partitions you can create multiple copies of the same file without taking any extra space on disc! These are called hard links and can be created using the special paste command in Edit menu. There's a relevant column, too, showing how many links each file has.
+
+43. The attributes column shows subtle information bits for files. For instance the "A" (archive) bit is automatically set every time you edit a file. You can clear this attribute at will or with backup/zip programs. At a later stage you can check which files have the archive bit back on and you'll immediately know they were changed since the last backup.
+
+44. On NTFS you can use the compressed attribute either for individual files or whole folders to save on disc space. You can enable compression using File| Properties| General| Advanced. This way you can enjoy near-regular use without resorting to cumbersome zip files.
+
+44a. Be very careful with folders that have the J attribute. These folder junctions are in essense hard links for folders; the catch is, if you try to delete the junction itself, you'll ransak all the target folder structure! If you have to use folder junctions make sure you name them in a way that makes absolutely clear what they are, e.g. use a "JUNCTION" extension.
+
+45. On NTFS you can use the Summary tab of file properties dialog to set details like Author, Title, even comments. There are columns for many of these fields for convenient browsing of this information.
+
+46. Many columns appear twice in the column customization dialog. This is because xplorer² knows how to get columns that windows explorer also offers. In such cases you're better off using the xplorer² versions (called stock, & carry [S] after their name) since they are faster and will also work in older windows versions where multiple columns aren't supported anyway.
+
+46a. Latest windows versions export more than 300 columns (file attributes). To find the column you need in <Alt+K> dialog, type a part of its name and click GO button. The matching columns will show in the available columns list box.
+
+47. Edit| Copy names puts the full paths of all selected items in the clipboard as text. This is useful e.g. for opening a file in another program, pasting its name in the standard windows Open dialog. If you press <Shift> you get the short 8.3 path name.
+
+47a. If you have multiple items selected, <Alt+C> will put each file path in a separate line. If you prefer a single comma-separated line containing all the paths then use <Ctrl+Alt+C>. This can be useful for pasting onto fields that accept comma separated paths, e.g. the Look in box in Find files dialog.
+
+48. What's an 8.3 name? In the old days files were limited to names with 8 characters and 3 letter extensions, and no spaces and other fancy letters were allowed. Modern filesystems have done away with this limitation but support 8.3 names too. They are useful when you want to avoid embedded spaces or try to minimize the length of a command.
+
+49. A command in Edit menu enables to copy all the information you see in a pane, including the columns for the selected items, as a tab-separated list. You can then import (paste) into a text editor for printing, even to Excel for advanced manipulation.
+
+49a. Edit| Paste works even when no files are copied in the clipboard. If you paste text a text file is created in the current folder; if you paste a picture then a PNG or BMP file is created.
+
+50. The Edit| Copy columns command also works when the folder tree is active. There you get a hierarchical list of all the open branches beneath the active one, copied in the clipboard as text for further processing. <Alt+RightArrow> will expand all the branches starting from the focus.
+
+51. When you traverse the folder tree with the keyboard, normally (unless you have used Tools| Options to prevent it) the folder where you rest for a short while will be automatically loaded in the active pane. If you want to temporarily prevent that happening you can hold down <Alt> while pressing the arrow keys.
+
+52. Whenever xplorer² is busy working in a lengthy command, it offers a way to interrupt or cancel, usually if you press the <Escape> key. This will be mentioned in a status bar busy message. Whenever possible there will also be a progress bar giving an estimate of the time remaining to completion. 
+
+53. xplorer² grows with your system. When you install new namespace extensions or column handlers (e.g. for MP3 tags) more often than not it will be able to integrate with them immediately just like windows explorer. External column handlers work even in windows vista and later.
+
+54. You can control which items are visible in a pane using wildcards. These are DOS templates made of the special characters * and ? mixed with regular letters and numbers. * matches anything and ? matches any single character. So *.txt will allow file.txt, 1.txt but not 1.dat. Similarly a*.xl? will allow aFile.xls, a.xll but not a.xl. You can type them directly in the addressbar.
+
+55. You can ask for more than one wildcard at a time using commas to separate the individual templates. So *.cpp , *.h will show all files that have either cpp or h extensions. A minus sign in the start of a substring acts as exclusion, e.g. *.cpp, -a* will select all files with cpp extensions except for those that begin with the letter a. So file.cpp is in but another.cpp is out.
+
+56. Wildcards are also used to select (or unselect) items through Mark| (Un)Select group. Just specify the template for the filenames using the special * and ? characters as in visual filters. You can also use multiple comma separated wildcards, leading - (minus) symbols to exclude filenames etc. Finally <Alt+Plus> will repeat the last selection command using the wildcard typed earlier in the dialog (ditto for the unselection command).
+
+56a. [PRO version] Instead of  composing custom wildcards you can use predefined document categories like {documents}, {pictures} etc (using curly braces). For example to select all pictures except for bitmaps (BMP) you can use {pictures},-*.bmp in the addressbar.
+
+57. The File| Change type command can be used to change the extension of files, even when those are normally hidden from Control Panel's Folder Options. Naturally not all possible changes make sense but you can use it to change a file from e.g. readme.txt to readme.dat.
+
+58. You can access FTP sites by typing the login details alongside the URL in the addressbar using the format ftp://username:password@ftpsite.com. But this may not be an option for many users, since it implies revealing your passwords which will be stored unencrypted in the registry. Still it may be reasonable for lightweight FTP users.
+
+59. The fastest way to get to a local or mapped drive is to use the <Ctrl+Shift+driveLetter> keyboard shortcut, where driveLetter is substituted by A, C, etc, depending on your intended destination. In a dual-pane setting, try keeping <Alt> pressed at the same time and see what happens!
+
+60. Go to| Quick bookmark is meant to be assigned and reused frequently, in contrast to long-term favorites listed in the Bookmarks main menu. So if you want to have a quick look around your namespace but get back to the original folder afterwards, just hit <Ctrl+Shift+F1> to store it as the "quick" (or scrap) bookmark, without worrying about overwriting any important favorite.
+
+61. You can have bookmarks on favorite files too. Use Bookmarks| Add to insert the file's parent folder and then edit the fresh bookmark's description (from Bookmarks| Organize) to append the filename. Then you can browse the folder and simultaneously select your favorite file in one stroke!
+
+61a. Each folder pane shows the full path of the current folder on its titlebar. You can click on any part of the path to jump to a parent folder e.g. E:\Users\nikos\Documents\c++\xplorer2. If you right-click on a subpath you get a menu with a folder list under that subpath. This is the breadcrumbs feature.
+
+62. When you <Control>-right-click on a pane's titlebar where the current folder path is shown, you get a list of folders visited recently in this pane. You can also double-click this titlebar to go to the parent folder or click on a highlighted subpath (e.g. E:\Documents and Settings\Administrator\My Documents) to jump directly there. If some of the subpaths are hidden due to width limitations, right-click while holding <Shift> to reveal them all.
+
+63. You can type file names in the addressbar too (not just folder names). In this case the parent folder is loaded and the file in question highlighted. You can also type wildcards alongside paths, so c:\*.bat will browse c:\ and set *.bat as a visual filter at the same time.
+
+63a. The addressbar also accepts bookmarks. You can type any folder name you have saved (everything under Bookmark menu), even part of it. For example if you have a bookmark called "tools" that points to c:\programs, you can type "ols", hit up arrow a few times till you see the full name, and then hit enter to browse the target folder.
+
+64. Whenever any kind of filter limits the visibility of items in a folder (see View| Visual filter) a filter icon will appear in the rightmost status bar pane, as a reminder. Double click on this icon to turn off the filter.
+
+65. You can access shared folders on computers in your network using a UNC path like \\computerName\share. If you have administrator privileges or can logon to a remote PC, you can even access unshared folders using C$ for C:\ drive, D$ for D:\ etc.
+
+66. For slow network folders and removable media, you can abort reading the contents via hitting <Esc>. You can tell whether xplorer² considers some folder to be slow or not by checking the message on the status bar while reading is in progress.
+
+67. From windows 2000 onwards, virtual folders like control panel, recycle bin, etc have "pathnames" too in the form ::{funny number}, using a CLSID-like number. For instance "My Computer" is addressed by ::{20D04FE0-3AEA-1069-A2D8-08002B30309D}. You can see all these paths in the addressbar when you browse such special folders.
+
+68. The addressbar is a valid drop target. A usual scenario is to drop a shortcut onto it (from the desktop or the quicklaunch bar) to jump to its location and then use Go to| Find target to reach the actual file pointed to by the shortcut.
+
+69. Go to menu offers easy access to a few interesting special system folders. Recent holds items you accessed or launched recently (the list shown in Start| Documents and more). Startup is a folder containing shortcuts to programs that automatically start whenever you logon. You can experiment with the rest of them for even more revelations!
+
+70. Using Window| Save layout you can save different window configurations for different tasks. For instance you can have a layout where there is just one pane with a big previewer window and no toolbars, and another with dual panes and a tree for regular file management. You can then clone instances from each type at will from Window menu.
+
+71. Cloning is a quick and efficient way to get another window for file management. So instead of opening a folder in the same window you can "clone" a fresh one and browse it there, keeping the original intact. You can even clone windows of particular type (registry key) using those available from Window menu.
+
+71a. If you want to permanently switch to a new layout, getting rid of the starting window, check the advanced option (Tools| Options| Advanced) "Close old window after cloning a new layout".
+
+72. The easiest way to switch among top-level windows controlled by xplorer² process is to use Window| List or <Ctrl+W>. This command is useful when windows from other running programs clutter the system <Alt+Tab> list.
+
+73. In dual-pane mode, pressing <Alt> while double-clicking (or pressing <Return>) on a folder opens this folder in the inactive pane. Likewise, <Alt+BackSpace> forces the inactive pane to go to its parent folder. <Alt> can be used in this fashion in most places where you browse for folders, e.g. typing paths in the addressbar.
+
+74. The inactive pane is a natural target for copy or move file operations. The Copy To command <F5> normally brings up a dialog, but you can suppress this if you press <Ctrl+F5>, sending the files to the inactive pane directly. <Alt+F5> will send the active selection to the folder last used (typed) in the Here: field of the CopyTo dialog. The same principles hold for Edit| Move To (<F6>).
+
+74a. Drag-drop is the easiest method to transfer files to an inactive tab. Just hover the mouse pointer over the target folder tab and it will be automatically brought to the front for you.
+
+74b. [PRO version] The drivebar is a valid drop target too. Drop files over a drive button to copy or move them to the root folder of the respective drive e.g. C:\.
+
+74c. [PRO version] If you place any bookmark or user command on any toolbar then it becomes a drop target too! This way you can easily move files into your bookmarked folders without browsing them first.
+
+75. The fastest way to divide a window in two equal portions is to double-click on the splitter bar. In dual pane mode you can also press <Ctrl+E>.
+
+75a. In dual pane mode press <Ctrl+E> to maximise the active pane. The difference compared to <Ctrl+O> is that the inactive pane remains available with all its tabs, ready to be restored with another <Ctrl+E>.
+
+76. To compare the contents of two panes use Mark| Sync wizard. It uses the filename as a guide to match items left and right and a user-selected comparison rule to figure out whether they are identical, or which one seems to be newer, i.e. modified later. You can use this information to select items that are either identical or to check which items need to be copied across to make the two folders identical. <Alt+F9> repeats the last synchronization command with the same options.
+
+77. Actions| Sync-touch forces the modification dates from the active pane to name-matching items in the inactive pane. It is useful for eliminating phantom differences introduced by changes in daylight saving time between NTFS and FAT drives. Actions| Change attributes on the other hand sets the same date/time to all selected items, acting like a normal touch command.
+
+78. The default file operation when drag-dropping files depends on whether the source and target folders are on the same logical drive or not: if they are, then move is performed, else the files are copied. You can override this default behaviour using keyboard modifiers while dragging: <Shift> forces a move, <Ctrl> a copy and <Ctrl+Shift> pastes a shortcut. Have you ever tried dragging with the right mouse button?
+
+79. Pressing <Escape> while dragging cancels the operation. If you can't see the window you want to drop on you can use <Alt+Tab> till the target shows up. Another option is to hover the mouse on the windows taskbar over the button of the window; after a short while the window will be restored for you.
+
+80. You can also drop files on non-folder targets. Dropping on an executable (or shortcut) icon is the same as starting the application with the dropped files as arguments. Dropping on zip icons usually adds files in the archive. Finally you can drop files even on running applications; try dropping a text file in an open Notepad window and see what happens!
+
+81. While dragging you can hover the mouse on some folder in the tree pane (wait over the folder icon while maintaining the mouse button depressed) to automatically expand the branch, revealing a subfolder where you want the drop placed. You can turn this and other usability features on/off using Tools| Options| Window.
+
+81a. If you release the mouse button by accident while drag-dropping, and you can't find which folder your files ended up in, use Goto| Drop target command.
+
+82. While dragging in a pane with many items, you can scroll the contents by hovering on the window edge closest to the direction you want to see revealed. This trick works in the tree too.
+
+82a. You can pin any xplorer² window above all other windows checking Topmost in system menu (click on the left corner of the window titlebar). This can help dragging objects among other uses.
+
+83. xplorer² senses changes occurring in any part of the filesystem (in most cases) and will automatically refresh all affected folder views. Sometimes this behaviour can be a nuisance e.g. when you browse a folder while files are being downloaded within it. View| Hold autorefresh comes handy in such cases, suspending all time-consuming refreshes. Don't forget to turn the autorefresh back on later!
+
+84. xplorer² is fully aware of shell item shortcuts (links), those with the little arrow on the left of the icon. It will help you create them and manage the target object. For instance, when you drop files on a folder shortcut, they will be sent to the actual folder.
+
+85. When a shortcut item is highlighted, you can use Goto| Find target to jump directly to the actual file object it points to. This is especially useful for file shortcuts.
+
+86. Actions| Merge files will join all the selected files in the order they are shown in the active pane. So make sure they are ordered properly (e.g. alphabetically) before proceeding with the merging, to avoid corrupting the originally split file.
+
+87. xplorer² accepts command line arguments. You can control details like the folders you start browsing, what kind of window you want displayed initially, the registry key to use for options, etc. See the help file for more information.
+
+88. You can search for text in files using the command in Mark menu. The command automatically senses the text file encoding if a BOM (identification number at the beginning of the file) exists, allowing searches within Unicode and UTF-8 files. For some cases you may have to force the encoding e.g. when trying to locate OEM text.
+
+88a. To suppress automatic encoding and other text filter interpretations when searching for text in files, use the Raw encoding option in either <Ctrl+G> or <Ctrl+F> dialogs. Then you can search the bytes exactly as they are stored on disk.
+
+88b. If you are certain of the character case of the text you are after, check Match character case in find text dialog. This will speed up the process. Case insensitive searches on the other hand are slower but more convenient: searching for "foo" will also match "Foo" and "FOO".
+
+89. You can search for special characters in text contained in files using the $xx format, where xx is the 2-digit hexadecimal code that corresponds to the character in question. For instance searching for hello$0D will only select files that contain "hello" at the end of a line (0D is hex for 13, the character that is usually found at the end of text lines). You'll find useful escape sequences in a drop-down box in the dialog box.
+
+90. You can search for multiple words in files using comma separated substrings as those used in visual filtering. You can assign a boolean context to substrings too using a leading + (AND) or - (NOT). E.g. searching for help, +me, -god will mark files that must contain "me", maybe contain "help" and not contain "god". Note that spaces around the separator commas are not significant.
+
+91. Multistrings used in text searches within files are very flexible but all these special characters may backfire. If you want to find text that contains commas, dollar characters etc, you'll need to "escape" them using the Special characters drop-down box in <Ctrl+G> command's dialog. So if you want to find "," search for "$2C" instead, where 2C is the hex code for comma. Or, just check the Verbatim box to disable boolean multistrings altogether.
+
+92. The text previewer window will sense when a file has matched a previous text search and will automatically scroll near the hit location, highlighting the word. Pressing <F3> (when the previewer is clicked) will take you to the next match, if any. Don't forget to right-click in the previewer window for some more interesting commands!
+
+93. The quick viewer pane offers previews of many file types, including text, graphics, HTML, office documents, it even plays music and video clips! When you turn it on it automatically shows the preview of the focused item in the active pane. As you use the keyboard or mouse to change the focused item, the quickviewer will follow (after a short delay) so you can easily preview many files just by scrolling the contents of a pane.
+
+93a. If your system supports it, xplorer² can browse certain classes of folders like as if they were pseudo-filesystem (e.g. zipfolders and FTP). You can check file details, view <F3> or preview content, even see thumbnails. Goes without saying that you can copy files from and into them, too.
+
+94. xplorer² won't extract thumbnails and quick previews for large files, especially those within slow folders (zipfolders, FTP, etc). Exactly how large is "large" is user-configurable from Tools| Options| General (size limits group box).
+
+95. If you want to see the raw text in a HTML file instead of the graphic preview, select Text only from the previewer context menu. If a file appears as binary (hex preview) and you know it is Unicode without a BOM, force the Encoding, again from the right-click menu. The previewer can also show UTF-8 and OEM text.
+
+95a. Sometimes when browsing log (text) files, you may prefer to see the end of the file in the quick previewer instead of its beginning. Just right click in the previewer and pick Tail mode menu command.
+
+96. xplorer² and editor² share the same search options. Thus, if you search for text contained in files and then you view the matching files pressing <F3>, editor² will be prepared to search for the matching text. Once the file is loaded, a simple <F3> will take you straight to the hit! That is why using editor² as the default file viewer is highly recommended.
+
+97. You can associate separate (text) external viewers and editors via Tools| Options. They will be used if editor² can't be found in the installation folder. If editor² exists then it will be used for File| View <F3> and your external editor for <F4>. You can reverse these roles if you hold <Ctrl> key down, e.g. <Ctrl+F3> will use the external viewer even when editor² exists.
+
+98. You can switch among various panes using the keyboard. <Tab> on its own takes you to the inactive view, which becomes active. <Shift+Tab> takes you to the addressbar, <Ctrl+Tab> to the tree (if visible) and <Ctrl+Shift+Tab> to the quick previewer. To get back to the active folder pane, press <Escape> or <Tab>.
+
+98a. [PRO version] To jump into the mini-scrap pane (View| Mini scrap) use <Ctrl+Alt+Tab>.
+
+98b. [PRO version] To change the keyboard shortcut that jumps to the addressbar to the internet explorer friendly <Alt+D>, use Customize| Keyboard command, switch to Miscellaneous category and locate the command cryptically called "32859" and assign to it the new key. You can tell that 32859 relates to the addressbar from the explanatory text under the box that lists the commands.
+
+99. Most combo boxes including the addressbar support 2 kinds of autocompletion. You can start writing a path and hit <F1> to get the first possible match, another <F1> to get the next match etc, in a similar fashion that the <Tab> key works in DOS boxes. The second mode allows you to type a small part of a string contained in the combo history (drop-down) portion and hit <UpArrow> to fetch the complete string; another <UpArrow> brings the next match and so on.
+
+99a. If you prefer explorer-style path autocompletion, without having to press <F1>, check the relevant option in Tools| Options| Advanced.
+
+100. You can use the addressbar to execute commands, in a similar fashion to Start| Run utility, if you start the command with the special characters > or $, for normal and DOS commands respectively. Perhaps more useful is the DOS mode $ which runs commands that require the command processor like ren, xcopy, etc.
+
+101. While typing commands in the addressbar you can press <Ctrl+Return> to grab the active filename from the active pane and use it as part of the command. <Ctrl+Arrows> move the focus around in the active pane while remaining in the addressbar, so that you can pick even more filenames. <Ctrl+Alt+Return> picks the whole path of the focused item. Holding <Shift> all at the same time pastes the 8.3 name.
+
+102. You can type addressbar commands in a reusable fashion, using special $-tokens supported by the Tools| Command script. E.g. instead of executing >windiff file1 file2 which is fixed and not reusable, try >windiff "$N" "$I". This means that you compare (windiff) the currently focused file represented by $N (whatever it may be) with a file with the same name in the inactive pane path ($I). This variable formulation can be reused time and again with different files. Command history is available from Tools menu.
+
+102a. Normally user commands started from the addressbar act only on the single focused item. If you want to apply the command to all selected items then use a double command prompt e.g. >> notepad "$N" will open all selected files with notepad.
+
+103. When you use the special $-tokens for commands or scripts, you should watch out for embedded spaces in pathnames that may confuse the application that executes the arguments. It's best to surround the tokens in quotes, as "$N". Alternatively you can use the lowercase version e.g. $n that stands for the short 8.3 name that is guaranteed to be free of space characters.
+
+104. Command templates may include environmental variables like %WINDIR%. These are automatically expanded for the actual pathname e.g. c:\winnt. You can also type such variables in the addressbar and other input fields accepting paths in dialogs. Try typing %TEMP% in the addressbar and see what happens when you press <Return>!
+
+105. DOS commands are not supported for UNC paths in the form \\computer\share. If you want to execute a $-prompted command on a remote computer you must first map the network drive onto a local drive letter like F:\.
+
+106. When executing commands you should keep in mind the whereabouts of the current directory. If the files you want to act upon are in the active pane then you can address them with their simple name $N. To access files in the inactive pane or in situations where there is no active folder (e.g. in scrap containers) you should use $F or $G and generally only use tokens that include path information.
+
+107. Programs launched from the addressbar may require a full path as in e.g. > c:\tools\windiff.exe $n $i. You can omit the program path if you extend your %PATH% environmental variable to include folders where you store your utilities. If your search path includes c:\tools then you can type the same command simply as > windiff.exe $n $i.
+
+108. The syntax of command templates is identical whether they are used in the addressbar or in the script generator (Tools menu). The difference is in the context: addressbar commands apply only to the focused item whereas in scripts as many commands as there are selected items are emited. Some $-tokens don't make sense in all situations, like using $01 counters in the addressbar or tokens that represent all the selection (e.g. $A or $S) in scripts.
+
+108a. The script wizard issues commands for the selected items in the order they appear in the active pane. If the order is important (e.g. when using counters $01) and you cannot achieve it via regular sorting, you can manually rearrange items using <Ctrl+Shift+UpArrow> and <Ctrl+Shift+DownArrow>. Note that you can only move one item at a time and the rearrangement is temporary.
+
+109. Within the script wizard <Ctrl+B>, you can generate multiple commands for each selected file. Just type all the commands you want within the dialog's Template field separated with commas, in the usual fashion. E.g. you could specify encrypt $N $B.xxx , del $N to encrypt files into a new name and then delete the originals.
+
+110. You have two ways to execute scripts generated with Tools| Command script. The DOS way uses the command processor and shell launches 32-bit windows applications. Use the first for commands like ren, copy etc and the second for programs like MP3 converters. There is a slight performance advantage running 32-bit tools in their natural environment, but you can also run them under DOS. The reverse is not possible, e.g. you can't run a script containing ren commands with shell execution.
+
+111. Mass renaming in File menu is also furnished with $-tokens. For instance a rename template of $B$001.$E uses the original base name ($B) and extension ($E) and adds an automatic counter inbetween. If you apply it on files a.jpg and b.jpg you'll end up with filenames a001.jpg and b002.jpg. If instead of $001 you used a counter like $02, you'd get a number sequence of 02, 03, 04,...
+
+112. With mirror browsing mode enabled (Go to menu), the inactive pane tries to follow the active one as it traverses the folder hierarchy. So if you are browsing c:\temp on the left and d:\aux on the right and you get into a folder called code in the left, the right pane will try to follow switching to d:\aux\code, if the folder exists. This feature is convenient for comparing folders and subfolders.
+
+113. When mirror scrolling is on (Go to menu), the inactive pane tries to follow the active pane focused item as you scroll around using the keyboard. So if file.txt is focused in the active pane and a file with the same name exists in the inactive pane, it will be brought into view, handy for comparing individual files left & right. While you are at it, try bringing a column other than Name in the leftmost position and see how mirror scrolling behaves!
+
+114. xplorer² uses advanced multi-threading techniques to extract some pieces of file information that are time consuming. The advantage is that you can start working with your files immediately, while the view is possibly still being updated. This is particularly evident in detailed view modes where some slow columns are filled in long after you started your work with the contents; you just don't have to wait at all!
+
+115. The free version of xplorer² has a few less commands than the "pro" version. That's why you get some menu items permanently disabled, no scrap containers, etc. Extra features available after registration are marked as [PRO version].
+
+116. [PRO version] If you are on windows NT/2000 or XP/Vista you are most likely using the special Unicode build of xplorer² (see Help| About version information). It is more efficient and the only option for dealing with some locale-related problems for far-Eastern and non-English users in general.
+
+117. [PRO version] You can see the real contents of some special folders like the Recycle Bin using View| Raw contents. This offers the same kind of access as a DOS dir command so you can check what really goes on under the covers!
+
+118. [PRO version] You can save a folder's view mode settings (Actions menu) so that every time you browse this folder it switches to the same format. This makes sense for folders like "My pictures" that you'd probably want to browse in thumbnails, or the windows system folder where you'd want to have the version column shown to check those DLL files.
+
+119. [PRO version] When you place a file in a scrap container, you don't change its physical location on disc. You can think of these windows as "bags" where you put notes about actual files that can be located in more than one folder. So you can roam your folders hand-picking items with File| Send to scrap command and in the end switch to the scrap window and deal with them simultaneously, just like as if they were on a single folder!
+
+120. [PRO version] Scrap containers are fully operational file managers. You can do mostly everything on a file in a scrap window as in normal windows. So you can drag-drop, use context menus, preview contents, etc. You can even have dual-pane scrap frames.
+
+121. [PRO version] When you press <Delete> in a scrap container, it forces File| Remove command that merely removes items from the window without actually affecting the files on disk. If you really want to delete the files use File| Delete (keep <Ctrl> pressed).
+
+122. [PRO version] If you enable infotips in a scrap container (via Tools| Options| Window) you'll see the path of each item in a popup window as you hover over it, as well as the normal shell infotip.
+
+123. [PRO version] The Find files command can be used to fetch files using any and all column attributes, combined in a boolean context. For instance you can search files by Owner, or for files that contain some text within their Comments etc. Similar super-filters can be used for selecting and unselecting files (Mark| Matching rule command).
+
+124. [PRO version] To locate files by name, it is easiest to type part of the filename without wildcards and they will be added for you automatically. So if you type sys in the Named field of the find dialog, it is equivalent to *sys* and will match anything containing "sys" in their names, e.g. system32, config.sys, etc. If you type any wildcard characters (*?) yourself then none will be added by xplorer².
+
+124a.  [PRO version] When you search for files by name you can match similar filenames using a value less than 100 in the fuzzy name % match box. The smaller the number, the bigger the "fuzziness", increasingly matching names that are distant relatives of what you type in the Named box. This feature is useful for spelling errors, removing accents etc. For example with 80% exact, bat will match abâter.txt.
+
+124b.  [PRO version] To enable regular expressions in the Named box and match files with complex regexp syntax, set the fuzzy name % box (to its right) to 0. For example abc[1-5] will match abc1, abc2... abc5.
+
+124c.  [PRO version] xplorer² has some predefined document categories which you can select from the drop-down portion of Named field. For example {audio} will limit the search to music files. In reality these categories are just glorified wildcards! You can change or even add your own categories under HKCU\Software\ZabaraKatranemia Plc\xplorer2_UC.global\File types registry key.
+
+125. [PRO version] When a search rule tries to locate text within some column, you can use boolean expressions as in the Mark| Containing text command discussed in a previous tip. So to search for files that have the Archive attribute but not the Hidden one, add a rule for the Attributes column that looks like +A,-H; note the use of the + and - special characters to denote the boolean operators AND and NOT, and the comma that separates the 2 substrings A and H.
+
+125a. [PRO version] You can use simple * and ? wildcards when matching text column properties (find files and related dialogs). These work in a similar fashion as in filenames. If you want to find the exact text as you type it, tick on the Verbatim box; this will cancel wildcard and comma processing.
+
+126. [PRO version] The Look In field where you specify where to search for files in the Find files dialog accepts multiple folders if separated by commas, e.g. c:\, d:\, f:\ will search all three hard discs. You can also specify folders to exclude, e.g. c:\, -*temp* will search all c:\ except for folders that contain temp in their name. Note that only excluded folder names can contain wildcards.
+
+127. [PRO version] The registry key .global\Find Blacklist under the main program key lists folders that are always excluded from searches, since they are more trouble than worth. You can add or remove folders from this list by editing the registry, after quitting xplorer².
+
+128. [PRO version] You can search for files within FTP and zipfolders (if you have windows XP) too, by ensuring you have Archived content box checked in the Find Files dialog. The only limitation is that you can only use stock properties (columns) in the search rules. Keep in mind that these searches are much slower than those in regular filesystem folders, so only check this option if you want to get in such slow folders.
+
+129. [PRO version] You can refine a search as follows: after the main search command has filled a scrap container with the rough results, issue an <Alt+G> command within the same window, where you can specify a similar or completely different filter. Out of the original files only those that match the secondary criteria will be highlighted! Another possibility is to issue another search <Ctrl+F> command making sure you check the Local search box.
+
+130. [PRO version] Pressing <Shift> while attempting to browse a folder will open a scrap container and flatten the subtree, filling in all the files contained in the folder and recursively in all its subfolders. You can then manage all the files simultaneously just like as if they were in the same folder.
+
+131. [PRO version] Unlike Find files command, File| Browse flat will not step into slow folders (FTP, zipfolders, webfolders etc) unless the root (where you start flattening from) is itself a slow folder. It also won't get into folders listed under the registry key .global\Find Blacklist.
+
+132. [PRO version] To compare files in two folders, including their subfolders ("deep" synchronization), use a dual-pane scrap container. Right-drag the first folder in one pane and pick the Flatten here command from the context menu; likewise flatten the second folder in the right pane and then use <F9> or Mark| Sync wizard to specify the comparison options. Once differing items are marked, use Edit| Sync-o-paste to overwrite older files in the appropriate subfolders.
+
+133. The Path column is especially useful for items in scrap containers, since they usually come from different folders.
+
+134. [PRO version] You can save the contents of a scrap container and reload them at a later time. There are many possible uses for such a feature: save the results of searches, keeping files with similar content from throughout your filesystem in a single "database" file, maintaining lists of favorite folders for bookmarks or copy targets, etc.
+
+134a.  [PRO version] You can use the mini-scrap pane (View| Mini scrap command) as a bookmark pane or even program launchpad. After you put in your favorite contents, save them in a "playlist" using the context menu. From then on, whenever you open the mini-scrap it will automatically reopen this "playlist" for your convenience. You can open other content files using the context menu, too.
+
+135. [PRO version] Have you tried typing a path in a scrap container's address bar to see what happens? You can also use it to execute commands on the focused item in the active view as in regular windows, too.
+
+136. [PRO version] By default the output of all DOS commands (started with $ prompt) go to a special console window, much friendlier than the standard DOS box. It is nearly an independent command processor on its own. Its current directory follows the folder you are browsing in the main program automatically (you can read it off its titlebar). Its toolbar keeps a history of past commands and also supports <F1>-based autocompletion: type a few characters from an existing path and press <F1> a few times to see what happens!
+
+137. If you need a standard DOS console for the current folder, just type a solitary $ in the addressbar (without any command) and press <Return>.
+
+138. [PRO version] Holding <Ctrl> while launching a file or folder in a scrap container will "load" the parent folder in a regular xplorer² window and select the original item. Still keep in mind that within a scrap container you can do pretty much all the file management that single-folder windows allow, so you don't have much use for this <Ctrl> modifier after all!
+
+139. [PRO version] You can search your whole hard disc for duplicates. First flatten the logical disc (e.g. C:\) in a scrap frame; use Tools| Check duplicates to begin the detection process. Most of the true duplicates will have the same name and size but other possibilities are available as options. In the end all suspected duplicates are grouped together for further inspection (the checksum column is ideal for this). Files that are unique are hidden from view.
+
+140. [PRO version] When you instruct xplorer² to select all duplicates as part of the detection process, it automatically turns on the sticky selection mode. This way you can roam freely examining the suspected duplicates, without accidentally losing the selection. When you are done you can turn this mode off using Mark| Sticky selection.
+
+141. [PRO version] You can permanently store your favorite commands using Customize| User commands. So instead of searching for windiff $N $I in the command history, just add it in the user menu. If you associate a keyboard shortcut for it, it will be at your beck and call with a single keystroke!
+
+142. [PRO version] A number of keyboard shortcuts are user-configurable through various Organize menus. You can associate combinations of <Ctrl>, <Alt> and <Shift> and keys within 0-9 with any command in a customizable menu, like bookmarks, user commands, layouts etc. To aid memorisation it is best to organize shortcuts by subject, e.g. bookmarks with <Ctrl>, layouts with <Alt> etc.
+
+143. [PRO version] You can add up to 14 extra toolbars using Customize| Toolbars| Add and place user-configurable command buttons on them, like bookmarks, layouts, columns etc. For these it makes sense to enable text labels from the toolbar's context menu so that you can tell them apart.
+
+144. The targets appearing in Send To context menu are actually files in a folder accessible via Go to| Special folders| Send to menu. For example you can add a shortcut to notepad.exe in that folder so you can send text files to it for editing, even when notepad isn't associated with them.
+
+144a. If you want to send files as email attachments, select them first, then right click on them and pick Send to| Mail recipient from the context menu.
+
+144b. To repeat the last shell context menu command press <Ctrl+Alt+F10>. Given that each file type may have its own commands in the context menu, this repetition is only going to work properly if you keep on acting on the same file types.
+
+145. If you want to preview larger portions of text files, increase the text preview size from Tools| Options| Window: Quick viewer. The downside is that you'll have to wait longer for them to load!
+
+146. [PRO version] Tools| Subfolder size will calculate total subfolder sizes and display them in the Size column, if any.  Tools| Folder statistics on the other hand will gather the detailed breakdown of a folder's disk usage and present it in a tree, so that you can see how much space each subfolder is using. You can even extract this information as text for printing etc.
+
+147. If you want to include a comma as part of a script command template, then use two commas in a row. This escapes the default meaning of comma as a command separator. So "foo,bar" will produce two separate commands (foo & bar) whereas "foo,,bar" will use the comma verbatim generating "foo,bar".
+
+148. [PRO version] Using Customize| Folder groups you can save a set of folders that you usually browse together. Later when you want to reinstate this working situation you can load all the folders - each in its own tab - conveniently with a menu item or even just a touch of a button. This is like a multi-bookmark feature.
+
+149. [PRO version] If you want more control for copying a large number of files, just use the Options button from Edit| Copy to dialog. This is a more robust copy engine compared to the standard windows one. If you prefer the windows animations on the other hand just use drag-drop to copy files instead of <F5>.
+
+150. [PRO version] The copy options dialog allows you to copy files in background mode, consuming less resources. Giving lower priority to the file transfer leaves the computer more responsive for you to continue with your work. In case you need to halt the copy altogether there is a Pause button in the copy progress dialog.
+
+151. [PRO version] You can prevent all user interaction during large copy operations. This silent mode is useful for unattended copies. Files will be overwritten automatically and errors ignored. In the end you can examine a log with a summary of the problems encountered - if any!
+
+152. [PRO version] If you get annoyed with files inheriting the Read-only attribute when copying from CD-ROMs, make sure you check "clear read-only attribute" in the Copy options dialog.
+
+152a. [PRO version] When robust-copying subfolders the progress bar may seem to wobble, since xplorer² can't know in advance how many files will be found. If you want to make the copy progress estimates exact, check Calculate total file size before starting transfer option. But if you do you'll somewhat delay the start of the copy while the transfer size is being calculated.
+
+152b. [PRO version] You can use robust transfer options to simulate a backup operation. When copying a folder to its "backup" location, if you check Overwrite if newer else skip and Clear archive attribute for source files, only files that were modified or added will be copied and marked as backed up. If you don't want to process any newly added files check Copy only files that already exist at destination.
+
+152c. Many times you don't want to backup all your hard disc, just your data folders. These are usually scattered in the filesystem so how do you do them all in one stroke? Use folder junctions which are links to folders. Here is an example: create a folder called Backup. For each of your data folders, copy the folder using <Ctrl+C> then paste a junction to it in the Backup folder using Edit| Paste special| Folder junction| Paste. Effectively you have modified the structure of your filesystem, bringing all your data folders under a single parent folder. Now just copy this master Backup folder and you've sorted out all your data in one step!
+
+153. Sometimes the error messages on the status bar are a bit cryptic. If you want more clarifications please use Help| Last error.
+
+154. If you hold down <Alt> as you press <GreyPlus> (or minus) then you select items using the last wildcard typed in Mark| Select group dialog (or unselect respectively). This is a fast way to repeat the last selection without showing the dialog.
+
+155. The keyboard-only command <Ctrl+Alt+GreyPlus> (or minus) will add to (or remove from) the selection all files that have the same extension as the currently focused item. It even works for items without extension as well as folders.
+
+155a. In a similar fashion, <Alt+Shift+GreyPlus> (or minus) will select (or unselect) files that share the same base name as the currently focused item. E.g. if you use it on kenny.c, files like kenny.h, kenny.obj etc will end up selected.
+
+156. [PRO version] In a dual pane scrap window you can use <Alt+Enter> to flatten all selected folders in the inactive pane. One possible use of this is to perform a local search limited to a few hand-picked folders: just switch to the pane with the flattened contents and use Mark| Matching a rule.
+
+156a. By default xplorer² remembers all the changes you make to its options, path histories etc and makes them available at subsequent runs. You can stop this by clearing Save program state on exit from Tools| Options| General. Then only "global" changes will be remembered, such as new bookmarks.
+
+157. If you want to move your favorite xplorer² settings to a different PC, use Actions| Export settings to create a .REG file. This can be copied to any other PC running the same windows version, and when double-clicked it will reinstate your favorite options including bookmarks etc. Just make sure xplorer² isn't running when you import the registry settings.
+
+157a. [PRO version] If you find yourself working often on other people's computers and you want to keep your tools in a USB stick then you may be interested in the portable edition of xplorer². It is a personalized inexpensive upgrade that can be run without special user login privileges and doesn't leave traces in the registry. For more information visit http://zabkat.com/x2port.htm
+
+158. [PRO version] The stock Contents column shows how many direct items are contained in some folder. You can use it as a rule to locate all empty folders,  that is all folders that have this property set to 0. Make sure you uncheck the Files box in the find files dialog so that the search only focuses on folders.
+
+159. xplorer² will calculate subfolder sizes automatically if you check the respective box in Tools| Options| Advanced. This is quite time consuming so by default xplorer² won't calculate subfolders if you are browsing a root or network drive. To force size calculation in such folders you must press <Ctrl+D> twice.
+
+159a. Calculating subfolder size can take too long but xplorer² will do (any) selected folders first. If you have many subfolders but you are only interested in a few, make sure you select them before issuing <Ctrl+D> command.
+
+160. If you are using a shell extension that relies on custom icon overlays (e.g. Tortoise CVS) you can force xplorer² to read extra icon states by checking "Extract custom icon overlays" box in Tools| Options| Advanced. There's a slight reading speed penalty when this option is active.
+
+160a. [PRO version] If you have Tortoise SVN installed you can create search and selection rules using its extra columns. For example, to find all files within version-control folders that have been changed, create a filter with an additional rule based on SVN status column, containing the text "modified".
+
+161. [PRO version] xplorer² can extract plain text previews from office (e.g. Word) and PDF documents. You can also search for text within such "binary" files (make sure you have "Search non-text files" box checked). For PDF files you may need to download this filter plugin (required only if you don't have any recent adobe reader installed): http://www.planetpdf.com/mainpage.asp?webpageid=737
+
+161a. [PRO version] Edit| Extract text command will extract plain text (without formatting) from complex file types like PDF, as long as you have the required desktop search filters installed.
+
+162. Columns related to picture data (dimensions, camera model, etc) rely on EXIF data stored as part of the file. Usually digital cameras will embed this information automatically. Otherwise these columns will remain empty.
+
+163. When your audio files contain ID3 tags, xplorer² can read information like artist and album title and present the details for each track in the respective columns. Just use View| Select columns to bring such columns into view.
+
+164. [PRO version] The quickviewer has two tabs corresponding to "draft" and "native" modes. Each shows different previews of the active item. In general, draft is quicker and native is more representative but much slower, based on ActiveX technology.
+
+165. [PRO version] Some malicious trojans like keyloggers may hide in ADS of a legitimate file. You can locate files with suspiciously high number of streams using Streams column as a search rule (Tools| Find files). Files with more than 2-3 streams are fishy and you should examine them further using Actions| ADS| View streams.
+
+166. [PRO version] If you are on 64 bit windows you will like the native 64 bit xplorer² that will work better with your 64 bit shell extensions (e.g. context menu handlers). You can download the 64 bit trial here: http://zabkat.com/x2-64bit.htm
+
+167. If you have windows vista or later, UAC may prevent you from changing certain system folders. To unleash the full power of xplorer² use Window| Administrator to start an elevated process with full access permissions.
+
+168. [PRO version] Bookmarks| Dual submenu lets you define a 2-folder bookmark from the folders you are browsing left and right. Then you can restore the 2 folders as a pair.
+
+169. [PRO version] Drag-drop any file over a dialog like Find Files (or related) and see what happens! This is useful for locating similar files in other parts of the filesystem.
+
+170. [ULT version] xplorer² uses fast windows search whenever you press <Ctrl+F> within indexed folders. You can make the search even faster if you tick the verbatim box for all text rules (e.g. Author property). The down-side is you will only find whole words, not partial string completions.
+
+xplorer² is constantly evolving. Please use Help| Check for updates every now and then to keep up with any new developments, see if there are any new versions, bug-fixes etc.
+
+This is the last tip. We hope it has been a fruitful journey for you! If you want a printable version of all tips please open the file called x2tips.rtf, within the installation folder.
+By the way, have you read the manual? Loads of information there too! Please start your next journey with Help| Contents.

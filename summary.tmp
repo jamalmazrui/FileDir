@@ -1,0 +1,180 @@
+[Hotkeys]
+Launch FileDir
+Open Item
+Go To Item
+Properties
+Open Parent Folder
+Go to Parent Folder
+Toggle Tagged
+Say Selected
+Append Tagged
+Extract with Regular Expression
+Tag All
+Untag All
+Alpha Order
+Reverse Alpha Order
+Beginning Tagged
+Recycle Bin
+Batch Mail
+Beginning File
+Burn Tagged to CD
+Copy Tagged
+Copy
+Copy Append
+Copy Name Tagged
+Date
+Date Order
+Reverse Date Order
+Delete Recycle Now
+Delete Now
+End Tagged
+Environment Variables
+Evaluate
+Export Clipboard
+FTP Put
+Set Filter
+Clear Filter
+File Find
+Get FTP
+Go to Folder
+Go to Special Folder
+Go to Virtual Folder
+Go to Drive
+Initial Change
+Invert Tagged
+Iterate Processes
+Inquire Differences
+Hot Key Summary
+Jump
+Jump Again
+Keywords
+Keywords Again
+List
+List Tagged
+List Files
+Play List
+Move Tagged
+Mail Body
+Mail Tagged
+Manual Options
+Next Tagged
+New Folder
+New Item Copy
+Network Connections
+Output Tagged
+Configuration Options
+Open Folder
+Open Special Folder
+Open Virtual Folder
+Open Drive
+Previous Tagged
+Print Tagged
+Path List to Clipboard
+Path
+Path to Clipboard
+Short Path to Clipboard
+Quick Shortcut
+Quick URL
+Open Quick Folder
+Go to Quick Folder
+Rename
+Rename with Wildcards
+Rename with Regular Expression
+Rename to Initial Line
+Recent Folders
+Recycle Toggle
+Size
+Size Order
+Reverse Size Order
+Save Tags
+Restore Tags
+Type
+Type Extended
+Type Order
+Reverse Type Order
+Send to Text Editor
+Unzip Tagged
+Unzip Tagged without Subfolders
+Unzip to Same Name
+Unzip Test
+Unzip Password
+Paste
+Volume Format
+Paste Copy
+Paste Move
+Windows Open
+Send to Word Processor
+Windows Control Panel
+Extension Change
+Cut
+Extra Speech Toggle
+Extra Speech Log
+Yield
+Yield Tagged
+Yield Files
+Yield on Drive
+Yield in Operating System
+Zip Tagged
+Zip Tagged Then Delete
+Zip List
+Status
+Delete Tagged
+Delete Tagged without Recycle
+Delete Recycle Tagged
+Parent Folder
+Come up Level
+Refresh Folder
+Open Root Folder
+Go to Root Folder
+Tag
+Untag
+Tag and Next
+Untag and Next
+Tag All Files
+Tag Duplicate Files
+Tag with Regular Expression
+Untag All But Current
+Say Item Name
+Say Folder Name
+Say Folder
+Folder to Clipboard
+Say Clipboard
+Clear Clipboard
+Say Current Time
+What
+Command Prompt
+Explorer Directory
+Stamp
+Hide
+Show
+ReadOnly
+ReadWrite
+System
+General
+Calculate Units
+Percent Through
+Filter Query
+Drive A ... I
+Next Window
+Previous Window
+Documentation
+Change History
+About
+Rename
+Current Windows
+Close Window
+Close All But Current
+Exit FileDir
+Restart Windows
+Refresh Folder
+Context Menu
+Send To Menu
+Alternate Menu
+Elevate Version
+Arrange Icons
+Cascade
+Tile Horizontal
+Tile Vertical
+Start Timer
+Stop Timer
+Say Timer

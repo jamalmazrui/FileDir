@@ -1,0 +1,64 @@
+Subject:
+FileDir error - Web Client Conversions Utility
+From:
+"Andre Williams" <andre.williams.1965@gmail.com>
+Date:
+Mon, 30 May 2011 15:23:46 -0700
+To:
+<jamal@EmpowermentZone.com>
+
+HI Jamal,
+
+While using FileDir's Web Client Utility (Shift + Alt + spacebar), I pressed 
+the = sign to launch the conversions feature. I typed "10 km" then tabbed 
+and typed both "mi" and "miles," and I received the error messages below. 
+All the conversions I tried gave me this error. I will also add that the 
+other Web Client utilities seem to work just fine.
+
+Errors occurred
+See the logfile 'C:\PROGRA~2\FileDir\WEBCLI~1\InPy.exe.log' for details
+OK
+
+Here are my error details:
+Note: I'm running Windows7 64bit and jaws 12.
+
+Traceback (most recent call last):
+  File "InPy.py", line 4437, in <module>
+    if iCount > 1:
+  File "C:\Program
+Files\FileDir\WebClient\WebClient_ZoomInfoContactSearch.py", line 20, in
+<module>
+    oRoot = xml.etree.ElementTree.parse(fResponse).getroot()
+AttributeError: 'module' object has no attribute 'ElementTree'
+Traceback (most recent call last):
+  File "InPy.py", line 4437, in <module>
+    if iCount > 1:
+  File "C:\Program
+Files\FileDir\WebClient\WebClient_ZoomInfoContactSearch.py", line 20, in
+<module>
+    oRoot = xml.etree.ElementTree.parse(fResponse).getroot()
+AttributeError: 'module' object has no attribute 'ElementTree'
+Traceback (most recent call last):
+  File "InPy.py", line 4437, in <module>
+  File "C:\Program Files
+(x86)\FileDir\WebClient\WebClient_=UnitConversion.py", line 27, in <module>
+    sText = lMatches[0]
+  File "win32com\client\dynamic.pyo", line 237, in __getitem__
+  File "win32com\client\util.pyo", line 37, in __getitem__
+  File "win32com\client\util.pyo", line 56, in __GetIndex
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "InPy.py", line 4437, in <module>
+  File "C:\Program Files
+(x86)\FileDir\WebClient\WebClient_=UnitConversion.py", line 27, in <module>
+    sText = lMatches[0]
+  File "win32com\client\dynamic.pyo", line 237, in __getitem__
+  File "win32com\client\util.pyo", line 37, in __getitem__
+  File "win32com\client\util.pyo", line 56, in __GetIndex
+IndexError: list index out of range
+
+Thanks.
+
+Andre
+
+

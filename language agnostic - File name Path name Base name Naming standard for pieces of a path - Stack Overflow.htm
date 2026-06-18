@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/QAPage">
+<head>
+
+<title>language agnostic - File name? Path name? Base name? Naming standard for pieces of a path - Stack Overflow</title>
+    <link rel="shortcut icon" href="//cdn.sstatic.net/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="//cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded&a" />
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="File name? Path name? Base name? Naming standard for pieces of a path" />
+    <meta name="twitter:description" property="og:description" itemprop="description" content="I keep getting myself in knots when I am manipulation paths and file names, because I don&#39;t have a common naming system that I use.
+
+I need to come up with a naming standard and stick to it, and I ..." />
+    <meta property="og:url" content="http://stackoverflow.com/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path"/>
+    <link rel="canonical" href="http://stackoverflow.com/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path" />
+
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdn.sstatic.net/Js/stub.en.js?v=9fab9eab0b51"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.sstatic.net/stackoverflow/all.css?v=71b0b89e65cb">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;File name? Path name? Base name? Naming standard for pieces of a path&#39;" href="/feeds/question/2235173">
+            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:1,shownCommentCount:1,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:2235173});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '2235173');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","serverTime":1442858241,"networkMetaHostname":"meta.stackexchange.com","routeName":"Questions/Show","styleCode":true,"enableUserHovercards":true,"snippets":{"enabled":true,"domain":"stacksnippets.net"},"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"globalAuthDisabled":true,"nonAsciiTags":true,"enableSocialMediaInSharePopup":true},"user":{"fkey":"34249f136697fc39ddfc6bb5386fe332","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true,"ab":{"hero_signup_button":{"v":"a","g":1},"topbar_next_achievement":{"v":"a","g":2}}}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"59e33f95843a","js/moderator.en.js":"19cf234cff5a","js/full-anon.en.js":"9105c5329a7f","js/full.en.js":"d1533b060afc","js/wmd.en.js":"a1b7405aa48c","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"f9007a314275","js/help.en.js":"8971d5a1711c","js/tageditor.en.js":"9c54855bf167","js/tageditornew.en.js":"ea3a34ead344","js/inline-tag-editing.en.js":"49f7375eb68e","js/revisions.en.js":"df3cb25dfabf","js/review.en.js":"fbb7353c6378","js/tagsuggestions.en.js":"d1ff9b84abe5","js/post-validation.en.js":"3a150a9e925d","js/explore-qlist.en.js":"cd6e5274146c","js/events.en.js":"d1a0a39018e0","js/keyboard-shortcuts.en.js":"4f8065cd1bf0","js/external-editor.en.js":"8d1a90b73439","js/external-editor.en.js":"8d1a90b73439","js/snippet-javascript.en.js":"950f106e9923","js/snippet-javascript-codemirror.en.js":"d8a09b2c0606"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+    
+    
+</head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="//stackoverflow.com">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+            <a href="http://chat.stackoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+                    <a href="http://blog.stackoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:7 })"
+>blog</a>
+            </div>
+
+
+
+
+    <a href="//stackoverflow.com"
+       class="current-site-link site-link js-gps-track"
+       data-id="1"
+       data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com"
+       class="site-link js-gps-track"
+       data-id="552"
+       data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track"
+                       href="//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider"
+                            data-gps-track="site_switcher.click({ item_type:9 })"
+>
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Stack Overflow Careers
+                    </a>
+                </li>
+        </ul>
+    </div>
+    
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f2235173%2ffile-name-path-name-base-name-naming-standard-for-pieces-of-a-path" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:10 })"
+>Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f2235173%2ffile-name-path-name-base-name-naming-standard-for-pieces-of-a-path" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:11 })"
+>log in</a> to customize your list.
+            </div>
+    </div>
+    
+    <div class="header">
+        <h3><a href="//stackexchange.com/sites">more stack exchange communities</a></h3>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="//stackexchange.com"
+               class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track"
+               data-gps-track="site_switcher.show"
+               title="A list of all 149 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+    <a href="#"
+       class="topbar-icon icon-inbox yes-hover js-inbox-button"
+       title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="#"
+       class="topbar-icon icon-achievements yes-hover js-achievements-button "
+       data-unread-class=""
+       title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://stackoverflow.com/users/signup?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f2235173%2ffile-name-path-name-base-name-naming-standard-for-pieces-of-a-path" class="login-link">sign up</a>
+                                <a href="https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f2235173%2ffile-name-path-name-base-name-naming-standard-for-pieces-of-a-path" class="login-link">log in</a>
+
+                        <a href="/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="//meta.stackoverflow.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+                            <a href="//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=anon-topbar">stack overflow careers</a>
+                    </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="search" value="" tabindex="1" autocomplete="off" maxlength="240" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="/" >
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="/questions">Questions</a></li>
+                        <li><a id="nav-tags" href="/tags">Tags</a></li>
+                        <li><a id="nav-users" href="/users">Users</a></li>
+                        <li><a id="nav-badges" href="/help/badges">Badges</a></li>
+                        <li><a id="nav-unanswered" href="/unanswered">Unanswered</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion"  href="/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content" class="snippet-hidden">
+            
+
+<div itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="//cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+			<!--googleoff: all-->
+
+<div id="herobox-mini">
+    <div id="hero-content">
+        <span id="controls">
+                <a href="/tour" id="tell-me-more" class="button">Take the 2-minute tour</a>
+            <span id="close"><a title="click to dismiss">&times;</a></span>
+        </span>
+        <div id="blurb">
+            Stack Overflow is a question and answer site for professional and enthusiast programmers. It&#39;s 100% free.
+        </div>        
+    </div>
+    <script>
+        StackExchange.ready(function() {
+            var clickSource = $("body").attr("class") + '-mini';
+            var location = 0;
+            if ($("body").hasClass("questions-page")) {
+                clickSource = 'questionpagemini';
+                location = 2;
+            } else if ($("body").hasClass("question-page")) {
+                clickSource = 'questionpagemini';
+                location = 2;
+            } else if ($("body").hasClass("home-page")) {
+                clickSource = 'homepagemini';
+                location = 4;
+            }
+
+            $('#tell-me-more').click(function () {
+                StackExchange.using("gps", function () {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: clickSource }, true);
+                    StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+                });
+            });
+            $('#herobox-mini #close').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: "close", location: location }, true);
+                });
+                $.cookie("hero", "none", { path: "/", expires: 365 });
+                var $hero = $("#herobox-mini");
+                $hero.slideUp('fast', function () { $hero.remove(); });
+                return false;
+            });
+        });
+    </script>
+</div>
+			<!--googleon: all-->
+			<div id="question-header">
+                <h1 itemprop="name"><a href="/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path" class="question-hyperlink">File name? Path name? Base name? Naming standard for pieces of a path</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="2235173"  id="question">
+
+    <div class="everyonelovesstackoverflow" id="careers1">
+        </div>    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="2235173">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">58</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
+        <div class="favoritecount"><b>39</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>I keep getting myself in knots when I am manipulation paths and file names, because I don't have a common naming system that I use.</p>
+
+<p>I need to come up with a naming standard and stick to it, and I would like to be clear and consistent with others, so I am opening up to learn the canonical answers.</p>
+
+<p>Consider this toy problem: (Windows example, but hopefully answer should be platform independent)</p>
+
+<p>You have been given the full name of a folder: C:\users\OddThinking\Documents\My Source. You want to walk the folders underneath, and compile all the .src to .obj.</p>
+
+<p>At some point you are looking at the following string.</p>
+
+<pre><code>C:\users\OddThinking\Documents\My Source\Widget\foo.src
+</code></pre>
+
+<p>So, what identifier names would you use for the parts?</p>
+
+<pre><code>A) foo
+B) foo.src
+C) src
+D) .src
+E) C:\users\OddThinking\Documents\My Source\ - i.e. the top of the tree.
+F) Widget\foo.src - i.e. the path from the top of the tree to the leaf.
+G) Widget - i.e. one node of the tree.
+H) C:\users\OddThinking\Documents\My Source\Widget\ - i.e. the name of the folder
+I) C:\users\OddThinking\Documents\My Source\Widget\foo.src
+</code></pre>
+
+<p>Let me give some answers, to get you started.</p>
+
+<p>A) base name?</p>
+
+<p>B) file name? Or is it filename? The difference is important when choosing identifier names, and I am never consistent here.</p>
+
+<p>C) Extension</p>
+
+<p>D) Extension. Wait, that is what I called C. Should I avoid storing the dot, and just put in in when required? What if there is no dot on a particular file?</p>
+
+<p>H) path name? Or wait, is it just the path?</p>
+
+<p>I) filename. Wait, that is what I called C. Path. Wait, that is what I called H. Maybe H should be the folder name. Isn't "folder" a Windows-specific term, though?</p>
+    </div>
+    <div class="post-taglist">
+        <a href="/questions/tagged/language-agnostic" class="post-tag" title="show questions tagged &#39;language-agnostic&#39;" rel="tag">language-agnostic</a> <a href="/questions/tagged/cross-platform" class="post-tag" title="show questions tagged &#39;cross-platform&#39;" rel="tag">cross-platform</a> <a href="/questions/tagged/terminology" class="post-tag" title="show questions tagged &#39;terminology&#39;" rel="tag">terminology</a> <a href="/questions/tagged/filenames" class="post-tag" title="show questions tagged &#39;filenames&#39;" rel="tag">filenames</a> 
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/q/2235173" title="short permalink to this question" class="short-link" id="link-post-2235173">share</a><span class="lsep">|</span><a href="/posts/2235173/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/2235173/revisions" title="show all edits to this post">edited <span title="2010-02-10 12:34:21Z" class="relativetime">Feb 10 '10 at 12:34</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/19750/josh-lee"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/13b41b2620da0b1e630715e0c91a0b03?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/19750/josh-lee">Josh Lee</a><br>
+        <span class="reputation-score" title="reputation score 68195" dir="ltr">68.2k</span><span title="15 gold badges"><span class="badge1"></span><span class="badgecount">15</span></span><span title="160 silver badges"><span class="badge2"></span><span class="badgecount">160</span></span><span title="200 bronze badges"><span class="badge3"></span><span class="badgecount">200</span></span>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info user-hover">
+    <div class="user-action-time">
+        asked <span title="2010-02-10 07:45:37Z" class="relativetime">Feb 10 '10 at 7:45</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/8014/oddthinking"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/9a51b486fec41adca6738d37f0d9cb3a?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/8014/oddthinking">Oddthinking</a><br>
+        <span class="reputation-score" title="reputation score 10228" dir="ltr">10.2k</span><span title="4 gold badges"><span class="badge1"></span><span class="badgecount">4</span></span><span title="47 silver badges"><span class="badge2"></span><span class="badgecount">47</span></span><span title="88 bronze badges"><span class="badge3"></span><span class="badgecount">88</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2235173" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-11960644" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Mike Pope, a technical editor at Microsoft, points out on his <a href="http://www.mikepope.com/blog/DisplayBlog.aspx?permalink=2346" rel="nofollow">blog that</a> that while the Microsoft style guide sticks consistently to two words:  file name, folder name, volume name, the Apple Style Guide sometimes joins them: filename, pathname, volume name.</span>
+                &ndash;&nbsp;
+                    <a href="/users/8014/oddthinking"
+                       title="10228 reputation"
+                       class="comment-user owner">Oddthinking</a>
+                <span class="comment-date" dir="ltr"><span title="2012-02-26 17:11:42Z" class="relativetime-clean">Feb 26 '12 at 17:11</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-2235173" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>        </table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								3 Answers
+                                <span style="display:none;" itemprop="answerCount">3</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active">active</a>
+        <a href="/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest">oldest</a>
+        <a class="youarehere" href="/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes">votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="2235762"></a>
+<div id="answer-2235762" class="answer accepted-answer" data-answerid="2235762"  itemscope itemtype="http://schema.org/Answer" itemprop="acceptedAnswer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="2235762">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">28</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+        <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>I think your search for a "standard" naming convention will be in vain. Here are my proposals, based on existing, well-known programs.</p>
+
+<blockquote>
+  <p><strong>A)</strong> C:\users\OddThinking\Documents\My Source\Widget\<b>foo</b>.src</p>
+</blockquote>
+
+<p>Vim calls it <em>file root</em> (:help filename-modifiers)</p>
+
+<blockquote>
+  <p><strong>B)</strong> C:\users\OddThinking\Documents\My Source\Widget\<b>foo.src</b></p>
+</blockquote>
+
+<p><em>file name</em> or <a href="http://en.wikipedia.org/wiki/Basename"><em>base name</em></a></p>
+
+<blockquote>
+  <p><strong>C)</strong> C:\users\OddThinking\Documents\My Source\Widget\foo.<b>src</b></p>
+</blockquote>
+
+<p><a href="http://en.wikipedia.org/wiki/Filename_extension"><em>file (name) extension</em></a></p>
+
+<blockquote>
+  <p><strong>D)</strong> C:\users\OddThinking\Documents\My Source\Widget\foo<b>.src</b></p>
+</blockquote>
+
+<p>Also <em>file extension</em>. Simply store without the dot, if there is no dot on a file, it has no extension.</p>
+
+<blockquote>
+  <p><strong>E)</strong> <b>C:\users\OddThinking\Documents\My Source\</b>Widget\foo.src</p>
+</blockquote>
+
+<p>(top of the tree)</p>
+
+<p>No convention, git calls it <em>base directory</em>.</p>
+
+<blockquote>
+  <p><strong>F)</strong> C:\users\OddThinking\Documents\My Source\<b>Widget\foo.src</b></p>
+</blockquote>
+
+<p>(path from top of the tree to the leaf)</p>
+
+<p><em>relative path</em></p>
+
+<blockquote>
+  <p><strong>G)</strong> C:\users\OddThinking\Documents\My Source\<b>Widget</b>\foo.src</p>
+</blockquote>
+
+<p>(one node of the tree)</p>
+
+<p>No convention, maybe a simple <em>directory</em>.</p>
+
+<blockquote>
+  <p><strong>H)</strong> <b>C:\users\OddThinking\Documents\My Source\Widget\</b>foo.src</p>
+</blockquote>
+
+<p><a href="http://en.wikipedia.org/wiki/Dirname"><em>dir name</em></a></p>
+
+<blockquote>
+  <p><strong>I)</strong> <b>C:\users\OddThinking\Documents\My Source\Widget\foo.src</b></p>
+</blockquote>
+
+<p><a href="http://en.wikipedia.org/wiki/Pathname"><em>full/absolute path</em></a></p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/2235762" title="short permalink to this answer" class="short-link" id="link-post-2235762">share</a><span class="lsep">|</span><a href="/posts/2235762/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/2235762/revisions" title="show all edits to this post">edited <span title="2014-03-30 10:42:46Z" class="relativetime">Mar 30 '14 at 10:42</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/1862009/toxalot"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/fbf4d32428eb409f554c3c9289723581?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/1862009/toxalot">toxalot</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">2,749</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="17 silver badges"><span class="badge2"></span><span class="badgecount">17</span></span><span title="38 bronze badges"><span class="badge3"></span><span class="badgecount">38</span></span>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2010-02-10 09:43:48Z" class="relativetime">Feb 10 '10 at 9:43</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/248734/blinry"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/27de1e4796502970d91435bdb9f420aa?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/248734/blinry">blinry</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">1,319</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="15 silver badges"><span class="badge2"></span><span class="badgecount">15</span></span><span title="27 bronze badges"><span class="badge3"></span><span class="badgecount">27</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2235762" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-2205759" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">4</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">It&#39;s getting off-topic, but be careful with the storage of the extension separate to the dot. You need to handle file names of &quot;foo&quot;, &quot;foo.&quot; and &quot;foo.txt&quot; (and even &quot;foo.txt.bak&quot;.)</span>
+                &ndash;&nbsp;
+                    <a href="/users/8014/oddthinking"
+                       title="10228 reputation"
+                       class="comment-user owner">Oddthinking</a>
+                <span class="comment-date" dir="ltr"><span title="2010-02-11 21:22:12Z" class="relativetime-clean">Feb 11 '10 at 21:22</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-32923633" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">hi guys, great example. It would be more easy to read if you put the answer next to the question, instead of using references that forces to scroll up. I make an edit by the way in order to improve that. Grettings</span>
+                &ndash;&nbsp;
+                    <a href="/users/903998/victor"
+                       title="1539 reputation"
+                       class="comment-user">Victor</a>
+                <span class="comment-date" dir="ltr"><span title="2014-02-13 20:09:14Z" class="relativetime-clean">Feb 13 '14 at 20:09</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-32953477" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Victor, since your edit got rejected (wtf guys, this is a very good improvement!) I just did it myself :-)</span>
+                &ndash;&nbsp;
+                    <a href="/users/248734/blinry"
+                       title="1319 reputation"
+                       class="comment-user">blinry</a>
+                <span class="comment-date" dir="ltr"><span title="2014-02-14 14:04:32Z" class="relativetime-clean">Feb 14 '14 at 14:04</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-34664552" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Actually, I think the edit makes it much worse. I had to look at the source code to see what each point was referring to. The font used for the <code>&lt;code&gt;</code> element is already bold on my system, so I can&#39;t see which part of the of the absolute path is bolded. It would be helpful to include the <code>A)</code>, <code>B)</code>, etc. and to remove the code elements. I&#39;ll try suggesting an edit.</span>
+                &ndash;&nbsp;
+                    <a href="/users/1862009/toxalot"
+                       title="2749 reputation"
+                       class="comment-user">toxalot</a>
+                <span class="comment-date" dir="ltr"><span title="2014-03-30 10:39:32Z" class="relativetime-clean">Mar 30 '14 at 10:39</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-2235762" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+<div class="everyonelovesstackoverflow" id="careers3">
+        </div>
+  
+<a name="9623049"></a>
+<div id="answer-9623049" class="answer" data-answerid="9623049"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="9623049">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">15</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>Good question first of all, my +1. This thing bugged me when I had to create a slew of functions in Utility class once. GetFileName? or GetFullName? GetApplicationPath means full path or the directory name? and so on. I come from .NET background, so I think I can add little more to otherwise excellent answer by @blinry.</p>
+
+<p><em><strong>Summary:</em></strong> (In italics is what I would not use as a programmer)</p>
+
+<ol>
+<li><p><strong>Path</strong>: Path specifies a unique location in the file system (unless its relative path). Path name is less often used, but I would stick with path - it pretty much explains what it is. Path can point to a file or a folder or even nothing (C:\). Path can be:</p>
+
+<ol>
+<li><strong>Relative Path</strong>: <code>My Source\Widget\</code> is relative path as well as <code>Widget\foo.src</code>. Self explanatory.</li>
+<li><strong>Absolute Path</strong> or <strong>Full Path</strong>: Is the fully qualified path that points to the target. I tend to use the latter more often. <code>C:\users\OddThinking\Documents\My Source\Widget\foo.src</code> is hence full path. See at the end what I call full path that points to a file and that ends as a directory.</li>
+</ol>
+
+<p>The <a href="http://en.wikipedia.org/wiki/Path_%28computing%29.">wiki page</a> and .NET naming for <strong>path</strong> is consistent.</p></li>
+<li><p><strong>Root Path</strong> or <strong><a href="http://en.wikipedia.org/wiki/Root_directory">Root Directory</a></strong>: Former is .NET convention while latter is more heard in UNIX circles. Though I like both I tend to use the former more. In windows, unlike UNIX, has many different root paths, one for each partition. Unix systems have one root directory which holds information on other directories and files. Eg. <code>C:\</code> is root path.</p></li>
+<li><p><em>Folder</em> or <strong>Folder Name</strong>: <code>Widget</code>, <code>OddThinking</code> etc in your case. This might be a Windows only convention (in fact its my own odd thinking :)), nevertheless I strongly object to blinry`s answer "Directory". Though for a normal user directory means <a href="http://en.wikipedia.org/wiki/Directory_%28file_systems%29">the same</a> as a folder (like subfolders, subdirectories), I believe from a technical angle "directory" should sound like a qualified address to the target and not the target itself. More below.</p>
+
+<ol>
+<li><strong>Sub Folders</strong>: With respect to <code>users</code> <code>OddThinking</code> and <code>Documents</code> are sub folders.</li>
+<li><strong>Sub Directories</strong>: With respect to <code>users</code> <code>OddThinking\</code>, <code>OddThinking\Documents\</code> and <code>OddThinking\Documents\My Source\Widget\</code> are sub directories. But we do not often need to bother about it, do we?</li>
+<li><strong>Child Folder</strong>: With respect to <code>users</code> <code>OddThinking</code> is a child folder (as well as sub folder)</li>
+<li><strong>Parent Folder</strong>: For <code>OddThinking</code> <code>users</code> is its parent folder (Just mentioning different terminologies, no big deal).</li>
+</ol></li>
+<li><p><em>Directory</em> or <strong>Directory Name</strong>: The former to use generally in real life, the latter to be in code. This refers to the fully qualified path (or simply <strong>full path</strong>) till the target's <strong>parent folder</strong>. In your case, <code>C:\users\OddThinking\Documents\My Source\Widget</code> (Yes a directory is never meant to point to a file). I use directory name in my code since directory is a class in .NET and Directory Name is what the library itself calls it. Its quite consistent with <a href="http://en.wikipedia.org/wiki/Dirname">dirname</a> used in UNIX systems.</p></li>
+<li><p><em>File Name</em> or <strong><a href="http://en.wikipedia.org/wiki/Basename">Basename</a></strong>: Name of the file along with extension. In your case: <code>foo.src</code>. I would say that for a non technical use I prefer <strong>file name</strong> (it is what it means for an end user) but for technical purposes I would strictly stick with <strong>basename</strong>. File Name is often used by MS, <strong>but I am surprised how they are not consistent not just in documentation but even in library</strong>. There filename could mean either basename or full path of the file. So I favour basename, that's what I call them in code. <a href="http://en.wikipedia.org/wiki/Filename">This page</a> on wiki too says file name could mean either full path or the basename. Surprisingly even in .NET I can find the usage basename to mean the root name of the file.</p></li>
+<li><p><strong>Extension</strong> or <strong>Filename Extension</strong> or <strong>File Extension</strong>: I like the last one. All refers to the same thing but what is it is again a matter of debate! <a href="http://en.wikipedia.org/wiki/Filename_extension">Wiki</a> says it is <code>src</code> while back then I remember reading that many of the languages interprets it as <code>.src</code>. Note the dot. So once again my take is, for casual uses it doesn't matter what it is, but as a programmer I always see extension as <code>.src</code>.</p>
+
+<p>Ok I might have tried to fetch some standard usages, but here are two of my conventions I follow. And it is about full paths.</p>
+
+<ol>
+<li><p>I generally call a full path that point to a file as <em>file path</em>. To me file path is clear cut, it tells me what it is. Though with file name I find it as the name of the file, in my code I call it <strong>file name</strong>. It's also consistent with "<strong>directory name</strong>". From the technical side, name refers to the fully qualified name! Frustratingly .NET uses the term file name (so I have my case here) and sometimes file path for this.</p></li>
+<li><p>I call a full path that ends as a directory a directory. In fact one can call any piece of address that doesn't point to a file a directory. So <code>C:\users\OddThinking\Documents\My Source\</code> is a directory, <code>C:\users\OddThinking\</code> is a directory, or even <code>OddThinking\Documents\My Source\</code> (better to call it sub directory or even better relative path - all that depends on the context you are dealing with it). Well above I mentioned something different about directory which is directory name. Here is my take on it: I'll get a new path to avoid confusion. What is this <code>D:\Fruit\Apple\Pip\</code>? A directory. But if the question is what is the directory or even better directory name of <code>D:\Fruit\Apple\Pip\</code>, the answer is <code>D:\Fruit\Apple\</code>. Hope its clear.</p></li>
+</ol>
+
+<p>I would say it's better not to worry about the final two terms as that is what create the most confusion (for me personally). Just use the term <strong>full path</strong>!</p></li>
+</ol>
+
+<p><em><strong>To answer you:</em></strong> </p>
+
+<ol>
+<li><p><em>with respect to the path you have given</em></p>
+
+<p>A) No idea. Anyways I never needed to get that one alone.</p>
+
+<p>B) basename</p>
+
+<p>C) I would just call it file extension for time being, I am least worried since I never needed that alone to be named in my code.</p>
+
+<p>D) file extension surely.</p>
+
+<p>E) I do not think this is a general purpose requirement. No idea. In .NET base directory is the same as directory name.</p>
+
+<p>F) relative path</p>
+
+<p>G) folder (parent folder to basename <code>foo.src</code>)</p>
+
+<p>H) directory name</p>
+
+<p>I) full path (or even file name)</p></li>
+<li><p><em>in general (sorry for being a bit verbose, just to drive the point home) but assuming <code>foo.src</code> is indeed a file</em></p>
+
+<p>A) NA</p>
+
+<p>B) basename</p>
+
+<p>C) NA</p>
+
+<p>D) extension</p>
+
+<p>E) directory or simply path</p>
+
+<p>F) relative path</p>
+
+<p>G) NA</p>
+
+<p>H) directory or simply path</p>
+
+<p>I) full path (or even file name)</p></li>
+</ol>
+
+<p><em><strong>Further driving with one example from my side:</em></strong></p>
+
+<ol>
+<li><p>Consider the path <code>C:\Documents and Settings\All Users\Application Data\s.sql</code>. </p>
+
+<ol>
+<li><code>C:\Documents and Settings\All Users\Application Data\s.sql</code> is the full path (which is a file name)</li>
+<li><code>C:\Documents and Settings\All Users\Application Data\</code> is the directory name.</li>
+</ol></li>
+<li><p>Now consider the path <code>C:\Documents and Settings\All Users\Application Data</code></p>
+
+<ol>
+<li><code>C:\Documents and Settings\All Users\Application Data</code> is the full path (which happens to be a directory)</li>
+<li><code>C:\Documents and Settings\All Users</code> is the directory name.</li>
+</ol></li>
+</ol>
+
+<p><em><strong>Two tips of mine:</em></strong></p>
+
+<ol>
+<li><p>I follow this rule of thumb that when it comes to addressing a full address irrespective of its type, I almost always call it "full path". This not only eliminates the use of two terminologies for file path and folder path, it also avoids the potential confusion if you are going to name that of file as file name (which for most users right away translates to basename). But yes if you have to be specific about the type of path, its better to name then file name or directory instead of more generic "path".</p></li>
+<li><p>Whatever it is you would have your own idea in mind, be consistent with it throughout. Have a consensus among team members that this means this and not that.</p></li>
+</ol>
+
+<p>Now that just from the circle I have some practice. A new brand of terms would be what is used on OS X and android machines. And all these are just about physical paths in filesystem. A whole  new set of terminologies would arise in case of web addresses. I expect someone to fill the void in this same thread :) I would be glad to hear the convention with which you have went ahead..</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/9623049" title="short permalink to this answer" class="short-link" id="link-post-9623049">share</a><span class="lsep">|</span><a href="/posts/9623049/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/9623049/revisions" title="show all edits to this post">edited <span title="2012-03-08 21:35:36Z" class="relativetime">Mar 8 '12 at 21:35</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-03-08 18:44:46Z" class="relativetime">Mar 8 '12 at 18:44</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/661933/nawfal"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/a60e16ef8a1f18164882bfbc7d1a1ea1?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/661933/nawfal">nawfal</a><br>
+        <span class="reputation-score" title="reputation score 20867" dir="ltr">20.9k</span><span title="16 gold badges"><span class="badge1"></span><span class="badgecount">16</span></span><span title="146 silver badges"><span class="badge2"></span><span class="badgecount">146</span></span><span title="176 bronze badges"><span class="badge3"></span><span class="badgecount">176</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-9623049" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-9623049" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="26637489"></a>
+<div id="answer-26637489" class="answer" data-answerid="26637489"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="26637489">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">4</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>In C++, <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm" rel="nofollow">Boost.Filesystem</a> has devised a nomenclature for the various parts of a path. See the <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/reference.html#path-decomposition" rel="nofollow">path decomposition</a> reference documentation for details, as well as this <a href="http://www.boost.org/doc/libs/release/libs/filesystem/v3/doc/tutorial.html#Class%20path-iterators-etc" rel="nofollow">tutorial</a>.</p>
+
+<p>Here's a summary based on the tutorial. For:</p>
+
+<ul>
+<li>Windows path: <code>c:\foo\bar\baa.txt</code></li>
+<li>Unix path: <code>/foo/bar/baa.txt</code></li>
+</ul>
+
+<p>you get:</p>
+
+<pre><code>Part            Windows          Posix
+------------------------------------------------
+Root name       c:               &lt;empty&gt;
+Root directory  \                /
+Root path       c:\              /
+Relative path   foo\bar\baa.txt  foo/bar/baa.txt
+Parent path     c:\foo\bar       /foo/bar
+Filename        baa.txt          baa.txt
+Stem            baa              baa
+Extension       .txt             .txt
+</code></pre>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/26637489" title="short permalink to this answer" class="short-link" id="link-post-26637489">share</a><span class="lsep">|</span><a href="/posts/26637489/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2014-10-29 17:58:02Z" class="relativetime">Oct 29 '14 at 17:58</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/245265/emile-cormier"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/416db680915c487cfe3349aeb498ce44?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/245265/emile-cormier">Emile Cormier</a><br>
+        <span class="reputation-score" title="reputation score 15472" dir="ltr">15.5k</span><span title="5 gold badges"><span class="badge1"></span><span class="badgecount">5</span></span><span title="47 silver badges"><span class="badge2"></span><span class="badgecount">47</span></span><span title="77 bronze badges"><span class="badge3"></span><span class="badgecount">77</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-26637489" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-26637489" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+									<a name='new-answer'></a>
+						<form id="post-form" action="/questions/2235173/answer/submit" method="post"  class="post-form">
+						    <input type="hidden" id="post-id" value="2235173" />
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false" />
+                            <input type="hidden" name="referrer" value="http://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CB0QFjAAahUKEwigo6HM2YjIAhXMkx4KHS10BdU&amp;url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F2235173%2Ffile-name-path-name-base-name-naming-standard-for-pieces-of-a-path&amp;usg=AFQjCNGwYYe5_RgKDOOEilzPnhOjzgQ20g&amp;bvm=bv.103073922,d.dmo&amp;cad=rja"/>
+							<h2 class="space">Your Answer</h2>
+
+
+
+            <script>
+            StackExchange.ifUsing("editor", function () {
+                StackExchange.using("externalEditor", function () {
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.init();
+                    });
+                });
+            }, "code-snippets");
+        </script>
+    
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+            // Have to fire editor after snippets, if snippets enabled
+            if (StackExchange.options.snippets.enabled) {
+                StackExchange.using("snippets", function() {
+                    createEditor();
+                });
+            }
+            else {
+                createEditor();
+            }
+        });
+
+        function createEditor() {
+            prepareEditor({
+                heartbeatType: 'answer',
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                ,immediatelyShowMarkdownHelp:true
+                });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor js-post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="34249f136697fc39ddfc6bb5386fe332">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+								            <div class="form-item dno new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="/users/login?ssrc=question_page&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f2235173%2ffile-name-path-name-base-name-naming-standard-for-pieces-of-a-path%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Stack Exchange</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid" />
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false" />
+                    <input type="hidden" name="use-google" class="use-google" value="false" />
+                    <input type="button" class="submit-openid" value="Submit" style="display:none" />
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', 'http%3a%2f%2fstackoverflow.com%2fquestions%2f2235173%2ffile-name-path-name-base-name-naming-standard-for-pieces-of-a-path%23new-answer', 'question_page');
+                    }
+                );
+            </script>
+            <noscript>
+                        <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+            </noscript>
+
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="#" class="discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href='http://stackexchange.com/legal/privacy-policy' target='_blank'>privacy policy</a> and <a href='http://stackexchange.com/legal/terms-of-service' target='_blank'>terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1" />								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you&#39;re looking for?							Browse other questions tagged <a href="/questions/tagged/language-agnostic" class="post-tag" title="show questions tagged &#39;language-agnostic&#39;" rel="tag">language-agnostic</a> <a href="/questions/tagged/cross-platform" class="post-tag" title="show questions tagged &#39;cross-platform&#39;" rel="tag">cross-platform</a> <a href="/questions/tagged/terminology" class="post-tag" title="show questions tagged &#39;terminology&#39;" rel="tag">terminology</a> <a href="/questions/tagged/filenames" class="post-tag" title="show questions tagged &#39;filenames&#39;" rel="tag">filenames</a>  or <a href="/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2010-02-10 07:45:37Z"><b>5 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>6834 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2014-10-29 17:58:02Z">10 months ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </table>
+			    </div>
+						
+			<div class="everyonelovesstackoverflow" id="careers2">
+        </div>
+        <div id="hireme">
+            <script>
+window.careers_adurl="//careers.stackoverflow.com/gethired/companyjs",window.careers_cssurl="//cdn-careers.sstatic.net/careers/gethired/company.min.css?v=b7dd614a01cc",window.careers_cssurl2="//cdn-careers.sstatic.net/careers/gethired/sidebar.min.css?v=19f7c7921388",window.careers_adselector="#hireme",StackExchange.ready(function(){var e="//cdn-careers.sstatic.net/careers/gethired/company-loader.min.js?v=11c25765cde5";$.ajax({url:e,dataType:"script",cache:!1})});(function(){function f(n){var t=i.createElement("link");t.type="text/css";t.rel="stylesheet";t.href=n;r.appendChild(t)}function e(t,r,f,e){var s=(r.cl||[]).join(" "),o=i.getElementById(t);o&&(s&&(o.className+=" "+s),o.innerHTML=r.cn.replace("&pt=0","&pt="+(e||"0")),o.onmousedown=function(t){for(var i=t.target,e,s,h,c,l;i.tagName!=="A"&&i!==o;)i=i.parentNode;if(i!=o){for(e=n.enc,s=f,h=0;h<i.attributes.length;++h)c=i.attributes[h],l=c.name.match(/^data-(.*)$/),l&&(s+="&"+e(l[1])+"="+e(c.value));s+="&utm="+e(u+r.utm);i.href=s}})}function o(){return[].map.call(n.qsa(".post-taglist .post-tag"),function(n){return n.innerText}).join(";")||null}var t=window,i=document,r=i.getElementsByTagName("head")[0],u="&utm_source="+location.hostname+"&utm_medium=ad&utm_campaign=",n={doc:i,head:r,enc:encodeURIComponent,dec:decodeURIComponent,se:t.StackExchange,ts:function(){return(new Date).getTime()},st:setTimeout,ct:clearTimeout,qsa:function(n){return document.querySelectorAll(n)}};n.ls=function(n,t,u){var f=i.createElement("script"),e=!1;f.async=!0;f.src=n;t&&(f.onload=f.onreadystatechange=function(){e||this.readyState&&this.readyState!=="loaded"&&this.readyState!=="complete"||(e=!0,t(f),f.onload=f.onreadystatechange=null,u&&f.parentNode.removeChild(f))});r.appendChild(f)};n.init=function(i){function s(){i.st.forEach(f);r.forEach(function(n){e(n,i.cr[n],u,o)});typeof t.clc_after_init=="function"&&t.clc_after_init()}var r=Object.keys(i.cr),u="//"+i.h+i.ct+"?an="+i.an,o=n.cps?n.ts()-n.cps:0;s()};n.lo=function(i){var u,f=t.location.hash,s=n.dec,r=n.se,e;i=i||{};switch(f){case"#large":opts.l=1;break;case"#abort":opts.abort=1;break;default:f.length>0&&f.substr(1).split("&").forEach(function(n){var t=n.split("=",2);this[s(t[0])]=s(t[1])},i)}return e=i.ac||i.accountid||r&&r.options&&r.options.user&&r.options.user.accountId,e&&(i.ac=e),i.tags||(u=o(),u&&(i.tags=u)),i};n.o2q=function(t,i){var r=n.enc;return Object.keys(t).filter(function(n){return i.indexOf(n)!==-1}).map(function(n){return r(n)+"="+r(t[n])}).join("&")};n.load=function(i,r,u){n.ls(i+"?"+n.o2q(r,u),function(){typeof t.clc_loaded=="function"&&t.clc_loaded()});n.cps=n.ts()};n.el=function(t){var i=n.qsa(t);return i.length>0?i[0]:null};n.hc=function(n){return n&&n.innerHTML&&n.innerHTML.replace(/\s+/g,"").length>0};n.wfc=function(t,i,r,u){function c(){n.hc(s)?(f(o),f(e),u(!0)):e=h(c,i)}function l(){f(e);u(!1)}var s=n.el(t),h=n.st,f=n.ct,o,e;if(s!==null)return c(),r&&(o=h(l,r)),function(){e&&f(e);o&&f(o)}};t.clc=n})();;(function(n){var r=window,t=r.clc,i=t.lo({d:"hireme",lt:"careers1",lb:"careers3"});i.abort||t.load(n.adurl,i,["d","lt","lb","ip","ac","eng","prov","tags","theme","cp"])}).call(null, {"adurl":"//clc.stackoverflow.com/cp/p.js"});            </script>
+        </div>
+			  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="/q/2119156" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">3</div>
+	</a>
+	<a href="/questions/2119156/name-of-a-path-containing-the-complete-file-name" class="question-hyperlink">Name of a path containing the complete file name?</a>
+</div>			</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer">
+<a href="/q/549" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted extra-large">3376
+    </div>
+</a><a href="/questions/549/the-definitive-guide-to-form-based-website-authentication" class="question-hyperlink">The definitive guide to form-based website authentication</a>
+</div>
+<div class="spacer">
+<a href="/q/6692301" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">5
+    </div>
+</a><a href="/questions/6692301/absolute-foo-and-relative-foo-file-names-what-is-the-foo-category" class="question-hyperlink">Absolute (&ldquo;/foo&rdquo;) and relative (&ldquo;../foo&rdquo;) file names. What is the &ldquo;foo&rdquo; category called?</a>
+</div>
+<div class="spacer">
+<a href="/q/7751654" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="/questions/7751654/updating-a-subversion-working-copy-when-someone-committed-a-file-with-an-illegal" class="question-hyperlink">Updating a subversion working copy when someone committed a file with an illegal file name</a>
+</div>
+<div class="spacer">
+<a href="/q/12314285" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="/questions/12314285/how-do-i-remove-spaces-from-all-the-file-names-in-the-current-directory" class="question-hyperlink">How do I remove spaces from all the file-names in the current directory</a>
+</div>
+<div class="spacer">
+<a href="/q/15012000" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="/questions/15012000/what-are-some-problems-with-having-in-file-names" class="question-hyperlink">What are some problems with having $ in file names?</a>
+</div>
+<div class="spacer">
+<a href="/q/21052620" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/21052620/adding-using-input-for-file-name-into-a-file-path-during-loading" class="question-hyperlink">Adding using input for file name into a file path during loading</a>
+</div>
+<div class="spacer">
+<a href="/q/23255446" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/23255446/how-to-get-the-full-path-of-a-file-through-the-files-name" class="question-hyperlink">How to get the full path of a file through the file&#39;s name</a>
+</div>
+<div class="spacer">
+<a href="/q/23748796" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="/questions/23748796/how-do-i-change-the-name-of-a-file-path-correctly-in-python" class="question-hyperlink">How do I change the name of a file path correctly in Python?</a>
+</div>
+<div class="spacer">
+<a href="/q/23872153" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">2
+    </div>
+</a><a href="/questions/23872153/what-do-i-not-understand-about-apis" class="question-hyperlink">What do I not understand about APIs?</a>
+</div>
+<div class="spacer">
+<a href="/q/25707909" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">1
+    </div>
+</a><a href="/questions/25707909/disallowed-characters-in-folder-names" class="question-hyperlink">Disallowed characters in folder names?</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="//stackexchange.com/questions?tab=hot" 
+           class="js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/208231/do-particle-accelerators-centrifuge-the-quarks-of-a-proton" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do particle accelerators centrifuge the quarks of a proton?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/58243/16-bit-binary-grid" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    16-bit binary grid
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-portuguese" title="Portuguese Language Stack Exchange"></div><a href="http://portuguese.stackexchange.com/questions/1214/podemos-permutar-as-palavras-de-trabalho-s%c3%b3-amanh%c3%a3-a-bel-prazer" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:625 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Podemos permutar as palavras de &quot;trabalho s&#243; amanh&#227;&quot; a bel-prazer?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="http://aviation.stackexchange.com/questions/21097/what-risks-come-from-passengers-taking-baggage-during-emergency-evacuation" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What risks come from passengers taking baggage during emergency evacuation?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-superuser" title="Super User"></div><a href="http://superuser.com/questions/976114/boot-signature-bios" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:3 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Boot Signature - BIOS
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/95123/why-drop-and-take-do-not-support-a-operator-form" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why `Drop` and `Take` do not support a operator form
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-gamedev" title="Game Development Stack Exchange"></div><a href="http://gamedev.stackexchange.com/questions/108641/separating-game-engine-from-game-code-in-similar-games-with-versioning" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:53 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Separating Game Engine from game code in similar games, with versioning
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/68608/what-is-the-meaning-of-spread-in-a-nice-charcuterie-spread-and-a-healthy-sel" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is the meaning of spread in &quot;...a nice charcuterie spread and a healthy selection of vegetables&quot;?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-money" title="Personal Finance &amp; Money Stack Exchange"></div><a href="http://money.stackexchange.com/questions/54069/justification-for-aggressive-investment-strategy-when-young" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:93 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Justification for aggressive investment strategy when young?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-judaism" title="Mi Yodeya"></div><a href="http://judaism.stackexchange.com/questions/64068/why-do-jewish-funeral-homes-tend-to-be-the-main-supplier-of-jewish-calendars" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:248 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why do Jewish funeral homes tend to be the main supplier of Jewish calendars?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/268646/using-left-and-right-in-math-mode-but-the-display-is-not-satisfied" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Using \left and \right in math mode, but the display is not satisfied
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/58366/the-fizzbuzz-ish-string-matcher" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    The FizzBuzz-ish String matcher
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-judaism" title="Mi Yodeya"></div><a href="http://judaism.stackexchange.com/questions/64063/what-is-the-source-for-the-role-of-the-levi-in-the-torah-service" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:248 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is the source for the role of the Levi in the Torah service?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/68620/like-amoeba-why-not-like-an-amoeba" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    like amoeba -- why not &quot;like an amoeba&quot;?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-diy" title="Home Improvement Stack Exchange"></div><a href="http://diy.stackexchange.com/questions/74881/do-ceiling-joists-need-to-rest-on-cross-beams" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:73 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do ceiling joists need to rest on cross beams?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/54748/when-does-accepting-a-counteroffer-make-sense" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    When does accepting a counteroffer make sense?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-bicycles" title="Bicycles Stack Exchange"></div><a href="http://bicycles.stackexchange.com/questions/34584/anti-aero-resistance-training-jerseys" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:126 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Anti-aero resistance training jerseys?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-crypto" title="Cryptography Stack Exchange"></div><a href="http://crypto.stackexchange.com/questions/29295/authenticating-code-securely-and-generating-a-certificate" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:281 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Authenticating code securely and generating a certificate
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-salesforce" title="Salesforce Stack Exchange"></div><a href="http://salesforce.stackexchange.com/questions/93089/capture-salesforce-outbound-message-with-a-java-soap-listener" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:459 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Capture Salesforce Outbound Message with a Java SOAP Listener
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/103315/doom-the-video-game-why-is-the-protagonist-immune-against-zombification" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    &quot;Doom&quot;, the video game: Why is the protagonist immune against zombification?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/22450/for-how-long-did-lisa-walk" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    For how long did Lisa walk?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-parenting" title="Parenting Stack Exchange"></div><a href="http://parenting.stackexchange.com/questions/22168/kids-and-tidying-up-with-konmari-method" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:228 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Kids and tidying up with KonMari method
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mathoverflow" title="MathOverflow"></div><a href="http://mathoverflow.net/questions/218838/whats-the-difference-between-a-pl-simplicial-sphere-and-a-shellable-simplicial" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:504 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What&#39;s the difference between a PL simplicial sphere and a shellable simplicial sphere?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/32693722/catch-and-logging-for-irrelevant-operations" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Catch and logging for irrelevant operations
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="/feeds/question/2235173" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/2235173/ivc/bca2');});
+</script>
+<noscript>
+    <div><img src="/posts/2235173/ivc/bca2" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang"></div></div>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                        <a href="/tour">tour</a>
+                    <a href="/help">help</a>
+                    <a href="http://blog.stackoverflow.com?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com">chat</a>
+                    <a href="http://data.stackexchange.com">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackexchange.com/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tr>
+            <th colspan=3>
+                Technology
+            </th>
+            <th >
+                Life / Arts
+            </th>
+            <th >
+                Culture / Recreation
+            </th>
+            <th >
+                Science
+            </th>
+            <th >
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="//stackoverflow.com" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="//serverfault.com" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="//superuser.com" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="//webapps.stackexchange.com" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="//askubuntu.com" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="//webmasters.stackexchange.com" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="//gamedev.stackexchange.com" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="//tex.stackexchange.com" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//programmers.stackexchange.com" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="//unix.stackexchange.com" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="//apple.stackexchange.com" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="//wordpress.stackexchange.com" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="//gis.stackexchange.com" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="//electronics.stackexchange.com" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="//android.stackexchange.com" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="//security.stackexchange.com" title="information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//dba.stackexchange.com" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="//drupal.stackexchange.com" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="//sharepoint.stackexchange.com" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="//ux.stackexchange.com" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="//mathematica.stackexchange.com" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="//salesforce.stackexchange.com" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="//expressionengine.stackexchange.com" title="administrators, end users, developers and designers for ExpressionEngine&#174; CMS">ExpressionEngine&#174; Answers</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (13)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//photo.stackexchange.com" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="//scifi.stackexchange.com" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="//graphicdesign.stackexchange.com" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="//movies.stackexchange.com" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="//cooking.stackexchange.com" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="//diy.stackexchange.com" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="//money.stackexchange.com" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="//academia.stackexchange.com" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (9)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//english.stackexchange.com" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="//skeptics.stackexchange.com" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="//judaism.stackexchange.com" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="//travel.stackexchange.com" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="//christianity.stackexchange.com" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="//gaming.stackexchange.com" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="//bicycles.stackexchange.com" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="//rpg.stackexchange.com" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//math.stackexchange.com" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="//stats.stackexchange.com" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="//cstheory.stackexchange.com" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="//physics.stackexchange.com" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="//mathoverflow.net" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="//chemistry.stackexchange.com" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="//biology.stackexchange.com" title="biology researchers, academics, and students">Biology</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (5)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//stackapps.com" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="//meta.stackexchange.com" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="//area51.stackexchange.com" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="//careers.stackoverflow.com">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</table>
+                </div>
+            </div>
+
+            <div id="copyright">
+                site design / logo &#169; 2015 Stack Exchange Inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2015.9.21.2835
+            </div>
+            
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');
+                        ga('set', 'dimension2', '|language-agnostic|cross-platform|terminology|filenames|');         ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>
+            
+    </body>
+</html>

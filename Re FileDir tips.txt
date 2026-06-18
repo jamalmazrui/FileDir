@@ -1,0 +1,93 @@
+From: programmingblind-bounce@freelists.org on behalf of Jamal Mazrui
+[empower@smart.net]
+Sent: Tuesday, April 13, 2010 1:19 PM
+To: programmingblind@freelists.org
+Subject: Re: FileDir tips
+
+I forgot to mention Key Describer mode, Control+F1.  Also, remember that as you arrow through the menu system, a summary of the current line is displayed on the status line (Ie.g., Insert+PageDown in JAWS).
+
+Jamal
+On Tue, 13 Apr
+2010, Jamal Mazrui wrote:
+
+> Date: Tue, 13 Apr 2010 13:15:09 -0400 (EDT)
+> From: Jamal Mazrui <empower@smart.net>
+> Reply-To: programmingblind@freelists.org
+> To: ProgrammingBlind@freelists.org
+> Subject: FileDir tips
+> 
+> Here are some beginner and advanced commands for anyone wanting to try 
+> FileDir.  I realize it has so many commands that it can be 
+> overwhelming at first!
+>
+> Jamal
+>
+> Some beginner Commands:
+>
+> Arrow keys plus Home and End to navigate a directory view.
+>
+> Alt+S for size, Alt+D for date, or ? For content of a file or folder item.
+>
+> Alt+A to sort alphabetically, Alt+D by date, or Alt+S by Size.  Add 
+> Alt+Shift for
+> reverse order.
+>
+> Alt+B for beginning file, which skips over folders at top of list.
+>
+> Enter to open a file or folder.
+>
+> Control+J to jump to a file based on text in its name, or Alt+J to 
+> Control+jump again
+> to the next match.
+>
+> Control+K to go to an item based on keywords in its content, or Alt+K 
+> Control+for the
+> next match.
+>
+>> to tag an item and go to the next one, or < to untag.
+>
+> Shift+C to copy the current or tagged items, Shift+M to move, or 
+> Shift+Delete key
+> to delete.
+>
+> Control+O to open a folder that you specify.
+>
+> Control+Tab and Control+Shift+Tab to cycle among open directory views, 
+> Control+or
+> Control+F4 to close the current one.
+>
+> Alt+F10 for an Alternate Menu, Alt+Shift+H for a hotkey list, or F1 
+> Alt+for the
+> whole manual.
+>
+> Some advanced commands:
+>
+> Shift+o to output text versions of tagged files, or Shift+A to append 
+> Shift+them to
+> the clipboard.
+>
+> Alt+I to iterate processes, letting you terminate or activate one.
+>
+> Alt+Shift+W for web download, or Alt+Shift+Space for Web Client Utilities.
+>
+> Alt+Shift+Comma to tag duplicate files (having identical content, 
+> Alt+Shift+ignoring
+> file names and dates).
+>
+> Control+Shift+I to rename files based on their initial line of text
+> (typically a title).
+>
+> Alt+Shift+P to copy full path of current file or folder item to the
+> clipboard, or Control+Shift+P to copy all paths inside a folder item.
+>
+> Shift+Z to zip, or Shift+U to unzip.
+>
+>
+>
+> __________
+> View the list's information and change your settings at 
+> http://www.freelists.org/list/programmingblind
+>
+__________
+View the list's information and change your settings at http://www.freelists.org/list/programmingblind
+

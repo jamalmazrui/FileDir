@@ -1,0 +1,23 @@
+
+Usage:  GetText.exe <Source file> <Destination text file> [<KT Text Filter>]
+
+GetText is a freeware file-to-text conversion utility which extracts textual
+contents from the <Source file> and saves it in the <Destination text file>.
+
+To perform text conversion GetText.exe uses <KT Text Filter> from the folder
+"Filters". If the parameter <KT Text Filter> is not specified, GetText scans
+the "Filters" subfolder and locates an appropriate Text Filter automatically
+in the following order:  first, DLL's, which file names contain "98" as part
+of the file name, after which the rest of the files in the folder "Filters".
+
+A freeware edition of GetText has certain limitations. In particular, GetText
+internally calls the Windows API function GetACP()  to determine the encoding
+under which it should produce textual data --  support of UNICODE is provided
+only  upon  purchasing a license to use KT Text Filters  in your own software
+products.  More  information about GetText and KT Text Filters is provided on
+the Web at http://www.kryltech.com,  and in the file "ReadMe.htm", which will
+will be displayed for your convenience when you press "Enter".
+
+Copyright (c) 1998 - 2017 Kryloff Technologies, Inc.  http://www.kryltech.com
+
+Press Enter to exit from GetText and read the file "ReadMe.htm">

@@ -1,0 +1,685 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0076)http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/ -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="en-US" 
+prefix="og: http://ogp.me/ns#"><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+ 
+<META charset="UTF-8"> <TITLE>Let controls share event handlers in C# - C# 
+HelperC# Helper</TITLE> <LINK href="http://gmpg.org/xfn/11" rel="profile"> <LINK 
+href="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/style.css" 
+rel="stylesheet" type="text/css" media="all"> <LINK href="http://csharphelper.com/blog/xmlrpc.php" 
+rel="pingback"> <!-- This site is optimized with the Yoast SEO plugin v2.3.5 - https://yoast.com/wordpress/plugins/seo/ --> 
+<META name="description" content="Let controls share event handlers in C#"> 
+<LINK href="http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/" 
+rel="canonical"> 
+<META content="en_US" property="og:locale"> 
+<META content="article" property="og:type"> 
+<META content="Let controls share event handlers in C# - C# Helper" property="og:title"> 
+<META content="Let controls share event handlers in C#" property="og:description"> 
+<META content="http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/" 
+property="og:url"> 
+<META content="C# Helper" property="og:site_name"> 
+<META content="C#" property="article:tag"> 
+<META content="C# programming" property="article:tag"> 
+<META content="code reuse" property="article:tag"> 
+<META content="controls" property="article:tag"> 
+<META content="event handlers" property="article:tag"> 
+<META content="example" property="article:tag"> 
+<META content="example program" property="article:tag"> 
+<META content="methods" property="article:tag"> 
+<META content="properties" property="article:tag"> 
+<META content="share code" property="article:tag"> 
+<META content="tag" property="article:tag"> 
+<META content="tag property" property="article:tag"> 
+<META content="Windows Forms programming" property="article:tag"> 
+<META content="controls" property="article:section"> 
+<META content="2014-12-29T10:20:00+00:00" property="article:published_time"> 
+<META content="2014-12-29T10:25:27+00:00" property="article:modified_time"> 
+<META content="2014-12-29T10:25:27+00:00" property="og:updated_time"> 
+<META content="http://www.csharphelper.com/howto_use_tag.png" property="og:image"> 
+<META content="http://www.csharphelper.com/Download.png" property="og:image"> 
+<META content="http://www.csharphelper.com/twitter.png" property="og:image"> 
+<META content="http://www.csharphelper.com/rss.png" property="og:image"> 
+<META content="http://www.csharphelper.com/Donate.png" property="og:image"> <!-- / Yoast SEO plugin. --> 
+<LINK title="C# Helper » Feed" href="http://csharphelper.com/blog/feed/" rel="alternate" 
+type="application/rss+xml"> <LINK title="C# Helper » Comments Feed" href="http://csharphelper.com/blog/comments/feed/" 
+rel="alternate" type="application/rss+xml"> <LINK title="C# Helper » Let controls share event handlers in C# Comments Feed" 
+href="http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/feed/" 
+rel="alternate" type="application/rss+xml">		 
+<SCRIPT type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/csharphelper.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.3.1"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</SCRIPT>
+		 
+<STYLE type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</STYLE>
+ <LINK id="contact-form-7-css" href="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/styles.css" 
+rel="stylesheet" type="text/css" media="all"> <LINK id="jetpack_css-css" href="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/jetpack.css" 
+rel="stylesheet" type="text/css" media="all"> 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/jquery.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/jquery-migrate.min.js" type="text/javascript"></SCRIPT>
+ <LINK title="RSD" href="http://csharphelper.com/blog/xmlrpc.php?rsd" rel="EditURI" 
+type="application/rsd+xml"> <LINK href="http://csharphelper.com/blog/wp-includes/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<META name="GENERATOR" content="MSHTML 11.00.9600.18015"> <LINK href="http://wp.me/p59KzP-eY" 
+rel="shortlink"> 
+<STYLE type="text/css">img#wpstats{display:none}</STYLE>
+<!-- All in one Favicon 4.3 --><LINK href="http://csharphelper.com/blog/wp-content/uploads/2014/07/favicon.ico" 
+rel="shortcut icon"> 
+<STYLE id="custom-background-css" type="text/css">
+body.custom-background { background-color: #c0c0ff; }
+</STYLE>
+ </HEAD> 
+<BODY class="single single-post postid-928 single-format-standard custom-background">
+<DIV class="hfeed" id="wrapper">
+<DIV id="header">
+<DIV id="masthead">
+<DIV id="branding" role="banner">
+<DIV id="site-title"><SPAN><A title="C# Helper" href="http://csharphelper.com/blog/" 
+rel="home">C# Helper</A>					 </SPAN>				 </DIV>
+<DIV id="site-description">Tips, tricks, and example programs for C# 
+programmers.</DIV><IMG width="900" height="123" alt="" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/banner_thin2.png"></DIV><!-- #branding -->
+			 
+<DIV id="access" role="navigation">
+<DIV class="skip-link screen-reader-text"><A title="Skip to content" href="http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/#content">Skip 
+to content</A></DIV>
+<DIV class="menu-header">
+<UL class="menu" id="menu-navigation">
+  <LI class="menu-item menu-item-type-custom menu-item-object-custom menu-item-94" 
+  id="menu-item-94"><A href="http://www.csharphelper.com/">Home</A></LI>
+  <LI class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-93" 
+  id="menu-item-93"><A href="http://csharphelper.com/blog/">Blog</A></LI>
+  <LI class="menu-item menu-item-type-custom menu-item-object-custom menu-item-43" 
+  id="menu-item-43"><A 
+  href="http://www.csharphelper.com/howto_index.html">Index</A></LI>
+  <LI class="menu-item menu-item-type-post_type menu-item-object-page menu-item-92" 
+  id="menu-item-92"><A 
+  href="http://csharphelper.com/blog/search/">Search</A></LI>
+  <LI class="menu-item menu-item-type-custom menu-item-object-custom menu-item-45" 
+  id="menu-item-45"><A 
+  href="http://www.csharphelper.com/articles.html">Articles</A></LI>
+  <LI class="menu-item menu-item-type-custom menu-item-object-custom menu-item-44" 
+  id="menu-item-44"><A 
+  href="http://www.csharphelper.com/books.html">Books</A></LI>
+  <LI class="menu-item menu-item-type-post_type menu-item-object-page menu-item-49" 
+  id="menu-item-49"><A href="http://csharphelper.com/blog/contact/">Contact 
+  Me</A></LI>
+  <LI class="menu-item menu-item-type-post_type menu-item-object-page menu-item-85" 
+  id="menu-item-85"><A href="http://csharphelper.com/blog/rod/">About 
+  Rod</A></LI></UL></DIV></DIV><!-- #access -->		 </DIV><!-- #masthead -->	 </DIV><!-- #header -->
+	 
+<DIV id="main">
+<DIV id="container">
+<DIV id="content" role="main">
+<DIV class="navigation" id="nav-above">
+<DIV class="nav-previous"><A href="http://csharphelper.com/blog/2014/12/use-the-params-keyword-in-c/" 
+rel="prev"><SPAN class="meta-nav">←</SPAN> Use the params keyword in 
+C#</A></DIV>
+<DIV class="nav-next"><A href="http://csharphelper.com/blog/2014/12/draw-in-a-paint-event-handler-in-c/" 
+rel="next">Draw in a Paint event handler in C# <SPAN 
+class="meta-nav">→</SPAN></A></DIV></DIV><!-- #nav-above -->				 
+<DIV class="post-928 post type-post status-publish format-standard hentry category-controls category-methods tag-c tag-c-programming tag-code-reuse tag-controls tag-event-handlers tag-example tag-example-program tag-methods tag-properties tag-share-code tag-tag tag-tag-property tag-windows-forms-programming" 
+id="post-928">
+<H1 class="entry-title">Let controls share event handlers in C#</H1>
+<DIV class="entry-meta"><SPAN class="meta-prep meta-prep-author">Posted 
+on</SPAN> <A title="10:20 am" href="http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/" 
+rel="bookmark"><SPAN class="entry-date">December 29, 2014</SPAN></A> <SPAN 
+class="meta-sep">by</SPAN> <SPAN class="author vcard"><A title="View all posts by Rod Stephens" 
+class="url fn n" href="http://csharphelper.com/blog/author/rod-stephens/">Rod 
+Stephens</A></SPAN>					</DIV><!-- .entry-meta -->					 
+<DIV class="entry-content">
+<P><IMG align="right" alt="[share event handlers]" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/howto_use_tag.png" 
+border="0" vspace="5" hspace="5"></P>
+<P>Sometimes it would be useful to let controls share event handlers. Often a 
+program has several controls that do almost the same thing. It would be nice if 
+they could share the same event handler to increase code reuse, but they don’t 
+do <I>exactly</I> the same thing. You can still share code as long as that event 
+handler can tell which control raised it.</P>
+<P>An event handler’s first parameter, which is the object that raised the 
+event, is declared as <TT>object sender</TT>. Giving the parameter the 
+<TT>object</TT> data type makes different kinds of event handlers more uniform, 
+but it makes them unable to easily use the controls that raised them. Still, the 
+<TT>sender</TT> parameter is the way an event handler can tell which object 
+raised it.</P>
+<P>There are several approaches you can take to figure out which control raised 
+an event. For example, you can use a series of <TT>if</TT> statements like 
+this:</P>
+<PRE><TT>if (sender == btnPink) ...</TT></PRE>
+<P>Another approach is to convert the sender into the type of control that it 
+really is. For example, the following code converts the sender into a 
+<TT>Button</TT>.</P>
+<PRE><TT>Button btn = sender as Button;</TT></PRE>
+<P>Now you can do whatever you like to the <TT>Button</TT>. Note that this only 
+works if the sender really is a <TT>Button</TT>. You cannot use this technique 
+to have a <TT>Button</TT> and <TT>PictureBox</TT> share the same event 
+handler.</P>
+<P>A particularly useful trick for telling the event handler what to do is to 
+put extra information in the control’s <TT>Tag</TT> property. The event handler 
+can convert the sender into the correct type of control (or even the more 
+generic <TT>Control</TT> type) and then use the <TT>Tag</TT> property to figure 
+out what to do.</P>
+<P>This example displays three buttons with their <TT>Tag</TT> properties set to 
+<TT>Pink</TT>, <TT>LightGreen</TT>, and <TT>LightBlue</TT>. When you click a 
+button, the following code uses those values to set the form’s background 
+color.</P>
+<PRE><TT>// Use the selected color for the form's background.
+private void btnColor_Click(object sender, EventArgs e)
+{
+    // Get the sender as a button.
+    Button btn = sender as Button;
+
+    // Convert its Tag value into a color.
+    this.BackColor = Color.FromName(btn.Tag.ToString());
+}</TT></PRE>
+<P>The code converts the sender into a <TT>Button</TT>. It then gets its 
+<TT>Tag</TT> property, converts it into a <TT>string</TT> (<TT>Tag</TT> itself 
+is an <TT>object</TT>), and passes it to <TT>Color.FromName</TT> to convert the 
+color’s name into an actual <TT>Color</TT>.</P>
+<P>You can use a similar technique in many menu items. For example, if the Scale 
+menu has commands such as x1, x2, x4, and x1/2, you can store the values 1, 2, 
+4, and 0.5 in the items’ <TT>Tag</TT> properties.</P>
+<P>
+<CENTER><BR><A 
+href="http://www.csharphelper.com/examples/howto_use_tag.zip"><IMG width="109" 
+height="59" alt="Download Example" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/Download.png" 
+border="0" hspace="10"></A> &nbsp; <A 
+href="http://twitter.com/CSharpHelper"><IMG width="73" height="60" alt="Follow me on Twitter" 
+src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/twitter.png" 
+border="0" hspace="10"></A> &nbsp; <A 
+href="http://csharphelper.com/blog/feed/"><IMG width="62" height="62" alt="RSS feed" 
+src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/rss.png" 
+border="0" hspace="10"></A> &nbsp; <A 
+href="http://csharphelper.com/donate.html"><IMG width="124" height="68" alt="Donate" 
+src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/Donate.png" 
+border="0" hspace="10"></A><BR></CENTER>
+<P></P>
+<P>
+<CENTER><BR>
+<SCRIPT type="text/javascript"><!--
+google_ad_client = "ca-pub-6627515316741006";
+/* PostBottom */
+google_ad_slot = "8932984896";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</SCRIPT>
+<BR>
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/f.txt" type="text/javascript"></SCRIPT>
+<BR></CENTER>
+<P></P></DIV><!-- .entry-content -->					 
+<DIV class="entry-utility">						This entry was posted in <A href="http://csharphelper.com/blog/category/controls/" 
+rel="category tag">controls</A>, <A href="http://csharphelper.com/blog/category/methods/" 
+rel="category tag">methods</A> and tagged <A href="http://csharphelper.com/blog/tag/c/" 
+rel="tag">C#</A>, <A href="http://csharphelper.com/blog/tag/c-programming/" rel="tag">C# 
+programming</A>, <A href="http://csharphelper.com/blog/tag/code-reuse/" rel="tag">code 
+reuse</A>, <A href="http://csharphelper.com/blog/tag/controls/" 
+rel="tag">controls</A>, <A href="http://csharphelper.com/blog/tag/event-handlers/" 
+rel="tag">event handlers</A>, <A href="http://csharphelper.com/blog/tag/example/" 
+rel="tag">example</A>, <A href="http://csharphelper.com/blog/tag/example-program/" 
+rel="tag">example program</A>, <A href="http://csharphelper.com/blog/tag/methods/" 
+rel="tag">methods</A>, <A href="http://csharphelper.com/blog/tag/properties/" 
+rel="tag">properties</A>, <A href="http://csharphelper.com/blog/tag/share-code/" 
+rel="tag">share code</A>, <A href="http://csharphelper.com/blog/tag/tag/" rel="tag">tag</A>, 
+<A href="http://csharphelper.com/blog/tag/tag-property/" rel="tag">tag 
+property</A>, <A href="http://csharphelper.com/blog/tag/windows-forms-programming/" 
+rel="tag">Windows Forms programming</A>. Bookmark the <A title="Permalink to Let controls share event handlers in C#" 
+href="http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/" 
+rel="bookmark">permalink</A>.											</DIV><!-- .entry-utility -->				 </DIV><!-- #post-## -->
+				 
+<DIV class="navigation" id="nav-below">
+<DIV class="nav-previous"><A href="http://csharphelper.com/blog/2014/12/use-the-params-keyword-in-c/" 
+rel="prev"><SPAN class="meta-nav">←</SPAN> Use the params keyword in 
+C#</A></DIV>
+<DIV class="nav-next"><A href="http://csharphelper.com/blog/2014/12/draw-in-a-paint-event-handler-in-c/" 
+rel="next">Draw in a Paint event handler in C# <SPAN 
+class="meta-nav">→</SPAN></A></DIV></DIV><!-- #nav-below -->							 
+<DIV id="comments">
+<DIV class="comment-respond" id="respond">
+<H3 class="comment-reply-title" id="reply-title">Leave a Reply <SMALL><A id="cancel-comment-reply-link" 
+style="display: none;" href="http://csharphelper.com/blog/2014/12/let-controls-share-event-handlers-in-c/#respond" 
+rel="nofollow">Cancel reply</A></SMALL></H3>
+<FORM class="comment-form" id="commentform" action="http://csharphelper.com/blog/wp-comments-post.php" 
+method="post">
+<P class="comment-notes"><SPAN id="email-notes">Your email address will not be 
+published.</SPAN> Required fields are marked <SPAN class="required">*</SPAN></P>
+<P class="comment-form-author"><LABEL for="author">Name <SPAN 
+class="required">*</SPAN></LABEL> 
+<INPUT name="author" id="author" aria-required="true" required="required" type="text" size="30"></P>
+<P class="comment-form-email"><LABEL for="email">Email <SPAN 
+class="required">*</SPAN></LABEL> <INPUT name="email" id="email" aria-required="true" aria-describedby="email-notes" required="required" type="text" size="30"></P>
+<P class="comment-form-url"><LABEL for="url">Website</LABEL> 
+<INPUT name="url" id="url" type="text" size="30"></P>
+<P class="comment-form-comment"><LABEL for="comment">Comment</LABEL> 
+<TEXTAREA name="comment" id="comment" aria-required="true" required="required" rows="8" cols="45"></TEXTAREA></P>
+<P class="form-submit"><INPUT name="submit" class="submit" id="submit" type="submit" value="Post Comment"> 
+<INPUT name="comment_post_ID" id="comment_post_ID" type="hidden" value="928"> 
+<INPUT name="comment_parent" id="comment_parent" type="hidden" value="0"> </P>
+<P style="display: none;"><INPUT name="akismet_comment_nonce" id="akismet_comment_nonce" type="hidden" value="e1ec2e80e3"></P>
+<P class="comment-subscription-form"><INPUT name="subscribe_comments" id="subscribe_comments" 
+style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" 
+type="checkbox" value="subscribe"> <LABEL class="subscribe-label" id="subscribe-label" 
+for="subscribe_comments">Notify me of follow-up comments by email.</LABEL></P>
+<P class="comment-subscription-form"><INPUT name="subscribe_blog" id="subscribe_blog" 
+style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" 
+type="checkbox" value="subscribe"> <LABEL class="subscribe-label" id="subscribe-blog-label" 
+for="subscribe_blog">Notify me of new posts by email.</LABEL></P>
+<P style="display: none;"><INPUT name="ak_js" id="ak_js" type="hidden" value="236"></P></FORM></DIV><!-- #respond -->
+			 </DIV><!-- #comments -->			 </DIV><!-- #content -->		 </DIV><!-- #container -->
+		 
+<DIV class="widget-area" id="primary" role="complementary">
+<UL class="xoxo">
+  <LI class="widget-container widget_text" id="text-3">
+  <DIV class="textwidget">
+  <CENTER><FONT color="green">Recent Books:</FONT> <BR><A href="http://www.wrox.com/WileyCDA/WroxTitle/Beginning-Software-Engineering.productCd-1118969146.html"><IMG 
+  alt="[Beginning Software Engineering]" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/sw_eng_tiny.png" 
+  border="0" vspace="5"> </A> <A href="http://www.wrox.com/WileyCDA/WroxTitle/C-5-0-Programmer-s-Reference.productCd-1118847288.html"><IMG 
+  alt="[C# 5.0 Programmer's Reference]" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/csharp_prog_ref_80x100.png" 
+  border="0" vspace="5"> </A> <BR><A href="http://www.csharphelper.com/algorithms.html"><IMG 
+  alt="[Essential Algorithms: A Practical Approach to Computer Algorithms]" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/essential_algs_81x100.jpg" 
+  border="0" vspace="5"> </A> <A href="http://www.wrox.com/WileyCDA/WroxTitle/MCSD-Certification-Toolkit-Exam-70-483-Programming-in-C-.productCd-1118612094.html"><IMG 
+  alt="[MCSD Certification Toolkit (Exam 70-483): Programming in C#]" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/c_cert_tiny.jpg" 
+  border="0" vspace="5"> </A> <BR><FONT color="green">Recent Videos:</FONT> 
+  <BR><A href="http://www.infiniteskills.com/training/learning-data-structures-and-algorithms.html"><IMG 
+  alt="[Learning Data Structures and Algorithms]" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/algs_video_tiny.png" 
+  border="0" vspace="5"> </A> <A href="http://www.infiniteskills.com/training/learning-visual-basic-.net.html"><IMG 
+  alt="[Learning Visual Basic .NET]" src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/vb_video_tiny.png" 
+  border="0" vspace="5"> </A> </CENTER></DIV></LI>
+  <LI class="widget-container widget_search" id="search-2">
+  <FORM class="searchform" id="searchform" role="search" action="http://csharphelper.com/blog/" 
+  method="get">
+  <DIV><LABEL class="screen-reader-text" for="s">Search for:</LABEL>
+					 <INPUT name="s" id="s" type="text">					 <INPUT id="searchsubmit" type="submit" value="Search">
+  				 </DIV></FORM></LI>
+  <LI class="widget-container widget_recent_entries" id="recent-posts-2">
+  <H3 class="widget-title">Recent Posts</H3>
+  <UL>
+    <LI><A href="http://csharphelper.com/blog/2015/10/make-a-windows-forms-application-display-icons-at-appropriate-sizes-in-c/">Make 
+    a Windows Forms application display icons at appropriate sizes in C#</A>
+    						 </LI>
+    <LI><A href="http://csharphelper.com/blog/2015/10/extract-comments-from-a-c-file-in-c/">Extract 
+    comments from a C# file in C#</A>						 </LI>
+    <LI><A href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-multiple-images-with-different-sizes-in-c/">Use 
+    steganography to hide multiple images with different sizes in C#</A>
+    						 </LI>
+    <LI><A href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-multiple-images-in-c/">Use 
+    steganography to hide multiple images in C#</A>						 </LI>
+    <LI><A href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-message-bytes-in-an-image-in-c/">Use 
+    steganography to hide Unicode message bytes in an image in C#</A>
+  						 </LI></UL></LI>
+  <LI class="widget-container widget_text" id="text-8">
+  <DIV class="textwidget">
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/f(1).txt" async=""></SCRIPT>
+   <!-- RightSide --> <INS class="adsbygoogle" style="width: 120px; height: 240px; display: inline-block;" 
+  data-ad-slot="4930090895" data-ad-client="ca-pub-6627515316741006"></INS> 
+<SCRIPT>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</SCRIPT>
+  </DIV></LI>
+  <LI class="widget-container widget_recent_comments" id="recent-comments-2">
+  <H3 class="widget-title">Recent Comments</H3>
+  <UL id="recentcomments">
+    <LI class="recentcomments"><SPAN class="comment-author-link"><A class="url" 
+    href="http://www.csharphelper.com/" 
+    rel="external nofollow">RodStephens</A></SPAN> on <A href="http://csharphelper.com/blog/2015/09/survey-what-should-be-in-my-upcoming-graphics-book/#comment-159291">Survey: 
+    What should be in my upcoming graphics book?</A></LI>
+    <LI class="recentcomments"><SPAN class="comment-author-link">Phan 
+    Sang</SPAN> on <A href="http://csharphelper.com/blog/2015/09/survey-what-should-be-in-my-upcoming-graphics-book/#comment-159209">Survey: 
+    What should be in my upcoming graphics book?</A></LI>
+    <LI class="recentcomments"><SPAN class="comment-author-link"><A class="url" 
+    href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-multiple-images-in-c/" 
+    rel="external nofollow">Use steganography to hide multiple images in C# - C# 
+    HelperC# Helper</A></SPAN> on <A href="http://csharphelper.com/blog/2015/03/use-steganography-to-hide-one-picture-inside-another-in-c/#comment-158472">Use 
+    steganography to hide one picture inside another in C#</A></LI>
+    <LI class="recentcomments"><SPAN class="comment-author-link"><A class="url" 
+    href="http://www.csharphelper.com/" 
+    rel="external nofollow">RodStephens</A></SPAN> on <A href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-messages-in-an-image-in-c/#comment-158470">Use 
+    steganography to hide Unicode messages in an image in C#</A></LI>
+    <LI class="recentcomments"><SPAN class="comment-author-link"><A class="url" 
+    href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-message-bytes-in-an-image-in-c/" 
+    rel="external nofollow">Use steganography to hide Unicode message bytes in 
+    an image in C# - C# HelperC# Helper</A></SPAN> on <A href="http://csharphelper.com/blog/2015/09/use-steganography-to-hide-unicode-messages-in-an-image-in-c/#comment-158469">Use 
+    steganography to hide Unicode messages in an image in C#</A></LI></UL></LI>
+  <LI class="widget-container widget_archive" id="archives-2">
+  <H3 class="widget-title">Archives</H3>
+  <UL>
+    <LI><A href="http://csharphelper.com/blog/2015/10/">October 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/09/">September 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/08/">August 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/07/">July 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/06/">June 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/05/">May 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/04/">April 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/03/">March 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/02/">February 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2015/01/">January 2015</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/12/">December 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/11/">November 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/10/">October 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/09/">September 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/08/">August 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/07/">July 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/06/">June 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/05/">May 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/03/">March 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/02/">February 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2014/01/">January 2014</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/12/">December 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/11/">November 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/10/">October 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/09/">September 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/08/">August 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/07/">July 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/06/">June 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/05/">May 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/04/">April 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/03/">March 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/02/">February 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2013/01/">January 2013</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/12/">December 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/11/">November 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/10/">October 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/09/">September 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/08/">August 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/07/">July 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/06/">June 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/05/">May 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/04/">April 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/03/">March 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/02/">February 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2012/01/">January 2012</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/12/">December 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/11/">November 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/10/">October 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/09/">September 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/08/">August 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/07/">July 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/06/">June 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/05/">May 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/04/">April 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/03/">March 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/02/">February 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2011/01/">January 2011</A></LI>
+    <LI><A href="http://csharphelper.com/blog/2010/12/">December 
+  2010</A></LI></UL></LI>
+  <LI class="widget-container widget_categories" id="categories-2">
+  <H3 class="widget-title">Categories</H3>
+  <UL>
+    <LI class="cat-item cat-item-10"><A href="http://csharphelper.com/blog/category/net/">.NET</A> 
+    </LI>
+    <LI class="cat-item cat-item-24"><A href="http://csharphelper.com/blog/category/ado-net/">ADO.NET</A> 
+    </LI>
+    <LI class="cat-item cat-item-20"><A href="http://csharphelper.com/blog/category/algorithms/">algorithms</A> 
+    </LI>
+    <LI class="cat-item cat-item-38"><A href="http://csharphelper.com/blog/category/animation/">animation</A> 
+    </LI>
+    <LI class="cat-item cat-item-33"><A href="http://csharphelper.com/blog/category/api/">API</A> 
+    </LI>
+    <LI class="cat-item cat-item-84"><A href="http://csharphelper.com/blog/category/arrays/">arrays</A> 
+    </LI>
+    <LI class="cat-item cat-item-99"><A href="http://csharphelper.com/blog/category/attributes/">attributes</A> 
+    </LI>
+    <LI class="cat-item cat-item-96"><A href="http://csharphelper.com/blog/category/audio/">audio</A> 
+    </LI>
+    <LI class="cat-item cat-item-28"><A href="http://csharphelper.com/blog/category/books/">books</A> 
+    </LI>
+    <LI class="cat-item cat-item-64"><A href="http://csharphelper.com/blog/category/calculations/">calculations</A> 
+    </LI>
+    <LI class="cat-item cat-item-44"><A href="http://csharphelper.com/blog/category/challenges/">challenges</A> 
+    </LI>
+    <LI class="cat-item cat-item-73"><A href="http://csharphelper.com/blog/category/classes/">classes</A> 
+    </LI>
+    <LI class="cat-item cat-item-70"><A href="http://csharphelper.com/blog/category/clipboard/">clipboard</A> 
+    </LI>
+    <LI class="cat-item cat-item-74"><A href="http://csharphelper.com/blog/category/coding/">coding</A> 
+    </LI>
+    <LI class="cat-item cat-item-30"><A href="http://csharphelper.com/blog/category/combinatorics/">combinatorics</A> 
+    </LI>
+    <LI class="cat-item cat-item-98"><A href="http://csharphelper.com/blog/category/console/">console</A> 
+    </LI>
+    <LI class="cat-item cat-item-25"><A href="http://csharphelper.com/blog/category/controls/">controls</A> 
+    </LI>
+    <LI class="cat-item cat-item-49"><A href="http://csharphelper.com/blog/category/cryptography/">cryptography</A> 
+    </LI>
+    <LI class="cat-item cat-item-36"><A href="http://csharphelper.com/blog/category/curve-fitting/">curve 
+    fitting</A> </LI>
+    <LI class="cat-item cat-item-23"><A href="http://csharphelper.com/blog/category/database/">database</A> 
+    </LI>
+    <LI class="cat-item cat-item-83"><A href="http://csharphelper.com/blog/category/debugging/">debugging</A> 
+    </LI>
+    <LI class="cat-item cat-item-67"><A href="http://csharphelper.com/blog/category/dialogs/">dialogs</A> 
+    </LI>
+    <LI class="cat-item cat-item-57"><A href="http://csharphelper.com/blog/category/directories/">directories</A> 
+    </LI>
+    <LI class="cat-item cat-item-100"><A href="http://csharphelper.com/blog/category/drag-and-drop/">Drag 
+    and Drop</A> </LI>
+    <LI class="cat-item cat-item-16"><A href="http://csharphelper.com/blog/category/drawing/">drawing</A> 
+    </LI>
+    <LI class="cat-item cat-item-103"><A href="http://csharphelper.com/blog/category/enums/">enums</A> 
+    </LI>
+    <LI class="cat-item cat-item-105"><A href="http://csharphelper.com/blog/category/event/">Event</A> 
+    </LI>
+    <LI class="cat-item cat-item-85"><A href="http://csharphelper.com/blog/category/events/">events</A> 
+    </LI>
+    <LI class="cat-item cat-item-22"><A href="http://csharphelper.com/blog/category/excel/">Excel</A> 
+    </LI>
+    <LI class="cat-item cat-item-54"><A href="http://csharphelper.com/blog/category/extension-methods/">extension 
+    methods</A> </LI>
+    <LI class="cat-item cat-item-66"><A href="http://csharphelper.com/blog/category/extensions/">extensions</A> 
+    </LI>
+    <LI class="cat-item cat-item-50"><A href="http://csharphelper.com/blog/category/files/">files</A> 
+    </LI>
+    <LI class="cat-item cat-item-97"><A href="http://csharphelper.com/blog/category/finance/">finance</A> 
+    </LI>
+    <LI class="cat-item cat-item-45"><A href="http://csharphelper.com/blog/category/fonts/">fonts</A> 
+    </LI>
+    <LI class="cat-item cat-item-605"><A href="http://csharphelper.com/blog/category/formatting/">formatting</A> 
+    </LI>
+    <LI class="cat-item cat-item-82"><A href="http://csharphelper.com/blog/category/forms/">forms</A> 
+    </LI>
+    <LI class="cat-item cat-item-53"><A href="http://csharphelper.com/blog/category/fractals/">fractals</A> 
+    </LI>
+    <LI class="cat-item cat-item-106"><A href="http://csharphelper.com/blog/category/ftp/">ftp</A> 
+    </LI>
+    <LI class="cat-item cat-item-43"><A href="http://csharphelper.com/blog/category/games/">games</A> 
+    </LI>
+    <LI class="cat-item cat-item-1576"><A href="http://csharphelper.com/blog/category/gdi/">GDI+</A> 
+    </LI>
+    <LI class="cat-item cat-item-1515"><A href="http://csharphelper.com/blog/category/generic/">generic</A> 
+    </LI>
+    <LI class="cat-item cat-item-40"><A href="http://csharphelper.com/blog/category/geometry/">geometry</A> 
+    </LI>
+    <LI class="cat-item cat-item-51"><A href="http://csharphelper.com/blog/category/globalization/">globalization</A> 
+    </LI>
+    <LI class="cat-item cat-item-6"><A href="http://csharphelper.com/blog/category/graphics/">graphics</A> 
+    </LI>
+    <LI class="cat-item cat-item-104"><A href="http://csharphelper.com/blog/category/html/">html</A> 
+    </LI>
+    <LI class="cat-item cat-item-80"><A href="http://csharphelper.com/blog/category/ide/">IDE</A> 
+    </LI>
+    <LI class="cat-item cat-item-256"><A href="http://csharphelper.com/blog/category/image-processing/">image 
+    processing</A> </LI>
+    <LI class="cat-item cat-item-88"><A href="http://csharphelper.com/blog/category/inheritance/">inheritance</A> 
+    </LI>
+    <LI class="cat-item cat-item-62"><A href="http://csharphelper.com/blog/category/interfaces/">interfaces</A> 
+    </LI>
+    <LI class="cat-item cat-item-31"><A href="http://csharphelper.com/blog/category/internationalization/">internationalization</A> 
+    </LI>
+    <LI class="cat-item cat-item-77"><A href="http://csharphelper.com/blog/category/internet/">internet</A> 
+    </LI>
+    <LI class="cat-item cat-item-72"><A href="http://csharphelper.com/blog/category/interoperability/">interoperability</A> 
+    </LI>
+    <LI class="cat-item cat-item-46"><A href="http://csharphelper.com/blog/category/linq/">LINQ</A> 
+    </LI>
+    <LI class="cat-item cat-item-68"><A href="http://csharphelper.com/blog/category/lists/">lists</A> 
+    </LI>
+    <LI class="cat-item cat-item-52"><A href="http://csharphelper.com/blog/category/localization/">localization</A> 
+    </LI>
+    <LI class="cat-item cat-item-19"><A href="http://csharphelper.com/blog/category/mathematics/">mathematics</A> 
+    </LI>
+    <LI class="cat-item cat-item-95"><A href="http://csharphelper.com/blog/category/memory/">memory</A> 
+    </LI>
+    <LI class="cat-item cat-item-81"><A href="http://csharphelper.com/blog/category/menus/">menus</A> 
+    </LI>
+    <LI class="cat-item cat-item-86"><A href="http://csharphelper.com/blog/category/messagebox/">MessageBox</A> 
+    </LI>
+    <LI class="cat-item cat-item-87"><A href="http://csharphelper.com/blog/category/methods/">methods</A> 
+    </LI>
+    <LI class="cat-item cat-item-65"><A href="http://csharphelper.com/blog/category/miscellany/">miscellany</A> 
+    </LI>
+    <LI class="cat-item cat-item-90"><A href="http://csharphelper.com/blog/category/multimedia/">multimedia</A> 
+    </LI>
+    <LI class="cat-item cat-item-93"><A href="http://csharphelper.com/blog/category/network/">network</A> 
+    </LI>
+    <LI class="cat-item cat-item-21"><A href="http://csharphelper.com/blog/category/office/">Office</A> 
+    </LI>
+    <LI class="cat-item cat-item-69"><A href="http://csharphelper.com/blog/category/oop/">OOP</A> 
+    </LI>
+    <LI class="cat-item cat-item-101"><A href="http://csharphelper.com/blog/category/oops/">OOPS</A> 
+    </LI>
+    <LI class="cat-item cat-item-89"><A href="http://csharphelper.com/blog/category/operators/">operators</A> 
+    </LI>
+    <LI class="cat-item cat-item-92"><A href="http://csharphelper.com/blog/category/parsing/">parsing</A> 
+    </LI>
+    <LI class="cat-item cat-item-61"><A href="http://csharphelper.com/blog/category/performance/">performance</A> 
+    </LI>
+    <LI class="cat-item cat-item-34"><A href="http://csharphelper.com/blog/category/phone/">phone</A> 
+    </LI>
+    <LI class="cat-item cat-item-75"><A href="http://csharphelper.com/blog/category/powerpoint/">PowerPoint</A> 
+    </LI>
+    <LI class="cat-item cat-item-79"><A href="http://csharphelper.com/blog/category/printers/">printers</A> 
+    </LI>
+    <LI class="cat-item cat-item-39"><A href="http://csharphelper.com/blog/category/printing/">printing</A> 
+    </LI>
+    <LI class="cat-item cat-item-78"><A href="http://csharphelper.com/blog/category/productivity/">productivity</A> 
+    </LI>
+    <LI class="cat-item cat-item-60"><A href="http://csharphelper.com/blog/category/programs/">programs</A> 
+    </LI>
+    <LI class="cat-item cat-item-136"><A href="http://csharphelper.com/blog/category/recursion/">recursion</A> 
+    </LI>
+    <LI class="cat-item cat-item-32"><A href="http://csharphelper.com/blog/category/reflection/">reflection</A> 
+    </LI>
+    <LI class="cat-item cat-item-41"><A href="http://csharphelper.com/blog/category/registry/">registry</A> 
+    </LI>
+    <LI class="cat-item cat-item-91"><A href="http://csharphelper.com/blog/category/regular-expressions/">regular 
+    expressions</A> </LI>
+    <LI class="cat-item cat-item-7"><A href="http://csharphelper.com/blog/category/serialization/">serialization</A> 
+    </LI>
+    <LI class="cat-item cat-item-76"><A href="http://csharphelper.com/blog/category/settings/">settings</A> 
+    </LI>
+    <LI class="cat-item cat-item-26"><A href="http://csharphelper.com/blog/category/sql/">SQL</A> 
+    </LI>
+    <LI class="cat-item cat-item-102"><A href="http://csharphelper.com/blog/category/stories/">stories</A> 
+    </LI>
+    <LI class="cat-item cat-item-55"><A href="http://csharphelper.com/blog/category/strings/">strings</A> 
+    </LI>
+    <LI class="cat-item cat-item-59"><A href="http://csharphelper.com/blog/category/syntax/">syntax</A> 
+    </LI>
+    <LI class="cat-item cat-item-56"><A href="http://csharphelper.com/blog/category/system/">system</A> 
+    </LI>
+    <LI class="cat-item cat-item-37"><A href="http://csharphelper.com/blog/category/threading/">threading</A> 
+    </LI>
+    <LI class="cat-item cat-item-94"><A href="http://csharphelper.com/blog/category/tips/">tips</A> 
+    </LI>
+    <LI class="cat-item cat-item-58"><A href="http://csharphelper.com/blog/category/tools/">tools</A> 
+    </LI>
+    <LI class="cat-item cat-item-29"><A href="http://csharphelper.com/blog/category/transformations/">transformations</A> 
+    </LI>
+    <LI class="cat-item cat-item-1"><A href="http://csharphelper.com/blog/category/uncategorized/">Uncategorized</A> 
+    </LI>
+    <LI class="cat-item cat-item-47"><A href="http://csharphelper.com/blog/category/user-interface/">user 
+    interface</A> </LI>
+    <LI class="cat-item cat-item-63"><A href="http://csharphelper.com/blog/category/variables/">variables</A> 
+    </LI>
+    <LI class="cat-item cat-item-71"><A href="http://csharphelper.com/blog/category/vba/">VBA</A> 
+    </LI>
+    <LI class="cat-item cat-item-18"><A href="http://csharphelper.com/blog/category/web/">web</A> 
+    </LI>
+    <LI class="cat-item cat-item-107"><A href="http://csharphelper.com/blog/category/wmi/">WMI</A> 
+    </LI>
+    <LI class="cat-item cat-item-35"><A href="http://csharphelper.com/blog/category/word/">Word</A> 
+    </LI>
+    <LI class="cat-item cat-item-48"><A href="http://csharphelper.com/blog/category/wpf/">wpf</A> 
+    </LI>
+    <LI class="cat-item cat-item-42"><A href="http://csharphelper.com/blog/category/xaml/">XAML</A> 
+    </LI>
+    <LI class="cat-item cat-item-8"><A href="http://csharphelper.com/blog/category/xml/">XML</A> 
+    </LI></UL></LI>
+  <LI class="widget-container widget_meta" id="meta-2">
+  <H3 class="widget-title">Meta</H3>
+  <UL>
+    <LI><A href="http://csharphelper.com/blog/wp-login.php" rel="nofollow">Log 
+    in</A></LI>
+    <LI><A href="http://csharphelper.com/blog/feed/">Entries <ABBR title="Really Simple Syndication">RSS</ABBR></A></LI>
+    <LI><A href="http://csharphelper.com/blog/comments/feed/">Comments <ABBR 
+    title="Really Simple Syndication">RSS</ABBR></A></LI>
+    <LI><A title="Powered by WordPress, state-of-the-art semantic personal publishing platform." 
+    href="https://wordpress.org/">WordPress.org</A></LI></UL></LI></UL></DIV><!-- #primary .widget-area -->
+	 </DIV><!-- #main -->	 
+<DIV id="footer" role="contentinfo">
+<DIV id="colophon">
+<DIV id="footer-widget-area" role="complementary">
+<DIV class="widget-area" id="first">
+<UL class="xoxo">
+  <LI class="widget-container widget_text" id="text-4">
+  <DIV class="textwidget">
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/f(1).txt" async=""></SCRIPT>
+   <!-- Bottom --> <INS class="adsbygoogle" style="width: 728px; height: 90px; display: inline-block;" 
+  data-ad-slot="6406824097" data-ad-client="ca-pub-6627515316741006"></INS> 
+<SCRIPT>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</SCRIPT>
+  </DIV></LI></UL></DIV><!-- #first .widget-area -->			 </DIV><!-- #footer-widget-area -->
+			 
+<DIV id="site-info"><A title="C# Helper" href="http://csharphelper.com/blog/" 
+rel="home">					C# Helper				</A>			 </DIV><!-- #site-info -->			 
+<DIV id="site-generator"><A title="Semantic Personal Publishing Platform" href="https://wordpress.org/">Proudly 
+powered by WordPress.</A>			 </DIV><!-- #site-generator -->		 </DIV><!-- #colophon -->
+	 </DIV><!-- #footer --> </DIV><!-- #wrapper -->	 
+<DIV style="display: none;"></DIV>
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/form.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/comment-reply.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/jquery.form.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"http:\/\/csharphelper.com\/blog\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","sending":"Sending ..."};
+/* ]]> */
+</SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/scripts.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/devicepx-jetpack.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/gprofiles.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/wpgroho.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Let%20controls%20share%20event%20handlers%20in%20C%23%20-%20C%23%20HelperC%23%20Helper_files/e-201540.js" defer="" type="text/javascript" async=""></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.7.2',blog:'76205677',post:'928',tz:'-6',srv:'csharphelper.com'} ]);
+	_stq.push([ 'clickTrackerInit', '76205677', '928' ]);
+</SCRIPT>
+ </BODY></HTML>

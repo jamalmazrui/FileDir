@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta charset='utf-8'/>
+<meta content='IE=9; IE=8; IE=7; IE=EDGE; chrome=1' http-equiv='X-UA-Compatible'/>
+<!-- 25/03/2010 - changed to only show article title in sub pages -->
+<title>
+HtmlAgilityPack Article Series
+</title>
+<!-- original title markup: title data:blog.pageTitle/ /title -->
+<meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+<meta content='Matthew Harris' name='author'/>
+<meta content='moXb5owNyEVpTJUnntpDaTTBzME' name='alexaVerifyID'/>
+<meta content='Bbywlz1-lLlmkOZ36XXuQIBU_f2JG1KJBtHkWKLq3oA' name='google-site-verification'/>
+<meta content='22DAFEEE18F6AC2B3AB46425D637EB9C' name='msvalidate.01'/>
+<meta content='a4d25dce4586f4df' name='y_key'/>
+<meta content='dfLpAkFqZsUmeZX9FtF4N7J1Z7E' type=''/>
+<link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css' rel='stylesheet'/>
+<link href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet'/>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Bitter' rel='stylesheet' type='text/css'/>
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/static/v1/widgets/859616579-widget_css_bundle.css' />
+<link type='text/css' rel='stylesheet' href='//www.google.com/uds/css/gsearch.css' />
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=5519904556829079674&zx=3db46b05-7bec-45f0-81bd-1e76e2ca15f6' />
+<style type='text/css'>
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Open Sans', "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+        background-image:url('//static.rtpdesign.co.uk/blog/img/background.png');
+        background-repeat:no-repeat;
+		background-position: right top;
+		background-size: 80%;
+      }
+      /* Small Devices, Tablets */
+      @media only screen and (min-width : 768px) {
+          body {
+              background-size: 70%;
+          }
+      }
+
+      /* Medium Devices, Desktops */
+      @media only screen and (min-width : 992px) {
+          body {
+              background-size: 60%;
+          }
+      }
+
+      /* Large Devices, Wide Screens */
+      @media only screen and (min-width : 1200px) {
+          body {
+              background-size: 50%;
+          }
+      }
+	  a {
+		color: #0054A6;
+      }
+      p, ul, ol
+      {
+        margin-bottom: 25px;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Bitter', Georgia, 'Times New Roman', serif;
+      }
+	  .well {
+		opacity: 0.9;
+      }
+      .widget {
+        margin-bottom: 2em;
+      }
+      .date-outer {
+        margin-bottom: 3em;
+      }
+      h1, h2, h3, h4, h5, h6, .entry-title a {
+        /* color: #ed9c00;  orange */
+        color: #E54A41; /*#A5352F; /*#d8463d; /* red */ 
+      }
+	  h1 {
+		margin-top: 2em;
+      }
+      h2 {
+        margin-top: 1.75em;
+      }
+      h2:first-child {
+        margin-top: 0.5em;
+      }
+      h4,h5,h6 {
+        margin-top: 1em;
+        margin-bottom: .5em;
+      }
+      ol li {
+        margin-bottom: .75em;
+      }
+	  .indexpostdate {
+        font-size: smaller;
+        margin-bottom: 10px;
+      }
+      .post-footer {
+        border-top: 3px solid #eee;
+        margin-top: 3em;
+      }
+	  .post-footer-line {
+		padding-top: 5px;
+		padding-bottom: 5px;
+      }
+	  .post-comment-link {
+		display: none;
+      }
+      .postupdatednotifybox{
+        padding: 1em 1em 0.5em 1em; 
+        border: 1px solid #ff0000; 
+        margin-bottom: 1em;
+      }
+      dd.comment-footer {
+        margin-bottom: 1em;
+      }
+      div.syntaxhighlighter {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px 4px 4px 4px;
+        padding: 8.5px;
+      }
+	  #main img {
+		  display: block;
+          max-width: 100%;
+          height: auto;
+      }
+      #main .syntaxhighlighter .gutter .line {
+        border-right: 3px solid #0088CC !important;
+      }
+      #main .syntaxhighlighter .toolbar {
+        background: #0088CC !important;
+      }
+      #main .syntaxhighlighter .toolbar a:hover {
+      }
+      div.Label ul {
+        list-style-type: none;
+        margin: 0;
+      }
+      div.Label ul li {
+        float: left;
+        padding: 3px;
+        border: 1px solid #0088CC;
+        margin: 0 10px 10px 0;
+      }
+      .alert-info a:link,
+      .alert-info a:visited {
+		text-decoration: underline;
+		font-weight: bold;
+      }
+      /* fix so bootstrap and syntax highlighter play well together */
+      .syntaxhighlighter .container:before,
+      .syntaxhighlighter .container:after {
+        display: none;
+      }
+    </style>
+<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+<style type='text/css'>
+      #WasProblemSolvedLinkPanel .ButtonPane
+      {
+        float: left;
+        display: block;
+        width: 49%;
+        text-align: center;
+        line-height: 3em;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+      #WasProblemSolvedLinkPanel #ProblemSolved
+      {
+        font-size: 2em;
+        margin-right: 3px;
+      }
+      #WasProblemSolvedPanel .Yes
+      {
+        background-color: #36BE6C;
+        border: 1px solid #0A7133;   	
+      }
+      #WasProblemSolvedPanel .No
+      {
+        background-color: #FF6B62;
+        border: 1px solid #BE3E36;
+      }
+	  #WasProblemSolvedLinkPanel a
+	  {
+		color: #fff;
+      }
+      #WasProblemSolvedLinkPanel #ProblemNotSolved
+      {
+        font-size: 2em;        	
+      }
+      #WasProblemSolvedThanksPanel
+      {
+        height: 4em;
+        text-align: center;
+      }
+      #WasProblemSolvedLearnMore
+      {
+        clear: both;
+        font-size: smaller;
+      }
+    </style>
+<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-7034895-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { (function(){function c(a){this.t={};this.tick=function(a,c,b){var d=void 0!=b?b:(new Date).getTime();this.t[a]=[d,c];if(void 0==b)try{window.console.timeStamp("CSI/"+a)}catch(e){}};this.tick("start",null,a)}var a;window.performance&&(a=window.performance.timing);var h=a?new c(a.responseStart):new c;window.jstiming={Timer:c,load:h};if(a){var b=a.navigationStart,e=a.responseStart;0<b&&e>=b&&(window.jstiming.srt=e-b)}if(a){var d=window.jstiming.load;0<b&&e>=b&&(d.tick("_wtsrt",void 0,b),d.tick("wtsrt_",
+"_wtsrt",e),d.tick("tbsd_","wtsrt_"))}try{a=null,window.chrome&&window.chrome.csi&&(a=Math.floor(window.chrome.csi().pageT),d&&0<b&&(d.tick("_tbnd",void 0,window.chrome.csi().startE),d.tick("tbnd_","_tbnd",b))),null==a&&window.gtbExternal&&(a=window.gtbExternal.pageT()),null==a&&window.external&&(a=window.external.pageT,d&&0<b&&(d.tick("_tbnd",void 0,window.external.startE),d.tick("tbnd_","_tbnd",b))),a&&(window.jstiming.pt=a)}catch(k){}})();window.tickAboveFold=function(c){var a=0;if(c.offsetParent){do a+=c.offsetTop;while(c=c.offsetParent)}c=a;750>=c&&window.jstiming.load.tick("aft")};var f=!1;function g(){f||(f=!0,window.jstiming.load.tick("firstScrollTime"))}window.addEventListener?window.addEventListener("scroll",g,!1):window.attachEvent("onscroll",g);
+ })();</script>
+<meta content='blogger' name='generator'/>
+<link href='http://articles.runtings.co.uk/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Run Tings Proper - Atom" href="http://articles.runtings.co.uk/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Run Tings Proper - RSS" href="http://articles.runtings.co.uk/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Run Tings Proper - Atom" href="https://www.blogger.com/feeds/5519904556829079674/posts/default" />
+
+<link rel="alternate" type="application/atom+xml" title="Run Tings Proper - Atom" href="http://articles.runtings.co.uk/feeds/3773341234706404852/comments/default" />
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<style id='page-skin-1' type='text/css'><!--
+/*
+
+--></style>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'>
+</div>
+<nav class='navbar navbar-default navbar-fixed-top'>
+<div class='container'>
+<div class='navbar-header'>
+<button class='navbar-toggle collapsed' data-target='#topnav' data-toggle='collapse' type='button'>
+<span class='sr-only'>
+              Toggle navigation
+            </span>
+<span class='icon-bar'>
+</span>
+<span class='icon-bar'>
+</span>
+<span class='icon-bar'>
+</span>
+</button>
+<a class='navbar-brand' href='/'>
+            Run Tings Proper
+          </a>
+</div>
+<div class='collapse navbar-collapse' id='topnav'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>
+                Articles
+              </a>
+</li>
+<li class='dropdown'>
+<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+                Projects 
+                <b class='caret'></b>
+</a>
+<ul class='dropdown-menu'>
+<li>
+<a href='/search/label/Bootstrap-sample'>
+                    Bootstrap 3 Samples
+                  </a>
+</li>
+<li>
+<a href='/p/bootlint-this-page-chrome.html'>
+                    Bootlint This Page - Chrome Extension
+                  </a>
+</li>
+<li>
+<a href='/p/bulk-page-stub-creator-wordpress.html'>
+                    Bulk Page Stub Creator - WordPress Plugin
+                  </a>
+</li>
+<li>
+<a href='/p/good-deeds-firefox.html'>
+                    Good Deeds - Firefox Addon
+                  </a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</div>
+<!-- /.container-fluid -->
+</nav>
+<div class='container'>
+<div class='row'>
+<div class='col-md-9'>
+<div>
+<a href='/'><img alt='' class='img-responsive' src='//static.rtpdesign.co.uk/blog/img/blog-logo.png'/></a>
+</div>
+<div class='row'>
+<div class='col-md-12'>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'></div>
+</div>
+<div id='main-wrapper'>
+<div class='main section' id='main'><div class='widget Blog' id='Blog1'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start(name=default) -->
+
+                              <div class="date-outer">
+                            
+
+                              <div class="date-posts">
+                            
+<div class='post-outer'>
+<div class='post hentry'>
+<a name='3773341234706404852'></a>
+<h1 class='post-title entry-title'>
+HtmlAgilityPack Article Series
+</h1>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+<p>This is an index post which will pull together the various HtmlAgilityPack posts on here. If you don't know what the HtmlAgilityPack or the idea of Screen Scraping is then you should read the first introductory article, otherwise you can dive right in!</p>  <h4>Article Index</h4>  <ul>   <li><a href="http://runtingsproper.blogspot.com/2009/09/introduction-to-htmlagilitypack-library.html">Introduction</a> </li>    <li><a href="http://runtingsproper.blogspot.com/2009/11/easily-extracting-links-from-snippet-of.html">Extract all the links from a snippet of html</a> </li>    <li><a href="http://runtingsproper.blogspot.co.uk/2012/07/a-straightforward-method-to-detecting.html">Discover the syndication feeds in a page</a> </li> </ul>  
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1 row'>
+<div class='col-md-2'>
+<span class='post-author vcard'>
+<span class='fn'>
+<i class='fa fa-user'></i>
+rtpHarry
+</span>
+</span>
+</div>
+<div class='col-md-4'>
+<span class='post-timestamp'>
+<i class='fa fa-calendar'></i>
+<a class='timestamp-link' href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html' rel='bookmark' title='permanent link'>
+<abbr class='published' title='2009-09-27T13:25:00+01:00'>
+Sunday, 27 September 2009
+13:25
+</abbr>
+</a>
+</span>
+</div>
+<div class='col-md-6'>
+<span class='post-labels'>
+<i class='fa fa-tags'></i>
+Labels:
+<a href='http://articles.runtings.co.uk/search/label/article' rel='tag'>
+article
+</a>
+
+                                    ,
+                                  
+<a href='http://articles.runtings.co.uk/search/label/asp.net' rel='tag'>
+asp.net
+</a>
+
+                                    ,
+                                  
+<a href='http://articles.runtings.co.uk/search/label/HtmlAgilityPack' rel='tag'>
+HtmlAgilityPack
+</a>
+
+                                    ,
+                                  
+<a href='http://articles.runtings.co.uk/search/label/index%20post' rel='tag'>
+index post
+</a>
+</span>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-comment-link'>
+</span>
+<span class='post-icons'>
+</span>
+<div class='post-share-buttons'>
+<a class='goog-inline-block share-button sb-email' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=3773341234706404852&target=email' target='_blank' title='Email This'>
+<span class='share-button-link-text'>
+Email This
+</span>
+</a>
+<a class='goog-inline-block share-button sb-blog' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=3773341234706404852&target=blog' onclick='window.open(this.href, "_blank", "height=270,width=475"); return false;' target='_blank' title='BlogThis!'>
+<span class='share-button-link-text'>
+BlogThis!
+</span>
+</a>
+<a class='goog-inline-block share-button sb-twitter' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=3773341234706404852&target=twitter' target='_blank' title='Share to Twitter'>
+<span class='share-button-link-text'>
+Share to Twitter
+</span>
+</a>
+<a class='goog-inline-block share-button sb-facebook' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=3773341234706404852&target=facebook' onclick='window.open(this.href, "_blank", "height=430,width=640"); return false;' target='_blank' title='Share to Facebook'>
+<span class='share-button-link-text'>
+Share to Facebook
+</span>
+</a>
+<a class='goog-inline-block share-button sb-pinterest' href='https://www.blogger.com/share-post.g?blogID=5519904556829079674&postID=3773341234706404852&target=pinterest' target='_blank' title='Share to Pinterest'>
+<span class='share-button-link-text'>
+Share to Pinterest
+</span>
+</a>
+<div class='goog-inline-block dummy-container'>
+<g:plusone source='blogger:blog:plusone' href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html' size='medium' width='300' annotation='inline'/>
+</div>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-3'></div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>
+7 comments
+                            :
+                          </h4>
+<div id='Blog1_comments-block-wrapper'>
+<dl class='avatar-comment-indent' id='comments-block'>
+<dt class='comment-author ' id='c1431345127945823048'>
+<a name='c1431345127945823048'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/16035614460172090498" rel="nofollow" onclick="" class="avatar-hovercard" id="av-0-16035614460172090498"><img src="https://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Daniel">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/16035614460172090498' rel='nofollow'>
+Daniel
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-1431345127945823048'>
+<p>
+I would love to learn more about HTMLAgilityPack! Could you continue working on them?
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html?showComment=1258481794414#c1431345127945823048' title='comment permalink'>
+17 November 2009 at 18:16
+</a>
+<span class='item-control blog-admin pid-425315132'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=1431345127945823048' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author blog-author' id='c7600933886487520665'>
+<a name='c7600933886487520665'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/12491312873295977300" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1-12491312873295977300"><img src="https://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="rtpHarry">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/12491312873295977300' rel='nofollow'>
+rtpHarry
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-7600933886487520665'>
+<p>
+Daniel, thanks for your comment, I am 85% complete with the second article now and I have written code samples for both of the unfinished articles. I have no way to contact you so I can only suggest you keep an eye on this blog :)
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html?showComment=1258591181581#c7600933886487520665' title='comment permalink'>
+19 November 2009 at 00:39
+</a>
+<span class='item-control blog-admin pid-1555730132'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=7600933886487520665' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c4126729348725879302'>
+<a name='c4126729348725879302'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="https://img1.blogblog.com/img/blank.gif" width="16" height="16" alt="" title="Anonymous">
+
+</span></div>
+Anonymous
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-4126729348725879302'>
+<p>
+Where is the 3rd article is this series?
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html?showComment=1322771330739#c4126729348725879302' title='comment permalink'>
+1 December 2011 at 20:28
+</a>
+<span class='item-control blog-admin pid-1922304156'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=4126729348725879302' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c437768402560442586'>
+<a name='c437768402560442586'></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="https://www.blogger.com/profile/15750660294378302769" rel="nofollow" onclick="" class="avatar-hovercard" id="av-3-15750660294378302769"><img src="https://img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" class="delayLoad" style="display: none;" longdesc="http://4.bp.blogspot.com/_qmaUCWgwOhA/TBAwEbTQt8I/AAAAAAAAC3U/DxubMe2L4RM/S45-s35/Photo%2B59.jpg" title="Harsya">
+
+<noscript><img src="http://4.bp.blogspot.com/_qmaUCWgwOhA/TBAwEbTQt8I/AAAAAAAAC3U/DxubMe2L4RM/S45-s35/Photo%2B59.jpg" width="35" height="35" class="photo" alt=""></noscript></a></span></div>
+<a href='https://www.blogger.com/profile/15750660294378302769' rel='nofollow'>
+Harsya
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-437768402560442586'>
+<p>
+Would you please continue this series :)
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html?showComment=1324051970291#c437768402560442586' title='comment permalink'>
+16 December 2011 at 16:12
+</a>
+<span class='item-control blog-admin pid-16586959'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=437768402560442586' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c8743041538153041544'>
+<a name='c8743041538153041544'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/06442413784116986503" rel="nofollow" onclick="" class="avatar-hovercard" id="av-4-06442413784116986503"><img src="https://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Neha Bajaj">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/06442413784116986503' rel='nofollow'>
+Neha Bajaj
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-8743041538153041544'>
+<p>
+Thanks a lot for your posts Daniel. I want to download all wsdl files from a website. I can do this if i get a proper link, for that i need to scan through the website. Could you just tell me how i can go for scanning whole website?<br /><br />Thanks
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html?showComment=1371227512353#c8743041538153041544' title='comment permalink'>
+14 June 2013 at 17:31
+</a>
+<span class='item-control blog-admin pid-1690413382'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=8743041538153041544' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c6038467585974146924'>
+<a name='c6038467585974146924'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="https://img1.blogblog.com/img/blank.gif" width="16" height="16" alt="" title="Anonymous">
+
+</span></div>
+Anonymous
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-6038467585974146924'>
+<p>
+I need your help .How can I extract data from a HTML form which is loaded dynamically using &quot;post&quot; method? <br />&quot;form action=&quot;blah&quot; method=&quot;post&quot;&gt;<br />/form&quot;<br />please reply , it&#39;s urgent . Thanks in advance :)
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html?showComment=1372746035626#c6038467585974146924' title='comment permalink'>
+2 July 2013 at 07:20
+</a>
+<span class='item-control blog-admin pid-2092524514'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=6038467585974146924' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c6351963478320389594'>
+<a name='c6351963478320389594'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/17433224930886651989" rel="nofollow" onclick="" class="avatar-hovercard" id="av-6-17433224930886651989"><img src="https://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="&#3512;&#3535;&#3482;&#3530;">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/17433224930886651989' rel='nofollow'>
+ම&#3535;ක&#3530;
+</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-6351963478320389594'>
+<p>
+Thanks.. This is very helpful !
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html?showComment=1392211396878#c6351963478320389594' title='comment permalink'>
+12 February 2014 at 13:23
+</a>
+<span class='item-control blog-admin pid-511111412'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=5519904556829079674&postID=6351963478320389594' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+</dl>
+</div>
+<p class='comment-footer'>
+<a class='btn btn-primary' href='https://www.blogger.com/comment.g?blogID=5519904556829079674&amp;postID=3773341234706404852' onclick=''>
+<i class='icon-comment icon-white'></i>
+Post a Comment
+</a>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+
+                            </div></div>
+                          
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='btn btn-default blog-pager-newer-link' href='http://articles.runtings.co.uk/2009/09/introduction-to-htmlagilitypack-library.html' id='Blog1_blog-pager-newer-link' title='Newer Post'>
+Newer Post
+</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='btn btn-default blog-pager-older-link' href='http://articles.runtings.co.uk/2009/09/where-to-get-aspnet-20-compatible.html' id='Blog1_blog-pager-older-link' title='Older Post'>
+Older Post
+</a>
+</span>
+<a class='btn btn-default home-link' href='http://articles.runtings.co.uk/'>
+Home
+</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://articles.runtings.co.uk/feeds/3773341234706404852/comments/default' target='_blank' type='application/atom+xml'>
+Post Comments
+                            (
+                            Atom
+                            )
+                          </a>
+</div>
+</div>
+<script type="text/javascript">window.___gcfg = {'lang': 'en_GB'};</script>
+</div><div class='widget HTML' id='HTML4'>
+<div class='widget-content'>
+<div id="WasProblemSolvedPanel" style="display: none;">
+           <h2>Was your problem solved by this article?</h2>
+           <div id="WasProblemSolvedLinkPanel">
+               <a class="ButtonPane Yes" href="#" id="ProblemSolved">Yes</a>
+               <a class="ButtonPane No" href="#" id="ProblemNotSolved">No</a>
+               <div style="clear: both;"></div>
+           </div>
+           <div id="WasProblemSolvedThanksPanel" style="display: none;">
+               <p>Thank you for clicking!</p>
+               <p>If you have additional feedback please use the <a href="#comments">comment form</a>.</p>
+           </div>
+           <p id="WasProblemSolvedLearnMore"><a href="http://runtingsproper.blogspot.com/2011/04/did-i-help-gauge-if-your-articles-are.html">Learn how I built this feature using jQuery and Google Analytics</a></p>
+       </div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML4&action=editWidget&sectionId=main' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML4"));' target='configHTML4' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML2'>
+<script type='text/javascript'>
+                          var disqus_shortname = 'rtpdesign';
+                          var disqus_blogger_current_url = "http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html";
+                          if (!disqus_blogger_current_url.length) {
+                              disqus_blogger_current_url = "http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html";
+                          }
+                          var disqus_blogger_homepage_url = "http://articles.runtings.co.uk/";
+                          var disqus_blogger_canonical_homepage_url = "http://articles.runtings.co.uk/";
+                      </script>
+<style type='text/css'>
+                              #comments {display:none;}
+                          </style>
+<script type='text/javascript'>
+                              (function() {
+                                  var bloggerjs = document.createElement('script');
+                                  bloggerjs.type = 'text/javascript';
+                                  bloggerjs.async = true;
+                                  bloggerjs.src = '//'+disqus_shortname+'.disqus.com/blogger_item.js';
+                                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(bloggerjs);
+                              })();
+                          </script>
+<style type='text/css'>
+                              .post-comment-link { visibility: hidden; }
+                          </style>
+<script type='text/javascript'>
+                          (function() {
+                              var bloggerjs = document.createElement('script');
+                              bloggerjs.type = 'text/javascript';
+                              bloggerjs.async = true;
+                              bloggerjs.src = '//'+disqus_shortname+'.disqus.com/blogger_index.js';
+                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(bloggerjs);
+                          })();
+                          </script>
+</div></div>
+</div>
+</div>
+<!--/span-->
+</div>
+<!--/row-->
+</div>
+<!--/span-->
+<div class='col-md-3'>
+<div class='well sidebar-nav'>
+<div id='sidebar-wrapper'>
+<div class='sidebar section' id='sidebar'><div class='widget BlogArchive' id='BlogArchive1'>
+<h2>
+Articles
+</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2015-01-01T00:00:00Z&amp;updated-max=2016-01-01T00:00:00Z&amp;max-results=20'>
+2015
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            20
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_09_01_archive.html'>
+September
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_08_01_archive.html'>
+August
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            5
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_06_01_archive.html'>
+June
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_05_01_archive.html'>
+May
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            4
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_04_01_archive.html'>
+April
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2015_03_01_archive.html'>
+March
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            7
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2014-01-01T00:00:00Z&amp;updated-max=2015-01-01T00:00:00Z&amp;max-results=10'>
+2014
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            10
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_12_01_archive.html'>
+December
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            4
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_11_01_archive.html'>
+November
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_10_01_archive.html'>
+October
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2014_09_01_archive.html'>
+September
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            4
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2013-01-01T00:00:00Z&amp;updated-max=2014-01-01T00:00:00Z&amp;max-results=2'>
+2013
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2013_07_01_archive.html'>
+July
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2012-01-01T00:00:00Z&amp;updated-max=2013-01-01T00:00:00Z&amp;max-results=2'>
+2012
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2012_07_01_archive.html'>
+July
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2011-01-01T00:00:00Z&amp;updated-max=2012-01-01T00:00:00Z&amp;max-results=7'>
+2011
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            7
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2011_06_01_archive.html'>
+June
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2011_04_01_archive.html'>
+April
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2011_03_01_archive.html'>
+March
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            1
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2010-01-01T00:00:00Z&amp;updated-max=2011-01-01T00:00:00Z&amp;max-results=10'>
+2010
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            10
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2010_04_01_archive.html'>
+April
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            5
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2010_03_01_archive.html'>
+March
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2010_02_01_archive.html'>
+February
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            2
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+                            &#9660;&#160;
+                          </span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/search?updated-min=2009-01-01T00:00:00Z&amp;updated-max=2010-01-01T00:00:00Z&amp;max-results=50'>
+2009
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            51
+                            )
+                          </span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_12_01_archive.html'>
+December
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            5
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_11_01_archive.html'>
+November
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            6
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_10_01_archive.html'>
+October
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            22
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+                            &#9660;&#160;
+                          </span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_09_01_archive.html'>
+September
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            6
+                            )
+                          </span>
+<ul class='posts'>
+<li>
+<a href='http://articles.runtings.co.uk/2009/09/introduction-to-htmlagilitypack-library.html'>
+Introduction To The HtmlAgilityPack Library
+</a>
+</li>
+<li>
+<a href='http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html'>
+HtmlAgilityPack Article Series
+</a>
+</li>
+<li>
+<a href='http://articles.runtings.co.uk/2009/09/where-to-get-aspnet-20-compatible.html'>
+Where to get an asp.net 2.0 compatible AjaxControl...
+</a>
+</li>
+<li>
+<a href='http://articles.runtings.co.uk/2009/09/round-off-time-to-nearest-minute.html'>
+Round off time to the nearest minute
+</a>
+</li>
+<li>
+<a href='http://articles.runtings.co.uk/2009/09/farewell-vsj-print-edition.html'>
+Farewell VSJ print edition
+</a>
+</li>
+<li>
+<a href='http://articles.runtings.co.uk/2009/09/better-way-to-reference-your-wizard.html'>
+A better way to reference your wizard steps using ...
+</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_08_01_archive.html'>
+August
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            3
+                            )
+                          </span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+                              &#9658;&#160;
+                            
+</span>
+</a>
+<a class='post-count-link' href='http://articles.runtings.co.uk/2009_07_01_archive.html'>
+July
+</a>
+<span class='post-count' dir='ltr'>
+                            (
+                            9
+                            )
+                          </span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget CustomSearch' id='CustomSearch1'>
+<h2 class='title'>
+Search
+</h2>
+<div class='widget-content'>
+<div id='CustomSearch1_form'>
+<span class='cse-status'>
+Loading...
+</span>
+</div>
+</div>
+<style type='text/css'>
+                      #uds-searchControl .gs-result .gs-title,
+                      #uds-searchControl .gs-result .gs-title *,
+                      #uds-searchControl .gsc-results .gsc-trailing-more-results,
+                      #uds-searchControl .gsc-results .gsc-trailing-more-results * {
+                        color:#00c;
+                      }
+                      #uds-searchControl .gs-result .gs-title a:visited,
+                      #uds-searchControl .gs-result .gs-title a:visited * {
+                        color:#00c;
+                      }
+                      #uds-searchControl .gs-relativePublishedDate,
+                      #uds-searchControl .gs-publishedDate {
+                        color: #6f6f6f;
+                      }
+                      #uds-searchControl .gs-result a.gs-visibleUrl,
+                      #uds-searchControl .gs-result .gs-visibleUrl {
+                        color: #00c;
+                      }
+                      #uds-searchControl .gsc-results {
+                        border-color: #6f6f6f;
+                        background-color: #fff;
+                      }
+                      #uds-searchControl .gsc-tabhActive {
+                        border-color: #6f6f6f;
+                        border-top-color: #6f6f6f;
+                        background-color: #fff;
+                        color: #000;
+                      }
+                      #uds-searchControl .gsc-tabhInactive {
+                        border-color: #6f6f6f;
+                        background-color: transparent;
+                        color: #00c;
+                      }
+                      #uds-searchClearResults {
+                        border-color: #6f6f6f;
+                      }
+                      #uds-searchClearResults:hover {
+                        border-color: #6f6f6f;
+                      }
+                      #uds-searchControl .gsc-cursor-page {
+                        color: #00c;
+                      }
+                      #uds-searchControl .gsc-cursor-current-page {
+                        color: #000;
+                      }
+                    </style>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=CustomSearch&widgetId=CustomSearch1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("CustomSearch1"));' target='configCustomSearch1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Stats' id='Stats1'>
+<h2>Visitors</h2>
+<div class='widget-content'>
+<div id='Stats1_content' style='display: none;'>
+<img alt='Sparkline' height='30' id='Stats1_sparkline' width='75'/>
+<span class='counter-wrapper text-counter-wrapper' id='Stats1_totalCount'>
+</span>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=Stats&widgetId=Stats1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("Stats1"));' target='configStats1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div>
+</div><div class='widget HTML' id='HTML1'>
+<div class='widget-content'>
+<a id="clustrMapsLink" href="http://www3.clustrmaps.com/counter/maps.php?url=http://runtingsproper.blogspot.com"><img id="clustrMapsImg" style="border:0px;" alt="Locations of visitors to this page" src="http://www3.clustrmaps.com/counter/index2.php?url=http://runtingsproper.blogspot.com" onerror="this.onerror=null; this.src='http://www2.clustrmaps.com/images/clustrmaps-back-soon.jpg'; document.getElementById('clustrMapsLink').href='http://www2.clustrmaps.com';" title="Locations of visitors to this page"/>
+</a>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML5'>
+<div class='widget-content'>
+<!-- who's amung us -->
+<!--
+<script src="http://widgets.amung.us/classic.js" type="text/javascript"></script><script type="text/javascript">WAU_classic('6zm8tfa5w0q4')</script>
+-->
+
+<!-- tynt -->
+<!--
+<script type="text/javascript">tyntVariables = {"ap":""};</script> <script src="http://tcr.tynt.com/javascripts/Tracer.js?user=du7lrUZXyr3PqRab7jrHtB&amp;s=91&amp;a=0&amp;lang=en" type="text/javascript"></script>
+-->
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML5&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML5"));' target='configHTML5' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML7'>
+<div class='widget-content'>
+<div style="float: left; margin-right: 15px;">
+
+<!-- Feedburner -->
+<p><a href="http://runtingsproper.blogspot.com/feeds/posts/default"><img width="88" style="border:0" alt="" src="http://feeds.feedburner.com/~fc/RunTingsProper?bg=99CCFF&amp;fg=444444&amp;anim=1" height="26"/></a></p>
+
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5519904556829079674&widgetType=HTML&widgetId=HTML7&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML7"));' target='configHTML7' title='Edit'>
+<img alt='' height='18' src='//img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+</div>
+<!--/.well -->
+</div>
+<!--/span-->
+</div>
+<!--/row-->
+<hr/>
+<footer>
+<p>
+          &#169; Copyright rtp design ltd
+        </p>
+<div id='footer-wrapper'>
+<div class='footer section' id='footer'></div>
+</div>
+</footer>
+</div>
+<!--/.fluid-container-->
+<!-- Le javascript ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src='//code.jquery.com/jquery-1.11.1.min.js'></script>
+<script src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'></script>
+<script type='text/javascript'>
+      /* <![CDATA[ */
+      var ScrollMarker = 0;
+      $(document).ready(function () {
+        SetupGoogleAnalyticsTrackEvents();
+      });
+      function SetupGoogleAnalyticsTrackEvents()
+      {
+        TrackEventsForCodeSampleDownloads();
+        TrackEventsForImageClicks();
+        TrackEventsForMinimumPageScroll();
+        TrackEventsForWasProblemSolved();
+      }
+      function TrackEventsForWasProblemSolved()
+      {
+        $("#WasProblemSolvedPanel").show();
+        $("#ProblemSolved").click(function(e){
+          e.preventDefault();
+          WasProblemSolvedClick("Yes");
+        });
+        $("#ProblemNotSolved").click(function(e){
+          e.preventDefault();
+          WasProblemSolvedClick("No");
+        });
+      }
+      function WasProblemSolvedClick(answer)
+      {
+        TrackEvent("Was Problem Solved?", answer, document.location.href);
+        $("#WasProblemSolvedLinkPanel").hide("fast");
+        $("#WasProblemSolvedThanksPanel").addClass(answer);
+        $("#WasProblemSolvedThanksPanel").show("fast");
+      }
+      function TrackEventsForMinimumPageScroll()
+      {
+        $(window).scroll(function(){
+          var bottom = $(window).height() + $(window).scrollTop();
+          var height = $(document).height();
+          var percentage = Math.round(100*bottom/height);
+          if(percentage > 90)
+          {
+            if(ScrollMarker == 0)
+            { 
+              ScrollMarker = 1;
+              //                 alert("Page Scrolled to 90% in " + document.location.href);
+              TrackEvent("Content Engagement", "Scrolled To 90%", document.location.href);
+            }
+          }
+        }); 
+      }
+      function TrackEventsForCodeSampleDownloads()
+      {
+        var FilterByBlogSampleHref = "href^='http://cid-15f731b049c8a797.skydrive.live.com/self.aspx/BlogExamples/'";
+        var FilterByRarFileExtension = "href$='.rar'";
+        $("a[" + FilterByBlogSampleHref + "][" + FilterByRarFileExtension + "]").click(function() {
+          var SampleFileName = ExtractFileNameFromUrl($(this).attr("href"));
+          TrackEvent("Sample Application", "Download", SampleFileName);
+        });
+      }
+      function TrackEventsForImageClicks()
+      {
+        TrackEventByFileExtension(".gif");
+        TrackEventByFileExtension(".jpg");
+        TrackEventByFileExtension(".jpeg");
+        TrackEventByFileExtension(".png");
+      }
+      function TrackEventByFileExtension(FileExtension)
+      {
+        $("a[href$='" + FileExtension + "']").click(function() {
+          var ImageFileName = ExtractFileNameFromUrl($(this).attr("href"));
+          TrackEvent("Image Enlargement", "Click", ImageFileName);
+        });
+      }
+      function ExtractFileNameFromUrl(Url)
+      {
+        // Note this code assumes
+        //   - that the url doesnt contain a query string
+        //   - that a real url has been passed in
+        //   - that the url has a filename and isnt a folder
+        var SplitUrl = Url.split('/');
+        var FileName = SplitUrl[SplitUrl.length-1];
+        return FileName;
+      }
+      function TrackEvent(Category, Action, Label)
+      {
+        ga('send', 'event', Category, Action, Label, {'nonInteraction': 1});
+      }     
+      /* ]]> */
+    </script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shCore.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushCSharp.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushCss.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushSql.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushVb.js' type='text/javascript'></script>
+<script src='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/scripts/shBrushXml.js' type='text/javascript'></script>
+<link href='//static.rtpdesign.co.uk/syntaxhighlighter_3.0.83/styles/shCoreDefault.css' rel='stylesheet' type='text/css'/>
+<script type='text/javascript'>
+      //        SyntaxHighlighter.config.clipboardSwf = 'http://alexgorbatchev.com/pub/sh/2.1.364/scripts/clipboard.swf';
+      //        SyntaxHighlighter.config.bloggerMode = true;
+      SyntaxHighlighter.config.stripBrs = true;
+      SyntaxHighlighter.all();	
+    </script>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script>
+
+<!-- 'It is your responsibility to notify your visitors about cookies used on your blog. See http://www.blogger.com/go/cookiechoices for more details.' -->
+<script src="/js/cookiechoices.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.cookieChoices && cookieChoices.showCookieConsentBar && cookieChoices.showCookieConsentBar(
+        (window.cookieOptions && cookieOptions.msg) || 'This site uses cookies from Google to deliver its services, to personalize ads and to analyze traffic. Information about your use of this site is shared with Google. By using this site, you agree to its use of cookies.',
+        (window.cookieOptions && cookieOptions.close) || 'Got it',
+        (window.cookieOptions && cookieOptions.learn) || 'Learn More',
+        (window.cookieOptions && cookieOptions.link) || 'https://www.blogger.com/go/blogspot-cookies');
+  });
+</script>
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/3141703100-widgets.js"></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '5519904556829079674';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d5519904556829079674','//articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html','5519904556829079674');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '5519904556829079674', 'bloggerUrl': 'https://www.blogger.com', 'title': 'Run Tings Proper', 'pageType': 'item', 'postId': '3773341234706404852', 'url': 'http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html', 'canonicalUrl': 'http://articles.runtings.co.uk/2009/09/htmlagilitypack-article-series.html', 'homepageUrl': 'http://articles.runtings.co.uk/', 'canonicalHomepageUrl': 'http://articles.runtings.co.uk/', 'blogspotFaviconUrl': 'http://articles.runtings.co.uk/favicon.ico', 'enabledCommentProfileImages': true, 'adultContent': false, 'disableAdSenseWidget': false, 'analyticsAccountNumber': '', 'useUniversalAnalytics': false, 'searchLabel': '', 'searchQuery': '', 'pageName': 'HtmlAgilityPack Article Series', 'pageTitle': 'Run Tings Proper: HtmlAgilityPack Article Series', 'encoding': 'UTF-8', 'locale': 'en_GB', 'localeUnderscoreDelimited': 'en_gb', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Run Tings Proper - Atom\42 href\75\42http://articles.runtings.co.uk/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42Run Tings Proper - RSS\42 href\75\42http://articles.runtings.co.uk/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42Run Tings Proper - Atom\42 href\75\42https://www.blogger.com/feeds/5519904556829079674/posts/default\42 /\76\n\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Run Tings Proper - Atom\42 href\75\42http://articles.runtings.co.uk/feeds/3773341234706404852/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { (function(){function c(a){this.t\75{};this.tick\75function(a,c,b){var d\75void 0!\75b?b:(new Date).getTime();this.t[a]\75[d,c];if(void 0\75\75b)try{window.console.timeStamp(\42CSI/\42+a)}catch(e){}};this.tick(\42start\42,null,a)}var a;window.performance\46\46(a\75window.performance.timing);var h\75a?new c(a.responseStart):new c;window.jstiming\75{Timer:c,load:h};if(a){var b\75a.navigationStart,e\75a.responseStart;0\74b\46\46e\76\75b\46\46(window.jstiming.srt\75e-b)}if(a){var d\75window.jstiming.load;0\74b\46\46e\76\75b\46\46(d.tick(\42_wtsrt\42,void 0,b),d.tick(\42wtsrt_\42,\n\42_wtsrt\42,e),d.tick(\42tbsd_\42,\42wtsrt_\42))}try{a\75null,window.chrome\46\46window.chrome.csi\46\46(a\75Math.floor(window.chrome.csi().pageT),d\46\0460\74b\46\46(d.tick(\42_tbnd\42,void 0,window.chrome.csi().startE),d.tick(\42tbnd_\42,\42_tbnd\42,b))),null\75\75a\46\46window.gtbExternal\46\46(a\75window.gtbExternal.pageT()),null\75\75a\46\46window.external\46\46(a\75window.external.pageT,d\46\0460\74b\46\46(d.tick(\42_tbnd\42,void 0,window.external.startE),d.tick(\42tbnd_\42,\42_tbnd\42,b))),a\46\46(window.jstiming.pt\75a)}catch(k){}})();window.tickAboveFold\75function(c){var a\0750;if(c.offsetParent){do a+\75c.offsetTop;while(c\75c.offsetParent)}c\75a;750\76\75c\46\46window.jstiming.load.tick(\42aft\42)};var f\75!1;function g(){f||(f\75!0,window.jstiming.load.tick(\42firstScrollTime\42))}window.addEventListener?window.addEventListener(\42scroll\42,g,!1):window.attachEvent(\42onscroll\42,g);\n })();\74/script\076', 'mobileHeadScript': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/37bc6460da44b327', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'sf': 'n', 'tf': ''}}, {'name': 'skin', 'data': {'vars': {}, 'override': ''}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\75classic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\75flipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\75magazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\75mosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\75sidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\75snapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\75timeslide'}}}]);
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/2807592153-lbx__en_gb.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/1185134592-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'main', null, document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'main', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading...'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_CustomSearchView', new _WidgetInfo('CustomSearch1', 'sidebar', null, document.getElementById('CustomSearch1'), {'title': 'Search', 'includeBlog': true, 'includePostLinks': false, 'includeWeb': false, 'linkLists': [], 'blogUrl': 'http://articles.runtings.co.uk/', 'loadingMsg': 'Loading...', 'thisBlogMsg': 'This Blog', 'linkedFromHereMsg': 'Linked From Here', 'theWebMsg': 'The Web', 'backgroundColor': '#fff', 'textColor': '#000', 'dateColor': '#6f6f6f', 'linkColor': '#00c', 'urlColor': '#00c', 'visitedLinkColor': '#00c', 'borderColor': '#6f6f6f', 'activeBorderColor': '#6f6f6f', 'cse_ua': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_StatsView', new _WidgetInfo('Stats1', 'sidebar', null, document.getElementById('Stats1'), {'title': 'Visitors', 'showGraphicalCounter': false, 'showAnimatedCounter': false, 'showSparkline': true, 'statsUrl': '//articles.runtings.co.uk/b/stats?style\75BLACK_TRANSPARENT\46timeRange\75ALL_TIME\46token\75C5sD-E8BAAA.gedpdAIMUQPUW5olPSb0IOEY2pj2r25Ld1RRHwO8Sjk.y7ZV2oKj-3rp4_x_DsUPpQ'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML5', 'sidebar', null, document.getElementById('HTML5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML7', 'sidebar', null, document.getElementById('HTML7'), {}, 'displayModeFull'));
+</script>
+</body>
+</html>

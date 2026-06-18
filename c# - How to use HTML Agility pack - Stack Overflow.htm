@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/QAPage">
+<head>
+
+<title>c# - How to use HTML Agility pack - Stack Overflow</title>
+    <link rel="shortcut icon" href="//cdn.sstatic.net/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="//cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded&a" />
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="How to use HTML Agility pack" />
+    <meta name="twitter:description" property="og:description" itemprop="description" content="How do I use the HTML Agility Pack?
+
+My XHTML document is not completely valid. That&#39;s why I wanted to use it. How do I use it in my project? My project is in C#.
+" />
+    <meta property="og:url" content="http://stackoverflow.com/questions/846994/how-to-use-html-agility-pack"/>
+    <link rel="canonical" href="http://stackoverflow.com/questions/846994/how-to-use-html-agility-pack" />
+
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdn.sstatic.net/Js/stub.en.js?v=72b128261e24"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.sstatic.net/stackoverflow/all.css?v=2534c4455ecc">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;How to use HTML Agility pack&#39;" href="/feeds/question/846994">
+            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/846994/how-to-use-html-agility-pack" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/846994/how-to-use-html-agility-pack" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/846994/how-to-use-html-agility-pack">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:10,shownCommentCount:5,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:846994});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '846994');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","serverTime":1442945874,"networkMetaHostname":"meta.stackexchange.com","routeName":"Questions/Show","styleCode":true,"enableUserHovercards":true,"snippets":{"enabled":true,"domain":"stacksnippets.net"},"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"globalAuthDisabled":true,"nonAsciiTags":true,"enableSocialMediaInSharePopup":true},"user":{"fkey":"dc7fd66c9caaa7be110f227cfe9697d9","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true,"ab":{"hero_signup_button":{"v":"a","g":2},"anon_popups":{"v":"c","g":2}}}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"924a5d0d2283","js/moderator.en.js":"347b0b9f5ba3","js/full-anon.en.js":"c594865b8e88","js/full.en.js":"b3cf805c50b6","js/wmd.en.js":"08a4a8769e56","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"c2b90c743b39","js/help.en.js":"afe1395f61de","js/tageditor.en.js":"b55d3d80afd2","js/tageditornew.en.js":"3b7b200e4bda","js/inline-tag-editing.en.js":"de80429b1816","js/revisions.en.js":"5f5ba1a4eb8c","js/review.en.js":"b0c41f47e312","js/tagsuggestions.en.js":"d1ff9b84abe5","js/post-validation.en.js":"262ba89aa52f","js/explore-qlist.en.js":"cd6e5274146c","js/events.en.js":"422dede1b0ae","js/keyboard-shortcuts.en.js":"30885ce25da2","js/external-editor.en.js":"d950ed54074b","js/external-editor.en.js":"d950ed54074b","js/snippet-javascript.en.js":"a31b1ccd5acc","js/snippet-javascript-codemirror.en.js":"3647ca0c3b14"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+    
+    
+</head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="//stackoverflow.com">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+            <a href="http://chat.stackoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+                    <a href="http://blog.stackoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:7 })"
+>blog</a>
+            </div>
+
+
+
+
+    <a href="//stackoverflow.com"
+       class="current-site-link site-link js-gps-track"
+       data-id="1"
+       data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com"
+       class="site-link js-gps-track"
+       data-id="552"
+       data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track"
+                       href="//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider"
+                            data-gps-track="site_switcher.click({ item_type:9 })"
+>
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Stack Overflow Careers
+                    </a>
+                </li>
+        </ul>
+    </div>
+    
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f846994%2fhow-to-use-html-agility-pack" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:10 })"
+>Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f846994%2fhow-to-use-html-agility-pack" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:11 })"
+>log in</a> to customize your list.
+            </div>
+    </div>
+    
+    <div class="header">
+        <h3><a href="//stackexchange.com/sites">more stack exchange communities</a></h3>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="//stackexchange.com"
+               class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track"
+               data-gps-track="site_switcher.show"
+               title="A list of all 149 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+    <a href="#"
+       class="topbar-icon icon-inbox yes-hover js-inbox-button"
+       title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="#"
+       class="topbar-icon icon-achievements yes-hover js-achievements-button "
+       data-unread-class=""
+       title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://stackoverflow.com/users/signup?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f846994%2fhow-to-use-html-agility-pack" class="login-link">sign up</a>
+                                <a href="https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f846994%2fhow-to-use-html-agility-pack" class="login-link">log in</a>
+
+                        <a href="/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="//meta.stackoverflow.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+                            <a href="//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=anon-topbar">stack overflow careers</a>
+                    </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="search" value="" tabindex="1" autocomplete="off" maxlength="240" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="/" >
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="/questions">Questions</a></li>
+                        <li><a id="nav-tags" href="/tags">Tags</a></li>
+                        <li><a id="nav-users" href="/users">Users</a></li>
+                        <li><a id="nav-badges" href="/help/badges">Badges</a></li>
+                        <li><a id="nav-unanswered" href="/unanswered">Unanswered</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion"  href="/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content" class="snippet-hidden">
+            
+
+<div itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="//cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+			<!--googleoff: all-->
+
+<div id="herobox-mini">
+    <div id="hero-content">
+        <span id="controls">
+                <a href="/users/signup?ssrc=hero&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f846994%2fhow-to-use-html-agility-pack" id="tell-me-more" class="button">Sign up</a>
+            <span id="close"><a title="click to dismiss">&times;</a></span>
+        </span>
+        <div id="blurb">
+            Stack Overflow is a question and answer site for professional and enthusiast programmers. It&#39;s 100% free.
+        </div>        
+    </div>
+    <script>
+        StackExchange.ready(function() {
+            var clickSource = $("body").attr("class") + '-mini';
+            var location = 0;
+            if ($("body").hasClass("questions-page")) {
+                clickSource = 'questionpagemini';
+                location = 2;
+            } else if ($("body").hasClass("question-page")) {
+                clickSource = 'questionpagemini';
+                location = 2;
+            } else if ($("body").hasClass("home-page")) {
+                clickSource = 'homepagemini';
+                location = 4;
+            }
+
+            $('#tell-me-more').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+                });
+            });
+            $('#herobox-mini #close').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: "close", location: location }, true);
+                });
+                $.cookie("hero", "none", { path: "/", expires: 365 });
+                var $hero = $("#herobox-mini");
+                $hero.slideUp('fast', function () { $hero.remove(); });
+                return false;
+            });
+        });
+    </script>
+</div>
+			<!--googleon: all-->
+			<div id="question-header">
+                <h1 itemprop="name"><a href="/questions/846994/how-to-use-html-agility-pack" class="question-hyperlink">How to use HTML Agility pack</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="846994"  id="question">
+
+    <script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk1111277256",4).setZone(43); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1111277256">
+            </div>    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="846994">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">436</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
+        <div class="favoritecount"><b>139</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>How do I use the <a href="http://htmlagilitypack.codeplex.com/">HTML Agility Pack</a>?</p>
+
+<p>My XHTML document is not completely valid. That's why I wanted to use it. How do I use it in my project? My project is in C#.</p>
+    </div>
+    <div class="post-taglist">
+        <a href="/questions/tagged/c%23" class="post-tag" title="show questions tagged &#39;c#&#39;" rel="tag">c#</a> <a href="/questions/tagged/html" class="post-tag" title="show questions tagged &#39;html&#39;" rel="tag">html</a> <a href="/questions/tagged/html-agility-pack" class="post-tag" title="show questions tagged &#39;html-agility-pack&#39;" rel="tag">html-agility-pack</a> 
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/q/846994" title="short permalink to this question" class="short-link" id="link-post-846994">share</a><span class="lsep">|</span><a href="/posts/846994/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/846994/revisions" title="show all edits to this post">edited <span title="2011-08-12 10:36:28Z" class="relativetime">Aug 12 '11 at 10:36</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/63550/peter-mortensen"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/RIZKi.png?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/63550/peter-mortensen">Peter Mortensen</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">8,791</span><span title="10 gold badges"><span class="badge1"></span><span class="badgecount">10</span></span><span title="58 silver badges"><span class="badge2"></span><span class="badgecount">58</span></span><span title="95 bronze badges"><span class="badge3"></span><span class="badgecount">95</span></span>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2009-05-11 06:50:11Z" class="relativetime">May 11 '09 at 6:50</span>
+    </div>
+    <div class="user-gravatar32">
+        <span class="anonymous-gravatar"></span>
+    </div>
+    <div class="user-details">
+        chh<br>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-846994" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="5"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-2064780" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">72</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">I disagree, there is nothing unhelpful about this question.</span>
+                &ndash;&nbsp;
+                    <a href="/users/152598/jay-t55"
+                       title="777 reputation"
+                       class="comment-user">jay_t55</a>
+                <span class="comment-date" dir="ltr"><span title="2010-01-24 08:15:04Z" class="relativetime-clean">Jan 24 '10 at 8:15</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-2933161" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">57</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">This question was very helpful to me.</span>
+                &ndash;&nbsp;
+                    <a href="/users/37786/bigjoe714"
+                       title="3677 reputation"
+                       class="comment-user">BigJoe714</a>
+                <span class="comment-date" dir="ltr"><span title="2010-05-21 20:34:23Z" class="relativetime-clean">May 21 '10 at 20:34</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-7661453" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="hot">21</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Side Note: with a Visual Studio that handles NuGet, you can now right-click &quot;References&quot; and choose &quot;Manage NuGet Packages...&quot;, search for &quot;HtmlAgilityPack&quot; and click &quot;Install&quot;. Then get right into playing with the code with a using/Import statement.</span>
+                &ndash;&nbsp;
+                    <a href="/users/48700/patridge"
+                       title="15768 reputation"
+                       class="comment-user">patridge</a>
+                <span class="comment-date" dir="ltr"><span title="2011-06-28 18:12:04Z" class="relativetime-clean">Jun 28 '11 at 18:12</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-31309950" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">11</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Anyone looking into HTMLAgilityPack should consider CsQuery, it&#39;s a much newer library with a much more modern interface from my experience. For example, the whole code from the first answer can be summed up in CsQuery as <code>var body = CQ.CreateFromFile(filePath)[&quot;body&quot;]</code>.</span>
+                &ndash;&nbsp;
+                    <a href="/users/1348195/benjamin-gruenbaum"
+                       title="85041 reputation"
+                       class="comment-user">Benjamin Gruenbaum</a>
+                <span class="comment-date" dir="ltr"><span title="2014-01-01 10:41:03Z" class="relativetime-clean">Jan 1 '14 at 10:41</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-36304108" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@BenjaminGruenbaum: Thumbs up for your CsQuery suggestion - set up in minutes, very easy to use.</span>
+                &ndash;&nbsp;
+                    <a href="/users/897326/neolisk"
+                       title="14852 reputation"
+                       class="comment-user">Neolisk</a>
+                <span class="comment-date" dir="ltr"><span title="2014-05-13 20:06:17Z" class="relativetime-clean">May 13 '14 at 20:06</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-846994" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>5</b> more comments</a>
+        </div>         
+    </td>
+</tr>        </table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								5 Answers
+                                <span style="display:none;" itemprop="answerCount">5</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="/questions/846994/how-to-use-html-agility-pack?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active">active</a>
+        <a href="/questions/846994/how-to-use-html-agility-pack?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest">oldest</a>
+        <a class="youarehere" href="/questions/846994/how-to-use-html-agility-pack?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes">votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="847051"></a>
+<div id="answer-847051" class="answer" data-answerid="847051"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="847051">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">269</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<ol>
+<li><p><a href="http://www.codeplex.com/htmlagilitypack">Download</a> and build the HTMLAgilityPack solution. </p></li>
+<li><p>In
+your application, add a reference to
+HTMLAgilityPack.dll in the HTMLAgilityPack\Debug (or Realease) \bin folder.</p></li>
+</ol>
+
+<p>Then, as an example:</p>
+
+<pre><code>    HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+
+    // There are various options, set as needed
+    htmlDoc.OptionFixNestedTags=true;
+
+    // filePath is a path to a file containing the html
+    htmlDoc.Load(filePath);
+
+    // Use:  htmlDoc.LoadHtml(xmlString);  to load from a string (was htmlDoc.LoadXML(xmlString)
+
+   // ParseErrors is an ArrayList containing any errors from the Load statement
+   if (htmlDoc.ParseErrors != null &amp;&amp; htmlDoc.ParseErrors.Count() &gt; 0)
+   {
+       // Handle any parse errors as required
+
+   }
+   else
+   {
+
+        if (htmlDoc.DocumentNode != null)
+        {
+            HtmlAgilityPack.HtmlNode bodyNode = htmlDoc.DocumentNode.SelectSingleNode("//body");
+
+            if (bodyNode != null)
+            {
+                // Do something with bodyNode
+            }
+        }
+    }
+</code></pre>
+
+<p>(NB:  This code is an example only and not necessarily the best/only approach.  Do not use it blindly in your own application.)</p>
+
+<p>The HtmlDocument.Load() method also accepts a stream which is very useful in integrating with other stream oriented classes in the .NET framework.  While HtmlEntity.DeEntitize() is another useful method for processing html entities correctly.  (thanks Matthew)</p>
+
+<p>HtmlDocument and HtmlNode  are the classes you'll use most.  Similar to an XML parser, it provides the selectSingleNode and selectNodes methods that accept XPath expressions.</p>
+
+<p>Pay attention to the HtmlDocument.Option??????  boolean properties.  These control how the Load and LoadXML methods will process your HTML/XHTML.</p>
+
+<p>There is also a compiled help file called HtmlAgilityPack.chm that has a complete reference for each of the objects.  This is normally in the base folder of the solution.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/847051" title="short permalink to this answer" class="short-link" id="link-post-847051">share</a><span class="lsep">|</span><a href="/posts/847051/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/847051/revisions" title="show all edits to this post">edited <span title="2012-10-03 02:58:29Z" class="relativetime">Oct 3 '12 at 2:58</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/337759/steve-konves"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/76effd843e68076d0043d1cc4eaf6bba?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/337759/steve-konves">Steve Konves</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">1,879</span><span title="14 silver badges"><span class="badge2"></span><span class="badgecount">14</span></span><span title="32 bronze badges"><span class="badge3"></span><span class="badgecount">32</span></span>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2009-05-11 07:19:42Z" class="relativetime">May 11 '09 at 7:19</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/5023/ash"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/9ef256cd299f05b32798386a086c208f?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/5023/ash">Ash</a><br>
+        <span class="reputation-score" title="reputation score 35832" dir="ltr">35.8k</span><span title="23 gold badges"><span class="badge1"></span><span class="badgecount">23</span></span><span title="109 silver badges"><span class="badge2"></span><span class="badgecount">109</span></span><span title="154 bronze badges"><span class="badge3"></span><span class="badgecount">154</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-847051" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="1"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-655441" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">9</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Also note that Load accepts a Stream parameter, which is convenient in many situations. I used it for a HTTP stream (WebResponse.GetResponseStream). Another good method to be aware of is HtmlEntity.DeEntitize (part of HTML Agility Pack). This is needed to process entities manually in some cases.</span>
+                &ndash;&nbsp;
+                    <a href="/users/47773/matthew-flaschen"
+                       title="153147 reputation"
+                       class="comment-user">Matthew Flaschen</a>
+                <span class="comment-date" dir="ltr"><span title="2009-05-11 07:34:09Z" class="relativetime-clean">May 11 '09 at 7:34</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-2596551" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">note: in the latest beta of Html Agility Pack (1.4.0 Beta 2 released Oct 3 2009) the help file has been moved out into a separate download because of dependencies on Sandcastle, DocProject and the Visual Studio 2008 SDK.</span>
+                &ndash;&nbsp;
+                    <a href="/users/156388/rtpharry"
+                       title="6172 reputation"
+                       class="comment-user">rtpHarry</a>
+                <span class="comment-date" dir="ltr"><span title="2010-04-06 23:02:51Z" class="relativetime-clean">Apr 6 '10 at 23:02</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-3374283" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy"><code>SelectSingleNode() </code> seems to have been removed a while ago</span>
+                &ndash;&nbsp;
+                    <a href="/users/21574/chris-s"
+                       title="37705 reputation"
+                       class="comment-user">Chris S</a>
+                <span class="comment-date" dir="ltr"><span title="2010-07-16 08:36:51Z" class="relativetime-clean">Jul 16 '10 at 8:36</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-5572917" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">3</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">No, SelectSingleNode and SelectNodes are definitely still there. I find it a little interesting that it should be htmlDoc.ParseErrors.Count(), not .Count</span>
+                &ndash;&nbsp;
+                    <a href="/users/28643/mike-blandford"
+                       title="2291 reputation"
+                       class="comment-user">Mike Blandford</a>
+                <span class="comment-date" dir="ltr"><span title="2011-02-14 02:04:10Z" class="relativetime-clean">Feb 14 '11 at 2:04</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-6818745" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">It is a property. Properties do not require ()</span>
+                &ndash;&nbsp;
+                    <a href="/users/603200/alireza-noori"
+                       title="5284 reputation"
+                       class="comment-user">Alireza Noori</a>
+                <span class="comment-date" dir="ltr"><span title="2011-05-07 11:21:28Z" class="relativetime-clean">May 7 '11 at 11:21</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-847051" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>1</b> more comment</a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk1514029374",4).setZone(44); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1514029374">
+            </div>
+  
+<a name="2588910"></a>
+<div id="answer-2588910" class="answer" data-answerid="2588910"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="2588910">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">137</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>I don't know if this will be of any help to you, but I have written a couple of articles which introduce the basics.</p>
+
+<ul>
+<li><em><a href="http://runtingsproper.blogspot.com/2009/09/htmlagilitypack-article-series.html">HtmlAgilityPack Article Series</a></em></li>
+<li><em><a href="http://runtingsproper.blogspot.com/2009/09/introduction-to-htmlagilitypack-library.html">Introduction To The HtmlAgilityPack Library</a></em> </li>
+<li><em><a href="http://runtingsproper.blogspot.com/2009/11/easily-extracting-links-from-snippet-of.html">Easily extracting links from a snippet of html with HtmlAgilityPack</a></em></li>
+</ul>
+
+<p>The next article is 95% complete, I just have to write up explanations of the last few parts of the code I have written. If you are interested then I will try to remember to post here when I publish it.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/2588910" title="short permalink to this answer" class="short-link" id="link-post-2588910">share</a><span class="lsep">|</span><a href="/posts/2588910/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/2588910/revisions" title="show all edits to this post">edited <span title="2011-08-12 10:41:54Z" class="relativetime">Aug 12 '11 at 10:41</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/63550/peter-mortensen"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/RIZKi.png?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/63550/peter-mortensen">Peter Mortensen</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">8,791</span><span title="10 gold badges"><span class="badge1"></span><span class="badgecount">10</span></span><span title="58 silver badges"><span class="badge2"></span><span class="badgecount">58</span></span><span title="95 bronze badges"><span class="badge3"></span><span class="badgecount">95</span></span>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2010-04-06 22:59:46Z" class="relativetime">Apr 6 '10 at 22:59</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/156388/rtpharry"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/6811db2b37e824fdf6c5c4fcdddd4146?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/156388/rtpharry">rtpHarry</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">6,172</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="14 silver badges"><span class="badge2"></span><span class="badgecount">14</span></span><span title="38 bronze badges"><span class="badge3"></span><span class="badgecount">38</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2588910" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-15339050" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">12</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Finally finished that article two years later :) <a href="http://runtingsproper.blogspot.co.uk/2012/07/a-straightforward-method-to-detecting.html" rel="nofollow">A straightforward method to detecting RSS and Atom feeds in websites with HtmlAgilityPack</a></span>
+                &ndash;&nbsp;
+                    <a href="/users/156388/rtpharry"
+                       title="6172 reputation"
+                       class="comment-user">rtpHarry</a>
+                <span class="comment-date" dir="ltr"><span title="2012-07-21 09:18:10Z" class="relativetime-clean">Jul 21 '12 at 9:18</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-33147617" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Recently in <i>Code Project</i> it has been released a very good article of HTMLAgilityPack. You can read it <a href="http://www.codeproject.com/Articles/691119/Html-Agility-Pack-Massive-information-extraction-f" rel="nofollow">here</a></span>
+                &ndash;&nbsp;
+                    <a href="/users/2695387/victor-sigler"
+                       title="4933 reputation"
+                       class="comment-user">Victor Sigler</a>
+                <span class="comment-date" dir="ltr"><span title="2014-02-19 19:15:21Z" class="relativetime-clean">Feb 19 '14 at 19:15</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-2588910" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="17531374"></a>
+<div id="answer-17531374" class="answer" data-answerid="17531374"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="17531374">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">37</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>HtmlAgilityPack uses XPath syntax, and though many argues that it is poorly documented, I had no trouble using it with help from this XPath documentation: <a href="http://www.w3schools.com/xpath/xpath_syntax.asp">http://www.w3schools.com/xpath/xpath_syntax.asp</a></p>
+
+<p>To parse</p>
+
+<pre><code>&lt;h2&gt;
+  &lt;a href=""&gt;Jack&lt;/a&gt;
+&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li class="tel"&gt;
+    &lt;a href=""&gt;81 75 53 60&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;
+  &lt;a href=""&gt;Roy&lt;/a&gt;
+&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li class="tel"&gt;
+    &lt;a href=""&gt;44 52 16 87&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>I did this:</p>
+
+<pre><code>string url = "http://website.com";
+var Webget = new HtmlWeb();
+var doc = Webget.Load(url);
+foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//h2//a"))
+{
+  names.Add(node.ChildNodes[0].InnerHtml);
+}
+foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//li[@class='tel']//a"))
+{
+  phones.Add(node.ChildNodes[0].InnerHtml);
+}
+</code></pre>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/17531374" title="short permalink to this answer" class="short-link" id="link-post-17531374">share</a><span class="lsep">|</span><a href="/posts/17531374/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/17531374/revisions" title="show all edits to this post">edited <span title="2014-09-05 11:55:41Z" class="relativetime">Sep 5 '14 at 11:55</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2013-07-08 16:17:56Z" class="relativetime">Jul 8 '13 at 16:17</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/2438446/kent-munthe-caspersen"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/58806b975f85de166828c97ab4536364?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/2438446/kent-munthe-caspersen">Kent Munthe Caspersen</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">850</span><span title="6 silver badges"><span class="badge2"></span><span class="badgecount">6</span></span><span title="12 bronze badges"><span class="badge3"></span><span class="badgecount">12</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-17531374" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-53237900" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Totally true. It is fully dependent on <code>XPath</code> standard. One should first learn that standard and everything will be easy after that.</span>
+                &ndash;&nbsp;
+                    <a href="/users/3441905/user3441905"
+                       title="52 reputation"
+                       class="comment-user">user3441905</a>
+                <span class="comment-date" dir="ltr"><span title="2015-09-21 14:10:30Z" class="relativetime-clean">yesterday</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-17531374" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="20422844"></a>
+<div id="answer-20422844" class="answer" data-answerid="20422844"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="20422844">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">4</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<pre><code>    public string HtmlAgi(string url, string key)
+    {
+
+        var Webget = new HtmlWeb();
+        var doc = Webget.Load(url);
+        HtmlNode ourNode = doc.DocumentNode.SelectSingleNode(string.Format("//meta[@name='{0}']", key));
+
+        if (ourNode != null)
+        {
+
+
+                return ourNode.GetAttributeValue("content", "");
+
+        }
+        else
+        {
+            return "not fount";
+        }
+
+    }
+</code></pre>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/20422844" title="short permalink to this answer" class="short-link" id="link-post-20422844">share</a><span class="lsep">|</span><a href="/posts/20422844/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2013-12-06 11:33:39Z" class="relativetime">Dec 6 '13 at 11:33</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/2737089/ibrahim-ozboluk"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/Te7Yw.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/2737089/ibrahim-ozboluk">ibrahim ozboluk</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">194</span><span title="1 silver badge"><span class="badge2"></span><span class="badgecount">1</span></span><span title="7 bronze badges"><span class="badge3"></span><span class="badgecount">7</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-20422844" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-20422844" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="25092536"></a>
+<div id="answer-25092536" class="answer" data-answerid="25092536"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="25092536">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">1</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>Refer the full code at <a href="http://www.dotnetlines.com/Blogs/tabid/85/EntryId/38/Get-Facebook-like-Page-Title-and-Meta-Description-of-other-site-using-HTMLAgilityPack.aspx" rel="nofollow">http://www.dotnetlines.com/Blogs/tabid/85/EntryId/38/Get-Facebook-like-Page-Title-and-Meta-Description-of-other-site-using-HTMLAgilityPack.aspx</a></p>
+
+<p>Main HTMLAgilityPack related code is as follows</p>
+
+<pre><code>using System;
+using System.Net;
+using System.Web;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Text.RegularExpressions;
+using HtmlAgilityPack;
+
+namespace GetMetaData
+{
+    /// &lt;summary&gt;
+    /// Summary description for MetaDataWebService
+    /// &lt;/summary&gt;
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.ComponentModel.ToolboxItem(false)]
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
+    [System.Web.Script.Services.ScriptService]
+    public class MetaDataWebService: System.Web.Services.WebService
+    {
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = false)]
+        public MetaData GetMetaData(string url)
+        {
+            MetaData objMetaData = new MetaData();
+
+            //Get Title
+            WebClient client = new WebClient();
+            string sourceUrl = client.DownloadString(url);
+
+            objMetaData.PageTitle = Regex.Match(sourceUrl, @
+            "\&lt;title\b[^&gt;]*\&gt;\s*(?&lt;Title&gt;[\s\S]*?)\&lt;/title\&gt;", RegexOptions.IgnoreCase).Groups["Title"].Value;
+
+            //Method to get Meta Tags
+            objMetaData.MetaDescription = GetMetaDescription(url);
+            return objMetaData;
+        }
+
+        private string GetMetaDescription(string url)
+        {
+            string description = string.Empty;
+
+            //Get Meta Tags
+            var webGet = new HtmlWeb();
+            var document = webGet.Load(url);
+            var metaTags = document.DocumentNode.SelectNodes("//meta");
+
+            if (metaTags != null)
+            {
+                foreach(var tag in metaTags)
+                {
+                    if (tag.Attributes["name"] != null &amp;&amp; tag.Attributes["content"] != null &amp;&amp; tag.Attributes["name"].Value.ToLower() == "description")
+                    {
+                        description = tag.Attributes["content"].Value;
+                    }
+                }
+            } 
+            else
+            {
+                description = string.Empty;
+            }
+            return description;
+        }
+    }
+}
+</code></pre>
+
+<ul>
+<li>See more at: <a href="http://www.dotnetlines.com/Blogs/tabid/85/EntryId/38/Get-Facebook-like-Page-Title-and-Meta-Description-of-other-site-using-HTMLAgilityPack.aspx#sthash.XoWtzJLb.dpuf" rel="nofollow">http://www.dotnetlines.com/Blogs/tabid/85/EntryId/38/Get-Facebook-like-Page-Title-and-Meta-Description-of-other-site-using-HTMLAgilityPack.aspx#sthash.XoWtzJLb.dpuf</a></li>
+</ul>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/25092536" title="short permalink to this answer" class="short-link" id="link-post-25092536">share</a><span class="lsep">|</span><a href="/posts/25092536/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/25092536/revisions" title="show all edits to this post">edited <span title="2015-04-16 07:37:40Z" class="relativetime">Apr 16 at 7:37</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/1126273/bali182"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/5cbf63d3598ea385c60c71b3d78bb249?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/1126273/bali182">bali182</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">4,561</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="13 silver badges"><span class="badge2"></span><span class="badgecount">13</span></span><span title="37 bronze badges"><span class="badge3"></span><span class="badgecount">37</span></span>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2014-08-02 07:00:04Z" class="relativetime">Aug 2 '14 at 7:00</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/2116540/captainsac"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/IlBkx.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/2116540/captainsac">captainsac</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">1,816</span><span title="2 gold badges"><span class="badge1"></span><span class="badgecount">2</span></span><span title="7 silver badges"><span class="badge2"></span><span class="badgecount">7</span></span><span title="24 bronze badges"><span class="badge3"></span><span class="badgecount">24</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-25092536" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-25092536" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+				        <div class="question-status">
+        <h2>                    <b>protected</b> by <a href="/users/16587/george-stocker">George Stocker</a><span class="mod-flair" title="moderator">&#9830;</span> <span dir="ltr"><span title="2011-08-08 13:42:11Z" class="relativetime">Aug 8 '11 at 13:42</span></span>
+</h2>
+        <p>
+Thank you for your interest in this question. 
+Because it has attracted low-quality answers, posting an answer now requires 10 <a href="/help/whats-reputation">reputation</a> on this site.
+<br /><br />
+Would you like to answer one of these <a href="/unanswered?fromProtectedNotice=true">unanswered questions</a> instead?
+</p>
+    </div>
+
+
+
+
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2009-05-11 06:50:11Z"><b>6 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>203690 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2015-04-16 07:37:40Z">5 months ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </table>
+			    </div>
+						
+			<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk175680696",[17,2221]).setZone(45); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk175680696">
+            </div>
+        <div id="hireme">
+            <script>
+(function(){function f(n){var t=i.createElement("link");t.type="text/css";t.rel="stylesheet";t.href=n;r.appendChild(t)}function e(t,r,f,e){var s=(r.cl||[]).join(" "),o=i.getElementById(t);o&&(s&&(o.className+=" "+s),o.innerHTML=r.cn.replace("&pt=0","&pt="+(e||"0")),o.onmousedown=function(t){for(var i=t.target,e,s,h,c,l;i.tagName!=="A"&&i!==o;)i=i.parentNode;if(i!=o){for(e=n.enc,s=f,h=0;h<i.attributes.length;++h)c=i.attributes[h],l=c.name.match(/^data-(.*)$/),l&&(s+="&"+e(l[1])+"="+e(c.value));s+="&utm="+e(u+r.utm);i.href=s}})}function o(){return[].map.call(n.qsa(".post-taglist .post-tag"),function(n){return n.innerText}).join(";")||null}var t=window,i=document,r=i.getElementsByTagName("head")[0],u="&utm_source="+location.hostname+"&utm_medium=ad&utm_campaign=",n={doc:i,head:r,enc:encodeURIComponent,dec:decodeURIComponent,se:t.StackExchange,ts:function(){return(new Date).getTime()},st:setTimeout,ct:clearTimeout,qsa:function(n){return document.querySelectorAll(n)}};n.ls=function(n,t,u){var f=i.createElement("script"),e=!1;f.async=!0;f.src=n;t&&(f.onload=f.onreadystatechange=function(){e||this.readyState&&this.readyState!=="loaded"&&this.readyState!=="complete"||(e=!0,t(f),f.onload=f.onreadystatechange=null,u&&f.parentNode.removeChild(f))});r.appendChild(f)};n.init=function(i){function s(){i.st.forEach(f);r.forEach(function(n){e(n,i.cr[n],u,o)});typeof t.clc_after_init=="function"&&t.clc_after_init()}var r=Object.keys(i.cr),u="//"+i.h+i.ct+"?an="+i.an,o=n.cps?n.ts()-n.cps:0;s()};n.lo=function(i){var u,f=t.location.hash,s=n.dec,r=n.se,e;i=i||{};switch(f){case"#large":opts.l=1;break;case"#abort":opts.abort=1;break;default:f.length>0&&f.substr(1).split("&").forEach(function(n){var t=n.split("=",2);this[s(t[0])]=s(t[1])},i)}return e=i.ac||i.accountid||r&&r.options&&r.options.user&&r.options.user.accountId,e&&(i.ac=e),i.tags||(u=o(),u&&(i.tags=u)),i};n.o2q=function(t,i){var r=n.enc;return Object.keys(t).filter(function(n){return i.indexOf(n)!==-1}).map(function(n){return r(n)+"="+r(t[n])}).join("&")};n.load=function(i,r,u){n.ls(i+"?"+n.o2q(r,u),function(){typeof t.clc_loaded=="function"&&t.clc_loaded()});n.cps=n.ts()};n.el=function(t){var i=n.qsa(t);return i.length>0?i[0]:null};n.hc=function(n){return n&&n.innerHTML&&n.innerHTML.replace(/\s+/g,"").length>0};n.wfc=function(t,i,r,u){function c(){n.hc(s)?(f(o),f(e),u(!0)):e=h(c,i)}function l(){f(e);u(!1)}var s=n.el(t),h=n.st,f=n.ct,o,e;if(s!==null)return c(),r&&(o=h(l,r)),function(){e&&f(e);o&&f(o)}};t.clc=n})();;(function(n){function c(){var n=t.el(u);t.hc(n)||(n.parentNode.removeChild(n),typeof r=="function"&&r())}function l(r){if(!f){f=!0;var u=t.qsa("#"+i.d);u.length!==0&&(r||(i.azt=!0),i.lw=t.ts()-s,i.l||document.getElementById("careersadsdoublehigh")===null||(i.l=1),t.load(n.adurl,i,["d","l","ip","ac","eng","prov","tags","theme","remote","seed","lw","azt","sysadmin"]))}}var o=window,t=o.clc,s=t.ts(),h=t.st,v=t.ct,u="#sidebar [id^='adzerk'].everyonelovesstackoverflow",i=t.lo({d:"hireme"}),f,r,e,a;i.abort||(e=null,r=t.wfc(u,20,e,l),a=h(c,2e3))}).call(null, {"adurl":"//clc.stackoverflow.com/j/p.js"});            </script>
+        </div>
+			  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="/q/13955247" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">-2</div>
+	</a>
+	<a href="/questions/13955247/how-can-i-remove-with-specific-tags-from-html" class="question-hyperlink">how can I remove with specific tags from html</a>
+</div><div class="spacer">
+	<a href="/q/23376687" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">1</div>
+	</a>
+	<a href="/questions/23376687/regex-for-html-tr-tag" class="question-hyperlink">Regex for HTML &lt;tr&gt; tag</a>
+</div><div class="spacer">
+	<a href="/q/12497534" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">0</div>
+	</a>
+	<a href="/questions/12497534/can-i-get-a-full-site-map-in-html-agility-pack" class="question-hyperlink">Can I get a full site map in html agility pack?</a>
+</div><div class="spacer">
+	<a href="/q/12487521" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/12487521/looking-for-a-way-to-retrieve-the-information-from-an-a-href-tags-e-g-a-hre" class="question-hyperlink">looking for a way to retrieve the information from an &lt;a href&gt; tags. E.g. &lt;a href=&ldquo;www.facebook.com&rdquo;&gt;</a>
+</div><div class="spacer">
+	<a href="/q/27263009" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/27263009/display-text-from-page-in-c-sharp" class="question-hyperlink">Display text from page in c#</a>
+</div><div class="spacer">
+	<a href="/q/25638207" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/25638207/xmlreader-doctype-is-an-unexpected-token" class="question-hyperlink">XMLReader &#39;doctype&#39; is an unexpected Token</a>
+</div><div class="spacer">
+	<a href="/q/19523913" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">34</div>
+	</a>
+	<a href="/questions/19523913/remove-html-tags-from-string-including-nbsp-in-c-sharp" class="question-hyperlink">Remove HTML tags from string including &amp;nbsp in C#</a>
+</div><div class="spacer">
+	<a href="/q/1884094" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">10</div>
+	</a>
+	<a href="/questions/1884094/html-agility-pack" class="question-hyperlink">HTML Agility Pack</a>
+</div><div class="spacer">
+	<a href="/q/5440392" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">6</div>
+	</a>
+	<a href="/questions/5440392/removing-html-comments" class="question-hyperlink">Removing HTML Comments</a>
+</div><div class="spacer">
+	<a href="/q/4958483" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">5</div>
+	</a>
+	<a href="/questions/4958483/how-to-install-html-agility-pack-in-my-c-sharp-project" class="question-hyperlink">How to install &ldquo;Html Agility Pack&rdquo; in my C# project?</a>
+</div>					<div class="spacer more">
+				<a href="/questions/linked/846994">see more linked questions…</a>
+			</div>
+	</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer">
+<a href="/q/655603" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">36
+    </div>
+</a><a href="/questions/655603/html-agility-pack-parsing-tables" class="question-hyperlink">HTML Agility pack - parsing tables</a>
+</div>
+<div class="spacer">
+<a href="/q/1884094" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">10
+    </div>
+</a><a href="/questions/1884094/html-agility-pack" class="question-hyperlink">HTML Agility Pack</a>
+</div>
+<div class="spacer">
+<a href="/q/5372856" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">7
+    </div>
+</a><a href="/questions/5372856/how-to-clean-up-poorly-formed-html-using-html-agility-pack" class="question-hyperlink">How to clean up poorly formed HTML using HTML Agility Pack</a>
+</div>
+<div class="spacer">
+<a href="/q/6143621" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">3
+    </div>
+</a><a href="/questions/6143621/c-sharp-html-agility-pack" class="question-hyperlink">c# html agility pack</a>
+</div>
+<div class="spacer">
+<a href="/q/13522412" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/13522412/how-to-use-html-agility-pack" class="question-hyperlink">how to use html agility pack?</a>
+</div>
+<div class="spacer">
+<a href="/q/13771083" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">15
+    </div>
+</a><a href="/questions/13771083/html-agility-pack-get-all-elements-by-class" class="question-hyperlink">Html Agility Pack get all elements by class</a>
+</div>
+<div class="spacer">
+<a href="/q/16246554" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="/questions/16246554/how-to-get-the-count-of-tables-in-an-html-file-with-c-sharp-and-html-agility-pac" class="question-hyperlink">How to get the count of tables in an html file with C# and html-agility-pack</a>
+</div>
+<div class="spacer">
+<a href="/q/16645257" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">2
+    </div>
+</a><a href="/questions/16645257/how-to-use-html-agility-pack-for-html-validations" class="question-hyperlink">How to use Html Agility Pack for HTML validations</a>
+</div>
+<div class="spacer">
+<a href="/q/18400619" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">3
+    </div>
+</a><a href="/questions/18400619/html-agility-pack-new-htmlattribute" class="question-hyperlink">Html Agility Pack - New HtmlAttribute</a>
+</div>
+<div class="spacer">
+<a href="/q/21911648" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="/questions/21911648/how-to-handle-parseerrors-in-html-agility-pack" class="question-hyperlink">How to handle ParseErrors in Html Agility Pack</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="//stackexchange.com/questions?tab=hot" 
+           class="js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/54768/how-appropriate-is-it-to-forward-interview-requests-mistakenly-sent-to-me-to-the" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How appropriate is it to forward interview requests mistakenly sent to me to the right person?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/32720492/why-is-a-class-dict-a-mappingproxy" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why is a class __dict__ a mappingproxy?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/95220/problem-with-fit-on-a-numerical-function" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Problem with fit on a numerical function
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="http://aviation.stackexchange.com/questions/21097/what-risks-come-from-passengers-taking-baggage-during-emergency-evacuation" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What risks come from passengers taking baggage during emergency evacuation?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/26137/how-to-improve-space-bandwidth" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to improve space bandwidth?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/58381/time-to-adjust-some-prices" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Time to adjust some prices!
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="http://aviation.stackexchange.com/questions/21133/what-is-a-take-off-roll" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is a take off roll?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-civicrm" title="CiviCRM Stack Exchange"></div><a href="http://civicrm.stackexchange.com/questions/6610/how-do-i-run-a-list-of-on-hold-email-addresses" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:605 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do I run a list of &quot;on-hold&quot; email addresses?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/208410/how-can-the-unstable-particles-of-the-standard-model-be-considered-particles-in" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can the unstable particles of the standard model be considered particles in their own right if they immediately decay into stable particles?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/26115/would-there-be-evolution-on-a-perfect-world" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Would there be evolution on a perfect world?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-law" title="Law Stack Exchange"></div><a href="http://law.stackexchange.com/questions/3892/what-if-i-dont-patent-my-invention" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:617 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What if I don&#39;t patent my invention?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/1446764/proof-about-integer-being-written-as-two-integer-squares" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    proof about integer being written as two integer squares
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ux" title="User Experience Stack Exchange"></div><a href="http://ux.stackexchange.com/questions/84796/what-is-considered-better-ux-have-tooltips-on-important-features-or-provide-a" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:102 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is considered better UX - have tooltips on important features or provide a tour
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-dba" title="Database Administrators Stack Exchange"></div><a href="http://dba.stackexchange.com/questions/115731/use-database-to-track-locking-unlocking-of-objects" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:182 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Use database to track locking/unlocking of objects
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-unix" title="Unix &amp; Linux Stack Exchange"></div><a href="http://unix.stackexchange.com/questions/231265/tar-and-its-key-letters-is-it-a-bug-or-feature" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:106 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    tar and its key letters: is it a bug or feature?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-biology" title="Biology Stack Exchange"></div><a href="http://biology.stackexchange.com/questions/38973/how-can-frogs-tolerate-freezing-while-humans-cannot" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:375 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can frogs tolerate freezing while humans cannot?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/103448/which-actor-appears-as-the-most-different-species-in-star-trek" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Which actor appears as the most different species in Star Trek?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/95229/cannot-get-nearest-neighbors-from-nearest" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Cannot get nearest neighbors from Nearest
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-gaming" title="Arqade"></div><a href="http://gaming.stackexchange.com/questions/237327/how-to-secure-your-fob" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:41 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to secure your FOB?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="http://electronics.stackexchange.com/questions/191629/how-can-a-synchronous-motor-have-rpm-other-than-3000-3600" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can a synchronous motor have RPM other than 3000/3600?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-drupal" title="Drupal Answers"></div><a href="http://drupal.stackexchange.com/questions/175241/how-to-drush-sql-dump-all-databases" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:220 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to &#39;drush sql-dump&#39; all databases
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/208315/is-there-a-rigorous-definition-of-much-greater-than" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is there a rigorous definition of &#39;much greater than&#39;?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/22491/what-date-can-it-be" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What date can it be?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/268927/huge-spacing-between-caption-and-longtabu" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    huge spacing between caption and longtabu
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="/feeds/question/846994" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/846994/ivc/2eb3');});
+</script>
+<noscript>
+    <div><img src="/posts/846994/ivc/2eb3" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang">lang-cs</div></div>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                        <a href="/tour">tour</a>
+                    <a href="/help">help</a>
+                    <a href="http://blog.stackoverflow.com?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com">chat</a>
+                    <a href="http://data.stackexchange.com">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackexchange.com/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tr>
+            <th colspan=3>
+                Technology
+            </th>
+            <th >
+                Life / Arts
+            </th>
+            <th >
+                Culture / Recreation
+            </th>
+            <th >
+                Science
+            </th>
+            <th >
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="//stackoverflow.com" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="//serverfault.com" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="//superuser.com" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="//webapps.stackexchange.com" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="//askubuntu.com" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="//webmasters.stackexchange.com" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="//gamedev.stackexchange.com" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="//tex.stackexchange.com" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//programmers.stackexchange.com" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="//unix.stackexchange.com" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="//apple.stackexchange.com" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="//wordpress.stackexchange.com" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="//gis.stackexchange.com" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="//electronics.stackexchange.com" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="//android.stackexchange.com" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="//security.stackexchange.com" title="information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//dba.stackexchange.com" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="//drupal.stackexchange.com" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="//sharepoint.stackexchange.com" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="//ux.stackexchange.com" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="//mathematica.stackexchange.com" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="//salesforce.stackexchange.com" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="//expressionengine.stackexchange.com" title="administrators, end users, developers and designers for ExpressionEngine&#174; CMS">ExpressionEngine&#174; Answers</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (13)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//photo.stackexchange.com" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="//scifi.stackexchange.com" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="//graphicdesign.stackexchange.com" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="//movies.stackexchange.com" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="//cooking.stackexchange.com" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="//diy.stackexchange.com" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="//money.stackexchange.com" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="//academia.stackexchange.com" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (9)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//english.stackexchange.com" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="//skeptics.stackexchange.com" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="//judaism.stackexchange.com" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="//travel.stackexchange.com" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="//christianity.stackexchange.com" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="//gaming.stackexchange.com" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="//bicycles.stackexchange.com" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="//rpg.stackexchange.com" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//math.stackexchange.com" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="//stats.stackexchange.com" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="//cstheory.stackexchange.com" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="//physics.stackexchange.com" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="//mathoverflow.net" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="//chemistry.stackexchange.com" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="//biology.stackexchange.com" title="biology researchers, academics, and students">Biology</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (5)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//stackapps.com" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="//meta.stackexchange.com" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="//area51.stackexchange.com" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="//careers.stackoverflow.com">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</table>
+                </div>
+            </div>
+
+            <div id="copyright">
+                site design / logo &#169; 2015 Stack Exchange Inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2015.9.22.2837
+            </div>
+            
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    ados.run.push(function () { ados_setKeywords('c%23,html,html-agility-pack');; ados_load(); });         
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');
+                        ga('set', 'dimension2', '|c#|html|html-agility-pack|');         ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>
+            
+    </body>
+</html>

@@ -1,0 +1,1197 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head><meta name="robots" content="index,follow" />
+<meta name="GENERATOR" content="Telligent Evolution Platform Developer Build (Build: 5.6.50428.7875)" />
+<link rel="pingback" href="http://blogs.msdn.com/b/yangxind/pingback.aspx" />
+<link href="http://i1.blogs.msdn.com/rrcontent/7632fe1dd91290a46b3a118f9478cf1b-27cae0dd5641775697cb89e9a8587625-RequestReducedStyle.css" rel="Stylesheet" type="text/css" /><link rel="alternate" type="application/rss+xml" title="Site Home (RSS 2.0)" href="http://blogs.msdn.com/rss.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="Yangxin Deng&#39;s Comments (RSS 2.0)" href="/members/yangxind/comments/rss.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="Yangxin Deng&#39;s Activities (RSS 2.0)" href="/members/yangxind/activities/rss.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="Activities of People Yangxin Deng Follows (RSS 2.0)" href="/members/yangxind/activities/followersrss.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="Yangxin Deng&#39;s Groups Activities (RSS 2.0)" href="/members/yangxind/activities/groupsrss.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="ASP.NET 2.0 and IIS 6.0 (RSS 2.0)" href="http://blogs.msdn.com/b/yangxind/rss.aspx"  />
+<link rel="alternate" type="application/atom+xml" title="ASP.NET 2.0 and IIS 6.0 (Atom 1.0)" href="http://blogs.msdn.com/b/yangxind/atom.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="ASP.NET 2.0 and IIS 6.0 - All Comments (RSS 2.0)" href="http://blogs.msdn.com/b/yangxind/rsscomments.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="Don&#39;t use .NET System.Uri.UnescapeDataString in URL Decoding - Comments for this post (RSS 2.0)" href="http://blogs.msdn.com/b/yangxind/rsscomments.aspx?WeblogPostID=1041825"  />
+
+                    
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <link rel="shortcut icon" type="image/ico" href="/themes/MSDN2/favicon.ico" />
+          <!--
+            Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx.
+          -->
+          <link href="http://i1.blogs.msdn.com/rrcontent/6e455ee01481483d5d047db51a775dad-ffc9f7e1f0412800af51bef62a866f63-RequestReducedStyle.css" rel="Stylesheet" type="text/css" /><script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.2.min.js" type="text/javascript" language="javascript"></script>
+                            
+          <link type="text/css" rel="stylesheet" href="/themes/MSDN2/css/DynamicStyle.aspx?PreviewKey=0" media="screen,print" />
+          <link type="text/css" rel="stylesheet" href="/themes/blogs/MSDN2/css/DynamicStyle.aspx?WeblogID=5391&PreviewKey=0" media="screen,print" />
+        
+          <!--[if lte IE 6]>
+              <link type="text/css" rel="stylesheet" href="/themes/MSDN2/css/ie6.css" media="screen,print" />
+          <![endif]-->
+                  <meta name="msvalidate.01" content="B717AD6FC29D3A844832AF011B5F9E4C" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blogs.msdn.com/b/yangxind/rsd.ashx" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" title="WLWManifest" href="http://blogs.msdn.com/b/yangxind/wlwmanifest.ashx" />
+
+        <!--
+            Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx.
+          -->
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.2.min.js" type="text/javascript" language="javascript"></script>
+    <title>
+	Don't use .NET System.Uri.UnescapeDataString in URL Decoding - ASP.NET 2.0 and IIS 6.0 - Site Home - MSDN Blogs
+</title></head>
+	<body spellcheck="true">
+		<form name="aspnetForm" method="post" action="/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="aspnetForm">
+<div>
+<input type="hidden" name="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_answer" id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_answer" value="" />
+<input type="hidden" name="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_encrypted" id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_encrypted" value="u0aRIWXO9bKE8TCGj0RNmraEqzZ/SWRtKsCuJ12d0fQ=" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTM5OTAxNDYyNWRkvI787cXLvh9XHlDReEjVejxzcZ4=" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="http://i1.blogs.msdn.com/rrcontent/befacdd6b5db87b82967c8773931ecc2-57603747de5e562abf362f65a8ace160-RequestReducedScript.js" type="text/javascript" ></script>
+
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="84C00179" />
+</div>
+			
+            
+                
+            
+            <div class="header-fragments-header"></div>
+<div class="header-fragments"><div class="header-fragment-outer top-bar msdn-header-fragment-outer msdn-top-bar"><div class="header-fragment-inner top-bar msdn-header-fragment-inner msdn-top-bar"><div class="header-fragment welcome-message" id="header-fragment-1402503690">
+
+
+<!-- always render -->
+</div><div class="header-fragment login-logout" id="header-fragment-1402503691">
+
+
+
+
+
+        <div class="navigation-list-header"></div>
+        <ul class="navigation-list">
+
+            <li class="navigation-item">
+                <span id="ctl00_header_fragment_1402503691__a71e65_ctl00_ctl02_ctl05_WLIDLoginButton1" class="internal-link live-id-button"><a href="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=12&ct=1442863466&rver=6.0.5286.0&wp=MBI&wreply=http:%2F%2Fblogs.msdn.com%2Fb%2Fyangxind%2Farchive%2F2006%2F11%2F09%2Fdon-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&lc=1033&id=271611">Sign in</a></span>
+            </li>
+        </ul>
+        <div class="navigation-list-footer"></div>
+    </div><div class="header-fragment user-welcome-without-login" id="header-fragment-1402503692">
+
+ &nbsp;<!-- always render -->
+
+</div></div></div><div class="header-fragment blog-banner" id="header-fragment-1402503693">
+
+
+
+<div class="site-banner blog-banner">
+
+<h1 class="blog-banner-name"><a href="/b/yangxind/">ASP.NET 2.0 and IIS 6.0</a></h1>
+
+</div>
+
+</div></div>
+<div class="header-fragments-footer"></div>
+			
+    <div class="content-fragment-page post" id="ctl00_content_ctl00_page"><div class="layout">
+<div class="layout-header"></div>
+<div class="layout-content content-left-sidebar-right" id="ctl00_content_ctl00_layout">
+<div class="layout-region right-sidebar" id="ctl00_content_ctl00_right-sidebar">
+<div class="layout-region-inner right-sidebar"><div class="content-fragment c-t-f-widget no-wrapper-with-spacing with-header" id="fragment-52310">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-header"><div>Translate This Page</div></div>
+<div class="content-fragment-content">
+
+
+     <!--
+         
+           localize text, such as translate this & powered by 
+           
+           
+            -->
+<div id="MicrosoftTranslatorWidget" style="width: 275px; min-height: 83px;
+    border-color: #333333; background-color: #CCCCCC;">
+    <noscript>
+        <a href="http://www.microsofttranslator.com/bv.aspx?a=http%3a%2f%2fblogs.msdn.com%2f">Translate this
+            page</a><br />
+        Powered by <a href="http://www.microsofttranslator.com">Microsoft® Translator</a>
+    </noscript>
+    <script type="text/javascript">
+        setTimeout(function () {
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.charset = "UTF-8";
+            s.src = "http://www.microsofttranslator.com/Ajax/V2/Widget.aspx?siteData=ncUzpG6DNC3ChU0huEHZCFQbqrzCQRcTVqXdHso8P2KRGM-oFXjoeYwum3D31voFEyqUPj4HjacfvEdrHEyIG8CuATkNhQmRwcZkpGVFjvVnLd1gzFP2dxWEWKdcQtE1&mode=manual&from=en-us&layout=ts";
+            var p = document.getElementsByTagName('head')[0] || document.documentElement; p.insertBefore(s, p.firstChild);
+        }, 0); 
+    </script>
+</div>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment blog-links no-wrapper-with-spacing with-header" id="fragment-52311">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-header"><div>Options</div></div>
+<div class="content-fragment-content">
+
+		<div class="navigation-list-header"></div>
+		<ul class="navigation-list">
+	<li class="navigation-item"><a class="internal-link view-application" href="/b/yangxind/"><span></span>Blog Home</a></li><li class="navigation-item"><a class="internal-link view-contact" href="/b/yangxind/contact.aspx"><span></span>Email Blog Author</a></li><li class="navigation-item"><a class="internal-link email-post" href="mailto:?subject=Don't use .NET System.Uri.UnescapeDataString in URL Decoding&amp;body=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx">
+		<span></span>Share this
+	</a></li><li class="navigation-item"><a class="internal-link rss" href="/b/yangxind/rss.aspx"><span></span>RSS for posts</a></li><li class="navigation-item"><a class="internal-link rss" href="/b/yangxind/atom.aspx"><span></span>Atom</a></li><li id=""RssComments""" class="navigation-item"><a class="internal-link rss" href="/b/yangxind/rsscomments.aspx"><span></span>RSS for comments</a></li>
+		</ul>
+		<div class="navigation-list-footer"></div>
+	</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment search-form no-wrapper-with-spacing with-header" id="fragment-52312">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-header"><div>Search</div></div>
+<div class="content-fragment-content">
+
+<div class="field-list-header">
+</div>
+<fieldset class="field-list">
+    <ul class="field-list">
+        <li class="field-item search">
+            <div id="search-allblogs-container">
+                <span class="field-item-input">
+                    <input id="SearchTextBox_AllBlogs" name="SearchTextBox_AllBlogs" type="text" class="searchField"
+                        maxlength="64" size="45" autocomplete="off" />
+                    <input id="SearchButton_AllBlogs" name="SearchButton_AllBlogs" type="button" class="search-button" />
+                </span>
+            </div>
+            <div id="search-thisblog-container">
+                <span class="field-item-input">
+                    <input id="SearchTextBox_ThisBlog" name="SearchTextBox_ThisBlog" type="text" class="searchField"
+                        maxlength="64" size="45" autocomplete="off" />
+                    <input id="SearchButton_ThisBlog" name="SearchButton_ThisBlog" type="button" class="search-button" />
+                </span>
+            </div>
+        </li>
+    </ul>
+</fieldset>
+<div class="field-list-footer">
+    <div id="search-switch-container">
+        <span style="display: inline-block">
+            <input type="radio" name="SearchTypeRadio" value="ThisBlog" id="ThisBlog" checked="checked" /><label
+                for="ThisBlog" id="ThisBlogText">Search this blog</label></span>
+        <span style="display: inline-block">
+            <input type="radio" name="SearchTypeRadio" value="AllBlogs" id="AllBlogs" /><label
+                for="AllBlogs" id="AllBlogsText">Search all blogs</label></span>
+    </div>
+</div>
+<script type="text/javascript">
+var elmSearchAll = $('#search-allblogs-container').hide();
+var elmSearchThis = $('#search-thisblog-container');
+
+// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach       
+(5391 === -1) && $('#search-switch-container').hide();
+
+$(document).ready(function() {
+    $('#ThisBlog').click(function () {
+        var self = $(this);
+        if (self.is(':checked')) {
+            elmSearchAll.hide();
+            elmSearchThis.show();
+        }
+    });
+    
+    $('#AllBlogs').click(function () {
+        var self = $(this);
+        if (self.is(':checked')) {
+            elmSearchThis.hide();
+            elmSearchAll.show();
+        }
+    });
+});
+</script>
+<script src="http://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=SearchTextBox_AllBlogs&btnid=SearchButton_AllBlogs&brand=MSDN&refinement=109&resref=&addEnglish=&rn=&rq=&watermark=&focusOnInit=false&beta=0&iroot=&overrideWatermark=false" type="text/javascript" language="javascript"></script>
+<script src="http://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=SearchTextBox_ThisBlog&btnid=SearchButton_ThisBlog&brand=MSDN&refinement=&resref=&addEnglish=&watermark=&focusOnInit=false&beta=0&iroot=&overrideWatermark=false&rn=ASP.NET%2b2.0%2band%2bIIS%2b6.0&rq=site:blogs.msdn.com/b/yangxind/" type="text/javascript" language="javascript"></script>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment tag-cloud no-wrapper-with-spacing with-header" id="fragment-52313">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-header"><div>Tags</div></div>
+<div class="content-fragment-content">
+<div class="tag-list-header"></div><div class="tag-list">No tags have been created or used yet.</div><div class="tag-list-footer"></div>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment blog-archive-list no-wrapper-with-spacing with-header" id="fragment-52314">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-header"><div>Archive</div></div>
+<div class="content-fragment-content">
+
+		<div class="content-list-header"></div>
+		<div class="content-list-name">Archives</div>
+		<ul class="content-list">
+	
+		<li class="content-item"><a class="internal-link view-post-archive-list" href="/b/yangxind/archive/2006/11.aspx">November 2006</a> (1)</li>
+	
+		<li class="content-item"><a class="internal-link view-post-archive-list" href="/b/yangxind/archive/2006/03.aspx">March 2006</a> (1)</li>
+	
+		<li class="content-item"><a class="internal-link view-post-archive-list" href="/b/yangxind/archive/2005/12.aspx">December 2005</a> (1)</li>
+	
+		</ul>
+		<div class="content-list-footer"></div>
+	
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+</div>
+</div>
+<div class="layout-region content" id="ctl00_content_ctl00_content">
+<div class="layout-region-inner content"><div class="content-fragment blog-title full-border" id="fragment-52315">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-content">
+<h1 class="title">
+	    
+			        
+			    
+	                Don't use .NET System.Uri.UnescapeDataString in URL Decoding
+			    
+	</h1></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment blog-bread-crumbs no-wrapper" id="fragment-52316">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-content">
+
+
+<div class="breadcrumb-list-header"></div>
+<div class="breadcrumb-list">
+	<span class="breadcrumb-item"><a class="internal-link view-home" href="/">MSDN Blogs</a></span>
+  
+	
+
+	
+			<span class="separator"> > </span>
+			<span class="breadcrumb-item">
+		<a href="/b/yangxind/">ASP.NET 2.0 and IIS 6.0</a>
+			</span>
+		
+	
+	
+			<span class="separator"> > </span>
+			<span class="breadcrumb-item">
+		<a href="/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx">Don't use .NET System.Uri.UnescapeDataString in URL Decoding</a>
+			</span>
+		
+
+	
+</div>
+<div class="breadcrumb-list-footer"></div>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment blog-post no-wrapper" id="fragment-52317">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-content">
+
+<div class="full-post-header"></div>
+<div class="full-post">
+	<h3 class="post-name">Don't use .NET System.Uri.UnescapeDataString in URL Decoding</h3>
+	
+    <div class="post-author" >
+        <span class="avatar"><a href="/12484/ProfileUrlRedirect.ashx"><img src="/utility/anonymous.gif" alt="" style="border-width:0px;max-height:32px;max-width:32px;" /></a></span>
+        
+         <span class="profile-usercard-hover" data-profile-userid="00000000-0000-0000-0000-000000000000">
+            <span class="user-name"><a class="internal-link view-user-profile" href="/12484/ProfileUrlRedirect.ashx"><span></span>Yangxin Deng</a></span>
+       
+            
+        </span>
+    </div>
+    <div class="post-date">
+        <span class="value">
+            8 Nov 2006 7:57 PM
+        </span>
+    </div>
+    <div class="post-attributes">
+        <div class="attribute-list-header"></div>
+        <ul class="attribute-list">
+             <li class="attribute-item post-reply-count">
+                <span class="attribute-name">Comments</span>
+                <span class="attribute-value"><a href="#comments" class="internal-link view-replies"><span></span>10</a></span>
+             </li>
+        </ul>
+        <div class="attribute-list-footer"></div>
+    </div>
+    <div class="post-content user-defined-markup"><P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; TEXT-ALIGN: center" align=center><FONT face=Calibri><FONT size=3>Don't use .NET </FONT><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt">System.Uri.UnescapeDataString in URL Decoding</SPAN></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri><FONT size=3>URL Encoding should encode Space into "+" or "%20". URL Decoding should decode "+" or "20" into Space. However by design, </FONT><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt">System.Uri.UnescapeDataString doesn't decode "+" into Space.</SPAN></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="COLOR: #1f497d"><FONT face=Calibri size=3>The MSDN remark of Uri.UnescapeDataString says:</FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Calibri size=3>&nbsp;</FONT><SPAN style="FONT-SIZE: 8.5pt; LINE-HEIGHT: 115%; FONT-FAMILY: 'Verdana','sans-serif'">“Many Web browsers escape spaces inside of URIs into plus ("+") characters; however, the UnescapeDataString method does not convert plus characters into spaces because this behavior is not standard across all URI schemes.”<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Calibri size=3>The issue will rise when your web application has query string like:</FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Calibri size=3>http://&nbsp;</FONT><A href="http://www.ms.com/default?Comment=just+do+it"><FONT face=Calibri size=3>www.ms.com/default?Comment=just+do+it</FONT></A></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Calibri><FONT size=3>If you use </FONT><SPAN style="FONT-SIZE: 10pt; LINE-HEIGHT: 115%; mso-bidi-font-size: 11.0pt">System.Uri.UnescapeDataString to decode the query string value "just+do+it", the result is "just+do+it" instead of "just do it". <SPAN style="mso-spacerun: yes">&nbsp;</SPAN>When the downstream application need to URL encode the value again, it becomes "just%2bdo%2bit ". The final URL will looks like<o:p></o:p></SPAN></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Calibri size=3>http://&nbsp;</FONT><A href="http://www.ms.com/default?Comment=just%2bdo%2bit"><FONT face=Calibri size=3>www.ms.com/default?Comment=just%2bdo%2bit</FONT></A></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Calibri size=3>The spaces get lost and application could interpret the value as "just+do+it" instead of "just do it".</FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><B style="mso-bidi-font-weight: normal"><FONT size=3><FONT face=Calibri>Detailed discussion:<o:p></o:p></FONT></FONT></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri size=3>RFC2396 defined reserved characters such as &amp;, $, + and excluded characters such as space, %, &lt; &gt; must be escaped (URL encoded) when used as values in query string of URL in order to keep the original meaning of the character.</FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri size=3>For example: to pass information such as </FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT size=3><FONT face=Calibri>Products : Windows<SPAN style="COLOR: red">&amp;</SPAN>Office Price: <SPAN style="COLOR: red">$</SPAN>200<SPAN style="mso-tab-count: 1"> </SPAN>Comment: In<SPAN style="BACKGROUND: red"> </SPAN>Stock Sign:<SPAN style="COLOR: red">+</SPAN></FONT></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><o:p><FONT face=Calibri size=3>&nbsp;</FONT></o:p></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri size=3>The URL could be</FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 9pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http://www.ms.com/default.aspx?Products=Windows<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%26</SPAN></B>Office&amp;Price=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%24</SPAN></B>200&amp;Comment=In<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%20</SPAN></B>Stock&amp;sign=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b<o:p></o:p></SPAN></B></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 9pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>or<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 9pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http://www.ms.com/default.aspx?Products=Windows<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%26</SPAN></B>Office&amp;Price=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%24</SPAN></B>200&amp;Comment=In<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">+</SPAN></B>Stock&amp;sign=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B><o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>URL may be used as return URL value in other URL. In the case, the URL need to be encoded and already encoded characters will be double encoded.<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http%3a%2f%2fwww.ms.com%2fdefault.aspx%3fProducts%3dWindows<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2526</SPAN></B>Office%26Price%3d<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2524</SPAN></B>200%26Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2520</SPAN></B>Stock%26sign%3d<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%252b<o:p></o:p></SPAN></B></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>or<o:p></o:p></FONT></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http%3a%2f%2fwww.ms.com%2fdefault.aspx%3fProducts%3dWindows<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2526</SPAN></B>Office%26Price%3d<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2524</SPAN></B>200%26Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B>Stock%26sign%3d<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%252b<o:p></o:p></SPAN></B></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt" cellSpacing=0 cellPadding=0 border=1 class="MsoTableGrid">
+<TBODY>
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; TEXT-ALIGN: center" align=center><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Characters<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; TEXT-ALIGN: center" align=center><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Single Encoded<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; TEXT-ALIGN: center" align=center><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Double Encoded<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 1">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&amp;<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%26<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2526<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 2">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>$<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%24<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2524<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 3">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2b<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%252b<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 4">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Space<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%20, +<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2520, %2b<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 5">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%25<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2525<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 6; mso-yfti-lastrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&lt;<o:p>&nbsp;</o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%3c<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%253c<o:p></o:p></FONT></SPAN></P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Notice Space's single encoding can be "+" and double encoding can be "%2b" and + sign's single encoding is %2b.<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>If the function doesn't handle the encoding properly, the original meaning of the character could be lost in transaction.<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>The right encoding or decoding methods should do what the above table defines.<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>.NET encoding methods<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt" cellSpacing=0 cellPadding=0 border=1 class="MsoTableGrid">
+<TBODY>
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 107.55pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1" vAlign=top width=143>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt">Characters</SPAN></B><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p></o:p></SPAN></FONT></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 116.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=155>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>HttpUtility.UrlEncode<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 131.15pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=175>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>System.Uri.EscapeDataString<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 124.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=165>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>System.Uri.EscapeUriString<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 1">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 107.55pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=143>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&amp;<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 116.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=155>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%26<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 131.15pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=175>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%26<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 124.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=165>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&amp;<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 2">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 107.55pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=143>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>$<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 116.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=155>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%24<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 131.15pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=175>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%24<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 124.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=165>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>$<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 3">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 107.55pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=143>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 116.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=155>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2b<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 131.15pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=175>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2B<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 124.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=165>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 4">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 107.55pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=143>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Space<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 116.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=155>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 131.15pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=175>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%20<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 124.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=165>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%20<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 5">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 107.55pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=143>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 116.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=155>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%25<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 131.15pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=175>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%25<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 124.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=165>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%25<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 6; mso-yfti-lastrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 107.55pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=143>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&lt;<o:p>&nbsp;</o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 116.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=155>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%3c<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 131.15pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=175>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%3C<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 124.05pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=165>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%3C<o:p></o:p></FONT></SPAN></P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Notice:<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>1. System.Uri.EscapeUriString doesn't encode RFC reserved characters<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>2. URLEncode encodes Space as "+" and EscapeDataString encode Space as "%20".<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>3. To encode the whole URL as return URL, EscapdeUriString should not be used. <o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt; mso-table-layout-alt: fixed" cellSpacing=0 cellPadding=0 border=1 class="MsoTableGrid">
+<TBODY>
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>.NET Methods<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri><SPAN style="FONT-SIZE: 9pt; mso-bidi-font-size: 11.0pt">http://www.ms.com/default.aspx?Products=Windows<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%26</SPAN></B>Office&amp;Price=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%24</SPAN></B>200&amp;Comment=In<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">+</SPAN></B>Stock&amp;sign=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B></SPAN><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p></o:p></SPAN></FONT></P></TD></TR>
+<TR style="mso-yfti-irow: 1">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>URLEncode<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http%3a%2f%2fwww.ms.com%2fdefault.aspx%3fProducts%3dWindows%2526Office%26Price%3d%2524200%26Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B>Stock%26sign%3d%252b<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 2">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>EscapeDataString<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http%3A%2F%2Fwww.ms.com%2Fdefault.aspx%3FProducts%3DWindows%2526Office%26Price%3D%2524200%26Comment%3DIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2B</SPAN></B>Stock%26sign%3D%252b<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 3; mso-yfti-lastrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>EscapdeUriString<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>(not right)<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http://www.ms.com/default.aspx?Products=Windows%2526Office&amp;Price=%2524200&amp;Comment=In+Stock&amp;sign=%252b<o:p></o:p></FONT></SPAN></P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Or<o:p></o:p></FONT></SPAN></P>
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt; mso-table-layout-alt: fixed" cellSpacing=0 cellPadding=0 width=638 border=1 class="MsoTableGrid">
+<TBODY>
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>.NET Methods<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http://www.ms.com/default.aspx?Products=Windows%26Office&amp;Price=%24200&amp;Comment=In<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%20</SPAN></B>Stock&amp;sign=%2b<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 1">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>URLEncode<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http%3a%2f%2fwww.ms.com%2fdefault.aspx%3fProducts%3dWindows%2526Office%26Price%3d%2524200%26Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2520</SPAN></B>Stock%26sign%3d%252b<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 2">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>EscapeDataString<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; tab-stops: 23.25pt"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http%3A%2F%2Fwww.ms.com%2Fdefault.aspx%3FProducts%3DWindows%2526Office%26Price%3D%2524200%26Comment%3DIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2520</SPAN></B>Stock%26sign%3D%252b<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 3; mso-yfti-lastrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 81.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=109>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>EscapdeUriString<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>(not right)<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 396.9pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=529>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http://www.ms.com/default.aspx?Products=Windows%2526Office&amp;Price=%2524200&amp;Comment=In%2520Stock&amp;sign=%252b<o:p></o:p></FONT></SPAN></P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>There are two decoding methods in .NET<o:p></o:p></FONT></SPAN></P>
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt" cellSpacing=0 cellPadding=0 border=1 class="MsoTableGrid">
+<TBODY>
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Encoded Characters<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>HttpUtility.UrlDecode<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>System.Uri.UnescapeDataString<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 1">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%26<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&amp;<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&amp;<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 2">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%24<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>$<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>$<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 3">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2b<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 4">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%20<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Space<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Space<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 5">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Space<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 6">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%25<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 7; mso-yfti-lastrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 95.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=127>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%3c<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 112.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=150>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&lt;<o:p>&nbsp;</o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 148.5pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=198>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&lt;<o:p>&nbsp;</o:p></FONT></SPAN></P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Notice that UrlDecode UnescapeDataString decode "+" differently. This will cause problem when decoding return URL which contains double encoded Space as "%2b".<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>For example: <SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>"Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B>Stock" in encoded return URL should be double decoded into<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Variable: "Comment"<SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>Value: "In Stock"<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri><SPAN style="mso-spacerun: yes">&nbsp;</SPAN><o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Call UrlDecode twice on it<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>"Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B>Stock"<SPAN style="mso-spacerun: yes">&nbsp; </SPAN></FONT></SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Wingdings; mso-bidi-font-size: 11.0pt; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; mso-char-type: symbol; mso-symbol-font-family: Wingdings"><SPAN style="mso-char-type: symbol; mso-symbol-font-family: Wingdings">à</SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri> "Comment=In+Stock" </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Wingdings; mso-bidi-font-size: 11.0pt; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; mso-char-type: symbol; mso-symbol-font-family: Wingdings"><SPAN style="mso-char-type: symbol; mso-symbol-font-family: Wingdings">à</SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri> "Comment=In Stock"<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Call UnescapeDataString twice on it<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>"Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B>Stock"<SPAN style="mso-spacerun: yes">&nbsp; </SPAN></FONT></SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Wingdings; mso-bidi-font-size: 11.0pt; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; mso-char-type: symbol; mso-symbol-font-family: Wingdings"><SPAN style="mso-char-type: symbol; mso-symbol-font-family: Wingdings">à</SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri> "Comment=In+Stock" </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Wingdings; mso-bidi-font-size: 11.0pt; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; mso-char-type: symbol; mso-symbol-font-family: Wingdings"><SPAN style="mso-char-type: symbol; mso-symbol-font-family: Wingdings">à</SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri> "Comment=In+Stock"<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>The original string "In Stock" is broken by UnescapeDataString.<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>If the downstream application assumes the URL string had be restored to not encoded format "In Stock" and use it as input to encode it again, the single encoding will become<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>"Comment=In+Stock" </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Wingdings; mso-bidi-font-size: 11.0pt; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; mso-char-type: symbol; mso-symbol-font-family: Wingdings"><SPAN style="mso-char-type: symbol; mso-symbol-font-family: Wingdings">à</SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri> "Comment%3dIn<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B>Stock" <o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Instead of<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri><SPAN style="mso-spacerun: yes">&nbsp;</SPAN><o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>"Comment=In Stock" </FONT></SPAN><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Wingdings; mso-bidi-font-size: 11.0pt; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; mso-char-type: symbol; mso-symbol-font-family: Wingdings"><SPAN style="mso-char-type: symbol; mso-symbol-font-family: Wingdings">à</SPAN></SPAN><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri> "Comment=In+Stock"<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Conclusion:<o:p></o:p></FONT></SPAN></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Since an application has no control of its upstream (use input or config), it can only assume the right encoding is in the URL query string: Single encoded special character as query string parameter value. Especially the Space can be "+" or "%20". When the URL needs to used as return URL in query string, it must be encoded again. Space will be double encoded as "%2b" or %2520".<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>When the receiving application received the encoded URL, if it uses method like UnescapeDataString for decoding, the "%2b" will not decoded into Space, Instead it becomes "+" as final result.<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Developer should avoid encoding Space into "+" or double encoded into "%2b". It is recommended that when encode URL use "<B style="mso-bidi-font-weight: normal">System.Uri.EscapeDataString", </B>when decode URL use<B style="mso-bidi-font-weight: normal"> "</B> <B style="mso-bidi-font-weight: normal">HttpUtility.UrlDecode</B>"<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Tester should ensure that<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>1. Reserved and Excluded characters as defined by RFC2396 should be singled encode when used as value in query string of URL as next table. (URL as links, config values or test values).<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>2. If the URL is used in return URL or value of another query string, the Reserved and Excluded characters should be doubled encoded as next table.<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt" cellSpacing=0 cellPadding=0 border=1 class="MsoTableGrid">
+<TBODY>
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; TEXT-ALIGN: center" align=center><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Characters<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; TEXT-ALIGN: center" align=center><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Single Encoded<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal; TEXT-ALIGN: center" align=center><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Double Encoded<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 1">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&amp;<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%26<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2526<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 2">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>$<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%24<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2524<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 3">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>+<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2b<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%252b<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 4">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Space<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%20, +<o:p></o:p></FONT></SPAN></B></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: red; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2520, %2b<o:p></o:p></FONT></SPAN></B></P></TD></TR>
+<TR style="mso-yfti-irow: 5">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%25<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%2525<o:p></o:p></FONT></SPAN></P></TD></TR>
+<TR style="mso-yfti-irow: 6; mso-yfti-lastrow: yes">
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>&lt;<o:p>&nbsp;</o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%3c<o:p></o:p></FONT></SPAN></P></TD>
+<TD class="" style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #ece9d8; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=213>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>%253c<o:p></o:p></FONT></SPAN></P></TD></TR></TBODY></TABLE>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>Two test URL can be<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 9pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http://www.ms.com/default.aspx?Products=Windows<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%26</SPAN></B>Office&amp;Price=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%24</SPAN></B>200&amp;Comment=In<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%20</SPAN></B>Stock&amp;sign=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b<o:p></o:p></SPAN></B></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 9pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>or<o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 9pt; mso-bidi-font-size: 11.0pt"><FONT face=Calibri>http://www.ms.com/default.aspx?Products=Windows<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%26</SPAN></B>Office&amp;Price=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%24</SPAN></B>200&amp;Comment=In<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">+</SPAN></B>Stock&amp;sign=<B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: red">%2b</SPAN></B><o:p></o:p></FONT></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><SPAN style="FONT-SIZE: 10pt; mso-bidi-font-size: 11.0pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P><div style="clear:both;"></div></div>
+    <div class="post-attachment-viewer">
+		
+    </div>
+    <div class="post-actions">
+        <div class="navigation-list-header"></div>
+        <ul class="navigation-list">
+            <!---->
+            <li class="navigation-item"><a class="internal-link view-replies" href="/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx#comments"><span></span>10 Comments</a></li>
+            
+            
+        </ul>
+        <div class="navigation-list-footer"></div>
+    </div>
+    
+</div>
+<div class="full-post-footer"></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment social-media-sharing no-wrapper" id="fragment-52318">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-content">
+
+<script src="http://i1.blogs.msdn.com/rrcontent/47499858c4077d6e043f7add14000981-e99ec8f3b45f97b38095df2708dc5898-RequestReducedScript.js" type="text/javascript" ></script>
+<div class="ShareThisMainPanel">
+	<div id="ctl00_content_ctl00_w_52318__a71e65_ctl00_c7fb4897_d43f_4334_a8bf_d7a327fb72e2" class="ShareThis_ChildRootPanel" onmouseover="ShareThisChildRootPanelOnmouseOver(this.id);" onmouseout="ShareThisChildRootPanelOnmouseOut(this.id);">
+		<div id="ctl00_content_ctl00_w_52318__a71e65_ctl00_ShareThisBtnCollPanel_aadaaeb4906143d6bffcda6d96fe7e34" class="tierOnePanel">
+			<div class="buttonPanel">
+				<a title="Share on Facebook" class="iconsOnPanel" href="http://www.facebook.com/sharer.php?u=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;t=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on Facebook" src="/CustomWidgets/SocialMediaSharingUC/Resources/facebook.gif" style="border-width:0px;" /></a>
+			</div><div class="buttonPanel">
+				<a title="Share on Twitter" class="iconsOnPanel" href="http://twitter.com/home?status=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding : http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx" target="_blank"><img title="Share on Twitter" src="/CustomWidgets/SocialMediaSharingUC/Resources/twitter.gif" style="border-width:0px;" /></a>
+			</div><div class="buttonPanel">
+				<a title="Share on Digg" class="iconsOnPanel" href="http://digg.com/submit?url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on Digg" src="/CustomWidgets/SocialMediaSharingUC/Resources/digg.gif" style="border-width:0px;" /></a>
+			</div><div class="buttonPanel">
+				<a title="Share on del.icio.us" class="iconsOnPanel" href="http://del.icio.us/post?url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on del.icio.us" src="/CustomWidgets/SocialMediaSharingUC/Resources/delicious.gif" style="border-width:0px;" /></a>
+			</div>
+		</div><div id="ctl00_content_ctl00_w_52318__a71e65_ctl00_ShareThisBtnCollPanel_9bd264090d194273adddc4fc8ce7d708" class="tierTwoPanel" onclick="TierTwoPanelOnclick(this.id);" onkeypress="if (event.keyCode == 13) TierTwoPanelOnclick(this.id);" onmouseover="TierTwoPanelOnmouseOver(this.id);" onmouseout="TierTwoPanelOnmouseOut(this.id);">
+			<div id="ctl00_content_ctl00_w_52318__a71e65_ctl00_ShareThisBtnCollPanel_8759c03a30d64e2fa2da895472adb1b5" class="tierTwoRowPanel">
+				<div class="buttonPanel">
+					<a title="Share on Reddit" class="iconsOnPanel" href="http://www.reddit.com/submit?url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on Reddit" src="/CustomWidgets/SocialMediaSharingUC/Resources/reddit.gif" style="border-width:0px;" /></a>
+				</div><div class="buttonPanel">
+					<a title="Share on LinkedIn" class="iconsOnPanel" href="http://www.linkedin.com/shareArticle?mini=true&amp;ro=true&amp;url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding&amp;summary=&amp;source=Microsoft&amp;armin=armin" target="_blank"><img title="Share on LinkedIn" src="/CustomWidgets/SocialMediaSharingUC/Resources/linkedin.gif" style="border-width:0px;" /></a>
+				</div><div class="buttonPanel">
+					<a title="Share on Slashdot" class="iconsOnPanel" href="http://slashdot.org/bookmark.pl?url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on Slashdot" src="/CustomWidgets/SocialMediaSharingUC/Resources/slashdot.gif" style="border-width:0px;" /></a>
+				</div><div class="buttonPanel">
+					<a title="Share on MySpace" class="iconsOnPanel" href="http://www.myspace.com/Modules/PostTo/Pages/?u=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;t=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on MySpace" src="/CustomWidgets/SocialMediaSharingUC/Resources/myspace.gif" style="border-width:0px;" /></a>
+				</div>
+			</div><div id="ctl00_content_ctl00_w_52318__a71e65_ctl00_ShareThisBtnCollPanel_8ab4cf2b84bc4003b150509e76628bcd" class="tierTwoRowPanel">
+				<div class="buttonPanel">
+					<a title="Share on Technorati" class="iconsOnPanel" href="http://technorati.com/faves/?add=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx" target="_blank"><img title="Share on Technorati" src="/CustomWidgets/SocialMediaSharingUC/Resources/technorati.gif" style="border-width:0px;" /></a>
+				</div><div class="buttonPanel">
+					<a title="Share on FriendFeed" class="iconsOnPanel" href="http://friendfeed.com/?url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on FriendFeed" src="/CustomWidgets/SocialMediaSharingUC/Resources/friendfeed.gif" style="border-width:0px;" /></a>
+				</div><div class="buttonPanel">
+					<a title="Share on Messenger" class="iconsOnPanel" href="http://profile.live.com/badge?url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on Messenger" src="/CustomWidgets/SocialMediaSharingUC/Resources/messenger.png" style="border-width:0px;" /></a>
+				</div><div class="buttonPanel">
+					<a title="Share on StumbleUpon" class="iconsOnPanel" href="http://www.stumbleupon.com/submit?url=http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx&amp;title=Don't+use+.NET+System.Uri.UnescapeDataString+in+URL+Decoding" target="_blank"><img title="Share on StumbleUpon" src="/CustomWidgets/SocialMediaSharingUC/Resources/stumbleupon.gif" style="border-width:0px;" /></a>
+				</div>
+			</div>
+		</div>
+	</div><div id="ctl00_content_ctl00_w_52318__a71e65_ctl00_ShowMoreLessButtonsPanel_e84f1d8a_7bc1_4493_8b5e_66d63ca1df11" tabindex="1" class="ShowMoreLessButtonsPanel" onclick="ShowMoreLessButtonsPanelOnClick(this.id);" onkeypress="if (event.keyCode == 13) ShowMoreLessButtonsPanelOnClick(this.id);" onmouseover="ShowMoreLessButtonsPanelOnmouseOver(this.id);" onmouseout="ShowMoreLessButtonsPanelOnmouseOut(this.id);">
+		<a class="buttonMoreLess" id="btn_more"><img title="More" src="/CustomWidgets/SocialMediaSharingUC/Resources/more.gif" src="" style="border-width:0px;" /></a><a class="buttonMoreLess" id="btn_less"><img title="Less" src="/CustomWidgets/SocialMediaSharingUC/Resources/less.gif" src="" style="border-width:0px;" /></a>
+	</div>
+</div><div class="ShareClearFloatsPanel">
+
+</div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment blog-feedback-list no-wrapper with-header" id="fragment-52319">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-header"><div>Blog - Comment List MSDN TechNet</div></div>
+<div class="content-fragment-content">
+
+<script src="http://i1.blogs.msdn.com/rrcontent/c6cf9e2cff3f0bfc0a1a8c20bf243544-5882c0bb1c3252f4238afcfee921f6f5-RequestReducedScript.js" type="text/javascript" ></script>
+<script type="text/javascript">
+    // <![CDATA[
+    (function ($) {
+        $.extend(jQuery.tmpl.tag, {
+            "for": {
+                _default: { $2: "var i=1;i<=1;i++" },
+                open: 'for ($2){',
+                close: '};'
+            }
+        });
+    })(jQuery);
+
+    function findYPos(obj) {
+        var curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+            return [curtop];
+        }
+    }
+
+    var endpoint = '/b/yangxind/listComments.aspx';
+    var deleteendpoint = '/Utility/ContentFragments/Blogs/FeedbackListAjax.asmx';  
+    $(document).ready(function () {
+        if (window.location.hash) {
+            var commentHash = parseInt(window.location.hash.substring(1, window.location.hash.length));
+            if (!isNaN(commentHash)) {
+                loadComments(0, commentHash, true);
+                return;
+            }
+        }
+
+        loadComments(0, 0, true);
+    });
+
+    function loadComments(page, anchorId, isFirstLoad) {
+        $.ajax({
+            type: 'POST',
+            async: false,
+            contentType: 'application/json',
+            dataType: 'json',
+            url: endpoint + '?blogId=5391&postId=1041825&page=' + page + '&commentId=' + anchorId + '&pageSize=1000&firstLoad=' + isFirstLoad + "&time=" + new Date().getTime(),
+            success: function (data) {
+                var pager = $('#pagerContainer');
+
+                $('#commentList').html('');
+                $('#commentList').html($('#commentTemplate').tmpl(data.Comments));
+                $('#pagerContainer').html($('#pagerTemplate').tmpl(data));
+
+                $('.pagingLink').click(function (e) {
+                    e.preventDefault();
+                    loadComments($(this).data('page'), 0, false);
+                    window.scroll(0, findYPos(document.getElementById('commentList')) - 50);
+                    return false;
+                });
+
+                $('.pagingLink').removeClass('selected');
+                $('#pager' + data.CurrentPage).addClass('selected');
+
+	            
+            }
+        });
+    }
+    // ]]>
+</script>
+
+
+<a name="comments"></a>
+<div class="content-list-header"></div>
+<div class="content-list-name">
+    
+            <a class="internal-link rss" href="/b/yangxind/rsscomments.aspx?WeblogPostID=1041825"><span></span>Comments</a>
+        
+</div>
+
+
+
+<ul id="commentList" class="content-list">
+      <li class="content-item">Loading...</li>
+</ul>
+<div id="pagerContainer" class="pager"></div>
+<div class="content-list-footer"></div>
+
+<script id="commentTemplate" type="text/html">
+    {{if Author}}
+    <li id="commentItem${Id}" class="content-item">
+        <div class="full-post-outer fiji-full-post-outer"><div class="full-post-header"><div class="r fiji-r"></div></div>
+        <div class="full-post"><div class="full-post-inner fiji-full-post-inner">
+            <div class="post-author">
+                <span class="avatar">
+                    {{if !Author.IsAnonymous}}
+                    <a href="${Author.ProfileUrl}">
+                        <img src="${Author.AvatarUrl}" style="border-width:0;max-height:32px;max-width:32px;"/>
+                    </a>
+                    {{else}}
+                    <img src="${Author.AvatarUrl}" style="border-width:0;max-height:32px;max-width:32px;"/>
+                    {{/if}}
+                </span>
+                <span class="profile-usercard-hover" data-profile-userid="${Author.ProfileId}">
+                    <span class="user-name">
+                        {{if !Author.IsAnonymous}}
+                        <a href="${Author.ProfileUrl}">
+                            ${Author.DisplayName}
+                        </a>
+                        {{else}}
+                        ${Author.DisplayName}
+                        {{/if}}
+                    </span>
+                </span>
+            </div>
+            <div class="post-date">
+                <span class="value">${PublishedDate}</span>
+            </div>
+            <a name="${Id}" style="padding-left:5px;" href="#${Id}">#</a>
+            <div class="post-content user-defined-markup">
+                {{html Body}}
+            </div>
+            <div class="post-actions">
+                
+            </div>
+        </div>
+        {{if !Author.IsAnonymous && Author.Id == 12484}}
+        <div class="full-post-footer user-is-author">
+        {{else}}
+        <div class="full-post-footer">
+        {{/if}}
+            <div class="r wireframe-r"></div>
+        </div>
+    </li>
+    {{/if}}
+</script>
+
+
+<script id="pagerTemplate" type="text/html">
+    {{if TotalPages}}     
+        {{if TotalPages > 1}}     
+            <span class="summary">Page 1 of 3 (39 items)</span>            
+        
+             {{for(i=1;i<=TotalPages;i++)}}            
+                <a id="pager${i}" data-page="${i}" href="javascript:void(0);" class="pagingLink">
+                    <span>${i}</span>
+                </a>
+                <span class="separator"></span>
+            {{/for }}
+        {{else}}  
+        {{/if}}
+    {{else}}      
+    {{/if}}
+</script></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+<div class="content-fragment captcha-blog-post-comment-form no-wrapper" id="fragment-52320">
+<div class="content-fragment-inner msdn-content-fragment-inner"><div class="content-fragment-top msdn-content-fragment-top"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div><div class="content-fragment-content">
+<input type="hidden" name="ctl00$content$ctl00$w_52320$_a71e65$ctl00$ctl00$postCommentUrl" id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_postCommentUrl" />
+
+    
+            <div class="field-list-header"></div>
+            <fieldset class="field-list">
+                <legend class="field-list-description">Leave a Comment</legend>
+                <ul class="field-list">
+                    <li id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_NameField" class="field-item">
+                        <label for="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName" class="field-item-header">Name</label>
+                        <span class="field-item-input"><input name="ctl00$content$ctl00$w_52320$_a71e65$ctl00$ctl00$PlaceHolder1$ctl04$bpCommentForm$ctl04$tbName" type="text" size="60" id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName" /></span>
+                        <span id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV" style="color:Red;display:none;"><span class="field-item-validation">*</span></span>
+                    </li>
+                    <li class="field-item post-body">
+                        <label for="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment" class="field-item-header">Comment</label>
+                        <span class="field-item-input"><textarea name="ctl00$content$ctl00$w_52320$_a71e65$ctl00$ctl00$PlaceHolder1$ctl04$bpCommentForm$ctl04$tbComment" rows="2" cols="20" id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment" style="height:100px;"></textarea></span>
+                        <span id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV" style="color:Red;display:none;"><span class="field-item-validation">* Please enter a comment</span></span>
+                        <span id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV" style="color:Red;display:none;"><span class="field-item-validation">Please shorten the content to 3072 or less</span></span>
+                    </li>
+                    <li class="field-item">
+                        
+                           <span id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha" style="color:Red;display:none;">*</span><span id="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_subtext_captcha">Please add 3 and 1 and type the answer here: <input type="text" name="ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_visibleanswer" value="" /></span>
+
+
+                    </li>
+                    <li class="field-item">
+                        <script type="text/javascript">
+                            // <![CDATA[
+
+                            $(document).ready(function () {
+                                $('a.add-reply.post').click(function (e) {
+                                    e.preventDefault();
+                                    postComment(this);
+                                    return false;
+                                });
+
+                                $('#ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').keyup(function (e) {
+                                    $('#errorOnPosting').hide();
+                                });
+                                var nameBox = $('#ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName');
+                                if (nameBox.length > 0) {
+                                    $(nameBox).keyup(function (e) {
+                                        $('#errorOnPosting').hide();
+                                    });
+                                }
+                            });
+
+                            function postComment(anchor) {
+                                if (Page_ClientValidate('BlogPostCommentForm-ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00')) {
+                                    togglePostAndPublishing();
+
+                                    var Core_CreateBlogComment_AjaxEndpoint = '/Utility/ContentFragments/Core/CreateBlogComment.asmx' + "/PostComment";
+                                    var name = '';
+                                    var nameBox = $('#ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName');
+                                    if (nameBox.length > 0) {
+                                        name = $(nameBox).val();
+                                    }
+                                    var body = $('#ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').val();
+                                    var weblogPostId = '1041825';
+
+                                    $.ajax({
+                                        type: "POST",
+                                        async: false,
+                                        url: Core_CreateBlogComment_AjaxEndpoint,
+                                        beforeSend: function (xhr) { TelligentUtility.WriteAuthorizationHeader(xhr); },
+                                        data: { weblogPostId: weblogPostId, url: '', subject: '', message: body, name: name, remember: false },
+                                        success: function (results) {
+                                            var responseVal = $(results.firstChild).text();
+                                            if (responseVal === "-1" || responseVal === "-2") {
+                                                togglePostAndPublishing();
+                                                if (responseVal == "-2")
+                                                    $('#errorOnPosting').html('Your comment has been flagged as spam! The blog administrator has been notified.');
+                                                $('#errorOnPosting').show();
+                                                return;
+                                            }
+                                            var redirectUrl = window.location.href;
+                                            if (redirectUrl.indexOf("?") > -1) {
+                                                redirectUrl = redirectUrl.replace(/\?.*/, "");
+                                            } else if (redirectUrl.indexOf("#") > -1) {
+                                                redirectUrl = redirectUrl.replace(/\#.*/, "");
+                                            }
+
+                                            redirectUrl += '?CommentPosted=true#commentmessage';
+                                            if (window.location.href == redirectUrl) {
+                                                location.reload(true);
+                                            }
+                                            else {
+                                                window.location.href = redirectUrl;
+                                            }
+                                        },
+                                        error: function (xhr, textStatus, errorThrown) {
+                                            togglePostAndPublishing();
+                                            $('#errorOnPosting').show();
+                                        }
+                                    });
+
+                                }
+                            }
+
+                            function togglePostAndPublishing() {
+                                $('a.add-reply.post').toggle();
+                                $('a.publishing').toggle();
+                            }
+                            // ]]>
+                        </script>
+                        <span class="field-item-input">
+                            
+                            <a class="internal-link add-reply post" style="cursor: pointer;"><span></span>Post</a>
+                            <a class="internal-link add-reply publishing" style="color:#c7c7c7; display: none;cursor: pointer;"><span></span>Publishing</a>
+                            <span id="errorOnPosting" style="color: white; background-color: red; padding: 5px; margin-left: 10px; display: none;">An error occurred while posting! Please retry posting your comment.</span>
+                        </span>
+                    </li>
+                </ul>
+            </fieldset>
+            <div class="field-list-footer"></div>
+            
+        
+    </div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom msdn-content-fragment-bottom"><div class="r1 msdn-r1"></div><div class="r2 msdn-r2"></div><div class="r3 msdn-r3"></div><div class="r4 msdn-r4"></div></div></div></div>
+</div>
+</div>
+</div>
+<div class="layout-footer"></div>
+</div></div>
+
+			<div class="footer-fragments-header"></div>
+<div class="footer-fragments"><div class="footer-fragment copyright-info" id="footer-fragment-1402503690">
+
+<ul class="footer-fragment-links">
+    <li class="message copyright">© 2015 Microsoft Corporation.</li>
+	<li class="message termsOfService"><a href="http://msdn.microsoft.com/cc300389">Terms of Use</a> </li>
+    <li class="message trademarks"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a> </li>
+    <li class="message privacy"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a> </li>
+    <li class="message abuse">
+    
+            <a id="ctl00_footer_fragment_1402503690__a71e65_ctl00_ctl00_ctl01_lnkAbuse" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$footer_fragment_1402503690$_a71e65$ctl00$ctl00$ctl01$lnkAbuse&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">Report Abuse</a>
+        
+    </li>
+    
+    <li class="message version">5.6.426.415</li>
+</ul></div><div class="footer-fragment omniture-footer-fragment" id="footer-fragment-1402503691">
+
+
+<script src="http://i1.blogs.msdn.com/rrcontent/2569210a296af7a76a1f0a41cafcfd42-c199d44b1a9c6ae7e05c19b407502229-RequestReducedScript.js" type="text/javascript" ></script>        <noscript><a href="http://www.omniture.com" title="Web Analytics"><img
+        src="http://msstomsdnblogs.112.2O7.net/b/ss/msstomsdnblogs/1/H.20.2--NS/0"
+        height="1" width="1" border="0" alt="" /></a></noscript>
+
+</div><div class="footer-fragment app-insights-footer-fragment" id="footer-fragment-1402503692">
+
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function () {
+                window.appInsights = { queue: [], start: function (n) { function r(n, t) { n[t] = function () { var i = arguments; n.queue.push(function () { n[t].apply(n, i) }) } } var t, i; this.applicationInsightsId = n; this.accountId = null; this.appUserId = null; r(this, "logEvent"); r(this, "logPageView"); t = document.createElement("script"); t.type = "text/javascript"; t.src = "//az416426.vo.msecnd.net/scripts/ai.js"; t.async = !0; i = document.getElementsByTagName("script")[0]; i.parentNode.insertBefore(t, i) } };
+                window.appInsights.start("b4d65b72-ce61-486e-b07c-969cef6675f6");
+                window.appInsights.logPageView();
+            });
+        </script>
+    </div></div>
+<div class="footer-fragments-footer"></div>
+		
+<script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV"), document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV"), document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV"), document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV = document.all ? document.all["ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV"] : document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV");
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.controltovalidate = "ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.display = "Dynamic";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.initialvalue = "";
+var ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV = document.all ? document.all["ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV"] : document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV");
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.controltovalidate = "ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.display = "Dynamic";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.initialvalue = "";
+var ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV = document.all ? document.all["ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV"] : document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV");
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.controltovalidate = "ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.display = "Dynamic";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.validationexpression = "^[\\s\\S]{0,3072}$";
+var ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha = document.all ? document.all["ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha"] : document.getElementById("ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha");
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.errormessage = "*";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.display = "Dynamic";
+ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00";
+//]]>
+</script>
+
+<script type="text/javascript">
+// <![CDATA[
+ctl00_content_ctl00 = new ContentFragmentPageCustomCallback('ctl00_content_ctl00',new Function('mode','parameters','callback','errorCallback','context','ctl00_content_ctl00_ctl00._doCallback(mode+\':\'+parameters,callback,context,errorCallback);'));
+// ]]>
+</script>
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx"
+dc:identifier="http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx"
+dc:title="Don't use .NET System.Uri.UnescapeDataString in URL Decoding"
+trackback:ping="http://blogs.msdn.com/b/yangxind/trackback.ashx?WeblogPostID=1041825" />
+</rdf:RDF>
+-->
+<script type="text/javascript">
+// <![CDATA[
+Telligent_Modal.Configure('\/utility\/loading.htm',['modal'],['modal-title','modal-title-2','modal-title-3','modal-title-4'],['modal-close'],['modal-content','modal-content-2'],['modal-footer','modal-footer-2','modal-footer-3'],['modal-resize'],['modal-mask'],10000,false,true,true);
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_content_ctl00_ctl00 = new Telligent_CallbackManager('ctl00_content_ctl00_ctl00','ctl00$content$ctl00$ctl00','aspnetForm');
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+$('#ctl00_content_ctl00_w_52317__a71e65_ctl00_ctl15_ctl01_Container input[value="Save"]').attr('onclick','').removeAttr('onclick').click( function(){ try { var tagText = $('#ctl00_content_ctl00_w_52317__a71e65_ctl00_ctl15_ctl01_Tags').val(); if (!tagText) return false;var tagList = tagText.replace(';',',').split(','); var isValid = true; for (var i=0,l=tagList.length;i<l;i++) {isValid = /^[ -~]{0,100}$/ig.test(tagList[i]); if (!isValid) { alert(tagList[i] + ' : is not valide'); return false; } }ctl00_content_ctl00_w_52317__a71e65_ctl00_ctl15_ctl01.Save();}catch(ex){ } return false; });
+// ]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        $('#ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').autoResize({animate : false,extraSpace : 0,limit : 3000});//]]>
+</script>
+<script type="text/javascript">
+subtext_invisible_captcha_hideFromJavascriptEnabledBrowsers('ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_subtext_captcha');
+</script><script type="text/javascript">
+subtext_invisible_captcha_setAnswer(3, 1, 'ctl00_content_ctl00_w_52320__a71e65_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_answer');
+</script></form>
+       
+    <script type="text/javascript">
+        $(window).load(function () {
+            $.getScript('http://widgets.membership.s-msft.com/v1/loader.js?brand=msdn&lang=en-US', function () {
+            });
+        });
+    </script>
+    
+	
+        <script type="text/javascript">$('div.breadcrumb-list span:last a').addClass('last');</script></body>
+</html>

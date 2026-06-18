@@ -1,0 +1,319 @@
+MsoEncoding Enumeration (Microsoft.Office.Core)Home Library Learn 
+      Downloads Support Community Sign in | United States - English |  |  
+       
+
+        
+ MSDN Library  Office Development  Microsoft Office 2003  Office 2003  Primary 
+Interop Assembly References  Microsoft Office Core Primary Interop Reference  
+Microsoft.Office.Core  _CommandBarActiveX Interface  _CommandBarButton Interface 
+ _CommandBarButtonEvents Interface  _CommandBarButtonEvents_ClickEventHandler 
+Delegate  _CommandBarButtonEvents_Event Interface  
+_CommandBarButtonEvents_SinkHelper Class  _CommandBarComboBox Interface  
+_CommandBarComboBoxEvents Interface  
+_CommandBarComboBoxEvents_ChangeEventHandler Delegate  
+_CommandBarComboBoxEvents_Event Interface  _CommandBarComboBoxEvents_SinkHelper 
+Class  _CommandBars Interface  _CommandBarsEvents Interface  
+_CommandBarsEvents_Event Interface  _CommandBarsEvents_OnUpdateEventHandler 
+Delegate  _CommandBarsEvents_SinkHelper Class  _IMsoDispObj Interface  
+_IMsoOleAccDispObj Interface  Adjustments Interface  AnswerWizard Interface  
+AnswerWizardFiles Interface  Assistant Interface  Balloon Interface  
+BalloonCheckbox Interface  BalloonCheckboxes Interface  BalloonLabel Interface  
+BalloonLabels Interface  CalloutFormat Interface  CanvasShapes Interface  
+ColorFormat Interface  COMAddIn Interface  COMAddIns Interface  CommandBar 
+Interface  CommandBarButton Interface  CommandBarButtonClass Class  
+CommandBarComboBox Interface  CommandBarComboBoxClass Class  CommandBarControl 
+Interface  CommandBarControls Interface  CommandBarPopup Interface  CommandBars 
+Interface  CommandBarsClass Class  ConnectorFormat Interface  DiagramNode 
+Interface  DiagramNodeChildren Interface  DiagramNodes Interface  DocProperties 
+Enumeration  DocumentLibraryVersion Interface  DocumentLibraryVersions Interface 
+ DocumentProperties Interface  DocumentProperty Interface  FileDialog Interface  
+FileDialogFilter Interface  FileDialogFilters Interface  FileDialogSelectedItems 
+Interface  FileSearch Interface  FileTypes Interface  FillFormat Interface  
+FoundFiles Interface  FreeformBuilder Interface  GroupShapes Interface  
+HTMLProject Interface  HTMLProjectItem Interface  HTMLProjectItems Interface  
+IAccessible Interface  ICommandBarButtonEvents Interface  
+ICommandBarComboBoxEvents Interface  ICommandBarsEvents Interface  IFind 
+Interface  IFoundFiles Interface  ILicAgent Interface  ILicValidator Interface  
+ILicWizExternal Interface  IMsoDiagram Interface  IMsoDispCagNotifySink 
+Interface  IMsoEnvelopeVB Interface  IMsoEnvelopeVBEvents Interface  
+IMsoEnvelopeVBEvents_EnvelopeHideEventHandler Delegate  
+IMsoEnvelopeVBEvents_EnvelopeShowEventHandler Delegate  
+IMsoEnvelopeVBEvents_Event Interface  IMsoEnvelopeVBEvents_SinkHelper Class  
+IMsoEServicesDialog Interface  LanguageSettings Interface  LineFormat Interface  
+MailFormat Enumeration  MsoAlertButtonType Enumeration  MsoAlertCancelType 
+Enumeration  MsoAlertDefaultType Enumeration  MsoAlertIconType Enumeration  
+MsoAlignCmd Enumeration  MsoAnimationType Enumeration  MsoAppLanguageID 
+Enumeration  MsoArrowheadLength Enumeration  MsoArrowheadStyle Enumeration  
+MsoArrowheadWidth Enumeration  MsoAutomationSecurity Enumeration  
+MsoAutoShapeType Enumeration  MsoBalloonButtonType Enumeration  
+MsoBalloonErrorType Enumeration  MsoBalloonType Enumeration  MsoBarPosition 
+Enumeration  MsoBarProtection Enumeration  MsoBarRow Enumeration  MsoBarType 
+Enumeration  MsoBlackWhiteMode Enumeration  MsoButtonSetType Enumeration  
+MsoButtonState Enumeration  MsoButtonStyle Enumeration  MsoButtonStyleHidden 
+Enumeration  MsoCalloutAngleType Enumeration  MsoCalloutDropType Enumeration  
+MsoCalloutType Enumeration  MsoCharacterSet Enumeration  MsoColorType 
+Enumeration  MsoComboStyle Enumeration  MsoCommandBarButtonHyperlinkType 
+Enumeration  MsoCondition Enumeration  MsoConnector Enumeration  
+MsoConnectorType Enumeration  MsoControlOLEUsage Enumeration  MsoControlType 
+Enumeration  MsoDebugOptions Interface  MsoDiagramNodeType Enumeration  
+MsoDiagramType Enumeration  MsoDistributeCmd Enumeration  MsoDocProperties 
+Enumeration  MsoEditingType Enumeration  MsoEncoding Enumeration  MsoEnvelope 
+Interface  MsoEnvelopeClass Class  MsoExtraInfoMethod Enumeration  
+MsoExtrusionColorType Enumeration  MsoFarEastLineBreakLanguageID Enumeration  
+MsoFeatureInstall Enumeration  MsoFileDialogType Enumeration  MsoFileDialogView 
+Enumeration  MsoFileFindListBy Enumeration  MsoFileFindOptions Enumeration  
+MsoFileFindSortBy Enumeration  MsoFileFindView Enumeration  MsoFileNewAction 
+Enumeration  MsoFileNewSection Enumeration  MsoFileType Enumeration  MsoFillType 
+Enumeration  MsoFilterComparison Enumeration  MsoFilterConjunction Enumeration  
+MsoFlipCmd Enumeration  MsoGradientColorType Enumeration  MsoGradientStyle 
+Enumeration  MsoHorizontalAnchor Enumeration  MsoHTMLProjectOpen Enumeration  
+MsoHTMLProjectState Enumeration  MsoHyperlinkType Enumeration  MsoIconType 
+Enumeration  MsoLanguageID Enumeration  MsoLanguageIDHidden Enumeration  
+MsoLastModified Enumeration  MsoLineDashStyle Enumeration  MsoLineStyle 
+Enumeration  MsoMenuAnimation Enumeration  MsoMixedType Enumeration  MsoModeType 
+Enumeration  MsoMoveRow Enumeration  MsoOLEMenuGroup Enumeration  
+MsoOrgChartLayoutType Enumeration  MsoOrgChartOrientation Enumeration  
+MsoOrientation Enumeration  MsoPatternType Enumeration  MsoPermission 
+Enumeration  MsoPictureColorType Enumeration  MsoPresetExtrusionDirection 
+Enumeration  MsoPresetGradientType Enumeration  MsoPresetLightingDirection 
+Enumeration  MsoPresetLightingSoftness Enumeration  MsoPresetMaterial 
+Enumeration  MsoPresetTextEffect Enumeration  MsoPresetTextEffectShape 
+Enumeration  MsoPresetTexture Enumeration  MsoPresetThreeDFormat Enumeration  
+MsoRelativeNodePosition Enumeration  MsoScaleFrom Enumeration  MsoScreenSize 
+Enumeration  MsoScriptLanguage Enumeration  MsoScriptLocation Enumeration  
+MsoSearchIn Enumeration  MsoSegmentType Enumeration  MsoShadowType Enumeration  
+MsoShapeType Enumeration  MsoSharedWorkspaceTaskPriority Enumeration  
+MsoSharedWorkspaceTaskStatus Enumeration  MsoSortBy Enumeration  MsoSortOrder 
+Enumeration  MsoSyncAvailableType Enumeration  MsoSyncCompareType Enumeration  
+MsoSyncConflictResolutionType Enumeration  MsoSyncErrorType Enumeration  
+MsoSyncEventType Enumeration  MsoSyncStatusType Enumeration  MsoSyncVersionType 
+Enumeration  MsoTargetBrowser Enumeration  MsoTextEffectAlignment Enumeration  
+MsoTextOrientation Enumeration  MsoTextureType Enumeration  MsoTriState 
+Enumeration  MsoVerticalAnchor Enumeration  MsoWizardActType Enumeration  
+MsoWizardMsgType Enumeration  MsoZOrderCmd Enumeration  NewFile Interface  
+ODSOColumn Interface  ODSOColumns Interface  ODSOFilter Interface  ODSOFilters 
+Interface  OfficeDataSourceObject Interface  Permission Interface  PictureFormat 
+Interface  PropertyTest Interface  PropertyTests Interface  ScopeFolder 
+Interface  ScopeFolders Interface  Script Interface  Scripts Interface  
+SearchFolders Interface  SearchScope Interface  SearchScopes Interface  
+ShadowFormat Interface  Shape Interface  ShapeNode Interface  ShapeNodes 
+Interface  ShapeRange Interface  Shapes Interface  SharedWorkspace Interface  
+SharedWorkspaceFile Interface  SharedWorkspaceFiles Interface  
+SharedWorkspaceFolder Interface  SharedWorkspaceFolders Interface  
+SharedWorkspaceLink Interface  SharedWorkspaceLinks Interface  
+SharedWorkspaceMember Interface  SharedWorkspaceMembers Interface  
+SharedWorkspaceTask Interface  SharedWorkspaceTasks Interface  Signature 
+Interface  SignatureSet Interface  SmartDocument Interface  Sync Interface  
+TextEffectFormat Interface  TextFrame Interface  ThreeDFormat Interface  
+UserPermission Interface  WebComponent Interface  WebComponentFormat Interface  
+WebComponentProperties Interface  WebComponentWindowExternal Interface  
+WebPageFont Interface  WebPageFonts Interface  
+Community Content
+ Add code samples and tips to enhance this topic.
+More...   
+ MsoEncoding Enumeration  
+Office 2003 Other Versions  Office 2010 
+Specifies the document encoding (code page or character set) for the Web browser 
+to use when a user views a saved document. 
+Namespace: Microsoft.Office.Core
+Assembly: office (in office.dll)Usage
+
+
+VBCopy
+ 'Usage
+Dim msoEncoding1 As MsoEncoding = MsoEncoding.msoEncodingArabic
+
+Syntax
+
+
+C#C++VBCopy
+ public enum MsoEncoding
+J#Copy
+ public enum MsoEncoding
+JScriptCopy
+ public enum MsoEncoding
+Members
+
+
+      Member nameDescription
+      msoEncodingArabicArabic.
+      msoEncodingArabicASMOArabic ASMO.
+      msoEncodingArabicAutoDetectWeb browser auto-detects type of Arabic 
+      encoding to use.
+      msoEncodingArabicTransparentASMOTransparent Arabic.
+      msoEncodingAutoDetectWeb browser auto-detects type of encoding to use.
+      msoEncodingBalticBaltic.
+      msoEncodingCentralEuropeanCentral European.
+      msoEncodingCyrillicCyrillic.
+      msoEncodingCyrillicAutoDetectWeb browser auto-detects type of Cyrillic 
+      encoding to use.
+      msoEncodingEBCDICArabicExtended Binary Coded Decimal Interchange Code 
+      (EBCDIC) Arabic.
+      msoEncodingEBCDICDenmarkNorwayEBCDIC as used in Denmark and Norway.
+      msoEncodingEBCDICFinlandSwedenEBCDIC as used in Finland and Sweden.
+      msoEncodingEBCDICFranceEBCDIC as used in France.
+      msoEncodingEBCDICGermanyEBCDIC as used in Germany.
+      msoEncodingEBCDICGreekEBCDIC as used in the Greek language.
+      msoEncodingEBCDICGreekModernEBCDIC as used in the Modern Greek language.
+      msoEncodingEBCDICHebrewEBCDIC as used in the Hebrew language.
+      msoEncodingEBCDICIcelandicEBCDIC as used in Iceland.
+      msoEncodingEBCDICInternationalInternational EBCDIC.
+      msoEncodingEBCDICItalyEBCDIC as used in Italy.
+      msoEncodingEBCDICJapaneseKatakanaExtendedEBCDIC as used with Japanese 
+      Katakana (extended).
+      msoEncodingEBCDICJapaneseKatakanaExtendedAndJapaneseEBCDIC as used with 
+      Japanese Katakana (extended) and Japanese.
+      msoEncodingEBCDICJapaneseLatinExtendedAndJapaneseEBCDIC as used with 
+      Japanese Latin (extended) and Japanese.
+      msoEncodingEBCDICKoreanExtendedEBCDIC as used with Korean (extended).
+      msoEncodingEBCDICKoreanExtendedAndKoreanEBCDIC as used with Korean 
+      (extended) and Korean.
+      msoEncodingEBCDICLatinAmericaSpainEBCDIC as used in Latin America and 
+      Spain.
+      msoEncodingEBCDICMultilingualROECELatin2EBCDIC Multilingual ROECE (Latin 
+      2).
+      msoEncodingEBCDICRussianEBCDIC as used with Russian.
+      msoEncodingEBCDICSerbianBulgarianEBCDIC as used with Serbian and 
+Bulgarian.
+      msoEncodingEBCDICSimplifiedChineseExtendedAndSimplifiedChineseEBCDIC as 
+      used with Simplified Chinese (extended) and Simplified Chinese.
+      msoEncodingEBCDICThaiEBCDIC as used with Thai.
+      msoEncodingEBCDICTurkishEBCDIC as used with Turkish.
+      msoEncodingEBCDICTurkishLatin5EBCDIC as used with Turkish (Latin 5).
+      msoEncodingEBCDICUnitedKingdomEBCDIC as used in the United Kingdom.
+      msoEncodingEBCDICUSCanadaEBCDIC as used in the United States and Canada.
+      msoEncodingEBCDICUSCanadaAndJapaneseEBCDIC as used in the United States 
+      and Canada, and with Japanese.
+      msoEncodingEBCDICUSCanadaAndTraditionalChineseEBCDIC as used in the United 
+      States and Canada, and with Traditional Chinese.
+      msoEncodingEUCChineseSimplifiedChineseExtended Unix Code (EUC) as used 
+      with Chinese and Simplified Chinese.
+      msoEncodingEUCJapaneseEUC as used with Japanese.
+      msoEncodingEUCKoreanEUC as used with Korean.
+      msoEncodingEUCTaiwaneseTraditionalChineseEUC as used with Taiwanese and 
+      Traditional Chinese.
+      msoEncodingEuropa3Europa.
+      msoEncodingExtAlphaLowercaseExtended Alpha lowercase.
+      msoEncodingGreekGreek.
+      msoEncodingGreekAutoDetectWeb browser auto-detects type of Greek encoding 
+      to use.
+      msoEncodingHebrewHebrew.
+      msoEncodingHZGBSimplifiedChineseSimplified Chinese (HZGB).
+      msoEncodingIA5GermanGerman (International Alphabet No. 5, or IA5).
+      msoEncodingIA5IRVIA5, International Reference Version (IRV).
+      msoEncodingIA5NorwegianIA5 as used with Norwegian.
+      msoEncodingIA5SwedishIA5 as used with Swedish.
+      msoEncodingISCIIAssameseIndian Script Code for Information Interchange 
+      (ISCII) as used with Assamese.
+      msoEncodingISCIIBengaliISCII as used with Bengali.
+      msoEncodingISCIIDevanagariISCII as used with Devanagari.
+      msoEncodingISCIIGujaratiISCII as used with Gujarati.
+      msoEncodingISCIIKannadaISCII as used with Kannada.
+      msoEncodingISCIIMalayalamISCII as used with Malayalam.
+      msoEncodingISCIIOriyaISCII as used with Oriya.
+      msoEncodingISCIIPunjabiISCII as used with Punjabi.
+      msoEncodingISCIITamilISCII as used with Tamil.
+      msoEncodingISCIITeluguISCII as used with Telugu.
+      msoEncodingISO2022CNSimplifiedChineseISO 2022-CN encoding as used with 
+      Simplified Chinese.
+      msoEncodingISO2022CNTraditionalChineseISO 2022-CN encoding as used with 
+      Traditional Chinese.
+      msoEncodingISO2022JPJISX02011989ISO 2022-JP 
+      msoEncodingISO2022JPJISX02021984ISO 2022-JP
+      msoEncodingISO2022JPNoHalfwidthKatakanaISO 2022-JP with no half-width 
+      Katakana.
+      msoEncodingISO2022KRISO 2022-KR.
+      msoEncodingISO6937NonSpacingAccentISO 6937 Non-Spacing Accent.
+      msoEncodingISO885915Latin9ISO 8859-15 with Latin 9.
+      msoEncodingISO88591Latin1ISO 8859-1 Latin 1.
+      msoEncodingISO88592CentralEuropeISO 8859-2 Central Europe.
+      msoEncodingISO88593Latin3ISO 8859-3 Latin 3.
+      msoEncodingISO88594BalticISO 8859-4 Baltic.
+      msoEncodingISO88595CyrillicISO 8859-5 Cyrillic.
+      msoEncodingISO88596ArabicISA 8859-6 Arabic.
+      msoEncodingISO88597GreekISO 8859-7 Greek.
+      msoEncodingISO88598HebrewISO 8859-8 Hebrew.
+      msoEncodingISO88598HebrewLogicalISO 8859-8 Hebrew (Logical).
+      msoEncodingISO88599TurkishISO 8859-9 Turkish.
+      msoEncodingJapaneseAutoDetectWeb browser auto-detects type of Japanese 
+      encoding to use.
+      msoEncodingJapaneseShiftJISJapanese (Shift-JIS).
+      msoEncodingKOI8RKOI8-R.
+      msoEncodingKOI8UK0I8-U.
+      msoEncodingKoreanKorean.
+      msoEncodingKoreanAutoDetectWeb browser auto-detects type of Korean 
+      encoding to use.
+      msoEncodingKoreanJohabKorean (Johab).
+      msoEncodingMacArabicMacintosh Arabic.
+      msoEncodingMacCroatiaMacintosh Croatian.
+      msoEncodingMacCyrillicMacintosh Cyrillic.
+      msoEncodingMacGreek1Macintosh Greek.
+      msoEncodingMacHebrewMacintosh Hebrew.
+      msoEncodingMacIcelandicMacintosh Icelandic.
+      msoEncodingMacJapaneseMacintosh Japanese.
+      msoEncodingMacKoreanMacintosh Korean.
+      msoEncodingMacLatin2Macintosh Latin 2.
+      msoEncodingMacRomanMacintosh Roman.
+      msoEncodingMacRomaniaMacintosh Romanian.
+      msoEncodingMacSimplifiedChineseGB2312Macintosh Simplified Chinese (GB 
+      2312).
+      msoEncodingMacTraditionalChineseBig5Macintosh Traditional Chinese (Big 5).
+      msoEncodingMacTurkishMacintosh Turkish.
+      msoEncodingMacUkraineMacintosh Ukrainian.
+      msoEncodingOEMArabicOEM as used with Arabic.
+      msoEncodingOEMBalticOEM as used with Baltic.
+      msoEncodingOEMCanadianFrenchOEM as used with Canadian French.
+      msoEncodingOEMCyrillicOEM as used with Cyrillic.
+      msoEncodingOEMCyrillicIIOEM as used with Cyrillic II.
+      msoEncodingOEMGreek437GOEM as used with Greek 437G.
+      msoEncodingOEMHebrewOEM as used with Hebrew.
+      msoEncodingOEMIcelandicOEM as used with Icelandic.
+      msoEncodingOEMModernGreekOEM as used with Modern Greek.
+      msoEncodingOEMMultilingualLatinIOEM as used with multi-lingual Latin I.
+      msoEncodingOEMMultilingualLatinIIOEM as used with multi-lingual Latin II.
+      msoEncodingOEMNordicOEM as used with Nordic languages.
+      msoEncodingOEMPortugueseOEM as used with Portuguese.
+      msoEncodingOEMTurkishOEM as used with Turkish.
+      msoEncodingOEMUnitedStatesOEM as used in the United States.
+      msoEncodingSimplifiedChineseAutoDetectWeb browser auto-detects type of 
+      Simplified Chinese encoding to use.
+      msoEncodingSimplifiedChineseGB18030Simplified Chinese GB 18030.
+      msoEncodingSimplifiedChineseGBKSimplified Chinese GBK.
+      msoEncodingT61T61.
+      msoEncodingTaiwanCNSTaiwan CNS.
+      msoEncodingTaiwanEtenTaiwan Eten.
+      msoEncodingTaiwanIBM5550Taiwan IBM 5550.
+      msoEncodingTaiwanTCATaiwan TCA.
+      msoEncodingTaiwanTeleTextTaiwan Teletext.
+      msoEncodingTaiwanWangTaiwan Wang.
+      msoEncodingThaiThai.
+      msoEncodingTraditionalChineseAutoDetectWeb browser auto-detects type of 
+      Traditional Chinese encoding to use.
+      msoEncodingTraditionalChineseBig5Traditional Chinese Big 5.
+      msoEncodingTurkishTurkish.
+      msoEncodingUnicodeBigEndianUnicode big endian.
+      msoEncodingUnicodeLittleEndianUnicode little endian.
+      msoEncodingUSASCIIUnited States ASCII.
+      msoEncodingUTF7UTF-7 encoding.
+      msoEncodingUTF8UTF-8 encoding.
+      msoEncodingVietnameseVietnamese.
+      msoEncodingWesternWestern.
+
+Platforms
+
+
+Development Platforms
+Windows XP Home Edition, Windows XP Professional, Windows Server 2003, and 
+Windows 2000
+Target Platforms
+See Also
+
+
+Reference
+Microsoft.Office.Core Namespace 
+
+Community Content Add  FAQ © 2011 Microsoft. All rights reserved.Terms of Use | 
+Trademarks | Privacy Statement | Feedback Feedback  Feedbackx Tell us about your 
+experience... Did the page load quickly? Yes  No  Do you like the page design? 
+Yes  No  How useful is this topic?       Tell us more  Enter description here.   
+        

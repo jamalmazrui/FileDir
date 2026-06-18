@@ -1,0 +1,81 @@
+Subject:
+Re: FileDir and dropBox
+From:
+"Peter Scanlon" <scanno@tpg.com.au>
+Date:
+Mon, 21 Jun 2010 22:47:15 +1000
+To:
+"Jamal Mazrui" <empower@smart.net>
+
+Ah yes, I use FileDir to look in side and then to unzip zipped files all the time. Both PC set to do that.
+ 
+ 
+
+    ----- Original Message -----
+    From: Jamal Mazrui
+    To: Peter Scanlon
+    Sent: Monday, June 21, 2010 10:16 PM
+    Subject: Re: FileDir and dropBox
+
+    There is an option in the FileDir program group of the Windows Start
+    Menu called "Set folders and .zip extension" to open with FileDir."
+    Another option removes that association.
+
+
+
+    On 6/20/2010 11:36 AM, Peter Scanlon wrote:
+    >
+    >  >>Are the computers using the same Windows version?
+    > They both have:
+    > Full Name = Microsoft Windows XP Professional
+    >
+    > Version = 5.1.2600.196608
+    >
+    > User Interface Culture = en-US
+    >
+    > Platform = Win32NT
+    >
+    >  >>Do you have FileDir
+    > configured to open folders, rather than Windows Explorer, on both of
+    > them?
+    > Where do I find this option?
+    > Does the DropBox option not appear in the FileDir Shift+F10
+    > Not on either computer.
+    > P.
+    > menu?
+    >
+    > Jamal
+    >
+    >
+    > On 6/20/2010 6:07 AM, Peter Scanlon wrote:
+    >  >
+    >  > Hi,
+    >  > I have just installed a program called DropBox which is a file sharing
+    >  > program, excellent for blind users as it opens up just a "Save Dialogue"
+    >  > if you supply a link to a person you want to have the file.
+    >  > I installed it on my computer mainly used for sound editing and music as
+    >  > I wanted to share those files. However I find that I am unable to get
+    >  > the DropBox menu which is supposed to appear in the context right click
+    >  > menu. (using fileDir).
+    >  > I have tried invoking the DropBox shortcut from the desktop and also the
+    >  > "My Computer and My documents shortcuts. On each occasion FileDir
+    > comes up.
+    >  > the point is that this does not happen on the second computer on which I
+    >  > installed DropBox.
+    >  > If I click on My Computer or My Documents or dropbox from the Desktop,
+    >  > they come up without FileDir, which then allows the context menu to
+    >  > contain the DropBox menu.
+    >  > It appears there may be some conflict not allowing the DropBox menu to
+    >  > appear in the FileDir context menu.
+    >  > Is there some fileDir setting that may be different on my computers that
+    >  > is causing this?
+    >  > Peter Scanlon
+    >  > Editor
+    >  > THE BIG BEAT OF THE 50'S
+    >  > The Australian Rock'n'Roll Appreciation Society.
+    >  > Submissions to
+    >  > editor@arras.com.au <mailto:editor@arras.com.au>
+    > <mailto:editor@arras.com.au>
+    >  > Phone +61 03 9878 3623
+    >
+

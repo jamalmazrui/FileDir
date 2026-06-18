@@ -1,0 +1,60 @@
+Subject:
+RE: small mistake in description of file dir window-eyes script
+From:
+Dave Bahr <David.C.Bahr@Colorado.EDU>
+Date:
+Wed, 30 Jun 2010 07:52:29 -0600
+To:
+"'Jamal Mazrui'" <empower@smart.net>
+
+Hi, it was in the description you have written up for the file dir script in
+the install packages dialogue. The one you can read when you find your
+script in the dialogue and then tab over to read a description of the
+package before installing it.  Does that help? The text reads: 
+This is a script file and key label dictionary designed to fine tune speech
+in the FileDir file manager, which is freely available
+athttp://EmpowermentZone.com/dirsetup.exeThe script requires GW Toolkit and
+Homer Shared Object.
+Changed code to get Window-Eyes program folder to work around current bug in
+Process object.
+
+
+
+	 
+ 
+Dave c. bahr
+
+-----Original Message-----
+From: Jamal Mazrui [mailto:empower@smart.net] 
+Sent: Wednesday, June 30, 2010 6:12 AM
+To: Dave Bahr
+Subject: Re: small mistake in description of file dir window-eyes script
+
+Hi Dave,
+Not intentional -- sorry about the inconvenience.  Not sure what context you
+mean though.  Was this a description in an email message, web page, or
+something else?
+
+Jamal
+
+
+On 6/28/2010 10:01 PM, Dave Bahr wrote:
+> >
+> > Hey Jamal,
+> > I wasn't sure if you were aware of this, but when you wrote up the 
+> > description of the file dir window-eys script, you surrounded the url 
+> > of the file dir executable with words, it reads:
+> > athttp://EmpowermentZone.com/dirsetup.exeThe
+> > as you can see, you have the word, at, before the http of the url, and 
+> > the word, the, after the .exe of the filename. I just had to delete 
+> > them from the url itself and the program downloaded fine, but it took 
+> > me a bit to realize why the url wasn't working properly.
+> > So, alal in all, not a huge deal, but I thought you should know.
+> > Cheers,
+> > Dave c. bahr
+
+No virus found in this incoming message.
+Checked by AVG - www.avg.com
+Version: 9.0.830 / Virus Database: 271.1.1/2971 - Release Date: 06/29/10
+12:35:00
+

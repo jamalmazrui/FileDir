@@ -1,0 +1,107 @@
+using (WebClient client = new WebClient()){
+    client.OpenRead(url);
+
+    string header_contentDisposition = client.ResponseHeaders["content-disposition"];
+    string filename = new ContentDisposition(header_contentDisposition).FileName;
+
+    ...do stuff...
+}
+using (WebClient client = new WebClient())
+{
+    using (Stream rawStream = client.OpenRead(url))
+    {
+        string fileName = string.Empty;
+        string contentDisposition = client.ResponseHeaders["content-disposition"];
+        if (!string.IsNullOrEmpty(contentDisposition))
+        {
+            string lookFor = "filename=";
+            int index = contentDisposition.IndexOf(lookFor, StringComparison.CurrentCultureIgnoreCase);
+            if (index >= 0)
+                fileName = contentDisposition.Substring(index + lookFor.Length);
+        }
+        if (fileName.Length > 0)
+        {
+            using (StreamReader reader = new StreamReader(rawStream))
+            {
+                File.WriteAllText(Server.MapPath(fileName), reader.ReadToEnd());
+                reader.Close();
+            }
+        }
+        rawStream.Close();
+    }
+}
+You can just replace the StreamReader with a MemoryStream, and then use rawStream.CopyTo(memStream) and File.WriteAllBytes(path, memStream.ToArray()) (.NET
+    public override void OnAttachmentSaved(string filePath)
+    {
+        var webClient = new WebClient();
+
+        //get file name
+        var request = WebRequest.Create(filePath);
+        var response = request.GetResponse();
+        var contentDisposition = response.Headers["Content-Disposition"];
+        const string contentFileNamePortion = "filename=";
+        var fileNameStartIndex = contentDisposition.IndexOf(contentFileNamePortion, StringComparison.InvariantCulture) + contentFileNamePortion.Length;
+        var originalFileNameLength = contentDisposition.Length - fileNameStartIndex;
+        var originalFileName = contentDisposition.Substring(fileNameStartIndex, originalFileNameLength);
+
+        //download file
+        webClient.UseDefaultCredentials = true;
+        webClient.DownloadFile(filePath, String.Format(@"C:\inetpub\Attachments Test\{0}", originalFileName));            
+    }
+using (WebClient client = new WebClient())
+{
+    using (Stream rawStream = client.OpenRead(url))
+    {
+        string fileName = string.Empty;
+        string contentDisposition = client.ResponseHeaders["content-disposition"];
+        if (!string.IsNullOrEmpty(contentDisposition))
+        {
+            string lookFor = "filename=";
+            int index = contentDisposition.IndexOf(lookFor, StringComparison.CurrentCultureIgnoreCase);
+            if (index >= 0)
+                fileName = contentDisposition.Substring(index + lookFor.Length);
+        }
+        if (fileName.Length > 0)
+        {
+            using (StreamReader reader = new StreamReader(rawStream))
+            {
+                File.WriteAllText(Server.MapPath(fileName), reader.ReadToEnd());
+                reader.Close();
+            }
+        }
+        rawStream.Close();
+    }
+}
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        try
+        {
+
+            HttpWebResponse res = (HttpWebResponse)request.GetResponse();
+            using (Stream rstream = res.GetResponseStream())
+            {
+                string fileName = res.Headers["Content-Disposition"] != null ?
+                    res.Headers["Content-Disposition"].Replace("attachment; filename=", "").Replace("\"", "") :
+                    res.Headers["Location"] != null ? Path.GetFileName(res.Headers["Location"]) : 
+                    Path.GetFileName(url).Contains('?') || Path.GetFileName(url).Contains('=') ?
+                    Path.GetFileName(res.ResponseUri.ToString()) : defaultFileName;
+            }
+            res.Close();
+        }
+        catch { }
+
+Tested this on http://upload.p-kratzer.com/index.php?dir=&file=asdfasdfwervdcvvedb and it does return wetter.JPG. 
+The file name is simply everything after the last '/' in the url (and before the ? if the url has parameters).
+JobaDiniz                        Saturday, July 24, 2010 5:27 PM                    
+
+
+
+Saturday, July 24, 2010 1:08 AM
+                
+
+
+
+Saturday, July 24, 2010 3:14 AM
+
+
+                        Reply   
+ string n = webResponse.Headers["Location"] ;

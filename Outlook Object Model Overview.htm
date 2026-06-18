@@ -1,0 +1,921 @@
+﻿<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "" ""><HTML lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=11.0000" http-equiv="X-UA-Compatible">
+
+<META name="WT.seg_1" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"><LINK href="https://msdn.microsoft.com/en-us/library/ms268893.aspx" 
+rel="canonical">         <TITLE>Outlook Object Model Overview</TITLE> 
+<META name="DCS.dcsuri" content="/en-us/library/ms268893(d=default,l=en-us,v=vs.140).aspx"> 
+<META name="NormalizedUrl" content="https://msdn.microsoft.com/en-us/library/ms268893(d=default,l=en-us,v=vs.140).aspx"> 
+<META name="ms.normalizedurl" content="https://msdn.microsoft.com/en-us/library/ms268893(d=default,l=en-us,v=vs.140).aspx"> 
+<META name="DCS.appliesToProduct" content=""> 
+<META name="DCS.appliesToTechnology" content=""> 
+<META name="DCS.appliesToVersion" content=""> 
+<META name="ms.prod" content="visual-studio-dev14"> 
+<META name="ms.service" content=""> 
+<META name="ms.devlang" content="dotnet"> 
+<META name="ms.topic" content="article"> 
+<META name="AmbientContext" content='{"AmbientContextId":"FE399EE9-D4C2-4CBB-8E39-81ADE30B9B02","AmbientContextDownstream":{}}'> 
+<META name="VotingContextUrl" content="https://msdn.microsoft.com/en-us/library/ms268893(d=default,l=en-us,v=vs.140).aspx"> 
+<META name="MN" content="FB361393-8:55:35 AM"> 
+<META name="Search.ShortId" content="ms268893"> 
+<META name="ms.shortidmsdn" content="ms268893"> 
+<META name="Ms.Locale" content="en-us"> 
+<META name="ms.prodver" content="VS.140"> 
+<META name="ms.contentlang" content="EN"> 
+<META name="ms.lang" content="EN"> 
+<META name="ms.loc" content="US"> 
+<META name="ms.sitever" content="2015.09.14.1"> 
+<META name="ms.assetid" content="59704974-b7d9-46d6-949c-e97349c75279"> 
+<META name="ms.auth" content="0"> 
+<META name="ms.custom" content=""> 
+<META name="viewport" content="width=device-width, initial-scale=1.0">           
+              <LINK href="https://i-msdn.sec.s-msft.com/Combined.css?resources=0:ImageSprite,0:TopicResponsive,0:TopicResponsive.MediaQueries,1:CodeSnippet,1:ProgrammingSelector,1:ExpandableCollapsibleArea,0:CommunityContent,1:TopicNotInScope,1:FeedViewerBasic,1:ImageSprite,2:Header,2:HeaderFooterSprite,2:Header.MediaQueries,3:Banner.MediaQueries,4:LinkList,0:Breadcrumbs,0:Breadcrumbs.MediaQueries,0:ResponsiveToc,0:ResponsiveToc.MediaQueries,1:VersionSelector,0:LibraryMemberFilter,5:SkinnyRating,2:Footer,2:Footer.MediaQueries,4:FooterSock,4:FooterSock.MediaQueries,0:BaseResponsive,6:MsdnResponsive;/Areas/Library/Content:0,/Areas/Epx/Content/Css:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Epx/Shared/Content:3,/Areas/Epx/Themes/Base/Content:4,/Areas/Library/Themes/Base/Content:5,/Areas/Library/Themes/Msdn/Content:6&amp;amp;v=C095E67EC215988DCA7BF7D689D03CFF" 
+rel="stylesheet" type="text/css">
+<SCRIPT src="//az416426.vo.msecnd.net/scripts/a/ai.0.js" type="text/javascript" async=""></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+/**/
+(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { 
+	"image": "https://i-msdn.sec.s-msft.com", 
+	"js": "https://i2-msdn.sec.s-msft.com", 
+	"css": "https://i-msdn.sec.s-msft.com", 
+	"xap": "https://msdn.microsoft.com"
+});
+/**/
+} finally { MTPS._injectNextScript_0 && MTPS._injectNextScript_0(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+//
+  var literalNormalizedUrl = '/en-us/library/ms268893(l=en-us,v=vs.140).aspx';
+  var wt_nvr_ru = 'WT_NVR_RU';
+  var wt_fpcdom = '.microsoft.com';
+  var wt_domlist = 'msdn.microsoft.com';
+  var wt_pathlist = '';
+  var wt_paramlist = 'DCSext.mtps_devcenter';
+  var wt_siteid = 'MSDN';
+  var gDomain = 'm.webtrends.com';
+  var gDcsId = 'dcsmgru7m99k7mqmgrhudo0k8_8c6m';
+  var gFpc = 'WT_FPC';
+
+
+
+  if (document.cookie.indexOf(gFpc + "=") == -1) {
+    var wtidJs = document.createElement("script");
+    wtidJs.src = "//" + gDomain + "/" + gDcsId + "/wtid.js";
+    document.getElementsByTagName("head")[0].appendChild(wtidJs);
+  }
+
+
+
+  var detectedLocale = 'en-us';
+  var wtsp = 'msdnlib_devtools_lang';
+  var gTrackEvents = '0';
+/**/
+} finally { MTPS._injectNextScript_2 && MTPS._injectNextScript_2(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+//
+
+        window.appInsightsId = '60854590-027a-4ae4-98be-2741a40f355f';
+        //
+} finally { MTPS._injectNextScript_3 && MTPS._injectNextScript_3(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5&amp;amp;hashKey=0B41D28E6726B4E716D72FB5060856F6&amp;amp;v=39C43C7786CEFC417EBC779FDB2447B4"></SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox&amp;btnid=HeaderSearchButton&amp;brand=Msdn&amp;loc=en-us&amp;focusOnInit=false&amp;emptyWatermark=true&amp;searchButtonTooltip=Search MSDN"></SCRIPT>
+<LINK href="/Areas/Epx/Content/Css/PrintView.css" rel="stylesheet" type="text/css" 
+media="print">
+<SCRIPT src="https://c.microsoft.com/ms.js" type="text/javascript"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = 'Expand'; MTPS.LocalizedStrings.CollapseButtonTooltip = 'Collapse'; MTPS.LocalizedStrings.EnhancedExpandTooltip = 'Click to expand. Double-click to expand all.'; MTPS.LocalizedStrings.EnhancedCollapseTooltip = 'Click to collapse. Double-click to collapse all.'; MTPS.LocalizedStrings.ExpandAllButtonTooltip = 'Expand All'; MTPS.LocalizedStrings.CollapseAllButtonTooltip = 'Collapse All';
+} finally { MTPS._injectNextScript_6 && MTPS._injectNextScript_6(); }</SCRIPT>
+
+<SCRIPT class="mtps-injected" src="https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1&amp;amp;hashKey=16381DF0927C75E12C62EAD23C017874&amp;amp;v=39C43C7786CEFC417EBC779FDB2447B4"></SCRIPT>
+
+<SCRIPT src="https://www.microsoft.com/library/svy/sto/https/broker.js"></SCRIPT>
+
+<SCRIPT class="mtps-injected">try {
+$(document).ready(function() {
+        try {
+            var token = $("#globalRequestVerification input[name='__RequestVerificationToken']").clone();
+            $("#siteFeedbackForm").append(token);
+        } catch(err) {
+            
+        }
+    });
+} finally { MTPS._injectNextScript_8 && MTPS._injectNextScript_8(); }</SCRIPT>
+</HEAD> 
+<BODY class="library IE IE11">
+<DIV id="page"><LINK rel="stylesheet" type="text/css">                         
+<INPUT id="isHeaderBleeding" type="hidden" value="true">     
+<DIV class="ltr msdn" id="ux-header" dir="ltr" data-device-type="tablet"><HEADER 
+class="mobile" ms.pgarea="header"><SPAN id="singleCol"></SPAN>         <SPAN id="doubleCol"></SPAN> 
+        <SPAN id="isMobile"></SPAN>
+<DIV>
+<DIV class="row topRow">
+<DIV class="top">
+<DIV class="left"><A class="msdnLogoImg" 
+href="https://msdn.microsoft.com/en-us">
+<DIV class="tablet-msft-logo" id="msft-logo"></DIV></A>                 
+<DIV class="GrayPipe"></DIV>                   <A class="DevCenterFullNameNonMegaBlade" 
+href="https://msdn.microsoft.com/en-us">Developer Network</A>                 <A 
+class="DevCenterFullName" href="https://msdn.microsoft.com/en-us">Developer 
+Network</A>                 <A class="DevCenterShortName" href="https://msdn.microsoft.com/en-us">Developer</A> 
+              </DIV>
+<DIV class="right">
+<DIV id="signIn"><IMG class="profileImage" src="https://i-msdn.sec.s-msft.com/Areas/Centers/Themes/StandardDevCenter/Content/Images/profile.jpg?v=635777873377454672"> 
+</DIV>                 </DIV></DIV></DIV>
+<DIV class="row middleRow">
+<DIV class="expandTop" style="display: none;">
+<DIV class="left">
+<DIV class="auxNav">
+<DIV>
+<DIV id="Fragment_Subscriptions" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="Subscriptions"><A id="Subscriptions_2153_1" href="https://msdn.microsoft.com/subscriptions/manage/hh442900" 
+xmlns="http://www.w3.org/1999/xhtml">MSDN subscriptions</A> </DIV>
+<DIV id="Fragment_GetTools" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="GetTools"><A id="GetTools_2153_3" href="http://go.microsoft.com/fwlink/?LinkId=309297&amp;clcid=0x409&amp;slcid=0x409&amp;campaign=o~msft~msdn~gettools-header~dn308572" 
+xmlns="http://www.w3.org/1999/xhtml">Get tools</A> </DIV></DIV>
+<DIV>
+<DIV id="Fragment_SocialLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SocialLinks">
+<DIV class="linkList">
+<UL class="links horizontal">
+  <LI><A class="facebook" id="SocialLinks_2152_4" href="http://www.facebook.com/microsoftdeveloper" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">http://www.facebook.com/microsoftdeveloper</A> 
+        </LI>
+  <LI><A class="twitter" id="SocialLinks_2152_5" href="https://twitter.com/msdev" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">https://twitter.com/msdev</A>       </LI>
+  <LI><A class="googlePlus" id="SocialLinks_2152_6" href="http://plus.google.com/111221966647232053570/" 
+  target="_blank" 
+  xmlns="http://www.w3.org/1999/xhtml">http://plus.google.com/111221966647232053570/</A> 
+        </LI></UL></DIV></DIV></DIV></DIV></DIV>
+<DIV class="right"><A title="Sign in" class="scarabLink" href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1443023735&amp;rver=6.0.5276.0&amp;wp=MCMBI&amp;wlcxt=MSDN%24MSDN%24MSDN&amp;wreply=https%3a%2f%2fmsdn.microsoft.com%2fen-us%2flibrary%2fms268893.aspx&amp;lc=1033&amp;id=254354&amp;mkt=en-US">Sign 
+in</A></DIV></DIV></DIV></DIV>
+<DIV class="bg_default" id="buttomRowWrapper">
+<DIV class="row buttomRow bg_default">
+<DIV class="bottom">
+<DIV class="left"><A class="menu-icon" id="grip" href="javascript:void(0)"></A>  
+                               </DIV>               
+<DIV class="right">
+<DIV id="Fragment_SearchBox" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="SearchBox">
+<DIV class="SearchBox">
+<FORM name="HeaderSearchForm" id="HeaderSearchForm" method="get"><BUTTON class="header-search-button" 
+id="FakeHeaderSearchButton" type="submit" value="Search">
+<DIV class="search-finder" id="search-finder"></DIV></BUTTON>       <BUTTON 
+title="Search MSDN" id="HeaderSearchButton" style="display: none;" 
+data-searchtype="icon"></BUTTON>       
+<DIV id="searchSplitter"></DIV>
+<DIV class="search-clear-x" id="searchCloseIcon"></DIV>
+<DIV id="searchTextContainer" style="width: 0px; display: none;"><INPUT name="query" id="HeaderSearchTextBox" onfocus="Epx.Controls.SearchBox.watermarkFocus(event, this.title)" onblur="Epx.Controls.SearchBox.watermarkBlur(event, this.title)" type="text" maxlength="200" autocomplete="off" data-searchtype="searchbox"> 
+      
+<DIV id="SearchFlyoutContainer" style='padding: 2px; border: 1px solid buttonshadow; border-image: none; text-align: left; color: rgb(255, 255, 255); font-family: "Segoe UI",Tahoma,Helvetica,Sans-Serif; font-size: 16px; display: none; position: absolute; z-index: 1000; background-color: rgb(255, 255, 255);'>
+<DIV id="SuggestionContainer">
+<UL style="list-style: none; margin: 1px; padding: 4px 2px 0px 1px; white-space: nowrap; cursor: pointer;"></UL></DIV></DIV></DIV></FORM></DIV></DIV></DIV></DIV>
+<DIV id="drawer" style="display: none;">
+<DIV class="toc"><NAV>
+<UL class="navL1" ms.cmpgrp="main nav">
+  <LI class="inactive toggle"><A title="Technologies" 
+  href="javascript:void(0)">Technologies</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Cloud" href="https://msdn.microsoft.com/cloud-app-development-msdn">Cloud</A></LI>
+    <LI class="inactive"><A title="App Development" href="https://msdn.microsoft.com/dn629516">App 
+    Development</A></LI>
+    <LI class="inactive"><A title="Web" href="https://msdn.microsoft.com/web-app-development-msdn">Web</A></LI>
+    <LI class="inactive"><A title="Data" href="https://msdn.microsoft.com/big-data-development-msdn">Data</A></LI>
+    <LI class="inactive"><A title="Gaming" href="https://msdn.microsoft.com/games-development-msdn">Gaming</A></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Downloads" 
+  href="javascript:void(0)">Downloads</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Visual Studio" href="https://www.visualstudio.com/downloads/download-visual-studio-vs">Visual 
+    Studio</A></LI>
+    <LI class="inactive"><A title="MSDN subscription access" href="https://msdn.microsoft.com/subscriptions">MSDN 
+    subscription access</A></LI>
+    <LI class="inactive"><A title="SDKs" href="https://msdn.microsoft.com/microsoft-sdks-msdn">SDKs</A></LI>
+    <LI class="inactive toggle"><A title="Trial software" href="javascript:void(0)">Trial 
+    software</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Free downloads" href="https://msdn.microsoft.com/evalcenter">Free 
+      downloads</A></LI>
+      <LI class="inactive"><A title="Office resources" href="https://msdn.microsoft.com/officeevaluationresources">Office 
+      resources</A></LI>
+      <LI class="inactive"><A title="SharePoint Server 2013 resources" href="https://msdn.microsoft.com/sharepoint2013resources">SharePoint 
+      Server 2013 resources</A></LI>
+      <LI class="inactive"><A title="SQL Server 2014 Express resources" href="https://msdn.microsoft.com/sqlserver2014expressresources">SQL 
+      Server 2014 Express resources</A></LI>
+      <LI class="inactive"><A title="Windows Server 2012 resources" href="https://msdn.microsoft.com/windowsserver2012r2resources">Windows 
+      Server 2012 resources</A></LI></UL></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Programs" 
+  href="javascript:void(0)">Programs</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Rewards" href="https://rewards.msdn.microsoft.com/">Rewards</A></LI>
+    <LI class="inactive"><A title="Startups" href="https://www.microsoft.com/bizspark">Startups</A></LI>
+    <LI class="inactive toggle"><A title="Students" 
+    href="javascript:void(0)">Students</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Microsoft Imagine" href="https://msdn.microsoft.com/imagine/imagine-home">Microsoft 
+      Imagine</A></LI>
+      <LI class="inactive"><A title="Microsoft Student Partners" href="https://msdn.microsoft.com/microsoftstudentpartners">Microsoft 
+      Student Partners</A></LI></UL></LI>
+    <LI class="inactive toggle"><A title="Architects" 
+    href="javascript:void(0)">Architects</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Overview" href="https://msdn.microsoft.com/architects-overview-msdn">Overview</A></LI>
+      <LI class="inactive"><A title="Case studies" href="https://msdn.microsoft.com/architects-case-studies-msdn">Case 
+      studies</A></LI>
+      <LI class="inactive"><A title="Blueprints" href="https://msdn.microsoft.com/architects-blueprints-msdn">Blueprints</A></LI>
+      <LI class="inactive"><A title="Blog" href="http://blogs.msdn.com/b/msarchitecture/">Blog</A></LI>
+      <LI class="inactive"><A title="Forums" href="http://social.msdn.microsoft.com/forums/en-us/home?brandignore=true&amp;sort=relevancedesc&amp;searchterm=architecture+or+architect">Forums</A></LI></UL></LI>
+    <LI class="inactive"><A title="Events" href="http://events.msdn.microsoft.com/">Events</A></LI>
+    <LI class="inactive toggle"><A title="MSDN Subscriptions" href="javascript:void(0)">MSDN 
+    Subscriptions</A>
+    <UL class="navL3" style="display: none;">
+      <LI class="inactive"><A title="Overview" href="https://msdn.microsoft.com/msdn-subscriptions-overview">Overview</A></LI>
+      <LI class="inactive"><A title="Benefits" href="https://msdn.microsoft.com/benefits-overview">Benefits</A></LI>
+      <LI class="inactive"><A title="Administrators" href="https://msdn.microsoft.com/msdn-subscriptions-administration">Administrators</A></LI></UL></LI></UL></LI>
+  <LI class="inactive toggle"><A title="Community" 
+  href="javascript:void(0)">Community</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive"><A title="Magazine" href="https://msdn.microsoft.com/magazine/dd767791">Magazine</A></LI>
+    <LI class="inactive"><A title="Forums" href="https://social.msdn.microsoft.com/forums/">Forums</A></LI>
+    <LI class="inactive"><A title="Blogs" href="http://blogs.msdn.com/b/developer-tools/">Blogs</A></LI>
+    <LI class="inactive"><A title="Tech Advisors" href="http://tech-advisors.msdn.microsoft.com/en-us">Tech 
+    Advisors</A></LI>
+    <LI class="inactive"><A title="Channel 9" 
+    href="http://channel9.msdn.com/">Channel 9</A></LI></UL></LI>
+  <LI class="inactive current toggle"><A title="Documentation" href="javascript:void(0)">Documentation</A>
+  <UL class="navL2" style="display: none;">
+    <LI class="inactive current"><A title="APIs and reference" href="https://msdn.microsoft.com/library">APIs 
+    and reference</A></LI>
+    <LI class="inactive"><A title="Dev centers" href="https://msdn.microsoft.com/developer-centers-msdn">Dev 
+    centers</A></LI></UL></LI>
+  <LI class="inactive"><A title="Samples" href="https://code.msdn.microsoft.com/">Samples</A></LI></UL></NAV></DIV></DIV></DIV></DIV></HEADER>
+<DIV id="overlayMaskHeader"></DIV></DIV><LINK rel="stylesheet" type="text/css"> 
+<LINK rel="stylesheet" type="text/css">     
+<DIV id="breadcrumbs">
+<DIV class="breadCrumb" id="breadcrumbDesktop"><SPAN 
+class="breadcrumbEllipsis"><A title="Development Tools and Languages" href="https://msdn.microsoft.com/en-us/library/aa187916.aspx"></A></SPAN> 
+                        <SPAN><A title="Office and SharePoint Development in Visual Studio" 
+href="https://msdn.microsoft.com/en-us/library/d2tx7z6d.aspx"><SPAN>Office and 
+SharePoint Development in Visual Studio</SPAN></A></SPAN>                        
+ <SPAN><A title="Create VSTO Add-ins for Office" href="https://msdn.microsoft.com/en-us/library/jj620922.aspx"><SPAN>Create 
+VSTO Add-ins for Office</SPAN></A></SPAN>                         <SPAN class="breadcrumbDropSmall"><A 
+title="Outlook Solutions" id="breadcrumbDropDownButton" href="#" targethref="https://msdn.microsoft.com/en-us/library/jj620922.aspx"><SPAN>Outlook 
+Solutions</SPAN></A>                         </SPAN>         </DIV>
+<DIV id="breadcrumbDropDownMenu" style="display: none;"></DIV>
+<DIV id="tocDropDownMenu" style="display: none;"></DIV>
+<DIV class="breadCrumb" id="breadcrumbTablet"><SPAN 
+class="breadcrumbEllipsis"><A title="Create VSTO Add-ins for Office" href="https://msdn.microsoft.com/en-us/library/jj620922.aspx"></A></SPAN> 
+                    <SPAN><A title="Outlook Solutions" href="https://msdn.microsoft.com/en-us/library/bb386094.aspx"><SPAN>Outlook 
+Solutions</SPAN></A></SPAN>                 <SPAN class="breadcrumbDropSmall"><A 
+title="Outlook Object Model Overview" id="tocDropDownButton" 
+href="#"><SPAN>Outlook Object Model Overview</SPAN></A></SPAN>         
+<DIV id="navigationButtons"><A id="provideFeedback1" 
+href="javascript:void(0)"><INS class="suggestion"></INS>Any Suggestions?</A>     
+        <A id="isd_print" href="https://msdn.microsoft.com/en-us/library/ms268893(d=printer).aspx" 
+rel="nofollow"><INS class="print"></INS>Print </A>             <A id="isd_printABook" 
+href="/en-us/library/export/help/?returnUrl=%2fen-us%2flibrary%2fms268893.aspx"><INS 
+class="export"></INS>Export (<SPAN class="count">0</SPAN>)             </A>      
+   </DIV></DIV>
+<DIV class="breadCrumb" id="breadcrumbMobile"><SPAN 
+class="breadcrumbEllipsis"><A title="Outlook Solutions" href="https://msdn.microsoft.com/en-us/library/bb386094.aspx"></A></SPAN> 
+            <SPAN class="breadcrumbDropSmall"><A title="Outlook Object Model Overview" 
+id="tocPopupButton" href="#"><SPAN>Outlook Object Model 
+Overview</SPAN></A></SPAN>         </DIV></DIV>
+<DIV id="tocPopupMenu" style="display: none;">
+<DIV class="tocCloseLarge" id="tocPopMenuClose"></DIV>
+<DIV id="tocTitle">Outlook Object Model Overview</DIV>
+<DIV class="hide-archive" id="tocnav" style="top: 60px; width: 255px; position: fixed;" 
+ms.pgarea="left toc">
+<DIV class="tocunselected">
+<DIV id="tocExpandArea"><SPAN class="toc_empty"></SPAN>             <SPAN id="tocExpandButton"><A 
+href="#"></A></SPAN>         </DIV>
+<DIV id="tocExpand"></DIV></DIV>
+<DIV class="tocselected">
+<DIV class="toclevel current" data-toclevel="1" data-childrenloaded="true"><A 
+class="toc_expanded" aria-label="Collapse the table of content" href="#"></A><A 
+title="Outlook Object Model Overview" id="mt459214_VS.140_en-us" href="https://msdn.microsoft.com/en-us/library/ms268893.aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Outlook 
+Object Model Overview</A></DIV>
+<DIV class="tocPadding">
+<DIV class="toclevel " data-toclevel="2"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Working with Contact Items" id="mt473828_VS.140_en-us" 
+href="https://msdn.microsoft.com/en-us/library/bb157884.aspx" mtpsshortid="" 
+mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Working with Contact 
+Items</A></DIV>
+<DIV class="toclevel " data-toclevel="2"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Working with Mail Items" id="mt473846_VS.140_en-us" href="https://msdn.microsoft.com/en-us/library/bb157889.aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Working 
+with Mail Items</A></DIV>
+<DIV class="toclevel " data-toclevel="2"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Working with Folders" id="mt459215_VS.140_en-us" href="https://msdn.microsoft.com/en-us/library/bb398247.aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Working 
+with Folders</A></DIV>
+<DIV class="toclevel " data-toclevel="2"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Working with Calendar Items" id="mt459206_VS.140_en-us" 
+href="https://msdn.microsoft.com/en-us/library/bb386291.aspx" mtpsshortid="" 
+mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Working with Calendar 
+Items</A></DIV>
+<DIV class="toclevel " data-toclevel="2"><SPAN class="toc_empty"></SPAN><A 
+title="How to: Programmatically Determine the Current Outlook Item" href="https://msdn.microsoft.com/en-us/library/ms268994.aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">How to: Programmatically Determine 
+the Current Outlook Item</A></DIV></DIV></DIV>
+<DIV class="tocunselected">
+<DIV class="toclevel " data-toclevel="1"><A class="toc_collapsed" aria-label="Expand the table of content" 
+href="#"></A><A title="Creating Outlook Form Regions" id="mt459217_VS.140_en-us" 
+href="https://msdn.microsoft.com/en-us/library/bb386301.aspx" mtpsshortid="" 
+mtpsassetid="" mtpsaliasid="" data-tochassubtree="true">Creating Outlook Form 
+Regions</A></DIV>
+<DIV class="toclevel " data-toclevel="1"><SPAN class="toc_empty"></SPAN><A 
+title="Walkthrough: Creating Your First VSTO Add-In for Outlook" href="https://msdn.microsoft.com/en-us/library/cc668191.aspx" 
+mtpsshortid="" mtpsassetid="" mtpsaliasid="">Walkthrough: Creating Your First 
+VSTO Add-In for Outlook</A></DIV></DIV></DIV></DIV>
+<DIV id="body"><SPAN id="tabletView_large"></SPAN>             <SPAN id="tabletView_small"></SPAN> 
+            <SPAN id="mobileView"></SPAN>                 
+<DIV id="leftNav" style="height: 0px;">
+<DIV style="display: none;">
+<DIV id="CollapseLocalizeString">Collapse the table of content</DIV>
+<DIV id="ExpandLocalizeString">Expand the table of content</DIV></DIV>
+<DIV><A id="isd_archiveControlResponsive" style="display: none;" 
+data-exclude-archive="Exclude Previous Version" data-include-archive="Include Previous Version"></A> 
+        </DIV></DIV>
+<DIV class="content" id="content">
+<DIV xmlns="http://www.w3.org/1999/xhtml">
+<DIV class="topic">
+<H1 class="title">Outlook Object Model Overview</H1>
+<DIV class="lw_vs">
+<DIV id="curversion"><STRONG></STRONG>       </DIV>
+<DIV id="versionclick">
+<DIV>
+<DIV><A id="vsLink" href="javascript:;">                        Other Versions   
+                  </A>           </DIV>
+<DIV class="cl_vs_arrow clip10x10"><IMG class="cl_lw_vs_arrow" id="vsArrow" alt="" 
+src="https://i-msdn.sec.s-msft.com/Areas/Epx/Content/Images/ImageSprite.png?v=635777873432767956"> 
+          </DIV></DIV>
+<UL id="vsPanel">
+  <LI><A href="/en-us/library/ms268893(v=vs.120).aspx">Visual Studio 2013 </A>   
+          </LI>
+  <LI><A href="/en-us/library/ms268893(v=vs.110).aspx">Visual Studio 2012</A>    
+         </LI>
+  <LI><A href="/en-us/library/ms268893(v=vs.100).aspx">Visual Studio 2010</A>    
+         </LI>
+  <LI><A href="/en-us/library/ms268893(v=vs.90).aspx">Visual Studio 2008</A>     
+        </LI>
+  <LI><A href="/en-us/library/ms268893(v=vs.80).aspx">Visual Studio 2005</A>     
+        </LI></UL></DIV></DIV>
+<DIV style="clear: both;"></DIV>
+<DIV id="mainSection">
+<DIV id="mainBody">&nbsp;
+<DIV class="introduction">
+<P>To develop VSTO Add-ins for Microsoft Office Outlook, you can interact with 
+the objects that are provided by the Outlook object model. The Outlook object 
+model provides classes and interfaces that represent items in the user 
+interface. For example, the <SPAN class="buildwarning" id="Warn_bbe7362a-ef6c-4dd5-bb68-69ea530d8209"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+object represents the entire application, the <SPAN class="buildwarning" id="Warn_cbc48a46-3de5-4f86-a146-415ea03e4d81"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN> 
+object represents a folder that contains e-mail messages or other items, and the 
+<SPAN class="buildwarning" id="Warn_2c7235cc-c527-46df-a912-0166e2114e10"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mailitem.aspx">T:Microsoft.Office.Interop.Outlook.MailItem</A></SPAN> 
+object represents an e-mail message.  </P>
+<P>This topic provides a brief overview of some of the main objects in the 
+Outlook object model. For resources where you can learn more about the entire 
+Outlook object model, see <A href="#refdoc">Using the Outlook Object Model 
+Documentation</A>. </P>
+<P>
+<P><STRONG>Applies to:</STRONG> The information in this topic applies to VSTO 
+add-in projects for Outlook. For more information, see <A href="https://msdn.microsoft.com/en-us/library/aa942839.aspx">Features 
+Available by Office Application and Project Type</A>.</P>
+<P></P>
+<P><SPAN><IMG title="link to video" id="fd35b1a1-0824-4165-9afa-7bdcc63943f8" 
+alt="link to video" src="https://i-msdn.sec.s-msft.com/dynimg/IC25698.jpeg" 
+xmlns=""></SPAN> For a related video demonstration, see <A href="http://go.microsoft.com/fwlink/?LinkID=130315">How 
+Do I: Use Outlook to Create a Custom Task Report?</A>.</P></DIV>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Accessing 
+Objects in an Outlook Project</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="section">
+<P>Outlook provides many objects with which you can interact. To use the object 
+model effectively, you should be familiar with the following top-level 
+objects:</P>
+<UL class="unordered">
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_63f8ac61-fab7-4a07-96a0-cd3eba9b2fcb"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN></P></LI>
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_89f6dbe7-05ad-41a3-9ad7-a7ed0d2d93fa"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.explorer.aspx">T:Microsoft.Office.Interop.Outlook.Explorer</A></SPAN></P></LI>
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_c3cb4594-880d-4562-9fe0-915b6612e6e9"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.inspector.aspx">T:Microsoft.Office.Interop.Outlook.Inspector</A></SPAN></P></LI>
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_381389a5-b6a0-4e7a-a877-2f470d56ba61"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN></P></LI>
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_95026a84-c591-4492-83b8-dba8480d890a"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mailitem.aspx">T:Microsoft.Office.Interop.Outlook.MailItem</A></SPAN></P></LI>
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_5fd82c80-37fc-494f-b0a6-e3c710f67708"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.appointmentitem.aspx">T:Microsoft.Office.Interop.Outlook.AppointmentItem</A></SPAN></P></LI>
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_cfd22654-93d4-4be3-940d-ff8f408dc10e"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.taskitem.aspx">T:Microsoft.Office.Interop.Outlook.TaskItem</A></SPAN></P></LI>
+  <LI>
+  <P><SPAN class="buildwarning" 
+  id="Warn_7a8e84f7-7d92-4531-af87-8b1fe2fd8790"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.contactitem.aspx">T:Microsoft.Office.Interop.Outlook.ContactItem</A></SPAN></P></LI></UL></DIV>
+<DIV class="section">
+<H3 class="subHeading">Application Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_19812212-9262-4672-9eff-478e635e8f20"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+object represents the Outlook application, and it is the highest-level object in 
+the Outlook object model. Some of the most important members of this object 
+include: </P>
+<UL class="unordered">
+  <LI>
+  <P>The <A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.createitem.aspx">CreateItem</A> 
+  method which you can use to create a new item such as an e-mail message, task, 
+  or appointment. </P></LI>
+  <LI>
+  <P>The <SPAN class="buildwarning" id="Warn_a0f18d6e-7039-4594-892c-917dabe309de"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.explorers.aspx">P:Microsoft.Office.Interop.Outlook._Application.Explorers</A></SPAN> 
+  property, which you can use to access the windows that display the contents of 
+  a folder in the Outlook user interface (UI). </P></LI>
+  <LI>
+  <P>The <SPAN class="buildwarning" id="Warn_a1fcfeb6-6e97-4e88-8f7d-f032b39a1cd6"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.inspectors.aspx">P:Microsoft.Office.Interop.Outlook._Application.Inspectors</A></SPAN> 
+  property, which you can use to access the windows that display the contents of 
+  a single item, such as an e-mail message or meeting request.</P></LI></UL>
+<P>To get an instance of the <SPAN class="buildwarning" id="Warn_062f21e7-e4f7-4b05-82b6-02f78821f460"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+object, use the <STRONG>Application</STRONG> field of the <SPAN 
+class="code">ThisAddIn</SPAN> class in your project. For more information, see 
+<A href="https://msdn.microsoft.com/en-us/library/bb157876.aspx">Programming 
+VSTO Add-Ins</A>.</P>
+<DIV class="alert">
+<DIV class="contentTableWrapper">
+<TABLE>
+  <TBODY>
+  <TR>
+    <TH align="left"><SPAN><IMG title="System_CAPS_note" id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-note" 
+      alt="System_CAPS_note" src="https://i-msdn.sec.s-msft.com/dynimg/IC101471.jpeg" 
+      xmlns=""></SPAN><SPAN class="alertTitle">Note </SPAN></TH></TR>
+  <TR>
+    <TD>
+      <P>To help avoid security warnings when you use properties and methods 
+      that are blocked by the Outlook object model guard, get Outlook objects 
+      from the <STRONG>Application</STRONG> field of the <SPAN 
+      class="code">ThisAddIn</SPAN> class. For more information, see <A href="https://msdn.microsoft.com/en-us/library/1thd35d7.aspx">Specific 
+      Security Considerations for Office 
+Solutions</A>.</P></TD></TR></TBODY></TABLE></DIV></DIV></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">Explorer Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_2ee60642-109d-4e83-8e6f-14054d213a9c"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.explorer.aspx">T:Microsoft.Office.Interop.Outlook.Explorer</A></SPAN> 
+object represents a window that displays the contents of a folder that contains 
+items such as e-mail messages, tasks, or appointments. The <SPAN class="buildwarning" 
+id="Warn_649569ae-60d4-495a-84cf-033ad9f05adf"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.explorer.aspx">T:Microsoft.Office.Interop.Outlook.Explorer</A></SPAN> 
+object includes methods and properties that you can use to modify the window, 
+and events that are raised when the window changes. </P>
+<P>To get an <SPAN class="buildwarning" id="Warn_aef54673-66fd-483f-9bbc-8f5d8123d3f1"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.explorer.aspx">T:Microsoft.Office.Interop.Outlook.Explorer</A></SPAN> 
+object, do one of the following:</P>
+<UL class="unordered">
+  <LI>
+  <P>Use the <SPAN class="buildwarning" id="Warn_af76e60f-3adc-49ab-b083-2e2dcbf01c02"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.explorers.aspx">P:Microsoft.Office.Interop.Outlook._Application.Explorers</A></SPAN> 
+  property of the <SPAN class="buildwarning" id="Warn_63d9b43e-373c-439c-9c9b-3c1fa146c14f"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+  object to access all of the <SPAN class="buildwarning" id="Warn_824917f8-2441-4915-91e0-6f8826c3910a"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.explorer.aspx">T:Microsoft.Office.Interop.Outlook.Explorer</A></SPAN> 
+  objects in Outlook.</P></LI>
+  <LI>
+  <P>Use the <SPAN class="buildwarning" id="Warn_4c6a4ce0-e6eb-4a4f-a2b4-e034aa43bd02"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.activeexplorer.aspx">M:Microsoft.Office.Interop.Outlook._Application.ActiveExplorer</A></SPAN> 
+  method of the <SPAN class="buildwarning" id="Warn_5ec71d7c-3218-48ba-a412-6437fc41f43b"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+  object to get the <SPAN class="buildwarning" id="Warn_ca9514ad-0321-4db8-8c77-52820dd360ce"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.explorer.aspx">T:Microsoft.Office.Interop.Outlook.Explorer</A></SPAN> 
+  that currently has focus.</P></LI>
+  <LI>
+  <P>Use the <STRONG>GetExplorer</STRONG> method of the <SPAN class="buildwarning" 
+  id="Warn_48351f3b-11ca-49d8-bf17-d0d8d677508e"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN> 
+  object to get the <SPAN class="buildwarning" id="Warn_5cb54c6f-36c8-4ec8-8201-4c7bd798203c"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.explorer.aspx">T:Microsoft.Office.Interop.Outlook.Explorer</A></SPAN> 
+  for the current folder.</P></LI></UL></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">Inspector Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_cded0ca2-a9ef-43e0-90c5-6986d2635a47"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.inspector.aspx">T:Microsoft.Office.Interop.Outlook.Inspector</A></SPAN> 
+object represents a window that displays a single item such as an e-mail 
+message, task, or appointment. The <SPAN class="buildwarning" id="Warn_ba718242-f694-4c7f-b1f1-521d04a59ee0"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.inspector.aspx">T:Microsoft.Office.Interop.Outlook.Inspector</A></SPAN> 
+object includes methods and properties that you can use to modify the window, 
+and events that are raised when the window changes. </P>
+<P>To get an <SPAN class="buildwarning" id="Warn_8ff6c44b-6943-4345-bed9-e80ca6880690"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.inspector.aspx">T:Microsoft.Office.Interop.Outlook.Inspector</A></SPAN> 
+object, do one of the following:</P>
+<UL class="unordered">
+  <LI>
+  <P>Use the <SPAN class="buildwarning" id="Warn_1a5fec21-11db-4197-9b20-33e4511fc5e4"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.inspectors.aspx">P:Microsoft.Office.Interop.Outlook._Application.Inspectors</A></SPAN> 
+  property of the <SPAN class="buildwarning" id="Warn_481f6693-11bf-4456-9d75-8a24523a4d2a"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+  object to access all of the <SPAN class="buildwarning" id="Warn_007ab28c-853e-4fe9-a9eb-fa73a8028bec"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.inspector.aspx">T:Microsoft.Office.Interop.Outlook.Inspector</A></SPAN> 
+  objects in Outlook. </P></LI>
+  <LI>
+  <P>Use the <SPAN class="buildwarning" id="Warn_a291ea13-c763-4034-93bf-692731aad0a4"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.activeinspector.aspx">M:Microsoft.Office.Interop.Outlook._Application.ActiveInspector</A></SPAN> 
+  method of the <SPAN class="buildwarning" id="Warn_cf235853-0b36-4135-bf89-ce7e875033a7"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+  object to get the <SPAN class="buildwarning" id="Warn_1e8cebb3-9cb4-4a42-80da-9f6f11210eb5"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.inspector.aspx">T:Microsoft.Office.Interop.Outlook.Inspector</A></SPAN> 
+  that currently has focus. </P></LI>
+  <LI>
+  <P>Use the <STRONG>GetInspector</STRONG> method of a specific item, such as a 
+  <SPAN class="buildwarning" id="Warn_5118247d-6005-4e8f-b963-d23c229834a2"><A 
+  href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mailitem.aspx">T:Microsoft.Office.Interop.Outlook.MailItem</A></SPAN> 
+  or <SPAN class="buildwarning" 
+  id="Warn_1512eaa7-1fb8-4230-a2e2-d5a26bc56f59"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.appointmentitem.aspx">T:Microsoft.Office.Interop.Outlook.AppointmentItem</A></SPAN>, 
+  to retrieve the Inspector that is associated with it.</P></LI></UL></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">MAPIFolder Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_a49b6951-5746-4212-9b6e-497bac84f615"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN> 
+object represents a folder that contains e-mail messages, contacts, tasks, and 
+other items. Outlook provides 16 default <SPAN class="buildwarning" id="Warn_739c7e56-ea56-4439-bfe0-b6bd6e1936b6"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN> 
+objects. </P>
+<P>The default <SPAN class="buildwarning" id="Warn_974855bb-815a-4f62-8455-26ca795ffe79"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN> 
+objects are defined by the <SPAN class="buildwarning" id="Warn_64c8b8f0-d67c-4351-b1b8-62247063c3e4"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.oldefaultfolders.aspx">T:Microsoft.Office.Interop.Outlook.OlDefaultFolders</A></SPAN> 
+enumeration values. For example, </P>
+<P><STRONG>Microsoft.Office.Interop.Outlook.OlDefaultFolders.olFolderInbox</STRONG> 
+corresponds to the <STRONG>Inbox</STRONG> folder in Outlook. </P>
+<P>For an example that shows how to access a default <SPAN class="buildwarning" 
+id="Warn_59aa98f3-c029-450f-b572-b8ad11402321"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN> 
+and create a new <SPAN class="buildwarning" id="Warn_e2debc90-7f7b-4f11-8e2b-558b8715b80d"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mapifolder.aspx">T:Microsoft.Office.Interop.Outlook.MAPIFolder</A></SPAN>, 
+see <A href="https://msdn.microsoft.com/en-us/library/ms268879.aspx">How to: 
+Programmatically Create Custom Folder Items</A>. </P></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">MailItem Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_6909b2a4-894b-4a9c-b3c5-2d5c067097fa"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mailitem.aspx">T:Microsoft.Office.Interop.Outlook.MailItem</A></SPAN> 
+object represents an e-mail message. <SPAN class="buildwarning" id="Warn_27ea4688-9103-44ee-9fdd-cd6fa0f709b0"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mailitem.aspx">T:Microsoft.Office.Interop.Outlook.MailItem</A></SPAN> 
+objects are usually in folders, such as <STRONG>Inbox</STRONG>, <STRONG>Sent 
+Items</STRONG>, and <STRONG>Outbox</STRONG>. <SPAN class="buildwarning" id="Warn_c1ab5f82-aba0-487d-b236-a5e3c4aaa986"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.mailitem.aspx">T:Microsoft.Office.Interop.Outlook.MailItem</A></SPAN> 
+exposes properties and methods that can be used to create and send e-mail 
+messages. </P>
+<P>For an example that shows how to create an e-mail message, see <A href="https://msdn.microsoft.com/en-us/library/ms269113.aspx">How 
+to: Programmatically Create an E-Mail Item</A>.</P></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">AppointmentItem Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_07305fd6-8fcf-4a6c-9104-9609699ee036"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.appointmentitem.aspx">T:Microsoft.Office.Interop.Outlook.AppointmentItem</A></SPAN> 
+object represents a meeting, a one-time appointment, or a recurring appointment 
+or meeting in the <STRONG>Calendar</STRONG> folder. The <SPAN class="buildwarning" 
+id="Warn_7148ef34-762a-43e5-b86f-05fe53877df0"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.appointmentitem.aspx">T:Microsoft.Office.Interop.Outlook.AppointmentItem</A></SPAN> 
+object includes methods that perform actions such as responding to or forwarding 
+meeting requests, and properties that specify meeting details such as the 
+location and time.</P>
+<P>For an example that shows how to create an appointment, see <A href="https://msdn.microsoft.com/en-us/library/ms268875.aspx">How 
+to: Programmatically Create a Meeting Request</A>. </P></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">TaskItem Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_6dee94b1-288a-4efe-9f4f-a89cca4c5973"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.taskitem.aspx">T:Microsoft.Office.Interop.Outlook.TaskItem</A></SPAN> 
+object represents a task to be performed within a specified time frame. <SPAN 
+class="buildwarning" id="Warn_eb3def43-f250-45a3-9580-b754992a9458"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.taskitem.aspx">T:Microsoft.Office.Interop.Outlook.TaskItem</A></SPAN> 
+objects are located in the <STRONG>Tasks</STRONG> folder. </P>
+<P>To create a task, use the <A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._application.createitem.aspx">CreateItem</A> 
+method of the <SPAN class="buildwarning" id="Warn_9f31e8c2-fdb9-40d1-9144-b7e3230c50f5"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.application.aspx">T:Microsoft.Office.Interop.Outlook.Application</A></SPAN> 
+object, and pass in the value <SPAN class="buildwarning" id="Warn_252ce9ca-ee64-4b00-b7b5-132ad4655db0"><A 
+href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.olitemtype.aspx">F:Microsoft.Office.Interop.Outlook.OlItemType.olTaskItem</A></SPAN> 
+for the parameter.</P></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">ContactItem Object</H3>
+<DIV class="section">
+<P>The <SPAN class="buildwarning" 
+id="Warn_2ba6ef5a-5e52-486d-8c92-ed001f4b3fba"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.contactitem.aspx">T:Microsoft.Office.Interop.Outlook.ContactItem</A></SPAN><STRONG>&nbsp;</STRONG>object 
+represents a contact in the <STRONG>Contacts</STRONG> folder. <SPAN class="buildwarning" 
+id="Warn_2aafbee7-948e-4d4e-9e3c-e36f44ab8d13"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.contactitem.aspx">T:Microsoft.Office.Interop.Outlook.ContactItem</A></SPAN> 
+objects contain a variety of contact information for the people they represent, 
+such as street addresses, e-mail addresses, and phone numbers. </P>
+<P>For an example that shows how to create a new contact, see <A href="https://msdn.microsoft.com/en-us/library/ms268866.aspx">How 
+to: Programmatically Add an Entry to Outlook Contacts</A>. For an example that 
+shows how to search for an existing contact, see <A href="https://msdn.microsoft.com/en-us/library/ms269001.aspx">How 
+to: Programmatically Search for a Specific 
+Contact</A>.</P></DIV></DIV></DIV></DIV><A id="refdoc"></A>
+<DIV>
+<H2 class="LW_CollapsibleArea_TitleDiv">
+<DIV><A title="" class="LW_CollapsibleArea_TitleAhref" role="button" href="javascript:void(0)"><SPAN 
+class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></SPAN><SPAN class="LW_CollapsibleArea_Title">Using 
+the Outlook Object Model Documentation</SPAN></A>
+<DIV class="LW_CollapsibleArea_HrDiv">
+<HR class="LW_CollapsibleArea_Hr">
+</DIV></DIV></H2>
+<DIV class="sectionblock">
+<DIV class="section">
+<P>For complete information about the Outlook object model, you can refer to the 
+Outlook primary interop assembly (PIA) reference and the VBA object model 
+reference. </P></DIV>
+<DIV class="section">
+<H3 class="subHeading">Primary Interop Assembly Reference</H3>
+<DIV class="section">
+<P>The Outlook PIA reference documents the types in the primary interop 
+assemblies for Outlook 2010. For more information, see <A href="http://go.microsoft.com/fwlink/?LinkId=189580">Outlook 
+2010 Primary Interop Assembly Reference</A>.</P>
+<P>In addition to providing information for all of the types in the PIAs, this 
+documentation also provides additional information about the structure of the 
+PIAs and code examples for common Outlook automation tasks. </P></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">VBA Object Model Reference</H3>
+<DIV class="section">
+<P>The VBA object model reference documents the Outlook object model as it is 
+exposed to Visual Basic for Applications (VBA) code. For more information, see 
+<A href="http://go.microsoft.com/fwlink/?LinkId=199769">Outlook 2010 Object 
+Model Reference</A>.</P>
+<P>All of the objects and members in the VBA object model reference correspond 
+to types and members in the Outlook PIA. For example, the 
+<STRONG>Inspector</STRONG> object in the VBA object model reference corresponds 
+to the <SPAN class="buildwarning" 
+id="Warn_3bcf6fc6-5744-4b07-9505-baef141e44b7"><A href="https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook.inspector.aspx">T:Microsoft.Office.Interop.Outlook.Inspector</A></SPAN> 
+object in the Outlook PIA. Although the VBA object model reference provides code 
+examples for most properties, methods, and events, you must translate the VBA 
+code in this reference to Visual Basic or Visual C# if you want to use them in 
+an Outlook VSTO Add-In project that you create by using Visual 
+Studio.</P></DIV></DIV>
+<DIV class="section">
+<H3 class="subHeading">Related Topics</H3>
+<DIV class="section">
+<DIV class="contentTableWrapper">
+<TABLE>
+  <TBODY>
+  <TR>
+    <TH>
+      <P>Title</P></TH>
+    <TH>
+      <P>Description</P></TH></TR>
+  <TR>
+    <TD>
+      <P><A 
+      href="https://msdn.microsoft.com/en-us/library/bb157884.aspx">Working with 
+      Contact Items</A></P></TD>
+    <TD>
+      <P>Provides topics that show how to perform tasks with contacts.</P></TD></TR>
+  <TR>
+    <TD>
+      <P><A 
+      href="https://msdn.microsoft.com/en-us/library/bb157889.aspx">Working with 
+      Mail Items</A></P></TD>
+    <TD>
+      <P>Provides topics that show how to perform tasks with mail 
+  items.</P></TD></TR>
+  <TR>
+    <TD>
+      <P><A 
+      href="https://msdn.microsoft.com/en-us/library/bb398247.aspx">Working with 
+      Folders</A></P></TD>
+    <TD>
+      <P>Provides topics that show how to perform tasks with folders.</P></TD></TR>
+  <TR>
+    <TD>
+      <P><A 
+      href="https://msdn.microsoft.com/en-us/library/bb386291.aspx">Working with 
+      Calendar Items</A></P></TD>
+    <TD>
+      <P>Provides topics that show how to perform tasks with calendar 
+    items.</P></TD></TR>
+  <TR>
+    <TD>
+      <P><A href="https://msdn.microsoft.com/en-us/library/ms268994.aspx">How 
+      to: Programmatically Determine the Current Outlook Item</A></P></TD>
+    <TD>
+      <P>Shows how to display the name of the current folder and some 
+      information about the selected 
+item.</P></TD></TR></TBODY></TABLE></DIV></DIV></DIV></DIV></DIV></DIV></DIV></DIV></DIV>
+<DIV class="libraryMemberFilter">
+<DIV class="filterContainer"><SPAN>Show:</SPAN>         <LABEL><INPUT class="libraryFilterInherited" 
+type="checkbox" checked="checked" value="Inherit">Inherited         </LABEL>     
+    <LABEL><INPUT class="libraryFilterProtected" type="checkbox" checked="checked" 
+value="Protected">Protected         </LABEL>     </DIV></DIV><INPUT id="libraryMemberFilterEmptyWarning" type="hidden" value="There are no members available with your current filter settings."> 
+    </DIV> 
+<DIV id="rightNavigationMenu" ms.pgarea="right nav">
+<DIV id="mobileButtons"></DIV>
+<DIV id="navMain" style="top: 60px; position: fixed;">
+<DIV id="closeNavigation"><A class="tocCloseSmall" id="closeButton"></A></DIV>
+<DIV id="navigationButtons"><A id="provideFeedback2" 
+href="javascript:void(0)"><INS class="suggestion"></INS>Any Suggestions?</A><A 
+id="isd_print" href="https://msdn.microsoft.com/en-us/library/ms268893(d=printer).aspx" 
+rel="nofollow"><INS class="print"></INS>Print </A><A id="isd_printABook2" href="/en-us/library/export/help/?returnUrl=%2fen-us%2flibrary%2fms268893.aspx"><INS 
+class="export"></INS>Export (<SPAN class="count">0</SPAN>)             
+</A></DIV>
+<DIV id="indoc_toc" ms.cmpgrp="indoc toc">
+<DIV id="indoc_title">IN THIS ARTICLE</DIV>
+<UL id="indoc_toclist">
+  <LI data-index="0">Accessing Objects in an Outlook Project</LI>
+  <LI data-index="1">Using the Outlook Object Model 
+Documentation</LI></UL></DIV></DIV></DIV>
+<DIV class="rightNavigationMenuThumbnail" 
+id="rightNavigationMenuThumbnail"></DIV></DIV>
+<DIV 
+class="clear"></DIV><INPUT name="__RequestVerificationToken" type="hidden" value="We8fGzoHFv4Ugxbcv2G533kSt39rnijJAoPRiL2gPLEyMVbLM1yQT03jEYD3CtHXLsU4Wa9S5E0AbYety_BWwya5Qww1"> 
+<INPUT id="ratingSubmitUrl" type="hidden" value="https://msdn.microsoft.com/en-us/library/feedback/add/ms268893.aspx"> 
+<INPUT id="isTopicRated" type="hidden" value="false">     
+<DIV id="lib-footer">
+<DIV class="show static-position" id="responsiveRating" ms.pgarea="rating">
+<DIV id="skinnyRating">
+<DIV class="closeSmallWhite"></DIV>
+<DIV class="rating">
+<DIV id="s_ratingSection1">
+<DIV class="title">                Was this page helpful?             </DIV>     
+        
+<DIV class="description">                Your feedback about this content is 
+important. Let us know what you think.             </DIV>
+<DIV class="buttons"><BUTTON class="button" id="s_ratingYes" aria-label="Yes, this page was helpful">Yes</BUTTON> 
+                <BUTTON class="button" id="s_ratingNo" aria-label="No, this page was not helpful">No</BUTTON> 
+            </DIV>             <INPUT id="s_ratingValue" type="hidden" value=""> 
+        </DIV>
+<DIV id="s_ratingSection2">
+<DIV id="s_skinnyRatingForm">
+<DIV class="title">                    Additional feedback?                 
+</DIV><TEXTAREA id="s_ratingText" maxlength="1500" rows="6" cols="20"></TEXTAREA>
+<DIV class="counter right"><SPAN id="feedbackTextCounter">1500</SPAN> characters 
+remaining                 </DIV></DIV>
+<DIV class="buttons left"><BUTTON class="button" id="s_ratingSubmit" aria-label="Submit my additional feedback">Submit</BUTTON> 
+                <BUTTON class="button" id="s_ratingSkipThis" aria-label="Skip additional feedback">Skip 
+this</BUTTON>             </DIV></DIV>
+<DIV id="s_ratingSection3" style="display: none;">
+<DIV class="title">                Thank you!             </DIV>             
+<DIV class="description">                We appreciate your feedback.            
+ </DIV></DIV>
+<DIV id="contentFeedbackQAContainer" 
+style="display: none;"></DIV></DIV></DIV></DIV><LINK rel="stylesheet" type="text/css"> 
+                
+<DIV id="ux-footer" dir="ltr">
+<DIV class="both" id="footerSock">
+<DIV id="footerSockInner"><A name="feedback"></A> 
+<DIV class="rating">
+<DIV id="ratingSection1">
+<DIV class="title">            Was this page helpful?         </DIV>
+<DIV class="description">            Your feedback about this content is 
+important.<BR>Let us know what you think.         </DIV>
+<DIV class="buttons"><BUTTON class="button" id="ratingYes" aria-label="Yes, this page was helpful">Yes</BUTTON> 
+            <BUTTON class="button" id="ratingNo" aria-label="No, this page was not helpful">No</BUTTON> 
+        </DIV><INPUT id="ratingValue" type="hidden" value="">     </DIV>
+<DIV id="ratingSection2">
+<DIV class="title">            Additional feedback?         </DIV><TEXTAREA id="ratingText" maxlength="1500" rows="6" cols="20"></TEXTAREA> 
+        
+<DIV class="counter right"><SPAN id="feedbackTextCounter">1500</SPAN> characters 
+remaining         </DIV>
+<DIV class="buttons left"><BUTTON class="button" id="ratingSubmit" aria-label="Submit my additional feedback">Submit</BUTTON> 
+            <BUTTON class="button" id="ratingSkipThis" aria-label="Skip additional feedback">Skip 
+this</BUTTON>         </DIV></DIV>
+<DIV id="ratingSection3">
+<DIV class="title">            Thank you!         </DIV>
+<DIV class="description">            We appreciate your feedback.         
+</DIV></DIV>
+<DIV id="contentFeedbackQAContainer" style="display: none;"></DIV></DIV>
+<DIV class="userVoice">
+<DIV class="title">        Have a suggestion to improve MSDN Library?     </DIV>
+<DIV class="description">            Visit our UserVoice Page to submit and vote 
+on ideas!         </DIV>
+<DIV class="buttons"><A class="button" id="userVoiceButton" href="http://feedback.msdn.com/forums/257782-msdn-feature-suggestions/category/83975" 
+target="_blank">Make a suggestion</A>     </DIV></DIV>
+<DIV class="clear"></DIV></DIV></DIV><FOOTER class="top">
+<DIV id="Fragment_LeftLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="LeftLinks">
+<DIV class="linkList">
+<DIV class="linkListTitle">Dev centers</DIV>
+<UL class="links">
+  <LI><A class="windowsBlue" id="LeftLinks_2148_1" href="https://dev.windows.com" 
+  xmlns="http://www.w3.org/1999/xhtml">Windows</A>       </LI>
+  <LI><A class="office" id="LeftLinks_2148_3" href="http://dev.office.com" 
+  xmlns="http://www.w3.org/1999/xhtml">Office</A>       </LI>
+  <LI><A class="visualStudio" id="LeftLinks_2148_4" href="https://msdn.microsoft.com/vstudio" 
+  xmlns="http://www.w3.org/1999/xhtml">Visual Studio</A>       </LI>
+  <LI><A id="LeftLinks_2148_12" href="http://azure.microsoft.com/en-us/documentation/" 
+  target="_blank" xmlns="http://www.w3.org/1999/xhtml">Microsoft Azure</A>       
+  </LI>
+  <LI><A id="LeftLinks_2148_5" href="https://msdn.microsoft.com/aa937802" xmlns="http://www.w3.org/1999/xhtml">More...</A> 
+        </LI></UL></DIV></DIV>
+<DIV id="rightLinks">
+<DIV id="Fragment_CenterLinks1" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks1">
+<DIV class="linkList">
+<DIV class="linkListTitle">Learning resources</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks1_2151_4" href="http://www.microsoftvirtualacademy.com/" 
+  xmlns="http://www.w3.org/1999/xhtml">Microsoft Virtual Academy</A>       </LI>
+  <LI><A id="CenterLinks1_2151_5" href="http://channel9.msdn.com/" xmlns="http://www.w3.org/1999/xhtml">Channel 
+  9</A>       </LI>
+  <LI><A id="CenterLinks1_2151_6" href="http://www.interoperabilitybridges.com/" 
+  xmlns="http://www.w3.org/1999/xhtml">Interoperability Bridges</A>       </LI>
+  <LI><A id="CenterLinks1_2151_7" href="https://msdn.microsoft.com/magazine/" 
+  xmlns="http://www.w3.org/1999/xhtml">MSDN Magazine</A>       
+</LI></UL></DIV></DIV>
+<DIV id="Fragment_CenterLinks2" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks2">
+<DIV class="linkList">
+<DIV class="linkListTitle">Community</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks2_2151_8" href="https://social.msdn.microsoft.com/forums/en-us/home" 
+  xmlns="http://www.w3.org/1999/xhtml">Forums</A>       </LI>
+  <LI><A id="CenterLinks2_2151_9" href="http://blogs.msdn.com/b/developer-tools/" 
+  xmlns="http://www.w3.org/1999/xhtml">Blogs</A>       </LI>
+  <LI><A id="CenterLinks2_2151_10" href="http://www.codeplex.com" xmlns="http://www.w3.org/1999/xhtml">Codeplex</A> 
+        </LI></UL></DIV></DIV>
+<DIV id="Fragment_CenterLinks3" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks3">
+<DIV class="linkList">
+<DIV class="linkListTitle">Support</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks3_2151_11" href="https://msdn.microsoft.com/hh361695" 
+  xmlns="http://www.w3.org/1999/xhtml">Self support</A>       
+</LI></UL></DIV></DIV>
+<DIV class="nth-child-4n" id="Fragment_CenterLinks4" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="CenterLinks4">
+<DIV class="linkList">
+<DIV class="linkListTitle">Programs</DIV>
+<UL class="links">
+  <LI><A id="CenterLinks4_2151_13" href="https://www.microsoft.com/bizspark/" 
+  xmlns="http://www.w3.org/1999/xhtml">BizSpark (for startups)</A>       </LI>
+  <LI><A id="CenterLinks4_2151_14" href="https://www.dreamspark.com/" xmlns="http://www.w3.org/1999/xhtml">DreamSpark</A> 
+        </LI>
+  <LI><A id="CenterLinks4_2151_17" href="http://www.imaginecup.com" xmlns="http://www.w3.org/1999/xhtml">Imagine 
+  Cup</A>       </LI></UL></DIV></DIV></DIV></FOOTER><FOOTER class="bottom"><SPAN 
+class="localeContainer">
+<FORM class="selectLocale" id="selectLocaleForm" action="https://msdn.microsoft.com/en-us/selectlocale-dmc"><INPUT name="fromPage" type="hidden" value="https%3a%2f%2fmsdn.microsoft.com%2fen-us%2flibrary%2fms268893.aspx"> 
+        <A title="Change your language" onclick="$('#selectLocaleForm').submit();return false;" 
+href="#">United States (English)</A>     </FORM></SPAN>
+<DIV id="Fragment_BottomLinks" xmlns="http://www.w3.org/1999/xhtml" 
+data-fragmentname="BottomLinks">
+<DIV class="linkList">
+<UL class="links horizontal">
+  <LI><A id="BottomLinks_2148_7" href="https://msdn.microsoft.com/newsletter.aspx" 
+  xmlns="http://www.w3.org/1999/xhtml">Newsletter</A>       </LI>
+  <LI><A id="BottomLinks_2148_8" href="https://msdn.microsoft.com/dn529288" 
+  xmlns="http://www.w3.org/1999/xhtml">Privacy &amp; cookies</A>       </LI>
+  <LI><A id="BottomLinks_2148_9" href="https://msdn.microsoft.com/cc300389" 
+  xmlns="http://www.w3.org/1999/xhtml">Terms of use</A>       </LI>
+  <LI><A id="BottomLinks_2148_10" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" 
+  xmlns="http://www.w3.org/1999/xhtml">Trademarks</A>       
+</LI></UL></DIV></DIV><SPAN class="logoLegal"><SPAN class="logo"></SPAN><SPAN 
+class="copyright">© 2015 Microsoft</SPAN>             
+</SPAN></FOOTER></DIV></DIV>
+<DIV class="footerPrintView">
+<DIV class="footerCopyrightPrintView">© 2015 Microsoft</DIV></DIV><INPUT id="tocPaddingPerLevel" type="hidden" value="17"> 
+        <INPUT id="MtpsDevice" type="hidden" value="Default"> <!--[CDATA[ Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]--> 
+                                            <NOSCRIPT>&lt;div&gt;&lt;img 
+alt="DCSIMG" id="Img1" width="1" height="1" 
+src="https://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;amp;WT.js=No" 
+/&gt;&lt;/div&gt;</NOSCRIPT> 
+<DIV 
+id="globalRequestVerification"><INPUT name="__RequestVerificationToken" type="hidden" value="WnSGER9JLxup4bG-3gWOM5pkcCghrh_tQCrEhx2O-WC_7QkuYU1X3ES0smoIO_2d4spsqrmpfv_swZQ0nWLQAcvpiwU1"> 
+</DIV></DIV>
+<SCRIPT class="mtps-injected" type="text/javascript">
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-msdn.sec.s-msft.com\", \r\n\t\"css\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"xap\": \"https://msdn.microsoft.com\"\r\n});\r\n/**/" },
+	{ url: "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js" },
+	{ txt: "//\n  var literalNormalizedUrl = \u0027/en-us/library/ms268893(l=en-us,v=vs.140).aspx\u0027;\n  var wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n  var wt_fpcdom = \u0027.microsoft.com\u0027;\n  var wt_domlist = \u0027msdn.microsoft.com\u0027;\n  var wt_pathlist = \u0027\u0027;\n  var wt_paramlist = \u0027DCSext.mtps_devcenter\u0027;\n  var wt_siteid = \u0027MSDN\u0027;\n  var gDomain = \u0027m.webtrends.com\u0027;\n  var gDcsId = \u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n  var gFpc = \u0027WT_FPC\u0027;\n\n\n\n  if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n    var wtidJs = document.createElement(\"script\");\n    wtidJs.src = \"//\" + gDomain + \"/\" + gDcsId + \"/wtid.js\";\n    document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n  }\n\n\n\n  var detectedLocale = \u0027en-us\u0027;\n  var wtsp = \u0027msdnlib_devtools_lang\u0027;\n  var gTrackEvents = \u00270\u0027;\n/**/" },
+	{ txt: "//\n\n        window.appInsightsId = \u002760854590-027a-4ae4-98be-2741a40f355f\u0027;\n        //" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Layout,2:Header,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,4:SkinnyRating,1:Rating,2:Footer,0:Topic,5:webtrendsscript,4:WEDCS,0:ScrollTracking,3:CmpgrpForHeader,0:AppInsightsPerf,3:ResponsiveToc,1:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Base/Content:1,/Areas/Centers/Themes/StandardDevCenter/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content/Webtrends/resources:5\u0026amp;hashKey=0B41D28E6726B4E716D72FB5060856F6\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4" },
+	{ url: "https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=Msdn\u0026loc=en-us\u0026focusOnInit=false\u0026emptyWatermark=true\u0026searchButtonTooltip=Search MSDN" },
+	{ txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = \u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = \u0027Collapse\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027Click to expand. Double-click to expand all.\u0027; MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027Click to collapse. Double-click to collapse all.\u0027; MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027Expand All\u0027; MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027Collapse All\u0027;" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1\u0026amp;hashKey=16381DF0927C75E12C62EAD23C017874\u0026amp;v=39C43C7786CEFC417EBC779FDB2447B4" },
+	{ txt: "$(document).ready(function() {\n        try {\n            var token = $(\"#globalRequestVerification input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n            $(\"#siteFeedbackForm\").append(token);\n        } catch(err) {\n            \n        }\n    });" }
+]);
+
+/*]]>*/
+</SCRIPT>
+ 
+<DIV id="overlayMask"></DIV>
+<SCRIPT src="https://www.microsoft.com/library/svy/sto/https/broker-config.js?1443023732462"></SCRIPT>
+</BODY></HTML>

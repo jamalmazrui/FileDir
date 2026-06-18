@@ -1,0 +1,860 @@
+﻿How to: Make Thread-Safe Calls to Windows Forms Controlstry { /**/ (window.MTPS 
+|| (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { "image": 
+"http://i.msdn.microsoft.com", "js": "http://i2.msdn.microsoft.com", "css": 
+"http://i3.msdn.microsoft.com" }); /**/ } finally { MTPS._injectNextScript_0 && 
+MTPS._injectNextScript_0(); }try { // var literalNormalizedUrl = 
+'/en-us/library/ms171728(d=default,l=en-us,v=vs.110).aspx'; var wt_nvr_ru = 
+'WT_NVR_RU'; var wt_fpcdom = '.microsoft.com'; var wt_domlist = 
+'msdn.microsoft.com'; var wt_pathlist = ''; var wt_paramlist = 
+'DCSext.mtps_devcenter'; var wt_siteid = 'MSDN'; var gDomain = 
+'m.webtrends.com'; var gDcsId = 'dcsmgru7m99k7mqmgrhudo0k8_8c6m'; var gFpc = 
+'WT_FPC'; if (document.cookie.indexOf(gFpc + "=") == -1) { var wtidJs = 
+document.createElement("script"); wtidJs.src = "//" + gDomain + "/" + gDcsId + 
+"/wtid.js"; document.getElementsByTagName("head")[0].appendChild(wtidJs); } var 
+detectedLocale = 'en-us'; var wtsp = 'msdnlib_dotnet'; var gTrackEvents = '0';
+ /**/ } finally { MTPS._injectNextScript_2 && MTPS._injectNextScript_2(); }try {
+ /**/ var omni_guid = "8a977efd-6f2f-4398-9488-b27c40f4fd3b"; /**/ } finally { 
+MTPS._injectNextScript_3 && MTPS._injectNextScript_3(); }try { MTPS = 
+window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; 
+MTPS.LocalizedStrings.ExpandButtonTooltip = 'Expand'; 
+MTPS.LocalizedStrings.CollapseButtonTooltip = 'Collapse'; } finally { 
+MTPS._injectNextScript_7 && MTPS._injectNextScript_7(); }try {
+ $(document).ready(function() { try { var token = $("#globalRequestVerification 
+input[name='__RequestVerificationToken']").clone(); 
+$("#siteFeedbackForm").append(token); } catch(err) { } }); } finally { 
+MTPS._injectNextScript_9 && MTPS._injectNextScript_9(); }
+
+
+
+
+
+United States (English)
+
+Create Profile
+
+Sign out
+
+
+
+
+
+
+
+
+
+Close
+
+
+HomeLibraryLearnSamplesDownloadsSupportCommunityForums
+
+
+
+
+ MSDN Library
+
+ .NET Development
+
+ .NET Framework 4.5
+
+ Development Guide
+
+ Developing Client Applications
+
+ Windows Forms
+
+ Getting Started with Windows Forms
+
+ Windows Forms Controls
+
+ Developing Custom Windows Forms Controls with the .NET Framework
+
+ Multithreading in Windows Forms Controls
+
+ How to: Make Thread-Safe Calls to Windows Forms Controls
+
+ How to: Use a Background Thread to Search for Files
+ 
+
+
+
+How to: Make Thread-Safe Calls to Windows Forms Controls
+
+
+ .NET Framework 4.5 
+
+
+
+
+Other Versions 
+
+
+  Visual Studio 2010
+  .NET Framework 3.0
+  Visual Studio 2005
+  .NET Framework 3.5
+  .NET Framework 2.0
+
+
+ 2 out of 11 rated this helpful - Rate this topic
+
+
+
+
+
+
+
+If you use multithreading to improve the performance of your Windows Forms 
+applications, you must make sure that you make calls to your controls in a 
+thread-safe way.
+
+Access to Windows Forms controls is not inherently thread safe. If you have two 
+or more threads manipulating the state of a control, it is possible to force the 
+control into an inconsistent state. Other thread-related bugs are possible, such 
+as race conditions and deadlocks. It is important to make sure that access to 
+your controls is performed in a thread-safe way.
+
+It is unsafe to call a control from a thread other than the one that created the 
+control without using the Invoke method. The following is an example of a call 
+that is not thread safe.
+
+ 
+
+
+C#
+
+C++
+
+VB
+
+
+
+Copy
+
+
+		// This event handler creates a thread that calls a  
+		// Windows Forms control in an unsafe way. 
+		private void setTextUnsafeBtn_Click(
+			object sender, 
+			EventArgs e)
+		{
+			this.demoThread = 
+				new Thread(new ThreadStart(this.ThreadProcUnsafe));
+
+			this.demoThread.Start();
+		}
+
+		// This method is executed on the worker thread and makes 
+		// an unsafe call on the TextBox control. 
+		private void ThreadProcUnsafe()
+		{
+			this.textBox1.Text = "This text was set unsafely.";
+		}
+ 
+The .NET Framework helps you detect when you are accessing your controls in a 
+manner that is not thread safe. When you are running your application in the 
+debugger, and a thread other than the one which created a control tries to call 
+that control, the debugger raises an InvalidOperationException with the message, 
+"Control control name accessed from a thread other than the thread it was 
+created on."
+
+This exception occurs reliably during debugging and, under some circumstances, 
+at run time. You might see this exception when you debug applications that you 
+wrote with the .NET Framework prior to the .NET Framework 2.0. You are strongly 
+advised to fix this problem when you see it, but you can disable it by setting 
+the CheckForIllegalCrossThreadCalls property to false. This causes your control 
+to run like it would run under Visual Studio .NET 2003 and the .NET Framework 
+1.1.
+
+
+
+
+  Note
+
+
+
+
+If you are using ActiveX controls on a form, you may receive the cross-thread 
+InvalidOperationException when you run under the debugger. When this occurs, the 
+ActiveX control does not support multithreading. For more information about 
+using ActiveX controls with Windows Forms, see Windows Forms and Unmanaged 
+Applications. If you are using Visual Studio, you can prevent this exception by 
+disabling the Visual Studio hosting process. How to: Disable the Hosting Process
+How to: Disable the Hosting Process
+How to: Disable the Hosting Process
+How to: Disable the Hosting Process
+
+
+
+
+Making Thread-Safe Calls to Windows Forms Controls
+
+
+
+
+
+To make a thread-safe call to a Windows Forms control
+
+
+  Query the control's InvokeRequired property.
+
+
+  If InvokeRequired returns true, call Invoke with a delegate that makes the 
+  actual call to the control.
+
+
+  If InvokeRequired returns false, call the control directly.
+
+
+In the following code example, a thread-safe call is implemented in the 
+ThreadProcSafe method, which is executed by the background thread. If the 
+TextBox control's InvokeRequired returns true, the ThreadProcSafe method creates 
+an instance of SetTextCallback and passes that to the form's Invoke method. This 
+causes the SetText method to be called on the thread that created the TextBox 
+control, and in this thread context the Text property is set directly.
+
+ 
+
+
+C#
+
+C++
+
+VB
+
+
+
+Copy
+
+
+		// This event handler creates a thread that calls a  
+		// Windows Forms control in a thread-safe way. 
+		private void setTextSafeBtn_Click(
+			object sender, 
+			EventArgs e)
+		{
+			this.demoThread = 
+				new Thread(new ThreadStart(this.ThreadProcSafe));
+
+			this.demoThread.Start();
+		}
+
+		// This method is executed on the worker thread and makes 
+		// a thread-safe call on the TextBox control. 
+		private void ThreadProcSafe()
+		{
+			this.SetText("This text was set safely.");
+		}
+ 
+
+
+
+C#
+
+C++
+
+VB
+
+
+
+Copy
+
+
+		// This method demonstrates a pattern for making thread-safe 
+		// calls on a Windows Forms control.  
+		// 
+		// If the calling thread is different from the thread that 
+		// created the TextBox control, this method creates a 
+		// SetTextCallback and calls itself asynchronously using the 
+		// Invoke method. 
+		// 
+		// If the calling thread is the same as the thread that created 
+		// the TextBox control, the Text property is set directly.  
+
+		private void SetText(string text)
+		{
+			// InvokeRequired required compares the thread ID of the 
+			// calling thread to the thread ID of the creating thread. 
+			// If these threads are different, it returns true. 
+			if (this.textBox1.InvokeRequired)
+			{	
+				SetTextCallback d = new SetTextCallback(SetText);
+				this.Invoke(d, new object[] { text });
+			}
+			else
+			{
+				this.textBox1.Text = text;
+			}
+		}
+ 
+
+
+Making Thread-Safe Calls by using BackgroundWorker
+
+
+
+
+
+The preferred way to implement multithreading in your application is to use the 
+BackgroundWorker component. The BackgroundWorker component uses an event-driven 
+model for multithreading. The background thread runs your DoWork event handler, 
+and the thread that creates your controls runs your ProgressChanged and 
+RunWorkerCompleted event handlers. You can call your controls from your 
+ProgressChanged and RunWorkerCompleted event handlers.
+
+To make thread-safe calls by using BackgroundWorker
+
+
+  Create a method to do the work that you want done in the background thread. Do 
+  not call controls created by the main thread in this method.
+
+
+  Create a method to report the results of your background work after it 
+  finishes. You can call controls created by the main thread in this method.
+
+
+  Bind the method created in step 1 to the DoWork event of an instance of 
+  BackgroundWorker, and bind the method created in step 2 to the same instance’s 
+  RunWorkerCompleted event.
+
+
+  To start the background thread, call the RunWorkerAsync method of the 
+  BackgroundWorker instance.
+
+
+In the following code example, the DoWork event handler uses Sleep to simulate 
+work that takes some time. It does not call the form’s TextBox control. The 
+TextBox control's Text property is set directly in the RunWorkerCompleted event 
+handler.
+
+ 
+
+
+C#
+
+C++
+
+VB
+
+
+
+Copy
+
+
+		// This BackgroundWorker is used to demonstrate the  
+		// preferred way of performing asynchronous operations. 
+		private BackgroundWorker backgroundWorker1;
+ 
+
+
+
+C#
+
+C++
+
+VB
+
+
+
+Copy
+
+
+		// This event handler starts the form's  
+		// BackgroundWorker by calling RunWorkerAsync. 
+		// 
+		// The Text property of the TextBox control is set 
+		// when the BackgroundWorker raises the RunWorkerCompleted 
+		// event. 
+		private void setTextBackgroundWorkerBtn_Click(
+			object sender, 
+			EventArgs e)
+		{
+			this.backgroundWorker1.RunWorkerAsync();
+		}
+		
+		// This event handler sets the Text property of the TextBox 
+		// control. It is called on the thread that created the  
+		// TextBox control, so the call is thread-safe. 
+		// 
+		// BackgroundWorker is the preferred way to perform asynchronous 
+		// operations. 
+
+		private void backgroundWorker1_RunWorkerCompleted(
+			object sender, 
+			RunWorkerCompletedEventArgs e)
+		{
+			this.textBox1.Text = 
+				"This text was set safely by BackgroundWorker.";
+		}
+ 
+You can also report the progress of a background task by using the 
+ProgressChanged event. For an example that incorporates that event, see 
+BackgroundWorker.
+
+
+
+Example
+
+
+
+
+
+The following code example is a complete Windows Forms application that consists 
+of a form with three buttons and one text box. The first button demonstrates 
+unsafe cross-thread access, the second button demonstrates safe access by using 
+Invoke, and the third button demonstrates safe access by using BackgroundWorker.
+
+
+
+
+  Note
+
+
+
+
+For instructions on how to run the example, see How to: Compile and Run a 
+Complete Windows Forms Code Example Using Visual Studio. This example requires 
+references to the System.Drawing and System.Windows.Forms assemblies.
+
+
+ 
+
+
+C#
+
+C++
+
+VB
+
+
+
+Copy
+
+
+using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Windows.Forms;
+
+namespace CrossThreadDemo
+{
+	public class Form1 : Form
+	{
+		// This delegate enables asynchronous calls for setting 
+		// the text property on a TextBox control. 
+		delegate void SetTextCallback(string text);
+
+		// This thread is used to demonstrate both thread-safe and 
+		// unsafe ways to call a Windows Forms control. 
+		private Thread demoThread = null;
+
+		// This BackgroundWorker is used to demonstrate the  
+		// preferred way of performing asynchronous operations. 
+		private BackgroundWorker backgroundWorker1;
+
+		private TextBox textBox1;
+		private Button setTextUnsafeBtn;
+		private Button setTextSafeBtn;
+		private Button setTextBackgroundWorkerBtn;
+
+		private System.ComponentModel.IContainer components = null;
+
+		public Form1()
+		{
+			InitializeComponent();
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		// This event handler creates a thread that calls a  
+		// Windows Forms control in an unsafe way. 
+		private void setTextUnsafeBtn_Click(
+			object sender, 
+			EventArgs e)
+		{
+			this.demoThread = 
+				new Thread(new ThreadStart(this.ThreadProcUnsafe));
+
+			this.demoThread.Start();
+		}
+
+		// This method is executed on the worker thread and makes 
+		// an unsafe call on the TextBox control. 
+		private void ThreadProcUnsafe()
+		{
+			this.textBox1.Text = "This text was set unsafely.";
+		}
+
+		// This event handler creates a thread that calls a  
+		// Windows Forms control in a thread-safe way. 
+		private void setTextSafeBtn_Click(
+			object sender, 
+			EventArgs e)
+		{
+			this.demoThread = 
+				new Thread(new ThreadStart(this.ThreadProcSafe));
+
+			this.demoThread.Start();
+		}
+
+		// This method is executed on the worker thread and makes 
+		// a thread-safe call on the TextBox control. 
+		private void ThreadProcSafe()
+		{
+			this.SetText("This text was set safely.");
+		}
+
+		// This method demonstrates a pattern for making thread-safe 
+		// calls on a Windows Forms control.  
+		// 
+		// If the calling thread is different from the thread that 
+		// created the TextBox control, this method creates a 
+		// SetTextCallback and calls itself asynchronously using the 
+		// Invoke method. 
+		// 
+		// If the calling thread is the same as the thread that created 
+		// the TextBox control, the Text property is set directly.  
+
+		private void SetText(string text)
+		{
+			// InvokeRequired required compares the thread ID of the 
+			// calling thread to the thread ID of the creating thread. 
+			// If these threads are different, it returns true. 
+			if (this.textBox1.InvokeRequired)
+			{	
+				SetTextCallback d = new SetTextCallback(SetText);
+				this.Invoke(d, new object[] { text });
+			}
+			else
+			{
+				this.textBox1.Text = text;
+			}
+		}
+
+		// This event handler starts the form's  
+		// BackgroundWorker by calling RunWorkerAsync. 
+		// 
+		// The Text property of the TextBox control is set 
+		// when the BackgroundWorker raises the RunWorkerCompleted 
+		// event. 
+		private void setTextBackgroundWorkerBtn_Click(
+			object sender, 
+			EventArgs e)
+		{
+			this.backgroundWorker1.RunWorkerAsync();
+		}
+		
+		// This event handler sets the Text property of the TextBox 
+		// control. It is called on the thread that created the  
+		// TextBox control, so the call is thread-safe. 
+		// 
+		// BackgroundWorker is the preferred way to perform asynchronous 
+		// operations. 
+
+		private void backgroundWorker1_RunWorkerCompleted(
+			object sender, 
+			RunWorkerCompletedEventArgs e)
+		{
+			this.textBox1.Text = 
+				"This text was set safely by BackgroundWorker.";
+		}
+
+		#region Windows Form Designer generated code
+
+		private void InitializeComponent()
+		{
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.setTextUnsafeBtn = new System.Windows.Forms.Button();
+			this.setTextSafeBtn = new System.Windows.Forms.Button();
+			this.setTextBackgroundWorkerBtn = new System.Windows.Forms.Button();
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.SuspendLayout();
+			//  
+			// textBox1 
+			//  
+			this.textBox1.Location = new System.Drawing.Point(12, 12);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(240, 20);
+			this.textBox1.TabIndex = 0;
+			//  
+			// setTextUnsafeBtn 
+			//  
+			this.setTextUnsafeBtn.Location = new System.Drawing.Point(15, 55);
+			this.setTextUnsafeBtn.Name = "setTextUnsafeBtn";
+			this.setTextUnsafeBtn.TabIndex = 1;
+			this.setTextUnsafeBtn.Text = "Unsafe Call";
+			this.setTextUnsafeBtn.Click += new System.EventHandler(this.setTextUnsafeBtn_Click);
+			//  
+			// setTextSafeBtn 
+			//  
+			this.setTextSafeBtn.Location = new System.Drawing.Point(96, 55);
+			this.setTextSafeBtn.Name = "setTextSafeBtn";
+			this.setTextSafeBtn.TabIndex = 2;
+			this.setTextSafeBtn.Text = "Safe Call";
+			this.setTextSafeBtn.Click += new System.EventHandler(this.setTextSafeBtn_Click);
+			//  
+			// setTextBackgroundWorkerBtn 
+			//  
+			this.setTextBackgroundWorkerBtn.Location = new System.Drawing.Point(177, 55);
+			this.setTextBackgroundWorkerBtn.Name = "setTextBackgroundWorkerBtn";
+			this.setTextBackgroundWorkerBtn.TabIndex = 3;
+			this.setTextBackgroundWorkerBtn.Text = "Safe BW Call";
+			this.setTextBackgroundWorkerBtn.Click += new System.EventHandler(this.setTextBackgroundWorkerBtn_Click);
+			//  
+			// backgroundWorker1 
+			//  
+			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+			//  
+			// Form1 
+			//  
+			this.ClientSize = new System.Drawing.Size(268, 96);
+			this.Controls.Add(this.setTextBackgroundWorkerBtn);
+			this.Controls.Add(this.setTextSafeBtn);
+			this.Controls.Add(this.setTextUnsafeBtn);
+			this.Controls.Add(this.textBox1);
+			this.Name = "Form1";
+			this.Text = "Form1";
+			this.ResumeLayout(false);
+			this.PerformLayout();
+
+		}
+
+		#endregion
+
+
+		[STAThread]
+		static void Main()
+		{
+			Application.EnableVisualStyles();
+			Application.Run(new Form1());
+		}
+
+	}
+}
+ 
+When you run the application and click the Unsafe Call button, you immediately 
+see "Written by the main thread" in the text box. Two seconds later, when the 
+unsafe call is attempted, the Visual Studio debugger indicates that an exception 
+occurred. The debugger stops at the line in the background thread that attempted 
+to write directly to the text box. You will have to restart the application to 
+test the other two buttons. When you click the Safe Call button, "Written by the 
+main thread" appears in the text box. Two seconds later, the text box is set to 
+"Written by the background thread (Invoke)", which indicates that the Invoke 
+method was called. When you click the Safe BW Call button, "Written by the main 
+thread" appears in the text box. Two seconds later, the text box is set to 
+"Written by the main thread after the background thread completed", which 
+indicates that the handler for the RunWorkerCompleted event of BackgroundWorker 
+was called.
+
+
+
+Robust Programming
+
+
+
+
+
+
+
+
+  Caution
+
+
+
+
+When you use multithreading of any sort, your code can be exposed to very 
+serious and complex bugs. For more information, see Managed Threading Best 
+Practices before you implement any solution that uses multithreading. 
+
+
+
+
+See Also
+
+
+
+
+
+Tasks
+
+How to: Run an Operation in the Background
+
+How to: Implement a Form That Uses a Background Operation
+
+Reference
+
+BackgroundWorker
+
+Other Resources
+
+Developing Custom Windows Forms Controls with the .NET Framework
+
+Windows Forms and Unmanaged Applications
+ 
+
+
+
+Did you find this helpful? YesNo
+
+
+
+Not accurate
+
+Not enough depth
+
+Need more code examples
+
+Tell us more...
+(1500 characters remaining)
+ 
+
+
+
+
+  Tools
+  Visual Studio
+  Expression
+  ASP.NET
+  Silverlight
+  Platforms
+  Visual Studio
+  Windows
+  Windows Phone
+  Windows Azure
+  Office
+  Servers
+  Windows Server
+  Exchange Server
+  SQL Server
+  Biz Talk Server
+  Data
+  Developer resources
+  MSDN Subscriptions
+  MSDN Magazine
+  MSDN Flash Newsletter
+  Code Samples
+  MSDN Forums
+  Get started for free
+  MSDN evaluation center
+  BizSpark (for startups)
+  DreamSpark (for students)
+  School faculty
+
+
+
+
+
+© 2013 Microsoft. All rights reserved.
+
+
+
+
+
+
+
+  Newsletter
+
+  |
+  Contact Us
+
+  |
+  Privacy Statement
+
+  |
+  Terms of Use
+
+  |
+  Trademarks
+ 
+
+
+|
+
+
+ Site Feedback 
+
+
+
+Site Feedback 
+
+x
+
+
+ Tell us about your experience... 
+
+Did the page load quickly? 
+
+Yes No
+
+ Do you like the page design? 
+
+Yes No
+
+ Tell us more 
+
+Enter description here.
+
+
+ 
+
+
+
+© 2013 Microsoft. All rights reserved.
+<div><img alt="DCSIMG" id="Img1" width="1" height="1" 
+src="http://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&WT.js=No".
+/></div> <a href="http://www.omniture.com" title="Web Analytics"> <img 
+src="//msstonojsmsdn.112.2o7.net/b/ss/msstonojsmsdn/1/H.20.2--NS/0" height="1" 
+width="1" border="0" alt="" /> </a> 
+
+/*<![CDATA[*/ (function(window,document){"use strict";function 
+preload(scripts){for(var 
+result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);returne
+result}function inject(scripts,index){var 
+script,elem;if(index>=scripts.length){delete 
+mtps.injectScripts;return}script=scripts[index],elem=document.createElement("script"),elem.className="mtps-injected",elem.async=!1;varo
+isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete.
+mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext,script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="trye
+{\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && 
+MTPS."+injectNextFnName+"(); }"),parent.appendChild(elem)}var 
+mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+ MTPS.injectScripts([ { txt: "/**/\r\n(window.MTPS || (window.MTPS = 
+{})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": 
+\"http://i.msdn.microsoft.com\", \r\n\t\"js\": \"http://i2.msdn.microsoft.com\", 
+\r\n\t\"css\": \"http://i3.msdn.microsoft.com\"\r\n});\r\n/**/" }, { url: 
+"http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js" }, { txt: "//\n var 
+literalNormalizedUrl = 
+\u0027/en-us/library/ms171728(d=default,l=en-us,v=vs.110).aspx\u0027;\n var 
+wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n var wt_fpcdom = 
+\u0027.microsoft.com\u0027;\n var wt_domlist = \u0027msdn.microsoft.com\u0027;\n 
+var wt_pathlist = \u0027\u0027;\n var wt_paramlist = 
+\u0027DCSext.mtps_devcenter\u0027;\n var wt_siteid = \u0027MSDN\u0027;\n var 
+gDomain = \u0027m.webtrends.com\u0027;\n var gDcsId = 
+\u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n var gFpc = 
+\u0027WT_FPC\u0027;\n\n\n\n if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n 
+var wtidJs = document.createElement(\"script\");\n wtidJs.src = \"//\" + gDomain 
++ \"/\" + gDcsId + \"/wtid.js\";\n 
+document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n }\n\n\n\n var 
+detectedLocale = \u0027en-us\u0027;\n var wtsp = \u0027msdnlib_dotnet\u0027;\n 
+var gTrackEvents = \u00270\u0027;\n/**/" }, { txt: "/**/\n var omni_guid = 
+\"8a977efd-6f2f-4398-9488-b27c40f4fd3b\";\n/**/" }, { url: 
+"http://i2.msdn.microsoft.com/Combined.js?resources=0:Utilities,0:Topic,1:webtrendsscript,2:omni_rsid_MSDN,3:SearchBox;/Areas/Epx/Content/Scripts:0,/Areas/Global/Content/Webtrends/resources:1,/Areas/Global/Content/Omniture/resources/MSDN:2,/Areas/Epx/Themes/Base/Content:3\u0026amp;hashKey=5982499A7F75BAC5491807268AEC2A90"p
+}, { url: 
+"http://i2.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=MSDN\u0026loc=en-us\u0026watermark=MSDN"0
+}, { url: 
+"http://i2.msdn.microsoft.com/Combined.js?resources=0:Toc,0:NavigationResize,1:FeedbackCounter;/Areas/Epx/Library/Content:0,/Areas/Epx/Shared/Content:1\u0026amp;hashKey=8BB72751CDDF2F68EE50F9C219164DA1""
+}, { txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = 
+window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = 
+\u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = 
+\u0027Collapse\u0027;" }, { url: 
+"http://i2.msdn.microsoft.com/Combined.js?resources=0:Feedback,1:SiteFeedbackLink,1:CodeSnippet,1:TopicNotInScope,1:CollapsibleArea,1:VersionSelector,1:SurveyBroker;/Areas/Epx/Shared/Content:0,/Areas/Epx/Content/Scripts:1\u0026amp;hashKey=3FE4B697FEB162FA3B90C8FCC3EF171F"2
+}, { txt: "$(document).ready(function() {\n try {\n var token = 
+$(\"#globalRequestVerification 
+input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n 
+$(\"#siteFeedbackForm\").append(token);\n } catch(err) {\n \n }\n });" } ]);
+ /*]]>*/ 
