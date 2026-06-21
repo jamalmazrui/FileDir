@@ -1,0 +1,8 @@
+title: FileDir
+description: FileDir
+author: JamalMazrui
+theme: jekyll-theme-cayman
+markdown: kramdown
+kramdown:
+  input: GFM
+  toc_levels: 2..3
