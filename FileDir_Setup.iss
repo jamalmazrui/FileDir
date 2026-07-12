@@ -1,10 +1,10 @@
-; FileDir_Setup.iss -- Inno Setup script for the AnyCPU FileDir 5.0 beta (x64 and ARM64).
+﻿; FileDir_Setup.iss -- Inno Setup script for the AnyCPU FileDir 5.0 beta (x64 and ARM64).
 ;
 ; Compile with ISCC.exe (Inno Setup 5.6+ or 6.x). Run BuildFileDir.cmd first
-; so FileDir.exe exists. Produces FileDir_Setup.exe in C:\FileDir.
+; so FileDir.exe exists. Produces FileDir_setup.exe in C:\FileDir.
 ;
 ; OutputBaseFilename is FileDir_Setup so the Elevate Version (F11) command can
-; fetch releases/latest/download/FileDir_Setup.exe -- GitHub asset URLs are
+; fetch releases/latest/download/FileDir_setup.exe -- GitHub asset URLs are
 ; case-sensitive, so this name and the F11 asset name must stay identical.
 ;
 ; This is a slimmed, 64-bit replacement for the old FileDir_setup.iss. Removed:
@@ -45,7 +45,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
 Compression=lzma2/max
 SolidCompression=yes
-OutputBaseFilename=FileDir_Setup
+OutputBaseFilename=FileDir_setup
 OutputDir=C:\FileDir
 SourceDir=C:\FileDir
 PrivilegesRequired=admin
