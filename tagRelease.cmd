@@ -13,9 +13,12 @@ rem  invocation only (does not change the system policy), forwarding
 rem  any arguments. A fresh .\tagRelease.log is written on every run.
 rem
 rem  Usage:
-rem    tagRelease.cmd                  bump the last version number, publish
-rem    tagRelease.cmd -Version 5.1     set an explicit version, publish
-rem    tagRelease.cmd -NoBump          publish the current .iss version as-is
+rem    tagRelease.cmd                  the normal command; no flags needed.
+rem                                    Bumps the version only if the current one
+rem                                    was already released, so running it again
+rem                                    after a rebuild publishes that same version.
+rem    tagRelease.cmd -Version 5.1     set an explicit version
+rem    tagRelease.cmd -NoBump          never bump, even if already released
 rem    tagRelease.cmd -PrepareOnly     update the version files only, no release
 rem    tagRelease.cmd -SkipStaleCheck  publish even if the installer looks stale
 rem ============================================================

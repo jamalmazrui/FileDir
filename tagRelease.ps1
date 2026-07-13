@@ -29,9 +29,13 @@
 #
 #   This script removes that whole class of bug:
 #     1. It reads AppVersion from the .iss.
-#     2. Unless -NoBump is passed, it BUMPS the last number by one, so every
-#        release gets a genuinely higher version than the one before it. That is
-#        what lets an older install detect this release as newer.
+#     2. If that version has ALREADY been released, it bumps the last number by
+#        one, so every release gets a genuinely higher version than the one
+#        before it -- that is what lets an older install detect this release as
+#        newer. If the version has NOT been released yet (because a previous run
+#        already bumped it and you have since rebuilt), it is published as-is.
+#        This means you never have to remember a flag, and re-running the script
+#        never invalidates the installer you just built.
 #     3. It writes the bumped version BACK to the .iss (AppVersion, and, when
 #        present, AppVerName / VersionInfoVersion) AND into <App>.cs's
 #        VersionString constant, so the .exe and the release tag always agree.
@@ -39,13 +43,17 @@
 #   Use -Version X.Y.Z to set an explicit version, or -NoBump to release the
 #   version already in the .iss unchanged.
 #
-#   IMPORTANT: because the version is written into <App>.cs, REBUILD the app and
-#   recompile the installer after a bump, before the assets are published. The
-#   script checks the installer's timestamp against the source and warns loudly
-#   if the installer looks older than the version bump (see -SkipStaleCheck).
-#   The recommended order is:  tagRelease -PrepareOnly  ->  build  ->  compile
-#   the .iss in Inno Setup  ->  tagRelease.  Or simply run tagRelease twice:
-#   the first run bumps and tells you to rebuild; the second publishes.
+#   IMPORTANT: because the version is written into <App>.cs, the app must be
+#   REBUILT and the installer recompiled after a bump, before it is published.
+#   The script compares the installer's timestamp against both version-bearing
+#   files and, if the installer is older, stops cleanly (nothing is published),
+#   prints the steps, and commits the version files. Just run it again after
+#   rebuilding -- no flags:
+#
+#     .\tagRelease.cmd      bumps if needed, says "rebuild first"
+#     Build<App>.cmd        rebuild with the new version
+#     (compile the .iss in Inno Setup)
+#     .\tagRelease.cmd      publishes that same version (no second bump)
 #
 # Working tree: uncommitted changes never block a release. The script commits
 # the version files it changed (unless -NoCommit) and warns about anything else
@@ -53,10 +61,10 @@
 #
 # Run from the repo root:
 #   cd C:\FileDir
-#   .\tagRelease.cmd                     bump the last number, publish
-#   .\tagRelease.cmd -Version 5.1        set an explicit version, publish
-#   .\tagRelease.cmd -NoBump             publish the .iss version as-is
-#   .\tagRelease.cmd -PrepareOnly        bump/sync the version files only, no release
+#   .\tagRelease.cmd                     the normal command; no flags needed
+#   .\tagRelease.cmd -Version 5.1        set an explicit version
+#   .\tagRelease.cmd -NoBump             never bump, even if already released
+#   .\tagRelease.cmd -PrepareOnly        set/sync the version files only, no release
 #
 # Requirements: git and gh in PATH, gh authenticated (gh auth login),
 # PowerShell 5.1+.
@@ -259,6 +267,22 @@ function getOwnerRepo {
     throw "Could not parse owner/repo from the origin remote: $sUrl"
 }
 
+function isReleased {
+    # Has this tag already been published?  Asks GitHub first (authoritative,
+    # and covers a release made from another machine), then falls back to a
+    # local tag.  This is what lets the script decide by itself whether the
+    # version in the .iss still needs releasing or has been used already.
+    param([Parameter(Mandatory)] [string] $sTag)
+    $ErrorActionPreference = 'Continue'
+    if (Get-Command gh -ErrorAction SilentlyContinue) {
+        & gh release view $sTag 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) { return $true }
+    }
+    & git rev-parse --verify --quiet "refs/tags/$sTag" 2>$null | Out-Null
+    if ($LASTEXITCODE -eq 0) { return $true }
+    return $false
+}
+
 function invokeChecked {
     # Run an external program; show output; throw on a non-zero exit.
     param(
@@ -348,15 +372,25 @@ try {
     $sOldVersion = getVersionFromIss -aLines $aIssLines
     Write-Host "Current version in $($sIssName): $sOldVersion"
 
+    # Decide the version WITHOUT needing a flag.  The rule: a version is bumped
+    # only if it has already been released.  So if the .iss version is not yet
+    # published (typically because a previous run, or -PrepareOnly, just bumped it
+    # and you have since rebuilt), it is released as-is; re-running the script
+    # never invalidates the installer you just built.  If the .iss version IS
+    # already published, a new number is needed, so it is bumped.
     if ($Version) {
         $sVersion = $Version.Trim()
         Write-Host "Using the explicit version requested: $sVersion"
     } elseif ($NoBump) {
         $sVersion = $sOldVersion
         Write-Host "-NoBump: releasing the current version unchanged."
-    } else {
+    } elseif (isReleased -sTag "v$sOldVersion") {
         $sVersion = bumpVersion -sVersion $sOldVersion
+        Write-Host "v$sOldVersion is already released, so a new number is needed."
         Write-Host "Bumped to: $sVersion  (every release gets a higher number, so F11 can detect it)"
+    } else {
+        $sVersion = $sOldVersion
+        Write-Host "v$sOldVersion has not been released yet, so it is published as-is (no bump)."
     }
     $sTag = "v$sVersion"
     Write-Host "Tag:       $sTag"
@@ -400,24 +434,45 @@ try {
     Write-Host ("  size:  {0:N0} bytes" -f $oExe.Length)
     Write-Host ("  mtime: {0}" -f $oExe.LastWriteTime)
 
-    # If the version changed just now, the installer on disk predates the bump
-    # and therefore still contains the OLD version: publishing it would tag a
-    # release whose .exe reports a different version, which is precisely the
-    # drift that breaks F11. Warn loudly (or stop, unless overridden).
-    if ($aChangedFiles.Count -gt 0 -and -not $SkipStaleCheck) {
-        $oIss = Get-Item -LiteralPath $sIssPath
-        if ($oExe.LastWriteTime -lt $oIss.LastWriteTime) {
+    # The installer must be NEWER than both version-bearing files, or it still
+    # contains an older version number than the one being tagged -- exactly the
+    # drift that breaks F11.  This is checked every run (not only when this run
+    # changed the files), so an installer left over from an earlier version is
+    # caught too.  When it is stale the script stops cleanly and tells you what to
+    # do; it is not an error, just work still to do, so re-running plain
+    # tagRelease afterwards finishes the job (the version is not bumped again,
+    # because v$sVersion has not been released yet).
+    if (-not $SkipStaleCheck) {
+        $dtSource = (Get-Item -LiteralPath $sIssPath).LastWriteTime
+        $sCsPath = Join-Path $sRepoPath "$sApp.cs"
+        if (Test-Path -LiteralPath $sCsPath -PathType Leaf) {
+            $dtCs = (Get-Item -LiteralPath $sCsPath).LastWriteTime
+            if ($dtCs -gt $dtSource) { $dtSource = $dtCs }
+        }
+        if ($oExe.LastWriteTime -lt $dtSource) {
             Write-Host ""
-            Write-Host "STALE INSTALLER" -ForegroundColor Red
-            Write-Host "$sSetupExe is older than the version files just updated, so it still contains" -ForegroundColor Red
-            Write-Host "version $sOldVersion, not $sVersion. Publishing it would tag a release whose program" -ForegroundColor Red
-            Write-Host "reports the wrong version, and F11 would misbehave for your users." -ForegroundColor Red
+            Write-Host "=== REBUILD NEEDED -- nothing was published. ===" -ForegroundColor Yellow
             Write-Host ""
-            Write-Host "Do this, then re-run tagRelease (it will keep version $sVersion, since the .iss now says so):" -ForegroundColor Yellow
+            Write-Host "$sSetupExe is older than the version files, so it does not yet contain" -ForegroundColor Yellow
+            Write-Host "version $sVersion.  Publishing it would tag a release whose program reports the" -ForegroundColor Yellow
+            Write-Host "wrong version, and F11 would misbehave for your users." -ForegroundColor Yellow
+            Write-Host ""
+            Write-Host "The version files are now set to $sVersion.  Do this:" -ForegroundColor Yellow
+            Write-Host ""
             Write-Host "  1. Build$sApp.cmd" -ForegroundColor Yellow
             Write-Host "  2. Compile $sIssName in Inno Setup" -ForegroundColor Yellow
-            Write-Host "  3. .\tagRelease.cmd -NoBump" -ForegroundColor Yellow
-            throw "Installer predates the version bump. Rebuild first, or pass -SkipStaleCheck to publish anyway."
+            Write-Host "  3. .\tagRelease.cmd            (no flags needed)" -ForegroundColor Yellow
+            Write-Host ""
+            Write-Host "Step 3 will publish $sVersion as-is: it does not bump again, because" -ForegroundColor Yellow
+            Write-Host "v$sVersion has not been released yet." -ForegroundColor Yellow
+            Write-Host ""
+            if ($aChangedFiles.Count -gt 0 -and -not $NoCommit) {
+                Write-Host "Committing the version files so they are not lost: $($aChangedFiles -join ', ')"
+                invokeChecked -sExe 'git' -aArgs (@('add') + $aChangedFiles)
+                invokeChecked -sExe 'git' -aArgs @('commit', '-m', "$sApp $sVersion")
+            }
+            Stop-Transcript | Out-Null
+            exit 0
         }
     }
 

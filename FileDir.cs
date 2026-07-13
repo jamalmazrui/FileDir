@@ -32,7 +32,14 @@ using Tektosyne.Win32Api;
 
 [assembly: AssemblyTitle("FileDir")]
 [assembly: AssemblyProduct("FileDir")]
-[assembly: AssemblyVersion("5.0.*")]
+// Single-sourced from AppVersion in FileDir_setup.iss: BuildFileDir.cmd generates
+// Version.cs (BuildVersion.Version) from it.  This replaces the wildcard "5.0.*",
+// which made the assembly version a build TIMESTAMP unrelated to the release --
+// so the program, the installer, and the release tag could never agree.
+// AssemblyFileVersion also stamps the Win32 version resource, so the version is
+// visible in Explorer's file properties and readable by tools.
+[assembly: AssemblyVersion(BuildVersion.Version)]
+[assembly: AssemblyFileVersion(BuildVersion.Version)]
 [assembly: AssemblyDescription("FileDir file manager")]
 [assembly: AssemblyCompany("EmpowermentZone.com")]
 [assembly: AssemblyCopyright("Copyright 2006 - 2026 by Jamal Mazrui")]
@@ -125,7 +132,11 @@ public static class App {
 // Dotted-numeric version used by the Elevate Version command to compare with
 // the latest release tag. Bump this on each release; the About dialog shows the
 // friendly "5.0 beta" label separately.
-public const string VersionString = "5.0.4";
+// The version number is NOT stored here.  It lives in exactly one place --
+// AppVersion in FileDir_setup.iss -- and BuildFileDir.cmd generates Version.cs
+// from it at build time, defining BuildVersion.Version.  The program, the
+// installer, and the release tag can therefore never disagree.
+public const string VersionString = BuildVersion.Version;
 
 public static string fetchLatestReleaseTag(string sOwnerRepo) {
 // Return the tag of the latest GitHub release for "owner/repo", e.g. "v5.0.0".

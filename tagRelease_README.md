@@ -43,47 +43,54 @@ Those two drift. In your own repos right now:
   `5.0` compares **equal** to `5.0.0`, which is exactly why re-posting a new
   build under the same number never registered as an update.
 
-`tagRelease.ps1` removes the whole class of bug. On every run it:
+`tagRelease.ps1` removes the whole class of bug. It **owns** the version number:
 
-1. reads `AppVersion` from the `.iss`;
-2. **bumps the last number** (`5.0` → `5.0.1`, `1.0.126` → `1.0.127`), so every
-   release is genuinely higher than the one before — a two-part version gains a
-   third part precisely because `5.0` and `5.0.0` are equal;
-3. writes that version **back into the `.iss`** (`AppVersion`, plus
+1. it reads `AppVersion` from the `.iss`;
+2. if that version has **already been released**, it bumps the last number
+   (`5.0` → `5.0.1`, `1.0.126` → `1.0.127`) — a two-part version gains a third
+   part precisely because `5.0` and `5.0.0` compare *equal*. If the version has
+   **not** been released yet, it is published as-is;
+3. it writes that version **back into the `.iss`** (`AppVersion`, plus
    `AppVerName` / `VersionInfoVersion` when they carry a literal) **and into
    `<App>.cs`'s `VersionString`**, so the `.exe` and the release tag always
    agree;
-4. commits those version files, tags, publishes, and uploads the installer.
+4. it commits those version files, tags, publishes, and uploads the installer.
 
-Because the version is written into `<App>.cs`, **the app must be rebuilt and the
-installer recompiled after a bump.** The script checks the installer's timestamp
-and refuses to publish an installer older than the version bump, telling you to
-rebuild — so a release whose program reports the wrong version cannot escape.
+Rule 2 is what makes the script safe to re-run. Because the version is written
+into `<App>.cs`, the app must be rebuilt before publishing — and a second run
+after that rebuild will **not** bump again, since the version it is holding has
+not been released yet. You never have to remember a flag.
 
 ## Normal release, start to finish
 
 ```
 cd C:\FileDir
-.\tagRelease.cmd -PrepareOnly     ' bump 5.0 -> 5.0.1, sync .iss + FileDir.cs
-.\BuildFileDir.cmd                ' rebuild FileDir.exe with the new version
-' compile FileDir_setup.iss in Inno Setup -> FileDir_setup.exe
-.\tagRelease.cmd -NoBump          ' publish 5.0.1 (do not bump again)
+.\tagRelease.cmd        ' bumps if needed, then says "rebuild needed"
+.\BuildFileDir.cmd      ' rebuild with the new version
+'                         compile FileDir_setup.iss in Inno Setup
+.\tagRelease.cmd        ' publishes that same version -- no second bump
 ```
 
-If you forget `-PrepareOnly` and just run `.\tagRelease.cmd`, no harm is done:
-it bumps and syncs the version files, then stops with a clear "stale installer"
-message telling you to rebuild and re-run with `-NoBump`. Two runs, same result.
+The first run sets the version everywhere and stops **cleanly** (nothing is
+published, and the version files are committed). The second run finds the
+installer newer than the version files, sees that this version has not been
+released, and publishes it. Two identical commands, no flags.
+
+If the installer is already current when you start, the first run simply
+publishes — there is no second step.
 
 ## Options
 
 | Option | Effect |
 | --- | --- |
-| *(none)* | Bump the last version number, sync, publish. |
-| `-PrepareOnly` | Bump and sync the version files only; do not tag or publish. |
-| `-NoBump` | Publish the version currently in the `.iss`, unchanged. |
-| `-Version 5.1` | Use an explicit version instead of bumping. |
+| *(none)* | The normal command. Bump only if the current version was already released, sync, publish. |
+| `-PrepareOnly` | Set and sync the version files only; do not tag or publish. |
+| `-NoBump` | Never bump, even if the version was already released. |
+| `-Version 5.1` | Use an explicit version. |
 | `-NoCommit` | Do not commit the version files (they are still written). |
-| `-SkipStaleCheck` | Publish even if the installer looks older than the bump. |
+| `-SkipStaleCheck` | Publish even if the installer looks older than the version files. |
+
+You should not need any of them in normal use.
 
 **Uncommitted changes never block a release.** The script commits the version
 files it changed, warns about anything else still outstanding, and proceeds.
@@ -108,5 +115,5 @@ To add the same guard to `BuildEdSharp.cmd` or `buildDbDo.cmd`, copy the
 
 `DbDo.cs` (1.0.111) and `DbDo_setup.iss` (1.0.126) are out of step. Run
 `tagRelease.cmd -PrepareOnly` in `C:\DbDo` once: it will set both to 1.0.127.
-Rebuild, recompile the installer, then `tagRelease.cmd -NoBump`. From then on the
-two stay in step by construction.
+Rebuild, recompile the installer, then run `tagRelease.cmd` again. From then on
+the two stay in step by construction.

@@ -26,9 +26,9 @@
 
 [Setup]
 AppName=FileDir
-AppVersion=5.0.1
-AppVerName=FileDir 5.0.1 beta
-VersionInfoVersion=5.0.1
+AppVersion=5.0.5
+AppVerName=FileDir 5.0.5 beta
+VersionInfoVersion=5.0.5
 AppPublisher=NonvisualDevelopment.org
 AppPublisherURL=https://github.com/JamalMazrui/FileDir
 AppContact=Jamal Mazrui
@@ -189,4 +189,7 @@ function HasNgen(): boolean;
 begin
   result := FileExists(ExpandConstant('{code:NgenExe}'));
 end;
+
+
+
 

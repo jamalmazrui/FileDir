@@ -1,0 +1,72 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260712185644
+Username: JM-LAPTOP\Jamal
+RunAs User: JM-LAPTOP\Jamal
+Configuration Name: 
+Machine: JM-LAPTOP (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File c:\FileDir\tagRelease.ps1
+Process ID: 13268
+PSVersion: 5.1.26100.8737
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8737
+BuildVersion: 10.0.26100.8737
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== tagRelease.ps1 ===
+Started: 2026-07-12 18:56:44
+Log:     C:\FileDir\tagRelease.log
+Repo:    C:\FileDir
+App:     FileDir  (from the directory name)
+
+--- Tool checks ---
+git: git version 2.47.1.windows.1
+gh:  gh version 2.92.0 (2026-04-28)
+gh authentication: OK
+
+--- Discovery ---
+Setup script: FileDir_setup.iss
+Installer:    FileDir_setup.exe  (from OutputBaseFilename)
+GitHub repo:  JamalMazrui/FileDir  (from the origin remote)
+
+--- Version ---
+Current version in FileDir_setup.iss: 5.0.3
+v5.0.3 is already released, so a new number is needed.
+Bumped to: 5.0.4  (every release gets a higher number, so F11 can detect it)
+Tag:       v5.0.4
+Updated FileDir_setup.iss to version 5.0.4
+Synced VersionString in FileDir.cs to 5.0.4
+
+--- Asset check ---
+Asset:   FileDir_setup.exe
+  size:  11,678,118 bytes
+  mtime: 7/12/2026 5:10:39 PM
+
+=== REBUILD NEEDED -- nothing was published. ===
+
+FileDir_setup.exe is older than the version files, so it does not yet contain
+version 5.0.4.  Publishing it would tag a release whose program reports the
+wrong version, and F11 would misbehave for your users.
+
+The version files are now set to 5.0.4.  Do this:
+
+  1. BuildFileDir.cmd
+  2. Compile FileDir_setup.iss in Inno Setup
+  3. .\tagRelease.cmd            (no flags needed)
+
+Step 3 will publish 5.0.4 as-is: it does not bump again, because
+v5.0.4 has not been released yet.
+
+Committing the version files so they are not lost: FileDir_setup.iss, FileDir.cs
+  > git add FileDir_setup.iss FileDir.cs
+
+  > git commit -m FileDir 5.0.4
+[master 84d45a4] FileDir 5.0.4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+**********************
+Windows PowerShell transcript end
+End time: 20260712185647
+**********************
