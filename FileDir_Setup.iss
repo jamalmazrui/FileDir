@@ -1,4 +1,4 @@
-; FileDir_Setup.iss -- Inno Setup script for the AnyCPU FileDir 5.0 beta (x64 and ARM64).
+﻿; FileDir_Setup.iss -- Inno Setup script for the AnyCPU FileDir 5.0 beta (x64 and ARM64).
 ;
 ; Compile with ISCC.exe (Inno Setup 5.6+ or 6.x). Run BuildFileDir.cmd first
 ; so FileDir.exe exists. Produces FileDir_setup.exe in C:\FileDir.
@@ -18,8 +18,9 @@
 ; Interim notes (resolved by later modernization steps):
 ;  - Text extraction uses 2htm.exe (plain-text mode). The old gettext.exe and
 ;    the filters\ DLLs it drove are retired and no longer shipped.
-;  - JAWS scripts still install via Scripts\FileDir_Scripts_setup.exe; moving to
-;    a "FileDir.exe --install-jaws-settings" model is the JAWS step.
+;  - JAWS scripts install via "FileDir.exe --install-jaws-settings" (shared
+;    Homer.JawsSettingsInstaller), the same way DbDo and EdSharp do it.  The old
+;    Scripts\FileDir_Scripts_setup.exe is retired.
 ;  - Speech goes through Homer.Say (JAWS, NVDA, then a UIA notification that
 ;    Narrator announces).  The old 32-bit saapi32/nvdaControllerClient32 DLLs
 ;    and the Web Client Utilities tree are no longer shipped, and are deleted
@@ -108,7 +109,8 @@ Source: "AssocOff.exe";       DestDir: "{app}"; Flags: ignoreversion skipifsourc
 Source: "2htm.exe";           DestDir: "{app}"; Flags: ignoreversion
 ; Extra-speech bridges (32-bit; dormant in the 64-bit process -- see header note).
 Source: "nvdaControllerClient.dll";   DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; JAWS settings family (installed by Scripts\FileDir_Scripts_setup.exe in [Run]).
+; JAWS settings family.  FileDir installs these itself via --install-jaws-settings;
+; the old FileDir_Scripts_setup.exe is no longer used and is deleted on upgrade.
 Source: "Scripts\*";          DestDir: "{app}\Scripts"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
 ; Configuration: do NOT clobber a user's existing settings on upgrade.
 Source: "FileDir.ini";        DestDir: "{app}"; Flags: onlyifdoesntexist
@@ -151,6 +153,7 @@ Type: files; Name: "{app}\LbcJS.dll"
 Type: files; Name: "{app}\LbcJS.js"
 Type: files; Name: "{app}\GetProps.js"
 Type: files; Name: "{app}\gettext.exe"
+Type: files; Name: "{app}\Scripts\FileDir_Scripts_setup.exe"
 ; WebGet.exe scraped Internet Explorer's address bar for the Quick URL and Web
 ; Download commands.  Internet Explorer is gone; those commands now take the
 ; address from the clipboard, and downloading is done by FileDir itself.
@@ -188,14 +191,43 @@ Name: "{group}\Uninstall FileDir"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\FileDir"; Filename: "{app}\FileDir.exe"; WorkingDir: "{app}"; IconFilename: "{app}\FileDir.ico"; HotKey: Alt+Ctrl+F; Comment: "Launch or activate FileDir 5.0 (Alt+Control+F)"
 
 [Run]
-; Optional JAWS scripts (Finish-page checkbox). Interim: delegates to the existing
-; Scripts installer; later this becomes "FileDir.exe --install-jaws-settings".
-Filename: "{app}\Scripts\FileDir_Scripts_setup.exe"; WorkingDir: "{app}"; Description: "Install optional JAWS scripts to fine-tune FileDir speech"; Flags: postinstall skipifsilent unchecked skipifdoesntexist
-; Pre-generate native images for faster startup (64-bit ngen).
-Filename: "{code:NgenExe}"; Parameters: "uninstall FileDir /nologo /silent"; Flags: runhidden; Check: HasNgen
-Filename: "{code:NgenExe}"; Parameters: "install ""{app}\FileDir.exe"" /AppBase:""{app}"" /nologo /silent"; Flags: runhidden; Check: HasNgen
-; Offer the documentation on the Finish page.
-Filename: "{app}\FileDir.htm"; Description: "Read FileDir documentation"; Flags: postinstall shellexec skipifsilent skipifdoesntexist
+; The four Finish-page checkboxes, in this order.  All are checked by default
+; except the user guide.  The order here IS the order shown.
+;
+; 1. JAWS scripts.  "FileDir.exe --install-jaws-settings" copies the script family into
+;    every installed version of JAWS and compiles it there.  The implementation is the
+;    shared Homer.JawsSettingsInstaller (Jaws.cs), so EdSharp, FileDir, and DbDo all
+;    install scripts by the same code, and the command can be re-run later.
+FileName: "{app}\FileDir.exe"; \
+  Parameters: "--install-jaws-settings"; \
+  WorkingDir: "{app}"; \
+  Description: "Install scripts for improving use with the JAWS screen reader"; \
+  Flags: postinstall waituntilterminated runhidden skipifsilent
+
+; 2. NVDA add-on.  Shell-executing the .nvda-addon hands it to NVDA's own file
+;    association, so NVDA shows its native add-on install dialog.  skipifdoesntexist
+;    means the checkbox simply does not appear if the app ships no add-on yet.
+FileName: "{app}\FileDir.nvda-addon"; \
+  WorkingDir: "{app}"; \
+  Description: "Install add-on for improving use with the NVDA screen reader"; \
+  Flags: postinstall shellexec waituntilterminated skipifsilent skipifdoesntexist
+
+; 3. Launch the app.
+FileName: "{app}\FileDir.exe"; \
+  WorkingDir: "{app}"; \
+  Description: "Launch FileDir (Alt+Control+F)"; \
+  Flags: nowait postinstall skipifsilent
+
+; 4. User guide -- the ONLY box not checked by default.
+FileName: "{app}\FileDir.htm"; \
+  Description: "Open user guide for FileDir"; \
+  Flags: postinstall shellexec skipifsilent skipifdoesntexist unchecked
+
+; Native image generation.  Not checkboxes: these run automatically and elevated, so
+; the installed copy starts from a cached native image instead of JIT-compiling.
+; Identical in all three apps.  HasNgen skips them if ngen.exe is absent.
+FileName: "{code:NgenExe}"; Parameters: "uninstall FileDir /nologo /silent"; Flags: runhidden; Check: HasNgen
+FileName: "{code:NgenExe}"; Parameters: "install ""{app}\FileDir.exe"" /AppBase:""{app}"" /nologo /silent"; Flags: runhidden; Check: HasNgen
 
 [UninstallRun]
 Filename: "{code:NgenExe}"; Parameters: "uninstall FileDir /nologo /silent"; Flags: runhidden; Check: HasNgen

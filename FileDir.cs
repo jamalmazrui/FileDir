@@ -1,4 +1,4 @@
-//FileDir 5.0 beta
+﻿//FileDir 5.0 beta
 //June 17, 2026
 //Copyright 2006 - 2026 by Jamal Mazrui
 //Modified GPL License
@@ -694,6 +694,21 @@ App.writeValue(App.sIniFile, "Internal", "TimerStop", App.sTimerStop);
 static void Main(string[] args) {
 string sApp = System.Reflection.Assembly.GetExecutingAssembly().Location;
 sAppDir = Path.GetDirectoryName(sApp);
+
+// --install-jaws-settings: copy this app's JAWS script family into every
+// installed version of JAWS and compile it there, then exit.  The installer's
+// Finish page runs this, and the Help menu can run it again later.  The work is
+// done by the shared Homer.JawsSettingsInstaller, the same code DbDo and EdSharp
+// use -- replacing the separate FileDir_Scripts_setup.exe that used to ship.
+foreach (string sArg in args) {
+if (String.Compare(sArg, "--install-jaws-settings", true) != 0) continue;
+int iCopied = 0;
+int iCompiled = 0;
+string sMessage = Homer.JawsSettingsInstaller.install(Path.GetDirectoryName(sApp), out iCopied, out iCompiled);
+if (sMessage.Length > 0) MessageBox.Show(sMessage, "FileDir - JAWS Settings");
+return;
+}
+
 sAppDir = Homer.Util.getShortPath(sAppDir);
 string sRoot = Path.GetFileNameWithoutExtension(sApp);
 string sName = sRoot + ".ini";

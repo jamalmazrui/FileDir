@@ -1,4 +1,4 @@
-// Util.cs -- part of the shared Homer toolkit (namespace Homer).
+﻿// Util.cs -- part of the shared Homer toolkit (namespace Homer).
 //
 // String utilities, written in Camel Type and ported from Jamal Mazrui's
 // HomerLib.vbs so the VBScript and C# Homer libraries share one naming

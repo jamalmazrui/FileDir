@@ -1,4 +1,4 @@
-// Dialogs.cs - FileDir-local dialog layer, forked from the retired LayoutByCode
+﻿// Dialogs.cs - FileDir-local dialog layer, forked from the retired LayoutByCode
 // (lbc.dll). The proven WinForms dialog bodies are preserved; utility calls
 // delegate to the portable Homer toolkit (Homer.Util) and App speech (App.say).
 // This is the last piece that allowed lbc.dll to be dropped entirely.
