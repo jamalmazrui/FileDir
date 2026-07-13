@@ -43,6 +43,23 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+function compareVersions {
+    # $true if $sA is strictly greater than $sB (dotted-numeric, zero-padded, so
+    # 5.0 and 5.0.0 compare equal).
+    param([string] $sA, [string] $sB)
+    if (-not $sA) { return $false }
+    if (-not $sB) { return $true }
+    $aA = @($sA.Split(".")); $aB = @($sB.Split("."))
+    for ($i = 0; $i -lt 4; $i++) {
+        $iA = 0; $iB = 0
+        if ($i -lt $aA.Count) { [void][int]::TryParse($aA[$i], [ref] $iA) }
+        if ($i -lt $aB.Count) { [void][int]::TryParse($aB[$i], [ref] $iB) }
+        if ($iA -gt $iB) { return $true }
+        if ($iA -lt $iB) { return $false }
+    }
+    return $false
+}
+
 try {
     $sRepoPath = $PWD.Path
     $sApp = Split-Path -Leaf $sRepoPath
@@ -67,15 +84,37 @@ try {
     }
     if (-not $sOld) { throw "Could not find AppVersion in $(Split-Path -Leaf $sIssPath)." }
 
+    # ---- Floor: never assign a version that is already released ----
+    # The .iss is just a file on disk, so it can be WRONG: an old copy restored from
+    # a backup, or unzipped over the project, rewinds the number -- and the next
+    # build would then re-assign a version that has already been published.  GitHub
+    # is the authority on what actually shipped, so ask it, and start from whichever
+    # is higher: the .iss or the latest release.  If gh is missing or offline, fall
+    # back to the .iss alone.
+    $sFloor = $sOld
+    if (Get-Command gh -ErrorAction SilentlyContinue) {
+        $ErrorActionPreference = "Continue"
+        $sLatest = (& gh release view --json tagName --jq .tagName 2>$null | Out-String).Trim()
+        $ErrorActionPreference = "Stop"
+        if ($sLatest) {
+            $sLatest = $sLatest -replace "^[vV]", ""
+            if (compareVersions $sLatest $sFloor) {
+                Write-Host "Latest GitHub release is v$sLatest, higher than the .iss ($sOld)."
+                Write-Host "Starting from the released version, so the new number is genuinely new."
+                $sFloor = $sLatest
+            }
+        }
+    }
+
     # ---- Decide the new version ----
     if ($Version) {
         $sNew = $Version.Trim()
     }
     else {
-        $aParts = $sOld.Trim().Split('.')
+        $aParts = $sFloor.Trim().Split('.')
         foreach ($sPart in $aParts) {
             if ($sPart -notmatch '^\d+$') {
-                throw "Version '$sOld' is not dotted-numeric, so it cannot be bumped automatically. Pass -Version X.Y.Z."
+                throw "Version '$sFloor' is not dotted-numeric, so it cannot be bumped automatically. Pass -Version X.Y.Z."
             }
         }
         if ($aParts.Count -lt 3) { $aParts = @($aParts) + '1' }

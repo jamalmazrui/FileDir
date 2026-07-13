@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260713095635
+Start time: 20260713101840
 Username: JM-LAPTOP\Jamal
 RunAs User: JM-LAPTOP\Jamal
 Configuration Name: 
 Machine: JM-LAPTOP (Microsoft Windows NT 10.0.26200.0)
 Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File c:\bin\tagRelease.ps1
-Process ID: 31424
+Process ID: 25660
 PSVersion: 5.1.26100.8737
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8737
@@ -17,7 +17,7 @@ PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
 === tagRelease.ps1 ===
-Started: 2026-07-13 09:56:35
+Started: 2026-07-13 10:18:40
 Log:     C:\FileDir\tagRelease.log
 Repo:    C:\FileDir
 App:     FileDir  (from the directory name)
@@ -34,68 +34,19 @@ GitHub repo:  JamalMazrui/FileDir  (from the origin remote)
 
 --- Version ---
 Current version in FileDir_setup.iss: 5.0.5
-v5.0.5 has not been released yet.  Publishing what the build produced.
-Tag:       v5.0.5
 
---- Asset check ---
-Asset:   FileDir_setup.exe
-  size:  11,678,449 bytes
-  mtime: 7/13/2026 9:55:05 AM
-  built version: 5.0.5  (from the installer's version resource)
+=== ALREADY RELEASED -- nothing was published. ===
 
---- Working tree ---
-NOTE: other uncommitted changes are present. Releasing anyway:
- M tagRelease.log
+v5.0.5 is already on GitHub, so this build has nothing new to offer.
 
---- Tag ---
-git.exe : fatal: ambiguous argument 'v5.0.5': unknown revision or path not in the working tree.
-At C:\bin\tagRelease.ps1:328 char:5
-+     & $sExe @aArgs 2>$null | Out-Null
-+     ~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (fatal: ambiguou...e working tree.:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-Creating tag v5.0.5 ...
-  > git tag -a v5.0.5 -m FileDir 5.0.5
+BuildFileDir.cmd assigns a NEW version every time it runs.  So:
 
-Pushing tag v5.0.5 to origin ...
-  > git push origin v5.0.5
-Enumerating objects: 1, done.
-Counting objects: 100% (1/1), done.
-Writing objects: 100% (1/1), 172 bytes | 172.00 KiB/s, done.
-Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-remote: This repository moved. Please use the new location:
-remote:   https://github.com/jamalmazrui/FileDir.git
-To https://github.com/JamalMazrui/FileDir
- * [new tag]         v5.0.5 -> v5.0.5
+  1. BuildFileDir.cmd               (takes the next version automatically)
+  2. Compile FileDir_setup.iss in Inno Setup
+  3. git add -A  /  git commit  /  git push
+  4. tagRelease
 
---- Release ---
-gh.cmd : release not found
-At C:\bin\tagRelease.ps1:328 char:5
-+     & $sExe @aArgs 2>$null | Out-Null
-+     ~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (release not found:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
-Creating release v5.0.5 with asset FileDir_setup.exe ...
-  > gh release create v5.0.5 C:\FileDir\FileDir_setup.exe --title FileDir 5.0.5 --generate-notes --latest
-https://github.com/jamalmazrui/FileDir/releases/tag/v5.0.5
-
---- URL verification ---
-Public URL: https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe
-URL check: HTTP 200
-
-=== FileDir 5.0.5 published. ===
-
-Stable public download URL (does not change between versions):
-
-  https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe
-
-Users on an older version will now see this release from Elevate Version (F11).
-
-
---- Log saved at: C:\FileDir\tagRelease.log ---
 **********************
 Windows PowerShell transcript end
-End time: 20260713095644
+End time: 20260713101841
 **********************

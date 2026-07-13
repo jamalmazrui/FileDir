@@ -25,11 +25,23 @@
 ;    and the Web Client Utilities tree are no longer shipped, and are deleted
 ;    from existing installs.
 
+; ---- Version -----------------------------------------------------------------
+; The version number is NOT stored in this script.  It lives in version.txt, one
+; line, which Build<App>.cmd increments on every build.  Inno reads it here, and
+; Build<App>.cmd also generates Version.cs from it, so the program, the installer,
+; and the release tag always report the same number -- which is what Elevate
+; Version (F11) compares.  Because no version literal appears in this file, a
+; stale copy of it can never rewind the version.
+#define VerFile FileOpen(AddBackslash(SourcePath) + "version.txt")
+#define AppVersion Trim(FileRead(VerFile))
+#expr FileClose(VerFile)
+#undef VerFile
+
 [Setup]
 AppName=FileDir
-AppVersion=5.0.5
-AppVerName=FileDir 5.0.5 beta
-VersionInfoVersion=5.0.5
+AppVersion={#AppVersion}
+AppVerName=FileDir {#AppVersion} beta
+VersionInfoVersion={#AppVersion}
 AppPublisher=NonvisualDevelopment.org
 AppPublisherURL=https://github.com/JamalMazrui/FileDir
 AppContact=Jamal Mazrui

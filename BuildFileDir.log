@@ -1,6 +1,6 @@
 FileDir build log 
-Started Mon 07/13/2026 10:16:17.98 
-Version: 5.0.5 
+Started Mon 07/13/2026 10:50:11.44 
+Version: 5.0.5 -> 5.0.6 
 C# compiler: C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe 
 JScript compiler: C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319\jsc.exe 
 UIAutomationProvider: C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\UIAutomationProvider\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationProvider.dll 
@@ -14,4 +14,4 @@ Converted 1 file:
 Docs: generated FileDir.htm / History.htm via 2htm. 
  
 BUILD COMPLETE: FileDir.exe built successfully. 
-Finished Mon 07/13/2026 10:16:20.13 
+Finished Mon 07/13/2026 10:50:13.42 
