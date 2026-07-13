@@ -125,7 +125,7 @@ public static class App {
 // Dotted-numeric version used by the Elevate Version command to compare with
 // the latest release tag. Bump this on each release; the About dialog shows the
 // friendly "5.0 beta" label separately.
-public const string VersionString = "5.0.1";
+public const string VersionString = "5.0.3";
 
 public static string fetchLatestReleaseTag(string sOwnerRepo) {
 // Return the tag of the latest GitHub release for "owner/repo", e.g. "v5.0.0".
