@@ -241,10 +241,10 @@ public static DateTime dtTimerStart = DateTime.Now;
 public static TimeSpan tsElapsed = new TimeSpan();
 
 // ---- Speech adapter (Homer port) ----------------------------------
-// Replaces the former LayoutByCode Lbc.Say screen-reader chain (JAWS COM,
-// Window-Eyes, System Access, NVDA, SAPI). Output now flows through
-// Homer.Say.sayForced, which raises a native UIA notification honored by
-// JAWS, NVDA, and Narrator. FileDir's original gating is preserved
+// Speech flows through Homer.Say.sayForced: JAWS and NVDA are addressed
+// through their own interfaces, and otherwise a native UIA notification is
+// raised, which Narrator and other compatible readers announce.  Exactly one
+// announcement is produced per message.  FileDir's original gating is preserved
 // unchanged: when extra speech is off the text is appended to the speech
 // log instead of voiced; a non-global announcement is suppressed unless
 // FileDir is the active window and ScrollLock is off. Homer.Say.attach is
@@ -939,7 +939,6 @@ public HomerToolStripMenuItem menuMiscExplorerDir;
 public HomerToolStripMenuItem menuMiscFTPPut;
 public HomerToolStripMenuItem menuMiscGetFTP;
 public HomerToolStripMenuItem menuMiscWebDownload;
-public HomerToolStripMenuItem menuMiscWebClientUtilities;
 public HomerToolStripMenuItem menuMiscEvaluate;
 public HomerToolStripMenuItem menuMiscConvertUnits;
 public HomerToolStripMenuItem menuMiscStartTimer;
@@ -1171,7 +1170,6 @@ menuMiscExplorerDir = menu_Helper("Explorer Directory", "Alt+/", menuMiscExplore
 menuMiscFTPPut = menu_Helper("FTP Put ...", "Shift+F", menuMiscFTPPut_Click);
 menuMiscGetFTP = menu_Helper("Get FTP ...", "Shift+G", menuMiscGetFTP_Click);
 menuMiscWebDownload = menu_Helper("Web Download ...", "Alt+Shift+W", menuMiscWebDownload_Click);
-menuMiscWebClientUtilities = menu_Helper("Web Client Utilities ...", "Alt+Shift+Space", menuMiscWebClientUtilities_Click);
 menuMiscEvaluate = menu_Helper("Evaluate Expression ...", "Control+Equals", menuMiscEvaluate_Click);
 menuMiscConvertUnits = menu_Helper("Convert Units ...", "Shift+3", menuMiscConvertUnits_Click);
 menuMiscStartTimer = menu_Helper("Start Timer ...", "F12", menuMiscStartTimer_Click);
@@ -1183,7 +1181,7 @@ menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscWebClientUtilities, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscPlayList, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscPlayList, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -6493,52 +6491,6 @@ string sFile = Path.Combine(App.sAppDir, "HotKeys.txt");
 Process.Start(sFile);
 } // menuHelpHotKeys_Click method
 
-void menuMiscWebClientUtilities_Click(object sender, EventArgs e) {
-bool bSort;
-int iCount, iIndex;
-string sCommand, sExe, sDir, sFile, sName, sValue, sBase, sTitle, sInputFile, sOutputFile, sCodeFile;
-
-sDir = Path.Combine(App.sAppDir, "WebClient");
-string[] aFiles = Directory.GetFiles(sDir, "WebClient_*.py");
-iCount = aFiles.Length;
-HomerList hlNames = new HomerList();
-HomerList hlValues = new HomerList();
-for (int iFile = 0; iFile <iCount; iFile++) {
-sFile = aFiles[iFile];
-sName = Path.GetFileName(sFile);
-sBase = Path.GetFileNameWithoutExtension(sName);
-sBase = sBase.Substring("WebClient_".Length);
-hlNames.Add(sBase);
-sValue = Path.Combine(sDir, sName);
-hlValues.Add(sValue);
-} // for
-
-sBase = App.readValue(App.sIniFile, "Data", "WebClientUtilities", "");
-iIndex = -1;
-if (sBase.Length > 0) {
-iIndex = hlNames.IndexOf(sBase);
-}
-if (iIndex == -1) iIndex = 0;
-sTitle = "Web Client Utilities";
-bSort = false;
-string[] aNames = hlNames.ToArray();
-sName = Dialog.Pick(sTitle, aNames, bSort, iIndex);
-if (sName.Length == 0) return;
-
-App.writeValue(App.sIniFile, "Data", "WebClientUtilities", sName);
-iIndex = hlNames.IndexOf(sName);
-sFile = hlValues[iIndex];
-sExe = Path.Combine(sDir, "InPy.exe");
-sExe = Homer.Util.getShortPath(sExe);
-sInputFile = Path.Combine(App.sDataDir, "WebClient.ini");
-sBase = Path.GetFileNameWithoutExtension(sFile);
-sOutputFile = Path.Combine(App.sDataDir, sBase + ".txt");
-sCodeFile = sFile;
-sCommand = sExe + " " + Homer.Util.stringQuote(sCodeFile) + " " + Homer.Util.stringQuote(sInputFile) + " " + Homer.Util.stringQuote(sOutputFile);
-if (File.Exists(sOutputFile)) File.Delete(sOutputFile);
-Homer.Util.runWait(sCommand);
-if (File.Exists(sOutputFile))  Process.Start(sOutputFile);
-} // menuMiscWebClientUtilities_Click method
 
 void MenuHelpAlternateMenu_Click(object sender, EventArgs e) {
 App.say("Alternate Menu");
@@ -7096,9 +7048,6 @@ App.frame.menuMiscWindowsControlPanel.clickOrDescribe();
 return true;
 case Keys.Alt | Keys.Shift | Keys.W :
 App.frame.menuMiscWebDownload.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Space :
-App.frame.menuMiscWebClientUtilities.clickOrDescribe();
 return true;
 
 case Keys.Shift | Keys.X :

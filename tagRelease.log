@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260712185644
+Start time: 20260713095635
 Username: JM-LAPTOP\Jamal
 RunAs User: JM-LAPTOP\Jamal
 Configuration Name: 
 Machine: JM-LAPTOP (Microsoft Windows NT 10.0.26200.0)
-Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File c:\FileDir\tagRelease.ps1
-Process ID: 13268
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File c:\bin\tagRelease.ps1
+Process ID: 31424
 PSVersion: 5.1.26100.8737
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8737
@@ -17,7 +17,7 @@ PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
 === tagRelease.ps1 ===
-Started: 2026-07-12 18:56:44
+Started: 2026-07-13 09:56:35
 Log:     C:\FileDir\tagRelease.log
 Repo:    C:\FileDir
 App:     FileDir  (from the directory name)
@@ -33,40 +33,69 @@ Installer:    FileDir_setup.exe  (from OutputBaseFilename)
 GitHub repo:  JamalMazrui/FileDir  (from the origin remote)
 
 --- Version ---
-Current version in FileDir_setup.iss: 5.0.3
-v5.0.3 is already released, so a new number is needed.
-Bumped to: 5.0.4  (every release gets a higher number, so F11 can detect it)
-Tag:       v5.0.4
-Updated FileDir_setup.iss to version 5.0.4
-Synced VersionString in FileDir.cs to 5.0.4
+Current version in FileDir_setup.iss: 5.0.5
+v5.0.5 has not been released yet.  Publishing what the build produced.
+Tag:       v5.0.5
 
 --- Asset check ---
 Asset:   FileDir_setup.exe
-  size:  11,678,118 bytes
-  mtime: 7/12/2026 5:10:39 PM
+  size:  11,678,449 bytes
+  mtime: 7/13/2026 9:55:05 AM
+  built version: 5.0.5  (from the installer's version resource)
 
-=== REBUILD NEEDED -- nothing was published. ===
+--- Working tree ---
+NOTE: other uncommitted changes are present. Releasing anyway:
+ M tagRelease.log
 
-FileDir_setup.exe is older than the version files, so it does not yet contain
-version 5.0.4.  Publishing it would tag a release whose program reports the
-wrong version, and F11 would misbehave for your users.
+--- Tag ---
+git.exe : fatal: ambiguous argument 'v5.0.5': unknown revision or path not in the working tree.
+At C:\bin\tagRelease.ps1:328 char:5
++     & $sExe @aArgs 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: ambiguou...e working tree.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+Creating tag v5.0.5 ...
+  > git tag -a v5.0.5 -m FileDir 5.0.5
 
-The version files are now set to 5.0.4.  Do this:
+Pushing tag v5.0.5 to origin ...
+  > git push origin v5.0.5
+Enumerating objects: 1, done.
+Counting objects: 100% (1/1), done.
+Writing objects: 100% (1/1), 172 bytes | 172.00 KiB/s, done.
+Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: This repository moved. Please use the new location:
+remote:   https://github.com/jamalmazrui/FileDir.git
+To https://github.com/JamalMazrui/FileDir
+ * [new tag]         v5.0.5 -> v5.0.5
 
-  1. BuildFileDir.cmd
-  2. Compile FileDir_setup.iss in Inno Setup
-  3. .\tagRelease.cmd            (no flags needed)
+--- Release ---
+gh.cmd : release not found
+At C:\bin\tagRelease.ps1:328 char:5
++     & $sExe @aArgs 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (release not found:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+Creating release v5.0.5 with asset FileDir_setup.exe ...
+  > gh release create v5.0.5 C:\FileDir\FileDir_setup.exe --title FileDir 5.0.5 --generate-notes --latest
+https://github.com/jamalmazrui/FileDir/releases/tag/v5.0.5
 
-Step 3 will publish 5.0.4 as-is: it does not bump again, because
-v5.0.4 has not been released yet.
+--- URL verification ---
+Public URL: https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe
+URL check: HTTP 200
 
-Committing the version files so they are not lost: FileDir_setup.iss, FileDir.cs
-  > git add FileDir_setup.iss FileDir.cs
+=== FileDir 5.0.5 published. ===
 
-  > git commit -m FileDir 5.0.4
-[master 84d45a4] FileDir 5.0.4
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Stable public download URL (does not change between versions):
+
+  https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe
+
+Users on an older version will now see this release from Elevate Version (F11).
+
+
+--- Log saved at: C:\FileDir\tagRelease.log ---
 **********************
 Windows PowerShell transcript end
-End time: 20260712185647
+End time: 20260713095644
 **********************

@@ -20,9 +20,10 @@
 ;    the filters\ DLLs it drove are retired and no longer shipped.
 ;  - JAWS scripts still install via Scripts\FileDir_Scripts_setup.exe; moving to
 ;    a "FileDir.exe --install-jaws-settings" model is the JAWS step.
-;  - saapi32.dll / nvdaControllerClient32.dll are 32-bit; they will not load in
-;    the 64-bit process, so their extra-speech path is dormant until the x64
-;    NVDA controller client is dropped in (normal screen-reader access is fine).
+;  - Speech goes through Homer.Say (JAWS, NVDA, then a UIA notification that
+;    Narrator announces).  The old 32-bit saapi32/nvdaControllerClient32 DLLs
+;    and the Web Client Utilities tree are no longer shipped, and are deleted
+;    from existing installs.
 
 [Setup]
 AppName=FileDir
@@ -91,13 +92,9 @@ Source: "AssocOff.exe";       DestDir: "{app}"; Flags: ignoreversion skipifsourc
 ; Text-extraction engine: 2htm (plain-text mode) replaces gettext.exe + filters\.
 Source: "2htm.exe";           DestDir: "{app}"; Flags: ignoreversion
 ; Extra-speech bridges (32-bit; dormant in the 64-bit process -- see header note).
-Source: "saapi32.dll";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "nvdaControllerClient32.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "nvdaControllerClient.dll";   DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; JAWS settings family (installed by Scripts\FileDir_Scripts_setup.exe in [Run]).
 Source: "Scripts\*";          DestDir: "{app}\Scripts"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
-; Web Client Utilities tree (Python helper + utility scripts).
-Source: "WebClient\*";        DestDir: "{app}\WebClient"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
 ; Configuration: do NOT clobber a user's existing settings on upgrade.
 Source: "FileDir.ini";        DestDir: "{app}"; Flags: onlyifdoesntexist
 Source: "Hotkeys.ini";        DestDir: "{app}"; Flags: onlyifdoesntexist
@@ -139,6 +136,16 @@ Type: files; Name: "{app}\LbcJS.dll"
 Type: files; Name: "{app}\LbcJS.js"
 Type: files; Name: "{app}\GetProps.js"
 Type: files; Name: "{app}\gettext.exe"
+; Web Client Utilities: the ~35 Python "web 2.0" scripts and the InPy interpreter
+; they ran under.  The services they called are long gone, so the feature has been
+; removed from FileDir; delete the whole tree from an existing install.
+Type: filesandordirs; Name: "{app}\WebClient"
+Type: files; Name: "{app}\InPy.exe"
+Type: files; Name: "{app}\InPyC.exe"
+; 32-bit screen-reader client DLLs.  System Access is gone, and these cannot load
+; in the 64-bit process anyway; speech now goes through JAWS/NVDA/UIA (Homer.Say).
+Type: files; Name: "{app}\saapi32.dll"
+Type: files; Name: "{app}\nvdaControllerClient32.dll"
 Type: files; Name: "{app}\lbc.dll"
 Type: files; Name: "{app}\lbc.cs"
 
