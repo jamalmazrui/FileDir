@@ -1,4 +1,4 @@
-﻿; FileDir_Setup.iss -- Inno Setup script for the AnyCPU FileDir 5.0 beta (x64 and ARM64).
+; FileDir_Setup.iss -- Inno Setup script for the AnyCPU FileDir 5.0 beta (x64 and ARM64).
 ;
 ; Compile with ISCC.exe (Inno Setup 5.6+ or 6.x). Run BuildFileDir.cmd first
 ; so FileDir.exe exists. Produces FileDir_setup.exe in C:\FileDir.
@@ -26,9 +26,9 @@
 
 [Setup]
 AppName=FileDir
-AppVersion=5.0
-AppVerName=FileDir 5.0 beta
-VersionInfoVersion=5.0
+AppVersion=5.0.1
+AppVerName=FileDir 5.0.1 beta
+VersionInfoVersion=5.0.1
 AppPublisher=NonvisualDevelopment.org
 AppPublisherURL=https://github.com/JamalMazrui/FileDir
 AppContact=Jamal Mazrui
@@ -189,3 +189,4 @@ function HasNgen(): boolean;
 begin
   result := FileExists(ExpandConstant('{code:NgenExe}'));
 end;
+

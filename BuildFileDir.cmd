@@ -33,6 +33,33 @@ for %%d in (FileAssociation.dll Tektosyne.dll ICSharpCode.SharpZipLib.dll) do (
   if not exist "%%d" echo ERROR: reference assembly %%d not found.& popd & exit /b 1
 )
 
+rem ---- version consistency check (keeps Elevate Version / F11 working) ----
+rem The F11 Elevate Version command compares the version compiled into
+rem FileDir.exe (the "const string VersionString" line in FileDir.cs) with the
+rem tag of the latest GitHub release, which tagRelease derives from AppVersion
+rem in FileDir_setup.iss. If those two drift apart, F11 misreports (DbDo.cs once
+rem said 1.0.111 while DbDo_setup.iss said 1.0.126). tagRelease.ps1 keeps them in
+rem step automatically; this check simply refuses to build a mismatched pair, so
+rem a stale version can never reach an installer.
+set "srcVer="
+set "issVer="
+for /f tokens^=2^ delims^=^" %%v in ('findstr /r /c:"VersionString" FileDir.cs 2^>nul') do if not defined srcVer set "srcVer=%%v"
+if exist "FileDir_setup.iss" (
+  for /f "tokens=2 delims==" %%v in ('findstr /r /c:"^AppVersion=" FileDir_setup.iss 2^>nul') do if not defined issVer set "issVer=%%v"
+)
+if defined srcVer if defined issVer (
+  if /i not "!srcVer!"=="!issVer!" (
+    echo ERROR: version mismatch. FileDir.cs VersionString=!srcVer! but FileDir_setup.iss AppVersion=!issVer!.
+    echo Run tagRelease.cmd -PrepareOnly to sync them, then rebuild.
+    echo Version mismatch: FileDir.cs=!srcVer! FileDir_setup.iss=!issVer! >> "!log!"
+    popd & exit /b 1
+  )
+  echo Version: !srcVer! ^(FileDir.cs and FileDir_setup.iss agree^)
+  echo Version: !srcVer! >> "!log!"
+) else (
+  echo NOTE: could not read both version numbers; skipping the version check.
+)
+
 rem ---- locate csc.exe: prefer Roslyn (latest C#), fall back to Framework64 ----
 set "csc="
 for %%p in (
