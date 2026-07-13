@@ -1,12 +1,15 @@
 FileDir build log 
-Started Mon 07/13/2026 11:05:11.98 
-Version: 5.0.5 -> 5.0.6 
+Started Mon 07/13/2026 12:33:27.37 
+Version: 5.0.7 -> 5.0.8 
+Ude.dll present - character encoding autodetection enabled. 
 C# compiler: C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe 
 JScript compiler: C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319\jsc.exe 
 UIAutomationProvider: C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\UIAutomationProvider\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationProvider.dll 
 UIAutomationTypes: C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\UIAutomationTypes\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationTypes.dll 
 Manifest: FileDir.manifest 
 Icon: FileDir.ico 
+FileDir.cs(5896,8): warning CS0219: The variable 'sUserName' is assigned but its value is never used
+FileDir.cs(5897,8): warning CS0219: The variable 'sPassword' is assigned but its value is never used
 FileDir.md
 Converted 1 file:
 History.md
@@ -14,4 +17,4 @@ Converted 1 file:
 Docs: generated FileDir.htm / History.htm via 2htm. 
  
 BUILD COMPLETE: FileDir.exe built successfully. 
-Finished Mon 07/13/2026 11:05:13.49 
+Finished Mon 07/13/2026 12:33:29.19 

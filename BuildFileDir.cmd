@@ -66,27 +66,7 @@ if /i "%~1"=="nobump" (
   echo Version: !ver! ^(nobump: keeping the current number^)
   echo Version: !ver! ^(nobump^) >> "!log!"
 ) else (
-  rem Increment the last dotted part.  A two-part version gains a third, because
-  rem 5.0 and 5.0.0 compare EQUAL and an existing install would not see it as newer.
-  set "p1=" & set "p2=" & set "p3=" & set "p4="
-  for /f "tokens=1-4 delims=." %%a in ("!ver!") do (
-    set "p1=%%a" & set "p2=%%b" & set "p3=%%c" & set "p4=%%d"
-  )
-  if defined p4 (
-    set /a p4=p4+1
-    set "new=!p1!.!p2!.!p3!.!p4!"
-  ) else if defined p3 (
-    set /a p3=p3+1
-    set "new=!p1!.!p2!.!p3!"
-  ) else if defined p2 (
-    set "new=!p1!.!p2!.1"
-  ) else (
-    set "new=!p1!.0.1"
-  )
-  > version.txt echo !new!
-  echo Version: !ver! -^> !new!
-  echo Version: !ver! -^> !new! >> "!log!"
-  set "ver=!new!"
+  call :takeNextVersion
 )
 
 rem ---- generate Version.cs from version.txt ----
@@ -96,6 +76,43 @@ rem Version.cs is generated output: do not edit it, and keep it out of git.
 >> Version.cs echo {
 >> Version.cs echo     public const string Version = "!ver!";
 >> Version.cs echo }
+
+rem ---- encoding detection library (Ude.dll), best-effort ----
+rem The .NET base class library cannot detect a text file's character encoding.
+rem Ude (a port of the Mozilla universal charset detector) does, and EdSharp already
+rem uses it, so FileDir uses the same library and detects encodings identically.
+rem This is what the retired Encoding.exe used to do.
+rem
+rem Three ways to get Ude.dll, in order.  None of them can fail the build: without
+rem Ude.dll the HAVEUDE symbol is simply not defined, and detection falls back to
+rem the byte-order mark alone (the old behavior).
+if not exist "Ude.dll" (
+  rem 1. Copy it from the EdSharp project, which already has it.
+  if exist "..\EdSharp\Ude.dll" (
+    copy /y "..\EdSharp\Ude.dll" "Ude.dll" >nul 2>&1
+    if exist "Ude.dll" echo Ude.dll copied from the EdSharp project. >> "!log!"
+  )
+)
+if not exist "Ude.dll" (
+  rem 2. Fetch it, using the same script EdSharp uses.  Copy FetchUde.ps1 here from
+  rem    the EdSharp folder if you want this step to work.
+  if exist "FetchUde.ps1" (
+    echo Fetching Ude.dll ^(best-effort^)... >> "!log!"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "FetchUde.ps1" >> "!log!" 2>&1
+  )
+)
+set "udeRef="
+set "udeDef="
+if exist "Ude.dll" (
+  set "udeRef=/reference:Ude.dll"
+  set "udeDef=/define:HAVEUDE"
+  echo Ude.dll present - character encoding autodetection enabled. >> "!log!"
+  echo Encoding detection: Ude.dll present.
+) else (
+  echo Ude.dll absent - encoding detection limited to byte-order marks. >> "!log!"
+  echo NOTE: Ude.dll not found. Copy it ^(or FetchUde.ps1^) from the EdSharp folder
+  echo       to enable character encoding autodetection.
+)
 
 rem ---- locate csc.exe: prefer Roslyn (latest C#), fall back to Framework64 ----
 set "csc="
@@ -152,7 +169,7 @@ if errorlevel 1 goto failed
 
 echo Compiling FileDir.cs -^> FileDir.exe ...
 if exist FileDir.exe del /f /q FileDir.exe
-"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ /nowarn:0162 %manifest% %icon% /reference:FileAssociation.dll /reference:Microsoft.CSharp.dll /reference:Tektosyne.dll /reference:ICSharpCode.SharpZipLib.dll /reference:Microsoft.VisualBasic.dll /reference:System.Security.dll /reference:System.Web.dll /reference:"!uiaProv!" /reference:"!uiaTypes!" /out:FileDir.exe Version.cs FileDir.cs Web.cs Say.cs Inix.cs Util.cs Dialogs.cs >> "!log!" 2>&1
+"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ /nowarn:0162 !udeDef! %manifest% %icon% /reference:FileAssociation.dll /reference:Microsoft.CSharp.dll /reference:Tektosyne.dll /reference:ICSharpCode.SharpZipLib.dll /reference:Microsoft.VisualBasic.dll /reference:System.Security.dll /reference:System.Web.dll /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:FileDir.exe Version.cs FileDir.cs Web.cs Say.cs Inix.cs Util.cs Dialogs.cs >> "!log!" 2>&1
 if errorlevel 1 goto failed
 
 rem ---- optional: build accessible HTML docs from Markdown via 2htm ----
@@ -179,3 +196,43 @@ echo.
 echo BUILD FAILED. Errors from %log%:
 type "!log!" | findstr /C:": error" /C:"error CS"
 popd & endlocal & exit /b 1
+
+:takeNextVersion
+rem ---------------------------------------------------------------------------
+rem Take the next version number: increment the last dotted part of !ver!.
+rem
+rem This makes NO network call.  An earlier version asked GitHub whether the number
+rem was already taken -- but gh has no timeout, so a slow or unreachable network hung
+rem the build with no message and no way to interrupt it.  A build script must never
+rem wait on the network.  tagRelease does the "already released" check instead: that
+rem is where a network call belongs, and where a stall is visible and interruptible.
+rem
+rem This runs as a subroutine rather than inside a parenthesised ( ) block, so each
+rem line is parsed on its own -- avoiding the block-parsing traps batch has inside ( ).
+rem ---------------------------------------------------------------------------
+set "p1=" & set "p2=" & set "p3=" & set "p4="
+set "new="
+for /f "tokens=1-4 delims=." %%a in ("!ver!") do (
+  set "p1=%%a" & set "p2=%%b" & set "p3=%%c" & set "p4=%%d"
+)
+if defined p4 (
+  set /a p4=p4+1
+  set "new=!p1!.!p2!.!p3!.!p4!"
+) else if defined p3 (
+  set /a p3=p3+1
+  set "new=!p1!.!p2!.!p3!"
+) else if defined p2 (
+  set "new=!p1!.!p2!.1"
+) else (
+  set "new=!p1!.0.1"
+)
+if not defined new (
+  echo ERROR: could not work out the next version from "!ver!".
+  echo ERROR: could not work out the next version from "!ver!". >> "!log!"
+  goto :eof
+)
+> version.txt echo !new!
+echo Version: !ver! -^> !new!
+echo Version: !ver! -^> !new! >> "!log!"
+set "ver=!new!"
+goto :eof

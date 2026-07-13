@@ -325,7 +325,118 @@ getShortPathName(sLfn, sbShort, sbShort.Capacity);
 return sbShort.ToString();
 } // getShortPath method
 
-// Detect text encoding from a leading byte-order mark; Encoding.Default if none.
+
+// ---- Character encodings (replaces the Encoding.exe utility) ----
+//
+// Encoding.exe offered three things this code reproduces: detection of a file's
+// encoding, a list of encodings to choose from, and conversion with an optional
+// .bak backup.  Two of its conventions are kept because they matter in practice
+// and .NET has no name for either:
+//
+//   utf-8b   UTF-8 WITH a byte-order mark   (what most Windows programs expect)
+//   utf-8n   UTF-8 with NO byte-order mark  (the norm on Linux and the Mac)
+//
+// and one pseudo-encoding:
+//
+//   asciify  reduce to ASCII, transliterating what can be transliterated -- an
+//            accented letter loses its accent, a curly quote becomes a straight
+//            one, an ellipsis becomes three periods -- rather than dropping the
+//            character outright.
+
+public static string[] getEncodingNames() {
+// The names offered to the user: the two UTF-8 conventions and asciify first,
+// then every encoding this computer actually has.
+List<string> lsNames = new List<string>();
+lsNames.Add("asciify");
+lsNames.Add("utf-8b");
+lsNames.Add("utf-8n");
+foreach (EncodingInfo encodingInfo in Encoding.GetEncodings()) lsNames.Add(encodingInfo.Name.ToLower());
+lsNames.Sort(StringComparer.OrdinalIgnoreCase);
+return lsNames.ToArray();
+} // getEncodingNames method
+
+public static Encoding getEncodingByName(string sName) {
+// Turn a name from the list above into an Encoding.  Returns null for "asciify",
+// which is not an encoding but a transformation the caller applies first.
+string sKey = sName.Trim().ToLower().Replace("-", "").Replace("_", "");
+if (sKey == "asciify") return null;
+if (sKey == "utf8b" || sKey == "utf8sig") return new UTF8Encoding(true);
+if (sKey == "utf8n") return new UTF8Encoding(false);
+if (sKey == "utf8") return new UTF8Encoding(true);   // Windows convention: with BOM
+return Encoding.GetEncoding(sName.Trim());
+} // getEncodingByName method
+
+public static string getFileEncodingName(string sFile) {
+// The name to REPORT for a file, using the utf-8b / utf-8n distinction so the
+// answer says whether a byte-order mark is present -- which is exactly what the
+// user needs to know, and what a bare "utf-8" would hide.
+Encoding en = getFileEncoding(sFile);
+if (en is UTF8Encoding) return hasBom(sFile) ? "utf-8b" : "utf-8n";
+return en.WebName.ToLower();
+} // getFileEncodingName method
+
+public static bool hasBom(string sFile) {
+try {
+byte[] aBom = new byte[3];
+using (FileStream fs = new FileStream(sFile, FileMode.Open, FileAccess.Read, FileShare.Read)) { fs.Read(aBom, 0, 3); }
+return (aBom[0] == 0xEF && aBom[1] == 0xBB && aBom[2] == 0xBF);
+}
+catch { return false; }
+} // hasBom method
+
+public static string asciify(string sText) {
+// Reduce text to ASCII, transliterating rather than discarding wherever possible.
+// Decomposing to NFD splits an accented letter into its base letter plus a
+// combining mark, so dropping the marks leaves the base letter ("e" for an
+// e-acute).  A few punctuation characters have no decomposition and are mapped by
+// hand.  Anything still above ASCII after that is dropped, as Encoding.exe did.
+if (sText == null || sText.Length == 0) return "";
+sText = sText.Replace("\u2018", "'").Replace("\u2019", "'");
+sText = sText.Replace("\u201C", "\"").Replace("\u201D", "\"");
+sText = sText.Replace("\u2013", "-").Replace("\u2014", "--");
+sText = sText.Replace("\u2026", "...");
+sText = sText.Replace("\u00A0", " ");
+sText = sText.Replace("\u00AB", "<<").Replace("\u00BB", ">>");
+sText = sText.Replace("\u00E6", "ae").Replace("\u00C6", "AE");
+sText = sText.Replace("\u00F8", "o").Replace("\u00D8", "O");
+sText = sText.Replace("\u00DF", "ss");
+sText = sText.Replace("\u20AC", "EUR").Replace("\u00A3", "GBP");
+string sNormal = sText.Normalize(NormalizationForm.FormD);
+StringBuilder sb = new StringBuilder(sNormal.Length);
+foreach (char c in sNormal) {
+if (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.NonSpacingMark) continue;
+if (c < 128) sb.Append(c);
+}
+return sb.ToString();
+} // asciify method
+
+public static void convertFileEncoding(string sFile, string sTargetName, bool bBackup) {
+// Rewrite sFile in the named encoding.  The source encoding is DETECTED, not
+// assumed, so a file is read correctly whatever it is in.  With bBackup, the
+// original is kept alongside as <name>.bak -- the behavior of Encoding.exe's
+// "backup" task, which is the one FileDir used.
+Encoding enFrom = getFileEncoding(sFile);
+string sBody = File.ReadAllText(sFile, enFrom);
+Encoding enTo = getEncodingByName(sTargetName);
+if (enTo == null) {                 // asciify
+sBody = asciify(sBody);
+enTo = Encoding.ASCII;
+}
+if (bBackup) {
+string sBak = sFile + ".bak";
+if (File.Exists(sBak)) File.Delete(sBak);
+File.Copy(sFile, sBak);
+}
+File.WriteAllText(sFile, sBody, enTo);
+} // convertFileEncoding method
+
+// Determine a text file's encoding: a byte-order mark if there is one, otherwise
+// content-based detection.  The .NET base class library has no charset detector,
+// so detection uses the Ude library (a port of the Mozilla universal detector)
+// when Ude.dll is present at build time -- the HAVEUDE symbol.  This is what the
+// retired Encoding.exe did, and EdSharp already uses the same library, so all the
+// apps now detect encodings the same way.  Without Ude.dll the result degrades to
+// Encoding.Default, which is the old BOM-only behavior.
 public static Encoding getFileEncoding(string sFile) {
 try {
 byte[] aBom = new byte[4];
@@ -337,8 +448,45 @@ if (aBom[0] == 0xFF && aBom[1] == 0xFE) return Encoding.Unicode;
 if (aBom[0] == 0xFE && aBom[1] == 0xFF) return Encoding.BigEndianUnicode;
 }
 catch {}
-return Encoding.Default;
+return detectEncodingNoBom(sFile);
 } // getFileEncoding method
+
+public static Encoding detectEncodingNoBom(string sFile) {
+// Content-based detection for a file with no byte-order mark.  A clearly detected
+// legacy or wide encoding (windows-1252, UTF-16 without a BOM, Shift-JIS, ...) is
+// honored, so the file is read -- and later saved -- without corruption.
+Encoding enDefault = Encoding.Default;
+#if HAVEUDE
+try {
+byte[] aBytes = File.ReadAllBytes(sFile);
+if (aBytes.Length == 0) return enDefault;
+Ude.CharsetDetector charsetDetector = new Ude.CharsetDetector();
+charsetDetector.Feed(aBytes, 0, aBytes.Length);
+charsetDetector.DataEnd();
+string sCharset = charsetDetector.Charset;
+if (String.IsNullOrEmpty(sCharset)) return enDefault;
+return charsetName2Encoding(sCharset, enDefault);
+}
+catch { return enDefault; }
+#else
+return enDefault;
+#endif
+} // detectEncodingNoBom method
+
+public static Encoding charsetName2Encoding(string sName, Encoding enDefault) {
+// Map a detector charset name to a .NET Encoding.  Unknown names fall back to the
+// caller's default rather than throwing.
+string sKey = sName.Trim().Replace("-", "").Replace("_", "").ToLower();
+if (sKey == "ascii" || sKey == "usascii") return enDefault;
+if (sKey == "utf8") return new UTF8Encoding(false);
+if (sKey == "utf16le" || sKey == "utf16" || sKey == "unicode") return Encoding.Unicode;
+if (sKey == "utf16be") return Encoding.BigEndianUnicode;
+if (sKey == "utf32" || sKey == "utf32le") return Encoding.UTF32;
+if (sKey == "utf32be") return new UTF32Encoding(true, false);
+try { return Encoding.GetEncoding(sName); }
+catch { }
+return enDefault;
+} // charsetName2Encoding method
 
 // ---- Shell / process, ported from Lbc ----
 
@@ -521,15 +669,27 @@ callMethod(o, "Save", new object[] {});
 // ---- URI / web, ported from Lbc ----
 
 public static string getUrl() {
-object oShell = createObject("Shell.Application");
-object oWindows = callMethod(oShell, "Windows");
-int iCount = (int) getProperty(oWindows, "Count");
-string sUrl = "";
-if (iCount > 0) {
-object oWindow = callMethod(oWindows, "Item", new object[] {iCount - 1});
-sUrl = (string) getProperty(oWindow, "LocationURL");
+// Return a web address to offer as a default, or "" if none is available.
+//
+// This used to enumerate the Shell.Application Windows collection and read
+// Internet Explorer's address bar.  Internet Explorer no longer exists on
+// Windows, so that returned nothing useful.  The clipboard is the replacement
+// and works with every browser: copy a link, then run the command.
+string sText = "";
+try {
+if (System.Windows.Forms.Clipboard.ContainsText()) sText = System.Windows.Forms.Clipboard.GetText();
 }
-return sUrl;
+catch { return ""; }
+if (sText == null) return "";
+sText = sText.Trim();
+int iBreak = sText.IndexOfAny(new char[] {'\r', '\n'});
+if (iBreak >= 0) sText = sText.Substring(0, iBreak).Trim();
+if (sText.Length == 0) return "";
+if (sText.StartsWith("http://", StringComparison.OrdinalIgnoreCase)) return sText;
+if (sText.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) return sText;
+if (sText.StartsWith("ftp://", StringComparison.OrdinalIgnoreCase)) return sText;
+if (sText.StartsWith("www.", StringComparison.OrdinalIgnoreCase)) return "http://" + sText;
+return "";
 } // getUrl method
 
 public static string getFileFromUri(string sUri) {

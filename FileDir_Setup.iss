@@ -79,6 +79,10 @@ Source: "FileDir.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir.ico";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Referenced assemblies still loaded at run time (until the Homer port retires them).
 Source: "Tektosyne.dll";      DestDir: "{app}"; Flags: ignoreversion
+; Ude.dll: character-encoding autodetection (a port of the Mozilla universal
+; detector).  The .NET base class library cannot detect an encoding, and this is
+; what the retired Encoding.exe did.  EdSharp ships the same library.
+Source: "Ude.dll";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "ICSharpCode.SharpZipLib.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "FileAssociation.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; Source and build inputs (shipped so users can recompile, EdSharp-style).
@@ -98,7 +102,6 @@ Source: "7z.*";               DestDir: "{app}"; Flags: ignoreversion
 Source: "chimes.wav";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Burn2CD.exe";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Burn2CD.dll";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "WebGet.exe";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "AssocOn.exe";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "AssocOff.exe";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Text-extraction engine: 2htm (plain-text mode) replaces gettext.exe + filters\.
@@ -148,6 +151,14 @@ Type: files; Name: "{app}\LbcJS.dll"
 Type: files; Name: "{app}\LbcJS.js"
 Type: files; Name: "{app}\GetProps.js"
 Type: files; Name: "{app}\gettext.exe"
+; WebGet.exe scraped Internet Explorer's address bar for the Quick URL and Web
+; Download commands.  Internet Explorer is gone; those commands now take the
+; address from the clipboard, and downloading is done by FileDir itself.
+Type: files; Name: "{app}\WebGet.exe"
+Type: files; Name: "{app}\WebGet.tmp"
+; Encoding.exe was the external character-encoding tool; the Ude library does the
+; detection now, and the base class library does the conversion.
+Type: files; Name: "{app}\Encoding.exe"
 ; Web Client Utilities: the ~35 Python "web 2.0" scripts and the InPy interpreter
 ; they ran under.  The services they called are long gone, so the feature has been
 ; removed from FileDir; delete the whole tree from an existing install.

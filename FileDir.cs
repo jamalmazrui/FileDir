@@ -338,8 +338,8 @@ return bResult;
 
 // ---- LbcVB replacement (Homer/BCL port) ----------------------------
 // Replaces the former LbcVB.dll Visual Basic helper module. Link
-// extraction now uses Homer.Web; file transfer keeps the exact VB
-// behavior via Microsoft.VisualBasic.Devices.Network; the rest map onto
+// extraction AND file transfer (HTTP, HTTPS, FTP) now go through Homer.Web,
+// shared with EdSharp and DbDo; the rest map onto
 // the BCL: SoundPlayer/SystemSound for audio, SmtpClient for mail, DPAPI
 // ProtectedData for the optional password store, and ComputerInfo for the
 // system summary.
@@ -380,11 +380,14 @@ return s;
 } // yieldInOperatingSystem method
 
 public static void downloadFile(string sUrl, string sFile, string sUserName, string sPassword) {
-new Microsoft.VisualBasic.Devices.Network().DownloadFile(sUrl, sFile, sUserName, sPassword, true, 100000, true, Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
+// Homer.Web handles HTTP, HTTPS, and FTP with modern TLS and a real User-Agent.
+// This replaces Microsoft.VisualBasic.Devices.Network, so no VB runtime is
+// involved and EdSharp, FileDir, and DbDo all transfer files the same way.
+if (!Homer.Web.downloadTo(sUrl, sFile, sUserName, sPassword)) throw new IOException("Download failed: " + sUrl);
 } // downloadFile method
 
 public static void uploadFile(string sFile, string sUrl, string sUserName, string sPassword) {
-new Microsoft.VisualBasic.Devices.Network().UploadFile(sFile, sUrl, sUserName, sPassword, true, 100000, Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
+if (!Homer.Web.uploadFrom(sFile, sUrl, sUserName, sPassword)) throw new IOException("Upload failed: " + sUrl);
 } // uploadFile method
 
 public static void sendMail(string sUserName, string sPassword, string sSenderAddress, string sOutgoingServer, string sSubject, string sText, string sRecipient) {
@@ -1792,32 +1795,20 @@ else Lbc.Show("Cannot create .lnk file", "Error");
 
 void menuFileQuickURL_Click(object sender, EventArgs e) {
 App.say("Quick URL");
-string sExe = Path.Combine(App.sAppDir, "WebGet.exe");
-string sTmp = Path.Combine(App.sAppDir, "WebGet.tmp");
-//if (File.Exists(sTmp)) File.Delete(sTmp);
-if (!File.Exists(sTmp)) Homer.Util.string2File(" ", sTmp);
-try {
-int iLoop = 600;
-Homer.Util.runHide(sExe);
-while (iLoop > 0 && !File.Exists(sTmp)) {
-System.Threading.Thread.Sleep(100);
-iLoop--; 
-}
-}
-catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
-return;
-}
-string[] aLines = Homer.Util.file2String(sTmp).Replace("\r\n", "\n").Trim().Split('\n');
-string sAddress = aLines[0].Trim();
-//Lbc.Show(sAddress, sAddress.Length);
-if (sAddress == "") {
-//Lbc.Show("Cannot get URL from AddressBar of Internet Explorer.", "Error");
-//App.say("Cannot get address from Internet Explorer!");
-//return;
-}
+// The address and title used to come from WebGet.exe, an external helper that
+// scraped Internet Explorer's address bar.  Internet Explorer is gone, so the
+// clipboard is the source: copy a link in any browser, then run this command.
+// Both fields stay editable, so nothing is lost when the clipboard holds no URL.
+string sAddress = Homer.Util.getUrl();
 string sTitle = "";
-if (sAddress != "" && aLines.Length > 1) sTitle = aLines[1];
+if (sAddress.Length > 0) {
+try {
+Uri uri = new Uri(sAddress);
+sTitle = uri.Host;
+if (sTitle.StartsWith("www.", StringComparison.OrdinalIgnoreCase)) sTitle = sTitle.Substring(4);
+}
+catch { sTitle = ""; }
+}
 string sDir = Path.Combine(App.sDataDir, "Quick");
 string sName = sTitle;
 //sName = Lbc.InputDialog("Input", "&Name", sName).Trim();
@@ -4528,14 +4519,10 @@ App.say("Encoding " + en.EncodingName);
 App.say("Code Page " + en.CodePage);
 */
 
-App.say("Encoding");
-string sDir = Path.Combine(App.sAppDir, "WebClient");
-string sExe = Path.Combine(sDir, "Encoding.exe");
-string sParams = "show " + Homer.Util.stringQuote(sFile);
-string sText = Homer.Util.getProgramOutput(sExe, sParams);
-string[] aParts = sText.Split(' ');
-sText = aParts[0].ToUpper();
-App.say(sText);
+// Report the file's encoding.  This used to run Encoding.exe; Homer.Util now
+// detects it with the Ude library and reports it the same way, including the
+// utf-8b / utf-8n distinction that says whether a byte-order mark is present.
+App.say(Homer.Util.getFileEncodingName(sFile).ToUpper());
 } // menuQueryCharacterEncoding method
 
 void menuQueryPercentThrough_Click(object sender, EventArgs e) {
@@ -5096,12 +5083,9 @@ if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
-string sDir = Path.Combine(App.sAppDir, "WebClient");
-string sExe = Path.Combine(sDir, "Encoding.exe");
-string sParams = "list";
-string sEncodings = Homer.Util.getProgramOutput(sExe, sParams).Trim().ToUpper();
-sEncodings = Homer.Util.stringConvertToUnixLineBreak(sEncodings);
-string[] aEncodings = sEncodings.Split('\n');
+// The same list Encoding.exe offered: every encoding this computer has, plus
+// utf-8b (with byte-order mark), utf-8n (without), and asciify.
+string[] aEncodings = Homer.Util.getEncodingNames();
 string sEncoding = App.readValue(App.sIniFile, "Data", "ConvertEncoding", "");
 int iIndex = -1;
 if (sEncoding.Length > 0) iIndex = Array.IndexOf(aEncodings, sEncoding.ToUpper());
@@ -5122,9 +5106,15 @@ App.say("Skipping folder " + sName);
 }
 else if (File.Exists(sPath) ){
 App.say(sName);
-// sParams = "convert " + Homer.Util.stringQuote(sPath) + " " + sEncoding;
-sParams = "backup " + Homer.Util.stringQuote(sPath) + " " + sEncoding;
-Homer.Util.getProgramOutput(sExe, sParams);
+// Detect the source encoding, rewrite in the chosen one, and keep the .bak
+// copy -- exactly Encoding.exe's "backup" task, which is the one FileDir used.
+// The target may be utf-8b, utf-8n, asciify, or any named encoding.
+try {
+Homer.Util.convertFileEncoding(sPath, sEncoding, true);
+}
+catch (Exception ex) {
+App.say(sName + ": " + ex.Message);
+}
 }
 else App.say(sName + " not found!");
 }
@@ -5855,9 +5845,18 @@ App.say("Please wait");
 List<string[]> listLinks = App.getLinks(sUrl);
 List<string> listFiles = new List<string>();
 string sRef;
+// Work out the name each link would be saved as, the way durl.py does: the
+// server-recommended name from Content-Disposition, and an extension inferred
+// from the MIME type when the URL carries none.  That is what makes the
+// "Extensions" filter below work for links like "site.com/get?id=42", which
+// used to show no extension and so could never be picked by type.  A link whose
+// URL already ends in a name with an extension costs no network call.
+Dictionary<string, string> dNames = new Dictionary<string, string>();
 foreach (string[] aLink in listLinks) {
 sRef = aLink[0];
-string sFile = Homer.Util.getFileFromUri(sRef);
+string sFile = Homer.Web.suggestedName(sRef);
+if (sFile.Length == 0) sFile = Homer.Util.getFileFromUri(sRef);
+dNames[sRef] = sFile;
 listFiles.Add(sFile);
 }
 
@@ -5873,7 +5872,7 @@ List<string> listItems = new List<string>();
 List<string> listRefs = new List<string>();
 foreach (string[] aLink in listLinks) {
 sRef = aLink[0];
-string sFile = Homer.Util.getFileFromUri(sRef);
+string sFile = dNames.ContainsKey(sRef) ? dNames[sRef] : Homer.Util.getFileFromUri(sRef);
 string sExt = Path.GetExtension(sFile).TrimStart('.').ToLower();
 if (Array.IndexOf(aResults, sFile) == -1) continue;
 
@@ -5902,12 +5901,15 @@ foreach (string s in aResults) {
 int i = listItems.IndexOf(s);
 string sFile = listFiles[i];
 sRef = listRefs[i];
-sFile = Path.Combine(sDir, sFile);
-sFile = Homer.Util.getUniqueName(sFile);
-App.say(Path.GetFileName(sFile));
+App.say(sFile);
 try {
-App.deleteFile(sFile, App.Recycle);
-App.downloadFile(sRef, sFile, sUserName, sPassword);
+// Homer.Web assigns the name the server recommends (Content-Disposition, then
+// the MIME type for a missing extension), sanitizes it, and makes it unique in
+// the target folder -- the durl.py rules.  The name worked out above is passed
+// as the suggestion, so it is used when the server offers nothing better.
+string sSaved = Homer.Web.download(sRef, sDir, sFile);
+if (sSaved.Length == 0) throw new IOException("Download failed: " + sRef);
+sFile = sSaved;
 }
 catch (Exception ex) {
 Lbc.Show(ex.Message, "Error");
