@@ -27,6 +27,7 @@ if not exist "Say.cs" echo ERROR: Say.cs ^(Homer^) not found.& popd & exit /b 1
 if not exist "Inix.cs" echo ERROR: Inix.cs ^(Homer^) not found.& popd & exit /b 1
 if not exist "Util.cs" echo ERROR: Util.cs ^(Homer^) not found.& popd & exit /b 1
 if not exist "FileDir.js" echo ERROR: FileDir.js not found.& popd & exit /b 1
+if not exist "FileDir.manifest" echo ERROR: FileDir.manifest not found.& popd & exit /b 1
 
 rem ---- required reference DLLs (must sit beside FileDir.cs) ----
 for %%d in (FileAssociation.dll Tektosyne.dll ICSharpCode.SharpZipLib.dll) do (
@@ -152,10 +153,9 @@ if not defined uiaTypes echo ERROR: UIAutomationTypes.dll not found; install the
 echo UIAutomationProvider: !uiaProv! >> "!log!"
 echo UIAutomationTypes: !uiaTypes! >> "!log!"
 
-rem ---- optional manifest and icon (used only if present) ----
-set "manifest="
-if exist "FileDir.manifest" set "manifest=/win32manifest:FileDir.manifest"
-if defined manifest (echo Manifest: FileDir.manifest >> "!log!") else (echo Manifest: none ^(optional^) >> "!log!")
+rem ---- manifest (required; embedded into the exe) and optional icon ----
+set "manifest=/win32manifest:FileDir.manifest"
+echo Manifest: FileDir.manifest >> "!log!"
 set "icon="
 if exist "FileDir.ico" set "icon=/win32icon:FileDir.ico"
 if defined icon (echo Icon: FileDir.ico >> "!log!") else (echo Icon: none ^(optional^) >> "!log!")

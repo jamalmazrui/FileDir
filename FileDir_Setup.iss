@@ -95,7 +95,7 @@ Source: "Util.cs";            DestDir: "{app}"; Flags: ignoreversion
 Source: "Dialogs.cs";         DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDirScript.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.js";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "FileDir.manifest";   DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "FileDir.manifest";   DestDir: "{app}"; Flags: ignoreversion
 Source: "BuildFileDir.cmd";   DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir_Setup.iss";  DestDir: "{app}"; Flags: ignoreversion
 ; Helper tools shipped alongside the app.
