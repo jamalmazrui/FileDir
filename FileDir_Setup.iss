@@ -196,7 +196,7 @@ Name: "{autodesktop}\FileDir"; Filename: "{app}\FileDir.exe"; WorkingDir: "{app}
 ;
 ; 1. JAWS scripts.  "FileDir.exe --install-jaws-settings" copies the script family into
 ;    every installed version of JAWS and compiles it there.  The implementation is the
-;    shared Homer.JawsSettingsInstaller (Jaws.cs), so EdSharp, FileDir, and DbDo all
+;    shared Homer.JawsSettingsInstaller (in Say.cs), so EdSharp, FileDir, and DbDo all
 ;    install scripts by the same code, and the command can be re-run later.
 FileName: "{app}\FileDir.exe"; \
   Parameters: "--install-jaws-settings"; \

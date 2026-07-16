@@ -169,7 +169,7 @@ if errorlevel 1 goto failed
 
 echo Compiling FileDir.cs -^> FileDir.exe ...
 if exist FileDir.exe del /f /q FileDir.exe
-"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ /nowarn:0162 !udeDef! %manifest% %icon% /reference:FileAssociation.dll /reference:Microsoft.CSharp.dll /reference:Tektosyne.dll /reference:ICSharpCode.SharpZipLib.dll /reference:Microsoft.VisualBasic.dll /reference:System.Security.dll /reference:System.Web.dll /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:FileDir.exe Version.cs FileDir.cs Lbc.cs Say.cs Inix.cs Web.cs Jaws.cs Util.cs Dialogs.cs >> "!log!" 2>&1
+"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ /nowarn:0162 !udeDef! %manifest% %icon% /reference:FileAssociation.dll /reference:Microsoft.CSharp.dll /reference:Tektosyne.dll /reference:ICSharpCode.SharpZipLib.dll /reference:Microsoft.VisualBasic.dll /reference:System.Security.dll /reference:System.Web.dll /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:FileDir.exe Version.cs FileDir.cs Lbc.cs Say.cs Inix.cs Web.cs Util.cs Dialogs.cs >> "!log!" 2>&1
 if errorlevel 1 goto failed
 
 rem ---- optional: build accessible HTML docs from Markdown via 2htm ----

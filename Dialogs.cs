@@ -146,6 +146,18 @@ return sReturn;
 // ---- input / field dialogs ----
 
 public static string InputDialog(string sTitle, string sLabel, string sValue) {
+return InputDialog(sTitle, sLabel, sValue, null);
+} // InputDialog method
+
+// InputDialog with input history: when sHistoryKey is given (for example
+// "Jump"), the input control is an editable combo box whose dropdown holds
+// up to historyCount recent entries for that command, newest first. The
+// entries persist through the FileDir settings layer in section
+// [Recent<key>] as slot keys term1, term2, and so on, the same layout DbDo
+// uses. [General] historyCount sets the depth; default 10, ceiling 100.
+// Password prompts and callers that pass no key keep the plain text box,
+// so passwords are never recorded.
+public static string InputDialog(string sTitle, string sLabel, string sValue, string sHistoryKey) {
 string sResult = "";
 
 Form frm = new Form();
@@ -170,12 +182,39 @@ Label lbl = new Label();
 lbl.AutoSize = true;
 lbl.Text = sLabel + ":";
 lbl.AccessibleName = lbl.Text.Replace("&", "");
-TextBox txt = new TextBox();
+bool bPassword = lbl.Text.Contains("Password:");
+bool bHistory = !string.IsNullOrEmpty(sHistoryKey) && !bPassword;
+int iCount = Homer.InputHistory.DefaultCount;
+string sSection = null;
+List<string> lsRecent = null;
+if (bHistory) {
+iCount = Homer.InputHistory.clampCount(App.readValue(App.sIniFile, "General", "historyCount", ""));
+sSection = "Recent" + sHistoryKey;
+lsRecent = Homer.InputHistory.load(delegate(string sKey) { return App.readValue(App.sIniFile, sSection, sKey, ""); }, iCount);
+}
+
+TextBox txt = null;
+ComboBox cmb = null;
+Control ctlInput;
+if (bHistory) {
+cmb = new ComboBox();
+cmb.DropDownStyle = ComboBoxStyle.DropDown;
+cmb.AccessibleName = lbl.AccessibleName;
+cmb.AccessibleDescription = "Down arrow selects from up to " + iCount + " recent entries";
+foreach (string sOne in lsRecent) cmb.Items.Add(sOne);
+cmb.Text = sValue;
+cmb.GotFocus += delegate(object o, EventArgs e) {cmb.SelectAll();};
+ctlInput = cmb;
+}
+else {
+txt = new TextBox();
 txt.AccessibleName = lbl.AccessibleName;
-if (lbl.Text.Contains("Password:")) txt.UseSystemPasswordChar = true;
+if (bPassword) txt.UseSystemPasswordChar = true;
 txt.Text = sValue;
 txt.GotFocus += delegate(object o, EventArgs e) {txt.SelectAll();};
-flpInput.Controls.AddRange(new Control[] {lbl, txt});
+ctlInput = txt;
+}
+flpInput.Controls.AddRange(new Control[] {lbl, ctlInput});
 flpInput.ResumeLayout();
 
 FlowLayoutPanel flpButtons = new FlowLayoutPanel();
@@ -186,7 +225,7 @@ flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 flpButtons.FlowDirection = FlowDirection.LeftToRight;
 
 Button btnOK = new Button();
-btnOK.Click += delegate(object o, EventArgs e) { sResult = txt.Text;frm.Close();};
+btnOK.Click += delegate(object o, EventArgs e) { sResult = (cmb != null) ? cmb.Text : txt.Text; frm.Close();};
 btnOK.Text = "OK";
 btnOK.AccessibleName = btnOK.Text;
 
@@ -210,8 +249,12 @@ frm.ResumeLayout();
 frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
 frm.ShowDialog();
 frm.Dispose();
+if (bHistory && sResult != null && sResult.Trim().Length > 0) {
+lsRecent = Homer.InputHistory.push(lsRecent, sResult.Trim(), iCount);
+Homer.InputHistory.store(lsRecent, delegate(string sKey, string sVal) { App.writeValue(App.sIniFile, sSection, sKey, sVal); }, iCount);
+}
 return sResult;
-} // InputDialog method
+} // InputDialog method (history overload)
 
 public static ArrayList FieldDialog(string sTitle, string[] sLabelList, string[] sValueList) {
 return FieldDialog(sTitle, sLabelList, sValueList, false);
