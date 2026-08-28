@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Homer {
 
@@ -110,19 +111,21 @@ public static readonly string[,] c_aTargets = {
 {"MediaWiki", "mediawiki"}
 };
 
-// The extensions Pandoc can READ. Legacy .doc, .ppt and .xls are absent
-// because Pandoc has no reader for them, and so is .pdf: those go through
-// 2htm instead. Saying so here means a person is told why rather than shown
-// Pandoc's own complaint.
-public static readonly string[] c_aReadable = {
-".docx", ".odt", ".epub", ".html", ".htm", ".md", ".markdown", ".rst",
-".tex", ".latex", ".rtf", ".txt", ".org", ".adoc", ".asciidoc", ".csv",
-".ipynb", ".mediawiki", ".textile", ".typ", ".xlsx", ".pptx", ".fb2", ".djot"
-};
+// ONE list of what Pandoc reads, used by everything.
+//
+// There were three, and they disagreed. toPlainText routed .bib, .jats, .opml
+// and .tsv to Pandoc, and convertFile then refused them because its own list
+// did not have them. The other list called .pptx and .xlsx Pandoc-readable,
+// which they are not -- Pandoc writes those, it does not read them.
+//
+// The lists are gone. c_aPandocReadable above is the only one, and every place
+// that asks "can Pandoc read this" asks it.
 
 public static bool canRead(string sPath) {
+// Whether PANDOC can read it. The name is kept because callers read well with
+// it, but there is now one list behind it rather than three.
 string sExt = Path.GetExtension(sPath).ToLower();
-return Array.IndexOf(c_aReadable, sExt) >= 0;
+return Array.IndexOf(c_aPandocReadable, sExt) >= 0;
 } // canRead method
 
 public static string targetName(int iIndex) {
@@ -157,10 +160,24 @@ return aLabels;
 //   audio, video, image -- ffmpeg
 // ---------------------------------------------------------------------------
 
+// What Pandoc actually READS. Checked against "pandoc --list-input-formats":
+// it reads docx, odt, epub, html, rtf, markdown, rst, latex, csv and more, and
+// it does NOT read pptx, xlsx or pdf, whatever its output list suggests.
+public static readonly string[] c_aPandocReadable = {
+".docx", ".odt", ".epub", ".html", ".htm", ".rtf", ".md", ".markdown",
+".rst", ".tex", ".latex", ".csv", ".tsv", ".org", ".textile", ".mediawiki",
+".ipynb", ".fb2", ".typ", ".jats", ".opml", ".bib"
+};
+
+// What Output Type treats as a document: everything Pandoc reads, plus the two
+// Open XML formats FileDir reads itself. They are documents to a person even
+// though Pandoc cannot read them, and categoryOf must agree with that or a
+// .pptx would be offered no targets at all.
 private static readonly string[] c_aDocumentSources = {
-".docx", ".odt", ".epub", ".html", ".htm", ".md", ".markdown", ".rst",
-".tex", ".latex", ".rtf", ".txt", ".org", ".adoc", ".asciidoc", ".csv",
-".ipynb", ".mediawiki", ".textile", ".typ", ".xlsx", ".pptx", ".fb2", ".djot"
+".docx", ".odt", ".epub", ".html", ".htm", ".rtf", ".md", ".markdown",
+".rst", ".tex", ".latex", ".csv", ".tsv", ".org", ".textile", ".mediawiki",
+".ipynb", ".fb2", ".typ", ".jats", ".opml", ".bib", ".txt",
+".pptx", ".xlsx"
 };
 
 // Formats Pandoc cannot read at all. 2htm handles them, which is why FileDir
@@ -182,6 +199,11 @@ private static readonly string[] c_aImageSources = {
 
 public static string categoryOf(string sPath) {
 string sExt = Path.GetExtension(sPath).ToLower();
+// Order matters: .pptx and .xlsx are documents to a person, but Pandoc cannot
+// read either, so they are their own category and are extracted here first.
+// Calling them documents offered them ten targets and then refused all ten.
+if (sExt == ".pptx" || sExt == ".xlsx") return "openxml";
+if (sExt == ".pdf") return "pdf";
 if (Array.IndexOf(c_aDocumentSources, sExt) >= 0) return "document";
 if (Array.IndexOf(c_aLegacySources, sExt) >= 0) return "legacy";
 if (Array.IndexOf(c_aAudioSources, sExt) >= 0) return "audio";
@@ -196,6 +218,18 @@ public static string[,] targetsFor(string sPath) {
 // meaning.
 string sCategory = categoryOf(sPath);
 if (sCategory == "document") return c_aTargets;
+if (sCategory == "openxml" || sCategory == "pdf")
+// Extracted first, then Pandoc makes anything from that. A PDF becomes rich
+// Markdown with its headings, lists and tables, so Word and a web page are
+// worth offering rather than only flat text.
+return new string[,] {
+{"Markdown", "md"},
+{"Plain text", "txt"},
+{"Web page", "html"},
+{"Word document", "docx"},
+{"OpenDocument text", "odt"},
+{"Rich text", "rtf"}
+};
 if (sCategory == "legacy")
 return new string[,] {
 {"Plain text", "txt"},
@@ -264,20 +298,36 @@ private static readonly string[] c_aPlainSources = {
 public static string toPlainText(string sPath, out string sError) {
 // The text of a file, whatever the file is, by whichever engine can read it.
 //
-// This is what Append to Clipboard and Chat about File both want, and neither
-// should have to know that a .docx goes through Pandoc, a .pdf through 2htm,
-// and a .cs is simply read. A format nothing can read says so plainly rather
-// than returning the raw bytes, which is what the old path did: a .zip read as
-// text put a screenful of rubbish on the clipboard.
+// THE ORDER MATTERS, AND IT IS DELIBERATE.
+//
+// A goal of the reborn Homer Tools is that nothing fundamental depends on a
+// commercial product being installed. 2htm reaches Office through COM for the
+// legacy formats, so it is LAST, not first -- which is what it used to be. On a
+// computer without Office it returned success and produced nothing, and the
+// Say Contents command simply said nothing at all.
+//
+//   1. Already text        -- read it.
+//   2. Pandoc              -- docx, odt, epub, html, rtf, markdown, rst,
+//                             latex, csv and the rest it reads. Free, and
+//                             already installed for the conversion commands.
+//   3. Open XML, read here -- pptx and xlsx, which Pandoc does not read. They
+//                             are zip archives of XML, and FileDir already
+//                             carries a zip library, so no Office and no new
+//                             package.
+//   4. 2htm                -- pdf, and legacy .doc, .ppt and .xls. The last
+//                             two reach Office through COM, and there is no
+//                             reasonable alternative for a 1997 .doc file.
+//
+// AND IT SAYS WHY WHEN IT FAILS. Silence was the real fault: a person pressed a
+// key and nothing happened, with nothing to read and nothing in the log.
 sError = "";
 if (!File.Exists(sPath)) {
-sError = "not found";
+sError = "the file was not found";
 return "";
 }
 string sExt = Path.GetExtension(sPath).ToLower();
-string sCategory = categoryOf(sPath);
 
-// Already text. Read it, and let the encoding detector work out how.
+// 1. Already text.
 if (Array.IndexOf(c_aPlainSources, sExt) >= 0) {
 try {
 return Homer.Util.file2String(sPath);
@@ -288,16 +338,208 @@ return "";
 }
 }
 
-// Legacy Office and PDF: 2htm, which comes with FileDir.
-// Documents Pandoc reads: Pandoc, whose plain output keeps the structure as
-// indentation and blank lines rather than throwing it away.
-if (sCategory == "legacy" || sCategory == "document") {
+// 2. Pandoc, for everything it reads.
+if (Array.IndexOf(c_aPandocReadable, sExt) >= 0) {
+if (!havePandoc()) {
+sError = "Pandoc is not installed, and it is what reads " + sExt + " files. "
++ "Run installPandoc.cmd in the FileDir folder as an administrator, or install FileDir again and leave the Pandoc box ticked.";
+return "";
+}
+string sViaPandoc = throughFile(sPath, ".txt", out sError);
+if (sViaPandoc.Length > 0) return sViaPandoc;
+if (sError.Length == 0) sError = "Pandoc read " + Path.GetFileName(sPath) + " but found no text in it.";
+return "";
+}
+
+// 3. Open XML, read here rather than through anything else.
+if (sExt == ".pptx" || sExt == ".xlsx") {
+string sOpenXml = openXmlText(sPath, out sError);
+if (sOpenXml.Length > 0) return sOpenXml;
+if (sError.Length == 0) sError = "No text was found inside " + Path.GetFileName(sPath) + ".";
+return "";
+}
+
+// 4. PDF, through the same reader EdSharp uses: PyMuPDF4LLM, which reads a
+// PDF's own structure -- font sizes become headings, bullet runs become lists,
+// ruled areas become tables -- and writes Markdown. Plain text from a PDF
+// throws away everything a screen reader user navigates by.
+//
+// Word is not involved. 2htm reads a PDF through Word's PDF Reflow, so on a
+// machine without Word it produces nothing, and it produced nothing on a
+// machine WITH Word too when it could not load one of its own assemblies.
+if (sExt == ".pdf") {
+string sRich = pdfMarkdown(sPath, out sError);
+if (sRich.Length > 0) return sRich;
+// 2htm is still tried, in case Word can do what the reader could not.
+string sViaTwoHtm = throughTwoHtm(sPath, out sError);
+if (sViaTwoHtm.Length > 0) return sViaTwoHtm;
+if (sError.Length == 0)
+sError = "No text could be got out of this PDF. If it is a scan of images it needs "
++ "optical character recognition rather than conversion.";
+return "";
+}
+
+// 5. 2htm, for the legacy Office formats only.
+if (sExt == ".doc" || sExt == ".ppt" || sExt == ".xls") {
+string sLegacy = throughTwoHtm(sPath, out sError);
+if (sLegacy.Length > 0) return sLegacy;
+if (sError.Length == 0)
+sError = "2htm could not get any text out of " + Path.GetFileName(sPath) + ". "
++ "The 1997 Office formats need Microsoft Office installed. Saving the file as "
++ (sExt == ".doc" ? ".docx" : sExt == ".ppt" ? ".pptx" : ".xlsx")
++ " avoids that, and FileDir reads those without Office.";
+return "";
+}
+
+sError = sExt + " is not a format FileDir can read as text.";
+return "";
+} // toPlainText method
+
+public static string pythonProgram() {
+// The interpreter that has the PDF reader, or the best one found.
+//
+// installPdfTools.cmd records which interpreter it installed the package with,
+// because a machine may carry several Pythons and only one of them can import
+// it. That record is read first. Windows also answers "where python" with an
+// app execution alias under WindowsApps which is NOT Python -- it advertises
+// the Microsoft Store and exits -- so any path through WindowsApps is rejected.
+try {
+string sRecord = Path.Combine(
+Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+Path.Combine("FileDir", Path.Combine("logs", "FileDir_python.txt")));
+if (File.Exists(sRecord)) {
+string sNoted = File.ReadAllText(sRecord).Trim();
+if (sNoted.Length > 0 && File.Exists(sNoted)) return sNoted;
+}
+}
+catch (Exception) {
+}
+string sFound = Homer.Media.findTool("python");
+if (sFound.Length > 0 && sFound.IndexOf("WindowsApps", StringComparison.OrdinalIgnoreCase) < 0)
+return sFound;
+foreach (string sFolder in new string[] {
+Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\Programs\Python\Python313"),
+Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\Programs\Python\Python312"),
+Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\Programs\Python\Python311"),
+Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\Python313"),
+Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\Python312"),
+Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\Python311")}) {
+string sTry = Path.Combine(sFolder, "python.exe");
+if (File.Exists(sTry)) return sTry;
+}
+return "";
+} // pythonProgram method
+
+public static string pdfMarkdown(string sPath, out string sError) {
+// A PDF as rich Markdown, by pdfRich.py and PyMuPDF4LLM.
+sError = "";
+string sScript = Path.Combine(Homer.Media.exeFolder(), "pdfRich.py");
+if (!File.Exists(sScript)) {
+sError = "pdfRich.py is not in the FileDir folder.";
+return "";
+}
+string sPython = pythonProgram();
+if (sPython.Length == 0) {
+sError = "Python is not installed, and the PDF reader needs it. "
++ "Install Python from python.org, then run installPdfTools.cmd in the FileDir folder.";
+return "";
+}
+string sTemp = Path.Combine(Path.GetTempPath(),
+Path.GetFileNameWithoutExtension(sPath) + "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + ".md");
+string sOut, sErr;
+int iCode = Homer.Media.run(sPython,
+Homer.Util.stringQuote(sScript) + " " + Homer.Util.stringQuote(sPath) + " " + Homer.Util.stringQuote(sTemp),
+out sOut, out sErr);
+// pdfRich writes its reasons beside the target, and removes that log when it
+// succeeds. So a log still there is the explanation, in its own words.
+string sLog = sTemp + ".log";
+if (iCode != 0 || !File.Exists(sTemp)) {
+if (File.Exists(sLog)) {
+try {
+sError = firstMeaningful(File.ReadAllText(sLog));
+File.Delete(sLog);
+}
+catch (Exception) {
+}
+}
+if (sError.Length == 0) sError = firstLine((sOut + "\n" + sErr).Trim());
+if (sError.Length == 0) sError = "The PDF reader returned " + iCode + ".";
+return "";
+}
+try {
+string sText = Homer.Util.file2String(sTemp);
+File.Delete(sTemp);
+if (File.Exists(sLog)) File.Delete(sLog);
+return sText;
+}
+catch (Exception ex) {
+sError = ex.Message;
+return "";
+}
+} // pdfMarkdown method
+
+private static string firstMeaningful(string sText) {
+// The first line that says something went wrong, or the last line with words
+// on it. pdfRich's log opens with the environment before it reaches the point.
+string sBest = "";
+foreach (string sLine in sText.Replace("\r\n", "\n").Split('\n')) {
+string sTrim = sLine.Trim();
+if (sTrim.Length == 0) continue;
+if (sTrim.StartsWith("FAILED")) return sTrim;
+sBest = sTrim;
+}
+return sBest;
+} // firstMeaningful method
+
+private static bool fromText(string sText, string sTarget, out string sError) {
+// Text or Markdown already in hand, written out as the target asks.
+//
+// A .txt target is simply the text. Anything else goes through Pandoc, which
+// is told the input is Markdown -- because what the PDF reader and the Open
+// XML reader produce IS Markdown, and reading it as such keeps the headings
+// and tables rather than flattening them into one paragraph.
+sError = "";
+string sExt = Path.GetExtension(sTarget).ToLower().TrimStart('.');
+try {
+if (sExt == "txt" || sExt == "md" || sExt == "markdown") {
+File.WriteAllText(sTarget, sText, new UTF8Encoding(true));
+return true;
+}
+}
+catch (Exception ex) {
+sError = ex.Message;
+return false;
+}
+string sExe = pandocPath();
+if (sExe.Length == 0) {
+sError = "Pandoc is not installed, and it is what makes a " + sExt + " file from the text.";
+return false;
+}
+string sTemp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N").Substring(0, 8) + ".md");
+try {
+File.WriteAllText(sTemp, sText, new UTF8Encoding(true));
+}
+catch (Exception ex) {
+sError = ex.Message;
+return false;
+}
+bool bMade = convertFile(sTemp, sTarget, out sError);
+try { File.Delete(sTemp); }
+catch (Exception) { }
+return bMade;
+} // fromText method
+
+private static string throughTwoHtm(string sPath, out string sError) {
+// 2htm into a temporary text file, read back.
+sError = "";
+string sExe = Path.Combine(Homer.Media.exeFolder(), "2htm.exe");
+if (!File.Exists(sExe)) {
+sError = "2htm.exe is not in the FileDir folder.";
+return "";
+}
 string sTemp = Path.Combine(Path.GetTempPath(),
 Path.GetFileNameWithoutExtension(sPath) + "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + ".txt");
-bool bMade = false;
-if (sCategory == "legacy") bMade = convertLegacy(sPath, sTemp, out sError);
-else bMade = convertFile(sPath, sTemp, out sError);
-if (!bMade) return "";
+if (!convertLegacy(sPath, sTemp, out sError)) return "";
 try {
 string sText = Homer.Util.file2String(sTemp);
 File.Delete(sTemp);
@@ -307,11 +549,106 @@ catch (Exception ex) {
 sError = ex.Message;
 return "";
 }
-}
+} // throughTwoHtm method
 
-sError = sExt + " is not a text format";
+private static string throughFile(string sPath, string sTargetExt, out string sError) {
+// Convert to a temporary file and read it back. Pandoc writes files rather
+// than talking on a pipe, and a temporary file avoids every question about
+// encodings on the way through.
+sError = "";
+string sTemp = Path.Combine(Path.GetTempPath(),
+Path.GetFileNameWithoutExtension(sPath) + "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + sTargetExt);
+if (!convertFile(sPath, sTemp, out sError)) return "";
+try {
+string sText = Homer.Util.file2String(sTemp);
+File.Delete(sTemp);
+return sText;
+}
+catch (Exception ex) {
+sError = ex.Message;
 return "";
-} // toPlainText method
+}
+} // throughFile method
+
+public static string openXmlText(string sPath, out string sError) {
+// The text inside a .pptx or .xlsx, read straight out of the archive.
+//
+// Both are zip files full of XML, and FileDir already carries SharpZipLib for
+// its archive commands, so this needs no Office, no COM and no new package.
+// Pandoc does not read either format, which is why this exists.
+//
+//   pptx -- every ppt/slides/slideN.xml, and the text is in <a:t> elements.
+//   xlsx -- xl/sharedStrings.xml, which holds every string in the workbook in
+//           <t> elements. Numbers live in the sheets and are not gathered:
+//           what a person wants read aloud from a spreadsheet is its words.
+sError = "";
+StringBuilder sbText = new StringBuilder();
+try {
+using (ICSharpCode.SharpZipLib.Zip.ZipFile zip = new ICSharpCode.SharpZipLib.Zip.ZipFile(sPath)) {
+System.Collections.Generic.List<string> lsNames = new System.Collections.Generic.List<string>();
+foreach (ICSharpCode.SharpZipLib.Zip.ZipEntry entry in zip) {
+if (!entry.IsFile) continue;
+string sName = entry.Name.Replace('\\', '/').ToLower();
+bool bWanted = sName.StartsWith("ppt/slides/slide") && sName.EndsWith(".xml");
+if (sName == "xl/sharedstrings.xml") bWanted = true;
+if (bWanted) lsNames.Add(entry.Name);
+}
+// Slide 2 must not come before slide 10 by name alone, and it does when the
+// names are compared as text. The number decides.
+lsNames.Sort(delegate(string sLeft, string sRight) {
+return slideNumber(sLeft).CompareTo(slideNumber(sRight));
+});
+foreach (string sName in lsNames) {
+ICSharpCode.SharpZipLib.Zip.ZipEntry entry = zip.GetEntry(sName);
+if (entry == null) continue;
+string sXml;
+using (Stream stream = zip.GetInputStream(entry))
+using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+sXml = reader.ReadToEnd();
+string sPart = xmlRunText(sXml);
+if (sPart.Trim().Length == 0) continue;
+if (sbText.Length > 0) sbText.Append("\r\n\r\n");
+sbText.Append(sPart.Trim());
+}
+}
+}
+catch (Exception ex) {
+sError = ex.Message;
+return "";
+}
+return sbText.ToString();
+} // openXmlText method
+
+private static int slideNumber(string sName) {
+// The digits in "ppt/slides/slide12.xml", or a large number for anything else
+// so that shared strings sort last rather than first.
+Match digits = Regex.Match(sName, @"slide(\d+)\.xml", RegexOptions.IgnoreCase);
+if (!digits.Success) return int.MaxValue;
+int iNumber = 0;
+int.TryParse(digits.Groups[1].Value, out iNumber);
+return iNumber;
+} // slideNumber method
+
+private static string xmlRunText(string sXml) {
+// The text of every <a:t> and <t> element, which is where Open XML keeps the
+// words. Written by hand rather than with an XML parser because a namespace
+// declaration missing from a fragment would stop a parser dead, and this only
+// has to find text between two known tags.
+StringBuilder sb = new StringBuilder();
+foreach (Match run in Regex.Matches(sXml, @"<(?:a:)?t(?:\s[^>]*)?>(.*?)</(?:a:)?t>", RegexOptions.Singleline)) {
+string sRun = run.Groups[1].Value;
+sRun = sRun.Replace("&lt;", "<").Replace("&gt;", ">").Replace("&quot;", "\"")
+.Replace("&apos;", "'").Replace("&amp;", "&");
+sb.Append(sRun);
+// A paragraph end in either format closes the run that precedes it.
+sb.Append(" ");
+}
+// Line breaks where the markup had them, so a slide does not arrive as one
+// long sentence.
+string sText = sb.ToString();
+sText = Regex.Replace(sText, "[ \t]{2,}", " ");
+return sText.Trim();
+} // xmlRunText method
 
 public static bool convertAny(string sSource, string sTarget, out string sError) {
 // One file to one target, whichever engine is right for it. The caller names
@@ -320,6 +657,13 @@ sError = "";
 string sCategory = categoryOf(sSource);
 if (sCategory == "document") return convertFile(sSource, sTarget, out sError);
 if (sCategory == "legacy") return convertLegacy(sSource, sTarget, out sError);
+if (sCategory == "openxml" || sCategory == "pdf") {
+// Extract once, then let Pandoc make the target from that. One rich
+// conversion serves every target, which is what EdSharp does with a PDF.
+string sText = toPlainText(sSource, out sError);
+if (sText.Length == 0) return false;
+return fromText(sText, sTarget, out sError);
+}
 if (sCategory == "audio" || sCategory == "video" || sCategory == "image")
 return convertMedia(sSource, sTarget, out sError);
 sError = "FileDir does not know what " + Path.GetExtension(sSource).ToLower()
@@ -347,6 +691,31 @@ sbArgs.Append(" ");
 sbArgs.Append(Homer.Util.stringQuote(sSource));
 string sOut, sErr;
 int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
+
+// 2HTM REPORTS FAILURE IN ITS OUTPUT AND STILL RETURNS ZERO.
+//
+// This is what made the fault so hard to see. On a machine where 2htm cannot
+// load one of its assemblies it prints
+//
+//   <file>: Could not load file or assembly 'System.Memory, Version=4.0.2.0'
+//   Failed to convert 1 file:
+//
+// and exits with code 0. Every caller that trusted the exit code concluded all
+// was well, and the person got silence. So its words are read, not its code.
+string sSaid = (sOut + "\n" + sErr).Trim();
+if (sSaid.Length > 0) {
+if (sSaid.IndexOf("Could not load file or assembly", StringComparison.OrdinalIgnoreCase) >= 0) {
+sError = "2htm is missing an assembly it needs, so it cannot convert anything. "
++ "Copy System.Memory.dll into the FileDir folder, beside 2htm.exe. "
++ "It reported: " + firstLine(sSaid);
+return false;
+}
+if (sSaid.IndexOf("Failed to convert", StringComparison.OrdinalIgnoreCase) >= 0) {
+sError = "2htm reported: " + firstLine(sSaid);
+return false;
+}
+}
+
 // 2htm names its own output after the source, so the file it wrote may not be
 // the name asked for; it is renamed rather than left with a surprising name.
 string sMade = Path.Combine(sOutDir, Path.GetFileNameWithoutExtension(sSource) + "." + (sExt == "txt" ? "txt" : "htm"));
@@ -367,6 +736,14 @@ sError = sErr.Trim();
 if (sError.Length == 0) sError = "2htm returned " + iCode + " and wrote no file.";
 return false;
 } // convertLegacy method
+
+private static string firstLine(string sText) {
+// The first line with anything on it. A tool that fails is often talkative,
+// and the first line is nearly always the one that says what went wrong.
+foreach (string sLine in sText.Replace("\r\n", "\n").Split('\n'))
+if (sLine.Trim().Length > 0) return sLine.Trim();
+return sText.Trim();
+} // firstLine method
 
 private static bool convertMedia(string sSource, string sTarget, out string sError) {
 // ffmpeg works out both formats from the two file names, so the command stays

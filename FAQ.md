@@ -1,6 +1,6 @@
 ﻿# FileDir — Questions and Answers
 
-**Version 5.0.27**  
+**Version 5.0.28**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -126,6 +126,17 @@ text, AsciiDoc, CSV, MediaWiki, PowerPoint (.pptx) and Excel (.xlsx), among
 others. It cannot read legacy .doc, .ppt or .xls, and it cannot read PDF. Use
 Shift+O, Output to Text, for those: that goes through 2htm, which comes with
 FileDir.
+
+**How are PDFs read?**
+
+By PyMuPDF4LLM, a free reader the installer offers as a ticked checkbox. It
+reads the PDF's own structure, so you get headings, lists and tables rather than
+a wall of text. It needs Python, which it will tell you about if it is missing.
+Microsoft Word is not involved.
+
+A PDF that is a scan of images has no text in it at all, and needs optical
+character recognition rather than conversion. FileDir says so rather than going
+quiet.
 
 **Do I need Pandoc?**
 

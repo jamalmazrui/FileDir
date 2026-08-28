@@ -179,7 +179,7 @@
 <h1 class="title">FileDir History</h1>
 </header>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
-<p><strong>Version 5.0.27</strong><br />
+<p><strong>Version 5.0.28</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -222,6 +222,11 @@ MIT License</p>
 <li><a href="#version-3-7">Version 3.7</a></li>
 <li><a href="#version-3-8">Version 3.8</a></li>
 <li><a href="#version-3-9">Version 3.9</a></li>
+<li><a href="#version-5-0-29">Version 5.0.29</a></li>
+<li><a href="#version-5-0-28">Version 5.0.28</a></li>
+<li><a href="#version-5-0-25">Version 5.0.25</a></li>
+<li><a href="#version-5-0-24">Version 5.0.24</a></li>
+<li><a href="#version-5-0-23">Version 5.0.23</a></li>
 <li><a href="#version-5-0-20">Version 5.0.20</a></li>
 <li><a href="#version-5-0-19">Version 5.0.19</a></li>
 <li><a href="#version-5-0-18">Version 5.0.18</a></li>
@@ -1470,6 +1475,149 @@ by simply marking a checkbox.</p>
 <p>Sped up time for subsequent invocations of FileDir after the initial
 one. Improved the optional JAWS scripts for FileDir so that titles of
 top-level windows are more reliably read.</p>
+<h2 id="version-5.0.29">Version 5.0.29</h2>
+<p><em>August 2026</em></p>
+<p><strong>Say Contents and Append to Clipboard failed, and failed
+silently.</strong> The cause was not a missing Microsoft Office, which
+was the first guess and the wrong one: the tester had Office installed.
+It was 2htm being unable to load System.Memory.</p>
+<p>On .NET Framework 4.8 a package whose members are declared with Span
+needs System.Memory.dll beside the executable. Without it 2htm prints
+“Could not load file or assembly ‘System.Memory, Version=4.0.2.0’” and
+“Failed to convert 1 file”, and then <strong>exits with code 0</strong>.
+Every caller that trusted the exit code concluded all was well, so a
+person pressed Question Mark and heard nothing at all. The same fault
+had already skipped nine documents in a build on the developer’s
+machine, hidden the same way.</p>
+<p>Three fixes for that. 2htm’s words are read rather than its exit
+code, and a failed assembly load produces a message naming the missing
+file and where to put it. The installer ships System.Memory.dll when it
+is in the FileDir folder. And the audit warns when 2htm.exe is present
+without it.</p>
+<p><strong>The extraction chain is rebuilt so nothing fundamental
+depends on a commercial product.</strong> 2htm is now last rather than
+first:</p>
+<ol type="1">
+<li><p>A file that is already text is read.</p></li>
+<li><p><strong>Pandoc</strong> handles docx, odt, epub, html, rtf,
+Markdown, reStructuredText, LaTeX and CSV. Free, already installed for
+the conversion commands, and the list was checked against pandoc
+–list-input-formats rather than assumed.</p></li>
+<li><p><strong>pptx and xlsx are read by FileDir itself</strong>,
+straight out of the archive. Pandoc reads neither, and both are zip
+files full of XML; FileDir already carries a zip library, so this needs
+no Office, no COM and no new package. Slides are gathered in numeric
+order, since slide 2 sorts after slide 10 by name.</p></li>
+<li><p><strong>PDF is read by PyMuPDF4LLM through Python</strong>, which
+is EdSharp’s arrangement adopted whole: pdfRich.py and
+installPdfTools.cmd come across unchanged in method. It reads a PDF’s
+own structure – font sizes become heading levels, bullet runs become
+lists, ruled areas become Markdown tables – so a PDF arrives with
+everything a screen reader user navigates by, rather than as a wall of
+plain text. No Microsoft Word anywhere in it.</p>
+<p>This matters more than it first looks. 2htm reads a PDF through
+Word’s PDF Reflow, so its PDF support was Office support all along,
+which is exactly what the reborn Homer Tools are meant not to depend
+on.</p></li>
+<li><p><strong>2htm</strong> is the last resort, for the 1997 .doc, .ppt
+and .xls, where there is no reasonable alternative, and as a second try
+for a PDF the reader could not manage.</p></li>
+</ol>
+<p>The PDF reader is a ticked checkbox on the installer, probed like the
+others by asking the recorded interpreter to import the package. A
+machine may carry several Pythons and only one of them will have it, so
+installPdfTools records which one it used, and FileDir and the Results
+box both ask that one.</p>
+<p>Worth doing regardless of the assembly fault: a machine with a broken
+2htm now loses only PDF and the 1997 formats rather than everything.</p>
+<p><strong>Tracing the chain by hand found three more faults, all the
+same shape: two tables that had to agree, and did not.</strong></p>
+<p>Three separate lists claimed to say what Pandoc reads. One routed
+.bib, .jats, .opml and .tsv to Pandoc; the next refused them because its
+own list lacked them. A third called .pptx and .xlsx Pandoc-readable,
+which they are not – Pandoc writes those formats, it does not read them.
+There is one list now, and every place that asks whether Pandoc can read
+something asks it.</p>
+<p>.pptx and .xlsx were categorised as documents, so Output Type offered
+them the ten document targets and the converter then refused all ten.
+They have their own category now, as does PDF, and both are extracted
+first and handed to Pandoc as Markdown – so one rich conversion serves
+every target, which is what EdSharp does with a PDF.</p>
+<p>A PDF was offered only flat text and a web page. Now that the reader
+produces Markdown with headings, lists and tables, it is offered
+Markdown, text, a web page, Word, OpenDocument and rich text.</p>
+<p><strong>The trace now runs on every build.</strong> The audit walks
+the extension tables and refuses a format routed to an engine that
+cannot read it, a document source nothing can read, a category returned
+with no branch to handle it, and any list claiming Pandoc reads PDF or
+the Office formats. None of that would show up in a compiler, and each
+would have reached a tester as “the command did nothing”. It was tested
+by reintroducing one of the faults, which it caught.</p>
+<p><strong>And it says why when it fails.</strong> The silence was the
+real fault. Every failure names the tool tried and the reason, spoken
+and written to the session log. Say Contents, Append to Clipboard,
+Translate File and Chat about File share the one chain, so a fix in it
+reaches all four.</p>
+<h2 id="version-5.0.28">Version 5.0.28</h2>
+<p><em>August 2026</em></p>
+<p>The audit warned eight times that the documents did not name the
+current version, on a build that stamped all nine of them nine lines
+later. The audit runs before that step, so what it sees is whatever the
+last build left. It is the state of the tree, not a fault, and it is now
+a note with a count.</p>
+<p>That was the third time this pattern appeared, so it is written down
+as a rule: <strong>anything the build regenerates is a note before the
+build and a failure only after it.</strong> A check that fires before
+the step that fixes it teaches the reader to skim, and a reader who
+skims misses the one warning that mattered.</p>
+<h2 id="version-5.0.25">Version 5.0.25</h2>
+<p><em>August 2026</em></p>
+<p><strong>Four commands advertised keys they did not have.</strong> F12
+went on starting the timer while the menu, the hotkey document and Key
+Describer all said Chat with AI. Chat about File, Copy Log and Translate
+File were not reachable from the keyboard at all.</p>
+<p>menu_Helper’s second argument is only the key DISPLAYED beside a
+command. The keystroke is dispatched by a separate switch in
+ProcessCmdKey, and nothing connects the two. Changing the first without
+the second produces a program that is confidently wrong: the
+documentation, the description table and the compiled key map all told
+the same untrue story, because they all read the same argument.</p>
+<p>The dispatcher now matches. The audit checks that every command
+advertising a key has an entry in ProcessCmdKey, with Enter and
+Shift+Enter named as exceptions since they branch on what the item is.
+This is the check that would have caught the fault in the release that
+introduced it, and it was missing because every earlier check read the
+same argument the fault hid behind.</p>
+<h2 id="version-5.0.24">Version 5.0.24</h2>
+<p><em>August 2026</em></p>
+<p>The first build in which everything worked: nine documents converted,
+the installer compiled, and every optional component found or
+installed.</p>
+<p>Two cosmetic corrections to the Results box. Three blank lines had
+collected before the component list; trailing blanks are now dropped,
+leaving the single line that separates two sections. And the audit no
+longer names nine files in a warning whose point is that the state is
+normal.</p>
+<h2 id="version-5.0.23">Version 5.0.23</h2>
+<p><em>August 2026</em></p>
+<p><strong>The installer no longer interrupts itself to report the JAWS
+scripts.</strong> It showed a box listing every folder in every
+installed JAWS version – nine lines of “JAWS 2024 / enu: jkm jss jsb” –
+in the middle of an installation. That is a report to nobody: it says
+the thing the person ticked has happened, which the Results box says at
+the end anyway. The detail goes to the session log now. FileDir.exe
+takes a –quiet switch for this and the installer passes it; running the
+same command from the Help menu still shows the box, because there a
+person asked.</p>
+<p><strong>Launching FileDir and opening the guide moved to the
+end</strong> of the finish page, after every component, because they are
+not installations. Both unticked, both worded as EdSharp words them, and
+both running as the original user.</p>
+<p><strong>Corrected two version reports in the Results box.</strong>
+ExifTool appeared as “installed, NAME”, the first line of its own manual
+page: it answers -ver, not –version. And ffmpeg reported its version,
+build host and copyright in one breath; only the version is shown
+now.</p>
 <h2 id="version-5.0.20">Version 5.0.20</h2>
 <p><em>August 2026</em></p>
 <p><strong>The build no longer depends on one converter being in working

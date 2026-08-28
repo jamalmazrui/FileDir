@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.27**  
+**Version 5.0.28**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -738,6 +738,17 @@ taken, FileDir picks another.
 It reads the same formats the Say Contents command reads: Word, PDF,
 PowerPoint, Excel, Markdown and plain text. So you can translate a folder of
 Word documents without opening any of them.
+
+**How FileDir reads a file, and what it needs.** A file that is already text is
+simply read. Word, OpenDocument, EPUB, web pages, rich text, Markdown,
+reStructuredText, LaTeX and CSV are read by Pandoc, which is free and comes with
+the installer. PowerPoint and Excel files are read by FileDir itself, straight
+out of the file. PDFs are read by PyMuPDF4LLM, which comes with the installer and needs no Word:
+it reads the PDF's own structure, so headings stay headings, lists stay lists
+and tables stay tables. Only the older .doc, .ppt and .xls formats need
+Microsoft Office installed. If a file
+cannot be read, FileDir says which tool it tried and why, rather than going
+quiet.
 
 Because a model takes its time, FileDir says which file it is on and which part
 of that file, so you can tell it is working rather than stuck.

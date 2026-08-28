@@ -115,6 +115,24 @@ function findPandoc() {
   return ""
 }
 
+function reportPdfReader() {
+  # Asked of the interpreter that installed it, since a machine may carry
+  # several Pythons and only one of them will have the package.
+  $sPython = "python"
+  $sRecord = Join-Path $sLogDir "FileDir_python.txt"
+  if (Test-Path -LiteralPath $sRecord) {
+    $sNoted = (Get-Content -LiteralPath $sRecord -ErrorAction SilentlyContinue | Select-Object -First 1)
+    if ($sNoted) { $sPython = $sNoted.Trim() }
+  }
+  $sAnswer = runBounded $sPython @("-c", "import pymupdf4llm; print('ready')") 40
+  if ($sAnswer -match "ready") {
+    say "PDF reader (PyMuPDF4LLM): installed. PDFs are read with their headings, lists and tables."
+  }
+  else {
+    say "PDF reader (PyMuPDF4LLM): not installed. PDFs cannot be read. To add it later, run installPdfTools.cmd in the FileDir folder."
+  }
+}
+
 function reportPandoc() {
   $sPandoc = findPandoc
   if ($sPandoc -eq "") {
@@ -208,6 +226,7 @@ function main() {
   reportTool "ExifTool" "exiftool" "run installMediaTools.cmd in the FileDir folder"
   reportTool "ffmpeg" "ffmpeg" "run installMediaTools.cmd in the FileDir folder"
   reportTool "yt-dlp" "yt-dlp" "run installMediaTools.cmd in the FileDir folder"
+  reportPdfReader
   reportTool "Ollama" "ollama" "run installOllama.cmd in the FileDir folder"
   # One probe, read whole: the listing is short, and asking three times would
   # triple the wait on a cold service.

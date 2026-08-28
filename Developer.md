@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.27**  
+**Version 5.0.28**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -231,6 +231,16 @@ about things that are wrong but not fatal, and returns 1 when anything fails so
 the build can stop on it.
 
 Add a check whenever something breaks. That habit is the point of it.
+
+**Where a check belongs.** Anything the build regenerates — the HTML twins, the
+version lines, the key map — is a NOTE before the build and a FAILURE only
+after. The audit runs first, so before the build it is looking at what the last
+one left, which just after unarchiving is not a fault at all. This was learned
+three times: a missing `ReadMe.htm` once stopped the build that writes
+`ReadMe.htm`, and eight warnings about unstamped documents once appeared on a
+build that stamped all nine. A check that fires before the step that fixes it
+teaches the reader to skim, and a reader who skims misses the one that
+mattered.
 
 ## Single Sources of Truth
 
@@ -497,6 +507,30 @@ four separate sources said otherwise.
 **Both must be edited together.** The audit checks it, and Enter and
 Shift+Enter are the named exceptions, since they branch on what the item is and
 call `item_Helper` rather than a menu.
+
+## The Conversion Chain, and How It Is Checked
+
+`Homer.Convert.toPlainText` is the one path all four text commands take -- Say
+Contents, Append to Clipboard, Translate File and Chat about File. The order is
+deliberate: nothing fundamental depends on a commercial product.
+
+| Source | Read by | Needs |
+| --- | --- | --- |
+| .txt .md .cs and other text | read directly | nothing |
+| .docx .odt .epub .html .rtf .rst .tex .csv | Pandoc | Pandoc |
+| .pptx .xlsx | FileDir, via SharpZipLib | nothing |
+| .pdf | PyMuPDF4LLM through Python | Python and the package |
+| .doc .ppt .xls | 2htm | Office, and System.Memory.dll |
+
+`categoryOf` decides what Output Type offers, and every category must have an
+engine that can serve its targets. Two tables that must agree is where the bugs
+live: three separate lists once claimed to say what Pandoc reads, and they
+disagreed three ways.
+
+**The audit traces this on every build.** It refuses a format routed to an
+engine that cannot read it, a document source nothing can read, a category with
+no branch, and any claim that Pandoc reads PDF or the Office formats. Add to
+that check whenever a format or an engine is added.
 
 ## Traps Worth Knowing
 

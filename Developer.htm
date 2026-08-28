@@ -179,7 +179,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.27</strong><br />
+<p><strong>Version 5.0.28</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -442,6 +442,16 @@ fatal, and returns 1 when anything fails so the build can stop on
 it.</p>
 <p>Add a check whenever something breaks. That habit is the point of
 it.</p>
+<p><strong>Where a check belongs.</strong> Anything the build
+regenerates — the HTML twins, the version lines, the key map — is a NOTE
+before the build and a FAILURE only after. The audit runs first, so
+before the build it is looking at what the last one left, which just
+after unarchiving is not a fault at all. This was learned three times: a
+missing <code>ReadMe.htm</code> once stopped the build that writes
+<code>ReadMe.htm</code>, and eight warnings about unstamped documents
+once appeared on a build that stamped all nine. A check that fires
+before the step that fixes it teaches the reader to skim, and a reader
+who skims misses the one that mattered.</p>
 <h2 id="single-sources-of-truth">Single Sources of Truth</h2>
 <p>Two facts live in exactly one place each, and everything else is
 generated:</p>
@@ -719,6 +729,57 @@ separate sources said otherwise.</p>
 and Enter and Shift+Enter are the named exceptions, since they branch on
 what the item is and call <code>item_Helper</code> rather than a
 menu.</p>
+<h2 id="the-conversion-chain-and-how-it-is-checked">The Conversion
+Chain, and How It Is Checked</h2>
+<p><code>Homer.Convert.toPlainText</code> is the one path all four text
+commands take – Say Contents, Append to Clipboard, Translate File and
+Chat about File. The order is deliberate: nothing fundamental depends on
+a commercial product.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Read by</th>
+<th>Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.txt .md .cs and other text</td>
+<td>read directly</td>
+<td>nothing</td>
+</tr>
+<tr>
+<td>.docx .odt .epub .html .rtf .rst .tex .csv</td>
+<td>Pandoc</td>
+<td>Pandoc</td>
+</tr>
+<tr>
+<td>.pptx .xlsx</td>
+<td>FileDir, via SharpZipLib</td>
+<td>nothing</td>
+</tr>
+<tr>
+<td>.pdf</td>
+<td>PyMuPDF4LLM through Python</td>
+<td>Python and the package</td>
+</tr>
+<tr>
+<td>.doc .ppt .xls</td>
+<td>2htm</td>
+<td>Office, and System.Memory.dll</td>
+</tr>
+</tbody>
+</table>
+<p><code>categoryOf</code> decides what Output Type offers, and every
+category must have an engine that can serve its targets. Two tables that
+must agree is where the bugs live: three separate lists once claimed to
+say what Pandoc reads, and they disagreed three ways.</p>
+<p><strong>The audit traces this on every build.</strong> It refuses a
+format routed to an engine that cannot read it, a document source
+nothing can read, a category with no branch, and any claim that Pandoc
+reads PDF or the Office formats. Add to that check whenever a format or
+an engine is added.</p>
 <h2 id="traps-worth-knowing">Traps Worth Knowing</h2>
 <ul>
 <li><strong>Modern packages on .NET Framework 4.8.</strong> Anything

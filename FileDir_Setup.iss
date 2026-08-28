@@ -139,6 +139,11 @@ Source: "auditFileDir.py";    DestDir: "{app}"; Flags: ignoreversion skipifsourc
 ; serves FileDir, EdSharp and HomerScribe -- which is why it is installed there
 ; rather than inside each program's own folder.
 Source: "installPandoc.cmd";  DestDir: "{app}"; Flags: ignoreversion
+; The PDF reader, EdSharp's arrangement kept identical: PyMuPDF4LLM through
+; Python, which reads a PDF's own structure into Markdown with headings, lists
+; and tables. No Microsoft Word anywhere in it.
+Source: "installPdfTools.cmd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "pdfRich.py";         DestDir: "{app}"; Flags: ignoreversion
 Source: "installOllama.cmd";  DestDir: "{app}"; Flags: ignoreversion
 Source: "installTranslateModel.cmd"; DestDir: "{app}"; Flags: ignoreversion
 ; The single Results box, shown after every finish-page checkbox has run.
@@ -159,6 +164,12 @@ Source: "AssocOn.exe";        DestDir: "{app}"; Flags: ignoreversion skipifsourc
 Source: "AssocOff.exe";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Text-extraction engine: 2htm (plain-text mode) replaces gettext.exe + filters\.
 Source: "2htm.exe";           DestDir: "{app}"; Flags: ignoreversion
+; 2htm needs System.Memory beside it on .NET Framework 4.8 -- the Span trap.
+; Without it, it fails on EVERY file and still exits with code 0, so callers
+; that trusted the exit code got silence. Shipped when present.
+Source: "System.Memory.dll";  DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "System.Buffers.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; ---- Media tools ----
 ;
 ; ExifTool, ffmpeg with ffprobe, and yt-dlp are NOT shipped here. Together they
@@ -379,6 +390,14 @@ FileName: "{cmd}"; \
   WorkingDir: "{app}"; \
   Description: "{code:descMediaTools}"; \
   Flags: postinstall skipifsilent runascurrentuser; Check: mediaToolsNeedInstall
+
+; The PDF reader. Ticked: without it, Say Contents and the conversions do
+; nothing useful with a PDF, and PDF is the format people most often have.
+FileName: "{cmd}"; \
+  Parameters: "/c """"{app}\installPdfTools.cmd""""";  \
+  WorkingDir: "{app}"; \
+  Description: "{code:descPdfTools}"; \
+  Flags: postinstall skipifsilent runascurrentuser; Check: pdfToolsNeedInstall
 
 FileName: "{cmd}"; \
   Parameters: "/c """"{app}\installOllama.cmd""""";  \
@@ -838,6 +857,44 @@ begin
   gStateKnown[2] := True;
 end;
 
+function pdfToolsPresent(): boolean;
+// Whether a Python on this machine can import the PDF reader. Asked of the
+// interpreter installPdfTools recorded, when there is one, because a machine
+// may carry several Pythons and only one of them will have the package.
+var
+  lsLines: TArrayOfString;
+  sRecord, sPython: string;
+begin
+  if gStateKnown[3] then
+  begin
+    result := (gStateCache[3] = 2);
+    exit;
+  end;
+  sPython := 'python';
+  sRecord := ExpandConstant('{localappdata}\FileDir\logs\FileDir_python.txt');
+  if FileExists(sRecord) then
+    if LoadStringsFromFile(sRecord, lsLines) then
+      if GetArrayLength(lsLines) > 0 then
+        if Trim(lsLines[0]) <> '' then sPython := '"' + Trim(lsLines[0]) + '"';
+  result := probeLines(sPython + ' -c "import pymupdf4llm; print(1)"', lsLines)
+            and (GetArrayLength(lsLines) > 0) and (Pos('1', lsLines[0]) > 0);
+  if result then gStateCache[3] := 2 else gStateCache[3] := 0;
+  gStateKnown[3] := True;
+end;
+
+function pdfToolsNeedInstall(): boolean;
+begin
+  result := not pdfToolsPresent();
+end;
+
+function descPdfTools(sParam: string): string;
+begin
+  if pdfToolsPresent() then
+    result := 'Reinstall the PDF reader, PyMuPDF4LLM (installed)'
+  else
+    result := 'Install the PDF reader, PyMuPDF4LLM, so PDFs can be read with their headings, lists and tables (about 25 MB; needs Python)';
+end;
+
 function mediaToolsNeedInstall(): boolean;
 begin
   result := not mediaToolsPresent();
@@ -926,7 +983,9 @@ begin
     WizardForm.StatusLabel.Caption := 'Checking the AI models ...';
     ollamaModelList();
     { The labels themselves, so the page has nothing left to compute. }
-    descMediaTools(''); descPandoc(''); descOllama(''); descTranslateModel('');
+    WizardForm.StatusLabel.Caption := 'Checking the PDF reader ...';
+    pdfToolsPresent();
+    descMediaTools(''); descPandoc(''); descPdfTools(''); descOllama(''); descTranslateModel('');
 
     WizardForm.ProgressGauge.Style := npbstNormal;
     WizardForm.StatusLabel.Caption := '';

@@ -4096,33 +4096,33 @@ return convert2Text(sFile, bBlankDefault);
 } // convert2Text method
 
 public string convert2Text(string sFile, bool bBlankDefault) {
-string sExt = Path.GetExtension(sFile).ToLower();
+// The text of a file, for Say Contents, Append to Clipboard, Translate File
+// and Chat about File alike.  One chain for all of them, in Homer.Convert.
+//
+// It used to send five extensions straight to 2htm and read the raw bytes of
+// anything else.  Two things were wrong with that.  2htm reaches Office through
+// COM for the legacy formats, so on a computer without Office it returned
+// success and produced nothing, and Say Contents said nothing at all -- which
+// is exactly what happened in testing.  And reading raw bytes put the innards
+// of a zip on the clipboard.
+//
+// Now Pandoc goes first, the Open XML formats are read here, and 2htm is the
+// last resort for PDF and the 1997 Office formats.  A failure says which tool
+// was tried and why, out loud and in the log, rather than leaving a silence.
 string sName = Path.GetFileName(sFile);
-string[] aConvertExts = {".docx", ".xlsx", ".pptx", ".pdf", ".md"};
 if (!File.Exists(sFile)) {
 App.say(sName + " not found!");
 return "";
 }
-
-string sResult = "";
-if (Array.IndexOf(aConvertExts, sExt) >= 0) {
-// 2htm in plain-text mode (-p) writes "<basename>.txt" into the output
-// directory (-o), forcing replacement (-f) of any prior output. It emits
-// clean UTF-8, so the old GetText.exe + Encoding.exe pipeline is retired.
-// Office formats (.docx/.xlsx/.pptx) need Office installed; .pdf and .md
-// do not. Other extensions fall through to a direct read below.
-string sExe = Path.Combine(App.sAppDir, "2htm.exe");
-string sOutDir = Path.GetDirectoryName(App.sTempFile);
-string sTxt = Path.Combine(sOutDir, Path.GetFileNameWithoutExtension(sFile) + ".txt");
-App.killFile(sTxt);
-Homer.Util.runHideWait(sExe + " -p -f -o " + Homer.Util.stringQuote(sOutDir) + " " + Homer.Util.stringQuote(sFile));
-if (File.Exists(sTxt)) sResult = Homer.Util.file2String(sTxt);
-else if (bBlankDefault) sResult = "";
-else sResult = Homer.Util.file2String(sFile);
-}
-else if (bBlankDefault) sResult = "";
-else sResult = Homer.Util.file2String(sFile);
-return sResult;
+string sError;
+string sText = Homer.Convert.toPlainText(sFile, out sError);
+if (sText.Length > 0) return sText;
+Homer.Log.write("No text from " + sName + ": " + sError);
+if (bBlankDefault) return "";
+// Said rather than shown: this is called from commands that speak, and a box
+// in the middle of a batch of twenty files would stop the batch.
+App.say(sName + ": " + (sError.Length > 0 ? sError : "no text could be read"));
+return "";
 } // convert2Text method
 
 public string[] getTagged() {

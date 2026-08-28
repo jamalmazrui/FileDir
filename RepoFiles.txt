@@ -36,6 +36,8 @@ cleanFileDir.cmd
 cleanFileDir.py
 homerPolicy.py
 installMediaTools.cmd
+installPdfTools.cmd
+pdfRich.py
 makeKeyMap.py
 
 # Sources of the two small association programs the installer ships. The
@@ -90,6 +92,12 @@ unins000.exe
 # program works without them, so they live on disk rather than in the
 # repository: together they are well over 100 MB, which git is the wrong place
 # for. The installer ships whichever are here at build time.
+# Assemblies 2htm needs beside it. Without System.Memory.dll it fails on every
+# file and still exits 0.
+System.Memory.dll
+System.Buffers.dll
+System.Runtime.CompilerServices.Unsafe.dll
+
 exiftool.exe
 ffmpeg.exe
 ffprobe.exe

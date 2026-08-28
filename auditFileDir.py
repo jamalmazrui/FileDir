@@ -392,6 +392,7 @@ def checkDocumentsCurrent():
         if lParts and lParts[-1].isdigit():
             lParts[-1] = str(int(lParts[-1]) + 1)
             lAcceptable.append(".".join(lParts))
+    lLagging = []
     for sDoc in ("ReadMe.md", "FileDir.md", "Developer.md", "History.md",
                  "Hotkeys.md", "Announce.md", "FAQ.md", "Tutorials.md",
                  "License.md"):
@@ -404,8 +405,22 @@ def checkDocumentsCurrent():
                  "reading **Version 0.0.0** near the top.")
             continue
         if lAcceptable and not any(s in sHead for s in lAcceptable):
-            warn(sDoc + " names neither version " + " nor ".join(lAcceptable)
-                 + " in its opening lines, so the build did not stamp it.")
+            # A NOTE, not a warning. The audit runs BEFORE the version step, so
+            # what it sees is whatever the last build left -- and just after
+            # unarchiving that is whatever version the archive was made at. The
+            # build stamps every document nine lines later, so this is the state
+            # of the tree, not a fault. Eight of these on one build said nothing
+            # eight times.
+            #
+            # The real check is the one above: a document with no version line
+            # at all is a document the build cannot stamp, and that stays a
+            # warning.
+            lLagging.append(sDoc)
+    if lLagging:
+        say("NOTE  " + plural(len(lLagging), "document")
+            + " not yet stamped with version " + " or ".join(lAcceptable)
+            + ". The build stamps them; this is the state of the tree, not a fault.")
+
     # History and Developer may NAME the GNU licence in their bodies, because
     # recording what changed means saying what it changed from. Their opening
     # lines are a different matter: those state what the program is now, and
@@ -728,6 +743,142 @@ def checkInstallerQuoting(sIss):
            "backslash gives 'Mismatched or misplaced quotes'")
 
 
+def extensionLists():
+    """The extension tables in Convert.cs, read out of the source."""
+    sText = readFile("Convert.cs")
+    if sText is None:
+        return None
+    dLists = {}
+    for oMatch in re.finditer(r"string\[\]\s+(c_a\w+)\s*=\s*\{(.*?)\};", sText, re.S):
+        dLists[oMatch.group(1)] = set(
+            s.strip().strip('"').lower()
+            for s in oMatch.group(2).replace("\n", "").split(",") if s.strip())
+    return dLists
+
+
+def checkConversionChain():
+    """Trace every file type through the conversion chain, on every build.
+
+    Three faults were found by tracing this by hand, and all three were the same
+    shape: two tables that had to agree, and did not.
+
+      * Three separate lists claimed to say what Pandoc reads. One routed .bib,
+        .jats, .opml and .tsv to Pandoc; another then refused them. A third
+        called .pptx and .xlsx Pandoc-readable, which they are not.
+      * .pptx and .xlsx were categorised as documents, so Output Type offered
+        them ten targets and the converter refused all ten.
+      * A PDF was offered only flat text, when the reader produces Markdown from
+        which Pandoc can make anything.
+
+    None of those would show up in a compiler, and each would have reached a
+    tester as "the command did nothing". So the trace runs here instead.
+    """
+    dLists = extensionLists()
+    if dLists is None:
+        return
+    setPandoc = dLists.get("c_aPandocReadable", set())
+    setDocument = dLists.get("c_aDocumentSources", set())
+    setPlain = dLists.get("c_aPlainSources", set())
+    lFaults = []
+
+    if not setPandoc:
+        lFaults.append("c_aPandocReadable is missing or empty")
+
+    # Every format Pandoc reads must be offered the document targets, or Output
+    # Type will say a readable file cannot become anything.
+    for sExt in sorted(setPandoc - setDocument):
+        lFaults.append(sExt + " is Pandoc-readable but not a document source")
+
+    # And nothing may be called a document that no engine can convert. The two
+    # Open XML formats are the deliberate exception: FileDir reads them itself.
+    for sExt in sorted(setDocument - setPandoc - {".pptx", ".xlsx"} - setPlain):
+        lFaults.append(sExt + " is a document source that nothing can read")
+
+    # Pandoc does not read these, whatever any list says. Checked against what
+    # pandoc --list-input-formats actually reports.
+    for sExt in (".pdf", ".doc", ".ppt", ".xls", ".pptx", ".xlsx"):
+        if sExt in setPandoc:
+            lFaults.append(sExt + " is listed as Pandoc-readable and Pandoc cannot read it")
+
+    # Every category the router names must have targets, and every category with
+    # targets must have a branch in the router. This is the offered-then-refused
+    # fault, caught by construction.
+    sText = readFile("Convert.cs") or ""
+    setCategories = set(re.findall(r'return "(document|legacy|openxml|pdf|audio|video|image)"', sText))
+    setWithTargets = set(re.findall(r'sCategory == "(\w+)"', sText))
+    for sCategory in sorted(setCategories - setWithTargets):
+        lFaults.append("category " + sCategory + " is returned but no branch handles it")
+
+    report("The conversion chain is consistent", not lFaults, "; ".join(lFaults))
+
+
+def checkHistoryContents():
+    """Every entry in History.md's contents must have a heading, and the reverse.
+
+    Five release entries went missing without a sound. Each was inserted by
+    replacing the heading of the release before it, and a Python str.replace
+    whose pattern is absent does nothing and says nothing -- so when one
+    insertion failed, it removed the anchor for the next, and five in a row were
+    lost while the contents list went on advertising them.
+
+    A contents entry with no section is a link to nowhere; a section missing
+    from the contents cannot be reached by a reader working down the list. Both
+    are worth catching, and neither is visible by reading the top of the file.
+    """
+    sText = readFile("History.md")
+    if sText is None:
+        return
+    lHeadings = re.findall(r"(?m)^## (.+?)\s*$", sText)
+    lContents = re.findall(r"(?m)^- \[(.+?)\]\(#", sText)
+    setHeadings = set(lHeadings)
+    lOrphanLinks = [s for s in lContents if s not in setHeadings]
+    setContents = set(lContents)
+    lUnlisted = [s for s in lHeadings
+                 if s not in setContents and s.lower() != "contents"]
+    report("Every history contents entry has a section", not lOrphanLinks,
+           ", ".join(lOrphanLinks) + " -- listed but not present")
+    report("Every history section is in the contents", not lUnlisted,
+           ", ".join(lUnlisted) + " -- present but not listed")
+
+    # The release the build is about to make should be the newest entry, so a
+    # release cannot go out with nothing recorded about it.
+    lVersion = (readFile("version.txt") or "").strip().splitlines()
+    sVersion = lVersion[0].strip() if lVersion else ""
+    if sVersion:
+        lParts = sVersion.split(".")
+        lWanted = [sVersion]
+        if lParts and lParts[-1].isdigit():
+            lParts[-1] = str(int(lParts[-1]) + 1)
+            lWanted.append(".".join(lParts))
+        if not any(("Version " + s) in setHeadings for s in lWanted):
+            warn("History.md has no entry for version " + " or ".join(lWanted)
+                 + ". Add one before releasing; a release with nothing recorded "
+                 "about it cannot be explained later.")
+
+
+def check2htmAssemblies():
+    """2htm needs System.Memory beside it, or it fails on everything silently.
+
+    On .NET Framework 4.8 a package whose members are declared with Span needs
+    System.Memory.dll present. Without it 2htm prints "Could not load file or
+    assembly" and STILL EXITS WITH CODE 0, so every caller that trusted the exit
+    code concluded all was well. That is how Say Contents came to say nothing at
+    all on a tester's machine, and how nine documents were silently not
+    converted on the developer's.
+
+    A warning rather than a failure: 2htm is optional, Pandoc covers most of
+    what it did, and the file is not ours to redistribute from here.
+    """
+    if not os.path.isfile(os.path.join(pathRoot, "2htm.exe")):
+        return
+    if os.path.isfile(os.path.join(pathRoot, "System.Memory.dll")):
+        say("PASS  2htm has the assemblies it needs")
+        return
+    warn("2htm.exe is here but System.Memory.dll is not. 2htm will fail on every "
+         "file and still exit with code 0. Copy System.Memory.dll into this "
+         "folder; the installer ships it when it is present.")
+
+
 def checkVersionFile():
     """version.txt must be a bare version number with no byte order mark.
 
@@ -860,6 +1011,14 @@ def checkScriptsWellFormed():
         if sLower in ("homerpolicy.py",          # a module, not a command
                       "auditfiledir.py",         # run by the build, and by "BuildFileDir audit"
                       "makekeymap.py",           # a build step, not a command
+                      # pdfRich.py is called by FileDir with a source and a
+                      # target, and it DOES log and DOES trap -- but beside the
+                      # target it was given, as <target>.log, which is what lets
+                      # FileDir quote the reason a particular file failed. A
+                      # fixed pdfRich.log would be the wrong shape for a helper
+                      # that runs many times on many files, and a .cmd wrapper
+                      # would earn nothing when the caller is a program.
+                      "pdfrich.py",
                       "tagrelease.ps1", "postpage.ps1"):
             continue
         if oInstalled is not None and not homerPolicy.belongsInFolder(
@@ -1029,6 +1188,9 @@ def main():
     checkNoStrayProject()
     checkHtmlPairs()
     checkLicenceDocument()
+    checkConversionChain()
+    checkHistoryContents()
+    check2htmAssemblies()
     checkVersionFile()
     checkListsAgree()
     checkPowerShellQuoting()
