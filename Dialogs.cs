@@ -482,6 +482,94 @@ frm.ShowDialog();
 frm.Dispose();
 } // InfoDialog method
 
+// ---- answer dialog ----
+
+public static void AnswerDialog(string sTitle, string sLabel, string sText) {
+// A long piece of text to read, move around in, and copy from, with one OK
+// button and three ways to leave.
+//
+// WHY NOT InfoDialog
+//
+// InfoDialog is 300 by 300 with a Close button, which suits a short report. An
+// answer from a language model is prose of unknown length, and the reader wants
+// to arrow through it line by line, select part of it, and copy that part out.
+// So this is larger, it is labelled, and it can be dismissed without leaving
+// the text.
+//
+// READ ONLY BUT NOT DISABLED. A read-only text box still takes focus, still
+// moves by character, word and line, and still copies with Control+C, which is
+// exactly what is wanted. A disabled one does none of those and a screen reader
+// skips it.
+//
+// THREE WAYS OUT. Escape and Enter are the usual pair, through CancelButton and
+// AcceptButton. The Spacebar is added because in a read-only box it does
+// nothing else, and a reader whose hand is on the text should not have to find
+// another key. Enter is handled on the box as well, since a multiline text box
+// consumes it before the form's AcceptButton ever sees it.
+Form frm = new Form();
+frm.SuspendLayout();
+frm.FormBorderStyle = FormBorderStyle.Sizable;
+frm.MinimizeBox = false;
+frm.MaximizeBox = true;
+frm.ShowInTaskbar = false;
+frm.StartPosition = FormStartPosition.CenterParent;
+frm.Text = sTitle;
+frm.ClientSize = new Size(640, 460);
+
+Label lbl = new Label();
+lbl.AutoSize = true;
+lbl.Location = new Point(12, 9);
+// The label names the box for a screen reader, and its trigger letter reaches
+// it from the button, per the Homer form guidelines.
+lbl.Text = sLabel;
+
+TextBox txt = new TextBox();
+txt.Multiline = true;
+txt.ReadOnly = true;
+txt.WordWrap = true;
+txt.ScrollBars = ScrollBars.Vertical;
+txt.AcceptsReturn = false;
+txt.AcceptsTab = false;
+txt.Location = new Point(12, lbl.Bottom + 4);
+txt.Size = new Size(616, 380);
+txt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+// Windows line endings, or a text box shows one long run with no line breaks.
+txt.Text = sText.Replace("\r\n", "\n").Replace("\n", "\r\n");
+// The caret starts at the top with nothing selected, so the first arrow key
+// reads the first line rather than moving off a selection nobody made.
+txt.SelectionStart = 0;
+txt.SelectionLength = 0;
+
+Button btnOk = new Button();
+// No ampersand on OK, per the Homer form guidelines: its keys are Enter and
+// Escape, and leaving O free lets another control claim it.
+btnOk.Text = "OK";
+btnOk.Location = new Point(12, txt.Bottom + 8);
+btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+btnOk.Click += delegate(object o, EventArgs e) { frm.Close(); };
+
+txt.KeyDown += delegate(object o, KeyEventArgs e) {
+if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter || e.KeyCode == Keys.Escape) {
+// Handled, so the box neither beeps nor tries to insert anything.
+e.Handled = true;
+e.SuppressKeyPress = true;
+frm.Close();
+}
+};
+
+frm.AcceptButton = btnOk;
+frm.CancelButton = btnOk;
+frm.Controls.AddRange(new Control[] {lbl, txt, btnOk});
+frm.ResumeLayout();
+// Focus lands in the text, not on the button: reading is why the dialog opened.
+frm.Shown += delegate(object sender, EventArgs e) {
+SetForegroundWindow((int) frm.Handle);
+txt.Focus();
+};
+frm.ShowDialog();
+frm.Dispose();
+} // AnswerDialog method
+
 // ---- button dialog ----
 
 public static string ButtonDialog(string sTitle, string sText, string[] sButtonList, int iDefaultButton) {

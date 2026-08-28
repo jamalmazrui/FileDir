@@ -1,7 +1,13 @@
-﻿//FileDir 5.0 beta
-//June 17, 2026
-//Copyright 2006 - 2026 by Jamal Mazrui
-//Modified GPL License
+﻿// FileDir -- a keyboard-driven file and directory manager for Windows.
+//
+// Copyright 2006-2026 by Jamal Mazrui
+// MIT License. See License.md, which carries the terms in full.
+//
+// No version or date is written here. Both went stale the moment they were
+// typed: this header said "5.0 beta" and "June 17, 2026" through nineteen
+// releases, and claimed the modified GPL for months after the change to MIT.
+// The version comes from version.txt by way of BuildVersion, generated at build
+// time, and the date is the build date of the assembly.
 
 using BrendanGrant.Helpers.FileAssociation;
 using ICSharpCode.SharpZipLib.Zip;
@@ -41,7 +47,7 @@ using Tektosyne.Win32Api;
 [assembly: AssemblyVersion(BuildVersion.Version)]
 [assembly: AssemblyFileVersion(BuildVersion.Version)]
 [assembly: AssemblyDescription("FileDir file manager")]
-[assembly: AssemblyCompany("EmpowermentZone.com")]
+[assembly: AssemblyCompany("NonvisualDevelopment.org")]
 [assembly: AssemblyCopyright("Copyright 2006 - 2026 by Jamal Mazrui")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyConfiguration("")]
@@ -76,17 +82,18 @@ e.ExitApplication = false;
 Exception ex = (Exception) e.Exception;
 string sMessage = ex.Message;
 sMessage += "\n\nStack trace:\n" + ex.StackTrace;
-string[] aButtons = {"&Mail to Developer", "Copy to Clipboard", "Exit FileDir"};
+string[] aButtons = {"&Report a Problem", "Copy to Clipboard", "Exit FileDir"};
 string sButton = Dialog.Choose("Unexpected Event", sMessage, aButtons, 0);
   switch (sButton) {
-case "&Mail to Developer" :
-App.say("Please add steps to reproduce the problem, if possible.");
+case "&Report a Problem" :
+// The message is put on the clipboard first, then the issues page opens, so
+// the report can simply be pasted in.  This used to mail a legacy address that
+// belonged to the original FileDir; the reborn FileDir lives on GitHub, where a
+// report can be tracked and answered in public.
+App.say("Message copied. Please add the steps that led to it.");
 try {
-string sSubject = "FileDir error: " + ex.Message;
-KeyValuePair<string, string>[] aAddresses = new KeyValuePair<string, string>[1];
-aAddresses[0] = new KeyValuePair<String, String>("Jamal Mazrui", "jamal@EmpowermentZone.com");
-//MapiMail.SendMail(sSubject, sMessage, null, null);
-MapiMail.SendMail(sSubject, sMessage, aAddresses, null);
+Clipboard.SetText("FileDir " + BuildVersion.Version + "\n\n" + sMessage);
+Process.Start("https://github.com/JamalMazrui/FileDir/issues/new");
 }
 catch {
 }
@@ -695,17 +702,41 @@ static void Main(string[] args) {
 string sApp = System.Reflection.Assembly.GetExecutingAssembly().Location;
 sAppDir = Path.GetDirectoryName(sApp);
 
+// The session log, in the Homer Tools convention: one file per run at
+// %LOCALAPPDATA%\FileDir\logs\FileDir_<timestamp>.log, beside the setup log the
+// installer writes.  It opens with the version and the environment, and every
+// outside program FileDir runs adds a line with its exit code, so a conversion
+// that failed can be diagnosed rather than guessed at.  The newest thirty are
+// kept.  Copy Log, Control+F12, puts the path on the clipboard.
+//
+// This is started before anything else can fail, and starting it can never fail
+// the program: a read-only profile simply means no log.
+Homer.Log.start("FileDir", BuildVersion.Version, sApp, args);
+
 // --install-jaws-settings: copy this app's JAWS script family into every
 // installed version of JAWS and compile it there, then exit.  The installer's
 // Finish page runs this, and the Help menu can run it again later.  The work is
 // done by the shared Homer.JawsSettingsInstaller, the same code DbDo and EdSharp
 // use -- replacing the separate FileDir_Scripts_setup.exe that used to ship.
+bool bQuietJaws = false;
+foreach (string sArg in args) if (String.Compare(sArg, "--quiet", true) == 0) bQuietJaws = true;
 foreach (string sArg in args) {
 if (String.Compare(sArg, "--install-jaws-settings", true) != 0) continue;
 int iCopied = 0;
 int iCompiled = 0;
 string sMessage = Homer.JawsSettingsInstaller.install("FileDir", Path.GetDirectoryName(sApp), new string[] {"FileDir.jsd", "FileDir.jcf", "Homer.jsh", "Homer.jsd", "MSAA.jsh"}, new string[] {"Homer"}, out iCopied, out iCompiled);
-if (sMessage.Length > 0) MessageBox.Show(sMessage, "FileDir - JAWS Settings");
+// The detail always goes to the log.  It is worth having -- which folders in
+// which JAWS versions received which files -- and it is worth having later
+// rather than in front of somebody who is installing a file manager.
+Homer.Log.write("JAWS settings: " + iCopied + " copied, " + iCompiled + " compiled.");
+foreach (string sLine in sMessage.Replace("\r\n", "\n").Split('\n'))
+if (sLine.Trim().Length > 0) Homer.Log.write("  " + sLine.Trim());
+// The box appears only when a person asked for this from the Help menu.  The
+// installer passes --quiet, because a wall of "JAWS 2024 / enu: jkm jss jsb"
+// lines is a report to nobody: it interrupts an installation to say that the
+// thing the person ticked has happened, which the Results box says at the end
+// anyway, in one line, along with everything else.
+if (!bQuietJaws && sMessage.Length > 0) MessageBox.Show(sMessage, "FileDir - JAWS Settings");
 return;
 }
 
@@ -950,6 +981,7 @@ public HomerToolStripMenuItem menuMiscSendToTextEditor;
 public HomerToolStripMenuItem menuMiscOutputTagged;
 public HomerToolStripMenuItem menuMiscAppendTagged;
 public HomerToolStripMenuItem menuMiscConvertEncodingTagged;
+public HomerToolStripMenuItem menuMiscTranslateTagged;
 public HomerToolStripMenuItem menuMiscExtractTagged;
 public HomerToolStripMenuItem menuMiscBurnTagged;
 public HomerToolStripMenuItem menuMiscMailBody;
@@ -972,6 +1004,8 @@ public HomerToolStripMenuItem menuMiscEvaluate;
 public HomerToolStripMenuItem menuMiscConvertUnits;
 public HomerToolStripMenuItem menuMiscStartTimer;
 public HomerToolStripMenuItem menuMiscStopTimer;
+public HomerToolStripMenuItem menuMiscChatWithAI;
+public HomerToolStripMenuItem menuMiscChatAboutFile;
 public HomerToolStripMenuItem menuMiscConfigureTimer;
 public HomerToolStripMenuItem menuMiscPlayList;
 public HomerToolStripMenuItem menuMiscIterateProcesses;
@@ -1006,6 +1040,7 @@ public HomerToolStripMenuItem menuHelpExplorerMenu;
 public HomerToolStripMenuItem menuHelpSendToMenu;
 public HomerToolStripMenuItem menuHelpAlternateMenu;
 public HomerToolStripMenuItem menuHelpElevateVersion;
+public HomerToolStripMenuItem menuHelpCopyLog;
 
 public ToolStripStatusLabel statusLabel;
 public Frame() {
@@ -1157,7 +1192,7 @@ menuQueryFullFolder = menu_Helper("Folder", "Control+'", menuQueryFullFolder_Cli
 menuQueryClipboard = menu_Helper("Clipboard", "Alt+'", menuQueryClipboard_Click);
 menuQueryNow = menu_Helper("Time", "Alt+;", menuQueryNow_Click);
 menuQueryWhat = menu_Helper("What Content", "?", menuQueryWhat_Click);
-menuQueryTimer = menu_Helper("Timer", "Alt+F12", menuQueryTimer_Click);
+menuQueryTimer = menu_Helper("Timer", "Alt+Control+Y", menuQueryTimer_Click);
 menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryList, menuQueryListTagged, menuQuerySelected, menuQueryListFiles, menuQueryPath, menuQuerySize, menuQueryType, menuQueryTypeExtended, menuQueryWindowsOpen, menuQueryYield, menuQueryYieldTagged, menuQueryYieldFiles, menuQueryYieldOnDrive, menuQueryYieldInOperatingSystem, menuQueryStatus, menuQueryCharacterEncoding, menuQueryPercentThrough, menuQueryFilter, menuQueryName, menuQueryFolderName, menuQueryFullFolder, menuQueryClipboard, menuQueryNow, menuQueryWhat, menuQueryTimer});
 
 menuMisc = menu_Helper("&Misc");
@@ -1178,9 +1213,10 @@ menuMiscTypeOrder = menu_Helper("Type Order", "Alt+T", menuMiscTypeOrder_Click);
 menuMiscReverseTypeOrder = menu_Helper("Reverse Type Order", "Alt+Shift+T", menuMiscReverseTypeOrder_Click);
 menuMiscSendToWordProcessor = menu_Helper("Send to Word Processor", "Control+W", MenuMiscSendToWordProcessor_Click);
 menuMiscSendToTextEditor = menu_Helper("Send to Text Editor", "Control+T", MenuMiscSendToTextEditor_Click);
-menuMiscOutputTagged = menu_Helper("Output to Text", "Shift+O", MenuMiscOutputTagged_Click);
+menuMiscOutputTagged = menu_Helper("Output Type", "Shift+O", MenuMiscOutputTagged_Click);
 menuMiscAppendTagged = menu_Helper("Append to Clipboard", "Shift+A", MenuMiscAppendTagged_Click);
 menuMiscConvertEncodingTagged = menu_Helper("Convert Encoding", "Control+2", MenuMiscConvertEncodingTagged_Click);
+menuMiscTranslateTagged = menu_Helper("Translate File", "Alt+Shift+L", MenuMiscTranslateTagged_Click);
 menuMiscExtractTagged = menu_Helper("Extract with Regular Expression", "Control+Shift+E", MenuMiscExtractTagged_Click);
 menuMiscBurnTagged = menu_Helper("Burn to CD", "Alt+Shift+B", menuMiscBurnTagged_Click);
 menuMiscMailBody = menu_Helper("Mail Body", "Control+M", menuMiscMailBody_Click);
@@ -1201,8 +1237,10 @@ menuMiscGetFTP = menu_Helper("Get FTP ...", "Shift+G", menuMiscGetFTP_Click);
 menuMiscWebDownload = menu_Helper("Web Download ...", "Alt+Shift+W", menuMiscWebDownload_Click);
 menuMiscEvaluate = menu_Helper("Evaluate Expression ...", "Control+Equals", menuMiscEvaluate_Click);
 menuMiscConvertUnits = menu_Helper("Convert Units ...", "Shift+3", menuMiscConvertUnits_Click);
-menuMiscStartTimer = menu_Helper("Start Timer ...", "F12", menuMiscStartTimer_Click);
-menuMiscStopTimer = menu_Helper("Stop Timer", "Shift+F12", menuMiscStopTimer_Click);
+menuMiscStartTimer = menu_Helper("Start Timer ...", "Alt+Control+T", menuMiscStartTimer_Click);
+menuMiscStopTimer = menu_Helper("Stop Timer", "Alt+Control+S", menuMiscStopTimer_Click);
+menuMiscChatWithAI = menu_Helper("Chat with AI", "F12", MenuMiscChatWithAI_Click);
+menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChatAboutFile_Click);
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
 menuMiscPlayList = menu_Helper("Play List", "Control+Shift+L", menuMiscPlayList_Click);
 menuMiscIterateProcesses = menu_Helper("Iterate Processes ...", "Alt+I", MenuMiscIterateProcesses_Click);
@@ -1210,7 +1248,7 @@ menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscPlayList, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -1239,7 +1277,8 @@ menuHelpContextMenu = menu_Helper("Context Menu ...", "Shift+F10", MenuHelpConte
 menuHelpSendToMenu = menu_Helper("SendTo Menu ...", "Control+F10", MenuHelpSendToMenu_Click);
 menuHelpAlternateMenu = menu_Helper("Alternate Menu ...", "Alt+F10", MenuHelpAlternateMenu_Click);
 menuHelpElevateVersion = menu_Helper("Elevate Version", "F11", menuHelpElevateVersion_Click);
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion});
+menuHelpCopyLog = menu_Helper("Copy Log", "Control+F12", MenuHelpCopyLog_Click);
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
 //menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpHotKeys, menuHelpContextMenu, menuHelpExplorerMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion});
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuQuery, menuNavigate, menuMisc, menuWindow, menuHelp});
@@ -4315,36 +4354,72 @@ status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
 } // menuQueryType_Click method
 
 void menuQueryTypeExtended_Click(object sender, EventArgs e) {
-//App.say("Type extended");
+// Everything known about this file, from three sources, as one plain list of
+// field names and values sorted by name without regard to capitalization.
+//
+// One sorted list rather than three sections on purpose.  Somebody looking for
+// "Artist" should not have to know whether Windows, the file association, or
+// ExifTool is the one that knows it, nor read three lists to find out.  With a
+// screen reader, first-letter navigation through one alphabetical list beats
+// arrowing through three groupings every time.
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string sPath = Path_Helper();
-string sResult = App.getShellProperties(sPath);
-// string sResult = "";
-//Lbc.Show(sResult, "Type Extended");
-//Microsoft.VisualBasic.Interaction.InputBox("", "Type Extended", sResult, -1, -1);
+System.Collections.Generic.List<string[]> lsPairs = new System.Collections.Generic.List<string[]>();
+
+// 1. The Windows shell properties, which is what this command showed before.
+foreach (string sLine in App.getShellProperties(sPath).Replace("\r\n", "\n").Split('\n')) {
+int iEquals = sLine.IndexOf(" = ");
+if (iEquals < 1) continue;
+lsPairs.Add(new string[] {sLine.Substring(0, iEquals).Trim(), sLine.Substring(iEquals + 3).Trim()});
+}
+
+// 2. What the file association says.
+try {
 string sExt = Path.GetExtension(sPath);
 FileAssociationInfo fa = new FileAssociationInfo(sExt);
 ProgramAssociationInfo pa = new ProgramAssociationInfo(fa.ProgID);
 if (pa.Exists) {
-sResult += "ContentType = " + fa.ContentType + "\r\n";
-if (fa.OpenWithList.Length > 0) sResult += "OpenWithList = " + String.Join(" ", fa.OpenWithList) + "\r\n";
-if (fa.PerceivedType.ToString() != "None") sResult += "PerceivedType = " + fa.PerceivedType + "\r\n";
-// sResult += "PersistentHandler = " + fa.PersistentHandler + "\r\n";
-sResult += "ProgID = " + fa.ProgID + "\r\n";
-if (pa.Exists) {
-// pa.AddVerb
-sResult += "AlwaysShowExtension = " + pa.AlwaysShowExtension + "\r\n";
-if (pa.DefaultIcon.Path.Length > 0) sResult += "DefaultIcon = " + pa.DefaultIcon + "\r\n";
-// sResult += "Description = " + pa.Description + "\r\n";
-// sResult += "EditFlags = " + pa.EditFlags + "\r\n";
-// pa.RemoveVerb
-foreach (ProgramVerb verb in pa.Verbs) {
-sResult += verb.Name + " = " + verb.Command + "\r\n";
-} // foreach
-} // pa exists
-} // fa exists
-Lbc.InfoDialog("Type Extended", sResult, true);
+lsPairs.Add(new string[] {"ContentType", fa.ContentType});
+if (fa.OpenWithList.Length > 0) lsPairs.Add(new string[] {"OpenWithList", String.Join(" ", fa.OpenWithList)});
+if (fa.PerceivedType.ToString() != "None") lsPairs.Add(new string[] {"PerceivedType", fa.PerceivedType.ToString()});
+lsPairs.Add(new string[] {"ProgID", fa.ProgID});
+lsPairs.Add(new string[] {"AlwaysShowExtension", pa.AlwaysShowExtension.ToString()});
+if (pa.DefaultIcon.Path.Length > 0) lsPairs.Add(new string[] {"DefaultIcon", pa.DefaultIcon.ToString()});
+foreach (ProgramVerb verb in pa.Verbs) lsPairs.Add(new string[] {verb.Name, verb.Command});
+}
+}
+catch (Exception) {
+// An unregistered extension is ordinary, not a fault worth a message.
+}
+
+// 3. ExifTool, which knows thousands of tags across hundreds of formats: the
+// camera and exposure of a photograph, the artist and album of a song, the
+// duration and codecs of a video, the author and producer of a PDF.
+string sExifError;
+foreach (string[] aPair in Homer.Media.readProperties(sPath, out sExifError)) lsPairs.Add(aPair);
+
+// Alphabetical by name, ignoring capitalization, and a stable tie-break on the
+// value so two tags of one name keep a predictable order between runs.
+lsPairs.Sort(delegate(string[] aLeft, string[] aRight) {
+int iCompare = String.Compare(aLeft[0], aRight[0], StringComparison.OrdinalIgnoreCase);
+if (iCompare != 0) return iCompare;
+return String.Compare(aLeft[1], aRight[1], StringComparison.OrdinalIgnoreCase);
+});
+
+StringBuilder sbResult = new StringBuilder();
+foreach (string[] aPair in lsPairs) sbResult.Append(aPair[0] + " = " + aPair[1] + "\r\n");
+if (sExifError.Length > 0) {
+// Said at the end rather than instead of the list: the Windows properties are
+// still worth reading when ExifTool is absent.
+sbResult.Append("\r\n" + sExifError + "\r\n");
+if (Homer.Media.exifToolProgram().Length == 0) sbResult.Append(Homer.Media.exifToolLog());
+}
+// Match the noun to the count, and say it, because a list this long gives no
+// other clue how much there is to read.
+string sFieldNoun = lsPairs.Count == 1 ? "field" : "fields";
+App.say(lsPairs.Count + " " + sFieldNoun);
+Lbc.InfoDialog("Type Extended", sbResult.ToString(), true);
 status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
 } // menuQueryTypeExtended_Click method
 
@@ -5027,76 +5102,158 @@ App.say("Done!", true);
 } // menuHelpSendToMenu_Click method
 
 void MenuMiscOutputTagged_Click(object sender, EventArgs e) {
+// Output Type.  Look at what the file IS, offer what it can become, and convert
+// the tagged files, or the current one, keeping each root name.
+//
+// This was Output to Text, which only ever wrote .txt.  Text is still one of
+// the choices; the rest were behind a second command until now.  A file manager
+// reads and writes binary files, so there is no reason to stop at documents:
+// mp4 to mp3, mkv to mp4, png to jpg all belong here.
+//
+// Three engines do the work and nobody has to know which: Pandoc for documents,
+// 2htm for the legacy Office formats and PDF that Pandoc cannot read, and
+// ffmpeg for audio, video and pictures.
 if (abortInZip()) return;
-App.say("Output tagged");
+string sTitle = "Output Type";
+App.say(sTitle);
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
+// The first real file decides what is offered.  A batch is nearly always one
+// kind of thing, and asking per file would defeat the point of tagging.
+string sDriver = "";
+foreach (string sPath in aPaths) {
+if (File.Exists(sPath)) { sDriver = sPath; break; }
+}
+if (sDriver.Length == 0) {
+App.say("No file to convert.");
+return;
+}
+string[] aExtensions;
+string[] aLabels = Homer.Convert.targetLabelsFor(sDriver, out aExtensions);
+if (aLabels.Length == 0) {
+Lbc.Show("FileDir does not know what " + Path.GetExtension(sDriver).ToLower()
++ " files can become.\n\nDocuments, legacy Office files, PDF, audio, video and pictures are all understood.", sTitle);
+return;
+}
+
+// The remembered choice is kept per category, so picking mp3 for audio does not
+// become the default the next time a Word document is tagged.
+string sCategory = Homer.Convert.categoryOf(sDriver);
+string sKey = "OutputType" + sCategory;
+int iIndex = 0;
+string sRemembered = App.readValue(App.sIniFile, "Data", sKey, "");
+if (sRemembered.Length > 0) {
+int iFound = Array.IndexOf(aLabels, sRemembered);
+if (iFound >= 0) iIndex = iFound;
+}
+bool bSort = false;
+string sPicked = Dialog.Pick("Pick", aLabels, bSort, iIndex);
+if (sPicked.Length == 0) return;
+App.writeValue(App.sIniFile, "Data", sKey, sPicked);
+int iTarget = Array.IndexOf(aLabels, sPicked);
+if (iTarget < 0) return;
+string sExt = aExtensions[iTarget];
+
+App.say("Writing " + sExt + " files");
+int iDone = 0;
+int iSkipped = 0;
+int iFailed = 0;
 for (int i = 0; i < aPaths.Length; i++) {
 string sPath = aPaths[i];
 string sName = Path.GetFileName(sPath);
 if (Directory.Exists(sPath)) {
-DirectoryInfo di = new DirectoryInfo(sPath);
 App.say("Skipping folder " + sName);
-}
-else if (File.Exists(sPath) ){
-App.say(sName);
-string sDir = Path.GetDirectoryName(sPath);
-string sRoot = Path.GetFileNameWithoutExtension(sName);
-string sTarget = Path.Combine(sDir, sRoot + ".txt");
-if (sPath.ToLower() == sTarget.ToLower()) {
-App.say("Skipping " + sName);
 continue;
 }
-if (File.Exists(sTarget)) File.Delete(sTarget);
-//string sBody = App.frame.convert2Text(@"""" + sPath + @"""");
-//Lbc.Show(sTarget, sPath);
-bool bBlankDefault = true;
-string sBody = App.frame.convert2Text(sPath, bBlankDefault);
-if (sBody.Length == 0) App.say("Cannot convert " + sName);
-// else Homer.Util.string2File(sBody, sTarget);
-else File.WriteAllText(sTarget, sBody, Encoding.UTF8);
+if (!File.Exists(sPath)) {
+App.say(sName + " not found!");
+continue;
 }
-else App.say(sName + " not found!");
+if (String.Compare(Path.GetExtension(sPath).TrimStart('.'), sExt, true) == 0) {
+App.say("Skipping " + sName + ", already " + sExt);
+iSkipped++;
+continue;
 }
-//App.say("Done!", true);
-} // menuEditOutputTagged_Click method
+if (Homer.Convert.categoryOf(sPath).Length == 0) {
+App.say("Skipping " + sName + ", which FileDir cannot convert");
+iSkipped++;
+continue;
+}
+App.say(sName + ", " + (i + 1) + " of " + aPaths.Length);
+// Same root name, same folder, made unique so nothing is ever overwritten.
+string sTarget = Path.Combine(Path.GetDirectoryName(sPath), Path.GetFileNameWithoutExtension(sPath) + "." + sExt);
+sTarget = Homer.Web.uniquePath(sTarget);
+string sError;
+if (Homer.Convert.convertAny(sPath, sTarget, out sError)) iDone++;
+else {
+App.say(sName + ": " + sError);
+iFailed++;
+}
+}
+string sFileNoun = iDone == 1 ? "file" : "files";
+string sMessage = iDone + " " + sFileNoun + " written";
+if (iSkipped > 0) sMessage += ", " + iSkipped + " skipped";
+if (iFailed > 0) sMessage += ", " + iFailed + " failed";
+App.say(sMessage + ".", true);
+refreshFolder_Helper(mdiChild);
+} // MenuMiscOutputTagged_Click method
 
 void MenuMiscAppendTagged_Click(object sender, EventArgs e) {
+// Append to Clipboard.  The text of every tagged file, one after another, so a
+// folder of sources becomes one set of notes in the order you tagged them.
+//
+// Whatever the file is.  A Word document goes through Pandoc, a PDF or a legacy
+// .doc through 2htm, and anything already text is simply read.  A format none
+// of them can read is skipped with a word saying so, rather than having its raw
+// bytes put on the clipboard, which is what happened before: a tagged .zip put
+// a screenful of rubbish there and nothing said why.
 if (abortInZip()) return;
-App.say("Append");
+App.say("Append to clipboard");
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
+StringBuilder sbText = new StringBuilder(Clipboard.GetText().Trim());
+int iDone = 0;
+int iSkipped = 0;
 for (int i = 0; i < aPaths.Length; i++) {
 string sPath = aPaths[i];
 string sName = Path.GetFileName(sPath);
 if (Directory.Exists(sPath)) {
-DirectoryInfo di = new DirectoryInfo(sPath);
 App.say("Skipping folder " + sName);
+continue;
 }
-else if (File.Exists(sPath) ){
+if (!File.Exists(sPath)) {
+App.say(sName + " not found!");
+continue;
+}
 App.say(sName);
-string sBody = App.frame.convert2Text(sPath);
-if (sBody.Length == 0) App.say("Cannot convert " + sName);
-else {
-string sText = Clipboard.GetText().Trim();
-//if (sText == "\n") sText = "";
-if (sText.Length > 0) sText += Homer.Util.sSectionBreak;
-sText += sBody;
-Clipboard.SetText(sText);
+string sError;
+string sBody = Homer.Convert.toPlainText(sPath, out sError);
+if (sBody.Trim().Length == 0) {
+App.say("Skipping " + sName + ": " + (sError.Length > 0 ? sError : "no text"));
+iSkipped++;
+continue;
 }
+if (sbText.Length > 0) sbText.Append(Homer.Util.sSectionBreak);
+// Each piece is headed by its file name, because three sources run together
+// with no seam is one document nobody can take apart again.
+sbText.Append(sName + "\r\n\r\n");
+sbText.Append(sBody.Trim());
+iDone++;
 }
-else App.say(sName + " not found!");
-}
-Clipboard.SetText(Clipboard.GetText() + Homer.Util.sEndOfDocument);
-//App.say("Done!", true);
+sbText.Append(Homer.Util.sEndOfDocument);
+Clipboard.SetText(sbText.ToString());
+string sFileNoun = iDone == 1 ? "file" : "files";
+string sMessage = iDone + " " + sFileNoun + " appended";
+if (iSkipped > 0) sMessage += ", " + iSkipped + " skipped";
+App.say(sMessage + ".", true);
 } // menuEditAppendTagged_Click method
 
 void MenuMiscConvertEncodingTagged_Click(object sender, EventArgs e) {
@@ -5146,6 +5303,210 @@ else App.say(sName + " not found!");
 }
 App.say("Done!", true);
 } // menuEditConvertEncodingTagged_Click method
+
+void MenuMiscChatWithAI_Click(object sender, EventArgs e) {
+// A plain question, with no file attached, answered by a model on this computer.
+// EdSharp puts this on F12 and FileDir now matches it.
+//
+// Shift+F12 is the one that sends the file.  Keeping them apart matters: a
+// question about a folder full of names, or about how to phrase a command, has
+// nothing to do with whatever the cursor happens to be on.
+string sTitle = "Chat with AI";
+App.say(sTitle);
+if (!Homer.Ollama.isRunning()) {
+Lbc.Show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+return;
+}
+string sModel = Homer.Ollama.bestTranslateModel();
+if (sModel.Length == 0) {
+Lbc.Show("Ollama is running, but no model is installed.\n\nRun installOllama.cmd in the FileDir folder to fetch llama3.2.", sTitle);
+return;
+}
+string sQuestion = Lbc.InputDialog("Chat with AI", "&Question", "", "ChatWithAI").Trim();
+if (sQuestion.Length == 0) return;
+App.say("Asking " + sModel + ". This can take a while.");
+string sError;
+string sAnswer = Homer.Ollama.generate(sModel, sQuestion, 600000, out sError);
+if (sError.Length > 0) {
+Lbc.Show("The question could not be answered.\n\n" + sError, sTitle);
+return;
+}
+if (sAnswer.Trim().Length == 0) {
+Lbc.Show("The model returned nothing. Try asking in fewer words.", sTitle);
+return;
+}
+Lbc.AnswerDialog(sTitle, "&Answer", sAnswer.Trim());
+} // MenuMiscChatWithAI_Click method
+
+void MenuMiscChatAboutFile_Click(object sender, EventArgs e) {
+// Ask a question about the current file, answered by a model running on this
+// computer.  The file's text travels with the question, so "what is this about"
+// and "list the dates in it" both work.
+//
+// The keys match EdSharp exactly: F12 asks a plain question, Shift+F12 asks
+// about the file you are on.  The Timer commands held this column here for
+// twenty years and moved to Alt+Control, which nothing else used.  Matching the
+// sibling program is worth more than protecting a habit few people had.
+if (abortInZip()) return;
+string sTitle = "Chat about File";
+App.say(sTitle);
+string sPath = Path_Helper();
+if (!File.Exists(sPath)) {
+Lbc.Show("Move to a file first. This command asks about one file, not a folder.", sTitle);
+return;
+}
+if (!Homer.Ollama.isRunning()) {
+Lbc.Show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+return;
+}
+string sModel = Homer.Ollama.bestTranslateModel();
+if (sModel.Length == 0) {
+Lbc.Show("Ollama is running, but no model is installed.\n\nRun installOllama.cmd in the FileDir folder to fetch llama3.2.", sTitle);
+return;
+}
+
+string sError;
+string sText = Homer.Convert.toPlainText(sPath, out sError);
+if (sText.Trim().Length == 0) {
+Lbc.Show("There is no text in " + Path.GetFileName(sPath) + " to ask about"
++ (sError.Length > 0 ? ":\n\n" + sError : ".") , sTitle);
+return;
+}
+
+string sQuestion = App.readValue(App.sIniFile, "Data", "ChatQuestion", "Summarize this file.");
+sQuestion = Lbc.InputDialog("Chat about File", "&Question", sQuestion, "ChatQuestion").Trim();
+if (sQuestion.Length == 0) return;
+App.writeValue(App.sIniFile, "Data", "ChatQuestion", sQuestion);
+
+// The file is trimmed to what the model can hold.  A quiet truncation would be
+// worse than saying so: an answer about the first half of a document, presented
+// as an answer about the document, is wrong in a way nobody can see.
+System.Collections.Generic.List<string> lsParts = Homer.Ollama.splitForModel(sText, 12000);
+string sSent = lsParts.Count > 0 ? lsParts[0] : "";
+if (lsParts.Count > 1) App.say("The file is long, so the first part is being asked about.");
+
+App.say("Asking " + sModel + ". This can take a while.");
+string sPrompt = sQuestion + "\r\n\r\nHere is the file, " + Path.GetFileName(sPath) + ":\r\n\r\n" + sSent;
+string sAnswer = Homer.Ollama.generate(sModel, sPrompt, 600000, out sError);
+if (sError.Length > 0) {
+Lbc.Show("The question could not be answered.\n\n" + sError, sTitle);
+return;
+}
+if (sAnswer.Trim().Length == 0) {
+Lbc.Show("The model returned nothing. Try a shorter question, or a smaller file.", sTitle);
+return;
+}
+if (lsParts.Count > 1)
+sAnswer = "(Answered from the first part of the file only; it was too long to send whole.)\r\n\r\n" + sAnswer;
+Lbc.AnswerDialog(sTitle, "&Answer", sAnswer.Trim());
+} // MenuMiscChatAboutFile_Click method
+
+void MenuMiscTranslateTagged_Click(object sender, EventArgs e) {
+// Translate the tagged files, or the current one, with a language model
+// running on this computer.  Nothing leaves the machine.
+//
+// Batch by design: tag a folder full of files, answer one question, and walk
+// away.  A file manager is the right place for that, and it is the reason this
+// lives here rather than inside an editor.
+if (abortInZip()) return;
+string sTitle = "Translate File";
+App.say(sTitle);
+string[] aDirs, aFiles;
+string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
+if (aPaths.Length == 0) return;
+
+// Ask Ollama what it has before asking the person anything.  Being told the
+// feature needs a download is better than typing a language first and being
+// told afterwards.
+if (!Homer.Ollama.isRunning()) {
+Lbc.Show("Ollama is not running on this computer, so nothing can be translated.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+return;
+}
+string sModel = Homer.Ollama.bestTranslateModel();
+if (sModel.Length == 0) {
+Lbc.Show("Ollama is running, but neither translation model is installed.\n\nRun installOllama.cmd in the FileDir folder for llama3.2, or installTranslateModel.cmd for qwen2.5:7b, which translates better.", sTitle);
+return;
+}
+
+string sLanguage = App.readValue(App.sIniFile, "Data", "TranslateLanguage", "Spanish");
+sLanguage = Lbc.InputDialog("Translate File", "&Language to translate into", sLanguage, "TranslateLanguage").Trim();
+if (sLanguage.Length == 0) return;
+App.writeValue(App.sIniFile, "Data", "TranslateLanguage", sLanguage);
+
+App.say("Translating into " + sLanguage + " with " + sModel);
+int iDone = 0;
+int iFailed = 0;
+for (int i = 0; i < aPaths.Length; i++) {
+string sPath = aPaths[i];
+string sName = Path.GetFileName(sPath);
+if (Directory.Exists(sPath)) {
+App.say("Skipping folder " + sName);
+continue;
+}
+if (!File.Exists(sPath)) {
+App.say(sName + " not found!");
+continue;
+}
+// Match the noun to the count, and say which file of how many, because a
+// model takes its time and silence is indistinguishable from a hang.
+App.say(sName + ", " + (i + 1) + " of " + aPaths.Length);
+string sText = convert2Text(sPath);
+if (sText.Trim().Length == 0) {
+App.say(sName + " has no text to translate.");
+continue;
+}
+string sTranslated = translate_Helper(sText, sLanguage, sModel, sName);
+if (sTranslated.Length == 0) {
+iFailed++;
+continue;
+}
+// Beside the original, named for the language, so a folder of translations
+// sorts next to its sources and nothing is ever overwritten.
+string sOut = Path.Combine(Path.GetDirectoryName(sPath), Path.GetFileNameWithoutExtension(sPath) + "." + sLanguage + ".txt");
+sOut = Homer.Web.uniquePath(sOut);
+try {
+File.WriteAllText(sOut, sTranslated, new UTF8Encoding(true));
+iDone++;
+}
+catch (Exception ex) {
+App.say(sName + ": " + ex.Message);
+iFailed++;
+}
+}
+string sFileNoun = iDone == 1 ? "file" : "files";
+if (iFailed == 0) App.say(iDone + " " + sFileNoun + " translated into " + sLanguage + ".", true);
+else App.say(iDone + " " + sFileNoun + " translated, " + iFailed + " not done.", true);
+// The translations are new files in this folder, so show them without making
+// anyone press Refresh to find out the command worked.
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild != null) refreshFolder_Helper(mdiChild);
+} // MenuMiscTranslateTagged_Click method
+
+string translate_Helper(string sText, string sLanguage, string sModel, string sName) {
+// One file, in pieces the model can hold, joined back together.  A piece is
+// kept well under the context window: a model given more than it can hold
+// silently drops the end, which looks like a translation that stops.
+System.Collections.Generic.List<string> lsParts = Homer.Ollama.splitForModel(sText, 4000);
+StringBuilder sbResult = new StringBuilder();
+for (int i = 0; i < lsParts.Count; i++) {
+if (lsParts.Count > 1) App.say("Part " + (i + 1) + " of " + lsParts.Count);
+string sPrompt = "Translate the following text into " + sLanguage + ".\n"
++ "Reply with the translation only: no preamble, no explanation, no quotation marks around it.\n"
++ "Keep the paragraph breaks of the original.\n\n"
++ lsParts[i];
+string sError;
+// Ten minutes a part.  A large model on a modest machine is slow rather than
+// broken, and giving up early on it would be the wrong answer.
+string sPiece = Homer.Ollama.generate(sModel, sPrompt, 600000, out sError);
+if (sError.Length > 0) {
+Lbc.Show(sName + " could not be translated.\n\n" + sError, "Translate File");
+return "";
+}
+if (sbResult.Length > 0) sbResult.Append("\r\n\r\n");
+sbResult.Append(sPiece.Trim());
+}
+return sbResult.ToString();
+} // translate_Helper method
 
 void menuMiscBurnTagged_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
@@ -5853,6 +6214,68 @@ refresh_Helper(s);
 App.say("Done!", true);
 } // menuMiscGetFTP_Click method
 
+void mediaDownload_Helper(string sUrl) {
+// yt-dlp fetches video and audio from the many sites it knows, into the folder
+// being looked at.  It is given the whole job: it picks the best streams and
+// joins them, which is what it is for and what a hand-rolled download cannot do.
+//
+// Sound only is offered because it is half of why anyone does this: a talk or a
+// lecture is worth keeping as audio and nothing else.  That path needs ffmpeg,
+// which yt-dlp calls itself, and FileDir puts the folder holding ffmpeg on the
+// path it hands over so a copy beside FileDir is found without anything being
+// installed.
+string sTitle = "Web Download";
+string sExe = Homer.Media.findTool("yt-dlp");
+if (sExe.Length == 0) {
+Lbc.Show("yt-dlp was not found, so media cannot be fetched from a page.\n\nInstall the media tools from the FileDir installer, or put yt-dlp.exe in the FileDir folder.", sTitle);
+return;
+}
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+string sDir = Path_Helper();
+if (File.Exists(sDir)) sDir = Path.GetDirectoryName(sDir);
+if (!Directory.Exists(sDir)) {
+Lbc.Show("The current folder could not be worked out, so there is nowhere to save.", sTitle);
+return;
+}
+
+string[] aWhat = {"Video and sound, best quality", "Sound only, as an MP3 file"};
+string sWhat = App.readValue(App.sIniFile, "Data", "MediaDownloadWhat", aWhat[0]);
+int iWhat = Array.IndexOf(aWhat, sWhat);
+if (iWhat < 0) iWhat = 0;
+bool bSort = false;
+sWhat = Dialog.Pick("Pick", aWhat, bSort, iWhat);
+if (sWhat.Length == 0) return;
+App.writeValue(App.sIniFile, "Data", "MediaDownloadWhat", sWhat);
+
+StringBuilder sbArgs = new StringBuilder();
+sbArgs.Append("--no-playlist --newline --paths ");
+sbArgs.Append(Homer.Util.stringQuote(sDir));
+if (sWhat == aWhat[1]) sbArgs.Append(" --extract-audio --audio-format mp3");
+string sFfmpeg = Homer.Media.ffmpegProgram();
+if (sFfmpeg.Length > 0) {
+sbArgs.Append(" --ffmpeg-location ");
+sbArgs.Append(Homer.Util.stringQuote(Path.GetDirectoryName(sFfmpeg)));
+}
+sbArgs.Append(" ");
+sbArgs.Append(Homer.Util.stringQuote(sUrl));
+
+App.say("Downloading. This can take a while.");
+string sOut, sErr;
+int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
+if (iCode == 0) {
+App.say("Done!", true);
+refreshFolder_Helper(mdiChild);
+return;
+}
+// yt-dlp says plainly what went wrong -- an unsupported site, a private video,
+// a missing ffmpeg -- so its own words are shown rather than a code.
+string sMessage = sErr.Trim();
+if (sMessage.Length == 0) sMessage = sOut.Trim();
+if (sMessage.Length == 0) sMessage = "yt-dlp returned " + iCode + ".";
+Lbc.Show("Nothing was downloaded.\n\n" + sMessage, sTitle);
+} // mediaDownload_Helper method
+
 void menuMiscWebDownload_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 MdiChild mdiChild = App.frame.getActiveChild();
@@ -5865,6 +6288,26 @@ else App.sWebText = sUrl;
 
 sUrl = Lbc.InputDialog("Input", "Address", sUrl, "WebAddress");
 if (sUrl.Length == 0) return;
+
+// A page of links and a page holding a video want opposite treatment, and no
+// scrape of the second finds anything: the video is assembled from pieces this
+// command cannot see.  When yt-dlp is here, the choice is offered rather than
+// guessed at, because a wrong guess costs either a large download or an empty
+// list.  The answer is remembered, so the usual case is one keypress.
+if (Homer.Media.findTool("yt-dlp").Length > 0) {
+string[] aHow = {"Download media from this page (yt-dlp)", "List the files linked from this page"};
+string sHow = App.readValue(App.sIniFile, "Data", "WebDownloadHow", aHow[0]);
+int iHow = Array.IndexOf(aHow, sHow);
+if (iHow < 0) iHow = 0;
+bool bSortHow = false;
+sHow = Dialog.Pick("Pick", aHow, bSortHow, iHow);
+if (sHow.Length == 0) return;
+App.writeValue(App.sIniFile, "Data", "WebDownloadHow", sHow);
+if (sHow == aHow[0]) {
+mediaDownload_Helper(sUrl);
+return;
+}
+}
 
 App.say("Please wait");
 
@@ -5919,8 +6362,6 @@ string[] aValues = listItems.ToArray();
 aResults = Lbc.MultiCheckDialog("Pick Files", aValues, new int[] {}, false, 0);
 if (aResults.Length == 0) return;
 
-string sUserName = "";
-string sPassword = "";
 string sDir = Directory.GetCurrentDirectory();
 App.say("Downloading");
 foreach (string s in aResults) {
@@ -6482,12 +6923,16 @@ activate_Helper(sDir);
 } // menuWindowDrive_Click method
 
 void MenuHelpAbout_Click(object sender, EventArgs e) {
-string sText = "FileDir 5.0 beta\nJune 17, 2026\n\n";
-sText += "Copyright 2006 - 2026 by Jamal Mazrui\nGNU Lesser General Public License (LGPL)\n\n";
+// The version comes from BuildVersion, generated by BuildFileDir.cmd from
+// version.txt, so the About box, the installer, and the release tag can never
+// disagree.  It used to be typed here, and said "5.0 beta" and the wrong
+// licence for fourteen releases.  The date is the build date of this assembly.
+string sText = "FileDir " + BuildVersion.Version + "\n";
+sText += File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToString("d MMMM yyyy") + "\n\n";
+sText += "Copyright 2006 - 2026 by Jamal Mazrui\nMIT License\n\n";
 sText += ".NET Framework " + RuntimeEnvironment.GetSystemVersion() + "\n\n";
 sText += App.getPortableExecutableKind();
 MessageBox.Show(sText, "About");
-//MessageBox.Show("FileDir 4.0\n\nAugust 26, 2015\n\nCopyright 2006 - 2015 by Jamal Mazrui\n\nGNU Lesser General Public License (LGPL)\n\n" + App.getPortableExecutableKind(), "About");
 } // menuHelpAbout_Click method
 
 void MenuHelpDocumentation_Click(object sender, EventArgs e) {
@@ -6498,7 +6943,9 @@ Process.Start(sFile);
 
 void MenuHelpChangeHistory_Click(object sender, EventArgs e) {
 App.say("Change history");
-string sFile = Path.Combine(App.sAppDir, "History.txt");
+// History.htm, generated from History.md by the build.  This opened History.txt,
+// which the documentation set replaced and the installer now deletes on upgrade.
+string sFile = Path.Combine(App.sAppDir, "History.htm");
 Process.Start(sFile);
 } // menuHelpChangeHistory_Click method
 
@@ -6515,7 +6962,10 @@ App.bKeyDescriber = true;
 
 void MenuHelpHotKeys_Click(object sender, EventArgs e) {
 App.say("Hot keys");
-string sFile = Path.Combine(App.sAppDir, "HotKeys.txt");
+// Hotkeys.htm, generated from Hotkeys.md, which makeKeyMap.ps1 generates from
+// Hotkeys.ini.  This opened HotKeys.txt, a hand-kept file that fell out of step
+// with the program and is no longer shipped.
+string sFile = Path.Combine(App.sAppDir, "Hotkeys.htm");
 Process.Start(sFile);
 } // menuHelpHotKeys_Click method
 
@@ -6561,6 +7011,34 @@ break;
 items[iChoice].clickOrDescribe();
 } // menuHelpAlternateMenu_Click method
 
+void MenuHelpCopyLog_Click(object sender, EventArgs e) {
+// This session's log path to the clipboard, in two formats at once, the way
+// EdSharp's Copy Log does and on the same key: a file drop list, so Control+V
+// in a new mail message attaches the log file itself, and plain text, so any
+// program that only reads clipboard text gets the path. Both matter, and a
+// DataObject carries the two together.
+//
+// This exists so that "send me the log" is one keystroke rather than a hunt
+// through a profile folder nobody should have to know the shape of.
+string sTitle = "Copy Log";
+if (Homer.Log.sFile.Length == 0 || !File.Exists(Homer.Log.sFile)) {
+App.say("No log for this session!");
+return;
+}
+try {
+DataObject dataLog = new DataObject();
+System.Collections.Specialized.StringCollection colFiles = new System.Collections.Specialized.StringCollection();
+colFiles.Add(Homer.Log.sFile);
+dataLog.SetFileDropList(colFiles);
+dataLog.SetText(Homer.Log.sFile);
+Clipboard.SetDataObject(dataLog, true);
+App.say("Log path copied");
+}
+catch (Exception ex) {
+Lbc.Show(ex.Message, sTitle);
+}
+} // MenuHelpCopyLog_Click method
+
 void menuHelpElevateVersion_Click(object sender, EventArgs e) {
 // Check GitHub Releases for a newer FileDir, then download and run its
 // installer. This replaces the old AppStamp.ini / Url2File mechanism with the
@@ -6571,7 +7049,7 @@ void menuHelpElevateVersion_Click(object sender, EventArgs e) {
 // OutputBaseFilename exactly (GitHub download URLs are case-sensitive).
 string sOwnerRepo = "JamalMazrui/FileDir";
 string sReleasesUrl = "https://github.com/" + sOwnerRepo + "/releases/latest";
-string sName = "FileDir_Setup.exe";
+string sName = "FileDir_setup.exe";
 App.say("Checking for updates");
 string sTag = App.fetchLatestReleaseTag(sOwnerRepo);
 if (sTag.Length == 0) {
@@ -7274,17 +7752,32 @@ return true;
 case Keys.Control | Keys.Shift | Keys.F11 :
 App.frame.menuWindowTileVertical.clickOrDescribe();
 return true;
+// The F12 column is the AI column, matching EdSharp: F12 asks a plain
+// question, Shift+F12 asks about the file you are on, and Control+F12 copies
+// this session's log path.  The Timer commands held these three keys here for
+// twenty years and moved to Alt+Control, below.
 case Keys.F12 :
-App.frame.menuMiscStartTimer.clickOrDescribe();
+App.frame.menuMiscChatWithAI.clickOrDescribe();
 return true;
 case Keys.Shift | Keys.F12 :
+App.frame.menuMiscChatAboutFile.clickOrDescribe();
+return true;
+case Keys.Control | Keys.F12 :
+App.frame.menuHelpCopyLog.clickOrDescribe();
+return true;
+// The Timer, on a row nothing else used.
+case Keys.Alt | Keys.Control | Keys.T :
+App.frame.menuMiscStartTimer.clickOrDescribe();
+return true;
+case Keys.Alt | Keys.Control | Keys.S :
 App.frame.menuMiscStopTimer.clickOrDescribe();
 return true;
-//case Keys.Control | Keys.F12 :
-//App.frame.menuMiscConfigureTimer.clickOrDescribe();
-//return true;
-case Keys.Alt | Keys.F12 :
+case Keys.Alt | Keys.Control | Keys.Y :
 App.frame.menuQueryTimer.clickOrDescribe();
+return true;
+// Translate the tagged files with a model running on this computer.
+case Keys.Alt | Keys.Shift | Keys.L :
+App.frame.menuMiscTranslateTagged.clickOrDescribe();
 return true;
 }
 //Lbc.Show(keyData);
@@ -7780,6 +8273,13 @@ int iDigit = "ABCDEFGHI".IndexOf(sLetter) + 1;
 sValue = "Alt+" + iDigit + ", Open " + sCommand;
 }
 else if (sValue.Length == 0) sValue = App.readValue(sHotkeyIni, "Hotkeys", "Say " + sCommand, "");
+
+// Hotkeys.ini is a user override and is read first.  The shipped defaults live
+// in KeyMap.cs, generated from Hotkeys.ini and compiled into the program,
+// because the installer copies Hotkeys.ini with the onlyifdoesntexist flag: a
+// machine that already has FileDir never receives an updated copy, so a
+// description added in a new version would otherwise never be heard.
+if (sValue.Length == 0) sValue = Homer.KeyMap.lookUp(sCommand);
 
 if (sValue.Length == 0) sValue = "No description available";
 string sKey = "";

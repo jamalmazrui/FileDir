@@ -1,38 +1,144 @@
-﻿# urlFido Release Notes
+﻿---
+title: What's New in the FileDir Directory Manager for Windows
+subtitle: A file manager rebuilt for the way screen reader users actually work
+author: Jamal Mazrui
+---
 
-**Copyright:** © 2026 Jamal Mazrui — Released under the [MIT License](https://opensource.org/license/mit/)
-**Project home:** <https://github.com/JamalMazrui/urlFido>
+# What's New in the FileDir Directory Manager for Windows
 
-## Version 1.0.0
+### A file manager rebuilt for the way screen reader users actually work
 
-The first release of urlFido, a 64-bit GUI/CLI hybrid tool that downloads files from web pages by extension.
+**Version 5.0.27**  
+August 2026  
+Copyright 2006-2026 by Jamal Mazrui  
+MIT License
 
-### What it does
+- [FileDir project page on GitHub](https://github.com/JamalMazrui/FileDir)
+- [FileDir installer for Windows](https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe)
 
-- **Download by extension, or by wildcard pattern.** Give urlFido one or more source pages and a list of what to fetch (default: `docx pdf zip`). Short forms escalate: `pdf` is short for `.pdf`, which is short for `*.pdf`. Because each entry is a cmd.exe-style pattern, you can also write `*newsletter*.pdf` to take only the newsletters, or `report?.xlsx` for a single-character match. Matching ignores case. Unix glob syntax is deliberately not supported, keeping the field predictable.
-- **Real browser retrieval.** urlFido drives your installed Microsoft Edge to open each page, so scripts run, cookies apply, and JavaScript-generated links are found — files are far more likely to be reachable than with a browserless download. PDFs are saved to disk rather than opened in Edge's viewer.
-- **Authenticate mode (`-a`).** Pause at the first page of each site so you can sign in, accept cookies, or complete two-factor in the visible Edge window, then continue; the session is reused for the rest of that site during the run. urlFido detaches and reattaches its automation channel around the pause to improve success on sites that resist automation.
-- **Main-profile mode (`-m`).** Use your real Edge profile so existing logins apply. Requires Edge to be fully closed; urlFido checks and reports clearly if it is running.
-- **Single executable.** urlFido.exe is one 64-bit file. It speaks the Chrome DevTools Protocol to Edge using only .NET Framework classes, so there is no Node.js driver and no bundled browser to ship. The shared Homer modules — Lbc.cs, Say.cs, Inix.cs, Util.cs, and Web.cs — are compiled into the same assembly rather than referenced as libraries. NVDA support is included too, with nothing to install alongside: because NVDA does not ship its controller client in the end-user installation, that native library is embedded in the executable as a resource and extracted to `%LOCALAPPDATA%\urlFido` on first use — and then only when NVDA is actually running, so users of JAWS, Narrator, or SAPI never see the file written and urlFido leaves no footprint of its own.
-- **Dialog built on shared Lbc primitives.** The parameter dialog is constructed from the Homer Layout-by-Code classes, so it inherits the whole shared convenience set rather than reimplementing any of it: Control+Enter clicks OK from any control; Control+C copies the selection or, with nothing selected, the current line; Alt+C and Alt+X append to the clipboard; Control+D deletes a line; Alt+F8 reads all; Alt+Y gives line and character counts; and Shift+F1 speaks a focus tip written for every field. The Help button is generated from those same labels and tips. Improvements made to Lbc in DbDo, EdSharp, or FileDir reach urlFido by replacing one file.
-- **CLI parallel to urlCheck.** The command-line switches and dialog controls mirror urlCheck as closely as the different purpose allows, so the two tools feel the same to use.
-- **Structured results summary.** The end-of-run summary follows the 2htm and extCheck convention: up to three sections — Downloaded, Failed to download, Skipped — each shown only when its count is non-zero, singular or plural to match, failures given as `name: reason`, and the output directory on a closing line. GUI mode puts it in the final message box with the names listed; command-line mode prints the headings without repeating names that already scrolled by. A short spoken line gives the outcome at a glance.
-- **Smart file naming, shared with FileDir.** urlFido calls the same Web helper FileDir's Web Download command uses. Names come from the url's final path segment; when the url carries no usable name, the server is asked, so links like `example.com/download?id=42` still get a proper name and extension from Content-Disposition or the MIME type. Ordinary links cost no extra request.
-- **Configuration and logging.** With Use configuration (`-u`), settings persist at `%LOCALAPPDATA%\urlFido\urlFido.inix`, written through the shared Inix codec so the file round-trips in order and keeps any comments or extra sections you add by hand. Without the option, urlFido leaves nothing on disk. With Log session (`-l`), a fresh urlFido.log is written to the output directory. The build script now logs the full compiler output to `buildUrlFido.log` as well.
-- **Desktop hotkey Alt+Control+U.** The installer adds a desktop shortcut on Alt+Control+U that opens the dialog from anywhere in Windows.
-- **Camel Type coding standard.** All identifiers follow the project's Camel Type style, and shared-concept names match across the companion tools urlCheck, extCheck, and 2htm.
+FileDir is free and open source, for Windows, and it aims at one thing: to be
+the most productive way a screen reader user can manage files and folders. This
+is a reborn FileDir, more capable than any version before it. Expert AI has been
+used throughout -- to review twenty years of code, modernize it, and build
+features that were not practical to write before. Several of the strongest
+things below exist because that help was available.
 
-- **New icon.** urlFido now carries a dog-fetching-a-document mark: a dog's head in profile with a white page, folded corner and all, carried in its mouth. It is original artwork drawn as vector-style shapes and rendered to every icon size from 16 to 256 pixels, so nothing is licensed from a third party. The small sizes drop the pupil and the page's text lines, leaving the two shapes that still read at 16 pixels: the dark head and the white page.
+FileDir works by tagging. You mark any set of items, and one command then acts
+on all of them. With nothing tagged, a command acts on the item you are on, so
+tagging is never something you have to do first. Almost everything below is a
+batch operation for that reason: you are rarely doing something to one file.
 
-- **Progress you can hear.** A run shows a status window whose status line names each step and counts files as they arrive. The line carries the status-bar accessible role — the same technique used in 2htm and extCheck — so screen readers announce changes automatically and the JAWS read-status-bar command reads it on demand. A Cancel button stops after the current file.
-- **A log worth sending.** With `-l`, urlFido records the Edge command line, the profile in use, every link and whether it matched, each download attempt and which method served it, HTTP statuses, byte counts, and timings.
-- **It works out what a link really is.** Where the address names a file, that is enough. Where it does not — `/download?id=42` and its kind — urlFido asks the server, always, with no switch to remember. Links that could not be files are ruled out first, the rest are asked in parallel with headers-only requests, and answers are cached, so knowing what a page truly offers costs seconds rather than minutes.
-- **A clean browser every time.** The temporary profile launches with extensions, component updates, background networking, sign-in, and sync all switched off, so nothing from your everyday browser loads, updates, or interrupts — and Edge does not sign the throwaway profile into your account.
-- **Only the page you asked for.** Files are retrieved with a direct request that replays the browser's cookies and identity, so no extra tab opens for each download. The browser download path remains as a fallback.
-- **Source lists.** A source can be a url, a local web page, or a text file listing one url per line, with `#` or `;` comments — keep the pages you harvest from in a file and hand urlFido the file.
+Nine tutorials, on the Start menu and in the Help menu, start you off by the
+kind of work you do. Here is what each one finds.
 
-- **Settings that stick.** Tick Use configuration and the dialog reopens the way you left it — no command-line switch needed. On the command line `-u` is still required, so a script picks up no state it did not ask for.
+## If you handle documents
 
-### Note on the desktop hotkey
+FileDir converts between formats in batches. Tag a folder of files, choose what
+they should become, and each one is written beside the original with the same
+name. Word, OpenDocument, EPUB, web pages, Markdown, LaTeX and rich text convert
+between each other. Older Word, PowerPoint and Excel files, and PDFs, become
+readable text or web pages.
 
-urlFido claims Alt+Control+U, which urlCheck currently uses. Because urlFido is expected to be the more frequently used tool, the plan is for urlCheck to move to Alt+Control+Shift+U in a future version. Until then, if both are installed, adjust one shortcut's hotkey via Alt+Enter (properties) on its desktop icon.
+You can also hear what is in a file without opening anything, whatever format it
+is in, and gather the text of many files onto the clipboard in one pass, each
+piece headed by its file name. Three scattered sources become one set of notes,
+in the order you tagged them.
+
+## If you work with media
+
+The same conversion works on sound, video and pictures. A folder of videos
+becomes audio files. One video format becomes another. Pictures convert between
+the common formats. It is the same three steps as converting a document, because
+it is the same command: FileDir looks at what you have and offers what it can
+become.
+
+FileDir also fetches media from the web. Give it the address of a page and it
+downloads the video, or just the sound as an audio file, from a great many
+sites.
+
+## If you research
+
+Download a page and pick out the files linked from it, filtered by type. Collect
+the text of everything you tagged into one document. Then ask an AI model
+questions about what you gathered, or about any single file: summarize this,
+list the dates in it, tell me what it is about.
+
+All of that runs on your own computer. There is no account, no limit, and
+nothing is sent anywhere.
+
+## If you work across languages
+
+FileDir translates whole folders of documents into a language you name, writing
+each translation beside its original. It reads Word files and PDFs as readily as
+plain text.
+
+This also runs on your own machine, which is the point of it: you can translate
+a document you would never paste into a web page.
+
+## If you need to know what something is
+
+One command shows everything known about a file as a single alphabetical list:
+the Windows properties, what the file is registered to open with, and the
+information stored inside the file itself. The camera, lens and exposure of a
+photograph. The artist, album and track of a song. The duration, codecs and
+frame rate of a video. The author and page count of a PDF.
+
+## If you work in bulk
+
+Tag a range in two keystrokes, invert what you tagged, or save a set of tags and
+come back to it another day. Then copy, move, zip, extract, print, mail, rename,
+convert, translate or delete all of it at once.
+
+Archives behave like folders: open one and look inside. FileDir extracts from
+nearly every archive format, and creates and updates zip files.
+
+## For everyone
+
+FileDir leaves window titles and focus changes to your screen reader, which
+announces them anyway, and speaks only what it alone knows. A describe mode lets
+you press any command key and hear what it does without doing it, and every
+command in the program now has a description.
+
+When something goes wrong, FileDir keeps a log of the session and one command
+puts it on your clipboard ready to attach to a message. Telling me what happened
+should not require hunting through folders.
+
+Documentation comes with it and is meant to be read: a user guide covering every
+command, nine tutorials by the kind of work you do, a hotkey reference listing
+every command three ways, a questions and answers file, a history of what
+changed and why, a developer guide, and the licence. Each is a web page the
+Start menu opens, and a Markdown file you can read in FileDir itself.
+
+## Getting the pieces
+
+Everything optional is a checkbox on the installer's last page, each saying what
+it will do, at what version, and how large it is, and each fetched and installed
+for you. Nothing is a manual download. A component already on your computer is
+found and offered as an update or a repair rather than installed a second time,
+and one copy is shared with EdSharp and HomerScribe rather than each program
+carrying its own.
+
+The document and media tools are ticked, because without them the conversion
+features quietly do less. The AI pieces are not ticked: they are several
+gigabytes, and nobody should download that by failing to notice a checkbox.
+
+Those AI features trade installation size for local power and privacy. A few
+gigabytes of models buy translation, summarizing and file questions that ask no
+account, impose no limit, and never send a document anywhere.
+
+## This is a beta
+
+FileDir has been rebuilt from a codebase that went twenty years without a
+serious tidy. Every release is tested here, but the range of Windows machines
+and screen reader versions in the world is wider than one developer's desk.
+Problem reports are what turn a beta into a release.
+
+- [FileDir project page on GitHub](https://github.com/JamalMazrui/FileDir)
+- [FileDir installer for Windows](https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe)
+
+I welcome feedback, by direct message if possible -- email, Facebook, LinkedIn
+or text. Tell me where it goes wrong.
+
+Jamal Mazrui
+
+End of Document

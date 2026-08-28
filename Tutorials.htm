@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FileDir Tutorials</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">FileDir Tutorials</h1>
+</header>
+<h1 id="filedir-tutorials">FileDir — Tutorials</h1>
+<p><strong>Version 5.0.27</strong><br />
+August 2026<br />
+Copyright 2006-2026 by Jamal Mazrui<br />
+MIT License</p>
+<p>Nine short walkthroughs, each a real job done from start to finish.
+Work through the first one and the rest will make sense; after that,
+take whichever matches what you need today.</p>
+<p>Every key is named in full the first time it appears in a tutorial.
+If you forget one, press Control+F1 for Key Describer and press the key:
+it says the command’s name and what it does instead of running it.</p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#1-your-first-five-minutes">1. Your First Five
+Minutes</a></li>
+<li><a href="#2-finding-something-in-a-crowded-folder">2. Finding
+Something in a Crowded Folder</a></li>
+<li><a href="#3-tagging-and-why-it-changes-everything">3. Tagging, and
+Why It Changes Everything</a></li>
+<li><a href="#4-copying-and-moving-between-two-folders">4. Copying and
+Moving Between Two Folders</a></li>
+<li><a href="#5-reading-a-document-without-opening-it">5. Reading a
+Document Without Opening It</a></li>
+<li><a href="#6-zipping-and-unzipping">6. Zipping and Unzipping</a></li>
+<li><a href="#6a-converting-a-folder-to-another-format">6a. Converting a
+Folder to Another Format</a></li>
+<li><a href="#7-translating-a-folder-of-files">7. Translating a Folder
+of Files</a></li>
+<li><a href="#8-renaming-a-batch-of-files">8. Renaming a Batch of
+Files</a></li>
+<li><a href="#9-making-filedir-yours">9. Making FileDir Yours</a></li>
+</ul>
+<h2 id="your-first-five-minutes">1. Your First Five Minutes</h2>
+<p><strong>The job: get oriented.</strong></p>
+<ol type="1">
+<li>Press <strong>Alt+Control+F</strong>. FileDir opens on a folder, and
+the title bar gives its path.</li>
+<li><strong>Arrow up and down</strong> the list. Folders come first,
+then files, each sorted by name.</li>
+<li>Press <strong>Apostrophe</strong> to hear the name of the item you
+are on. This is the key you will press most.</li>
+<li>Press <strong>Shift+S</strong> for its size,
+<strong>Shift+D</strong> for its date, <strong>Shift+T</strong> for its
+type, and <strong>Alt+P</strong> for the full path.</li>
+<li>Press <strong>Shift+P</strong> to hear how far down the list you
+are: item so many of so many.</li>
+<li>Press <strong>Enter</strong> on a folder. A new window opens on it,
+and the first window is still there behind it.</li>
+<li>Press <strong>Backspace</strong> to open the folder above. Notice
+that this opened another window too.</li>
+<li>Press <strong>Control+F6</strong> to move between the windows you
+have open, and <strong>Control+F4</strong> to close the one you are
+in.</li>
+<li>Press <strong>Shift+Backspace</strong>. This time the same window
+moves up instead of opening a new one. That pairing is everywhere in
+FileDir: the plain key opens, and Shift reuses.</li>
+<li>Press <strong>F1</strong> for the guide when you want the whole
+picture.</li>
+</ol>
+<p><strong>What you learned:</strong> where you are, what you are on,
+and the difference between opening and going.</p>
+<h2 id="finding-something-in-a-crowded-folder">2. Finding Something in a
+Crowded Folder</h2>
+<p><strong>The job: get to one file among hundreds.</strong></p>
+<ol type="1">
+<li>Open a folder with a lot in it — your Downloads folder will do.</li>
+<li><strong>Type the first few letters</strong> of the name. FileDir
+moves as you type.</li>
+<li>Press <strong>Control+J</strong> for Jump. Type any part of a name
+and press Enter, and FileDir goes to the next item containing it. Not
+just the start: any part.</li>
+<li>Press <strong>Control+J</strong> again and press Enter with the box
+empty to repeat the last jump.</li>
+<li>Try jumping to a <strong>backslash</strong>. That is the folder
+symbol, so it takes you to the next folder. The attribute symbols all
+work this way: a right parenthesis for hidden, a right bracket for read
+only, a right brace for system.</li>
+<li>Press <strong>Control+F</strong> for Filter. Type a word and the
+list narrows to items containing it. Clear the filter to bring the rest
+back.</li>
+<li>Press <strong>Shift+F</strong> to search inside files rather than in
+names, when what you remember is a phrase in a document rather than its
+name.</li>
+</ol>
+<p><strong>What you learned:</strong> four different ways to find
+something, each quicker than scrolling.</p>
+<h2 id="tagging-and-why-it-changes-everything">3. Tagging, and Why It
+Changes Everything</h2>
+<p><strong>The job: act on many files at once.</strong></p>
+<p>Tagging is the idea the rest of FileDir is built on. A command works
+on what you tagged; with nothing tagged, it works on the item you are
+on. So you never have to tag, and when you do, one command does the work
+of twenty.</p>
+<ol type="1">
+<li>Move to a file and press <strong>Space</strong>. It is now tagged.
+Press Space again to untag it.</li>
+<li>Tag three or four files this way.</li>
+<li>Press <strong>Shift+L</strong> to hear the list of what you have
+tagged.</li>
+<li>Press <strong>Shift+Y</strong> to hear how many they are and how
+much they come to altogether.</li>
+<li>Press <strong>Greater Than</strong> on an untagged file: it tags and
+moves down, which is quicker when you are tagging a run by hand.
+<strong>Less Than</strong> untags and moves down.</li>
+<li>Now a range. Move to where a run starts and press
+<strong>F8</strong>. Move to where it ends and press
+<strong>Shift+F8</strong>. Everything between is tagged.</li>
+<li>Press <strong>Alt+Shift+F8</strong> to untag a range the same
+way.</li>
+<li>Press <strong>Slash</strong> to untag everything, and
+<strong>Semicolon</strong> to tag everything.</li>
+<li>Press <strong>Alt+I</strong> — Invert Tagged — to swap what is
+tagged for what is not. Tagging the three files you do not want and
+inverting is often quicker than tagging the forty you do.</li>
+<li>Press <strong>Control+S</strong> to save your tags, so you can come
+back to the same set later.</li>
+</ol>
+<p><strong>What you learned:</strong> the whole tag vocabulary. Every
+command from here on uses it.</p>
+<h2 id="copying-and-moving-between-two-folders">4. Copying and Moving
+Between Two Folders</h2>
+<p><strong>The job: get files from one place to another.</strong></p>
+<ol type="1">
+<li>Open the folder you are copying <strong>from</strong>.</li>
+<li>Press <strong>Control+O</strong> to open the folder you are copying
+<strong>to</strong> in a second window. Type or paste its path.</li>
+<li>Press <strong>Control+F6</strong> to go back to the first
+window.</li>
+<li><strong>Tag</strong> the files you want, as in tutorial 3.</li>
+<li>Press <strong>Shift+C</strong> for Copy Tagged. FileDir asks where
+to. The other open window is offered, so you usually just press
+Enter.</li>
+<li>Press <strong>Control+F6</strong> to look at the destination and
+confirm they arrived.</li>
+<li>Press <strong>Shift+M</strong> instead of Shift+C to move rather
+than copy.</li>
+<li>Press <strong>Alt+P</strong> on a file and then paste elsewhere:
+FileDir put the full path on the clipboard, which is often what you
+actually wanted.</li>
+</ol>
+<p><strong>What you learned:</strong> two windows are two folders, and
+tagging plus one key moves any number of files.</p>
+<h2 id="reading-a-document-without-opening-it">5. Reading a Document
+Without Opening It</h2>
+<p><strong>The job: find out what is in a file without waiting for
+Word.</strong></p>
+<ol type="1">
+<li>Move to a document — a .docx, a .pdf, a .md, or a plain text
+file.</li>
+<li>Press <strong>Question Mark</strong>. FileDir converts the file to
+text and reads it out. Word and PowerPoint files need Office installed;
+PDF and Markdown do not.</li>
+<li>Press <strong>Shift+O</strong> — Output to Text — on a tagged set to
+write each one out as a .txt file you can read or search.</li>
+<li>Press <strong>Shift+A</strong> — Append Tagged — to put the text of
+every tagged file on the clipboard, one after another. Useful for
+gathering notes scattered across a folder.</li>
+<li>Press <strong>E</strong> to open the file in your text editor when
+you want to change it rather than read it.</li>
+</ol>
+<p><strong>What you learned:</strong> the fastest way to answer “what is
+this file?”</p>
+<h2 id="zipping-and-unzipping">6. Zipping and Unzipping</h2>
+<p><strong>The job: pack files up and take them apart.</strong></p>
+<ol type="1">
+<li><strong>Tag</strong> the files you want to pack.</li>
+<li>Press <strong>Shift+Z</strong> for Zip Tagged. FileDir asks for a
+name and makes the archive in the current folder.</li>
+<li>Move to the new archive and press <strong>Enter</strong>. You are
+now looking inside it as though it were a folder.</li>
+<li>Press <strong>Backspace</strong> to come out again.</li>
+<li>Tag one or more archives and press <strong>Shift+X</strong> —
+Unarchive Tagged — to extract them. FileDir handles nearly every archive
+format, not only zip.</li>
+<li>Press <strong>Alt+Shift+X</strong> to extract without recreating the
+folders inside, when you want everything in one place.</li>
+<li>Press <strong>Control+Shift+X</strong> to test an archive without
+extracting anything.</li>
+</ol>
+<p><strong>What you learned:</strong> archives are just folders, and
+packing is one key.</p>
+<h2 id="a.-converting-a-folder-to-another-format">6a. Converting a
+Folder to Another Format</h2>
+<p><strong>The job: turn a folder of Word documents into Markdown, or
+anything into anything.</strong></p>
+<p>This needs Pandoc, which the FileDir installer ticks by default. If
+you unticked it, run <code>installPandoc.cmd</code> in the FileDir
+folder as an administrator.</p>
+<ol type="1">
+<li>Open the folder and <strong>tag</strong> the files to convert.</li>
+<li>Press <strong>Alt+Shift+K</strong> for Convert Format.</li>
+<li>A list of ten formats appears, each with its extension named.
+<strong>Arrow to the one you want</strong> and press Enter. FileDir
+remembers your choice for next time.</li>
+<li>Listen. FileDir says which file it is on and how many there
+are.</li>
+<li>A file Pandoc cannot read — a legacy .doc, or a PDF — is skipped,
+and FileDir says so by name. Use <strong>Shift+O</strong>, Output to
+Text, for those instead.</li>
+<li>At the end you hear how many were converted, how many skipped, and
+how many failed. The folder refreshes so the new files are there.</li>
+<li>Press <strong>Question Mark</strong> on one to hear the result.</li>
+</ol>
+<p><strong>What you learned:</strong> batch conversion between any two
+formats Pandoc handles, and what to do about the ones it does not.</p>
+<h2 id="translating-a-folder-of-files">7. Translating a Folder of
+Files</h2>
+<p><strong>The job: read documents in a language you do not speak,
+without sending them anywhere.</strong></p>
+<p>This needs Ollama, which the FileDir installer offers as a checkbox.
+If you did not tick it, run <code>installOllama.cmd</code> in the
+FileDir folder, or install FileDir again and tick the box. If you
+already installed Ollama for EdSharp or DbDo, it is already here — one
+installation serves them all.</p>
+<ol type="1">
+<li>Open the folder holding the documents.</li>
+<li><strong>Tag</strong> the ones to translate. One is fine; twenty is
+the point.</li>
+<li>Press <strong>Alt+Shift+L</strong> for Translate File.</li>
+<li>Type the language you want — Spanish, French, Arabic, whatever it is
+— and press Enter. FileDir remembers your answer for next time.</li>
+<li>Listen. FileDir says which file it is on and which part of it,
+because a model takes its time and silence is hard to tell from a
+fault.</li>
+<li>When it finishes, the folder refreshes and you will see a new file
+beside each original, named
+<code>&lt;name&gt;.&lt;language&gt;.txt</code>. Nothing was
+overwritten.</li>
+<li>Press <strong>Question Mark</strong> on one to hear the
+translation.</li>
+</ol>
+<p><strong>Two things worth knowing.</strong> The translation happens on
+your own computer: nothing is uploaded, which is why this is safe for
+something private. And if you install the larger qwen2.5:7b model,
+FileDir uses it automatically and the translations are noticeably
+better; you do not configure anything.</p>
+<p><strong>What you learned:</strong> batch translation of a whole
+folder, entirely offline.</p>
+<h2 id="renaming-a-batch-of-files">8. Renaming a Batch of Files</h2>
+<p><strong>The job: fix forty file names at once.</strong></p>
+<ol type="1">
+<li><strong>Tag</strong> the files to rename.</li>
+<li>Press <strong>Control+R</strong> for Rename Tagged.</li>
+<li>Give the pattern you want. FileDir shows you what each name will
+become before anything changes.</li>
+<li>Read the list, and press Enter to go ahead or Escape to think
+again.</li>
+<li>Press <strong>Control+N</strong> to make a new folder first if the
+renamed files should live somewhere of their own.</li>
+</ol>
+<p><strong>What you learned:</strong> renaming is a review-then-commit
+operation, so a mistake costs you nothing.</p>
+<h2 id="making-filedir-yours">9. Making FileDir Yours</h2>
+<p><strong>The job: change the things that annoy you.</strong></p>
+<ol type="1">
+<li>Press <strong>Control+F1</strong> and wander the keys for a while.
+Key Describer is the fastest way to find out what is there.</li>
+<li>Press <strong>Alt+F10</strong> for the Alternate Menu and read the
+whole command list alphabetically. Filter it with Control+F.</li>
+<li>Press <strong>Alt+Shift+H</strong> to open the hotkey document,
+which lists every command three ways: by name, by key, and grouped by
+the modifier a key starts with.</li>
+<li>Press <strong>Control+F2</strong> for Configuration Options and set
+what you want changed for good.</li>
+<li>Press <strong>Alt+F2</strong> for Manual Options to change something
+for this session only.</li>
+<li>Press <strong>Control+Shift+X</strong> — Extra Speech Toggle — if
+FileDir says more than you want. Press it again to bring the extra
+messages back.</li>
+<li>Press <strong>F11</strong> now and then for Elevate Version, which
+checks whether a newer FileDir has been released.</li>
+</ol>
+<p><strong>What you learned:</strong> where the settings are, and how to
+explore the rest on your own.</p>
+<p>End of Document</p>
+</body>
+</html>

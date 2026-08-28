@@ -1,9 +1,9 @@
-# FileDir — User Guide
+﻿# FileDir — User Guide
 
-**Version 5.0 beta**  
-June 2026  
+**Version 5.0.27**  
+August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
-Modified GPL License
+MIT License
 
 ## Contents
 
@@ -17,38 +17,65 @@ Modified GPL License
 - [Tag Commands](#tag-commands)
 - [Transfer Commands](#transfer-commands)
 - [Miscellaneous Commands](#miscellaneous-commands)
+- [What Is Inside a File](#what-is-inside-a-file)
+- [Converting Between Formats](#converting-between-formats)
+- [Downloading From the Web](#downloading-from-the-web)
+- [Asking About a File](#asking-about-a-file)
+- [Translating Files](#translating-files)
 - [Hotkey Summary](#hotkey-summary)
+- [Logs](#logs)
 - [Development Notes](#development-notes)
 
 ## Installation
 
-The installation program for FileDir is called dirsetup.exe. When executed, it prompts for a program folder, the default being
+FileDir is installed by a program called FileDir_setup.exe. Get it from the
+[FileDir releases page](https://github.com/JamalMazrui/FileDir/releases/latest).
+Run it and answer the questions. The default program folder is
 
 ```
 C:\Program Files\FileDir
 ```
 
-The installer also creates a program group for FileDir on the Windows start menu, containing choices to launch FileDir, read Documentation, and uninstall. Additional choices either set or clear an association between FileDir and folders or the .zip extension when opened by other programs.
+FileDir needs the .NET Framework 4.8, which is already part of Windows 10 and
+Windows 11. It runs as a 64-bit program on both Intel and ARM machines.
 
-The FileDir installer creates a desktop shortcut with a hot key, enabling the program to be conveniently launched by pressing Alt+Control+F. If this hot key happens to conflict with an existing one, navigate to the FileDir item on the desktop, press Alt+Enter for properties, and then change the hot key to something else (or leave it blank).
+The installer puts a FileDir group on the Start menu. From there you can start
+FileDir, read the guide, look at the hotkeys, see the licence, turn the link
+between FileDir and folders or .zip files on or off, and uninstall.
 
-The FileDir setup program checks whether the required .NET Framework 4.8 is already installed (it ships with current versions of Windows), and if not, lets you conveniently do so. After installing FileDir, the setup program presents a list of two checkboxes that are on by default. The first checkbox offers an an optional set of JAWS scripts to fine tune the FileDir speech interface in a few ways that could not be accomplished otherwise. Mainly, these scripts suppress the often unnecessary verbalization of keystroke names, such as "Shift S," leaving just the command name if appropriate, such as "Size." If the scripts were installed and you would later prefer default JAWS behavior instead, however, you can do this by pressing Insert+0 when FileDir is active, and then down arrowing to the following line:
+It also puts one FileDir shortcut on your desktop, and gives that shortcut the
+hot key Alt+Control+F. Press those three keys anywhere in Windows to start
+FileDir, or to switch to it if it is already running. Only that one shortcut
+carries the hot key, so nothing else competes for it. If Alt+Control+F clashes
+with something else you use, move to the FileDir item on the desktop, press
+Alt+Enter for properties, and set a different key, or clear it.
 
-```
-;SwitchToConfiguration("default")
-```
+At the end of the install you are offered four checkboxes. The first three are
+already ticked:
 
-Delete the initial semicolon character (;), which uncomments the code, and then press Control+S to save and recompile the scripts. Press Alt+F4 to exit JAWS script manager.
+- **Install scripts for the JAWS screen reader.** These fine tune what JAWS
+  says. Mainly they stop JAWS reading the name of a keystroke out loud, such as
+  "Shift S", so you hear just the command name, "Size". Untick this box if you
+  use a different screen reader.
+- **Install the add-on for the NVDA screen reader.** This box only appears when
+  an add-on is included in the release.
+- **Start FileDir.**
+- **Open the user guide.** This is the one box that is not ticked to begin with.
 
-If you prefer not to install the JAWS scripts in the first place, e.g., because you use a screen reader other than JAWS, press Spacebar to uncheck that option of the setup program. The second checkbox in the list, available via DownArrow, offers FileDir documentation in the default web browser.
+You can install a new version straight over an older one. Press Alt+F1 for the
+About box, which gives the version number and release date. Press Shift+F1 for
+the change history.
 
-FileDir may be safely installed over previous versions. The About option from the Help menu, or Alt+F1 key, indicates the current version number and release date. The Change History option, Shift+F1, summarizes fixes and improvements over time.
+You do not have to download a new version by hand. Press F11 for the Elevate
+Version command, which asks the FileDir project on GitHub what the newest
+release is, tells you what you have and what is available, and offers to
+download and run the installer for you.
 
 ## Introduction
 
 FileDir is a file and directory manager developed in the C# language, which requires the .NET Framework 4.8 to run. Current versions of Windows include it; on older systems it is a free Microsoft download from [Microsoft .NET Framework download](https://dotnet.microsoft.com/download/dotnet-framework)
 
-FileDir is designed to be a powerful, efficient, and convenient alternative to Windows Explorer or My Computer for managing files and folders on a Windows-based computer. Almost every command can be done through a mnemonic keystroke, as well as a menu or mouse operation. These commands begin with those available in Windows Explorer. FileDir then adds several beneficial features above this base command set. Finally, a set of optional JAWS scripts provide further fine tuning of the speech interface.
+FileDir is designed to be a powerful, efficient, and convenient alternative to File Explorer for managing files and folders on a Windows-based computer. Almost every command can be done through a mnemonic keystroke, as well as a menu or mouse operation. These commands begin with those available in Windows Explorer. FileDir then adds several beneficial features above this base command set. Finally, a set of optional JAWS scripts provide further fine tuning of the speech interface.
 
 Since the number of possible FileDir commands is large, involving nearly every letter and several punctuation keys, some organizing concepts, explained below, help the learning curve.
 
@@ -90,7 +117,7 @@ FileDir commands can be subdivided into several categories, related to the follo
 
 Edit commands change the content, name, or other attribute of an item. Press Alt+Enter for the standard Properties dialog, like in Windows Explorer.
 
-Press Control+W to load the current file into a word processor. Microsoft Word is the default, but a different one may be configured with the Configuration Options command, Alt+Shift+C. Press Control+T to open it in a text editor instead, the configurable default being EdSharp, available at [EdSharp text editor](http://www.EmpowermentZone.com/edsetup.exe)
+Press Control+W to load the current file into a word processor. Microsoft Word is the default, but a different one may be configured with the Configuration Options command, Alt+Shift+C. Press Control+T to open it in a text editor instead, the configurable default being EdSharp, available at [EdSharp on GitHub](https://github.com/JamalMazrui/EdSharp)
 
 If another word processor or text editor is to be used, its full path may need to be specified if the executable is not located on the Windows search path. Such configuration options may also be manually edited, since they are stored in a standard .ini file, FileDir.ini, with an optional FileDir.inix overlay, located in the FileDir folder under your Windows Application Data directory.
 
@@ -282,7 +309,7 @@ Control+U unzips without preserving subfolders. It unzips all files to the chose
 
 You can test whether a file can be unzipped successfully by pressing Alt+U. Press Alt+Shift+U to set a password to be used by FileDir when creating, extracting, or viewing zip archives. It may also be set in the Options dialog, Alt+O. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
 
-Starting with FileDir 3.7, the unzip commands are now broader, unarchive commands that work with almost any archive format, including .rar, .tar, .gz, .bz2, .chm, .cab,. FileDir does this with the free 7Zip utility behind the scenes, which is also available independently at [7-Zip](http://7zip.com)
+Starting with FileDir 3.7, the unzip commands are now broader, unarchive commands that work with almost any archive format, including .rar, .tar, .gz, .bz2, .chm, .cab,. FileDir does this with the free 7Zip utility behind the scenes, which is also available independently at [the 7-Zip home page](https://www.7-zip.org/)
 
 Although any archive may be viewed or extracted, it is still the case that only a zip archive may be created or modified.
 
@@ -318,7 +345,7 @@ C:\My Documents\Body.txt
 
 Before sending a batch email, configure FileDir options for LogInUserName, Password (stored in an encrypted form), SenderAddress, and OutGoingServer (e.g., outgoing.verizon.net). Test the command by sending yourself mail first. This command only works with common SMTP protocol settings.
 
-Press Shift+O to output tagged files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for the following formats: .doc, .htm, .pdf, .ppt, .rtf, and .xls. Some conversions require Windows 2000 or above.
+Press Shift+O to output tagged files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
 
 The same conversion mechanism may be used to place text on the Windows clipboard instead of creating new files. Press Shift+A to append the textual body of currently tagged files to the clipboard. They will be separated by a sequence of characters indicating a divider between sections of a composite document: a line of 10 dashes followed by a form feed (hard page break). A termination sequence says "End of Document." This command is useful for combining multiple, related files, e.g., downloaded web pages, into a single document. You can use the Clear Clipboard command, Alt+Shift+', to clear the clipboard before appending to it. The Extract with Regular Expression command, Control+Shift+E, works similarly except that you are prompted for a regular expression, and only matching text is copied.
 
@@ -350,7 +377,7 @@ The opposite command is Get FTP, Shift+G, which downloads files from a remote di
 
 The Web Download command, Alt+Shift+W, lets you pick one or more files to download from a page whose address you specify.  If the clipboard holds a web address, FileDir offers it as the default.  Downloading is done by FileDir itself, with no web browser involved. Each item of the resulting checked listbox shows both the clickable text of the url and its target file name. Press Spacebar to toggle the checked state of an item. After picking files, you are prompted for the target folder on disk. If the URL of a link does not end in a valid file name, FileDir creates a file name for the target on disk based on other characters in the URL. If a file with the same name already exists, a unique name is created by adding a numeric suffix, e.g., page_001.htm, page_002.htm, etc.
 
-A listbox control of the .NET Framework does not support multiple letter navigation, so each letter typed jumps to the next item starting with that letter. To make navigation more flexible and efficient, particularly in a listbox with many items, EdSharp adds the following features to a list based dialog. Control+J prompts for text within an item, going to the first match if a new search, or the next match if the previous value is accepted. Alt+J goes to the next match without prompting for a value. The item with focus when the dialog is closed -- but not canceled -- becomes the current item the next time that the same list dialog is invoked (you are notified when it is not the first item). The Jump value of that dialog is also remembered.
+A listbox control of the .NET Framework does not support multiple letter navigation, so each letter typed jumps to the next item starting with that letter. To make navigation more flexible and efficient, particularly in a listbox with many items, FileDir adds the following features to a list based dialog. Control+J prompts for text within an item, going to the first match if a new search, or the next match if the previous value is accepted. Alt+J goes to the next match without prompting for a value. The item with focus when the dialog is closed -- but not canceled -- becomes the current item the next time that the same list dialog is invoked (you are notified when it is not the first item). The Jump value of that dialog is also remembered.
 
 Control+F sets a filter to restrict what items are shown via wildcards (* to match any sequence of characters or ? to match a single one). For example, you could browse replace-related commands in the Alternate Menu, Alt+F10, by pressing Control+F after invoking that list and then entering *replace* as the filter expression. Control+Shift+F clears the filter so all items are shown again. The order of items may also be changed: Alt+A for alpha order, Alt+Shift+A for reverse alpha order, Alt+D for default order, or Alt+Shift+D for reverse default order.
 
@@ -578,227 +605,233 @@ When the stop time is reached, FileDir plays some chimes and ends the timer. Suc
 
 Use the Play List command, Control+Shift+L, to create a .m3u file with references of tagged items to play sequentially. Types may include .mp3, .wav, or .cda (the extension of a track on a standard audio CD). FileDir prompts for the name of the play list to create, defaulting to PlayList.m3u in the current directory. Focus is then placed on that file (if in the same directory), so you can simply press Enter to execute the play list. Note that if you want to play tracks on an audio CD, however, you need to save the play list in another directory that permits the creation of new files.
 
-Use the Environment Variables command, Control+E, to review or change such settings of Windows. Choose those of the current process, user, or system as a whole. Jump quickly to a particular variable based on its initial letter, e.g., Alt+P for the PATH setting that determines where Windows searches for an executable file that is not found in the current directory. Changes to process settings affect the current session of EdSharp, but not the next time it is run. User settings take effect when you log in again. System settings take affect when you restart the computer.
+Use the Environment Variables command, Control+E, to review or change such settings of Windows. Choose those of the current process, user, or system as a whole. Jump quickly to a particular variable based on its initial letter, e.g., Alt+P for the PATH setting that determines where Windows searches for an executable file that is not found in the current directory. Changes to process settings affect the current session of FileDir, but not the next time it is run. User settings take effect when you log in again. System settings take affect when you restart the computer.
 
 FileDir windows may be visually organized according to common MDI (multiple document interface) patterns. The Window menu includes the following commands: Arrange Icons, Alt+F11; Cascade, Control+F11; Tile Horizontal, Alt+Shift+F11; and Tile Vertical, Control+Shift+F11.
 
 Use the Elevate Version command, F11, to download and install the latest version of FileDir. You are prompted for confirmation. The installer is downloaded to the folder for temporary Internet files so it will be deleted automatically when Windows reclaims space in that folder. The current FileDir version is then unloaded so that the installer can replace any files that were in use. You can reload the updated version in the usual manner after installation, e.g., by pressing Alt+Control+F.
 
+## What Is Inside a File
+
+Press **Control+Shift+T** for Type Extended. It shows everything known about the
+item you are on as one plain list of field names and values, sorted by name
+without regard to capitalization.
+
+Three sources are merged into that one list:
+
+- **The Windows properties**, the same ones File Explorer shows on a properties
+  page.
+- **The file association**, meaning what opens this kind of file, its content
+  type, and the verbs registered for it.
+- **The metadata inside the file itself**, read by ExifTool. That is the camera,
+  lens and exposure of a photograph; the artist, album and track of a song; the
+  duration, codecs and frame rate of a video; the author, producer and page
+  count of a PDF.
+
+One sorted list rather than three sections, on purpose. Somebody looking for
+"Artist" should not have to know which of the three sources knows it, and with a
+screen reader, first-letter navigation through one alphabetical list beats
+arrowing through three groupings. FileDir says how many fields there are before
+the list opens, so you know what you are looking at.
+
+If ExifTool is missing, the Windows properties are still shown and a line at the
+end says where FileDir looked and what to install. ExifTool comes from the media tools the installer offers, along with
+ffmpeg and yt-dlp.
+
+## Converting Between Formats
+
+Press **Shift+O** for Output Type. FileDir looks at what the file is, offers a
+short list of what it can become, and converts the tagged files, or the current
+one, keeping each root name. The result lands beside the original and nothing is
+ever overwritten.
+
+This was Output to Text, which only ever wrote a .txt file. Text is still one of
+the choices; the rest were not available before.
+
+What you are offered depends on what you are on:
+
+- **Documents** — Word, OpenDocument, EPUB, HTML, Markdown, reStructuredText,
+  LaTeX, rich text, CSV, PowerPoint, Excel — can become Word, a web page,
+  Markdown, plain text, OpenDocument, rich text, EPUB, LaTeX, reStructuredText
+  or MediaWiki.
+- **Legacy Office files and PDF** — .doc, .ppt, .xls, .pdf — can become plain
+  text or a web page.
+- **Audio** can become MP3, M4A, WAV, FLAC, Ogg Vorbis or Opus.
+- **Video** can become MP4, Matroska, WebM, QuickTime or AVI, or MP3, M4A or WAV
+  for the sound alone.
+- **Pictures** can become PNG, JPEG, WebP, BMP, GIF or TIFF.
+
+So converting a folder of MP4 files to MP3, or MKV to MP4, or PNG to JPEG, is
+the same three keystrokes as converting Word to Markdown. The format you last
+chose is remembered separately for each kind of file, so picking MP3 for audio
+does not become the default the next time you tag a Word document.
+
+Three programs do the work and you do not have to know which: **Pandoc** for
+documents, **2htm** for the legacy Office formats and PDF that Pandoc cannot
+read, and **ffmpeg** for audio, video and pictures. A file FileDir cannot
+convert is skipped with a word saying so, and the closing count says how many
+were written, skipped and failed.
+
+
+## Downloading From the Web
+
+Press **Alt+Shift+W** for Web Download and give an address. When yt-dlp is
+installed, FileDir asks which of two things you want, and remembers the answer:
+
+- **Download media from this page.** yt-dlp fetches the video, or the sound
+  alone as an MP3, into the folder you are looking at. It knows a great many
+  sites, picks the best streams and joins them.
+- **List the files linked from this page.** The original behaviour: FileDir
+  reads the page, shows you the links, lets you filter them by extension, and
+  downloads the ones you pick.
+
+The two are offered rather than guessed at, because a page holding a video has
+no links to list, and a page of documents has no media to fetch. A wrong guess
+costs either a large download or an empty list.
+
+## Asking About a File
+
+Two commands ask a language model running on this computer, and they use the
+same keys as EdSharp so one habit serves both programs.
+
+Press **F12** for Chat with AI. Type a question and get an answer. Nothing is
+attached: this is for a question that has nothing to do with whatever the cursor
+is on.
+
+Press **Shift+F12** for Chat about File. Type a question and the text of the
+current file travels with it, converted from whatever format it is in, so a Word
+document or a PDF works as well as a text file. Summarize this, list the dates
+in it, what is this about.
+
+Either way the answer opens in a window with the text in a box you can move
+around. Arrow through it line by line, select part of it, copy with Control+C.
+Leave it with the Spacebar, Enter, or Escape, whichever is nearer your hand,
+without moving off the text first.
+
+The question you last asked is remembered. A file too long to send whole is
+trimmed, and the answer says so rather than letting a partial answer look
+complete.
+
+These need Ollama, the same installation the Translate File command uses.
+
+**A note on the keys.** F12, Shift+F12 and Alt+F12 were the Timer commands here
+for twenty years. They moved to **Alt+Control+T**, **Alt+Control+S** and
+**Alt+Control+Y** so that FileDir and EdSharp agree about the F12 column.
+Matching the sibling program is worth more than protecting a habit that few
+people had, now that a phone or a smart speaker sets a timer better than a file
+manager does.
+
+
+## Translating Files
+
+FileDir can translate the text of your files into another language, using a
+language model running on your own computer. Nothing is uploaded and no part of
+any file is sent anywhere, so this is safe for a document you would not paste
+into a web page.
+
+Press **Alt+Shift+L** for Translate File. Name the language you want, and
+FileDir works through the tagged files, or the current one if nothing is tagged.
+For each file it reads the text, translates it, and writes the result beside the
+original as `<name>.<language>.txt`. Nothing is overwritten: if that name is
+taken, FileDir picks another.
+
+It reads the same formats the Say Contents command reads: Word, PDF,
+PowerPoint, Excel, Markdown and plain text. So you can translate a folder of
+Word documents without opening any of them.
+
+Because a model takes its time, FileDir says which file it is on and which part
+of that file, so you can tell it is working rather than stuck.
+
+### What You Need
+
+The translation is done by Ollama, which is free and separate from FileDir. The
+FileDir installer offers it as a checkbox, along with a second checkbox for a
+larger model that translates better. Neither is ticked by default: together they
+are several gigabytes, which is not something to download by accident.
+
+- **llama3.2**, about 2 GB, comes with the Ollama checkbox. It translates
+  passably and is quick.
+- **qwen2.5:7b**, about 5 GB, is a separate checkbox. It translates noticeably
+  better.
+
+FileDir uses qwen2.5:7b if you have it and llama3.2 otherwise. There is nothing
+to configure: it asks Ollama what is installed and picks the better one.
+
+You can add either later by running `installOllama.cmd` or
+`installTranslateModel.cmd` in the FileDir folder. If you already run Ollama for
+EdSharp or DbDo, FileDir uses that same installation and those same models --
+one copy serves every program on the machine.
+
+If Ollama is not running when you press Alt+Shift+L, FileDir says so and tells
+you what to run, rather than failing quietly.
+
 ## Hotkey Summary
 
-| Command | Keystroke | Description |
-|---|---|---|
-| Launch FileDir | Alt+Control+F | Launch or activate the FileDirapplication via a Windows desktop shortcut |
-| Open Item | Enter | Open subfolder in new window, view zip archive, or launch file |
-| Go to Item | Shift+Enter | Go to subfolder in same window, view zip archive, or launch file |
-| Properties | Alt+Enter | Invoke Windows properties dialog for current item |
-| Open Parent Folder | Backspace | Open parent folder in new window and jump to folder item that was previously open |
-| Go to Parent Folder | Comma or Shift+Backspace | Go to parent folder in same window ("come up level") |
-| Toggle Tag | Space | Invert tagged state of current item |
-| Say Selected | Shift+Space or JAWSKey+Shift+DownArrow | Say tagged items or current one if no tags |
-| Append to Clipboard | Shift+A | Append textual content of current or tagged files to the clipboard |
-| Convert Encoding | Control+2 | Convert character encoding of current or tagged files |
-| Extract with Regular Expression | Control+Shift+E | Extract text from tagged files with regular expression and copy to the clipboard |
-| Start Tag or Untag | F8 | Mark start of sequence to be tagged or untagged |
-| Complete Tag | Shift+F8 | Complete tagging |
-| Complete Untag | Alt+Shift+F8 | Complete untagging |
-| Tag All | Control+A | Tag all items |
-| Untag All | Control+Shift+A | Untag all items |
-| Alpha Order | Alt+A | Sort items in alphabetic/name order |
-| Reverse Alpha Order | Alt+Shift+A | Sort items in reverse alphabetic/name order |
-| Beginning Tagged | Shift+B or Control+Home | Go to beginning tagged item |
-| Recycle Bin | Control+B | Open Windows Recycle Bin to recover deleted items |
-| Batch Mail | Control+Shift+B | Send a message individually to multiple recipients |
-| Beginning File | Alt+B | Go to beginning file item, skipping over folder items |
-| Burn to CD | Alt+Shift+B | Add current or tagged items to CD |
-| Copy to Folder | Shift+C | Copy current or tagged items to another folder |
-| Copy | Control+C | Copy current or tagged items to clipboard (listing paths in both binary and text formats) |
-| Copy Append | Alt+C | Copy and append current or tagged items to clipboard (listing paths in both binary and text formats) |
-| Copy Name | Control+Shift+C | Copy name of current or tagged items to clipboard |
-| Say Date | Shift+D | Say date and time of current item |
-| Date Order | Alt+D | Sort items in date/time order |
-| Reverse Date Order | Alt+Shift+D | Sort items in reverse date/time order |
-| Delete and Recycle File Now | Control+D | Delete current file item and recycle without confirmation |
-| Delete File Now | Control+Shift+D | Delete current file item permanently without confirmation |
-| End Tagged | Shift+E or Control+End | Go to end tagged item |
-| Environment Variables | Control+E | Change Windows environment variables for the current process, user, or system |
-| Evaluate Expression | Control+Equals | Evaluate mathematical expression and copy result to clipboard |
-| Export Clipboard to File | Alt+Shift+E | Export clipboard text to disk file |
-| FTP Put | Shift+F | Upload current or tagged files to FTP directory |
-| Set Filter | Control+F | Set filter with wildcards to view a subset of items |
-| Clear Filter | Control+Shift+F | View all items |
-| File Find | Alt+Shift+F | Find file in current folder or subfolders based on match of textual content and name filter |
-| Get FTP | Shift+G | Download files from FTP directory |
-| Web Download | Alt+Shift+W | Download files from a web page |
-| Go to Folder | Control+G | Go to folder in same window |
-| Go to Special Folder | Control+Shift+G | Pick special folder (e.g., My Documents) to open in same window |
-| Go to Virtual Folder | Alt+Shift+G | Open a virtual folder definition in same window |
-| Go to Drive | Alt+G | Pick drive to open in same window |
-| Initial Change | Shift+I | Go to next item with different initial letter |
-| Invert Tagged | Control+I | Invert tagged and untagged state of items |
-| Iterate Processes | Alt+I | List running processes and activate or terminate |
-| Inquire Differences | Alt+Shift+I | Generate a report that compares files in two folders |
-| Hotkey Summary | Alt+Shift+H | Display list of FileDir keys, command names, and descriptions |
-| Jump | Control+J | Jump to item based on a string within its name |
-| Jump Again | Alt+J | Repeat Jump command with same string |
-| Keywords | Control+K | Jump to item based on a string within its content, optionally with multiple match conditions |
-| Keywords Again | Alt+K | Repeat Keywords command with same string |
-| List | Control+L | Say items in current folder |
-| List Tagged | Shift+L | Say tagged items in current folder |
-| List Files | Alt+L | Say file items (but not folder items) in current folder |
-| Play List | Control+Shift+L | Create .m3u play list containing tagged items |
-| Move to Folder | Shift+M | Move current or tagged items to another folder |
-| Mail Body | Control+M | Mail textual content of current file as the body of an email message |
-| Mail Attachment | Control+Shift+M | Mail current or tagged files as attachments to an email message |
-| Manual Options | Alt+Shift+M | Adjust FileDir configuration options in text editor |
-| Next Tagged | Shift+N or Control+DownArrow | Go to next tagged item |
-| New Folder | Control+N | Create new folder on disk |
-| New Item Copy | Control+Shift+N | Create copy of current file or folder item with similar name and numeric suffix |
-| Network Connections | Alt+Shift+N | Connect, disconnect, or restore mappings between physical storage and logical drives |
-| Output to Text | Shift+O | Output textual content of current or tagged files to files with same names but .txt extensions |
-| Configuration Options | Alt+Shift+C | Configure FileDir options |
-| Open Folder | Control+O | Open folder in new window |
-| Open Special Folder | Control+Shift+O | Pick special folder (e.g., My Documents) to open in new window |
-| Open Virtual Folder | Alt+Shift+O | Open a virtual folder definition in new window |
-| Open Drive | Alt+O | Pick drive to open in new window |
-| Previous Tagged | Shift+P or Control+UpArrow | Go to previous tagged item |
-| Print | Control+P | Print current or tagged files |
-| Path List to Clipboard | Control+Shift+P | Copy to clipboard file paths below current folder item |
-| Say Path | Alt+P | Say full path of current item |
-| Path to Clipboard | Alt+Shift+P | Copy full path of current item to clipboard |
-| Short Path to Clipboard | Tilde | Copy short path of current item to clipboard |
-| Quick Shortcut | Shift+Q | Create .lnk file for current item in Quick folder |
-| Quick URL | Alt+Shift+Q | Create .url file for Internet resource in Quick folder |
-| Open Quick Folder | Control+Q | Open folder of quick links |
-| Go to Quick Folder | Accent | Go to folder of quick links |
-| Rename | Shift+R or F2 | Rename current item |
-| Rename with Wildcards | Control+R | Rename all items in current folder with wildcards |
-| Rename with Regular Expression | Control+Shift+R | Rename current or tagged items with regular expressions |
-| Rename to Initial Line | Control+Shift+I | Rename current or tagged files to initial line of text within them |
-| Recent Folders | Alt+R | Pick a recent folder or shortcut to open |
-| Recycle Toggle | Alt+Shift+R | Toggle On/Off setting for whether deleted or replaced items are moved to the recycle bin |
-| Say Size | Shift+S | Say size of current item |
-| Size Order | Alt+S | Sort items in size order |
-| Reverse Size Order | Alt+Shift+S | Sort items in reverse size order |
-| Save Tags | Control+S | Save which items are tagged in current directory view |
-| Restore Tags | Control+Shift+S | Apply previously saved tags |
-| Say Type | Shift+T | Say type/extension of current item |
-| Type Extended | Control+Shift+T | Show all extended properties of current item |
-| Type Order | Alt+T | Sort items in type/extension order |
-| Reverse Type Order | Alt+Shift+T | Sort items in reverse type/extension order |
-| Send to Text Editor | Control+T | Send current file to text editor (default is EdSharp) |
-| Unarchive | Shift+U | Unzip current or tagged files |
-| Unarchive without Subfolders | Control+U | Unzip current or tagged files without subfolder paths |
-| Unarchive to Same Name | Control+Shift+U | Unzip current or tagged files to a directory named like the archive |
-| Unarchive Test | Alt+U | Check if current file item can be unzipped successfully |
-| Unarchive Password | Alt+Shift+U | Set password to be used when creating, extracting, or viewing zip archives |
-| Paste | Control+V | Paste items from clipboard to current folder |
-| Volume Format | Control+Shift+V | Format a disk or storage card |
-| Paste Copy | Alt+V | Copy items listed on clipboard to current folder |
-| Paste Move | Alt+Shift+V | Move items listed on clipboard to current folder |
-| Say Windows Open | Shift+F4 or Alt+NumPad5 | Say titles of open windows |
-| Send to Word Processor | Control+W | Send current file item to word processor (default is Microsoft Word) |
-| Windows Control Panel | Control+Shift+W | Launch Control Panel to configure Windows |
-| Extension Change | Shift+X | Go to next item with different extension |
-| Cut | Control+X | Cut current or tagged items to clipboard (listing paths in both binary and text formats) |
-| Extra Speech Toggle | Control+Shift+X | Toggle extra speech messages on or off, redirecting them to a log file |
-| Extra Speech Log | Alt+Shift+X | Open speech log file in configured text editor |
-| Yield | Control+Y | Say count and size of items in current folder |
-| Yield Tagged | Shift+Y | Say count and size of tagged items in current folder |
-| Yield Files | Alt+Y | Say count and size of file items (but not folder items) in current folder |
-| Yield on Drive | Control+Shift+Y | Say total size and bytes free on current drive |
-| Yield in Operating System | Alt+Shift+Y | Say Windows version, physical memory, and virtual memory |
-| Zip | Shift+Z | Add current or tagged files to zip archive |
-| Zip then Delete | Control+Z | Add current or tagged files to zip archive, then delete originals |
-| Zip List | Control+Shift+Z | Create or update a zip archive based on a list of files or folders |
-| Say Status | Alt+Z | Say status line, containing date and time of current item, its size, the sort order, and filter specification (if any) |
-| Delete | Delete | Delete current or tagged items and recycle according to setting |
-| Delete without Recycle | Shift+Delete | Delete current or tagged items permanently |
-| Delete and Recycle | Control+Delete | Delete and recycle current or tagged items |
-| Parent Folder | Backspace | Go to parent of current folder |
-| Come up Level | Comma or Backspace | Go to parent folder in same window and jump to folder item that was previously open |
-| Refresh Folder | Period or F5 | Read current folder again from disk in same window |
-| Open Root Folder | Backslash | Open root folder of current drive in new window (e.g., the C:\ folder) |
-| Go to Root Folder | Shift+Backslash | Go to root folder of current drive in same window |
-| Tag | Semicolon or Shift+NumPad5 | Tag current item |
-| Untag | Slash or Alt+Shift+NumPad5 | Untag current item |
-| Tag and Next | Greater Than or Shift+DownArrow | Tag current item and Go to next one |
-| Untag and Next | Less Than or Alt+Shift+DownArrow | Untag current item and Go to next one |
-| Tag and Previous | Shift+UpArrow | Tag current item and Go to previous one |
-| Untag and Previous | Alt+Shift+UpArrow | Untag current item and Go to previous one |
-| Tag to Bottom | Shift+End | Tag to bottom of list |
-| Untag to Bottom | Alt+Shift+End | Untag to bottom of list |
-| Tag to Top | Shift+Home | Tag to top of list |
-| Untag to Top | Alt+Shift+Home | Untag to top of list |
-| Tag All Files | Alt+Period | Tag file items but not subfolders |
-| Tag Duplicate Files | Alt+Shift+Period | Tag files with the same content as a prior one in the list |
-| Tag with Regular Expression | Control+Shift+Period | Tag files that match a regular expression |
-| Untag All But Current | Alt+Comma | Untag all but current item |
-| Say Item Name | Apostrophe | Say name of current file or folder item |
-| Say Folder Name | Shift+Apostrophe | Say name of folder containing current item |
-| Say Folder | Control+Apostrophe | Say folder of archive being viewed (like window title) |
-| Folder to Clipboard | Control+Shift+Apostrophe | Copy folder or archive being viewed to clipboard |
-| Say Clipboard | Alt+Apostrophe | Say clipboard text |
-| Clear Clipboard | Alt+Shift+Apostrophe | Clear clipboard text |
-| Say Time | Alt+Semicolon | Say current time and date |
-| Say What Content | Question | Say textual content of current file item, or list contained items if current item is a folder or zip archive |
-| Command Prompt | Control+Slash or Control+Backslash | Open command window in current folder |
-| Explorer Directory | Alt+Slash or Alt+Backslash | Open Windows Explorer in current folder |
-| Stamp with Date and Time | Exclamation Point | Stamp date and time of current or tagged items |
-| Hide | RightParen | Set Hidden attribute of current or tagged items |
-| Show | LeftParen | Remove Hidden attribute of current or tagged items |
-| ReadOnly | RightBracket | Set ReadOnly attribute of current or tagged items |
-| ReadWrite | LeftBracket | Remove ReadOnly attribute of current or tagged items |
-| System | RightBrace | Set System attribute of current or tagged items |
-| General | LeftBrace | Remove System attribute of current or tagged items |
-| Character Encoding | Shift+2 | Detect and say encoding name of current file |
-| Convert Units | Shift+3 | Convert between different units of measure and copy result to clipboard |
-| Say Percent Through | Shift+5 or Alt+Delete | Say current position, item count, and percent through |
-| Say Filter and Order | Shift+8 | Say current sort order and filter specification |
-| Drive Letter | Alt+1 through Alt+9 | Open new window on drive letter corresponding to digit |
-| Next Window | Control+Tab or Alt+RightArrow | Activate next open window |
-| Previous Window | Control+Shift+Tab or Alt+LeftArrow | Activate previous open window |
-| Documentation | F1 | Display FileDir documentation |
-| History of Changes | Shift+F1 | Display history of FileDir fixes and enhancements |
-| About | Alt+F1 | Display FileDir version number and release date |
-| Window Toggle | Shift+W | Toggle between most recently used windows |
-| Current Windows | F4 | Pick window to open from list of current ones |
-| Close Window | Control+F4 | Close current window |
-| Close All But Current Window | Control+Shift+F4 | Close all windows except the current one |
-| Exit FileDir | Alt+F4 | Close the FileDir application |
-| Restart Windows | Alt+Shift+F4 | Restart Windows after confirming |
-| Context Menu | Shift+F10 | Pick action to perform on current or tagged items based on file extension/type |
-| SendTo Menu | Control+F10 | Pick Send To shortcut and pass current or tagged items to it |
-| Alternate Menu | Alt+F10 | Pick command to execute from complete, alphabetized list |
-| Elevate Version | F11 | Download latest FileDir version and run installer (after confirming) |
-| Arrange Icons | Alt+F11 | Arrange open windows |
-| Cascade | Control+F11 | Cascade open windows |
-| Tile Horizontal | Alt+Shift+F11 | Tile open windows horizontally |
-| Tile Vertical | Control+Shift+F11 | Tile open windows vertically |
-| Start Timer | F12 | Start, pause, or resume timer |
-| Stop Timer | Shift+F12 | Stop running or paused timer |
-| Say Timer | Alt+F12 | Say elapsed time since start of timer (not counting any paused periods) |
+Every FileDir command, its key, and what it does are listed in a separate
+document, [Hotkeys](Hotkeys.htm), which comes with the program and is on the
+Start menu as "FileDir Hotkeys". It gives the same list three ways: in order of
+command name, in order of key, and grouped by the modifier a key starts with.
+
+Three commands help while you are learning:
+
+- **Hotkey Summary**, Alt+Shift+H, opens that same document from inside FileDir.
+- **Key Describer**, Control+F1, turns on a mode where pressing a command key
+  says the command's name, its key, and what it does, instead of running it.
+  Press Control+F1 again to turn it off. This is the fastest way to explore.
+- **Alternate Menu**, Alt+F10, lists every command in one alphabetical list. You
+  can filter that list with Control+F and jump within it with Control+J, then
+  press Enter to run the command you land on.
+
+## Logs
+
+FileDir keeps a log of every session, at
+
+```
+%LOCALAPPDATA%\FileDir\logs\FileDir_<date>_<time>.log
+```
+
+It opens with the version, the program path, the command line and the machine,
+and then records every outside program FileDir runs -- Pandoc, ffmpeg, ExifTool,
+yt-dlp, 2htm -- with its exit code and, when one fails, the first line of what
+it said. So a conversion that did not work can be explained rather than guessed
+at.
+
+The newest thirty session logs are kept and older ones are removed, so the
+folder never grows without limit.
+
+Press **Control+F12** for Copy Log. It puts the path of this session's log on
+the clipboard twice over: as a file, so pasting into a new mail message attaches
+the log itself, and as text, so any program that only reads clipboard text gets
+the path. That is the whole of "send me the log".
+
+The installer writes its own log in the same folder, `FileDir_setup.log`, and
+the Results box shown at the end of the installation names it. EdSharp uses the
+same folder shape, the same file naming, and the same Control+F12.
 
 ## Development Notes
 
-For the technically curious, I developed FileDir with the C# programming language on the .NET Framework 4.8, built with the Roslyn compiler from Microsoft.
+FileDir is written in C# and runs on the .NET Framework 4.8, which is part of
+Windows 10 and Windows 11. It is built with the Roslyn compiler from Microsoft.
+The program is one file, FileDir.exe, and needs nothing installed alongside it.
 
-Document text is extracted with the 2htm utility, written by Jamal Mazrui and released under the MIT license, which converts Word, Excel, PowerPoint, PDF, and Markdown files to accessible HTML. It is available at [2htm on GitHub](https://github.com/JamalMazrui/2htm)
+Text is pulled out of documents by 2htm, a separate tool by the same author,
+released under the MIT licence, which turns Word, Excel, PowerPoint, PDF, and
+Markdown files into accessible HTML or plain text. See
+[2htm on GitHub](https://github.com/JamalMazrui/2htm).
 
-This folder contains the complete source code for FileDir in FileDir.cs, the Homer helper modules (Web.cs, Say.cs, and Inix.cs), and the Layout by Code support libraries (lbc.cs and LbcVB.vb), the latter being progressively replaced by the Homer modules.
+The source code comes with the program, in the FileDir folder: FileDir.cs and
+Dialogs.cs for FileDir itself, and the shared Homer files Say.cs, Inix.cs,
+Web.cs, Util.cs, KeyMap.cs, and Lbc.cs, which EdSharp and DbDo use as well.
+Full instructions for rebuilding or changing FileDir are in
+[Developer](Developer.htm).
 
-The code is covered by a modified version of the GNU General Public License (GPL), which is explained at [GNU General Public License](http://gnu.org/copyleft/gpl.html)
+FileDir is free and open source under the MIT licence. See
+[License](License.htm) for the terms. The project home, including every
+release, is [FileDir on GitHub](https://github.com/JamalMazrui/FileDir).
 
-Essentially, software that uses the code must be open source, except that I am willing to relax GPL conditions in a particular case if persuaded that a greater good would result.
-
-I welcome feedback, which helps FileDir improve over time. When reporting a problem, the more specifics the better, including steps to reproduce it, if possible.
-
-The latest version of FileDir is available at the same URL, [FileDir download](http://www.EmpowermentZone.com/dirsetup.exe)
-
-This may be downloaded and installed with the Elevate Version command, F11.
+Feedback helps FileDir improve. When you report a problem, the more detail the
+better, especially the steps that lead to it.
 
 Jamal Mazrui
-
-[jamal@EmpowermentZone.com](mailto:jamal@EmpowermentZone.com)
 
 End of Document

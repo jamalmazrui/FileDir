@@ -1,238 +1,62 @@
 @echo off
-rem ====================================================================
-rem BuildFileDir.cmd - 64-bit build for FileDir.exe (5.0 beta).
+rem BuildFileDir.cmd -- build FileDir.exe and FileDir_setup.exe.
 rem
-rem Compiles FileDir.cs to FileDir.exe with csc.exe, /platform:anycpu so
-rem it runs as a 64-bit process on 64-bit Windows. No MSBuild/NuGet.
+rem   BuildFileDir             full build, taking the next version number
+rem   BuildFileDir nobump      recompile without taking a new number
+rem   BuildFileDir noinstall   build the program but not the installer
+rem   BuildFileDir audit       run the checks only, and compile nothing
 rem
-rem Homer helpers folded in as source so far: Web.cs (Homer.Web), Say.cs (Homer.Say), and
-rem Inix.cs (Homer.InixCodec, the FileDir.inix layer). Say.cs needs the UIA notification assemblies
-rem (UIAutomationProvider/UIAutomationTypes) and System.Web; the UIA
-rem DLLs are located via the .NET 4.8 reference-assemblies dir with a
-rem GAC fallback, mirroring the EdSharp build. The existing reference
-rem DLLs (lbc/LbcVB/LbcJS, Tektosyne, SharpZipLib, FileAssociation)
-rem remain until their subsystems are ported. Remaining Homer files are
-rem adopted in later passes.
-rem ====================================================================
-setlocal enableextensions enabledelayedexpansion
+rem THE LOG ALWAYS EXISTS. This wrapper opens BuildFileDir.log and writes the
+rem first lines BEFORE PowerShell is started, then captures everything PowerShell
+rem prints and appends it at the end. That matters for one failure in
+rem particular: a PowerShell script that will not PARSE never runs a line of
+rem itself, including the line that opens its own log. Three builds have failed
+rem that way, each leaving no log at all and a wall of parser errors on a console
+rem that scrolls. Now the parser errors land in the log with everything else.
+rem
+rem So: BuildFileDir.log is the file to send, whatever went wrong.
+setlocal
 pushd "%~dp0"
 
-set "log=BuildFileDir.log"
-echo FileDir build log > "!log!"
-echo Started %DATE% %TIME% >> "!log!"
+set "log=%~dp0BuildFileDir.log"
+set "capture=%TEMP%\BuildFileDir_console_%RANDOM%.txt"
 
-if not exist "FileDir.cs" echo ERROR: FileDir.cs not found.& popd & exit /b 1
-if not exist "Web.cs" echo ERROR: Web.cs ^(Homer^) not found.& popd & exit /b 1
-if not exist "Say.cs" echo ERROR: Say.cs ^(Homer^) not found.& popd & exit /b 1
-if not exist "Inix.cs" echo ERROR: Inix.cs ^(Homer^) not found.& popd & exit /b 1
-if not exist "Util.cs" echo ERROR: Util.cs ^(Homer^) not found.& popd & exit /b 1
-if not exist "FileDir.js" echo ERROR: FileDir.js not found.& popd & exit /b 1
-if not exist "FileDir.manifest" echo ERROR: FileDir.manifest not found.& popd & exit /b 1
+rem A fresh log, opened here so it exists no matter what happens next.
+> "%log%" echo FileDir build log
+>> "%log%" echo [wrapper] Started %DATE% %TIME%
+>> "%log%" echo [wrapper] Wrapper: %~f0
+>> "%log%" echo [wrapper] Command line: %0 %*
+>> "%log%" echo [wrapper] Computer: %COMPUTERNAME%, user: %USERNAME%
+>> "%log%" echo [wrapper] Working directory: %CD%
+for %%f in ("%~dp0BuildFileDir.ps1") do >> "%log%" echo [wrapper] Script: %%~ff, %%~zf bytes, written %%~tf
+>> "%log%" echo.
 
-rem ---- required reference DLLs (must sit beside FileDir.cs) ----
-for %%d in (FileAssociation.dll Tektosyne.dll ICSharpCode.SharpZipLib.dll) do (
-  if not exist "%%d" echo ERROR: reference assembly %%d not found.& popd & exit /b 1
+if not exist "%~dp0BuildFileDir.ps1" (
+  >> "%log%" echo [wrapper] ERROR: BuildFileDir.ps1 is not here. Nothing can be built.
+  echo ERROR: BuildFileDir.ps1 is not here. See "%log%".
+  popd & endlocal & exit /b 1
 )
 
-rem ---- version: version.txt is the SINGLE source of truth ----
-rem The version lives in version.txt: one line, nothing else.  It is incremented
-rem here, BEFORE anything is compiled, because both the program and the installer
-rem bake the number in:
-rem   * this script generates Version.cs from it, so the running program reports it
-rem   * FileDir_setup.iss reads version.txt directly (see its #define AppVersion), so the
-rem     installer is stamped with it
-rem   * tagRelease tags the release with it
-rem All three therefore always agree, which is what Elevate Version (F11) needs.
-rem The .iss contains NO version number, so an old copy of it cannot rewind one.
-rem
-rem Pass "nobump" to recompile without taking a new number: BuildFileDir.cmd nobump
-if not exist "version.txt" (
-  echo ERROR: version.txt not found. It must hold the current version, e.g. 1.0.0
-  echo ERROR: version.txt not found. >> "!log!"
-  popd
-  exit /b 1
+rem PowerShell writes its own detail into the log as it goes. Its CONSOLE output
+rem is captured separately and appended below, because that is the only place a
+rem parse error appears.
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0BuildFileDir.ps1" %* > "%capture%" 2>&1
+set "rc=%ERRORLEVEL%"
+
+rem Show it, so the person running the build sees what happened.
+if exist "%capture%" type "%capture%"
+
+>> "%log%" echo.
+>> "%log%" echo [wrapper] ---- Console output from PowerShell ----
+if exist "%capture%" type "%capture%" >> "%log%"
+>> "%log%" echo [wrapper] PowerShell exit code: %rc%
+>> "%log%" echo [wrapper] Finished %DATE% %TIME%
+if exist "%capture%" del /f /q "%capture%" >nul 2>&1
+
+if not "%rc%"=="0" (
+  echo.
+  echo BUILD FAILED. Send "%log%" -- it holds the whole story, including any
+  echo parser errors, which are the one thing the script cannot log itself.
 )
-set "ver="
-set /p ver=<version.txt
-rem strip stray spaces; a version number never contains one
-set "ver=!ver: =!"
-if "!ver!"=="" (
-  echo ERROR: version.txt is empty.
-  echo ERROR: version.txt is empty. >> "!log!"
-  popd
-  exit /b 1
-)
-
-if /i "%~1"=="nobump" (
-  echo Version: !ver! ^(nobump: keeping the current number^)
-  echo Version: !ver! ^(nobump^) >> "!log!"
-) else (
-  call :takeNextVersion
-)
-
-rem ---- generate Version.cs from version.txt ----
-rem Version.cs is generated output: do not edit it, and keep it out of git.
-> Version.cs echo // Generated by BuildFileDir.cmd from version.txt.  Do not edit; do not commit.
->> Version.cs echo public static class BuildVersion
->> Version.cs echo {
->> Version.cs echo     public const string Version = "!ver!";
->> Version.cs echo }
-
-rem ---- encoding detection library (Ude.dll), best-effort ----
-rem The .NET base class library cannot detect a text file's character encoding.
-rem Ude (a port of the Mozilla universal charset detector) does, and EdSharp already
-rem uses it, so FileDir uses the same library and detects encodings identically.
-rem This is what the retired Encoding.exe used to do.
-rem
-rem Three ways to get Ude.dll, in order.  None of them can fail the build: without
-rem Ude.dll the HAVEUDE symbol is simply not defined, and detection falls back to
-rem the byte-order mark alone (the old behavior).
-if not exist "Ude.dll" (
-  rem 1. Copy it from the EdSharp project, which already has it.
-  if exist "..\EdSharp\Ude.dll" (
-    copy /y "..\EdSharp\Ude.dll" "Ude.dll" >nul 2>&1
-    if exist "Ude.dll" echo Ude.dll copied from the EdSharp project. >> "!log!"
-  )
-)
-if not exist "Ude.dll" (
-  rem 2. Fetch it, using the same script EdSharp uses.  Copy FetchUde.ps1 here from
-  rem    the EdSharp folder if you want this step to work.
-  if exist "FetchUde.ps1" (
-    echo Fetching Ude.dll ^(best-effort^)... >> "!log!"
-    powershell -NoProfile -ExecutionPolicy Bypass -File "FetchUde.ps1" >> "!log!" 2>&1
-  )
-)
-set "udeRef="
-set "udeDef="
-if exist "Ude.dll" (
-  set "udeRef=/reference:Ude.dll"
-  set "udeDef=/define:HAVEUDE"
-  echo Ude.dll present - character encoding autodetection enabled. >> "!log!"
-  echo Encoding detection: Ude.dll present.
-) else (
-  echo Ude.dll absent - encoding detection limited to byte-order marks. >> "!log!"
-  echo NOTE: Ude.dll not found. Copy it ^(or FetchUde.ps1^) from the EdSharp folder
-  echo       to enable character encoding autodetection.
-)
-
-rem ---- locate csc.exe: prefer Roslyn (latest C#), fall back to Framework64 ----
-set "csc="
-for %%p in (
-  "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
-  "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
-  "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe"
-  "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe"
-  "C:\Program Files (x86)\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\Roslyn\csc.exe"
-  "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\Roslyn\csc.exe"
-  "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
-  "%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
-  "%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\csc.exe"
-) do (if not defined csc if exist %%p set "csc=%%~p")
-if not defined csc echo ERROR: No csc.exe found. Install VS Build Tools or repair .NET Framework.& popd & exit /b 1
-echo C# compiler: !csc! >> "!log!"
-
-rem ---- locate jsc.exe (Framework only; JScript .NET for the evaluator) ----
-set "jsc="
-if exist "%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\jsc.exe" set "jsc=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\jsc.exe"
-if not defined jsc if exist "%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\jsc.exe" set "jsc=%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\jsc.exe"
-if not defined jsc echo ERROR: No jsc.exe found ^(repair .NET Framework^).& popd & exit /b 1
-echo JScript compiler: !jsc! >> "!log!"
-
-rem ---- locate UIA notification assemblies for Homer.Say ----
-rem Prefer the .NET 4.8 reference assemblies; fall back to the GAC, which
-rem is present on any machine with the .NET 4.x runtime installed.
-set "refDir=%ProgramFiles(x86)%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8"
-set "uiaProv="
-set "uiaTypes="
-if exist "!refDir!\UIAutomationProvider.dll" set "uiaProv=!refDir!\UIAutomationProvider.dll"
-if exist "!refDir!\UIAutomationTypes.dll"    set "uiaTypes=!refDir!\UIAutomationTypes.dll"
-if not defined uiaProv  if exist "%SystemRoot%\Microsoft.NET\assembly\GAC_MSIL\UIAutomationProvider\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationProvider.dll" set "uiaProv=%SystemRoot%\Microsoft.NET\assembly\GAC_MSIL\UIAutomationProvider\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationProvider.dll"
-if not defined uiaTypes if exist "%SystemRoot%\Microsoft.NET\assembly\GAC_MSIL\UIAutomationTypes\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationTypes.dll" set "uiaTypes=%SystemRoot%\Microsoft.NET\assembly\GAC_MSIL\UIAutomationTypes\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationTypes.dll"
-if not defined uiaProv  echo ERROR: UIAutomationProvider.dll not found; install the .NET 4.8 Developer Pack.& popd & exit /b 1
-if not defined uiaTypes echo ERROR: UIAutomationTypes.dll not found; install the .NET 4.8 Developer Pack.& popd & exit /b 1
-echo UIAutomationProvider: !uiaProv! >> "!log!"
-echo UIAutomationTypes: !uiaTypes! >> "!log!"
-
-rem ---- manifest (required; embedded into the exe) and optional icon ----
-set "manifest=/win32manifest:FileDir.manifest"
-echo Manifest: FileDir.manifest >> "!log!"
-set "icon="
-if exist "FileDir.ico" set "icon=/win32icon:FileDir.ico"
-if defined icon (echo Icon: FileDir.ico >> "!log!") else (echo Icon: none ^(optional^) >> "!log!")
-
-rem ---- compile FileDir.cs -> FileDir.exe (64-bit on 64-bit Windows) ----
-rem ---- compile FileDir.js -^> FileDirScript.dll (JScript .NET host) ----
-echo Compiling FileDir.js -^> FileDirScript.dll ...
-if exist FileDirScript.dll del /f /q FileDirScript.dll
-"!jsc!" /nologo /target:library /out:FileDirScript.dll FileDir.js >> "!log!" 2>&1
-if errorlevel 1 goto failed
-
-echo Compiling FileDir.cs -^> FileDir.exe ...
-if exist FileDir.exe del /f /q FileDir.exe
-"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ /nowarn:0162 !udeDef! %manifest% %icon% /reference:FileAssociation.dll /reference:Microsoft.CSharp.dll /reference:Tektosyne.dll /reference:ICSharpCode.SharpZipLib.dll /reference:Microsoft.VisualBasic.dll /reference:System.Security.dll /reference:System.Web.dll /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:FileDir.exe Version.cs FileDir.cs Lbc.cs Say.cs Inix.cs Web.cs Util.cs Dialogs.cs >> "!log!" 2>&1
-if errorlevel 1 goto failed
-
-rem ---- optional: build accessible HTML docs from Markdown via 2htm ----
-if exist "2htm.exe" (
-  if exist "FileDir.md" "2htm.exe" -f "FileDir.md" >> "!log!" 2>&1
-  if exist "History.md" "2htm.exe" -f "History.md" >> "!log!" 2>&1
-  echo Docs: generated FileDir.htm / History.htm via 2htm. >> "!log!"
-) else (
-  echo Docs: 2htm.exe not present; HTML docs not regenerated. >> "!log!"
-)
-
-echo.
-echo Build complete:
-echo   FileDir.exe  -- the application (64-bit on 64-bit Windows)
-echo. >> "!log!"
-echo BUILD COMPLETE: FileDir.exe built successfully. >> "!log!"
-echo Finished %DATE% %TIME% >> "!log!"
-popd & endlocal & exit /b 0
-
-:failed
-echo. >> "!log!"
-echo BUILD FAILED - compile errors are listed above in this log. >> "!log!"
-echo.
-echo BUILD FAILED. Errors from %log%:
-type "!log!" | findstr /C:": error" /C:"error CS"
-popd & endlocal & exit /b 1
-
-:takeNextVersion
-rem ---------------------------------------------------------------------------
-rem Take the next version number: increment the last dotted part of !ver!.
-rem
-rem This makes NO network call.  An earlier version asked GitHub whether the number
-rem was already taken -- but gh has no timeout, so a slow or unreachable network hung
-rem the build with no message and no way to interrupt it.  A build script must never
-rem wait on the network.  tagRelease does the "already released" check instead: that
-rem is where a network call belongs, and where a stall is visible and interruptible.
-rem
-rem This runs as a subroutine rather than inside a parenthesised ( ) block, so each
-rem line is parsed on its own -- avoiding the block-parsing traps batch has inside ( ).
-rem ---------------------------------------------------------------------------
-set "p1=" & set "p2=" & set "p3=" & set "p4="
-set "new="
-for /f "tokens=1-4 delims=." %%a in ("!ver!") do (
-  set "p1=%%a" & set "p2=%%b" & set "p3=%%c" & set "p4=%%d"
-)
-if defined p4 (
-  set /a p4=p4+1
-  set "new=!p1!.!p2!.!p3!.!p4!"
-) else if defined p3 (
-  set /a p3=p3+1
-  set "new=!p1!.!p2!.!p3!"
-) else if defined p2 (
-  set "new=!p1!.!p2!.1"
-) else (
-  set "new=!p1!.0.1"
-)
-if not defined new (
-  echo ERROR: could not work out the next version from "!ver!".
-  echo ERROR: could not work out the next version from "!ver!". >> "!log!"
-  goto :eof
-)
-> version.txt echo !new!
-echo Version: !ver! -^> !new!
-echo Version: !ver! -^> !new! >> "!log!"
-set "ver=!new!"
-goto :eof
+popd
+endlocal & exit /b %rc%

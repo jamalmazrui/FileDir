@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FileDir Developer</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">FileDir Developer</h1>
+</header>
+<h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
+<p><strong>Version 5.0.27</strong><br />
+August 2026<br />
+Copyright 2006-2026 by Jamal Mazrui<br />
+MIT License</p>
+<p>This document is for developers. It is as technical as it needs to
+be, and it assumes familiarity with Windows, C#, and the command
+line.</p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#the-sources">The Sources</a></li>
+<li><a href="#building">Building</a></li>
+<li><a href="#the-audit">The Audit</a></li>
+<li><a href="#single-sources-of-truth">Single Sources of Truth</a></li>
+<li><a href="#releasing">Releasing</a></li>
+<li><a href="#keeping-the-folder-clean">Keeping the Folder
+Clean</a></li>
+<li><a href="#conventions">Conventions</a></li>
+<li><a href="#traps-worth-knowing">Traps Worth Knowing</a></li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Windows 10 or 11, x64 or ARM64.</li>
+<li>.NET Framework 4.8 and its Developer Pack. The Developer Pack
+supplies the reference assemblies; the build falls back to the GAC
+copies if it is absent.</li>
+<li>A C# compiler. The build prefers the Roslyn <code>csc.exe</code>
+shipped with Visual Studio Build Tools 2022 and falls back to the
+Framework <code>csc.exe</code>.</li>
+<li><code>jsc.exe</code>, the JScript .NET compiler, which ships with
+the Framework. It compiles <code>FileDir.js</code> into
+<code>FileDirScript.dll</code>, the expression evaluator behind the
+Evaluate command.</li>
+<li>Inno Setup 6 (or 5.6 and later) for <code>ISCC.exe</code>, which
+compiles the installer.</li>
+<li><code>git</code> and the GitHub CLI <code>gh</code>, used by
+<code>tagRelease</code>.</li>
+</ul>
+<p>Nothing is fetched from NuGet and there is no MSBuild project. The
+build is a direct compiler invocation, which keeps it inspectable and
+fast.</p>
+<h2 id="the-sources">The Sources</h2>
+<p>FileDir itself:</p>
+<ul>
+<li><code>FileDir.cs</code> — the program. One monolithic WinForms
+source, about 8,170 lines.</li>
+<li><code>Dialogs.cs</code> — FileDir’s own dialogs.</li>
+<li><code>FileDir.js</code> — the JScript .NET expression
+evaluator.</li>
+</ul>
+<p>Shared Homer files, common to FileDir, EdSharp, and DbDo, compiled in
+<code>namespace Homer</code>:</p>
+<ul>
+<li><code>Say.cs</code> — speech, trying JAWS through its automation
+interface, then NVDA through its controller library, then a native UIA
+notification that Narrator reads, stopping at the first that answers. It
+also carries <code>Homer.JawsSettingsInstaller</code>, which the
+installer calls through
+<code>FileDir.exe --install-jaws-settings</code>.</li>
+<li><code>Inix.cs</code> — the <code>.inix</code> configuration layer
+read in preference to the classic <code>.ini</code> for the same key,
+giving a non-destructive override.</li>
+<li><code>Web.cs</code> — a base-class-library-only web client with TLS
+1.2 and 1.3 and a browser user agent, used by Elevate Version.</li>
+<li><code>Util.cs</code> — shared helpers.</li>
+<li><code>KeyMap.cs</code> — <strong>generated</strong>; see below.</li>
+<li><code>Lbc.cs</code> — the Layout by Code dialog toolkit.</li>
+<li><code>Ollama.cs</code> — the client for the local model server, used
+by Translate File. Base class library only: the exchange is one string
+in and one string out, which does not justify a reference to
+<code>System.Web.Extensions</code> or
+<code>System.Runtime.Serialization</code> on a build that has to stay on
+.NET Framework 4.8. Two rules in it are worth keeping. Never run the
+<code>ollama</code> command to ask a question — it starts the server in
+a console of its own that looks like a fault; ask over
+<code>http://localhost:11434</code> instead, which opens nothing. And
+choose the model from what is installed rather than making anyone
+configure it.</li>
+</ul>
+<p>Referenced assemblies that must sit beside the sources:
+<code>FileAssociation.dll</code>, <code>Tektosyne.dll</code>,
+<code>ICSharpCode.SharpZipLib.dll</code>, and optionally
+<code>Ude.dll</code>.</p>
+<p><code>Ude.dll</code> is a port of the Mozilla universal character set
+detector. The base class library cannot detect a text file’s encoding;
+Ude can, and EdSharp uses the same library so both programs detect
+identically. The build copies it from <code>..\EdSharp\Ude.dll</code> if
+it is missing. Without it the <code>HAVEUDE</code> symbol is not defined
+and detection falls back to the byte order mark, which was the old
+behaviour. Its absence can never fail a build.</p>
+<h2 id="building">Building</h2>
+<pre><code>cd C:\FileDir
+BuildFileDir.cmd</code></pre>
+<p><strong>There are two commands to run.</strong>
+<code>BuildFileDir</code> builds; <code>cleanFileDir</code> tidies. Each
+is a <code>.cmd</code> wrapper, so neither PowerShell’s execution-policy
+parameters nor a Python path ever has to be typed, and each writes its
+own log beside itself. <code>makeKeyMap.py</code>,
+<code>auditFileDir.py</code> and <code>homerPolicy.py</code> are called
+by those two rather than run directly; to run the checks alone, use
+<code>BuildFileDir audit</code>.</p>
+<p>The build is PowerShell and the checks and the sweep are Python,
+which matches EdSharp: <code>BuildEdSharp.ps1</code> with
+<code>auditEdSharp.py</code> and <code>repoPolicy.py</code> beside it.
+PowerShell suits the compiler and installer work; Python suits the text
+and policy work, and is what lets the two projects share code rather
+than share only an idea.</p>
+<p><code>BuildFileDir.ps1</code> does six things, in order, and appends
+every step to <code>BuildFileDir.log</code> as it happens, so a build
+that dies still leaves a log:</p>
+<ol type="1">
+<li><p><strong>Key map.</strong> <code>makeKeyMap.py</code> regenerates
+<code>KeyMap.cs</code> and <code>Hotkeys.md</code> from
+<code>Hotkeys.ini</code>. This runs first because the audit checks what
+it produces.</p></li>
+<li><p><strong>Audit.</strong> <code>auditFileDir.py</code> runs, and
+the build stops if anything fails. Nothing is compiled until the checks
+a compiler cannot make have passed. Warnings are printed and do not stop
+it.</p></li>
+<li><p><strong>Version.</strong> The last dotted part of
+<code>version.txt</code> is incremented and <code>Version.cs</code> is
+generated from the result.</p></li>
+<li><p><strong>Compile.</strong> <code>jsc.exe</code> builds
+<code>FileDirScript.dll</code>; <code>csc.exe</code> builds
+<code>FileDir.exe</code> with <code>/platform:anycpu</code>, the
+manifest, and the icon.</p></li>
+<li><p><strong>Documents.</strong> Each document’s
+<code>**Version ...**</code> line is stamped from
+<code>version.txt</code>, then the <code>.htm</code> is regenerated for
+every Markdown document. <code>Hotkeys.md</code> is stamped by
+<code>makeKeyMap.py</code> instead, since the build does not edit a
+generated file.</p>
+<p><strong>Two converters.</strong> <code>2htm.exe</code> is tried
+first, being the house tool, and Pandoc is the fallback. That is not
+belt and braces for its own sake: 2htm failed on all nine documents in
+one build with <em>Could not load file or assembly System.Memory</em> —
+the Span trap, needing <code>System.Memory.dll</code> beside the
+executable — and every page silently kept its previous HTML while the
+installer, which ships each <code>.htm</code> only if it exists, would
+have carried stale documents into a release. A page that comes out zero
+bytes is deleted rather than kept, and the build <strong>stops</strong>
+if any document ends with no HTML.</p>
+<p>That check is deliberately in the build and not in the audit. The
+audit runs before the conversion, so “no HTML yet” is the ordinary state
+of a tree just unarchived; putting a failure there made the build refuse
+to run the step that fixes it. The audit still reports the state as
+advice. The failure lives where it is actionable, one line after the
+conversion.</p></li>
+<li><p><strong>Installer.</strong> <code>ISCC.exe</code> compiles
+<code>FileDir_setup.iss</code> into
+<code>FileDir_setup.exe</code>.</p></li>
+</ol>
+<p>Three optional words:</p>
+<ul>
+<li><code>BuildFileDir nobump</code> recompiles without taking a new
+version number.</li>
+<li><code>BuildFileDir noinstall</code> builds the program but skips the
+installer.</li>
+<li><code>BuildFileDir audit</code> runs the checks and compiles
+nothing.</li>
+</ul>
+<p>If <code>ISCC.exe</code> is not found the build still succeeds and
+says so; only the installer is skipped.</p>
+<p>Every external program is run with <code>runProgram</code>, which
+passes the program and its arguments separately, quotes any argument
+holding a space, gives the command an <strong>empty standard
+input</strong>, logs everything, captures the output into the build log,
+and records the exit code.</p>
+<p>The quoting and the empty standard input are both there because of
+one hang. PowerShell joins an argument list with spaces and quotes
+nothing, so <code>--metadata title=FileDir - ReadMe</code> reached
+Pandoc as four arguments, and the bare <code>-</code> among them means
+<em>read standard input</em>. Pandoc waited for ever and the console
+said nothing. Quoting fixes that case; the empty standard input fixes
+the whole class, since any tool that reads standard input would hang the
+same way. Passing them apart matters: the command interpreter’s quote
+stripping after <code>/c</code> defeats a quoted program with a quoted
+argument, and PowerShell joins an argument list with spaces and quotes
+nothing. Kept apart, no quoting rule applies at all.</p>
+<p><strong>Check the script stamps first when a fault looks
+familiar.</strong> Both <code>BuildFileDir.log</code> and
+<code>auditFileDir.log</code> open with the date and size of every
+script in the build. A failure that was supposedly fixed is far more
+often a stale copy — an archive not unarchived, or unarchived after the
+build ran — than a fix that did not work, and the stamps tell the two
+apart at a glance.</p>
+<p>When a build fails, <code>BuildFileDir.log</code> is the file to
+send. The script opens that log before doing anything that could fail
+and then traps unexpected errors.</p>
+<p><strong>A log always exists, including for a parse error.</strong>
+PowerShell parses a whole script before running a line of it, so a
+script that will not parse never reaches its own logging. That happened
+three times, each leaving no log at all. Both wrappers now open the log
+and write the first lines <em>before</em> starting the interpreter,
+capture everything it prints, and append that at the end; the scripts
+append rather than truncate. So <code>BuildFileDir.log</code> is the
+file to send whatever went wrong, and
+<code>python auditFileDir.py</code> is no longer the only way to see a
+parse error.</p>
+<p>Two PowerShell traps have caused those parse errors, and the audit
+now refuses both:</p>
+<ul>
+<li><strong><code>\"</code> to escape a quote.</strong> PowerShell
+escapes with a backtick. This came from generating C# source, which is
+why that generator moved to <code>makeKeyMap.py</code>.</li>
+<li><strong>A continuation line beginning with <code>+</code>.</strong>
+PowerShell wants the operator at the <em>end</em> of the line, or a
+backtick. Build a long message a line at a time into a variable
+instead.</li>
+</ul>
+<p>The audit now refuses any <code>.ps1</code> containing a
+backslash-escaped quote, so that particular cause is caught at the next
+build. Generating one language’s source from another is fiddly enough
+that it moved to <code>makeKeyMap.py</code>, where the quoting is
+simple.</p>
+<h2 id="the-audit">The Audit</h2>
+<p><code>auditFileDir.py</code> checks what a compiler cannot. Every
+check exists because something broke, here or in EdSharp:</p>
+<ol type="1">
+<li>Every source file the build needs is present.</li>
+<li><code>FileDir.cs</code> still has its baseline brace delta. The
+open-minus-close count is a fixed number for a correct file — currently
+<strong>15</strong>, the surplus being braces inside strings and
+comments. An edit that moves it has unbalanced a block. This matters
+because whoever edits this file may not be able to compile it.</li>
+<li>Every live menu command has a description.</li>
+<li>No key is bound to two commands.</li>
+<li><code>Hotkeys.ini</code> describes no command that no longer
+exists.</li>
+<li><code>KeyMap.cs</code> is not older than
+<code>Hotkeys.ini</code>.</li>
+<li>Every file named in the installer’s <code>[Files]</code> section
+exists. An entry carrying <code>skipifsourcedoesntexist</code> fails
+silently at compile time, so a file can quietly stop shipping; that case
+is reported as a warning.</li>
+<li>The installer script contains no literal version number.</li>
+<li>The documentation set is complete.</li>
+<li><code>ReadMe.md</code> and <code>FileDir.md</code> name the current
+version.</li>
+<li>No document still claims the GNU licence.</li>
+<li>No document points at a retired installer name, a retired download
+address, Internet Explorer, GetText, or the removed Web Client
+Utilities.</li>
+<li>No Markdown file in the folder belongs to another project.
+<code>ReadMe.md</code> and <code>Announce.md</code> were urlFido’s for a
+while, and would have shipped as FileDir’s if the installer had named
+them.</li>
+</ol>
+<p>Checks 14 through 19 were added later: that every document the
+program opens is one the installer ships; that the About box carries no
+typed version or licence; that every delivered script writes its own log
+and acts without a confirmation word; that Elevate Version asks GitHub
+for exactly the file name the installer produces, since GitHub addresses
+are case sensitive; that nothing sits at the root which the setup script
+and <code>RepoFiles.txt</code> do not claim; and that no Markdown file
+in the folder belongs to another project.</p>
+<p>Run the checks alone with <code>BuildFileDir audit</code>, which
+compiles nothing. The audit prints PASS or FAIL for each check with a
+plain sentence, warns separately about things that are wrong but not
+fatal, and returns 1 when anything fails so the build can stop on
+it.</p>
+<p>Add a check whenever something breaks. That habit is the point of
+it.</p>
+<h2 id="single-sources-of-truth">Single Sources of Truth</h2>
+<p>Two facts live in exactly one place each, and everything else is
+generated:</p>
+<p>Everything that names a version reads it from
+<code>version.txt</code>: <code>Version.cs</code>, the installer, the
+release tag, and the header line of every document. Nothing types
+one.</p>
+<p><strong>The version lives in <code>version.txt</code></strong>, one
+line and nothing else, as plain UTF-8 with <strong>no byte order
+mark</strong>. Four things read it — the audit, the build,
+<code>FileDir_setup.iss</code> and <code>tagRelease</code> — and only
+PowerShell is forgiving about a mark. It both writes one, with
+<code>Set-Content -Encoding UTF8</code>, and silently strips it again on
+reading, so the fault is invisible from that side; Inno Setup reads it
+as part of the number and refuses to compile. The build writes the file
+with <code>[System.IO.File]::WriteAllText</code> and a
+<code>UTF8Encoding($false)</code>, and reads it with a
+<code>TrimStart</code> on the mark, so a file that already has one is
+repaired. <code>BuildFileDir.ps1</code> increments it and generates
+<code>Version.cs</code>; <code>FileDir_setup.iss</code> reads the same
+file with <code>FileOpen</code>/<code>FileRead</code>, so no version
+literal appears in the installer script; <code>tagRelease</code> tags
+with it. The program, the installer, and the tag therefore always agree,
+which is what Elevate Version compares. This arrangement exists because
+a stale <code>.iss</code> carrying its own <code>AppVersion</code> once
+rewound the number and the next build re-minted a version already
+published.</p>
+<p><strong>Keys and descriptions live in
+<code>Hotkeys.ini</code>.</strong> The build generates from it
+<code>KeyMap.cs</code>, a compiled-in table, and
+<code>Hotkeys.md</code>, the reference document. <code>Version.cs</code>
+and <code>KeyMap.cs</code> are generated output: do not edit them, and
+they are in <code>.gitignore</code>.</p>
+<p><code>KeyMap.cs</code> exists for a specific reason. The installer
+used to ship <code>Hotkeys.ini</code> with the
+<code>onlyifdoesntexist</code> flag, so a machine that already had
+FileDir never received an updated copy, and a description added in a new
+version was never heard — Key Describer answered “no description
+available” for every new command. The table is compiled in now.
+<code>Hotkeys.ini</code> is still read first, as a user override, and
+the installer deletes the stale shipped copy on upgrade.</p>
+<h2 id="releasing">Releasing</h2>
+<pre><code>cd C:\FileDir
+BuildFileDir.cmd
+git add -A
+git commit -m &quot;...&quot;
+git push
+tagRelease</code></pre>
+<p><code>tagRelease</code> reads the version from the built installer,
+tags the commit, and publishes the release with
+<code>FileDir_setup.exe</code> as its asset. GitHub asset URLs are case
+sensitive, so the installer’s <code>OutputBaseFilename</code> and the
+name Elevate Version requests must stay identical.</p>
+<p>Commit a new Markdown document before tagging, or its
+<code>.htm</code> will not exist in the release.</p>
+<p>The network check for an already-published version belongs in
+<code>tagRelease</code>, not in the build. An earlier build script asked
+GitHub whether a number was taken, and because <code>gh</code> has no
+timeout a slow network hung the build with no message and no way to
+interrupt it. A build script must never wait on the network.</p>
+<h2 id="keeping-the-folder-clean">Keeping the Folder Clean</h2>
+<p><strong>Nothing in this project keeps a second list of what
+belongs.</strong> A file belongs only if it is <em>named</em>, and there
+are exactly two places to name one:</p>
+<ul>
+<li><strong><code>FileDir_setup.iss</code></strong> names it, which
+means FileDir installs it. A file on that list is part of the project by
+definition.</li>
+<li><strong><code>RepoFiles.txt</code></strong> names it, under
+<code>Tracked:</code> if the build needs it, or under
+<code>Local:</code> if it lives here without being tracked, like build
+output and logs.</li>
+</ul>
+<p>Doing neither is how a file is kept out. There is no third place to
+look, and no pattern admits a file by the look of its name.</p>
+<p>That rule comes from EdSharp, where a tidy script carried a line
+meant to spare the documentation set:</p>
+<pre><code>if sPath.endswith((&quot;.md&quot;, &quot;.htm&quot;)) and &quot;/&quot; not in sPath:
+    return True</code></pre>
+<p>What it actually said was that any file at the top of the folder
+ending in <code>.md</code> or <code>.htm</code> is part of the project.
+Every saved Stack Overflow page and every old draft ends that way and
+sits at the top, so the survey declared 38 of them needed and printed a
+clean report. <code>.gitignore</code> could not help either, because
+<code>.gitignore</code> has no effect on a file that is already
+tracked.</p>
+<p><code>cleanFileDir</code> looks at every entry at the top level and
+finds it is one of two things:</p>
+<ul>
+<li><strong>It belongs.</strong> The setup script ships it, or
+<code>RepoFiles.txt</code> names it.</li>
+<li><strong>Nothing claims it.</strong> It moves into
+<code>notes\</code>, whatever kind of file it is – a saved web page, a
+draft, a retired program, a downloaded library, an old copy, a test
+file.</li>
+</ul>
+<p>One folder rather than two, on purpose. Sorting the unclaimed
+material into kinds is work that only pays if something reads the kinds,
+and nothing does: none of it goes into the repository, and going through
+it is a job for a person with an afternoon, not for a script. A second
+ignored folder would be one more name to remember for no gain.</p>
+<p>The folder sits inside the project and is named in
+<code>.gitignore</code>, which the script adds if it is missing. Nothing
+is deleted, and subfolders are never searched: what is inside a folder
+is that folder’s business.</p>
+<p><code>cleanFileDir</code> then <strong>untracks</strong> anything git
+is carrying that the repository should not hold. Moving a file stages
+its own removal, because the path it was tracked under no longer exists,
+but a file that <em>stays</em> and should not be tracked is untouched by
+that — build output, a generated source, a log, a working document.
+<code>.gitignore</code> does nothing for those, because it has no effect
+on a file that is already tracked; adding a name to it after the fact
+changes nothing at all. Only <code>git rm --cached</code> takes one out,
+and the file stays on disk. On the working folder that was 10 files.</p>
+<p>A working document you want left at the root, but that is neither
+shipped nor needed by the build, goes under <code>Local:</code> in
+<code>RepoFiles.txt</code> — the same list that keeps build output and
+logs in place. There is no separate keep-at-root list, deliberately:
+there was one for a day, in two scripts and in neither
+<code>RepoFiles.txt</code> nor <code>.gitignore</code>, which is why git
+went on tracking two of the documents it named.</p>
+<p>Sorting by what a file is <em>for</em> rather than by what its name
+looks like is the point. An extension says what a file is made of, and
+the valid documents share <code>.md</code> and <code>.htm</code> with
+the saved pages, so no pattern on the name can separate them. A folder
+can.</p>
+<p>Run <code>cleanFileDir</code> with no parameters and it does the job.
+<code>cleanFileDir --survey</code> lists what would move and changes
+nothing, for when you want to look first. Both spellings match EdSharp’s
+<code>moveNotes</code>, so one habit works in either project. If a build
+breaks afterwards, the file it wants is in <code>notes\</code> and its
+name belongs in <code>RepoFiles.txt</code>.</p>
+<p>The sweep only runs when you run it, so the audit catches whatever
+lands at the root afterwards and does not belong, and warns at the next
+build. It also warns about anything git is <em>tracking</em> that
+nothing claims, which is the case <code>.gitignore</code> cannot
+see.</p>
+<h2 id="shared-with-the-other-homer-tools">Shared With the Other Homer
+Tools</h2>
+<p><code>homerPolicy.py</code> is the same file in every Homer Tools
+project. Nothing in it names FileDir, so a fix made here can be copied
+to EdSharp without reading it first. It finds the project’s name from
+the single <code>&lt;App&gt;_setup.iss</code> in the folder, and
+everything project-specific comes from that script and from
+<code>RepoFiles.txt</code>.</p>
+<p><code>auditFileDir.py</code> follows the shape of
+<code>auditEdSharp.py</code>: the same <code>say</code>,
+<code>report</code> and <code>startLog</code>, the same exit code, the
+same log beside the script, and the same handler that puts an unexpected
+traceback into the log rather than only on a console that scrolls away.
+A check written for one project can be moved to the other by copying the
+function.</p>
+<p><code>cleanFileDir.py</code> does the work that EdSharp splits
+between <code>moveNotes.py</code> and <code>tidyRepo.py</code>. FileDir
+needed the wider sweep because its clutter is wider: of 296 files at the
+root, 134 were documents and 162 were programs, libraries and old
+copies, so a documents-only mover would have left most of it behind.</p>
+<h2 id="conventions">Conventions</h2>
+<p><strong>Camel Type</strong> throughout: Hungarian prefixes on
+variables, lower camel case for methods and locals, functions rather
+than subprocedures, one-line simple conditions, declarations grouped at
+the top of scope. The authoritative description is
+<code>Camel_Type_C#.md</code>, which ships with the source.</p>
+<p><strong>Encoding.</strong> Shipped text files are CRLF. Files the
+program writes are UTF-8 with a byte order mark and CRLF. When editing
+with Python, read and write with <code>newline=""</code> so CRLF
+survives.</p>
+<p><strong>Speech supplements the screen reader and never repeats
+it.</strong> Window titles and the name, role, state, and value of the
+focused control are announced by JAWS, NVDA, and Narrator on their own.
+FileDir speaks only what it alone knows, and never sends one message by
+two mechanisms.</p>
+<p><strong>Documents.</strong> Every Markdown file has a matching
+<code>.htm</code> generated by the build. Prose in the user-facing
+documents is written plainly. Lists are preferred to tables, because a
+list reads better aloud.</p>
+<p><strong>Logs.</strong> Every script writes a detailed log beside
+itself, line by line as things happen, never buffered: the environment,
+every effective setting, every command with its exit code, and any
+error. Each PowerShell script opens its log before doing anything that
+could fail and then installs a <code>trap</code> that records the
+message, the exception type, the line, and the stack trace, so a failure
+never produces a console traceback and an empty log.</p>
+<p><strong>Scripts act.</strong> A delivered script does its job when
+run with no parameters. Requiring a confirmation word to make it work is
+a manual step in disguise. Where a preview is genuinely useful it is an
+option, not the default, and safety comes from the design instead:
+<code>cleanFileDir</code> moves rather than deletes, so there is nothing
+to guard against.</p>
+<h2 id="the-installers-optional-components">The Installer’s Optional
+Components</h2>
+<p>The finish-page checkbox pattern is EdSharp’s, arrived at over many
+iterations, and is deliberately not reinvented. The rules it
+encodes:</p>
+<ul>
+<li><strong>No Tasks or Components page.</strong> Every optional install
+is a checkbox on the finish page, running a probe-first script that
+reuses whatever is already installed.</li>
+<li><strong>Each tool appears three times</strong>, with a
+<code>Check</code> function so only one entry shows: install, update, or
+reinstall. They are grouped in that order, so the boxes that do
+something come first, and reinstall is never ticked because there is
+nothing to gain.</li>
+<li><strong>Every label says what the box will do</strong>, with the
+version and the size: “Install Ollama 0.x”, “Update Ollama from A to B”,
+“Reinstall Ollama A (current version)”. Never “a stronger model” — name
+it, so a person knows what they are getting and what to look for
+afterwards.</li>
+<li><strong>Probe behind the progress bar.</strong>
+<code>warmComponentProbes</code> asks every question at
+<code>ssPostInstall</code>, where the status line can say what is being
+checked. Asked when the finish page is built, the same queries add up to
+a silent minute.</li>
+<li><strong>Nothing pauses.</strong> One Results box at the very end,
+started from <code>DeinitializeSetup</code> so it runs after every
+checkbox, reporting each item by name with its version or the exact
+command to add it later.</li>
+<li><strong><code>runascurrentuser</code> for the optional
+installs</strong>: setup is elevated, and winget installs into the
+profile of whoever is signed in.</li>
+</ul>
+<p>Two traps specific to the <code>.iss</code>, both hit while writing
+this:</p>
+<ul>
+<li>A Pascal <strong>brace comment ends at the first closing
+brace</strong>, so a comment mentioning an Inno constant ends
+mid-sentence and hands the rest of its prose to the compiler. Comments
+naming a constant use <code>//</code>.</li>
+<li>The line asking Ollama for its model list has <strong>four levels of
+quoting</strong> on it. It is assembled with <code>Chr(39)</code> rather
+than written with doubled apostrophes, because writing them literally
+corrupted it once already.</li>
+</ul>
+<p>The audit checks both, plus the <code>begin</code>/<code>end</code>
+balance and that every routine named by a <code>Check:</code> or
+<code>{code:...}</code> exists.</p>
+<h2 id="the-media-tools-and-a-question-left-open">The Media Tools, and a
+Question Left Open</h2>
+<p><code>exiftool.exe</code>, <code>ffmpeg.exe</code>,
+<code>ffprobe.exe</code> and <code>yt-dlp.exe</code> sit in the program
+folder, copied from HomerScribe, and <code>Media.cs</code> finds them:
+beside the program first, then the PATH. Every candidate is run to learn
+its version and the newest wins, which is HomerScribe’s answer to a
+question that looking cannot settle – a winget install alongside an
+older copy in the build folder. Version parts are compared as whole
+numbers, because ExifTool released 13.11 after 13.8.</p>
+<p>They are in <code>RepoFiles.txt</code> under <code>Local:</code> and
+in <code>.gitignore</code>, so they live on disk without being tracked.
+Over 100 MB of third-party binaries is not something a git repository
+should carry, and the installer ships whichever are present at build
+time.</p>
+<p><strong>The open question.</strong> Pandoc moved to
+<code>C:\Program Files\Pandoc</code> precisely so three programs would
+not each carry 100 MB of it. ffmpeg is larger than Pandoc, and
+HomerScribe carries its own copy, so the same argument applies with more
+force. Against that: HomerScribe already works this way, both programs
+find the tools identically, and a tool beside the program is the one
+meant to be used. Nothing is decided here. If it is decided, the change
+is small – <code>Media.cs</code> already searches Program Files for
+ExifTool, and winget has <code>Gyan.FFmpeg</code> and
+<code>OliverBetz.ExifTool</code>.</p>
+<h2 id="two-places-define-a-key">Two Places Define a Key</h2>
+<p><code>menu_Helper("Chat with AI", "F12", handler)</code> sets the key
+<strong>shown</strong> beside a command: in the menu, in Key Describer,
+in the Alternate Menu, and in the <code>Hotkeys.md</code> the build
+generates. It does <strong>not</strong> bind anything.</p>
+<p>The keystroke is dispatched by the switch in
+<code>ProcessCmdKey</code>, and nothing connects the two. Change one
+without the other and the program is confidently wrong: every place a
+person looks reads the same argument, so they all agree with each other
+and none of them agrees with the keyboard. That is exactly what happened
+when the AI commands were added — F12 kept starting the timer while four
+separate sources said otherwise.</p>
+<p><strong>Both must be edited together.</strong> The audit checks it,
+and Enter and Shift+Enter are the named exceptions, since they branch on
+what the item is and call <code>item_Helper</code> rather than a
+menu.</p>
+<h2 id="traps-worth-knowing">Traps Worth Knowing</h2>
+<ul>
+<li><strong>Modern packages on .NET Framework 4.8.</strong> Anything
+whose members are declared with <code>Span</code> fails the build
+demanding <code>System.Memory</code>, in a way the error message does
+not explain. Check a package’s target framework before pinning it, and
+reach it by reflection if in doubt.</li>
+<li><strong>PowerShell argument lists</strong> are joined with spaces
+and nothing is quoted, so <code>python -c "import x"</code> arrives as
+three words.</li>
+<li><strong>The command interpreter’s quote stripping after
+<code>/c</code></strong> defeats a quoted program with a quoted
+argument. Do not fight it: Inno’s <code>Exec</code> and .NET’s process
+object both take the program and its arguments separately, and then no
+quoting rule applies.</li>
+<li><strong>A file shipped with <code>onlyifdoesntexist</code> never
+reaches a machine that already has the program.</strong> This is what
+<code>KeyMap.cs</code> exists to work around.</li>
+<li><strong>JAWS scripts.</strong> The <code>.jsb</code> files can only
+be recompiled by JAWS on Windows, so the shipped <code>.jss</code> and
+<code>.jsb</code> can drift apart. Prefer keymap-only fixes.
+<code>FileDir.jkm</code> binds about 270 keys directly to
+<code>TypeCurrentScriptKey</code>, which forces JAWS to pass the key
+through to the application. That is robust and needs no recompile, and
+it sidesteps the fragile window-class detection that cost EdSharp
+several rounds.</li>
+<li><strong>The monolithic click handler.</strong> Block-local variables
+are safe; method-level variables must be assigned rather than
+re-declared, and an early <code>return;</code> inside it is a trap. Wrap
+success paths in <code>if</code>.</li>
+<li><strong>Verify an edit by reading the file back.</strong> An edit
+script that hits an assertion and exits leaves the file untouched while
+the transcript says otherwise.</li>
+</ul>
+<h2 id="known-open-items">Known Open Items</h2>
+<p>None of these blocks a release.</p>
+<ul>
+<li>Single-instance behaviour still uses
+<code>WindowsFormsApplicationBase</code> from
+<code>Microsoft.VisualBasic</code>. Moving to a mutex with inter-process
+communication is deferred, as it was in EdSharp.</li>
+<li>Two compiler warnings, CS0219, for <code>sUserName</code> and
+<code>sPassword</code> assigned but never used. They are the remains of
+a credential path worth a look.</li>
+<li>The version history for 5.0.1 through 5.0.14 is not recorded in
+<code>History.md</code>.</li>
+<li>A true .NET 8 port is a separate project, not a quick win. WinForms
+is not compatible with NativeAOT, so a single native binary is not
+achievable, and the JScript .NET evaluator would have to be replaced
+because <code>jsc.exe</code> exists only on .NET Framework. The
+installer’s <code>ngen</code> step already gives most of the practical
+startup benefit.</li>
+</ul>
+<p>End of Document</p>
+</body>
+</html>

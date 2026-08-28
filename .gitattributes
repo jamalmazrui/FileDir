@@ -1,0 +1,12 @@
+# Text files are stored with Windows line endings, because that is what the
+# program, the installer, and the JAWS script compiler all expect.
+* text=auto eol=crlf
+
+# Binaries must never be line-ending converted.
+*.exe binary
+*.dll binary
+*.ico binary
+*.wav binary
+*.zip binary
+*.jsb binary
+*.sfx binary

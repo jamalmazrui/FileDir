@@ -1,9 +1,9 @@
-# FileDir — Change History
+﻿# FileDir — Change History
 
-**Version 5.0 beta**  
-June 2026  
+**Version 5.0.27**  
+August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
-Modified GPL License
+MIT License
 
 ## Contents
 
@@ -44,6 +44,11 @@ Modified GPL License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.20](#version-5-0-20)
+- [Version 5.0.19](#version-5-0-19)
+- [Version 5.0.18](#version-5-0-18)
+- [Version 5.0.17](#version-5-0-17)
+- [Version 5.0.15](#version-5-0-15)
 - [Version 5.0 beta](#version-5-0-beta)
 
 ## Beta 0.7
@@ -164,7 +169,7 @@ Made the Mail Body command, Control+M, use the file name without extension as th
 
 *Released January 1, 2007*
 
-Now available at [dirsetup.exe](http://www.EmpowermentZone.com/dirsetup.exe)
+Now available as an executable installer, dirsetup.exe
 
 FileDir, a file and directory manager, is intended to be a generally superior alternative to Windows Explorer or My Computer for managing a computer file system in an efficient, accessible manner.  It is particularly designed to optimize productivity by users of the JAWS or Window-Eyes screen readers.  Familiar features of Windows Explorer are replicated for starting functionality and ease of learning.  FileDir then adds much in power and convenience.
 
@@ -392,7 +397,7 @@ Use the Zip List command, Control+Shift+Z, to create or update a zip archive bas
 
 As before, Control+F4 closes the current window.  A new command, Control+Shift+F4, closes all windows except the current one.  This may be useful if you have opened a lot of windows, making it challenging to choose one of particular interest.  The Windows Open command, Shift+W, now says the number of windows open before listing their titles.
 
-As before, Control+Slash opens a command prompt in the current directory.  Now Alt+Slash opens the directory in Windows Explorer.  The optional JAWS scripts support Control+Backslash and Alt+Backslash as synonyms for these commands for consistency with the "Homer editor interface."  This is part of a JAWS scripting toolkit available as an executable installer at [kitsetup.exe](http://www.EmpowermentZone.com/kitsetup.exe) or as a zip archive at [kitsetup.zip](http://www.EmpowermentZone.com/kitsetup.zip)
+As before, Control+Slash opens a command prompt in the current directory.  Now Alt+Slash opens the directory in Windows Explorer.  The optional JAWS scripts support Control+Backslash and Alt+Backslash as synonyms for these commands for consistency with the "Homer editor interface."  This is part of a JAWS scripting toolkit available as an executable installer, kitsetup.exe, or as a zip archive, kitsetup.zip
 
 ## Version 2.5
 
@@ -492,7 +497,7 @@ Two new commands may be particularly helpful to users of the Victor Stream or si
 
 The Windows Control Panel command, Control+Shift+W, launches Control Panel for configuring Windows.  Besides being a convenient hot key, this command may be needed, for technical reasons, as an alternative to navigating to Control Panel via the Windows Start Menu if you have set FileDir instead of Windows Explorer to generally open folders (an option in the FileDir program group of the Start Menu).
 
-The System Access screen reader, as well as JAWS or Window-Eyes, is now supported with enhanced verbalization:  extra messages by FileDir beyond the default verbosity of the screen reader in use.  Such messages may be turned off with the new Extra Speech Toggle, Control+Shift+X.  They are then redirected to a log file (re-initialized at the start of a FileDir session), which may be reviewed with the Alt+Shift+X command in the text editor that has been configured for use.  The default setting for that editor has been changed from TextPal to EdSharp, available at [edsetup.exe](http://www.EmpowermentZone.com/edsetup.exe)
+The System Access screen reader, as well as JAWS or Window-Eyes, is now supported with enhanced verbalization:  extra messages by FileDir beyond the default verbosity of the screen reader in use.  Such messages may be turned off with the new Extra Speech Toggle, Control+Shift+X.  They are then redirected to a log file (re-initialized at the start of a FileDir session), which may be reviewed with the Alt+Shift+X command in the text editor that has been configured for use.  The default setting for that editor has been changed from TextPal to EdSharp
 
 FileDir compatibility with Windows Vista has been improved by locating data files that are created or modified after installation in a subfolder of Documents and Settings rather than Program Files.  Quick shortcut or URL files already created would need to be manually copied to the new location, e.g., from C:\Program Files\FileDir\Quick to C:\Documents and Settings\Owner\Application Data\FileDir\Quick
 
@@ -606,13 +611,13 @@ The installer for optional JAWS scripts is now compatible with 64-bit versions o
 
 *January 14, 2011*
 
-Improved detection of and conversion among file encodings by incorporating the Encoding utility that is separately available at [Encoding.zip](http://EmpowermentZone.com/Encoding.zip)
+Improved detection of and conversion among file encodings by incorporating the Encoding utility that is separately available as Encoding.zip
 
 The Query Encoding command (Shift+2) now detects almost any file encoding, not just forms of Unicode.  It uses the same algorithm as Mozilla Firefox, which is usually correct, though not always.
 
 Convert Encoding (Control+3) is a new command for converting a text file to a different encoding.  A list of nearly 100 encodings is offerred.  A few are unofficial terms with special meaning.  UTF-8B means UTF-8 encoding with a byte order mark (BOM) at the beginning.  UTF-8N means UTF-8 without a BOM.  ASCIIFY means 7-bit ASCII except that an attempt is made to substitute ASCII characters or words that are equivalent in meaning to characters found with code points above 127.  DEFAULT means the default encoding or "code page" of the computer in use, e.g., Latin1 or CP1252.
 
-Additional encoding support is made possible by incorporating the Encoding.exe utility, distributed in the  WebClient subdirectory of the FileDir program directory.  This utility is also available separately at [Encoding.zip](http://EmpowermentZone.com/Encoding.zip)
+Additional encoding support is made possible by incorporating the Encoding.exe utility, distributed in the  WebClient subdirectory of the FileDir program directory.  This utility is also available separately as Encoding.zip
 
 Added support for Microsoft Office 2007 file formats, which have extensions similar to prior versions except for an additional 'x' character, e.g., .docx for a Word document, .pptx for a PowerPoint presentation, or .xlsx for an Excel spreadsheet.  This affects the What command (invoked with the question mark symbol), the Output to Text command (Shift+O), and the Append Text to Clipboard command (Shift+A).  This support requires the installation of a Microsoft "filter pack," described on the web page [microsoft.com](http://www.microsoft.com/downloads/en/details.aspx?familyid=60c92a37-719c-4077-b5c6-cac34f4227cc&displaylang=en&tm)
 
@@ -623,6 +628,523 @@ and the one for 64-bit Windows is [filterpackx64.exe](http://download.microsoft.
 An option at the end of the FileDir installer lets you install this by simply marking a checkbox.
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
+
+## Version 5.0.20
+
+*August 2026*
+
+**The build no longer depends on one converter being in working order.** A
+build produced no HTML for any of the nine documents, and only a warning in the
+log said so: 2htm could not load System.Memory, which is the Span trap the
+EdSharp handover names -- a modern package on .NET Framework 4.8 needing
+System.Memory.dll beside the executable. Every page silently kept whatever HTML
+was there before, and the installer, which ships each .htm only if it exists,
+would have carried stale documents into a release without a word.
+
+2htm is still tried first, because it is the house tool and produces the house
+style. Pandoc is now the fallback, and it is already installed machine wide for
+the conversion commands, so nothing new has to be fetched. A page that comes out
+zero bytes is deleted rather than kept, since an empty page looks like a
+document on the Start menu and reads as nothing.
+
+The check for this went in the wrong place first, and the next build showed it:
+the audit runs BEFORE the documents are converted, so a missing ReadMe.htm
+stopped the build that would have written ReadMe.htm. In the audit it is now
+advice about the state of the tree, phrased as such, since a document with no
+HTML is the ordinary condition of a folder just unarchived. The check that
+stops a release runs immediately AFTER the conversion, inside the build, which
+is the only place the question can be answered: there, no HTML means both
+converters failed, and the message says which two things to check.
+
+The direct fix for 2htm itself is to put System.Memory.dll beside 2htm.exe in
+the FileDir folder.
+
+**The build hung with nothing on the console, and the log said why.** It stopped
+at the first Pandoc call. PowerShell joins an argument list with spaces and
+quotes nothing, so
+
+    --metadata title=FileDir - ReadMe
+
+arrived at Pandoc as four separate arguments, and the bare hyphen among them is
+what tells Pandoc to read from standard input. It waited for input that was
+never coming. That is precisely the trap named in the EdSharp handover, met here
+for real.
+
+Two fixes, because one is not enough. Every argument holding a space is now
+quoted before the list is handed over. And every command is given an empty
+standard input, so a tool that decides to read it gets end-of-file at once
+rather than waiting: quoting fixes the case that happened, and this fixes the
+class. A build must never wait for a person who is not there.
+
+The log is what made this findable at all. It recorded the exact argument list,
+and the fault was visible in that one line.
+
+**A log now appears whatever happens.** Three builds failed on a PowerShell
+parse error and each left no log at all, because a script that will not parse
+never runs a line of itself, including the line that opens its own log. Both
+wrappers, BuildFileDir.cmd and cleanFileDir.cmd, now create the log and write
+the first lines BEFORE starting PowerShell or Python, capture everything the
+script prints, and append that at the end. Parser errors land in the log with
+everything else, and the scripts append to it rather than truncating what the
+wrapper wrote. BuildFileDir.log is the file to send, whatever went wrong.
+
+The parse error itself was a multi-line expression whose continuation lines
+began with a plus sign. PowerShell wants the operator at the END of the line, or
+a backtick; written the other way round the statement ends early and the parser
+blames a bracket several lines away. Long messages are built a line at a time
+into a variable now, and the audit refuses any PowerShell line that starts with
+a continuation operator.
+
+Rewrote the announcement by the kind of work a person does, without naming
+individual keys or comparing against earlier versions.
+
+## Version 5.0.19
+
+*August 2026*
+
+**Output As is now Output Type, Shift+O.** The name says what the command asks:
+what type should this file be? The behaviour is unchanged.
+
+**Append to Clipboard, Shift+A, now converts every file it appends.** It used to
+run each file through the text converter and, for a format that converter did
+not know, fall back to reading the raw bytes -- so a tagged .zip put a screenful
+of rubbish on the clipboard and nothing said why. Every file now goes through
+one extractor that knows which engine reads it: Pandoc for documents, 2htm for
+legacy Office and PDF, a plain read for anything already text. A format none of
+them can read is skipped by name with the reason. Each file's text is headed by
+its own name, because three sources run together with no seam is one document
+nobody can take apart again, and the closing count says how many were appended
+and how many skipped.
+
+**FileDir keeps a session log.** One file per run at
+%LOCALAPPDATA%\FileDir\logs\FileDir_<timestamp>.log, beside the setup log the
+installer writes: the same folder, the same naming and the same Control+F12 as
+EdSharp. It opens with the version, the program path, the command line and the
+machine, and every outside program FileDir runs adds a line with its exit code
+and, on failure, the first line of what it said. Pandoc, ffmpeg, ExifTool,
+yt-dlp, 2htm and Ollama all report through it, so a conversion that did not work
+can be explained instead of guessed at. The newest thirty logs are kept.
+
+Copy Log, Control+F12, puts this session's log path on the clipboard in two
+formats at once, as EdSharp's does: a file drop list, so pasting into a new mail
+message attaches the log itself, and plain text for anything that only reads
+clipboard text. "Send me the log" is now one keystroke rather than a hunt
+through a profile folder nobody should have to know the shape of.
+
+Added Log.cs, which holds all of that. It lives in the Homer namespace because
+the shared classes are the ones running outside programs, and what those
+programs said when they failed is exactly what a log is for; they cannot reach
+the application's own class. Nothing in it ever throws: a read-only profile
+means no log, not a program that will not start.
+
+The installer's Results box now names the logs folder and reports the JAWS
+scripts, saying "not offered" rather than "not installed" when JAWS is not on
+the computer, since the latter reads as a failure to somebody who does not use
+it.
+
+**The F12 column now matches EdSharp.** F12 is Chat with AI, a plain question
+with nothing attached; Shift+F12 is Chat about File, which sends the text of the
+file you are on. EdSharp uses those two keys for the same two things, so one
+habit serves both programs.
+
+The Timer commands held that column here for twenty years and have moved to
+Alt+Control+T, Alt+Control+S and Alt+Control+Y, which nothing used. That is a
+deliberate trade: FileDir has few users and fewer who time anything with it, now
+that a phone or a smart speaker does it better, and agreement between the
+sibling programs is worth more than a habit almost nobody had.
+
+**An answer dialog built for reading.** Lbc.AnswerDialog shows a model's reply
+in a labelled multiline box that takes focus, so it can be arrowed through line
+by line, selected from, and copied with Control+C. It is read only rather than
+disabled, because a disabled box takes no focus and a screen reader skips it. It
+closes on the Spacebar, Enter, or Escape: the first because in a read-only box
+it does nothing else and a reader whose hand is on the text should not have to
+find another key, and Enter is handled on the box itself since a multiline box
+consumes it before the form ever sees it. One OK button, no ampersand on it, per
+the Homer form guidelines.
+
+**Chat about File.** Ask a question about the current file and a
+model running on this computer answers it, with the file's text travelling
+alongside -- converted from whatever format it is in by the same extractor.
+EdSharp puts Chat with AI on F12 and Chat about Document on Shift+F12; in
+FileDir F12, Shift+F12 and Alt+F12 have been the Timer commands for twenty
+years, so this takes Control+F12, the nearest free key of that group. A file too
+long to send whole is trimmed and the answer says so, because a partial answer
+presented as a whole one is wrong in a way nobody can see.
+
+Added toPlainText to Convert.cs, which is the one extractor all of this uses.
+Neither Append to Clipboard nor Chat about File should have to know that a .docx
+goes through Pandoc, a .pdf through 2htm, and a .cs is simply read.
+
+Rewrote Announce.md as a release announcement in the shape of EdSharp's,
+organized by the kind of work a person does rather than by a tour of the
+program.
+
+Corrected the last place FileDir still claimed the GNU licence: the first four
+lines of FileDir.cs, which read "FileDir 5.0 beta", "June 17, 2026" and
+"Modified GPL License". All three had been typed there and all three went stale
+-- the same fault the About box had, in the one file every developer opens
+first. The header now names the licence only, and says why no version or date is
+written in it.
+
+The audit walked past that line for months because it was looking for the words
+"GNU General Public" and the header said "GPL". It now flags any mention of GPL
+in the source that does not also say MIT, so a record of the change is allowed
+and a claim is not.
+
+License.md gained the same header as the rest of the documentation set, a
+sentence saying plainly that FileDir was under a modified GNU licence until 2026
+and is MIT from version 5.0 onward, and a list of the other programs FileDir
+ships or calls with the licence each keeps: 2htm, 7-Zip, SharpZipLib, Tektosyne,
+Ude, Pandoc, ExifTool, ffmpeg, yt-dlp and Ollama. Calling a program is not
+linking to it, so none of those terms reach FileDir's own source, and the four
+installed separately are not redistributed by FileDir at all.
+
+Added a check for the licence document itself: it must say MIT License, name
+FileDir and the author, carry the three sentences that make it the MIT licence
+rather than something that merely says MIT at the top, and agree with every
+other document that states a licence in its header.
+
+The three source files added in this release -- Ollama.cs, Convert.cs and
+Media.cs -- now carry a copyright and licence line, which they had lacked.
+
+## Version 5.0.18
+
+*August 2026*
+
+**Output to Text became Output Type, and Shift+O now converts anything to
+anything.** It looks at what the file is, offers a short list of what that kind
+of file can become, and converts the tagged files keeping each root name.
+Documents to documents through Pandoc; legacy Office and PDF to text or HTML
+through 2htm; audio, video and pictures through ffmpeg. So a folder of MP4 files
+becomes MP3, MKV becomes MP4 and PNG becomes JPEG in the same three keystrokes
+that turn Word into Markdown. The chosen format is remembered per kind of file,
+so a choice made for audio does not become the default for documents.
+
+The Convert Format command added earlier in this release is gone, folded into
+Output Type, and Alt+Shift+K is free again. Two commands that overlap is one too
+many when a program has few keys left to spend, and the question "what should
+this file become" is the same question either way.
+
+**Web Download now fetches media.** When yt-dlp is installed, Alt+Shift+W asks
+whether to download the media on a page or list the files linked from it, and
+remembers the answer. Media can be fetched as video or as sound alone in an MP3.
+The two are offered rather than guessed at: a page holding a video has no links
+to list and a page of documents has no media to fetch, so a wrong guess costs
+either a large download or an empty list. yt-dlp is told where ffmpeg is, so a
+copy sitting in the FileDir folder is used without anything being installed.
+
+**The media tools moved to a machine-wide install**, consistent with Pandoc.
+ExifTool, ffmpeg with ffprobe, and yt-dlp are no longer carried inside the
+installer: together they are well over 100 MB and EdSharp, HomerScribe and
+FileDir all want them, which is exactly the argument that moved Pandoc to
+Program Files. They are one ticked finish-page checkbox now, installed by
+winget. Media.cs still prefers a copy in the program folder, so a developer copy
+in C:\FileDir is used ahead of anything installed and nothing is disturbed.
+
+**Type Extended, Control+Shift+T, now shows what is inside the file.** It merges
+three sources into one plain list sorted by field name without regard to
+capitalization: the Windows properties it already showed, the file association
+details, and the metadata ExifTool reads from the file itself -- the camera and
+exposure of a photograph, the artist and album of a song, the duration and
+codecs of a video, the author and page count of a PDF. One sorted list rather
+than three sections, because somebody looking for a field should not have to
+know which source knows it, and first-letter navigation through one alphabetical
+list beats arrowing through three groupings. The count is spoken before the list
+opens.
+
+Added Media.cs, which finds and runs ExifTool, ffmpeg and ffprobe. The finding
+is adapted from HomerScribe rather than written again: every likely place is
+tried, each candidate is RUN to learn its version, and the newest wins, with the
+whole search available to show when nothing is found. HomerScribe learned that a
+copy installed by winget can sit alongside an older one and no amount of looking
+answers which will be used. Version numbers are compared part by part, because
+ExifTool released 13.11 after 13.8 and as decimals the older one looks newer.
+FileDir differs from HomerScribe in one way: it only reads, so a packaged
+ExifTool with its exiftool_files folder is accepted rather than passed over.
+
+exiftool.exe, ffmpeg.exe, ffprobe.exe and yt-dlp.exe now ship in the program
+folder, as they do in HomerScribe, and all four are optional: FileDir works
+without them and the installer skips any that are absent at build time. They are
+kept out of the repository, where over 100 MB of third-party binaries does not
+belong.
+
+**Convert Format, Alt+Shift+K.** Pick a format and FileDir converts the tagged
+files, or the current one, writing each result beside the original. Ten targets
+are offered -- Word, web page, Markdown, plain text, OpenDocument, rich text,
+EPUB, LaTeX, reStructuredText and MediaWiki -- with the extension named next to
+each so nobody has to guess what lands on disk. A file in a format Pandoc cannot
+read is skipped with a word saying so, and the closing count says how many were
+converted, skipped and failed.
+
+**Pandoc is now installed machine wide**, in C:\Program Files\Pandoc, rather
+than copied into the program folder. It is about 100 MB, and EdSharp and
+HomerScribe ship it too; three copies of the same executable under Program Files
+is not something to ask anyone to download. It is a finish-page checkbox like
+the others, probed first so an existing copy is updated rather than duplicated,
+with the label saying whether the box will install, update or reinstall and at
+what version. It is the one optional component that IS ticked, because without
+it a third of what the Transfer and Query commands can do quietly disappears.
+
+Added Convert.cs, which finds Pandoc and runs it. Shared in shape with the other
+Homer Tools, which drive the same machine-wide copy. It knows which extensions
+Pandoc can read, so a legacy .doc or a PDF is refused with a sentence naming
+Output to Text as the way to handle it, rather than passing the file to Pandoc
+and relaying a complaint about a format it never claimed to read.
+
+**Fixed the installer, which would not compile.** The Parameters lines escaped
+their quotes with a backslash, which is the C rule; Inno escapes a quote by
+doubling it, and reported "Mismatched or misplaced quotes on parameter" without
+saying why. The audit now refuses any installer line containing a
+backslash-escaped quote, which is the counterpart of the check that already
+guards the PowerShell scripts.
+
+## Version 5.0.17
+
+*August 2026*
+
+Beta. FileDir gains its first new feature in years, and the rebuilding work of
+the releases before it is complete.
+
+**Translate File, Alt+Shift+L.** Tag any number of documents, name a language,
+and FileDir writes a translation beside each one as <name>.<language>.txt. It
+reads the same formats Say Contents reads -- Word, PDF, PowerPoint, Excel,
+Markdown and plain text -- so a folder of Word documents can be translated
+without opening any of them. Nothing is overwritten; a name already taken gets
+another. The folder refreshes at the end so the new files are simply there.
+
+The translation is done by a model running on this computer, through Ollama.
+Nothing is uploaded and no part of any file is sent anywhere, which is the point
+of doing it this way rather than through a web service: a private document can
+be translated privately. FileDir picks qwen2.5:7b if it is installed and
+llama3.2 otherwise, by asking Ollama what it has. There is nothing to configure.
+
+The installer offers Ollama and the larger model as finish-page checkboxes, in
+the pattern EdSharp arrived at over many iterations and which is not reinvented
+here. Each component is probed before it is offered, so an existing installation
+is reused rather than duplicated, and each label says whether the box will
+install, update or reinstall, with the version and the size. The boxes are
+grouped so the ones that do something come first: install, then update, then
+reinstall, which is offered last and never ticked. Neither AI box is ticked:
+together they are several gigabytes, and nobody should download that by not
+noticing a checkbox. One Ollama installation and one set of models serve EdSharp,
+DbDo and FileDir alike, so a person who has one of the others downloads nothing.
+
+The probes run while the progress bar is still on screen and can say what is
+being checked, because each winget or Ollama query takes a second or two and the
+finish page would otherwise take a silent minute to appear. Ollama is asked over
+its local web interface rather than by running its command, which starts a
+server in a console of its own that looks like a fault. Nothing pauses anywhere,
+and one Results box at the very end reports every checkbox by name, with the
+version or the exact command to add it later.
+
+Added Ollama.cs, the client for all of that, written against the base class
+library alone so no assembly reference is added to a build that has to stay on
+.NET Framework 4.8.
+
+Added two documents to the standard set: Tutorials, which walks through nine
+real jobs from start to finish, and Questions and Answers. Both are on the Start
+menu, and both ship as Markdown and as a web page like the rest.
+
+Two faults were found while writing the installer, both worth recording because
+they are easy to repeat. A Pascal brace comment ends at the FIRST closing brace,
+so a comment mentioning an Inno constant ends in the middle of its own sentence
+and hands the rest of the prose to the compiler as code. And four levels of
+quoting meet on the line that asks Ollama for its model list -- Pascal, the
+command interpreter, and two kinds of PowerShell quote -- which corrupted that
+line once; it is now assembled with Chr(39) so each apostrophe is visibly one
+apostrophe. The audit now checks both, along with the begin and end balance of
+the installer code and that every routine named by a Check or code reference
+actually exists.
+
+## Version 5.0.15
+
+*August 2026*
+
+Housekeeping release: no change to how FileDir behaves for the user, and several
+changes to how it is built, documented, and kept honest.
+
+Key names and descriptions are now compiled into the program. They are generated
+from Hotkeys.ini into KeyMap.cs at build time, and Hotkeys.ini in the program
+folder is still read first as a user override. This fixes a long-standing fault:
+the installer shipped Hotkeys.ini with the onlyifdoesntexist flag, so a machine
+that already had FileDir never received an updated copy, and any description
+added in a new version was never heard. The installer now removes the stale
+copy on upgrade. Hotkeys.md, the hotkey reference, is generated from the same
+table, so the program and the document cannot disagree.
+
+Added a source audit, auditFileDir.ps1, which the build runs before compiling
+and which stops the build on failure. It checks the things a compiler cannot:
+the brace balance of FileDir.cs against a known baseline, that every menu
+command has a description, that no key is bound twice, that Hotkeys.ini
+describes nothing that has been removed, that every file the installer names
+exists, that the installer holds no version literal, that the documentation set
+is complete and names the current version, and that no document still refers to
+the GNU licence, a retired installer name, a retired download address,
+Internet Explorer, GetText, or the removed Web Client Utilities. It caught the missing
+description for the Key Describer command and a description of the removed Web
+Client Utilities, both of which are fixed here.
+
+The build script now compiles the installer as well, so BuildFileDir.cmd
+produces both FileDir.exe and FileDir_setup.exe. It skips that step with a note,
+rather than failing, when Inno Setup is not installed.
+
+Completed the documentation set: ReadMe, FileDir, Developer, License, History,
+and Hotkeys, each with the matching HTML the build generates. The ReadMe and
+Announce files in the project folder had belonged to a different program and
+have been replaced. The guide's installation and development sections were
+rewritten around FileDir_setup.exe and GitHub, replacing text that still
+described dirsetup.exe and a download page that no longer exists, and several
+paragraphs that named EdSharp by mistake now name FileDir.
+
+Changed the licence from a modified GNU General Public License to the MIT
+licence, matching the other Homer Tools. gpl.txt is no longer shipped and is
+removed on upgrade.
+
+Corrected the About box, Alt+F1. It had the version number, the release date,
+and the licence typed into the source, so it announced "FileDir 5.0 beta", "June
+17, 2026", and the GNU Lesser General Public License no matter which of the
+fourteen later releases was running. It now takes the version from the same
+version.txt the installer and the release tag use, shows the build date of the
+program itself, and names the MIT licence.
+
+Fixed two commands that opened files no longer shipped. History of Changes,
+Shift+F1, opened History.txt and Hotkey Summary, Alt+Shift+H, opened
+HotKeys.txt. Both were hand-kept files that the Markdown documentation set
+replaced, so on an upgraded installation both commands would have failed with
+nothing but a Windows error. They now open History.htm and Hotkeys.htm, and the
+audit checks that every document the program opens is one the installer ships.
+
+Removed two variables left behind by the retired WebGet download path, which the
+compiler had been warning about on every build.
+
+Fixed the Elevate Version command, F11, which could find a new release but never
+install it. It asked GitHub for FileDir_Setup.exe while the installer produced
+FileDir_setup.exe, and GitHub download addresses are case sensitive, so every
+download failed. A comment in the source said the two names had to match exactly,
+and they did not; the audit now compares them at every build.
+
+The build now stamps the version into every document, from version.txt. Typed by
+hand, the version line in the ReadMe and the guide went stale within three
+builds, which is the same fault the About box had for fourteen releases. The
+documents are now one more thing version.txt is the single source for, and the
+audit checks that each one carries a line the build can stamp.
+
+Corrected the licence named at the top of this file, which still said the
+modified GPL three releases after the change to MIT. The audit had been told to
+ignore GNU licence text in the change history, because recording the change
+means naming what it changed from, and that whole-file exemption hid a live
+claim in the header. The exemption now covers the body only: the opening lines
+of every document state what FileDir is licensed under now.
+
+Every log now records the date and size of each script in the build. A fault
+that has already been fixed is usually a stale copy of a file, and without this
+there is no way to tell that from a fix that did not work. The build also proves
+version.txt has no byte order mark after writing it, rather than assuming so.
+
+Fixed two places where the installer worked against itself. It shipped the whole
+Scripts folder, including the retired FileDir_Scripts_setup.exe that the
+[InstallDelete] section then named -- and since [InstallDelete] runs before the
+files are copied, the installer removed that file and put it straight back. It
+now ships only the compiled .jsb scripts. The same fault had just been
+introduced for Lbc.cs, newly shipped while a leftover line still deleted
+lbc.cs, which on Windows is the same file. A new check compares the two
+sections and refuses any file named in both.
+
+Stopped sweeping __pycache__ into notes. Python recreates it the moment a script
+runs, so every build moved a folder that came straight back and left another
+dated copy behind.
+
+Fixed the installer refusing to compile. BuildFileDir wrote version.txt with
+Set-Content, which in Windows PowerShell adds a byte order mark. PowerShell
+strips that mark again when it reads the file, so nothing looked wrong from
+that side, but Inno Setup read it as part of the number and stopped with
+"Value of [Setup] section directive VersionInfoVersion is invalid" against a
+line that was perfectly correct. The build now reads version.txt tolerantly and
+always writes it without a mark, so a file that already has one is repaired by
+the next build, and the audit warns when it sees one.
+
+cleanFileDir now untracks what the repository should not carry. Moving a file
+into notes stages its own removal, but a file that stays at the root and should
+not be tracked was untouched: build output, a generated source, a log, a working
+document. .gitignore does nothing for those, since it has no effect on a file
+already tracked. On the working folder that was 10 files, and the repository
+went from 302 tracked files at the root to 76, every one of them claimed.
+
+Fixed two faults in the audit itself. It failed the build because the installer
+names FileDir.exe, which does not exist when the audit runs — the audit runs
+before the compile on purpose, so that could never have passed on a clean tree.
+And it listed the documents kept at the root in its own code as well as in
+cleanFileDir, in neither RepoFiles.txt nor .gitignore, which is the same
+two-lists fault the repository rule exists to prevent. There is one list now.
+
+Fixed a build that would not start. The key map generator was a function inside
+BuildFileDir.ps1 that emitted C# source, and it wrote the C# quotes as \" --
+which is a C escape, not a PowerShell one, since PowerShell escapes a quote with
+a backtick. The script therefore would not parse, and PowerShell parses a whole
+script before running any of it, so the build never reached its own logging: it
+produced a page of parser errors and an empty log. The generator moved to
+makeKeyMap.py, where generating another language's source does not fight the
+quoting, and the audit now refuses any PowerShell script containing a
+backslash-escaped quote so the fault cannot return unnoticed.
+
+Adopted the repository rule worked out in EdSharp, and made the two projects
+share the code rather than only the idea. A file belongs only if it is named,
+and there are two places to name one: FileDir_setup.iss, which lists everything
+FileDir installs, and the new RepoFiles.txt, which lists what the build needs
+and what lives here without being tracked. No pattern admits a file by the look
+of its name, which is the fault that let saved web pages sit in the EdSharp
+repository for weeks while its tidy reported everything clean.
+
+homerPolicy.py holds that rule and is the same file in every Homer Tools
+project: nothing in it names FileDir, and it finds the program's name from the
+single setup script in the folder. auditFileDir.py and cleanFileDir.py both read
+it, so the check and the sweep cannot disagree, and auditFileDir.py follows the
+shape of EdSharp's audit so a check written for one project can be moved to the
+other.
+
+cleanFileDir now moves everything the project does not claim into a single
+notes folder, whatever kind of file it is. The folder is inside the project and
+ignored by git, so nothing leaves the machine and nothing is tracked that should
+not be. On the working folder that is 222 items moved, leaving 85 at the root,
+every one of them claimed. One folder rather than two because nothing reads the
+distinction: none of it goes into the repository, and going through it is a job
+for a person rather than a script. The audit also reports anything git is tracking
+that nothing claims, which is the case .gitignore cannot see, because .gitignore
+has no effect on a file that is already tracked.
+
+Fixed one omission the new rule exposed at once: Lbc.cs was compiled into
+FileDir.exe but was the single source the installer never shipped, so the source
+that came with the program could not be rebuilt from what was there.
+
+Reduced the project to two scripts, which are the only two commands to run:
+BuildFileDir and cleanFileDir. The audit and the key map generator had been
+separate scripts; both are now inside BuildFileDir, which is a PowerShell script
+with a command wrapper of the same name. The build gained the word audit, which
+runs the checks and compiles nothing.
+
+Dropped the last references to the legacy download address. The program's
+company name and the error dialog both pointed at the original FileDir's home. The reborn FileDir lives
+on GitHub, so the unexpected-event dialog now offers Report a Problem, which puts
+the message and the version on the clipboard and opens the issues page ready to
+paste into. Dead download links in the older history entries are now plain text,
+since the addresses no longer answer.
+
+Tightened two rules across every script delivered with FileDir, and made the
+audit enforce them. Each PowerShell script now opens its log before doing
+anything that could fail, and installs a handler that records the message, the
+exception type, the failing line, and the stack trace, so a failure can never
+produce a console traceback and an unfinished log. The build script now records
+the exit code of every external command it runs, along with the machine, the
+user, and the processor architecture. And a delivered script does its job when
+run with no parameters: requiring a confirmation word is a manual step in
+disguise, and safety belongs in the design instead.
+
+Added cleanFileDir, which moves the twenty years of working material that had
+collected in the project folder — saved reference pages, downloaded sample
+libraries, retired binaries, test data — into notes. It runs with no parameters
+and does the work; nothing is deleted, so a file moved by mistake is one move
+back. Add --survey to list what would move without moving it.
 
 ## Version 5.0 beta
 

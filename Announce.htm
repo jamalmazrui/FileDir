@@ -1,57 +1,313 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>urlFido — Release Notes</title>
-<style>
-body { font-family: Georgia, serif; max-width: 46em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
-code, pre { font-family: Consolas, monospace; }
-pre { background: #f4f4f4; padding: 0.75em; overflow-x: auto; }
-table { border-collapse: collapse; }
-th, td { border: 1px solid #999; padding: 0.3em 0.6em; text-align: left; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jamal Mazrui" />
+  <title>FileDir Announce</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
 </head>
 <body>
-<p>﻿# urlFido Release Notes</p>
-<p><strong>Copyright:</strong> © 2026 Jamal Mazrui — Released under the <a href="https://opensource.org/license/mit/">MIT License</a>
-<strong>Project home:</strong> <a href="https://github.com/JamalMazrui/urlFido">https://github.com/JamalMazrui/urlFido</a></p>
-<h2 id="version-100">Version 1.0.0</h2>
-<p>The first release of urlFido, a 64-bit GUI/CLI hybrid tool that downloads files from web pages by extension.</p>
-<h3 id="what-it-does">What it does</h3>
+<header id="title-block-header">
+<h1 class="title">FileDir Announce</h1>
+<p class="subtitle">A file manager rebuilt for the way screen reader
+users actually work</p>
+<p class="author">Jamal Mazrui</p>
+</header>
+<h1 id="whats-new-in-the-filedir-directory-manager-for-windows">What’s
+New in the FileDir Directory Manager for Windows</h1>
+<h3
+id="a-file-manager-rebuilt-for-the-way-screen-reader-users-actually-work">A
+file manager rebuilt for the way screen reader users actually work</h3>
+<p><strong>Version 5.0.27</strong><br />
+August 2026<br />
+Copyright 2006-2026 by Jamal Mazrui<br />
+MIT License</p>
 <ul>
-<li><strong>Download by extension, or by wildcard pattern.</strong> Give urlFido one or more source pages and a list of what to fetch (default: <code>docx pdf zip</code>). Short forms escalate: <code>pdf</code> is short for <code>.pdf</code>, which is short for <code>*.pdf</code>. Because each entry is a cmd.exe-style pattern, you can also write <code>*newsletter*.pdf</code> to take only the newsletters, or <code>report?.xlsx</code> for a single-character match. Matching ignores case. Unix glob syntax is deliberately not supported, keeping the field predictable.</li>
-<li><strong>Real browser retrieval.</strong> urlFido drives your installed Microsoft Edge to open each page, so scripts run, cookies apply, and JavaScript-generated links are found — files are far more likely to be reachable than with a browserless download. PDFs are saved to disk rather than opened in Edge's viewer.</li>
-<li><strong>Authenticate mode (<code>-a</code>).</strong> Pause at the first page of each site so you can sign in, accept cookies, or complete two-factor in the visible Edge window, then continue; the session is reused for the rest of that site during the run. urlFido detaches and reattaches its automation channel around the pause to improve success on sites that resist automation.</li>
-<li><strong>Main-profile mode (<code>-m</code>).</strong> Use your real Edge profile so existing logins apply. Requires Edge to be fully closed; urlFido checks and reports clearly if it is running.</li>
-<li><strong>Single executable.</strong> urlFido.exe is one 64-bit file. It speaks the Chrome DevTools Protocol to Edge using only .NET Framework classes, so there is no Node.js driver and no bundled browser to ship. The shared Homer modules — Lbc.cs, Say.cs, Inix.cs, Util.cs, and Web.cs — are compiled into the same assembly rather than referenced as libraries. NVDA support is included too, with nothing to install alongside: because NVDA does not ship its controller client in the end-user installation, that native library is embedded in the executable as a resource and extracted to <code>%LOCALAPPDATA%\urlFido</code> on first use — and then only when NVDA is actually running, so users of JAWS, Narrator, or SAPI never see the file written and urlFido leaves no footprint of its own.</li>
-<li><strong>Dialog built on shared Lbc primitives.</strong> The parameter dialog is constructed from the Homer Layout-by-Code classes, so it inherits the whole shared convenience set rather than reimplementing any of it: Control+Enter clicks OK from any control; Control+C copies the selection or, with nothing selected, the current line; Alt+C and Alt+X append to the clipboard; Control+D deletes a line; Alt+F8 reads all; Alt+Y gives line and character counts; and Shift+F1 speaks a focus tip written for every field. The Help button is generated from those same labels and tips. Improvements made to Lbc in DbDo, EdSharp, or FileDir reach urlFido by replacing one file.</li>
-<li><strong>CLI parallel to urlCheck.</strong> The command-line switches and dialog controls mirror urlCheck as closely as the different purpose allows, so the two tools feel the same to use.</li>
-<li><strong>Structured results summary.</strong> The end-of-run summary follows the 2htm and extCheck convention: up to three sections — Downloaded, Failed to download, Skipped — each shown only when its count is non-zero, singular or plural to match, failures given as <code>name: reason</code>, and the output directory on a closing line. GUI mode puts it in the final message box with the names listed; command-line mode prints the headings without repeating names that already scrolled by. A short spoken line gives the outcome at a glance.</li>
-<li><strong>Smart file naming, shared with FileDir.</strong> urlFido calls the same Web helper FileDir's Web Download command uses. Names come from the url's final path segment; when the url carries no usable name, the server is asked, so links like <code>example.com/download?id=42</code> still get a proper name and extension from Content-Disposition or the MIME type. Ordinary links cost no extra request.</li>
-<li><strong>Configuration and logging.</strong> With Use configuration (<code>-u</code>), settings persist at <code>%LOCALAPPDATA%\urlFido\urlFido.inix</code>, written through the shared Inix codec so the file round-trips in order and keeps any comments or extra sections you add by hand. Without the option, urlFido leaves nothing on disk. With Log session (<code>-l</code>), a fresh urlFido.log is written to the output directory. The build script now logs the full compiler output to <code>buildUrlFido.log</code> as well.</li>
-<li><strong>Desktop hotkey Alt+Control+U.</strong> The installer adds a desktop shortcut on Alt+Control+U that opens the dialog from anywhere in Windows.</li>
-<li>
-<p><strong>Camel Type coding standard.</strong> All identifiers follow the project's Camel Type style, and shared-concept names match across the companion tools urlCheck, extCheck, and 2htm.</p>
-</li>
-<li>
-<p><strong>New icon.</strong> urlFido now carries a dog-fetching-a-document mark: a dog's head in profile with a white page, folded corner and all, carried in its mouth. It is original artwork drawn as vector-style shapes and rendered to every icon size from 16 to 256 pixels, so nothing is licensed from a third party. The small sizes drop the pupil and the page's text lines, leaving the two shapes that still read at 16 pixels: the dark head and the white page.</p>
-</li>
-<li>
-<p><strong>Progress you can hear.</strong> A run shows a status window whose status line names each step and counts files as they arrive. The line carries the status-bar accessible role — the same technique used in 2htm and extCheck — so screen readers announce changes automatically and the JAWS read-status-bar command reads it on demand. A Cancel button stops after the current file.</p>
-</li>
-<li><strong>A log worth sending.</strong> With <code>-l</code>, urlFido records the Edge command line, the profile in use, every link and whether it matched, each download attempt and which method served it, HTTP statuses, byte counts, and timings.</li>
-<li><strong>It works out what a link really is.</strong> Where the address names a file, that is enough. Where it does not — <code>/download?id=42</code> and its kind — urlFido asks the server, always, with no switch to remember. Links that could not be files are ruled out first, the rest are asked in parallel with headers-only requests, and answers are cached, so knowing what a page truly offers costs seconds rather than minutes.</li>
-<li><strong>A clean browser every time.</strong> The temporary profile launches with extensions, component updates, background networking, sign-in, and sync all switched off, so nothing from your everyday browser loads, updates, or interrupts — and Edge does not sign the throwaway profile into your account.</li>
-<li><strong>Only the page you asked for.</strong> Files are retrieved with a direct request that replays the browser's cookies and identity, so no extra tab opens for each download. The browser download path remains as a fallback.</li>
-<li>
-<p><strong>Source lists.</strong> A source can be a url, a local web page, or a text file listing one url per line, with <code>#</code> or <code>;</code> comments — keep the pages you harvest from in a file and hand urlFido the file.</p>
-</li>
-<li>
-<p><strong>Settings that stick.</strong> Tick Use configuration and the dialog reopens the way you left it — no command-line switch needed. On the command line <code>-u</code> is still required, so a script picks up no state it did not ask for.</p>
-</li>
+<li><a href="https://github.com/JamalMazrui/FileDir">FileDir project
+page on GitHub</a></li>
+<li><a
+href="https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe">FileDir
+installer for Windows</a></li>
 </ul>
-<h3 id="note-on-the-desktop-hotkey">Note on the desktop hotkey</h3>
-<p>urlFido claims Alt+Control+U, which urlCheck currently uses. Because urlFido is expected to be the more frequently used tool, the plan is for urlCheck to move to Alt+Control+Shift+U in a future version. Until then, if both are installed, adjust one shortcut's hotkey via Alt+Enter (properties) on its desktop icon.</p>
+<p>FileDir is free and open source, for Windows, and it aims at one
+thing: to be the most productive way a screen reader user can manage
+files and folders. This is a reborn FileDir, more capable than any
+version before it. Expert AI has been used throughout – to review twenty
+years of code, modernize it, and build features that were not practical
+to write before. Several of the strongest things below exist because
+that help was available.</p>
+<p>FileDir works by tagging. You mark any set of items, and one command
+then acts on all of them. With nothing tagged, a command acts on the
+item you are on, so tagging is never something you have to do first.
+Almost everything below is a batch operation for that reason: you are
+rarely doing something to one file.</p>
+<p>Nine tutorials, on the Start menu and in the Help menu, start you off
+by the kind of work you do. Here is what each one finds.</p>
+<h2 id="if-you-handle-documents">If you handle documents</h2>
+<p>FileDir converts between formats in batches. Tag a folder of files,
+choose what they should become, and each one is written beside the
+original with the same name. Word, OpenDocument, EPUB, web pages,
+Markdown, LaTeX and rich text convert between each other. Older Word,
+PowerPoint and Excel files, and PDFs, become readable text or web
+pages.</p>
+<p>You can also hear what is in a file without opening anything,
+whatever format it is in, and gather the text of many files onto the
+clipboard in one pass, each piece headed by its file name. Three
+scattered sources become one set of notes, in the order you tagged
+them.</p>
+<h2 id="if-you-work-with-media">If you work with media</h2>
+<p>The same conversion works on sound, video and pictures. A folder of
+videos becomes audio files. One video format becomes another. Pictures
+convert between the common formats. It is the same three steps as
+converting a document, because it is the same command: FileDir looks at
+what you have and offers what it can become.</p>
+<p>FileDir also fetches media from the web. Give it the address of a
+page and it downloads the video, or just the sound as an audio file,
+from a great many sites.</p>
+<h2 id="if-you-research">If you research</h2>
+<p>Download a page and pick out the files linked from it, filtered by
+type. Collect the text of everything you tagged into one document. Then
+ask an AI model questions about what you gathered, or about any single
+file: summarize this, list the dates in it, tell me what it is
+about.</p>
+<p>All of that runs on your own computer. There is no account, no limit,
+and nothing is sent anywhere.</p>
+<h2 id="if-you-work-across-languages">If you work across languages</h2>
+<p>FileDir translates whole folders of documents into a language you
+name, writing each translation beside its original. It reads Word files
+and PDFs as readily as plain text.</p>
+<p>This also runs on your own machine, which is the point of it: you can
+translate a document you would never paste into a web page.</p>
+<h2 id="if-you-need-to-know-what-something-is">If you need to know what
+something is</h2>
+<p>One command shows everything known about a file as a single
+alphabetical list: the Windows properties, what the file is registered
+to open with, and the information stored inside the file itself. The
+camera, lens and exposure of a photograph. The artist, album and track
+of a song. The duration, codecs and frame rate of a video. The author
+and page count of a PDF.</p>
+<h2 id="if-you-work-in-bulk">If you work in bulk</h2>
+<p>Tag a range in two keystrokes, invert what you tagged, or save a set
+of tags and come back to it another day. Then copy, move, zip, extract,
+print, mail, rename, convert, translate or delete all of it at once.</p>
+<p>Archives behave like folders: open one and look inside. FileDir
+extracts from nearly every archive format, and creates and updates zip
+files.</p>
+<h2 id="for-everyone">For everyone</h2>
+<p>FileDir leaves window titles and focus changes to your screen reader,
+which announces them anyway, and speaks only what it alone knows. A
+describe mode lets you press any command key and hear what it does
+without doing it, and every command in the program now has a
+description.</p>
+<p>When something goes wrong, FileDir keeps a log of the session and one
+command puts it on your clipboard ready to attach to a message. Telling
+me what happened should not require hunting through folders.</p>
+<p>Documentation comes with it and is meant to be read: a user guide
+covering every command, nine tutorials by the kind of work you do, a
+hotkey reference listing every command three ways, a questions and
+answers file, a history of what changed and why, a developer guide, and
+the licence. Each is a web page the Start menu opens, and a Markdown
+file you can read in FileDir itself.</p>
+<h2 id="getting-the-pieces">Getting the pieces</h2>
+<p>Everything optional is a checkbox on the installer’s last page, each
+saying what it will do, at what version, and how large it is, and each
+fetched and installed for you. Nothing is a manual download. A component
+already on your computer is found and offered as an update or a repair
+rather than installed a second time, and one copy is shared with EdSharp
+and HomerScribe rather than each program carrying its own.</p>
+<p>The document and media tools are ticked, because without them the
+conversion features quietly do less. The AI pieces are not ticked: they
+are several gigabytes, and nobody should download that by failing to
+notice a checkbox.</p>
+<p>Those AI features trade installation size for local power and
+privacy. A few gigabytes of models buy translation, summarizing and file
+questions that ask no account, impose no limit, and never send a
+document anywhere.</p>
+<h2 id="this-is-a-beta">This is a beta</h2>
+<p>FileDir has been rebuilt from a codebase that went twenty years
+without a serious tidy. Every release is tested here, but the range of
+Windows machines and screen reader versions in the world is wider than
+one developer’s desk. Problem reports are what turn a beta into a
+release.</p>
+<ul>
+<li><a href="https://github.com/JamalMazrui/FileDir">FileDir project
+page on GitHub</a></li>
+<li><a
+href="https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe">FileDir
+installer for Windows</a></li>
+</ul>
+<p>I welcome feedback, by direct message if possible – email, Facebook,
+LinkedIn or text. Tell me where it goes wrong.</p>
+<p>Jamal Mazrui</p>
+<p>End of Document</p>
 </body>
 </html>

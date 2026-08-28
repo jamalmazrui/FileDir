@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FileDir FAQ</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">FileDir FAQ</h1>
+</header>
+<h1 id="filedir-questions-and-answers">FileDir — Questions and
+Answers</h1>
+<p><strong>Version 5.0.27</strong><br />
+August 2026<br />
+Copyright 2006-2026 by Jamal Mazrui<br />
+MIT License</p>
+<p>Short answers to the things people ask most. The full explanations
+are in <a href="FileDir.htm">the user guide</a>, and the worked examples
+are in <a href="Tutorials.htm">Tutorials</a>.</p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#working-with-files">Working With Files</a></li>
+<li><a href="#converting-between-formats">Converting Between
+Formats</a></li>
+<li><a href="#screen-readers">Screen Readers</a></li>
+<li><a href="#translating-files">Translating Files</a></li>
+<li><a href="#updates-and-problems">Updates and Problems</a></li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<p><strong>What is FileDir?</strong></p>
+<p>A file and folder manager for Windows that you drive from the
+keyboard. It does what File Explorer does, and more, but nearly every
+command is one keystroke, and it tells you what it is doing as it
+goes.</p>
+<p><strong>How do I start it?</strong></p>
+<p>Press Alt+Control+F. The installer puts one shortcut on your desktop
+and gives it that hot key. If FileDir is already open, the same keys
+switch to it rather than starting a second copy.</p>
+<p><strong>Alt+Control+F is already used by something else. Can I change
+it?</strong></p>
+<p>Yes. Move to the FileDir item on your desktop, press Alt+Enter for
+properties, and set a different key, or clear it. Only that one shortcut
+carries the hot key, so there is one place to change and nothing else to
+hunt down.</p>
+<p><strong>Do I have to learn all the keys?</strong></p>
+<p>No. Two commands teach you the rest. Press Control+F1 for Key
+Describer, and then any command key says its name, its key, and what it
+does instead of running it; press Control+F1 again to turn it off. Press
+Alt+F10 for the Alternate Menu, which lists every command in one
+alphabetical list you can filter and search.</p>
+<h2 id="working-with-files">Working With Files</h2>
+<p><strong>What is a tag?</strong></p>
+<p>A mark you put on an item so a command acts on it. Press Space to tag
+or untag the item you are on. Then a command like Copy, Zip, or
+Translate works on everything you tagged. With nothing tagged, a command
+works on the item you are on, so tagging is never something you have to
+do first.</p>
+<p><strong>How do I tag a run of files?</strong></p>
+<p>Press F8 where the run starts, move to where it ends, and press
+Shift+F8. Use Alt+Shift+F8 to untag a range the same way.</p>
+<p><strong>How do I see everything about a file?</strong></p>
+<p>Press Control+Shift+T for Type Extended. You get one alphabetical
+list of every field and value: the Windows properties, the file
+association details, and the metadata inside the file — camera and
+exposure for a photograph, artist and album for a song, duration and
+codecs for a video, author and page count for a PDF. ExifTool comes with
+FileDir and does that last part.</p>
+<p><strong>What do the symbols in a name mean?</strong></p>
+<p>They are attributes. A right parenthesis means hidden, a right
+bracket means read only, a right brace means system, and a backslash
+means the item is a folder. You can search on those same symbols: Jump
+accepts them as the text to find, so typing a backslash finds the next
+folder.</p>
+<p><strong>What is the difference between Open and Go to?</strong></p>
+<p>Open makes a new window and leaves the current one alone, with its
+tags intact. Go to reuses the window you are in and discards it. Enter
+opens; hold Shift to go instead.</p>
+<p><strong>Can FileDir look inside a zip file?</strong></p>
+<p>Yes. Press Enter on an archive and its contents appear as though they
+were a folder. FileDir extracts from nearly any archive format and
+creates and updates zip files.</p>
+<p><strong>How do I hear what is inside a file?</strong></p>
+<p>Press Question Mark. This works for Word, PDF, PowerPoint, Excel and
+Markdown files as well as plain text, because FileDir converts them
+first with 2htm, which comes with it.</p>
+<h2 id="screen-readers">Screen Readers</h2>
+<p><strong>Which screen readers work with FileDir?</strong></p>
+<p>JAWS, NVDA, and Narrator. FileDir speaks only what your screen reader
+does not already say: it never repeats a window title or the name of the
+control you are on, because your screen reader announces those
+itself.</p>
+<p><strong>Do I need the JAWS scripts?</strong></p>
+<p>They help. Mostly they stop JAWS reading the name of a keystroke out
+loud, such as “Shift S”, so you hear just the command name, “Size”. The
+installer offers them and ticks the box when JAWS is on the
+computer.</p>
+<p><strong>How does FileDir talk to NVDA?</strong></p>
+<p>Directly, when <code>nvdaControllerClient.dll</code> is in the
+FileDir folder. Without it, FileDir speaks through a Windows
+notification, which NVDA reads anyway. The direct route is a little
+quicker; nothing is lost without it.</p>
+<h2 id="converting-between-formats">Converting Between Formats</h2>
+<p><strong>How do I convert a Word document to Markdown, or the other
+way round?</strong></p>
+<p>Tag the files, press Alt+Shift+K, and pick the format you want.
+FileDir writes the converted copy beside each original and never
+overwrites anything.</p>
+<p><strong>Which formats can it read?</strong></p>
+<p>Word (.docx), OpenDocument, EPUB, HTML, Markdown, reStructuredText,
+LaTeX, rich text, AsciiDoc, CSV, MediaWiki, PowerPoint (.pptx) and Excel
+(.xlsx), among others. It cannot read legacy .doc, .ppt or .xls, and it
+cannot read PDF. Use Shift+O, Output to Text, for those: that goes
+through 2htm, which comes with FileDir.</p>
+<p><strong>Do I need Pandoc?</strong></p>
+<p>Yes, for Convert Format. The installer offers it as a checkbox and
+ticks it, because it is what gives FileDir its conversions.</p>
+<p><strong>Where does Pandoc go?</strong></p>
+<p><code>C:\Program Files\Pandoc</code>, machine wide. It is about 100
+MB and EdSharp and HomerScribe use the same copy, so one download serves
+all three rather than each program carrying its own.</p>
+<p><strong>I already have Pandoc. Will it install a second
+one?</strong></p>
+<p>No. FileDir checks first, and the checkbox then says Update or
+Reinstall with the version, rather than Install.</p>
+<h2 id="translating-files">Translating Files</h2>
+<p><strong>How does FileDir translate a file?</strong></p>
+<p>Press Alt+Shift+L, name the language, and FileDir reads the text of
+every tagged file, translates it, and writes the result beside the
+original as <code>&lt;name&gt;.&lt;language&gt;.txt</code>. Nothing is
+overwritten.</p>
+<p><strong>Where does the translation happen?</strong></p>
+<p>On your own computer. FileDir talks to Ollama, which runs a language
+model locally and listens only on this machine. No file, and no part of
+a file, is sent anywhere. That is why this is worth having rather than
+pasting into a web page: you can translate something private.</p>
+<p><strong>Do I have to install anything?</strong></p>
+<p>Yes, and it is optional. The FileDir installer offers Ollama as a
+checkbox, with the llama3.2 model, about 2 GB. A second checkbox offers
+qwen2.5:7b, about 5 GB, which translates noticeably better. Neither box
+is ticked to begin with, because nobody should download gigabytes by not
+noticing a checkbox.</p>
+<p><strong>I already installed Ollama for EdSharp. Do I need it
+twice?</strong></p>
+<p>No. One Ollama installation and one set of models serve every program
+on the machine. FileDir checks what is already there and offers a
+reinstall rather than a second copy.</p>
+<p><strong>Which model does it use?</strong></p>
+<p>qwen2.5:7b if you have it, llama3.2 otherwise. You do not configure
+this; FileDir asks Ollama what is installed and picks the better
+one.</p>
+<p><strong>Can I ask questions about a file?</strong></p>
+<p>Two ways. Press F12 for Chat with AI to ask a plain question, or
+Shift+F12 for Chat about File to ask about the file you are on, with its
+text sent along. It reads Word, PDF and the rest, not just plain text.
+The same keys do the same things in EdSharp.</p>
+<p>The answer opens in a box you can arrow through, select from, and
+copy with Control+C. Spacebar, Enter or Escape closes it.</p>
+<p><strong>Where did the timer go?</strong></p>
+<p>To Alt+Control+T to start, Alt+Control+S to stop, and Alt+Control+Y
+to hear the elapsed time. It moved off F12 so that FileDir and EdSharp
+agree about which keys ask the AI.</p>
+<p><strong>How long does it take?</strong></p>
+<p>Longer than you expect the first time, because the model has to load.
+FileDir says which file it is on and which part of it, so you can tell
+it is working rather than stuck.</p>
+<p><strong>Can I translate a whole folder at once?</strong></p>
+<p>That is what it is for. Tag as many files as you like and answer the
+language question once.</p>
+<h2 id="updates-and-problems">Updates and Problems</h2>
+<p><strong>How do I get a new version?</strong></p>
+<p>Press F11 for Elevate Version. FileDir asks GitHub what the newest
+release is, tells you what you have and what is available, and offers to
+download and run the installer. If that fails, download
+<code>FileDir_setup.exe</code> yourself from the <a
+href="https://github.com/JamalMazrui/FileDir/releases/latest">FileDir
+releases page</a>.</p>
+<p><strong>Can I install a new version over an old one?</strong></p>
+<p>Yes. Your settings are kept.</p>
+<p><strong>Where are the logs if something goes wrong?</strong></p>
+<p>In your local application data folder, under FileDir and then logs.
+FileDir writes one log per session, named for the date and time, and the
+installer writes <code>FileDir_setup.log</code> in the same place. The
+Results box at the end of the installation names it.</p>
+<p><strong>How do I send you the log?</strong></p>
+<p>Press Control+F12 for Copy Log, then paste into a new mail message.
+The log file itself is attached, because the path goes on the clipboard
+as a file as well as as text. The newest thirty logs are kept, so the
+one you want is there.</p>
+<p><strong>Something is wrong. Where do I report it?</strong></p>
+<p>At <a href="https://github.com/JamalMazrui/FileDir/issues">FileDir
+issues on GitHub</a>. If FileDir shows you an unexpected event, the
+Report a Problem button puts the whole message on the clipboard and
+opens that page ready to paste into.</p>
+<p>End of Document</p>
+</body>
+</html>
