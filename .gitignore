@@ -1,0 +1,23 @@
+# Maintainer tooling — kept out of the public source browser
+# per the note in tagRelease.ps1. createUrlFido is the one-time
+# repository bootstrap; tagRelease publishes each release.
+createUrlFido.cmd
+createUrlFido.ps1
+createUrlFido.log
+tagRelease.cmd
+tagRelease.ps1
+tagRelease.log
+
+# Build artifacts
+buildUrlFido.log
+
+# The NVDA controller client is a build input, embedded into urlFido.exe
+# as a resource. It is not ours to redistribute in source form, so it is
+# kept next to the sources locally rather than committed.
+nvdaControllerClient.dll
+
+# Editor and OS noise
+Thumbs.db
+desktop.ini
+*.swp
+*~

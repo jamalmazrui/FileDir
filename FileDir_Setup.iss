@@ -96,6 +96,21 @@ Source: "Dialogs.cs";         DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDirScript.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.js";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.manifest";   DestDir: "{app}"; Flags: ignoreversion
+
+; JAWS script family, installed into each JAWS version by
+; "FileDir.exe --install-jaws-settings" (the [Run] checkbox below) and
+; removed by the [UninstallRun] entry. FileDir.jss says Use "Homer.jsb",
+; so Homer.jss ships too and compiles first; Homer.jsh and MSAA.jsh are
+; include headers its compile needs beside it. The .jsd files document
+; the scripts inside JAWS; FileDir.jcf carries configuration defaults.
+Source: "FileDir.jss";        DestDir: "{app}"; Flags: ignoreversion
+Source: "FileDir.jkm";        DestDir: "{app}"; Flags: ignoreversion
+Source: "FileDir.jsd";        DestDir: "{app}"; Flags: ignoreversion
+Source: "FileDir.jcf";        DestDir: "{app}"; Flags: ignoreversion
+Source: "Homer.jss";          DestDir: "{app}"; Flags: ignoreversion
+Source: "Homer.jsd";          DestDir: "{app}"; Flags: ignoreversion
+Source: "Homer.jsh";          DestDir: "{app}"; Flags: ignoreversion
+Source: "MSAA.jsh";           DestDir: "{app}"; Flags: ignoreversion
 Source: "BuildFileDir.cmd";   DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir_Setup.iss";  DestDir: "{app}"; Flags: ignoreversion
 ; Helper tools shipped alongside the app.
@@ -230,6 +245,15 @@ FileName: "{code:NgenExe}"; Parameters: "uninstall FileDir /nologo /silent"; Fla
 FileName: "{code:NgenExe}"; Parameters: "install ""{app}\FileDir.exe"" /AppBase:""{app}"" /nologo /silent"; Flags: runhidden; Check: HasNgen
 
 [UninstallRun]
+; Symmetric to the JAWS-install [Run] entry above. Removes only the
+; files FileDir placed in the JAWS settings folders, tracked via the
+; install-time log at %APPDATA%\FileDir\jawsSettings.log. runhidden so
+; no console window flashes; skipped if FileDir.exe is already gone.
+FileName: "{app}\FileDir.exe"; \
+  Parameters: "--uninstall-jaws-settings"; \
+  WorkingDir: "{app}"; \
+  Flags: runhidden waituntilterminated skipifdoesntexist
+
 Filename: "{code:NgenExe}"; Parameters: "uninstall FileDir /nologo /silent"; Flags: runhidden; Check: HasNgen
 
 [UninstallDelete]

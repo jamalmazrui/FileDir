@@ -704,8 +704,19 @@ foreach (string sArg in args) {
 if (String.Compare(sArg, "--install-jaws-settings", true) != 0) continue;
 int iCopied = 0;
 int iCompiled = 0;
-string sMessage = Homer.JawsSettingsInstaller.install(Path.GetDirectoryName(sApp), out iCopied, out iCompiled);
+string sMessage = Homer.JawsSettingsInstaller.install("FileDir", Path.GetDirectoryName(sApp), new string[] {"FileDir.jsd", "FileDir.jcf", "Homer.jsh", "Homer.jsd", "MSAA.jsh"}, new string[] {"Homer"}, out iCopied, out iCompiled);
 if (sMessage.Length > 0) MessageBox.Show(sMessage, "FileDir - JAWS Settings");
+return;
+}
+
+// --uninstall-jaws-settings: remove exactly the files a previous install
+// placed in the JAWS settings folders, tracked in the per-app log, then
+// exit. The uninstaller runs this hidden, so no dialog is shown; silence
+// is the correct behavior there.
+foreach (string sArg in args) {
+if (String.Compare(sArg, "--uninstall-jaws-settings", true) != 0) continue;
+int iDeleted = 0;
+Homer.JawsSettingsInstaller.uninstall("FileDir", out iDeleted);
 return;
 }
 

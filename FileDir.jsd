@@ -1,0 +1,99 @@
+:script SpeedSlower
+:Synopsis Control+Shift+Accent = make voice slower
+
+:script SayActiveCursor
+
+:script JAWSPageDown
+
+:script CopySelectedTextToClipboard
+
+:function TestForFileDirScripts
+
+:function SayTempFile
+:Returns int No Return Description
+:Synopsis SayString("saying temp file")
+
+:script TypeCurrentScriptKey
+
+:script SayCurrentAccessKey
+
+:script ControlDownArrow
+
+:script VolumeLouder
+:Synopsis Alt+Accent = make voice louder
+
+:script Undo
+
+:script SelectFromStartOfLine
+
+:script JAWSEnd
+
+:script DeleteWordBack
+:Synopsis Control+Backspace = Delete word back and say new one
+
+:function SaveVoiceSetting
+:Param string/sSetting No Description
+:Param int/iLevel No Description
+
+:script SaySelectedText
+
+:script JAWSPageUp
+
+:script DeleteWord
+:Synopsis Control+Delete = Delete word and say new one
+
+:script SayLine
+
+:script PasteFromClipboard
+
+:script SelectPriorLine
+
+:script JAWSBackspace
+
+:script CommandLineDirectory
+
+:script BottomOfFile
+
+:script PreviousParagraph
+
+:script JAWSHome
+
+:script MouseDown
+
+:function SayFileByLine
+:Returns int No Return Description
+:Param string/sFile No Description
+
+:script VolumeSofter
+:Synopsis Alt+Shift+Accent = make voice softer
+
+:script TogglePunctuation
+:Synopsis Insert+Accent = Toggle between all and no punctuation
+
+:script ExplorerDirectory
+
+:script CutToClipboard
+
+:script SpeedFaster
+:Synopsis Control+Accent = make voice faster
+
+:script SelectNextLine
+
+:script MouseUp
+
+:script CloseDocumentWindow
+
+:script ScriptFileName
+
+:script NextParagraph
+
+:script UIEvaluateExpression
+
+:script TopOfFile
+
+:script SelectToEndOfLine
+
+:script sayparagraph
+
+:script ControlUpArrow
+
