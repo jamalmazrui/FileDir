@@ -1,6 +1,6 @@
 ﻿# FileDir — Questions and Answers
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -154,11 +154,24 @@ each program carrying its own.
 No. FileDir checks first, and the checkbox then says Update or Reinstall with
 the version, rather than Install.
 
+**Can I play a list of YouTube addresses?**
+
+Yes. Copy the list, press Alt+Shift+L, and it plays in order with the track
+titles. Anything mpv can reach works, because the addresses are handed to
+yt-dlp. An address that has been taken down is skipped rather than stopping the
+rest.
+
+**Can I add something while it is playing?**
+
+Yes. Copy an address and press Control+V in the player window. That is mpv's own
+key: it appends one file or address to what is already queued. For a whole list,
+come back to FileDir and press Alt+Shift+L again.
+
 ## Translating Files
 
 **How does FileDir translate a file?**
 
-Press Alt+Shift+L, name the language, and FileDir reads the text of every tagged
+Press Alt+Shift+F7, name the language, and FileDir reads the text of every tagged
 file, translates it, and writes the result beside the original as
 `<name>.<language>.txt`. Nothing is overwritten.
 

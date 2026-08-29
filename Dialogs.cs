@@ -894,59 +894,135 @@ return Dialog.MultiCheck(sTitle, aValues, aSelect, bSort, iIndex);
 
 // ---- special folder picker ----
 
+[DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+private static extern int SHGetKnownFolderPath(
+[MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken, out IntPtr ppszPath);
+
+// The known folders, by their official identifier and the name Windows uses
+// for each, with a qualifier added where two would otherwise read alike.
+//
+// WHY A LIST RATHER THAN AN ENUMERATION. This used to walk Shell.Application
+// namespaces 0 to 99 and then the Environment.SpecialFolder enumeration, and
+// take whatever names those gave. The two disagree about naming, so the list
+// mixed "Documents" with "MyDocuments" and "CommonApplicationData"; it offered
+// whatever numbered slots happened to exist on that machine; and it could not
+// offer Downloads at all, because .NET's enumeration has no member for it.
+//
+// SHGetKnownFolderPath is the modern way and knows every one of these. A folder
+// that does not exist on this machine is left out, so an old Windows shows a
+// shorter list rather than broken entries.
+//
+// THE NAMES ARE UNIQUE, case insensitively, and the list is written already in
+// the order it will be shown. "Documents" and "Documents, Public" sort next to
+// each other and both begin with the word a person is looking for, which
+// matters when the list is being read aloud or navigated by first letter.
+private static readonly string[,] c_aKnownFolders = {
+{"3D Objects", "31C0DD25-9439-4F12-BF41-7FF4EDA38722"},
+{"Administrative Tools", "724EF170-A42D-4FEF-9F26-B60E846FBA4F"},
+{"Administrative Tools, Common", "D0384E7D-BAC3-4797-8F14-CBA229B392B5"},
+{"Application Data, Local", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091"},
+{"Application Data, LocalLow", "A520A1A4-1780-4FF6-BD18-167343C5AF16"},
+{"Application Data, Roaming", "3EB685DB-65F9-4CF6-A03A-E3EF65729F3D"},
+{"Common Files", "F7F1ED05-9F6D-47A2-AAAE-29D317C6F066"},
+{"Common Files, 32-bit", "DE974D24-D9C6-4D3E-BF91-F4455120B917"},
+{"Contacts", "56784854-C6CB-462B-8169-88E350ACB882"},
+{"Desktop", "B4BFCC3A-DB2C-424C-B029-7FE99A87C641"},
+{"Desktop, Public", "C4AA340D-F20F-4863-AFEF-F87EF2E6BA25"},
+{"Documents", "FDD39AD0-238F-46AF-ADB4-6C85480369C7"},
+{"Documents, Public", "ED4824AF-DCE4-45A8-81E2-FC7965083634"},
+{"Downloads", "374DE290-123F-4565-9164-39C4925E467B"},
+{"Downloads, Public", "3D644C9B-1FB8-4F30-9B45-F670235F79C0"},
+{"Favorites", "1777F761-68AD-4D8A-87BD-30B759FA33DD"},
+{"Fonts", "FD228CB7-AE11-4AE3-864C-16F3910AB8FE"},
+{"History, Internet", "D9DC8A3B-B784-432E-A781-5A1130A75963"},
+{"Links", "BFB9D5E0-C6A9-404C-B2B2-AE6DB6AF4968"},
+{"Music", "4BD8D571-6D19-48D3-BE97-422220080E43"},
+{"Music, Public", "3214FAB5-9757-4298-BB61-92A9DEAA44FF"},
+{"Network Shortcuts", "C5ABBF53-E17F-4121-8900-86626FC2C973"},
+{"OneDrive", "A52BBA46-E9E1-435F-B3D9-28DAA648C0F6"},
+{"Pictures", "33E28130-4E1E-4676-835A-98395C3BC3BB"},
+{"Pictures, Public", "B6EBFB86-6907-413C-9AF7-4FC2ABF07CC5"},
+{"Printer Shortcuts", "9274BD8D-CFD1-41C3-B35E-B13F55A758F4"},
+{"Program Data", "62AB5D82-FDC1-4DC3-A9DD-070D1D495D97"},
+{"Program Files", "905E63B6-C1BF-494E-B29C-65B732D3D21A"},
+{"Program Files, 32-bit", "7C5A40EF-A0FB-4BFC-874A-C0F2E0B9FA8E"},
+{"Programs, Start Menu", "A77F5D77-2E2B-44C3-A6A2-ABA601054A51"},
+{"Programs, Start Menu, Common", "0139D44E-6AFE-49F2-8690-3DAFCAE6FFB8"},
+{"Public", "DFDF76A2-C82A-4D63-906A-5644AC457385"},
+{"Quick Launch", "52A4F021-7B75-48A9-9F6B-4B87A210BC8F"},
+{"Recent Items", "AE50C081-EBD2-438A-8655-8A092E34987A"},
+{"Saved Games", "4C5C32FF-BB9D-43B0-B5B4-2D72E54EAAA4"},
+{"Searches", "7D1D3A04-DEBB-4115-95CF-2F29DA2920DA"},
+{"Send To", "8983036C-27C0-404B-8F08-102D10DCFD74"},
+{"Start Menu", "625B53C3-AB48-4EC1-BA1F-A1EF4146FC19"},
+{"Start Menu, Common", "A4115719-D62E-491D-AA7C-E74B8BE3B067"},
+{"Startup", "B97D20BB-F46A-4C97-BA10-5E3608430854"},
+{"Startup, Common", "82A5EA35-D9CD-47C5-9629-E15D2F714E6E"},
+{"System32", "1AC14E77-02E7-4E5D-B744-2EB1AE5198B7"},
+{"System32, 32-bit", "D65231B0-B2F1-4857-A4CE-A8E7C6EA7D27"},
+{"Templates", "A63293E8-664E-48DB-A079-DF759E0509F7"},
+{"Templates, Common", "B94237E7-57AC-4347-9151-B08C6C32D1F7"},
+{"Temporary Internet Files", "352481E8-33BE-4251-BA85-6007CAEDCF9D"},
+{"User Profile", "5E6C858F-0E22-4760-9AFE-EA3317B67173"},
+{"Videos", "18989B1D-99B5-455B-841C-AB7C74E4DDFC"},
+{"Videos, Public", "2400183A-6185-49FB-A2D8-4A392A602BA3"},
+{"Windows", "F38BF404-1D43-42F2-9305-67DE0B28FC23"},
+};
+
 public static string PickSpecialFolder() {
-string sName = "";
-string sPath = "";
-StringBuilder sbNames = new StringBuilder();
-StringBuilder sbPaths = new StringBuilder("\n");
-object oShell = CreateObject("Shell.Application");
-for (int i = 0; i < 100; i++) {
-try {
-object oDir = CallMethod(oShell, "Namespace", new object[] {i});
-object oItem = GetProperty(oDir, "Self");
-sPath = (string) GetProperty(oItem, "Path");
+List<string> lsNames = new List<string>();
+List<string> lsPaths = new List<string>();
+List<string> lsSeen = new List<string>();
+
+for (int i = 0; i < c_aKnownFolders.GetLength(0); i++) {
+string sPath = KnownFolderPath(c_aKnownFolders[i, 1]);
+if (sPath.Length == 0) continue;
 if (!Directory.Exists(sPath)) continue;
-if (sbPaths.ToString().ToLower().Trim('\\').Contains("\n" + sPath.ToLower().Trim('\\') + "\n")) continue;
-sbPaths.Append(sPath + "\n");
-sName = (string) GetProperty(oItem, "Name");
-if (Equiv(sName, "Temporary Internet Files")) sName = "Internet Cache";
-else if (Equiv(sName, "History")) sName = "Internet History";
-else if (Equiv(sName, "NetHood")) sName = "Network Neighborhood";
-else if (Equiv(sName, "PrintHood")) sName = "Printer Neighborhood";
-else if ((@"\" + sPath.ToLower() + @"\").Contains(@"\all users\")) sName = "Common " + sName;
-else if (!Equiv(sName, "History") && (@"\" + sPath.ToLower() + @"\").Contains(@"\local settings\")) sName = "Local " + sName;
-sbNames.Append(sName + "\n");
-}
-catch {continue;}
+// Several identifiers can point at one folder on some installations, and the
+// same place twice under two names is a list nobody wants to read.
+string sKey = sPath.ToLower().TrimEnd('\\');
+if (lsSeen.Contains(sKey)) continue;
+lsSeen.Add(sKey);
+lsNames.Add(c_aKnownFolders[i, 0]);
+lsPaths.Add(sPath);
 }
 
-Environment.SpecialFolder folder;
-for (int i = 0; i < 100; i++) {
-sPath = "";
-try {
-folder = (Environment.SpecialFolder) i;
-sPath = Environment.GetFolderPath(folder);
+// The temporary folder is not a known folder, and is worth having.
+string sTemp = GetTempFolder();
+if (sTemp.Length > 0 && Directory.Exists(sTemp)
+&& !lsSeen.Contains(sTemp.ToLower().TrimEnd('\\'))) {
+lsNames.Add("Temporary Files");
+lsPaths.Add(sTemp);
 }
-catch {
-continue;
-}
-if (!Directory.Exists(sPath)) continue;
-if (sbPaths.ToString().ToLower().Trim('\\').Contains("\n" + sPath.ToLower().Trim('\\') + "\n")) continue;
-sbPaths.Append(sPath + "\n");
-sName = folder.ToString();
-sbNames.Append(sName + "\n");
-}
-sbNames.Append("Temp" + "\n");
-sbPaths.Append(GetTempFolder() + "\n");
 
-string[] aNames = sbNames.ToString().Trim().Split('\n');
-string[] aPaths = sbPaths.ToString().Trim().Split('\n');
-
-sName = ListDialog("Pick", "", aNames, true, 0);
+if (lsNames.Count == 0) return "";
+string[] aNames = lsNames.ToArray();
+string[] aPaths = lsPaths.ToArray();
+// Sorted by the dialog, which does it case insensitively.
+bool bSorted = true;
+string sName = ListDialog("Pick", "", aNames, bSorted, 0);
 if (sName.Length == 0) return "";
 int iName = Array.IndexOf(aNames, sName);
+if (iName < 0) return "";
 return aPaths[iName];
 } // PickSpecialFolder method
+
+private static string KnownFolderPath(string sGuid) {
+// The folder for one identifier, or an empty string when this Windows has no
+// such folder. Never throws: an unknown identifier on an older Windows is an
+// ordinary outcome, not a fault.
+IntPtr pPath = IntPtr.Zero;
+try {
+if (SHGetKnownFolderPath(new Guid(sGuid), 0, IntPtr.Zero, out pPath) != 0) return "";
+return Marshal.PtrToStringUni(pPath);
+}
+catch (Exception) {
+return "";
+}
+finally {
+if (pPath != IntPtr.Zero) Marshal.FreeCoTaskMem(pPath);
+}
+} // KnownFolderPath method
 
 // ---- directory dialog (FileDir-specific: Current/Recent/Quick/Special) ----
 

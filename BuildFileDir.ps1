@@ -422,13 +422,95 @@ if ($sUiaTypes -eq "") { stopHere "UIAutomationTypes.dll not found. Install the 
 writeLog ("UIAutomationProvider: " + $sUiaProvider)
 writeLog ("UIAutomationTypes: " + $sUiaTypes)
 
+function clearForBuild($sFile) {
+    # Remove a build output, and when that cannot be done, say WHY.
+    #
+    # "Access to the path is denied" is what .NET says and it explains nothing.
+    # The reason is nearly always that the program is running -- FileDir was
+    # started with Alt+Control+F and never closed -- and the second most likely
+    # is a read-only attribute left by a copy from elsewhere. Both are worth
+    # naming, because the answer differs: close it, or clear the attribute.
+    if (-not (Test-Path $sFile)) { return }
+
+    # Anything holding the file open, found by comparing full paths rather than
+    # by name, so a program of the same name elsewhere is not blamed.
+    $sFull = (Resolve-Path $sFile).Path
+    $lProcesses = @()
+    try {
+        foreach ($oProcess in Get-Process -ErrorAction SilentlyContinue) {
+            $sTheirs = ""
+            try { $sTheirs = $oProcess.Path } catch { }
+            if ($sTheirs -and ($sTheirs -eq $sFull)) {
+                $lProcesses += $oProcess
+            }
+        }
+    }
+    catch { }
+    if ($lProcesses.Count -gt 0) {
+        # CLOSE IT RATHER THAN COMPLAIN ABOUT IT.
+        #
+        # Saying "close it and build again" was already better than the system's
+        # "access is denied", but it still costs a whole build to be told
+        # something the build could have done itself. This is the developer's
+        # own program, built from its own folder, holding nothing a person
+        # typed: closing it loses nothing.
+        #
+        # Politely first. CloseMainWindow asks the window to close the way Alt+F4
+        # does, so FileDir saves its settings on the way out. Only a program that
+        # ignores that is killed, and after five seconds, because a build must
+        # not wait on something that is not going to answer.
+        foreach ($oHolder in $lProcesses) {
+            $sWho = $oHolder.ProcessName + ", process " + $oHolder.Id
+            Write-Host ("Closing " + $sWho + ", which is holding " + $sFile + " open ...")
+            writeLog ("Closing " + $sWho + " to replace " + $sFile + ".")
+            $bClosed = $false
+            try { $bClosed = $oHolder.CloseMainWindow() } catch { }
+            if ($bClosed) {
+                try { $null = $oHolder.WaitForExit(5000) } catch { }
+            }
+            if (-not $oHolder.HasExited) {
+                writeLog ($sWho + " did not close when asked; ending it.")
+                try { $oHolder.Kill(); $null = $oHolder.WaitForExit(5000) } catch { }
+            }
+            if ($oHolder.HasExited) { writeLog ($sWho + " closed.") }
+            else {
+                $sStop = "Cannot replace " + $sFile + ": " + $sWho + " will not close. "
+                $sStop = $sStop + "Close it by hand and build again."
+                stopHere $sStop
+            }
+        }
+        # Windows releases the file a moment after the process ends.
+        Start-Sleep -Milliseconds 300
+    }
+
+    # Read only is the other ordinary cause, and this one can simply be fixed.
+    try {
+        $oItem = Get-Item $sFile -Force
+        if ($oItem.IsReadOnly) {
+            $oItem.IsReadOnly = $false
+            writeLog ("Cleared the read-only attribute on " + $sFile + ".")
+        }
+    }
+    catch { }
+
+    try {
+        Remove-Item $sFile -Force
+    }
+    catch {
+        writeLog ("Could not remove " + $sFile + ": " + $_.Exception.Message)
+        $sStop = "Cannot replace " + $sFile + ": " + $_.Exception.Message + " "
+        $sStop = $sStop + "Nothing is holding it open that this build can see, so check for a virus scanner, a backup tool, or an Explorer preview pane showing the folder."
+        stopHere $sStop
+    }
+}
+
 Write-Host "Compiling FileDir.js to FileDirScript.dll ..."
-if (Test-Path "FileDirScript.dll") { Remove-Item "FileDirScript.dll" -Force }
+clearForBuild "FileDirScript.dll"
 $iExit = runProgram $sJsc @("/nologo", "/target:library", "/out:FileDirScript.dll", "FileDir.js") "jsc.exe"
 if ($iExit -ne 0) { stopHere ("jsc.exe returned " + $iExit + ". Its output is above in this log.") }
 
 Write-Host "Compiling FileDir.cs to FileDir.exe ..."
-if (Test-Path "FileDir.exe") { Remove-Item "FileDir.exe" -Force }
+clearForBuild "FileDir.exe"
 $asCscArgs = @(
     "/nologo", "/target:winexe", "/platform:anycpu", "/optimize+", "/nowarn:0162",
     "/win32manifest:FileDir.manifest"

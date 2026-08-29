@@ -28,6 +28,7 @@ using System.IO;
 using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Security.Permissions;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -137,8 +138,7 @@ else Process.Start("Explorer.exe", Microsoft.VisualBasic.Interaction.Command());
 
 public static class App {
 // Dotted-numeric version used by the Elevate Version command to compare with
-// the latest release tag. Bump this on each release; the About dialog shows the
-// friendly "5.0 beta" label separately.
+// the latest release tag.
 // The version number is NOT stored here.  It lives in exactly one place --
 // AppVersion in FileDir_setup.iss -- and BuildFileDir.cmd generates Version.cs
 // from it at build time, defining BuildVersion.Version.  The program, the
@@ -876,6 +876,9 @@ public HomerToolStripMenuItem menuEditTagAll;
 public HomerToolStripMenuItem menuEditUntagAll;
 public HomerToolStripMenuItem menuEditTagAllFiles;
 public HomerToolStripMenuItem menuEditTagDuplicateFiles;
+public HomerToolStripMenuItem menuEditTagSimilarFiles;
+public HomerToolStripMenuItem menuEditReorderNames;
+public HomerToolStripMenuItem menuEditFindDuplicates;
 public HomerToolStripMenuItem menuEditTagWithRegularExpression;
 public HomerToolStripMenuItem menuEditUntagAllButCurrent;
 public HomerToolStripMenuItem menuEditStartTagOrUntag;
@@ -900,7 +903,7 @@ public HomerToolStripMenuItem menuEditDeleteFileNowWithoutRecycle;
 public HomerToolStripMenuItem menuEditRename;
 public HomerToolStripMenuItem menuEditRenameWithWildcards;
 public HomerToolStripMenuItem menuEditRenameWithRegex;
-public HomerToolStripMenuItem menuEditRenameToInitialLine;
+public HomerToolStripMenuItem menuEditRenameToTitle;
 public HomerToolStripMenuItem menuEditPasteFromClipboard;
 public HomerToolStripMenuItem menuEditPasteCopy;
 public HomerToolStripMenuItem menuEditPasteMove;
@@ -1008,6 +1011,7 @@ public HomerToolStripMenuItem menuMiscChatWithAI;
 public HomerToolStripMenuItem menuMiscChatAboutFile;
 public HomerToolStripMenuItem menuMiscConfigureTimer;
 public HomerToolStripMenuItem menuMiscPlayList;
+public HomerToolStripMenuItem menuMiscPlayFolder;
 public HomerToolStripMenuItem menuMiscIterateProcesses;
 public HomerToolStripMenuItem menuMiscInquireDifferences;
 public HomerToolStripMenuItem menuMiscNetworkConnections;
@@ -1108,6 +1112,9 @@ menuEditTagAll = menu_Helper("Tag &All", "Control+A", MenuEditTagAll_Click);
 menuEditUntagAll = menu_Helper("Untag All", "Control+Shift+A", MenuEditUntagAll_Click);
 menuEditTagAllFiles = menu_Helper("Tag All Files", "Alt+.", MenuEditTagAllFiles_Click);
 menuEditTagDuplicateFiles = menu_Helper("Tag Duplicate Files", "Alt+Shift+.", MenuEditTagDuplicateFiles_Click);
+menuEditTagSimilarFiles = menu_Helper("Tag Similar Files", "Alt+Shift+,", MenuEditTagSimilarFiles_Click);
+menuEditReorderNames = menu_Helper("Reorder Names", "Alt+Shift+K", MenuEditReorderNames_Click);
+menuEditFindDuplicates = menu_Helper("Find Duplicates in Tree", "Alt+Shift+J", MenuEditFindDuplicates_Click);
 menuEditTagWithRegularExpression = menu_Helper("Tag with Regular Expression ...", "Control+Shift+.", MenuEditTagWithRegularExpression_Click);
 menuEditUntagAllButCurrent = menu_Helper("Untag All But Current", "Alt+,", MenuEditUntagAllButCurrent_Click);
 menuEditStartTagOrUntag = menu_Helper("Start Tag or Untag", "F8", MenuEditStartTagOrUntag_Click);
@@ -1132,7 +1139,7 @@ menuEditDeleteFileNowWithoutRecycle = menu_Helper("Delete File Now", "Control+Sh
 menuEditRename = menu_Helper("Rename ...", "Shift+R or F2", menuEditRename_Click);
 menuEditRenameWithWildcards = menu_Helper("Rename with Wildcards ...", "Control+R", menuEditRenameWithWildcards_Click);
 menuEditRenameWithRegex = menu_Helper("Rename with Regular Expression ...", "Control+Shift+R", menuEditRenameWithRegex_Click);
-menuEditRenameToInitialLine = menu_Helper("Rename to Initial Line", "Control+Shift+I", menuEditRenameToInitialLine_Click);
+menuEditRenameToTitle = menu_Helper("Rename to Identify Content", "Control+Shift+I", MenuEditRenameToTitle_Click);
 menuEditPasteFromClipboard = menu_Helper("Paste", "Control+V", menuEditPasteFromClipboard_Click);
 menuEditPasteCopy = menu_Helper("Paste Copy", "Alt+V", menuEditPasteCopy_Click);
 menuEditPasteMove = menu_Helper("Paste Move", "Alt+Shift+V", menuEditPasteMove_Click);
@@ -1148,7 +1155,7 @@ menuEditShortPathToClipboard = menu_Helper("Short Path to Clipboard", "~", menuE
 menuEditFullFolderToClipboard = menu_Helper("Folder to Clipboard", "Control+Shift+'", menuEditFullFolderToClipboard_Click);
 menuEditClearClipboard = menu_Helper("Clear Clipboard", "Alt+Shift+'", menuEditClearClipboard_Click);
 menuEditExportClipboardToFile = menu_Helper("Export Clipboard to File ...", "Alt+Shift+E", menuEditExportClipboardToFile_Click);
-menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditTagAndNext, menuEditUntagAndNext, menuEditTagAndPrevious, menuEditUntagAndPrevious, menuEditTagToBottom, menuEditUntagToBottom, menuEditTagToTop, menuEditUntagToTop, menuEditTag, menuEditUntag, menuEditToggleTag, menuEditTagAll, menuEditUntagAll, menuEditTagAllFiles, menuEditTagDuplicateFiles, menuEditTagWithRegularExpression, menuEditUntagAllButCurrent, menuEditStartTagOrUntag, menuEditCompleteTag, menuEditCompleteUntag, menuEditInvertTagged, menuEditSaveTags, menuEditRestoreTags, menuEditCopyToClipboardTagged, menuEditCopyAppendToClipboardTagged, menuEditCutToClipboardTagged, menuEditCopyNameTagged, menuEditPathList, menuEditCopyTagged, menuEditMoveTagged, menuEditDeleteTagged, menuEditDeleteAndRecycleTagged, menuEditDeleteTaggedWithoutRecycle, menuEditDeleteFileNow, menuEditDeleteFileNowWithoutRecycle, menuEditRename, menuEditRenameWithWildcards, menuEditRenameWithRegex, menuEditRenameToInitialLine, menuEditPasteFromClipboard, menuEditPasteCopy, menuEditStampTagged, menuEditHideTagged, menuEditShowTagged, menuEditReadOnlyTagged, menuEditReadWriteTagged, menuEditReadWriteTagged, menuEditSystemTagged, menuEditGeneralTagged, menuEditPathToClipboard, menuEditShortPathToClipboard, menuEditFullFolderToClipboard, menuEditClearClipboard, menuEditExportClipboardToFile});
+menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditTagAndNext, menuEditUntagAndNext, menuEditTagAndPrevious, menuEditUntagAndPrevious, menuEditTagToBottom, menuEditUntagToBottom, menuEditTagToTop, menuEditUntagToTop, menuEditTag, menuEditUntag, menuEditToggleTag, menuEditTagAll, menuEditUntagAll, menuEditTagAllFiles, menuEditTagDuplicateFiles, menuEditTagSimilarFiles, menuEditReorderNames, menuEditFindDuplicates, menuEditTagWithRegularExpression, menuEditUntagAllButCurrent, menuEditStartTagOrUntag, menuEditCompleteTag, menuEditCompleteUntag, menuEditInvertTagged, menuEditSaveTags, menuEditRestoreTags, menuEditCopyToClipboardTagged, menuEditCopyAppendToClipboardTagged, menuEditCutToClipboardTagged, menuEditCopyNameTagged, menuEditPathList, menuEditCopyTagged, menuEditMoveTagged, menuEditDeleteTagged, menuEditDeleteAndRecycleTagged, menuEditDeleteTaggedWithoutRecycle, menuEditDeleteFileNow, menuEditDeleteFileNowWithoutRecycle, menuEditRename, menuEditRenameWithWildcards, menuEditRenameWithRegex, menuEditRenameToTitle, menuEditPasteFromClipboard, menuEditPasteCopy, menuEditStampTagged, menuEditHideTagged, menuEditShowTagged, menuEditReadOnlyTagged, menuEditReadWriteTagged, menuEditReadWriteTagged, menuEditSystemTagged, menuEditGeneralTagged, menuEditPathToClipboard, menuEditShortPathToClipboard, menuEditFullFolderToClipboard, menuEditClearClipboard, menuEditExportClipboardToFile});
 
 menuNavigate = menu_Helper("&Navigate");
 menuNavigateJump = menu_Helper("&Jump ...", "Control+J", menuNavigateJump_Click);
@@ -1216,7 +1223,7 @@ menuMiscSendToTextEditor = menu_Helper("Send to Text Editor", "Control+T", MenuM
 menuMiscOutputTagged = menu_Helper("Output Type", "Shift+O", MenuMiscOutputTagged_Click);
 menuMiscAppendTagged = menu_Helper("Append to Clipboard", "Shift+A", MenuMiscAppendTagged_Click);
 menuMiscConvertEncodingTagged = menu_Helper("Convert Encoding", "Control+2", MenuMiscConvertEncodingTagged_Click);
-menuMiscTranslateTagged = menu_Helper("Translate File", "Alt+Shift+L", MenuMiscTranslateTagged_Click);
+menuMiscTranslateTagged = menu_Helper("Translate File", "Alt+Shift+F7", MenuMiscTranslateTagged_Click);
 menuMiscExtractTagged = menu_Helper("Extract with Regular Expression", "Control+Shift+E", MenuMiscExtractTagged_Click);
 menuMiscBurnTagged = menu_Helper("Burn to CD", "Alt+Shift+B", menuMiscBurnTagged_Click);
 menuMiscMailBody = menu_Helper("Mail Body", "Control+M", menuMiscMailBody_Click);
@@ -1243,12 +1250,13 @@ menuMiscChatWithAI = menu_Helper("Chat with AI", "F12", MenuMiscChatWithAI_Click
 menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChatAboutFile_Click);
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
 menuMiscPlayList = menu_Helper("Play List", "Control+Shift+L", menuMiscPlayList_Click);
+menuMiscPlayFolder = menu_Helper("Play Media", "Alt+Shift+L", MenuMiscPlayFolder_Click);
 menuMiscIterateProcesses = menu_Helper("Iterate Processes ...", "Alt+I", MenuMiscIterateProcesses_Click);
 menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I", MenuMiscInquireDifferences_Click);
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -2382,40 +2390,396 @@ if (!Directory.Exists((string) row["Path"])) row["Tagged"] = '>';
 mdiChild.bs.EndEdit();
 } // menuEditTagAllFiles method
 
+void MenuEditFindDuplicates_Click(object sender, EventArgs e) {
+// Every duplicate in this folder AND everything under it, gathered into a
+// virtual folder you can walk with the ordinary commands.
+//
+// WHY A VIRTUAL FOLDER RATHER THAN A DIALOG.
+//
+// KeyLine's delDupes puts its findings in a multiselect listbox with an All
+// button. FileDir already has something better: a virtual folder is a window
+// like any other, so every command works in it. You can hear a name, its size
+// and its date, read what is inside a file with Question Mark, open one to
+// check before deciding, tag a run with F8, invert the tagging, and then use
+// Delete Tagged -- which asks before it deletes. Nothing new to learn, and
+// nothing about it is a special case.
+//
+// ONLY THE DUPLICATES ARE LISTED, never the first copy of anything. So Tag All
+// and Delete Tagged in this window leaves exactly one of each file on disk,
+// which is what a person means by removing duplicates.
+if (abortInZip()) return;
+string sTitle = "Find Duplicates in Tree";
+App.say(sTitle);
+string sRoot = Directory.GetCurrentDirectory();
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild != null) {
+string sHere = Path_Helper();
+if (Directory.Exists(sHere)) sRoot = sHere;
+else if (File.Exists(sHere)) sRoot = Path.GetDirectoryName(sHere);
+}
+
+App.say("Reading " + Path.GetFileName(sRoot) + " and everything under it");
+List<string> lsAll = new List<string>();
+gatherFiles_Helper(sRoot, lsAll);
+if (lsAll.Count == 0) {
+Lbc.Show("No files were found under " + sRoot + ".", sTitle);
+return;
+}
+App.say(Homer.Util.stringPlural("file", lsAll.Count) + " to examine");
+
+// Size first: two files of different lengths cannot be the same, and grouping
+// by size means most files are never read at all. On a large tree that is the
+// difference between seconds and minutes.
+Dictionary<long, List<string>> dBySize = new Dictionary<long, List<string>>();
+foreach (string sPath in lsAll) {
+long lSize = 0;
+try { lSize = new FileInfo(sPath).Length; }
+catch (Exception) { continue; }
+// Empty files are all identical to each other, and calling them duplicates
+// is technically true and never what anybody wants.
+if (lSize == 0) continue;
+if (!dBySize.ContainsKey(lSize)) dBySize[lSize] = new List<string>();
+dBySize[lSize].Add(sPath);
+}
+
+List<string> lsDuplicates = new List<string>();
+int iRead = 0;
+int iGroups = 0;
+foreach (KeyValuePair<long, List<string>> pair in dBySize) {
+if (pair.Value.Count < 2) continue;
+Dictionary<string, string> dByHash = new Dictionary<string, string>();
+foreach (string sPath in pair.Value) {
+iRead++;
+// A count every so often, because a large tree takes a while and silence
+// is indistinguishable from a hang.
+if ((iRead % 50) == 0) App.say(iRead, true);
+string sHash = fileHash_Helper(sPath);
+if (sHash.Length == 0) continue;
+if (!dByHash.ContainsKey(sHash)) {
+dByHash[sHash] = sPath;
+continue;
+}
+if (!sameBytes_Helper(dByHash[sHash], sPath)) continue;
+lsDuplicates.Add(sPath);
+}
+iGroups++;
+}
+
+if (lsDuplicates.Count == 0) {
+App.say("No duplicates.", true);
+Lbc.Show("No duplicate files were found under " + sRoot + ".\n\n"
++ Homer.Util.stringPlural("file", lsAll.Count) + " examined, of which "
++ iRead + " had to be read in full because another file was exactly the same size.", sTitle);
+return;
+}
+
+// Written where Open Virtual Folder will offer it again, so the same set can
+// be reopened later without scanning the tree a second time.
+lsDuplicates.Sort(delegate(string sLeft, string sRight) {
+return String.Compare(sLeft, sRight, StringComparison.OrdinalIgnoreCase);
+});
+string sListFile = Path.Combine(Path.GetTempPath(), "FileDir_duplicates.txt");
+try {
+File.WriteAllText(sListFile, String.Join("\r\n", lsDuplicates.ToArray()), new UTF8Encoding(true));
+App.sVirtualFolder = sListFile;
+}
+catch (Exception ex) {
+Homer.Log.write("Could not write the duplicate list: " + ex.Message);
+}
+Homer.Log.write("Duplicates under " + sRoot + ": " + lsDuplicates.Count + " of " + lsAll.Count + " files.");
+
+App.say(Homer.Util.stringPlural("duplicate", lsDuplicates.Count) + " found. Opening them as a virtual folder.", true);
+string sDir = "";
+string sOrder = "";
+string sFilter = "";
+new MdiChild(this, sDir, sOrder, sFilter, sListFile, lsDuplicates.ToArray());
+} // MenuEditFindDuplicates_Click method
+
+void gatherFiles_Helper(string sFolder, List<string> lsInto) {
+// Every file under a folder, walked by hand rather than with the framework's
+// recursive search.
+//
+// Directory.GetFiles with AllDirectories throws the moment it meets one folder
+// it cannot open -- a system folder, a junction, someone else's profile -- and
+// loses the entire result. Walking it a folder at a time means an unreadable
+// one is skipped and noted, and everything else is still found.
+try {
+foreach (string sFile in Directory.GetFiles(sFolder)) lsInto.Add(sFile);
+}
+catch (Exception ex) {
+Homer.Log.write("Could not read files in " + sFolder + ": " + ex.Message);
+return;
+}
+string[] aSubFolders;
+try {
+aSubFolders = Directory.GetDirectories(sFolder);
+}
+catch (Exception ex) {
+Homer.Log.write("Could not list folders in " + sFolder + ": " + ex.Message);
+return;
+}
+foreach (string sSub in aSubFolders) {
+// A junction or a symbolic link can point at a parent, and following one
+// walks in a circle until the stack gives out.
+try {
+FileAttributes attributes = File.GetAttributes(sSub);
+if ((attributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint) {
+Homer.Log.write("Skipping the link " + sSub);
+continue;
+}
+}
+catch (Exception) {
+continue;
+}
+gatherFiles_Helper(sSub, lsInto);
+}
+} // gatherFiles_Helper method
+
+void MenuEditTagSimilarFiles_Click(object sender, EventArgs e) {
+// Tag files that look like other versions of the same thing, keeping the
+// largest of each group and tagging the rest.
+//
+// content.pdf, content-1.pdf, content_2.pdf, content(3).pdf and content[4].pdf
+// are one group: the same name with a numeric suffix that a browser or a
+// download added.  content.epub is NOT in it, because a different extension is
+// a different file rather than another copy.
+//
+// The largest is kept, on KeyLine's reasoning: a partial download is smaller
+// than the whole, so the biggest is the likeliest to be complete.  Nothing is
+// deleted here; Delete Tagged does that, and asks first.
+if (abortInZip()) return;
+App.say("Tag similar files");
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+DataView view = mdiChild.tbl.DefaultView;
+int iCount = view.Count;
+
+// Grouped by stem and extension together.  The stem is the name with a
+// trailing "-1", "_2", " (3)" or "[4]" taken off.
+Dictionary<string, List<int>> dGroups = new Dictionary<string, List<int>>();
+for (int i = 0; i < iCount; i++) {
+string sPath = (string) view[i]["Path"];
+if (Directory.Exists(sPath) || !File.Exists(sPath)) continue;
+string sRoot = Path.GetFileNameWithoutExtension(sPath);
+string sExt = Path.GetExtension(sPath).ToLower();
+// The separator is REQUIRED, and this is the whole difficulty. "content-1"
+// and "content (3)" are copies of content; "chapter1" and "part2" are not --
+// they are the first chapter and the second part, and grouping them would tag
+// one of a book's chapters for deletion. KeyLine's delSimilar makes the same
+// distinction, and its comment says so in as many words.
+string sStem = System.Text.RegularExpressions.Regex.Replace(sRoot,
+@"(?:[\s_-]+\d+|\s*[\(\[]\d+[\)\]])$", "").Trim();
+// A name that is nothing but digits has no stem to group by, and grouping
+// 1.jpg with 2.jpg would be wrong: those are different pictures.
+if (sStem.Length == 0) continue;
+string sKey = sStem.ToLower() + "|" + sExt;
+if (!dGroups.ContainsKey(sKey)) dGroups[sKey] = new List<int>();
+dGroups[sKey].Add(i);
+}
+
+int iSimilar = 0;
+foreach (KeyValuePair<string, List<int>> pair in dGroups) {
+if (pair.Value.Count < 2) continue;
+// Which to keep: the largest, and the earliest in the list to break a tie so
+// the same file is kept every time the command is run.
+int iKeep = pair.Value[0];
+long lBiggest = (long) view[iKeep]["Size"];
+foreach (int i in pair.Value) {
+long lSize = (long) view[i]["Size"];
+if (lSize > lBiggest) { lBiggest = lSize; iKeep = i; }
+}
+foreach (int i in pair.Value) {
+if (i == iKeep) continue;
+App.say(Path.GetFileName((string) view[i]["Path"]));
+view[i]["Tagged"] = '>';
+iSimilar++;
+}
+}
+mdiChild.bs.EndEdit();
+if (iSimilar == 0) App.say("No similar files.", true);
+else App.say(Homer.Util.stringPlural("similar file", iSimilar) + " tagged, keeping the largest of each. Nothing was deleted.", true);
+} // MenuEditTagSimilarFiles_Click method
+
+void MenuEditReorderNames_Click(object sender, EventArgs e) {
+// Rename the tagged files, or all of them, so an alphabetical list reads in
+// the order a person means.
+//
+// Three rules, from KeyLine's reorder:
+//   A single leading digit is padded with a zero, so 2name comes before
+//     11name instead of after it.
+//   Front matter -- ReadMe, index, introduction, overview -- is prefixed so it
+//     sorts to the top.
+//   Back matter -- licence, contributing, change log, credits and the rest --
+//     is prefixed with z- so it sorts to the bottom.
+//
+// Every rename is shown before anything happens, and nothing is overwritten:
+// a name already taken gets another.
+if (abortInZip()) return;
+string sTitle = "Reorder Names";
+App.say(sTitle);
+string[] aDirs, aFiles;
+string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
+if (aPaths.Length == 0) return;
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+
+List<string[]> lsPlan = new List<string[]>();
+foreach (string sPath in aPaths) {
+string sRoot = Path.GetFileNameWithoutExtension(sPath);
+string sExt = Path.GetExtension(sPath);
+string sNew = reorderRoot_Helper(sRoot);
+if (sNew == sRoot) continue;
+lsPlan.Add(new string[] {sPath, Path.Combine(Path.GetDirectoryName(sPath), sNew + sExt)});
+}
+if (lsPlan.Count == 0) {
+App.say("No names need reordering.", true);
+return;
+}
+
+// Shown before it happens, the way Rename Tagged does, so a surprise costs
+// nothing.
+StringBuilder sbPlan = new StringBuilder();
+foreach (string[] aPair in lsPlan)
+sbPlan.Append(Path.GetFileName(aPair[0]) + "  becomes  " + Path.GetFileName(aPair[1]) + "\r\n");
+string[] aButtons = {"&Rename", "Cancel"};
+if (Dialog.Choose(sTitle, Homer.Util.stringPlural("name", lsPlan.Count) + " will change:\r\n\r\n" + sbPlan.ToString(), aButtons, 0) != "&Rename") return;
+
+int iDone = 0;
+int iFailed = 0;
+foreach (string[] aPair in lsPlan) {
+string sTarget = Homer.Web.uniquePath(aPair[1]);
+try {
+if (Directory.Exists(aPair[0])) Directory.Move(aPair[0], sTarget);
+else File.Move(aPair[0], sTarget);
+iDone++;
+}
+catch (Exception ex) {
+App.say(Path.GetFileName(aPair[0]) + ": " + ex.Message);
+iFailed++;
+}
+}
+string sMessage = Homer.Util.stringPlural("name", iDone) + " changed";
+if (iFailed > 0) sMessage += ", " + iFailed + " failed";
+App.say(sMessage + ".", true);
+refreshFolder_Helper(mdiChild);
+} // MenuEditReorderNames_Click method
+
+string reorderRoot_Helper(string sRoot) {
+// The three rules, tried in order, first match wins.
+System.Text.RegularExpressions.RegexOptions oIgnore = System.Text.RegularExpressions.RegexOptions.IgnoreCase;
+// A single leading digit, padded. Two digits already sort correctly.
+if (System.Text.RegularExpressions.Regex.IsMatch(sRoot, @"^\d([^\d]|$)"))
+return "0" + sRoot;
+// Front matter to the top. ReadMe first of all, then the other openers.
+if (System.Text.RegularExpressions.Regex.IsMatch(sRoot, @"^read\s*me", oIgnore))
+return "0#" + sRoot;
+if (System.Text.RegularExpressions.Regex.IsMatch(sRoot, @"^(index|introduction|intro|overview|about|start|getting.?started)", oIgnore))
+return "0-" + sRoot;
+// Back matter to the bottom.
+if (System.Text.RegularExpressions.Regex.IsMatch(sRoot,
+@"^(?!\d)(.*contributors|.*credits|.*bug.?report|bugs|.*code.?of.?conduct|.*contribut(e|ing)|copying|changes|.*change.?log|history|.*licen[cs]e|.*issue.?template|.*pull.?request|appendix.*|glossary|index.?of.*)$", oIgnore))
+return "z-" + sRoot;
+return sRoot;
+} // reorderRoot_Helper method
+
 void MenuEditTagDuplicateFiles_Click(object sender, EventArgs e) {
+// Tag every file whose content is identical to one already seen, keeping the
+// first and tagging the rest.  Delete Tagged then removes them, after the
+// confirmation that command already asks for.
+//
+// TWO FAULTS FIXED HERE, BOTH SERIOUS.
+//
+// It used to call File.Delete on every duplicate it found.  A command called
+// TAG Duplicate Files deleted files outright, with no confirmation and no way
+// back, and a comment beside it said it had been done for one particular job
+// and never taken out again.
+//
+// And it compared files by reading them as TEXT.  Two different pictures whose
+// bytes happen to decode to the same string counted as identical, and one was
+// deleted.  Files are the same when their BYTES are the same, which is what
+// KeyLine's delDupes has always said.
+if (abortInZip()) return;
 App.say("Tag duplicate files");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iCount = view.Count;
-List<int> list = new List<int>();
-int iDuplicate = 0;
+
+// Grouped by size first, because two files of different lengths cannot be the
+// same and reading them would be wasted work.  Only a group with more than one
+// member is hashed at all.
+Dictionary<long, List<int>> dBySize = new Dictionary<long, List<int>>();
 for (int i = 0; i < iCount; i++) {
-string sFile1 = (string) view[i]["Path"];
-if (list.Contains(i) || Directory.Exists(sFile1) || !File.Exists(sFile1)) continue;
-long lBody1 = (long) view[i]["Size"];
-for (int j = i + 1; j < iCount; j++) {
-string sFile2 = (string) view[j]["Path"];
-if (Directory.Exists(sFile2) || !File.Exists(sFile2)) continue;
-long lBody2 = (long) view[j]["Size"];
-if (lBody1 != lBody2) continue;
-string sBody1 = Homer.Util.file2String(sFile1);
-string sBody2 = Homer.Util.file2String(sFile2);
-if (sBody1 == sBody2) {
-App.say(Path.GetFileName(sFile2));
-view[j]["Tagged"] = '>';
-list.Add(j);
+string sPath = (string) view[i]["Path"];
+if (Directory.Exists(sPath) || !File.Exists(sPath)) continue;
+long lSize = (long) view[i]["Size"];
+if (!dBySize.ContainsKey(lSize)) dBySize[lSize] = new List<int>();
+dBySize[lSize].Add(i);
+}
+
+int iDuplicate = 0;
+int iChecked = 0;
+foreach (KeyValuePair<long, List<int>> pair in dBySize) {
+if (pair.Value.Count < 2) continue;
+Dictionary<string, int> dByHash = new Dictionary<string, int>();
+foreach (int i in pair.Value) {
+string sPath = (string) view[i]["Path"];
+iChecked++;
+if ((iChecked % 25) == 0) App.say(iChecked, true);
+string sHash = fileHash_Helper(sPath);
+if (sHash.Length == 0) continue;
+if (!dByHash.ContainsKey(sHash)) {
+dByHash[sHash] = i;
+continue;
+}
+// A hash match is near certain, but "near" is not good enough before
+// somebody deletes something.  The bytes are compared as well.
+if (!sameBytes_Helper((string) view[dByHash[sHash]]["Path"], sPath)) continue;
+App.say(Path.GetFileName(sPath));
+view[i]["Tagged"] = '>';
 iDuplicate++;
-// For disability.gov tree
-File.Delete(sFile2);
 }
-}
-// if ((i % 10) == 0) App.say(i, true);
-App.say(i, true);
 }
 mdiChild.bs.EndEdit();
-App.say(Homer.Util.stringPlural("duplicate", iDuplicate));
+App.say(Homer.Util.stringPlural("duplicate", iDuplicate) + " tagged. Nothing was deleted.", true);
 } // menuEditTagDuplicateFiles method
+
+string fileHash_Helper(string sPath) {
+// SHA-256 of a file, read in a stream so a large file is not held in memory.
+try {
+using (SHA256 hasher = SHA256.Create())
+using (FileStream stream = File.OpenRead(sPath))
+return BitConverter.ToString(hasher.ComputeHash(stream));
+}
+catch (Exception ex) {
+Homer.Log.write("Could not hash " + sPath + ": " + ex.Message);
+return "";
+}
+} // fileHash_Helper method
+
+bool sameBytes_Helper(string sLeft, string sRight) {
+// Byte for byte, in blocks.  The last word before anything is tagged for
+// deletion.
+try {
+using (FileStream streamLeft = File.OpenRead(sLeft))
+using (FileStream streamRight = File.OpenRead(sRight)) {
+if (streamLeft.Length != streamRight.Length) return false;
+byte[] aLeft = new byte[65536];
+byte[] aRight = new byte[65536];
+while (true) {
+int iLeft = streamLeft.Read(aLeft, 0, aLeft.Length);
+int iRight = streamRight.Read(aRight, 0, aRight.Length);
+if (iLeft != iRight) return false;
+if (iLeft == 0) return true;
+for (int i = 0; i < iLeft; i++) if (aLeft[i] != aRight[i]) return false;
+}
+}
+}
+catch (Exception ex) {
+Homer.Log.write("Could not compare " + sLeft + " and " + sRight + ": " + ex.Message);
+return false;
+}
+} // sameBytes_Helper method
 
 void MenuEditTagWithRegularExpression_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
@@ -3091,85 +3455,212 @@ App.say("Done!", true);
 //refreshFolder_Helper(mdiChild);
 } // menuEditRenameWithRegex_Click method
 
-void menuEditRenameToInitialLine_Click(object sender, EventArgs e) {
+void MenuEditRenameToTitle_Click(object sender, EventArgs e) {
+// Rename the tagged files to what identifies their content: the title, caption
+// or name recorded INSIDE the file.
+//
+// This is renTitle, the command-line utility, brought inside FileDir. That one
+// asked ExifTool for one named tag and let ExifTool do the renaming, which
+// meant it worked when the tag happened to be called Title and did nothing
+// otherwise. This asks for EVERY field, keeps the ones whose name is about a
+// title, and takes the longest -- because a photograph carrying both IMG_4021
+// and "Sunset over the Cascades" should be named the second.
+//
+// Every rename is shown before anything happens, and nothing is overwritten.
 if (abortInZip()) return;
-if (abortInZip()) return;
-App.say("Rename to initial line");
+string sTitle = "Rename to Identify Content";
+App.say(sTitle);
+if (Homer.Media.exifToolProgram().Length == 0) {
+// Not fatal: the first line of the text still gives a name. Said once, so
+// nobody wonders why a photograph kept its camera name.
+App.say("ExifTool was not found, so only the text of each file can be used.");
+Homer.Log.write("Rename to Title without ExifTool. " + Homer.Media.exifToolLog());
+}
+string[] aDirs, aFiles;
+string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
+if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
-string[] aDirs, aFiles;
-string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
-foreach (string sPath in aPaths) {
+List<string[]> lsPlan = new List<string[]>();
+List<string> lsSkipped = new List<string>();
+for (int i = 0; i < aPaths.Length; i++) {
+string sPath = aPaths[i];
 string sName = Path.GetFileName(sPath);
-if (Directory.Exists(sPath)) {
-App.say("Skipping folder " + sName);
+if (Directory.Exists(sPath)) continue;
+if (!File.Exists(sPath)) {
+lsSkipped.Add(sName + ": not found");
 continue;
 }
-
-if (!File.Exists(sPath) ){
-App.say("Cannot find " + sName);
+App.say(sName + ", " + (i + 1) + " of " + aPaths.Length);
+string sField, sError;
+string sFound = Homer.Media.bestTitle(sPath, out sField, out sError);
+if (sFound.Length == 0 && Homer.Convert.readableAsText(sPath)) {
+// A LAST RESORT, and only for a file FileDir can read as text.
+//
+// The metadata is the better answer and is always tried first. A first line is
+// often not a title at all: a date, a header, a byline, "Chapter One", or the
+// opening words of a sentence that runs on. For a binary file it is not even
+// text, which is why this is not attempted unless the format is one the
+// extraction chain understands.
+//
+// So this catches the case metadata cannot: a note or a Markdown page that
+// carries its title on the first line and nowhere else.
+sFound = firstLineTitle_Helper(sPath);
+if (sFound.Length > 0) sField = "first line of the text";
+}
+if (sFound.Length == 0) {
+lsSkipped.Add(sName + ": " + (sError.Length > 0 ? sError : "nothing inside it identifies its content"));
 continue;
 }
-
-App.say(sName);
-string sDir = Path.GetDirectoryName(sPath);
-//sDir = Homer.Util.getShortPath(sDir);
-string sExt = Path.GetExtension(sPath);
-bool bBlankDefault = true;
-string sBody = App.frame.convert2Text(sPath, bBlankDefault);
-if (sBody.Length == 0) {
-App.say("Cannot convert " + sName);
-continue;
-}
-
-sBody = sBody.Replace("\r", "\n");
-string[] aLines = sBody.Split('\n');
-string sRoot = "";
-foreach (string sLine in aLines) {
-sRoot = Homer.Util.getLegalFileRoot(sLine.Trim());
-sRoot = sRoot.Replace(" ", "_");
-if (sRoot.Length > 0) break;
-}
+string sRoot = titleToRoot_Helper(sFound);
 if (sRoot.Length == 0) {
-App.say("Cannot find valid text in " + sName);
+lsSkipped.Add(sName + ": the title had nothing usable in it");
 continue;
 }
-
-if ((sDir + @"\" + sRoot + sExt).Length > 254 ) {
-string[] aWords = sRoot.Split('_');
-sRoot = "";
-foreach (string sWord in aWords) {
-if ((sDir + @"\" + sRoot + "_" + sWord + sExt).Length > 254) break;
-sRoot += "_" + sWord;
-}
-sRoot = sRoot.Trim(new char[] {' ', '_'});
+string sExt = Path.GetExtension(sPath);
+if (Homer.Util.stringEquiv(sRoot, Path.GetFileNameWithoutExtension(sPath))) continue;
+lsPlan.Add(new string[] {sPath, Path.Combine(Path.GetDirectoryName(sPath), sRoot + sExt), sField});
 }
 
-//string sTarget = Path.Combine(sDir, sRoot + sExt);
-sRoot = sRoot.Replace("_", " ");
-string sTarget = sDir + @"\" + sRoot + sExt;
-if (Homer.Util.stringEquiv(sPath, sTarget)) {
-App.say(sName + " already has target name");
-continue;
+if (lsPlan.Count == 0) {
+// One file, one sentence, spoken. Several, a window to read: the reasons
+// differ per file and a single spoken line could not carry them.
+foreach (string sLine in lsSkipped) Homer.Log.write("Not renamed, " + sLine);
+if (lsSkipped.Count == 1) {
+App.say("Not renamed. " + lsSkipped[0], true);
+return;
+}
+StringBuilder sbNone = new StringBuilder("No file could be renamed.\r\n\r\n");
+foreach (string sLine in lsSkipped) sbNone.Append("  " + sLine + "\r\n");
+Lbc.AnswerDialog(sTitle, "&Why not", sbNone.ToString());
+return;
 }
 
-sTarget = Homer.Util.getUniqueFileName(sTarget);
+// NO CONFIRMATION. Renaming is not deleting: the file is still there, still
+// tagged, and a name that turns out wrong can be changed again. A dialog before
+// every rename made the quick thing slow, and the plan it showed was a wall of
+// text to read before doing what had already been asked for.
+//
+// Each rename is spoken as it happens, so the reader hears what became what,
+// and every detail goes to the session log for afterwards.
+int iDone = 0;
+int iFailed = 0;
+string sLast = "";
+foreach (string[] aPair in lsPlan) {
+// A number is added only when the name is taken, and it is added to the ROOT
+// so the extension still says what the file is: "Sunset-01.jpg", never
+// "Sunset.jpg-01".
+string sTarget = uniqueTitleName_Helper(aPair[1]);
 try {
-//if (File.Exists(sTarget)) File.Delete(sTarget);
-FileSystem.RenameFile(Homer.Util.getShortPath(sPath), Path.GetFileName(sTarget));
-//App.moveFile(sPath, sTarget, false);
+File.Move(aPair[0], sTarget);
+Homer.Log.write("Renamed " + aPair[0] + " to " + Path.GetFileName(sTarget)
++ " from the " + aPair[2] + " field.");
+App.say(Path.GetFileName(sTarget));
+sLast = sTarget;
+iDone++;
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message + "\n" + sTarget, "Error");
-continue;
+App.say(Path.GetFileName(aPair[0]) + ": " + ex.Message);
+Homer.Log.write("Could not rename " + aPair[0] + ": " + ex.Message);
+iFailed++;
 }
-delete_Helper(sPath);
-refresh_Helper(sTarget);
 }
+foreach (string sLine in lsSkipped) Homer.Log.write("Not renamed, " + sLine);
+string sMessage = Homer.Util.stringPlural("file", iDone) + " renamed";
+if (iFailed > 0) sMessage += ", " + iFailed + " failed";
+if (lsSkipped.Count > 0) sMessage += ", " + lsSkipped.Count + " skipped";
+App.say(sMessage + ".", true);
+refreshFolder_Helper(mdiChild);
+// Land on the renamed file rather than wherever the list happened to move to.
+// goTo_Helper finds it only if it survived the filter in effect; when a filter
+// hides it, the cursor stays where the refresh left it, which is the honest
+// outcome rather than a jump to nothing.
+if (sLast.Length > 0) goTo_Helper(sLast);
+} // MenuEditRenameToTitle_Click method
 
-App.say("Done!", true);
-} // menuEditRenameToInitialLine_Click method
+string firstLineTitle_Helper(string sPath) {
+// The first line of a file's text that has anything in it.
+//
+// The text comes from the one extraction chain, so this works on a Word
+// document or a PDF as readily as on a text file -- which is more than the old
+// Rename to Initial Line managed, since it read only what 2htm knew.
+//
+// A first line that is merely long is prose rather than a title, so the same
+// bounds apply as to a metadata field: too short is not a name, too long is a
+// paragraph.
+string sError;
+string sBody = Homer.Convert.toPlainText(sPath, out sError);
+if (sBody.Length == 0) return "";
+foreach (string sLine in sBody.Replace("\r\n", "\n").Split('\n')) {
+string sTrimmed = sLine.Trim();
+// Markdown heading marks and the like are decoration, not part of the title.
+sTrimmed = sTrimmed.TrimStart(new char[] {'#', '*', '=', '-', ' ', '\t'}).Trim();
+if (sTrimmed.Length < 4) continue;
+if (sTrimmed.Length > 120) return sTrimmed.Substring(0, 120);
+return sTrimmed;
+}
+return "";
+} // firstLineTitle_Helper method
+
+string titleToRoot_Helper(string sTitle) {
+// A title turned into a file name, keeping the punctuation that carries
+// meaning and dropping the rest.
+//
+// KEPT: dashes, commas, periods, parentheses and apostrophes, because they
+// occur naturally in a sentence or a descriptive phrase and a name reads
+// wrongly without them. Capitalization is left exactly as written -- somebody
+// chose it, and lowercasing a title loses proper nouns.
+//
+// DROPPED: everything Windows forbids, and everything else that is punctuation
+// rather than language. Each run of dropped characters becomes ONE space, and
+// underscores go the same way, so "Sunset_over__the:Cascades" reads as
+// "Sunset over the Cascades" rather than running together.
+if (sTitle == null) return "";
+StringBuilder sb = new StringBuilder(sTitle.Length);
+bool bPendingSpace = false;
+foreach (char c in sTitle) {
+bool bKeep = Char.IsLetterOrDigit(c)
+|| c == '-' || c == ',' || c == '.' || c == '(' || c == ')' || c == '\'';
+if (bKeep) {
+if (bPendingSpace && sb.Length > 0) sb.Append(' ');
+bPendingSpace = false;
+sb.Append(c);
+}
+else {
+// Whitespace, underscores and every dropped character alike: one space.
+bPendingSpace = true;
+}
+}
+string sRoot = sb.ToString().Trim();
+// Windows will not keep a name ending in a period or a space, and a leading
+// dash makes a name that command-line tools mistake for an option.
+sRoot = sRoot.Trim(new char[] {' ', '.', '-'});
+// Room for the folder, a separating backslash, the extension, and a -99
+// sequence if one is needed. Cut at a word rather than mid-word.
+if (sRoot.Length > 120) {
+sRoot = sRoot.Substring(0, 120);
+int iSpace = sRoot.LastIndexOf(' ');
+if (iSpace > 40) sRoot = sRoot.Substring(0, iSpace);
+sRoot = sRoot.Trim(new char[] {' ', '.', '-', ','});
+}
+return sRoot;
+} // titleToRoot_Helper method
+
+string uniqueTitleName_Helper(string sTarget) {
+// The name if it is free, otherwise the same name with -01, -02 and so on
+// until one is. Two digits because a folder with a hundred files sharing one
+// title is a different problem.
+if (!File.Exists(sTarget) && !Directory.Exists(sTarget)) return sTarget;
+string sDir = Path.GetDirectoryName(sTarget);
+string sRoot = Path.GetFileNameWithoutExtension(sTarget);
+string sExt = Path.GetExtension(sTarget);
+for (int i = 1; i < 1000; i++) {
+string sTry = Path.Combine(sDir, sRoot + "-" + i.ToString("00") + sExt);
+if (!File.Exists(sTry) && !Directory.Exists(sTry)) return sTry;
+}
+return Homer.Web.uniquePath(sTarget);
+} // uniqueTitleName_Helper method
 
 void MenuMiscExtractTagged_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
@@ -6225,7 +6716,7 @@ void mediaDownload_Helper(string sUrl) {
 // path it hands over so a copy beside FileDir is found without anything being
 // installed.
 string sTitle = "Web Download";
-string sExe = Homer.Media.findTool("yt-dlp");
+string sExe = Homer.Media.findInstalled("yt-dlp");
 if (sExe.Length == 0) {
 Lbc.Show("yt-dlp was not found, so media cannot be fetched from a page.\n\nInstall the media tools from the FileDir installer, or put yt-dlp.exe in the FileDir folder.", sTitle);
 return;
@@ -6294,7 +6785,7 @@ if (sUrl.Length == 0) return;
 // command cannot see.  When yt-dlp is here, the choice is offered rather than
 // guessed at, because a wrong guess costs either a large download or an empty
 // list.  The answer is remembered, so the usual case is one keypress.
-if (Homer.Media.findTool("yt-dlp").Length > 0) {
+if (Homer.Media.findInstalled("yt-dlp").Length > 0) {
 string[] aHow = {"Download media from this page (yt-dlp)", "List the files linked from this page"};
 string sHow = App.readValue(App.sIniFile, "Data", "WebDownloadHow", aHow[0]);
 int iHow = Array.IndexOf(aHow, sHow);
@@ -6642,12 +7133,220 @@ DateTime dtStop = DateTime.Parse(sStop);
 App.sTimerStop = dtStop.ToString();
 } // menuMiscConfigureTimer_Click method
 
+void MenuMiscPlayFolder_Click(object sender, EventArgs e) {
+// Play something now: whatever is on the clipboard if that is playable,
+// otherwise the tagged files, otherwise everything playable in this folder.
+//
+// THE CLIPBOARD FIRST, AND WHY.
+//
+// mpv plays anything it can reach, and with yt-dlp beside it that includes a
+// YouTube address. So a play list of web addresses is as playable as a folder
+// of MP3 files, and the clipboard is where such a list arrives -- copied from a
+// mail message, a web page, or a file open in EdSharp.
+//
+// WHAT MPV DOES AND DOES NOT DO WITH THE CLIPBOARD.
+//
+// mpv reads the clipboard perfectly well at run time: clipboard/text is a
+// read and write property, native clipboard support is on by default, and
+// Windows has its own backend. Inside a running mpv, Control+V appends the
+// file or address in the clipboard to the play list, and plays it at once if
+// nothing is playing.
+//
+// But that is ONE entry, and there is no --playlist=clipboard and no
+// clipboard:// protocol -- --playlist takes a file name. A forty-track list
+// cannot be handed over that way.
+//
+// So FileDir writes the clipboard to a temporary play list and hands mpv that.
+// It could pipe the same text to --playlist=- instead, and a file is chosen
+// deliberately: it can be replayed, saved, or opened as a virtual folder
+// afterwards, and standard input can be handed over only once.
+//
+// Control+V still works inside the player, so more can be queued while
+// listening. That is worth knowing and is in the guide.
+//
+// The clipboard is only used when it LOOKS playable: a web address, or a line
+// naming a file that exists. Ordinary copied prose is ignored and the folder is
+// played instead, so the command never does something surprising with whatever
+// happened to be copied last.
+if (abortInZip()) return;
+string sTitle = "Play Media";
+App.say(sTitle);
+if (Homer.Media.mpvProgram().Length == 0) {
+Lbc.Show("mpv was not found, so there is nothing to play with.\r\n\r\n"
++ "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box. "
++ "Play List still writes a play list without it.\r\n\r\n"
++ "If mpv IS installed, this is where FileDir looked. Send these lines and the search can be widened:\r\n\r\n"
++ Homer.Media.searchLog(), sTitle);
+return;
+}
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+
+List<string> lsPlay = new List<string>();
+string sWhere = "";
+
+// 1. The clipboard, when it holds addresses or file names.
+foreach (string sLine in clipboardPlaylist_Helper()) lsPlay.Add(sLine);
+if (lsPlay.Count > 0) sWhere = "from the clipboard";
+
+// 2. The tagged files.
+if (lsPlay.Count == 0) {
+string[] aDirs, aFiles;
+string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
+if (aPaths.Length > 1) {
+foreach (string sPath in aPaths)
+if (File.Exists(sPath) && isPlayable_Helper(sPath)) lsPlay.Add(sPath);
+if (lsPlay.Count > 0) sWhere = "tagged";
+}
+}
+
+// 3. Everything playable in the window, in the order shown. Sort by date and
+// this plays in date order, which is how a recording session or a downloaded
+// series wants to be heard.
+if (lsPlay.Count == 0) {
+DataView view = mdiChild.tbl.DefaultView;
+for (int i = 0; i < view.Count; i++) {
+string sPath = (string) view[i]["Path"];
+if (File.Exists(sPath) && isPlayable_Helper(sPath)) lsPlay.Add(sPath);
+}
+if (lsPlay.Count > 0) sWhere = "in this folder";
+}
+
+if (lsPlay.Count == 0) {
+App.say("Nothing to play. Copy a play list or some addresses, or move to a folder holding sound or video.", true);
+return;
+}
+
+// A temporary list rather than one in the folder: this is playing, not filing,
+// and leaving an .m3u behind every time would be litter.  It keeps its name so
+// the same thing can be replayed, and Open Virtual Folder can reach it.
+string sTemp = Path.Combine(Path.GetTempPath(), "FileDir_play.m3u");
+try {
+File.WriteAllText(sTemp, "#EXTM3U\r\n" + String.Join("\r\n", lsPlay.ToArray()), new UTF8Encoding(false));
+}
+catch (Exception ex) {
+Lbc.Show("The play list could not be written.\n\n" + ex.Message, sTitle);
+return;
+}
+Homer.Log.write("Play Media: " + lsPlay.Count + " entries " + sWhere + ".");
+App.say(Homer.Util.stringPlural("item", lsPlay.Count) + " " + sWhere);
+playMedia_Helper(sTemp);
+} // MenuMiscPlayFolder_Click method
+
+List<string> clipboardPlaylist_Helper() {
+// The clipboard as a list of things to play, or an empty list when it holds
+// nothing of the kind.
+//
+// TOLERANT OF WHAT SURROUNDS THE LIST, strict about what the list is.
+//
+// The first version threw everything away the moment it met one line that was
+// neither an address nor a file. That looked careful and was useless: Append to
+// Clipboard heads each file's text with the file's NAME, and ends with a rule
+// and "End of Document", so a play list appended that way arrived with three
+// lines of packaging around forty perfectly good addresses -- and all forty
+// were discarded.
+//
+// So unplayable lines are now passed over rather than fatal, and the test moved
+// to the proportion: at least two playable lines, and at least half of the real
+// content. A play list wrapped in headings passes. A page of prose with one
+// address in it does not, which is the case the strictness was for.
+List<string> lsLines = new List<string>();
+string sText = "";
+try {
+if (!Clipboard.ContainsText()) return lsLines;
+sText = Clipboard.GetText();
+}
+catch (Exception) {
+return lsLines;
+}
+if (sText == null || sText.Trim().Length == 0) return lsLines;
+// A byte order mark at the front of a copied file would otherwise make the
+// first address unrecognisable.
+sText = sText.TrimStart('\uFEFF');
+
+List<string> lsKept = new List<string>();
+int iPlayable = 0;
+int iContent = 0;
+foreach (string sRaw in sText.Replace("\r\n", "\n").Split('\n')) {
+string sLine = sRaw.Trim();
+if (sLine.Length == 0) continue;
+// A comment is part of a play list, not content to judge it by. #EXTINF is
+// where the track titles live, so these are kept exactly as they are.
+if (sLine.StartsWith("#")) {
+lsKept.Add(sLine);
+continue;
+}
+// The rule Append to Clipboard draws between files is packaging, not content.
+if (sLine.TrimEnd('-').Length == 0) continue;
+iContent++;
+bool bAddress = sLine.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+|| sLine.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+|| sLine.StartsWith("rtmp://", StringComparison.OrdinalIgnoreCase)
+|| sLine.StartsWith("rtsp://", StringComparison.OrdinalIgnoreCase)
+|| sLine.StartsWith("file://", StringComparison.OrdinalIgnoreCase);
+bool bFile = false;
+if (!bAddress) {
+try { bFile = File.Exists(sLine); }
+catch (Exception) { }
+}
+if (!bAddress && !bFile) continue;
+lsKept.Add(sLine);
+iPlayable++;
+}
+
+// Two, so a single address inside a page of prose is not mistaken for a play
+// list; half, so a genuine list survives whatever was wrapped around it.
+if (iPlayable < 2 || iPlayable * 2 < iContent) return new List<string>();
+
+// Trailing comments with nothing left to describe would be a heading over an
+// empty list.
+while (lsKept.Count > 0 && lsKept[lsKept.Count - 1].StartsWith("#"))
+lsKept.RemoveAt(lsKept.Count - 1);
+return lsKept;
+} // clipboardPlaylist_Helper method
+
+
+bool isPlayable_Helper(string sPath) {
+// Sound or moving pictures. Asked of Homer.Convert, which already keeps the
+// lists that Output Type uses, so a format added there is playable here too
+// without a second list to keep in step.
+string sCategory = Homer.Convert.categoryOf(sPath);
+return sCategory == "audio" || sCategory == "video";
+} // isPlayable_Helper method
+
 void menuMiscPlayList_Click(object sender, EventArgs e) {
+// Make a play list of the tagged files, and, when mpv is installed, offer to
+// play it there and then.
+//
+// WHY THIS COMMAND RATHER THAN A NEW ONE.
+//
+// A play list is already the thing that says "these files, in this order" --
+// which is exactly what a player needs. Hanging playback off it means no new
+// key to learn, no second way of choosing files, and the list is still on disk
+// afterwards for any other player. FileDir has few keys left, and this one was
+// already the right place.
+//
+// Without mpv the command behaves exactly as it always has: the list is
+// written and nothing else is said. A person who does not play media from the
+// file list sees no change at all.
 if (abortInZip()) return;
 App.say("Play list");
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
+
+// Already a play list? Then play it rather than wrapping it in another. This
+// is what makes the command work a second time: run it, then come back to the
+// .m3u it made and run it again to listen.
+if (aPaths.Length == 1 && File.Exists(aPaths[0])
+&& Homer.Util.stringEquiv(Path.GetExtension(aPaths[0]), ".m3u")) {
+if (Homer.Media.mpvProgram().Length == 0) {
+Lbc.Show("That is already a play list.\n\nTo play it here, install mpv: run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box.", "Play List");
+return;
+}
+playMedia_Helper(aPaths[0]);
+return;
+}
 
 string sFile = "PlayList.m3u";
 string sDir = Directory.GetCurrentDirectory();
@@ -6663,11 +7362,98 @@ App.say("Done!", true);
 
 if (Homer.Util.stringEquiv(sDir, Path.GetDirectoryName(sFile))) {
 MdiChild mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
+if (mdiChild != null) {
 refresh_Helper(sFile);
 goTo_Helper(sFile);
 }
+}
+
+// The list is written and kept; then it plays, without asking.
+if (Homer.Media.mpvProgram().Length > 0) playMedia_Helper(sFile);
 } // menuMiscPlayList_Click method
+
+void playMedia_Helper(string sPlayList) {
+// Hand a play list to mpv and let it play.
+//
+// NO QUESTIONS. This used to ask whether to play sound and picture or sound
+// alone, and remembered the answer. That was a menu in front of a command whose
+// whole point is to start playing: the default experience is the whole one, and
+// mpv's own keys handle the rest -- there is a key in the player for muting the
+// video if that is ever wanted.
+//
+// mpv is left to run on its own rather than waited for: it is a player, the
+// person will be listening to it, and FileDir should not sit frozen meanwhile.
+// Its own keys work in its window -- space to pause, arrows to seek, angle
+// brackets for the previous and next item, q to stop.
+string sTitle = "Play Media";
+string sMpv = Homer.Media.mpvProgram();
+if (sMpv.Length == 0) return;
+
+StringBuilder sbArgs = new StringBuilder();
+
+// mpv reaches YouTube and the rest through yt-dlp, which it looks for on the
+// path. FileDir may hold the only copy -- beside its own program, where mpv
+// would never look -- so it is named outright when it is there. Options come
+// before the file, as mpv's own synopsis has them.
+string sYtDlp = Homer.Media.findInstalled("yt-dlp");
+if (sYtDlp.Length > 0) {
+sbArgs.Append("--script-opts=ytdl_hook-ytdl_path=");
+sbArgs.Append(Homer.Util.stringQuote(sYtDlp));
+sbArgs.Append(" ");
+}
+
+// THE PLAY LIST AS A PLAIN ARGUMENT, which is how a person would type it:
+//
+//   mpv.exe "C:\...\temp.m3u"
+//
+// It used to be handed over as --playlist=<file>, and that is where this went
+// wrong. mpv opens a play list perfectly well when it is simply named -- its
+// own manual says so, "You can play playlists directly, without this option" --
+// and --playlist applies security rules of its own that a list of web addresses
+// can fall foul of. Typing the plain form at the Run box played the same file
+// that FileDir could not, which settled it.
+//
+// Nothing else is passed. Every option is one more thing that can refuse the
+// list, and the default experience is the whole one.
+sbArgs.Append(Homer.Util.stringQuote(sPlayList));
+Homer.Log.write("Playing " + sPlayList + " with " + sMpv);
+Homer.Log.write("  Arguments: " + sbArgs.ToString());
+try {
+System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+if (Homer.Media.needsShell(sMpv)) {
+// A .cmd or .bat wrapper cannot be started directly, so it goes through the
+// command interpreter. A real player is preferred over a wrapper wherever
+// both exist, because a wrapper that does not forward its arguments
+// swallows the play list without a word -- which is exactly what happened.
+info.FileName = "cmd.exe";
+info.Arguments = "/c " + Homer.Util.stringQuote(sMpv) + " " + sbArgs.ToString();
+info.CreateNoWindow = true;
+}
+else {
+info.FileName = sMpv;
+info.Arguments = sbArgs.ToString();
+}
+info.UseShellExecute = false;
+info.WorkingDirectory = Path.GetDirectoryName(sPlayList);
+System.Diagnostics.Process process = System.Diagnostics.Process.Start(info);
+// A player that stops within a second or two has not played anything: mpv
+// refusing a list exits at once. Rather than say "Playing" and leave a person
+// waiting for sound that is not coming, the exit is noticed and said.
+if (process != null && process.WaitForExit(2000)) {
+Homer.Log.write("The player exited immediately, code " + process.ExitCode + ".");
+App.say("The player closed straight away. Nothing played.", true);
+Lbc.Show("mpv started and closed again without playing.\r\n\r\n"
++ "This is what it was given:\r\n\r\n"
++ sMpv + "\r\n" + sbArgs.ToString() + "\r\n\r\n"
++ "The play list is still at " + sPlayList + ", so the same line can be tried by hand.", sTitle);
+return;
+}
+App.say("Playing. Press q in the player window to stop.", true);
+}
+catch (Exception ex) {
+Lbc.Show("mpv could not be started.\r\n\r\n" + ex.Message + "\r\n\r\nIt was found at " + sMpv, sTitle);
+}
+} // playMedia_Helper method
 
 void MenuMiscNetworkConnections_Click(object sender, EventArgs e) {
 string sTitle = "Network Connections";
@@ -7207,6 +7993,15 @@ return true;
 case Keys.Alt | Keys.Shift | Keys.OemPeriod :
 App.frame.menuEditTagDuplicateFiles.clickOrDescribe();
 return true;
+case Keys.Alt | Keys.Shift | Keys.Oemcomma :
+App.frame.menuEditTagSimilarFiles.clickOrDescribe();
+return true;
+case Keys.Alt | Keys.Shift | Keys.K :
+App.frame.menuEditReorderNames.clickOrDescribe();
+return true;
+case Keys.Alt | Keys.Shift | Keys.J :
+App.frame.menuEditFindDuplicates.clickOrDescribe();
+return true;
 case Keys.Control | Keys.Shift | Keys.OemPeriod :
 App.frame.menuEditTagWithRegularExpression.clickOrDescribe();
 return true;
@@ -7391,7 +8186,7 @@ case Keys.Shift | Keys.I :
 App.frame.menuNavigateInitialChange.clickOrDescribe();
 return true;
 case Keys.Control | Keys.Shift | Keys.I :
-App.frame.menuEditRenameToInitialLine.clickOrDescribe();
+App.frame.menuEditRenameToTitle.clickOrDescribe();
 return true;
 case Keys.Control | Keys.Shift | Keys.E :
 App.frame.menuMiscExtractTagged.clickOrDescribe();
@@ -7419,6 +8214,9 @@ App.frame.menuQueryListTagged.clickOrDescribe();
 return true;
 case Keys.Control | Keys.Shift | Keys.L :
 App.frame.menuMiscPlayList.clickOrDescribe();
+return true;
+case Keys.Alt | Keys.Shift | Keys.L :
+App.frame.menuMiscPlayFolder.clickOrDescribe();
 return true;
 case Keys.Alt | Keys.L :
 App.frame.menuQueryListFiles.clickOrDescribe();
@@ -7776,7 +8574,7 @@ case Keys.Alt | Keys.Control | Keys.Y :
 App.frame.menuQueryTimer.clickOrDescribe();
 return true;
 // Translate the tagged files with a model running on this computer.
-case Keys.Alt | Keys.Shift | Keys.L :
+case Keys.Alt | Keys.Shift | Keys.F7 :
 App.frame.menuMiscTranslateTagged.clickOrDescribe();
 return true;
 }

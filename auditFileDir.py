@@ -319,7 +319,7 @@ def checkInstallerSourcesExist(sIss):
     can quietly stop shipping.
     """
     setTracked, setLocal = homerPolicy.repoFiles(pathRoot)
-    bInFiles, lMissing, lSilent, lNotYetBuilt = False, [], [], []
+    bInFiles, lMissing, lSilent, lNotYetBuilt, lOptional = False, [], [], [], []
     for iLine, sLine in enumerate(sIss.splitlines(), 1):
         sTrim = sLine.strip()
         if sTrim.startswith("["):
@@ -340,11 +340,19 @@ def checkInstallerSourcesExist(sIss):
         if os.path.exists(os.path.join(pathRoot, sSource.replace("\\", "/"))):
             continue
         if sSource.lower() in setLocal:
-            # Build output. The audit runs BEFORE the compile, on purpose, so
-            # FileDir.exe cannot exist yet on a clean tree. Failing on it would
-            # mean the build could never run twice from a fresh clone. If it is
-            # still missing when the installer is compiled, Inno says so itself.
-            lNotYetBuilt.append(sSource)
+            # Named as a local file, so its absence is not a fault. Two quite
+            # different things land here and the message must not conflate them,
+            # since it once told the reader that System.Memory.dll would be
+            # built by this build, which is nonsense.
+            if "skipifsourcedoesntexist" in sTrim.lower():
+                # Optional and third party: it ships if it is there. The audit
+                # says so plainly rather than promising it will appear.
+                lOptional.append(sSource)
+            else:
+                # Build output. The audit runs BEFORE the compile, on purpose,
+                # so FileDir.exe cannot exist yet on a clean tree. Failing on it
+                # would mean the build could never run from a fresh clone.
+                lNotYetBuilt.append(sSource)
             continue
         if "skipifsourcedoesntexist" in sTrim.lower():
             lSilent.append(sSource)
@@ -352,7 +360,13 @@ def checkInstallerSourcesExist(sIss):
             lMissing.append(sSource + " (line " + str(iLine) + ")")
     report("Every file the installer names exists", not lMissing, ", ".join(lMissing))
     if lNotYetBuilt:
-        say("      (" + ", ".join(lNotYetBuilt) + " will be built before the installer is compiled)")
+        say("      (" + ", ".join(lNotYetBuilt)
+            + (" is" if len(lNotYetBuilt) == 1 else " are")
+            + " built before the installer is compiled)")
+    if lOptional:
+        say("      (" + ", ".join(lOptional)
+            + (" is" if len(lOptional) == 1 else " are")
+            + " optional and ship only when present)")
     for sSource in lSilent:
         warn("Installer source missing, and flagged skipifsourcedoesntexist, so it ships nothing: " + sSource)
 
@@ -756,6 +770,90 @@ def extensionLists():
     return dLists
 
 
+def checkKeysNamedInText():
+    """Every key named in a shipped file must be a key the program has.
+
+    Translate File moved from Alt+Shift+L to Alt+Shift+F7, and the Results box
+    went on saying "Alt+Shift+F7 can translate with it" -- except it said
+    Alt+Shift+L, because that text lives in summarizeSetup.ps1 and the rename
+    never reached it. The key was still a real key by then, bound to Play Media,
+    so it read as plausible nonsense.
+
+    This catches the sharper case: a document or script naming a key the program
+    no longer has at all. It would not have caught the Results box, since
+    Alt+Shift+L still exists; the honest answer there is that renaming a key
+    means searching every shipped file, and the audit cannot know which sentence
+    was about which command.
+    """
+    sHotkeys = readFile("Hotkeys.ini")
+    if sHotkeys is None:
+        return
+    setBound = set()
+    for sLine in sHotkeys.splitlines():
+        iEquals = sLine.find("=")
+        if iEquals < 1:
+            continue
+        sValue = sLine[iEquals + 1:]
+        iComma = sValue.find(",")
+        sKey = (sValue[:iComma] if iComma >= 0 else sValue).strip()
+        for sPart in re.split(r"\s+or\s+", sKey):
+            if sPart.strip():
+                setBound.add(sPart.strip().lower())
+
+    # Keys bound in the source as well: a command may carry a second key that the
+    # hotkey table does not repeat.
+    sCode = readFile("FileDir.cs") or ""
+    for oMatch in re.finditer(r'menu_Helper\(\s*@?"[^"]*"\s*,\s*@?"([^"]*)"', sCode):
+        for sPart in re.split(r"\s+or\s+|,", oMatch.group(1)):
+            if sPart.strip():
+                setBound.add(sPart.strip().lower())
+
+    # And the ones Windows owns rather than FileDir: moving between and closing
+    # child windows is the framework's job, so no command declares them.
+    for sFramework in ("control+f6", "control+shift+f6", "control+f4",
+                       "control+tab", "control+shift+tab", "alt+f4"):
+        setBound.add(sFramework)
+
+    # ONLY WHAT THE INSTALLER SHIPS. The first version of this check read every
+    # .md in the folder and failed on a working note that mentioned EdSharp's
+    # Alt+Control+E -- which is a real key, of another program, in a document no
+    # user ever sees. The scope is what a user can read, which is what the
+    # installer carries.
+    sIss = readFile("FileDir_setup.iss") or ""
+    setShipped = set()
+    for oMatch in re.finditer(r'^\s*Source:\s*"([^"]+)"', sIss, re.M):
+        sSource = oMatch.group(1)
+        if "*" in sSource or "?" in sSource:
+            continue
+        setShipped.add(os.path.basename(sSource).lower())
+
+    lFaults = []
+    for sName in sorted(os.listdir(pathRoot)):
+        if sName.lower() not in setShipped:
+            continue
+        if not (sName.lower().endswith(".md") or sName.lower().endswith(".ps1")
+                or sName.lower().endswith(".cmd")):
+            continue
+        if sName.lower() in ("history.md",):
+            continue          # a history records keys that have since moved
+        sText = readFile(sName) or ""
+        for oMatch in re.finditer(
+                r"\b((?:Alt\+|Control\+|Shift\+){1,3}(?:F\d{1,2}|[A-Za-z]|Comma|Period))\b", sText):
+            sKey = oMatch.group(1)
+            if sKey.lower() in setBound:
+                continue
+            # Written with the punctuation spelled out in prose, as the hotkey
+            # table does for readability.
+            sSpelled = sKey.lower().replace("comma", ",").replace("period", ".")
+            if sSpelled in setBound:
+                continue
+            lFaults.append(sName + ": " + sKey)
+    # One line per file rather than one per mention, which would be pages.
+    lUnique = sorted(set(lFaults))
+    report("Every key named in a document is a key the program has",
+           not lUnique, ", ".join(lUnique[:12]) + ("..." if len(lUnique) > 12 else ""))
+
+
 def checkConversionChain():
     """Trace every file type through the conversion chain, on every build.
 
@@ -850,7 +948,15 @@ def checkHistoryContents():
         if lParts and lParts[-1].isdigit():
             lParts[-1] = str(int(lParts[-1]) + 1)
             lWanted.append(".".join(lParts))
-        if not any(("Version " + s) in setHeadings for s in lWanted):
+        # A heading may carry a note after the number -- "Version 5.0.37, the
+        # public release" -- and that is a better heading than a bare number.
+        # Matched on how it starts, not on the whole line.
+        bFound = False
+        for sWanted in lWanted:
+            for sHeading in setHeadings:
+                if sHeading.startswith("Version " + sWanted):
+                    bFound = True
+        if not bFound:
             warn("History.md has no entry for version " + " or ".join(lWanted)
                  + ". Add one before releasing; a release with nothing recorded "
                  "about it cannot be explained later.")
@@ -1188,6 +1294,7 @@ def main():
     checkNoStrayProject()
     checkHtmlPairs()
     checkLicenceDocument()
+    checkKeysNamedInText()
     checkConversionChain()
     checkHistoryContents()
     check2htmAssemblies()

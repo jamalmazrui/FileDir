@@ -1,6 +1,6 @@
 ﻿# FileDir
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -35,13 +35,21 @@ blind developer for people who work by keyboard and screen reader.
 - **Speech that adds rather than repeats.** FileDir speaks through JAWS, then
   NVDA, then a Windows notification that Narrator reads. It says only what your
   screen reader does not already say.
-- **Conversion between formats.** Tag files, press Alt+Shift+K, pick a format,
-  and FileDir writes a converted copy beside each one. Word, web page, Markdown,
-  plain text, OpenDocument, rich text, EPUB, LaTeX and more, through Pandoc.
-- **Translation that stays on your computer.** Tag a folder of documents, press
-  Alt+Shift+L, name a language, and FileDir writes a translation beside each
-  one. It uses a language model running on this machine, so nothing is sent
-  anywhere. This is optional and the installer asks before downloading it.
+- **Conversion between formats, in batches.** Tag files, press Shift+O, pick
+  what they should become. Documents, audio, video and pictures all convert,
+  and PDFs keep their headings, lists and tables. No Microsoft Office needed.
+- **Naming files by what is inside them.** Control+Shift+I renames to the title,
+  caption or song name held in the file itself.
+- **Finding duplicates anywhere below a folder**, compared byte for byte and
+  gathered into a window you can inspect and delete from.
+- **Playing media**, from the folder, the tagged files, or a play list you
+  copied — including lists of web addresses.
+- **Everything a file knows about itself** in one alphabetical list: Windows
+  properties, what opens it, and the metadata inside it.
+- **Translation and questions, on your own computer.** Translate whole folders,
+  or ask an AI about a file. Nothing is sent anywhere.
+- **A log of every session**, and one key to put it on your clipboard.
+
 
 ## Installing
 
@@ -69,7 +77,7 @@ download serves all three.
 The two for translation are **not ticked**:
 
 - **Ollama with the llama3.2 chat model**, about 2 GB. This is what makes
-  Alt+Shift+L work at all.
+  Alt+Shift+F7 work at all.
 - **The qwen2.5:7b model**, about 5 GB, which translates noticeably better.
 
 Nobody should download several gigabytes by not noticing a checkbox, so you have
@@ -107,7 +115,7 @@ Try these in order. Each is one keystroke.
    what you have tagged and **Shift+Y** for how many they are and how big.
 7. With those files still tagged, press **Shift+Z** to zip them, or **Shift+C**
    to copy them to another folder.
-8. Press **Alt+Shift+L** to translate them into a language you name, if you
+8. Press **Alt+Shift+F7** to translate them into a language you name, if you
    installed Ollama. FileDir writes a translation beside each file.
 9. Press **Control+F1** to turn on Key Describer. Now pressing a command key
    says its name, its key, and what it does, instead of running it. Press

@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -531,6 +531,29 @@ disagreed three ways.
 engine that cannot read it, a document source nothing can read, a category with
 no branch, and any claim that Pandoc reads PDF or the Office formats. Add to
 that check whenever a format or an engine is added.
+
+## Finding an Installed Tool
+
+`Homer.Media.findInstalled` is the one way to locate an outside program, and it
+looks in more places than seems necessary because each was learned from a
+failure:
+
+- **Beside FileDir.exe**, so a developer copy always wins.
+- **Every folder on PATH** — but PATH alone is never enough. A process inherits
+  the environment it was born with, so a program installed after Explorer
+  started is invisible to anything Explorer launches.
+- **Program Files, and any folder there whose name CONTAINS the tool name.** mpv
+  installs into "MPV Player".
+- **The user's Programs folder, winget's Links folder, and the Packages folder**
+  winget unpacks into, which no PATH mentions.
+
+**Every runnable extension**, not just `.exe`: `.com`, `.cmd` and `.bat` are all
+legitimate. A `.cmd` wrapper cannot be started by the process object, so
+`needsShell` says when to route through `cmd /c`.
+
+`Homer.Media.searchLog()` returns the whole search, and every failure message
+shows it. A "not found" that cannot be diagnosed from its own text costs more
+rounds than the bug.
 
 ## Traps Worth Knowing
 

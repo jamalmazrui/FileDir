@@ -1,6 +1,6 @@
 ﻿# FileDir — Tutorials
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -193,7 +193,7 @@ is already here — one installation serves them all.
 
 1. Open the folder holding the documents.
 2. **Tag** the ones to translate. One is fine; twenty is the point.
-3. Press **Alt+Shift+L** for Translate File.
+3. Press **Alt+Shift+F7** for Translate File.
 4. Type the language you want — Spanish, French, Arabic, whatever it is — and
    press Enter. FileDir remembers your answer for next time.
 5. Listen. FileDir says which file it is on and which part of it, because a
@@ -234,9 +234,9 @@ costs you nothing.
    alphabetically. Filter it with Control+F.
 3. Press **Alt+Shift+H** to open the hotkey document, which lists every command
    three ways: by name, by key, and grouped by the modifier a key starts with.
-4. Press **Control+F2** for Configuration Options and set what you want changed
+4. Press **Alt+Shift+C** for Configuration Options and set what you want changed
    for good.
-5. Press **Alt+F2** for Manual Options to change something for this session
+5. Press **Alt+Shift+M** for Manual Options to change something for this session
    only.
 6. Press **Control+Shift+X** — Extra Speech Toggle — if FileDir says more than
    you want. Press it again to bring the extra messages back.

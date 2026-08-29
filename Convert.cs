@@ -197,6 +197,21 @@ private static readonly string[] c_aImageSources = {
 ".png", ".jpg", ".jpeg", ".bmp", ".gif", ".tif", ".tiff", ".webp"
 };
 
+public static bool readableAsText(string sPath) {
+// Whether toPlainText has any engine for this file at all.
+//
+// Asked before falling back to a file's first line, because a first line only
+// means something in a file that HAS lines. Reading the opening bytes of a
+// JPEG and calling them a title is how a folder of photographs ends up named
+// after binary rubbish.
+string sExt = Path.GetExtension(sPath).ToLower();
+if (Array.IndexOf(c_aPlainSources, sExt) >= 0) return true;
+if (Array.IndexOf(c_aPandocReadable, sExt) >= 0) return true;
+if (sExt == ".pptx" || sExt == ".xlsx" || sExt == ".pdf") return true;
+if (Array.IndexOf(c_aLegacySources, sExt) >= 0) return true;
+return false;
+} // readableAsText method
+
 public static string categoryOf(string sPath) {
 string sExt = Path.GetExtension(sPath).ToLower();
 // Order matters: .pptx and .xlsx are documents to a person, but Pandoc cannot
@@ -289,7 +304,10 @@ return lsLabels.ToArray();
 
 // Extensions that are already text and can simply be read.
 private static readonly string[] c_aPlainSources = {
-".txt", ".md", ".markdown", ".csv", ".log", ".ini", ".inix", ".json", ".xml",
+// Play lists and shortcuts are plain text and were missing, so Append to
+// Clipboard refused an .m3u -- the very file the player commands produce.
+".m3u", ".m3u8", ".pls", ".url", ".cue", ".srt", ".vtt", ".sub", ".ass",
+".txt", ".md", ".markdown", ".csv", ".tsv", ".log", ".ini", ".inix", ".json", ".xml",
 ".yml", ".yaml", ".cs", ".js", ".py", ".ps1", ".cmd", ".bat", ".vbs", ".sql",
 ".c", ".cpp", ".h", ".java", ".php", ".rb", ".go", ".rs", ".ts", ".css",
 ".jss", ".jsh", ".jsd", ".jkm", ".iss", ".bas", ".vb", ".sh", ".tex", ".rst"

@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -18,7 +18,10 @@ MIT License
 - [Transfer Commands](#transfer-commands)
 - [Miscellaneous Commands](#miscellaneous-commands)
 - [What Is Inside a File](#what-is-inside-a-file)
+- [Renaming to What Is Inside](#renaming-to-what-is-inside)
+- [Tidying a Folder](#tidying-a-folder)
 - [Converting Between Formats](#converting-between-formats)
+- [Playing Media](#playing-media)
 - [Downloading From the Web](#downloading-from-the-web)
 - [Asking About a File](#asking-about-a-file)
 - [Translating Files](#translating-files)
@@ -589,7 +592,9 @@ Yard to meter
 
 Conversions may be added, modified, or deleted by editing the Convert.txt file in the FileDir program folder. A new installation of FileDir will replace this file, however, so custom changes would need to be manually backed up and restored.
 
-F12 related keys provide timer and alarm features (you may associate the number 12 with a clock). Press F12 to start a timer. FileDir prompts for the announcement interval and stop time. The announcement interval , measured in seconds, is how often FileDir will announce the amount of time elapsed since the start of the timer, e.g., a value of 60 means to announce at minute intervals. These verbal announcements occur regardless of what program is currently in the active window. Use a blank or 0 value to run the timer without automatic announcements. Press Alt+F12 at any time to check how much time has elapsed so far. If a timer is already running, the F12 key pauses it. If paused, F12 resumes. Press Shift+F12 to stop the timer and hear the total time it was running.
+Timer keys are on Alt+Control. Press **Alt+Control+T** to start a timer; FileDir asks for the announcement interval and the stop time. The announcement interval, in seconds, is how often FileDir says how long has passed since the timer started, so 60 means once a minute. Those announcements happen whatever program is in front. Leave the interval blank or 0 to run the timer silently. Press **Alt+Control+Y** at any time to hear how long has passed. If a timer is running, Alt+Control+T pauses it; if paused, it resumes. Press **Alt+Control+S** to stop the timer and hear the total time it ran.
+
+The timer moved off the F12 row so that F12 and Shift+F12 could ask the AI, as they do in EdSharp.
 
 In the dialog that prompts for the announcement interval, another field is the stop time. A blank or 0 value means that the timer will run until manually stopped by pressing Shift+F12 or exiting FileDir. Instead, a stopping point may be specified as a date and time. The date and time components are each optional. If a date is used, it must include at least the month and day, separated by the forward slash character (/) -- or equivalent for non-U.S. formatting conventions. If a time is used, it must include at least the hour and minute, separated by a colon character (:) -- or non-U.S. equivalent. If both date and time components are used, type the date, a space, and then the time. Without a time, today's date is assumed. A time may use either the military, 24-hour convention, or the AM/PM suffix (otherwise AM is assumed if the hour is less than 13). Examples of valid date/time values are as follows:
 
@@ -638,6 +643,76 @@ If ExifTool is missing, the Windows properties are still shown and a line at the
 end says where FileDir looked and what to install. ExifTool comes from the media tools the installer offers, along with
 ffmpeg and yt-dlp.
 
+## Renaming to What Is Inside
+
+Press **Control+Shift+I** for Rename to Identify Content. It names each tagged file after
+what is inside it, looking in two places.
+
+**First, the metadata.** The title of a PDF, the song and album of an MP3, the
+caption of a photograph, the book name of an EPUB. Every field whose name is
+about a title is considered and the longest is taken, because a photograph
+carrying both `IMG_4021` and "Sunset over the Cascades" is better called the
+second.
+
+Fields that name the camera, the lens, the software or the file itself are
+ignored, and so are fields naming the album or series a file belongs to — a song
+should be called by its own title, not by the record it came from.
+
+**Only if there is no metadata, the first line of the text.** This is a last
+resort, and it runs only for files FileDir can read as text. A first line is
+often not a title at all — a date, a byline, "Chapter One" — so the metadata is
+always preferred, and for a photograph or a song it is far better. For a note or
+a Markdown page, where the title is on the first line and nowhere else, it is
+exactly right. Heading marks are stripped from it.
+
+The new name keeps dashes, commas, periods, parentheses and apostrophes, since
+those occur naturally in a phrase. Everything else is dropped, and each run of
+dropped characters — underscores included — becomes one space. Capitalization is
+left exactly as written. If the name is already taken, `-01`, `-02` and so on
+are added to the root, so the extension stays intact.
+
+It renames straight away without asking. Each new name is spoken as it happens,
+and the cursor lands on the renamed file, so long as the filter in effect still
+shows it. Everything else — which field each title came from, and why any file
+was skipped — goes to the session log, which Control+F12 puts on your clipboard.
+
+ExifTool comes with the media tools. Without it the command still works from the
+text alone, and says so once.
+
+
+## Tidying a Folder
+
+Three commands help with a folder that has collected copies and oddly sorted
+names. None of them deletes anything: they tag, and Delete Tagged removes what
+you tagged after asking.
+
+Press **Alt+Shift+Period** for Tag Duplicate Files. It tags every file whose
+content is identical to one already in the list, keeping the first. Identical
+means byte for byte, so two files with different names but the same content are
+caught, and two files that merely look alike are not.
+
+Press **Alt+Shift+J** for Find Duplicates in Tree. This one looks at the current
+folder *and everything under it*, and opens every duplicate it finds as a
+virtual folder. That is an ordinary FileDir window, so you can move through it,
+hear sizes and dates, read what is inside a file with Question Mark, open one to
+check, tag a range with F8, and then Delete Tagged. Only the duplicates are
+listed, never the first copy of anything, so tagging everything and deleting
+leaves exactly one of each file on disk.
+
+Press **Alt+Shift+Comma** for Tag Similar Files. It finds files that look like
+other versions of the same one -- content.pdf beside content-1.pdf,
+content_2.pdf and content (3).pdf -- and tags all but the largest, since a
+partial download is smaller than the whole. A different extension is a different
+file. Names like chapter1 and chapter2 are left alone: those are a book's
+chapters, not copies.
+
+Press **Alt+Shift+K** for Reorder Names. It renames files so an alphabetical
+list reads in the order you mean. A single leading digit is padded with a zero,
+so 2name comes before 11name instead of after it. ReadMe, index, introduction
+and overview move to the top. Licence, contributing, change log and credits move
+to the bottom. Every rename is shown before anything happens, and nothing is
+overwritten.
+
 ## Converting Between Formats
 
 Press **Shift+O** for Output Type. FileDir looks at what the file is, offers a
@@ -672,6 +747,46 @@ read, and **ffmpeg** for audio, video and pictures. A file FileDir cannot
 convert is skipped with a word saying so, and the closing count says how many
 were written, skipped and failed.
 
+
+## Playing Media
+
+Press **Alt+Shift+L** for Play Media to hear something now without keeping a
+list. It looks in three places, in this order:
+
+1. **The clipboard**, when it holds a play list or web addresses. Copy a list of
+   YouTube addresses from a mail message and press Alt+Shift+L, and they play in
+   order with their titles. Anything mpv can reach works, because yt-dlp is
+   handed the addresses.
+2. **The tagged files**, if any are tagged.
+3. **Everything playable in the folder**, in the order the window is sorted.
+   Sort by date and it plays in date order, which is usually what a recording
+   session or a downloaded series wants.
+
+The clipboard is used only when every line is a web address or names a file that
+exists. One line of ordinary prose and it is ignored, so the command never
+surprises you with whatever you copied last.
+
+**While the player is running, Control+V adds more.** mpv reads the clipboard
+itself, so copy another address, press Control+V in the player window, and it
+joins the end of the list. If nothing is playing it starts at once. That is
+mpv's own key, not FileDir's, and it takes one address at a time; a whole list
+is what Alt+Shift+L is for.
+
+Other useful keys in the player window: space to pause, left and right arrows to
+seek, angle brackets for the previous and next item, and q to stop.
+
+Press **Control+Shift+L** for Play List when the set is worth keeping. It writes
+an .m3u beside the files and plays it. Move to a play list you made earlier and
+press Control+Shift+L again to play that one rather than making another.
+
+Neither command asks anything: they start playing, with sound and picture. The
+player runs on its own, so FileDir does not sit waiting while you listen.
+Its own keys work in its window: space to pause, arrows to seek, q to stop.
+
+mpv is optional and the installer does not tick it. It is about 60 MB, and it
+carries its own copy of ffmpeg which FileDir already has, so it is worth adding
+only if you play media from the file list. Converting audio and video does not
+need it.
 
 ## Downloading From the Web
 
@@ -714,7 +829,7 @@ complete.
 
 These need Ollama, the same installation the Translate File command uses.
 
-**A note on the keys.** F12, Shift+F12 and Alt+F12 were the Timer commands here
+**A note on the keys.** The whole F12 row held the Timer commands here
 for twenty years. They moved to **Alt+Control+T**, **Alt+Control+S** and
 **Alt+Control+Y** so that FileDir and EdSharp agree about the F12 column.
 Matching the sibling program is worth more than protecting a habit that few
@@ -729,7 +844,7 @@ language model running on your own computer. Nothing is uploaded and no part of
 any file is sent anywhere, so this is safe for a document you would not paste
 into a web page.
 
-Press **Alt+Shift+L** for Translate File. Name the language you want, and
+Press **Alt+Shift+F7** for Translate File. Name the language you want, and
 FileDir works through the tagged files, or the current one if nothing is tagged.
 For each file it reads the text, translates it, and writes the result beside the
 original as `<name>.<language>.txt`. Nothing is overwritten: if that name is
@@ -773,7 +888,7 @@ You can add either later by running `installOllama.cmd` or
 EdSharp or DbDo, FileDir uses that same installation and those same models --
 one copy serves every program on the machine.
 
-If Ollama is not running when you press Alt+Shift+L, FileDir says so and tells
+If Ollama is not running when you press Alt+Shift+F7, FileDir says so and tells
 you what to run, rather than failing quietly.
 
 ## Hotkey Summary

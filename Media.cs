@@ -48,26 +48,50 @@ public static class Media {
 private static string sExifToolCache = null;
 private static string sExifToolLog = "";
 
+// What Windows counts as runnable, in the order it prefers them. A .cmd or a
+// .bat is a real way to run a program -- "where mpv" answered with
+// c:\bin\mpv.cmd on the machine where this went wrong -- but a batch file
+// cannot be started directly by the process object, so callers must send one
+// through the command interpreter. needsShell says which is which.
+public static readonly string[] c_aRunnable = {".exe", ".com", ".cmd", ".bat"};
+
+public static bool needsShell(string sProgram) {
+string sExt = Path.GetExtension(sProgram).ToLower();
+return sExt == ".cmd" || sExt == ".bat";
+} // needsShell method
+
 public static string findTool(string sName) {
+return findToolOfKind(sName, c_aRunnable);
+} // findTool method
+
+public static string findToolOfKind(string sName, string[] aExtensions) {
 // Beside the program first, then the PATH. A tool the developer dropped into
 // the program folder is the one meant to be used, whatever else is installed.
-string sBeside = Path.Combine(exeFolder(), sName + ".exe");
+//
+// Looking only for .exe is half of why FileDir said mpv was not installed on a
+// machine that had it: the PATH held a .cmd wrapper, which runs mpv perfectly
+// well, and it was walked straight past.
+foreach (string sExt in aExtensions) {
+string sBeside = Path.Combine(exeFolder(), sName + sExt);
 if (File.Exists(sBeside)) return sBeside;
+}
 string sPath = Environment.GetEnvironmentVariable("PATH");
 if (sPath == null) return "";
 foreach (string sFolder in sPath.Split(Path.PathSeparator)) {
 if (sFolder.Trim().Length == 0) continue;
+foreach (string sExt in aExtensions) {
 string sTry = "";
 try {
-sTry = Path.Combine(sFolder.Trim(), sName + ".exe");
+sTry = Path.Combine(sFolder.Trim(), sName + sExt);
 }
 catch (Exception) {
-continue;
+break;
 }
 if (File.Exists(sTry)) return sTry;
 }
+}
 return "";
-} // findTool method
+} // findToolOfKind method
 
 public static string exeFolder() {
 try {
@@ -183,11 +207,163 @@ return sExifToolCache;
 } // exifToolProgram method
 
 public static string ffmpegProgram() {
-return findTool("ffmpeg");
+return findInstalled("ffmpeg");
 } // ffmpegProgram method
 
+public static string mpvProgram() {
+return findInstalled("mpv");
+} // mpvProgram method
+
+private static string sSearchLog = "";
+
+public static string searchLog() {
+// Where the last findInstalled looked, and what it found. Shown to the person
+// when a tool is missing, so "it says not installed" stops being a mystery and
+// becomes a list they can check against their own machine.
+return sSearchLog;
+} // searchLog method
+
+public static string findInstalled(string sName) {
+// A REAL EXECUTABLE IS PREFERRED OVER A WRAPPER, wherever each is found.
+//
+// findTool walks the PATH and takes the first runnable thing it meets, which on
+// one machine was c:\bin\mpv.cmd -- a batch wrapper sitting in a folder early
+// on the PATH, while the actual player was in Program Files. The wrapper was
+// launched, and nothing played: a wrapper that does not forward its arguments
+// swallows the play list silently, and there is no way to tell from outside
+// which kind it is.
+//
+// So the whole search runs twice. The first pass accepts only .exe and .com,
+// which are programs. Only if that finds nothing does the second pass accept
+// .cmd and .bat, because a wrapper is better than no player at all.
+string sReal = findInstalledOfKind(sName, c_aPrograms);
+if (sReal.Length > 0) return sReal;
+return findInstalledOfKind(sName, c_aRunnable);
+} // findInstalled method
+
+// Things that are programs, as against things that describe how to run one.
+public static readonly string[] c_aPrograms = {".exe", ".com"};
+
+private static string findInstalledOfKind(string sName, string[] aExtensions) {
+// A tool anywhere it might plausibly be, not merely on this process's PATH.
+//
+// THE FAULT THIS EXISTS FOR. The installer ran "where mpv", found it, and
+// offered Reinstall. FileDir then said it was not installed. Both were telling
+// the truth: the installer's shell was started after winget added mpv to the
+// machine path, and FileDir was started from a desktop shortcut by an Explorer
+// that had been running since before the install. A process inherits the
+// environment it was born with, so FileDir's PATH did not have mpv in it and
+// would not until the next sign-in.
+//
+// Asking the PATH is therefore never enough for a tool that may have been
+// installed minutes ago. Every place winget and ordinary installers put things
+// is looked at as well, including the package folder winget unpacks into,
+// which no PATH ever mentions. This is the same search exifToolProgram already
+// does; it is written once here so every tool gets it.
+StringBuilder sbLog = new StringBuilder();
+sbLog.Append("Looking for " + sName + " with " + String.Join(" ", aExtensions) + ":\r\n");
+// THE EXTENSIONS OF THIS PASS, not every runnable one. Calling findTool here
+// undid the whole point of the two passes: findTool accepts .cmd, so the first
+// pass -- the one meant to find only real programs -- returned the wrapper on
+// the PATH before it ever looked in Program Files. The two-pass search was
+// written, shipped, and did nothing, because this one line still asked the
+// wrong question.
+string sFound = findToolOfKind(sName, aExtensions);
+sbLog.Append("  beside FileDir and on the PATH: " + (sFound.Length > 0 ? sFound : "not found") + "\r\n");
+if (sFound.Length > 0) {
+sSearchLog = sbLog.ToString();
+return sFound;
+}
+
+List<string> lsWhere = new List<string>();
+foreach (string sRoot in new string[] {
+Environment.GetEnvironmentVariable("ProgramFiles"),
+Environment.GetEnvironmentVariable("ProgramFiles(x86)"),
+Environment.GetEnvironmentVariable("ProgramW6432")}) {
+if (sRoot == null || sRoot.Length == 0) continue;
+foreach (string sExt in aExtensions) {
+lsWhere.Add(Path.Combine(sRoot, Path.Combine(sName, sName + sExt)));
+lsWhere.Add(Path.Combine(sRoot, Path.Combine(sName, Path.Combine("bin", sName + sExt))));
+}
+}
+string sLocal = Environment.GetEnvironmentVariable("LOCALAPPDATA");
+if (sLocal != null && sLocal.Length > 0) {
+foreach (string sExt in aExtensions)
+lsWhere.Add(Path.Combine(sLocal, Path.Combine("Programs", Path.Combine(sName, sName + sExt))));
+// winget's shim folder: on the machine path, but not on the path of a
+// process that started before the install.
+foreach (string sExt in aExtensions)
+lsWhere.Add(Path.Combine(sLocal, Path.Combine("Microsoft", Path.Combine("WinGet", Path.Combine("Links", sName + sExt)))));
+}
+foreach (string sTry in lsWhere) {
+bool bThere = File.Exists(sTry);
+sbLog.Append("  " + sTry + ": " + (bThere ? "found" : "no") + "\r\n");
+if (bThere) {
+sSearchLog = sbLog.ToString();
+return sTry;
+}
+}
+
+// A program's folder is rarely named exactly after its command. mpv installs
+// into "MPV Player", and looking only for a folder called "mpv" is the other
+// half of why FileDir declared it missing on a machine where it plainly was.
+// So the likely roots are read and any folder whose NAME CONTAINS the tool
+// name is examined.
+foreach (string sRoot in new string[] {
+Environment.GetEnvironmentVariable("ProgramFiles"),
+Environment.GetEnvironmentVariable("ProgramFiles(x86)"),
+Environment.GetEnvironmentVariable("ProgramW6432"),
+(sLocal == null || sLocal.Length == 0) ? "" : Path.Combine(sLocal, "Programs")}) {
+if (sRoot == null || sRoot.Length == 0 || !Directory.Exists(sRoot)) continue;
+string[] aCandidates;
+try {
+aCandidates = Directory.GetDirectories(sRoot, "*" + sName + "*");
+}
+catch (Exception) {
+continue;
+}
+foreach (string sFolder in aCandidates) {
+foreach (string sExt in aExtensions) {
+foreach (string sTry in new string[] {
+Path.Combine(sFolder, sName + sExt),
+Path.Combine(sFolder, Path.Combine("bin", sName + sExt))}) {
+bool bThere = File.Exists(sTry);
+sbLog.Append("  " + sTry + ": " + (bThere ? "found" : "no") + "\r\n");
+if (bThere) {
+sSearchLog = sbLog.ToString();
+return sTry;
+}
+}
+}
+}
+}
+
+// Last, the folder winget unpacks a portable package into. Its name carries
+// the publisher and version, so it is searched rather than guessed.
+if (sLocal != null && sLocal.Length > 0) {
+string sPackages = Path.Combine(sLocal, Path.Combine("Microsoft", Path.Combine("WinGet", "Packages")));
+try {
+if (Directory.Exists(sPackages)) {
+foreach (string sOne in Directory.GetDirectories(sPackages, "*" + sName + "*")) {
+foreach (string sExe in Directory.GetFiles(sOne, sName + ".exe", SearchOption.AllDirectories)) {
+sbLog.Append("  " + sExe + ": found\r\n");
+sSearchLog = sbLog.ToString();
+return sExe;
+}
+}
+sbLog.Append("  " + sPackages + ": no folder matching " + sName + "\r\n");
+}
+}
+catch (Exception) {
+}
+}
+sSearchLog = sbLog.ToString();
+Homer.Log.write(sSearchLog.Replace("\r\n", " | "));
+return "";
+} // findInstalled method
+
 public static string ffprobeProgram() {
-return findTool("ffprobe");
+return findInstalled("ffprobe");
 } // ffprobeProgram method
 
 public static List<string[]> readProperties(string sPath, out string sError) {
@@ -226,6 +402,105 @@ lsPairs.Add(new string[] {sName, sValue});
 }
 return lsPairs;
 } // readProperties method
+
+// Field names whose value is a title of some kind. ExifTool reports thousands
+// of tags across hundreds of formats and they disagree about what to call this:
+// a PDF has Title, an MP3 has Title and Album, a photograph has ObjectName,
+// Headline, Caption-Abstract and Description, an EPUB has BookName.
+//
+// So the name is matched rather than listed. Anything whose field name contains
+// one of these words is a candidate, and the best candidate wins.
+private static readonly string[] c_aTitleWords = {
+"title", "headline", "caption", "objectname", "bookname", "songname",
+"trackname", "documentname", "displayname", "description", "subject",
+"episode", "movie", "name"
+};
+
+// Fields that name the COLLECTION a file belongs to rather than the file.
+// Album, show and product are all title-like and all wrong: testing this
+// against a real MP3, "Al Green Greatest Hits" beat "Let's Stay Together" on
+// length alone, and named the song after the record it came from. Longest wins
+// only among things that describe THIS file.
+private static readonly string[] c_aCollectionWords = {"album", "show", "product"};
+
+// Field names that CONTAIN a title word but are never a title. Without this
+// list, a photograph gets named after its lens and a PDF after its software.
+private static readonly string[] c_aNotTitles = {
+"file name", "filename", "directory", "source file", "base name",
+"software", "creator tool", "producer", "encoder", "handler",
+"lens", "camera", "make", "model", "profile", "color", "colour",
+"font", "charset", "mime", "format", "compressor", "codec",
+"user comment", "warning", "error", "exiftool", "device",
+"application", "generator", "toolkit", "os ", "platform"
+};
+
+public static string bestTitle(string sPath, out string sField, out string sError) {
+// The longest title-like value in a file's metadata, within a length that
+// makes a sensible file name.
+//
+// HOW THE FIELD IS CHOSEN. ExifTool reports thousands of tags across hundreds
+// of formats, and they disagree about what a title is called: a PDF has Title,
+// an MP3 has Title and Album, a photograph has ObjectName, Headline,
+// Caption-Abstract and Description, an EPUB has BookName, a video has Title
+// and Movie. So the NAME is matched rather than listed, and then the matches
+// are filtered, because half the tags containing the word "name" are about the
+// camera, the software or the file itself.
+//
+// THE LONGEST WINS. A photograph may carry "IMG_4021" in one field and "Sunset
+// over the Cascades from Rattlesnake Ridge" in another. Length is a crude
+// measure of how much somebody bothered to write, and for this it is a good
+// one.
+//
+// BOUNDED AT BOTH ENDS. Under four characters is a code, not a title. Over 120
+// is an abstract or a first paragraph, which Windows will not hold and nobody
+// wants read aloud.
+sField = "";
+sError = "";
+System.Collections.Generic.List<string[]> lsPairs = readProperties(sPath, out sError);
+if (lsPairs.Count == 0) return "";
+string sBest = "";
+string sOwnRoot = Path.GetFileNameWithoutExtension(sPath);
+foreach (string[] aPair in lsPairs) {
+// ExifTool prefixes each field with its group, as "EXIF:ObjectName". The
+// group is not part of the name being matched.
+string sName = aPair[0];
+int iColon = sName.LastIndexOf(':');
+if (iColon >= 0) sName = sName.Substring(iColon + 1);
+string sLowerName = sName.Trim().ToLower();
+
+bool bTitleLike = false;
+foreach (string sWord in c_aTitleWords)
+if (sLowerName.IndexOf(sWord, StringComparison.Ordinal) >= 0) bTitleLike = true;
+if (!bTitleLike) continue;
+bool bCollection = false;
+foreach (string sWord in c_aCollectionWords)
+if (sLowerName.IndexOf(sWord, StringComparison.Ordinal) >= 0) bCollection = true;
+if (bCollection) continue;
+
+bool bExcluded = false;
+foreach (string sNot in c_aNotTitles)
+if (sLowerName.IndexOf(sNot, StringComparison.Ordinal) >= 0) bExcluded = true;
+if (bExcluded) continue;
+
+string sValue = aPair[1].Trim();
+if (sValue.Length < 4 || sValue.Length > 120) continue;
+// A value that merely repeats what the file is already called is no use.
+if (Homer.Util.stringEquiv(sValue, sOwnRoot)) continue;
+if (Homer.Util.stringEquiv(sValue, Path.GetFileName(sPath))) continue;
+// Nor a value with no letters in it: a date, a serial number, a duration.
+bool bHasLetter = false;
+foreach (char c in sValue) if (Char.IsLetter(c)) bHasLetter = true;
+if (!bHasLetter) continue;
+
+if (sValue.Length > sBest.Length) {
+sBest = sValue;
+sField = sName.Trim();
+}
+}
+if (sBest.Length == 0 && sError.Length == 0)
+sError = "no title, caption or description was found in its metadata";
+return sBest;
+} // bestTitle method
 
 public static int run(string sProgram, string sArguments, out string sOut, out string sErr) {
 // A process with NO WINDOW, with both streams read before the wait: a full

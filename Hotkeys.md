@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -70,6 +70,7 @@ Commands in alphabetical order.
 - **Extra Speech Toggle**, Control+Shift+X -- Toggle extra speech messages on or off, redirecting them to a log file
 - **Extract with Regular Expression**, Control+Shift+E -- Extract text from tagged files with regular expression and copy to the clipboard
 - **File Find**, Alt+Shift+F -- Find file in current folder or subfolders based on match of textual content and name filter
+- **Find Duplicates in Tree**, Alt+Shift+J -- Find every duplicate in this folder and everything under it, and open them as a virtual folder you can inspect and delete from
 - **Folder to Clipboard**, Control+Shift+Apostrophe -- Copy folder or archive being viewed to clipboard
 - **FTP Put**, Shift+F -- Upload current or tagged files to FTP directory
 - **General**, LeftBrace -- Remove System attribute of current or tagged items
@@ -80,7 +81,7 @@ Commands in alphabetical order.
 - **Go to Parent Folder**, Comma -- or Shift+Backspace, Go to parent folder in same window ("come up level")
 - **Go to Quick Folder**, Accent -- Go to folder of quick links
 - **Go to Root Folder**, Shift+Backslash -- Go to root folder of current drive in same window
-- **Go to Special Folder**, Control+Shift+G -- Pick special folder (e.g., My Documents) to open in same window
+- **Go to Special Folder**, Control+Shift+G -- Pick one of the Windows special folders, such as Downloads or Documents, and open it in this window
 - **Go to Virtual Folder**, Alt+Shift+G -- Open a virtual folder definition in same window
 - **Hide**, RightParen -- Set Hidden attribute of current or tagged items
 - **History of Changes**, Shift+F1 -- Display history of FileDir fixes and enhancements
@@ -113,7 +114,7 @@ Commands in alphabetical order.
 - **Open Parent Folder**, Backspace -- Open parent folder in new window and jump to folder item that was previously open
 - **Open Quick Folder**, Control+Q -- Open folder of quick links
 - **Open Root Folder**, Backslash -- Open root folder of current drive in new window (e.g., the C:\ folder)
-- **Open Special Folder**, Control+Shift+O -- Pick special folder (e.g., My Documents) to open in new window
+- **Open Special Folder**, Control+Shift+O -- Pick one of the Windows special folders, such as Downloads or Documents, and open it in a new window
 - **Open Virtual Folder**, Alt+Shift+O -- Open a virtual folder definition in new window
 - **Output Type**, Shift+O -- Convert the tagged files, or the current one, into a type you pick from what that kind of file can become: documents, audio, video, or pictures
 - **Parent Folder**, Backspace -- Go to parent of current folder
@@ -122,7 +123,8 @@ Commands in alphabetical order.
 - **Paste Move**, Alt+Shift+V -- Move items listed on clipboard to current folder
 - **Path List to Clipboard**, Control+Shift+P -- Copy to clipboard file paths below current folder item
 - **Path to Clipboard**, Alt+Shift+P -- Copy full path of current item to clipboard
-- **Play List**, Control+Shift+L -- Create .m3u play list containing tagged items
+- **Play List**, Control+Shift+L -- Write a play list of the tagged files and play it; run it again on a play list to play that one
+- **Play Media**, Alt+Shift+L -- Play the clipboard when it holds a play list or web addresses, otherwise the tagged files, otherwise everything playable in this folder
 - **Previous Tagged**, Shift+P -- or Control+UpArrow, Go to previous tagged item
 - **Previous Window**, Control+Shift+Tab -- or Alt+LeftArrow, Activate previous open window
 - **Print**, Control+P -- Print current or tagged files
@@ -136,9 +138,10 @@ Commands in alphabetical order.
 - **Recycle Toggle**, Alt+Shift+R -- Toggle On/Off setting for whether deleted or replaced items are moved to the recycle bin
 - **Refresh Folder**, Period -- or F5, Read current folder again from disk in same window
 - **Rename**, Shift+R -- or F2, Rename current item
-- **Rename to Initial Line**, Control+Shift+I -- Rename current or tagged files to initial line of text within them
+- **Rename to Identify Content**, Control+Shift+I -- Rename the tagged files to what identifies them inside: the title, caption or name in the file metadata, read by ExifTool
 - **Rename with Regular Expression**, Control+Shift+R -- Rename current or tagged items with regular expressions
 - **Rename with Wildcards**, Control+R -- Rename all items in current folder with wildcards
+- **Reorder Names**, Alt+Shift+K -- Rename files so an alphabetical list reads in order: single leading digits padded, front matter first, licence and change log last
 - **Restart Windows**, Alt+Shift+F4 -- Restart Windows after confirming
 - **Restore Tags**, Control+Shift+S -- Apply previously saved tags
 - **Reverse Alpha Order**, Alt+Shift+A -- Sort items in reverse alphabetic/name order
@@ -177,9 +180,10 @@ Commands in alphabetical order.
 - **Tag**, Semicolon -- or Shift+NumPad5, Tag current item
 - **Tag All**, Control+A -- Tag all items
 - **Tag All Files**, Alt+Period -- Tag file items but not subfolders
-- **Tag and Next**, Greater -- Than or Shift+DownArrow, Tag current item and Go to next one
+- **Tag and Next**, Greater Than or Shift+Period or Shift+DownArrow -- Tag the current item and go to the next one
 - **Tag and Previous**, Shift+UpArrow -- Tag current item and Go to previous one
-- **Tag Duplicate Files**, Alt+Shift+Period -- Tag files with the same content as a prior one in the list
+- **Tag Duplicate Files**, Alt+Shift+. -- Tag every file whose content is identical to one already in the list, keeping the first; nothing is deleted
+- **Tag Similar Files**, Alt+Shift+comma -- Tag files that look like other versions of the same one, such as content-1 beside content, keeping the largest of each group
 - **Tag to Bottom**, Shift+End -- Tag to bottom of list
 - **Tag to Top**, Shift+Home -- Tag to top of list
 - **Tag with Regular Expression**, Control+Shift+Period -- Tag files that match a regular expression
@@ -187,7 +191,7 @@ Commands in alphabetical order.
 - **Tile Vertical**, Control+Shift+F11 -- Tile open windows vertically
 - **Timer**, Alt+Control+Y -- Say elapsed time since the timer started
 - **Toggle Tag**, Space -- Invert tagged state of current item
-- **Translate File**, Alt+Shift+L -- Translate the tagged files, or the current one, into a language you name, using a language model running on this computer
+- **Translate File**, Alt+Shift+F7 -- Translate the tagged files, or the current one, into a language you name, using a language model running on this computer
 - **Type Extended**, Control+Shift+T -- Show every property of the current item as one alphabetical list: Windows properties, file association details, and the metadata inside the file
 - **Type Order**, Alt+T -- Sort items in type/extension order
 - **Unarchive**, Shift+U -- Unzip current or tagged files
@@ -198,7 +202,7 @@ Commands in alphabetical order.
 - **Untag**, Slash -- or Alt+Shift+NumPad5, Untag current item
 - **Untag All**, Control+Shift+A -- Untag all items
 - **Untag All But Current**, Alt+Comma -- Untag all but current item
-- **Untag and Next**, Less -- Than or Alt+Shift+DownArrow, Untag current item and Go to next one
+- **Untag and Next**, Less Than or Shift+Comma or Alt+Shift+DownArrow -- Untag the current item and go to the next one
 - **Untag and Previous**, Alt+Shift+UpArrow -- Untag current item and Go to previous one
 - **Untag to Bottom**, Alt+Shift+End -- Untag to bottom of list
 - **Untag to Top**, Alt+Shift+Home -- Untag to top of list
@@ -248,27 +252,31 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+R** -- Recent Folders: Pick a recent folder or shortcut to open
 - **Alt+S** -- Size Order: Sort items in size order
 - **Alt+Semicolon** -- Say Time: Say current time and date
+- **Alt+Shift+.** -- Tag Duplicate Files: Tag every file whose content is identical to one already in the list, keeping the first; nothing is deleted
 - **Alt+Shift+A** -- Reverse Alpha Order: Sort items in reverse alphabetic/name order
 - **Alt+Shift+Apostrophe** -- Clear Clipboard: Clear clipboard text
 - **Alt+Shift+B** -- Burn to CD: Add current or tagged items to CD
 - **Alt+Shift+C** -- Configuration Options: Configure FileDir options
+- **Alt+Shift+comma** -- Tag Similar Files: Tag files that look like other versions of the same one, such as content-1 beside content, keeping the largest of each group
 - **Alt+Shift+D** -- Reverse Date Order: Sort items in reverse date/time order
 - **Alt+Shift+E** -- Export Clipboard to File: Export clipboard text to disk file
 - **Alt+Shift+End** -- Untag to Bottom: Untag to bottom of list
 - **Alt+Shift+F** -- File Find: Find file in current folder or subfolders based on match of textual content and name filter
 - **Alt+Shift+F11** -- Tile Horizontal: Tile open windows horizontally
 - **Alt+Shift+F4** -- Restart Windows: Restart Windows after confirming
+- **Alt+Shift+F7** -- Translate File: Translate the tagged files, or the current one, into a language you name, using a language model running on this computer
 - **Alt+Shift+F8** -- Complete Untag: Complete untagging
 - **Alt+Shift+G** -- Go to Virtual Folder: Open a virtual folder definition in same window
 - **Alt+Shift+H** -- Hotkey Summary: Display list of FileDir keys, command names, and descriptions
 - **Alt+Shift+Home** -- Untag to Top: Untag to top of list
 - **Alt+Shift+I** -- Inquire Differences: Generate a report that compares files in two folders
-- **Alt+Shift+L** -- Translate File: Translate the tagged files, or the current one, into a language you name, using a language model running on this computer
+- **Alt+Shift+J** -- Find Duplicates in Tree: Find every duplicate in this folder and everything under it, and open them as a virtual folder you can inspect and delete from
+- **Alt+Shift+K** -- Reorder Names: Rename files so an alphabetical list reads in order: single leading digits padded, front matter first, licence and change log last
+- **Alt+Shift+L** -- Play Media: Play the clipboard when it holds a play list or web addresses, otherwise the tagged files, otherwise everything playable in this folder
 - **Alt+Shift+M** -- Manual Options: Adjust FileDir configuration options in text editor
 - **Alt+Shift+N** -- Network Connections: Connect, disconnect, or restore mappings between physical storage and logical drives
 - **Alt+Shift+O** -- Open Virtual Folder: Open a virtual folder definition in new window
 - **Alt+Shift+P** -- Path to Clipboard: Copy full path of current item to clipboard
-- **Alt+Shift+Period** -- Tag Duplicate Files: Tag files with the same content as a prior one in the list
 - **Alt+Shift+Q** -- Quick URL: Create .url file for Internet resource in Quick folder
 - **Alt+Shift+R** -- Recycle Toggle: Toggle On/Off setting for whether deleted or replaced items are moved to the recycle bin
 - **Alt+Shift+S** -- Reverse Size Order: Sort items in reverse size order
@@ -327,12 +335,12 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+F** -- Clear Filter: View all items
 - **Control+Shift+F11** -- Tile Vertical: Tile open windows vertically
 - **Control+Shift+F4** -- Close All But Current Window: Close all windows except the current one
-- **Control+Shift+G** -- Go to Special Folder: Pick special folder (e.g., My Documents) to open in same window
-- **Control+Shift+I** -- Rename to Initial Line: Rename current or tagged files to initial line of text within them
-- **Control+Shift+L** -- Play List: Create .m3u play list containing tagged items
+- **Control+Shift+G** -- Go to Special Folder: Pick one of the Windows special folders, such as Downloads or Documents, and open it in this window
+- **Control+Shift+I** -- Rename to Identify Content: Rename the tagged files to what identifies them inside: the title, caption or name in the file metadata, read by ExifTool
+- **Control+Shift+L** -- Play List: Write a play list of the tagged files and play it; run it again on a play list to play that one
 - **Control+Shift+M** -- Mail Attachment: Mail current or tagged files as attachments to an email message
 - **Control+Shift+N** -- New Item Copy: Create copy of current file or folder item with similar name and numeric suffix
-- **Control+Shift+O** -- Open Special Folder: Pick special folder (e.g., My Documents) to open in new window
+- **Control+Shift+O** -- Open Special Folder: Pick one of the Windows special folders, such as Downloads or Documents, and open it in a new window
 - **Control+Shift+P** -- Path List to Clipboard: Copy to clipboard file paths below current folder item
 - **Control+Shift+Period** -- Tag with Regular Expression: Tag files that match a regular expression
 - **Control+Shift+R** -- Rename with Regular Expression: Rename current or tagged items with regular expressions
@@ -362,11 +370,11 @@ The same commands, in alphabetical order of the key that runs them.
 - **F12** -- Chat with AI: Ask a language model running on this computer a plain question; the answer opens in a window you can read and copy from
 - **F4** -- Current Windows: Pick window to open from list of current ones
 - **F8** -- Start Tag or Untag: Mark start of sequence to be tagged or untagged
-- **Greater** -- Tag and Next: Than or Shift+DownArrow, Tag current item and Go to next one
+- **Greater Than or Shift+Period or Shift+DownArrow** -- Tag and Next: Tag the current item and go to the next one
 - **LeftBrace** -- General: Remove System attribute of current or tagged items
 - **LeftBracket** -- ReadWrite: Remove ReadOnly attribute of current or tagged items
 - **LeftParen** -- Show: Remove Hidden attribute of current or tagged items
-- **Less** -- Untag and Next: Than or Alt+Shift+DownArrow, Untag current item and Go to next one
+- **Less Than or Shift+Comma or Alt+Shift+DownArrow** -- Untag and Next: Untag the current item and go to the next one
 - **Period** -- Refresh Folder: or F5, Read current folder again from disk in same window
 - **Question** -- Say What Content: Say textual content of current file item, or list contained items if current item is a folder or zip archive
 - **RightBrace** -- System: Set System attribute of current or tagged items
@@ -429,6 +437,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+E** -- Export Clipboard to File
 - **Alt+Shift+X** -- Extra Speech Log
 - **Alt+Shift+F** -- File Find
+- **Alt+Shift+J** -- Find Duplicates in Tree
 - **Alt+Shift+G** -- Go to Virtual Folder
 - **Alt+Shift+H** -- Hotkey Summary
 - **Alt+Shift+I** -- Inquire Differences
@@ -437,16 +446,19 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+O** -- Open Virtual Folder
 - **Alt+Shift+V** -- Paste Move
 - **Alt+Shift+P** -- Path to Clipboard
+- **Alt+Shift+L** -- Play Media
 - **Alt+Shift+Q** -- Quick URL
 - **Alt+Shift+R** -- Recycle Toggle
+- **Alt+Shift+K** -- Reorder Names
 - **Alt+Shift+F4** -- Restart Windows
 - **Alt+Shift+A** -- Reverse Alpha Order
 - **Alt+Shift+D** -- Reverse Date Order
 - **Alt+Shift+S** -- Reverse Size Order
 - **Alt+Shift+T** -- Reverse Type Order
-- **Alt+Shift+Period** -- Tag Duplicate Files
+- **Alt+Shift+.** -- Tag Duplicate Files
+- **Alt+Shift+comma** -- Tag Similar Files
 - **Alt+Shift+F11** -- Tile Horizontal
-- **Alt+Shift+L** -- Translate File
+- **Alt+Shift+F7** -- Translate File
 - **Alt+Shift+U** -- Unarchive Password
 - **Alt+Shift+UpArrow** -- Untag and Previous
 - **Alt+Shift+End** -- Untag to Bottom
@@ -479,7 +491,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+P** -- Path List to Clipboard
 - **Control+Shift+L** -- Play List
 - **Control+Shift+Tab** -- Previous Window
-- **Control+Shift+I** -- Rename to Initial Line
+- **Control+Shift+I** -- Rename to Identify Content
 - **Control+Shift+R** -- Rename with Regular Expression
 - **Control+Shift+S** -- Restore Tags
 - **Control+Shift+Period** -- Tag with Regular Expression
@@ -635,9 +647,9 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Exclamation** -- Stamp with Date and Time
 - **RightBrace** -- System
 - **Semicolon** -- Tag
-- **Greater** -- Tag and Next
+- **Greater Than or Shift+Period or Shift+DownArrow** -- Tag and Next
 - **Space** -- Toggle Tag
 - **Slash** -- Untag
-- **Less** -- Untag and Next
+- **Less Than or Shift+Comma or Alt+Shift+DownArrow** -- Untag and Next
 
 End of Document

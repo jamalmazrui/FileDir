@@ -1,4 +1,4 @@
-﻿; FileDir_setup.iss -- Inno Setup script for the AnyCPU FileDir 5.0 beta (x64 and ARM64).
+﻿; FileDir_setup.iss -- Inno Setup script for AnyCPU FileDir 5.0 (x64 and ARM64).
 ;
 ; Compile with ISCC.exe (Inno Setup 5.6+ or 6.x). Run BuildFileDir.cmd first
 ; so FileDir.exe exists. Produces FileDir_setup.exe in C:\FileDir.
@@ -41,7 +41,7 @@
 [Setup]
 AppName=FileDir
 AppVersion={#AppVersion}
-AppVerName=FileDir {#AppVersion} beta
+AppVerName=FileDir {#AppVersion}
 VersionInfoVersion={#AppVersion}
 AppPublisher=NonvisualDevelopment.org
 AppPublisherURL=https://github.com/JamalMazrui/FileDir
@@ -143,6 +143,11 @@ Source: "installPandoc.cmd";  DestDir: "{app}"; Flags: ignoreversion
 ; Python, which reads a PDF's own structure into Markdown with headings, lists
 ; and tables. No Microsoft Word anywhere in it.
 Source: "installPdfTools.cmd"; DestDir: "{app}"; Flags: ignoreversion
+; mpv, the player Play List hands its list to. Not ticked: it carries its own
+; copy of ffmpeg, which FileDir already has, so much of the download is a
+; second copy of something already installed. It buys playback and nothing
+; else -- conversion is ffmpeg's job and stays ffmpeg's job.
+Source: "installMpv.cmd";     DestDir: "{app}"; Flags: ignoreversion
 Source: "pdfRich.py";         DestDir: "{app}"; Flags: ignoreversion
 Source: "installOllama.cmd";  DestDir: "{app}"; Flags: ignoreversion
 Source: "installTranslateModel.cmd"; DestDir: "{app}"; Flags: ignoreversion
@@ -414,6 +419,12 @@ FileName: "{cmd}"; \
   Description: "{code:descTranslateModel}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: translateModelNeedsInstall
 
+FileName: "{cmd}"; \
+  Parameters: "/c """"{app}\installMpv.cmd""""";  \
+  WorkingDir: "{app}"; \
+  Description: "{code:descMpv}"; \
+  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: mpvNeedsInstall
+
 ; ---- Update: installed, but a newer version is available ----
 
 FileName: "{cmd}"; \
@@ -429,6 +440,12 @@ FileName: "{cmd}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: ollamaNeedsUpdate
 
 ; ---- Reinstall: already current, offered only for repair ----
+
+FileName: "{cmd}"; \
+  Parameters: "/c """"{app}\installMpv.cmd""""";  \
+  WorkingDir: "{app}"; \
+  Description: "{code:descMpv}"; \
+  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: mpvIsCurrent
 
 FileName: "{cmd}"; \
   Parameters: "/c """"{app}\installPandoc.cmd""""";  \
@@ -857,6 +874,34 @@ begin
   gStateKnown[2] := True;
 end;
 
+function mpvPresent(): boolean;
+// Whether mpv answers on this machine. Found by running it, so a copy
+// installed outside winget counts too.
+var
+  lsLines: TArrayOfString;
+begin
+  result := probeLines('where mpv', lsLines) and (GetArrayLength(lsLines) > 0)
+            and (Pos('mpv', Lowercase(lsLines[0])) > 0);
+end;
+
+function mpvNeedsInstall(): boolean;
+begin
+  result := not mpvPresent();
+end;
+
+function mpvIsCurrent(): boolean;
+begin
+  result := mpvPresent();
+end;
+
+function descMpv(sParam: string): string;
+begin
+  if mpvPresent() then
+    result := 'Reinstall mpv, the media player Play List uses (installed)'
+  else
+    result := 'Install mpv so Play List can play what it makes, sound and picture or sound alone (about 60 MB; conversion does not need it)';
+end;
+
 function pdfToolsPresent(): boolean;
 // Whether a Python on this machine can import the PDF reader. Asked of the
 // interpreter installPdfTools recorded, when there is one, because a machine
@@ -985,7 +1030,9 @@ begin
     { The labels themselves, so the page has nothing left to compute. }
     WizardForm.StatusLabel.Caption := 'Checking the PDF reader ...';
     pdfToolsPresent();
-    descMediaTools(''); descPandoc(''); descPdfTools(''); descOllama(''); descTranslateModel('');
+    WizardForm.StatusLabel.Caption := 'Checking mpv ...';
+    mpvPresent();
+    descMediaTools(''); descPandoc(''); descPdfTools(''); descMpv(''); descOllama(''); descTranslateModel('');
 
     WizardForm.ProgressGauge.Style := npbstNormal;
     WizardForm.StatusLabel.Caption := '';

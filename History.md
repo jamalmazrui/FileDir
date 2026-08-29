@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,13 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.37, the public release](#version-5-0-37-the-public-release)
+- [Version 5.0.36](#version-5-0-36)
+- [Version 5.0.35](#version-5-0-35)
+- [Version 5.0.34](#version-5-0-34)
+- [Version 5.0.33](#version-5-0-33)
+- [Version 5.0.31](#version-5-0-31)
+- [Version 5.0.30](#version-5-0-30)
 - [Version 5.0.29](#version-5-0-29)
 - [Version 5.0.28](#version-5-0-28)
 - [Version 5.0.25](#version-5-0-25)
@@ -634,6 +641,489 @@ An option at the end of the FileDir installer lets you install this by simply ma
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
 
+## Version 5.0.37, the public release
+
+*August 2026*
+
+FileDir 5.0 is released. The beta label is gone from the installer, from the
+About box and from the documentation, because the work it stood for is done:
+the program has been rebuilt, every command it advertises answers to its key,
+and the machinery that checks all of that runs on every build.
+
+What arrived since the rebuild began, in the order a person meets it. Files
+convert between formats in batches, documents through Pandoc and media through
+ffmpeg, with PDFs read for their structure rather than flattened. Files rename
+themselves from the title inside them. Duplicates are found anywhere below a
+folder, compared byte for byte, and gathered into a window that behaves like any
+other. Media plays from the folder, the tagged files, or a play list copied from
+anywhere, web addresses included. Everything a file knows about itself appears in
+one alphabetical list. Documents translate into any language, and questions can
+be asked about them, on this computer and nowhere else. Every session is logged
+and one key hands the log over.
+
+None of the AI features send anything anywhere, which is the point of doing them
+locally rather than through a web service.
+
+Rewrote the announcement for the release, within the length a LinkedIn post
+allows.
+
+### The special folder list
+
+*August 2026*
+
+**The special folder list, Control+Shift+G and Control+Shift+O, is rebuilt from
+the official one.** It offered whatever it found by walking Shell.Application
+namespaces 0 to 99 and then the Environment.SpecialFolder enumeration, taking
+whatever names those gave. Three things were wrong with that.
+
+The two sources disagree about naming, so the list mixed "Documents" with
+"MyDocuments" and "CommonApplicationData" -- the enumeration's member names,
+which are not what Windows calls those folders.
+
+It offered whatever numbered slots happened to exist, which varies by machine.
+
+And it could not offer **Downloads** at all, because .NET's enumeration has no
+member for it. The folder people use most was missing from a list of special
+folders.
+
+The list now comes from SHGetKnownFolderPath, which is how Windows itself
+answers this question and knows every one of them. Fifty folders are named, plus
+the temporary folder, which is not a known folder and is worth having. A folder
+this Windows does not have is left out rather than shown broken, and two
+identifiers pointing at one place are listed once.
+
+Every name is the official one, with a qualifier added where two would read
+alike, and each is unique when compared without regard to case: "Documents" and
+"Documents, Public", "Program Files" and "Program Files, 32-bit", "Start Menu"
+and "Start Menu, Common". The qualifier goes after the noun so that both entries
+begin with the word being looked for, which is what matters when the list is
+read aloud or navigated by first letter.
+
+## Version 5.0.36
+
+*August 2026*
+
+**The playing commands no longer ask anything.** Alt+Shift+L put up a list --
+sound and picture, or sound alone -- before starting. That is a menu in front of
+a command whose whole purpose is to begin playing. The default is the whole
+experience, picture included, and mpv has its own keys for everything else.
+Play List no longer asks either: it writes the list and plays it.
+
+**The play list is now named as a plain argument, not passed with --playlist.**
+Typing
+
+    "C:\Program Files\MPV Player\mpv.exe" c:\users\jamal\downloads\temp.m3u
+
+at the Run box played the very list FileDir could not, which settled where the
+fault was. mpv opens a play list perfectly well when it is simply named -- its
+own manual says "You can play playlists directly, without this option" -- and
+--playlist applies security rules of its own that a list of web addresses can
+fall foul of. Every other option was dropped with it: each one is a further
+chance for the list to be refused, and the default experience is the whole one.
+Only the yt-dlp location is still passed, because mpv cannot find FileDir's copy
+without being told.
+
+**A player that closes at once is now noticed.** mpv exits immediately when it
+refuses a list, and FileDir was announcing "Playing" regardless, leaving a person
+waiting for sound that was never coming. The process is watched for two seconds,
+and if it has gone by then, the exact command line is shown along with the path
+of the play list, so the same line can be tried by hand.
+
+**And it did not play at all, for a reason worth recording.** The log shows
+FileDir launching c:\bin\mpv.cmd -- a batch wrapper sitting in a folder early on
+the PATH, while the real player was in Program Files. A wrapper that does not
+forward its arguments swallows the play list silently, and there is no way to
+tell from outside which kind it is.
+
+Accepting .cmd and .bat was right; taking one in preference to a real program
+was not. And the two-pass search written to fix that DID NOTHING for a release,
+because one line inside it still called the old findTool, which accepts every
+runnable extension -- so the pass meant to find only real programs returned the
+wrapper on the PATH before it ever looked in Program Files. The code was
+written, shipped, and asked the wrong question. It now asks for the extensions
+of the pass it is in.
+
+The search runs twice: the first pass accepts only .exe and .com,
+and only if that finds nothing does the second accept a wrapper, because a
+wrapper is better than no player at all. The arguments handed to the player are
+written to the session log as well, so the next failure of this kind can be read
+rather than guessed.
+
+## Version 5.0.35
+
+*August 2026*
+
+The build closes FileDir itself rather than asking you to.
+
+A build stopped with "Access to the path is denied", which explains nothing, so
+the previous release taught it to name the process holding the file. That is
+better, and still not good enough: being told to close something and build again
+costs a whole build to learn what the build could have done itself. It happened
+twice in an hour.
+
+FileDir holds nothing a person typed, so closing it loses nothing. The build
+asks the window to close the way Alt+F4 does, which lets FileDir save its
+settings on the way out, waits five seconds, and only then ends a program that
+ignored the request. A holder that will not close at all still stops the build,
+named. Anything that is not the file being replaced is left alone: processes are
+matched by full path, so a program of the same name elsewhere is never touched.
+
+## Version 5.0.34
+
+*August 2026*
+
+**Rename to Identify Content, Control+Shift+I.** This is renTitle, the command-line utility,
+brought inside FileDir and made to work on more than the files it happened to
+suit.
+
+renTitle asked ExifTool for one named tag -- `-filename<${title;}` -- and let
+ExifTool do the renaming. That works when the tag is called Title and does
+nothing at all otherwise, which is why a second copy of the batch file existed
+asking for `bookname` instead. ExifTool reports thousands of tags across
+hundreds of formats and they disagree: a PDF has Title, an MP3 has Title and
+Album, a photograph has ObjectName, Headline, Caption-Abstract and Description,
+an EPUB has BookName.
+
+So every field is read, the ones whose NAME is about a title are kept, the ones
+that are title-like but never a title are thrown out, and the LONGEST of what
+remains is taken.
+
+The exclusions matter as much as the matches. Half the tags containing the word
+"name" are about the camera, the lens, the software or the file itself, and
+without a second list a photograph gets named after its lens and a PDF after
+pdfTeX. Fields naming the COLLECTION a file belongs to are excluded too --
+album, show, product -- and that one came out of testing: on a real MP3 tag set,
+"Al Green Greatest Hits" beat "Let''s Stay Together" on length alone and named
+the song after the record it came from. Longest wins only among fields that
+describe THIS file. A value with no letters in it is skipped as well, since a
+date or a duration is not a name.
+
+Tested against the tag sets of a photograph, a PDF, an MP3, an EPUB, a video and
+a bare scan: caption, title, song title, book name, video title, and nothing at
+all for the scan, which is right. Length is a crude measure of how much somebody bothered to
+write, and it works: a photograph carrying both IMG_4021 and "Sunset over the
+Cascades from Rattlesnake Ridge" gets named the second. Values under four
+characters are codes rather than titles, values over 120 are abstracts, and a
+value that merely repeats the current file name is ignored.
+
+The sanitising follows renTitle's rules. Dashes, commas, periods, parentheses
+and apostrophes are KEPT, because they occur naturally in a sentence and a name
+reads wrongly without them. Capitalization is preserved exactly -- somebody
+chose it, and lowercasing a title loses its proper nouns. Everything else is
+dropped, and each run of dropped characters, including underscores, becomes a
+single space, so "Sunset_over__the:Cascades" becomes "Sunset over the Cascades"
+rather than running together. A name is never left ending in a period or a
+space, which Windows will not keep, nor starting with a dash, which command-line
+tools mistake for an option. An over-long title is cut at a word.
+
+When a name is already taken, -01, -02 and so on are added to the ROOT, so the
+extension still says what the file is: Sunset-01.jpg, never Sunset.jpg-01.
+
+Every rename is shown first, with the field each title came from, and every file
+that could not be renamed is listed with the reason. Nothing is overwritten.
+
+**The build now says WHY it cannot replace a file.** A build stopped with
+"Access to the path 'C:\FileDir\FileDir.exe' is denied", which is what .NET
+says and explains nothing. The reason was that FileDir was running, started with
+Alt+Control+F and never closed.
+
+Before removing a build output, the build looks for a process holding that exact
+path -- compared by full path, so a program of the same name elsewhere is not
+blamed -- and CLOSES IT. Naming the process was already better than "access is
+denied", but being told to close something and build again still costs a whole
+build to learn what the build could have done itself. FileDir holds nothing a
+person typed, so closing it loses nothing.
+
+Politely first: CloseMainWindow asks the window to close the way Alt+F4 does, so
+FileDir saves its settings on the way out. Only a program that ignores that is
+ended, and only after five seconds, because a build must not wait on something
+that is not going to answer. A holder that will not close at all still stops the
+build, named.
+A read-only attribute, the other ordinary cause, is simply cleared. Anything
+else is reported with the system's own words and a note to look for a virus
+scanner or an Explorer preview pane.
+
+**Rename to Identify Content no longer asks first.** Renaming is not deleting:
+the file is still there, still tagged, and a name that turns out wrong can be
+changed again. The dialog made the quick thing slow and put a wall of text
+between the command and what it had already been asked to do. Each rename is now
+spoken as it happens, the cursor lands on the renamed file when the filter in
+effect still shows it, and every detail -- including which field each title came
+from and why a file was skipped -- goes to the session log.
+
+Reorder Names keeps its confirmation, because it changes many names by a rule
+rather than one name from its own contents, and reading the plan is the point.
+
+**A play list on the clipboard was rejected because of what surrounded it.**
+Alt+Shift+L found nothing to play in a perfectly good .m3u of forty YouTube
+addresses. The file was not the problem: Append to Clipboard heads each file's
+text with the file NAME and ends with a rule and "End of Document", so the list
+arrived with three lines of packaging around it -- and the classifier threw
+everything away the moment it met one line that was neither an address nor a
+file.
+
+That looked careful and was useless. Unplayable lines are passed over now, and
+the test moved to the proportion: at least two playable lines, and at least half
+of the real content. A list wrapped in headings passes; a page of prose with one
+address in it still does not, which is the case the strictness was for.
+
+**The first line of the text is a LAST resort, and only for files that have
+lines.** A first line is often not a title: a date, a byline, "Chapter One", or
+the opening words of a sentence that runs on. Metadata is asked first and is the
+better answer, especially for a binary file, where a "first line" is not text at
+all. So the fallback runs only when the metadata yields nothing AND the format
+is one the extraction chain understands.
+
+**Rename to Initial Line is gone, folded into this.** Two commands asking "what
+should this file be called" is one too many, and the second was on Control+Shift+J,
+which is mnemonic for nothing. Rename to Title takes the old command's key and
+its behaviour as a FALLBACK: metadata first, and when there is none, the first
+line of the text.
+
+The fallback is better than the command it replaces. The old one read only what
+2htm could reach; this reads through the whole extraction chain, so a Word
+document or a PDF works as readily as a text file. Markdown heading marks and
+underlines are stripped from the line, since they are decoration rather than
+part of the title, and the same length bounds apply as to a metadata field: too
+short is not a name, too long is a paragraph.
+
+ExifTool missing is no longer fatal either. It says so once and carries on with
+the text, so a folder of notes can be renamed on a machine that has no media
+tools installed.
+
+Control+Shift+J is free again.
+
+## Version 5.0.33
+
+*August 2026*
+
+**FileDir said mpv was not installed on a machine that had it, three times, and
+both guesses about why were wrong.** The directory listing settled it, and there
+were two faults, either of which alone was enough.
+
+The search looked only for `.exe`. That machine's PATH held `c:\bin\mpv.cmd`, a
+wrapper, which runs mpv perfectly well and was walked straight past. Every
+runnable extension is now tried -- .exe, .com, .cmd and .bat, in that order --
+and a batch file is started through the command interpreter, since the process
+object cannot start one directly.
+
+And the search looked for a folder named after the command. mpv installs into
+**"MPV Player"**, not "mpv". Any folder under Program Files, Program Files
+(x86) or the user's Programs folder whose NAME CONTAINS the tool name is now
+examined, which is how a program is actually named on disk.
+
+**And the message now says where it looked.** Three rounds went by with nothing
+to go on but "not installed", each answered by another guess. When a tool is not
+found, FileDir lists every place it tried, so the next report can be answered
+once. The same list goes to the session log whether the search succeeds or
+fails.
+
+That is the lesson worth keeping from this one: a failure that cannot be
+diagnosed from its own message costs more rounds than the bug did.
+
+## Version 5.0.31
+
+*August 2026*
+
+Three faults from testing, and one of them explains a contradiction.
+
+**An .m3u could not be appended to the clipboard.** FileDir said it did not know
+how to read it as text, which is absurd for a play list. The list of extensions
+that are already text simply lacked it, along with .m3u8, .pls, .url and the
+subtitle formats. It now has them. Saving a copy as .txt was a fair workaround
+and should never have been needed.
+
+**The installer offered to REINSTALL mpv while the Results box said it was not
+installed, and both were telling the truth.** The installer's shell was started
+after winget put mpv on the machine path; FileDir was started from a desktop
+shortcut by an Explorer that had been running since before the install. A
+process inherits the environment it was born with, so FileDir's path did not
+have mpv in it and would not until the next sign-in.
+
+Asking the path is therefore never enough for a tool that may have been
+installed minutes ago. Homer.Media.findInstalled now looks beside the program,
+on the path, in Program Files, in the user's Programs folder, in winget's shim
+folder, and finally inside the package folder winget unpacks into, which no path
+ever mentions. ffmpeg, ffprobe, yt-dlp and mpv all use it, and the Results box
+searches the same places, so the installer and the program can no longer
+disagree about what is on the machine.
+
+**The Results box named the wrong key for translation.** It said Alt+Shift+L,
+which moved to Alt+Shift+F7 when Translate File was aligned with EdSharp. That
+text lives in summarizeSetup.ps1 and the rename never reached it, and because
+Alt+Shift+L is still a real key -- Play Media now -- it read as plausible
+nonsense rather than an obvious error.
+
+A new check refuses any key named in a document or script that the program does
+not have. It caught five more stale references at once: a whole paragraph in the
+guide still describing the Timer on F12, Shift+F12 and Alt+F12, and Configuration
+Options and Manual Options given as Control+F2 and Alt+F2 in the tutorials, which
+were wrong before this release. It would NOT have caught the Results box, since
+Alt+Shift+L still exists; renaming a key still means reading every shipped file,
+and the audit cannot know which sentence was about which command.
+
+The check itself then failed a build, on a working note that mentions EdSharp's
+Alt+Control+E: a real key, of another program, in a document no user ever sees.
+It read every .md in the folder, where it should read only what the installer
+ships, which is what a user can read. Scope corrected.
+
+And the audit told the reader that System.Memory.dll "will be built before the
+installer is compiled", which is nonsense: it is a third-party assembly that
+ships when present, not build output. Both land in the same list of files whose
+absence is not a fault, and the message now tells them apart.
+
+The hotkey table also gained the spelled forms of two keys it recorded only as
+symbols, so Shift+Period and Shift+Comma are now written down as the tag and
+untag keys they have always been.
+
+## Version 5.0.30
+
+*August 2026*
+
+Three commands taken from KeyLine, the first of which fixes a bug that could
+lose files.
+
+**Tag Duplicate Files deleted them.** The command was called Tag, and it called
+File.Delete on every duplicate it found: no confirmation, no way back, and a
+comment beside it saying it had been done for one particular job and never taken
+out again. It also compared files by reading them as TEXT, so two different
+pictures whose bytes happened to decode to the same string counted as identical,
+and one was deleted.
+
+It now groups by size, hashes only the groups with more than one member, and
+compares the bytes of a hash match before tagging anything -- because "near
+certain" is not good enough before somebody deletes something. It tags and says
+so. Delete Tagged removes them, after the confirmation that command already
+asks.
+
+**Tag Similar Files, Alt+Shift+comma.** From KeyLine's delSimilar. It groups
+content.pdf with content-1.pdf, content_2.pdf, content (3).pdf and
+content[4].pdf, tagging all but the largest, on the reasoning that a partial
+download is smaller than the whole. A different extension is a different file,
+not another copy.
+
+The separator is required, and that is the whole difficulty of the rule. Testing
+it against real names caught the fault: without a required separator, chapter1
+and chapter2 group together, and one of a book's chapters gets tagged for
+deletion. KeyLine's own comment says not to match chapter1 or part2, and now
+neither does this.
+
+**Translate File moved to Alt+Shift+F7, matching EdSharp.** EdSharp puts
+Translate Language on that key, and the whole F7 row was free here, so the two
+programs can agree. Alt+Shift+L was a poor choice anyway: it named the feature
+rather than the family, and it took a letter better spent elsewhere.
+
+**Play Media, Alt+Shift+L**, is what that letter now does. It plays the
+clipboard when the clipboard holds something playable, and otherwise the tagged
+files, and otherwise everything playable in the folder.
+
+The clipboard first, because a play list of web addresses is as playable as a
+folder of MP3 files once yt-dlp is beside mpv, and the clipboard is where such a
+list arrives: copied from a mail message, a web page, or a file open in EdSharp.
+mpv reads the clipboard perfectly well at run time -- clipboard/text is a read
+and write property, native support is on by default, and Windows has its own
+backend -- and Control+V inside the player appends the file or address in the
+clipboard to the play list. But that is ONE entry: there is no
+--playlist=clipboard and no clipboard:// protocol, and --playlist takes a file
+name. A forty-track list cannot be handed over that way.
+
+So FileDir writes the clipboard to a temporary play list and hands mpv that. It
+could pipe the same text to --playlist=- instead; a file is chosen deliberately,
+because it can be replayed, saved or opened as a virtual folder afterwards,
+where standard input can be handed over only once. Control+V still works inside
+the player for queueing one more thing while listening, and the guide says so.
+
+The clipboard is used only when it looks playable: every line must be a web
+address or name a file that exists. One line of ordinary prose and the whole
+thing is ignored and the folder is played instead, so the command never does
+something surprising with whatever happened to be copied last. #EXTM3U and
+#EXTINF lines are kept exactly as they are, since that is where a play list
+keeps its track titles.
+
+Two things are passed to mpv that it would otherwise get wrong. yt-dlp is named
+outright when FileDir has it, because mpv looks for it on the path and FileDir
+may hold the only copy, beside its own program where mpv would never look --
+without which a list of web addresses fails saying nothing useful. And the
+player is told to keep going when an entry fails, because a list of forty
+addresses will have one that has been taken down and stopping there would lose
+the other thirty-nine.
+
+Failing a playable clipboard, it plays the tagged sound and video files, and
+failing those, everything playable in the folder, in the order the window is
+sorted. Play List writes an .m3u worth keeping; this is the other half of
+playing, which is most of it -- hear these now, keep nothing. That last part is the useful bit: sort by date and it plays in
+date order, which is how a recording session or a downloaded series wants to be
+heard. The list goes to a temporary file nobody has to name or tidy up.
+
+What counts as playable is asked of Homer.Convert, which already keeps the
+audio and video lists Output Type uses, so a format added there is playable here
+too without a second list to keep in step.
+
+**mpv is an optional component, and Play List is how it is reached.** No new
+key: a play list already says "these files, in this order", which is exactly
+what a player needs, and hanging playback off it means no second way of choosing
+files and no key to learn. FileDir has few keys left, and this one was already
+the right place.
+
+Control+Shift+L still writes the .m3u as it always did. When mpv is installed it
+then asks what to do with it: save it only, play it with sound and picture, or
+play it with sound alone -- the last because half of why anyone plays from a
+file manager is a talk or a lecture, where a video window only gets in the way.
+The answer is remembered. Run the command a second time while sitting on a play
+list and it plays that one instead of wrapping it in another, which is what
+makes the .m3u worth keeping.
+
+mpv is left to run on its own rather than waited for: it is a player, and
+FileDir should not sit frozen while somebody listens. Its own keys work in its
+window, which is the point of using it rather than growing a player inside
+FileDir.
+
+Without mpv the command behaves exactly as it always has. A person who does not
+play media from the file list sees no change at all.
+
+The checkbox is NOT ticked, and it sits last among the installs. mpv statically
+links its own copy of ffmpeg, which FileDir already carries, so a good part of
+the 60 MB is a second copy of something already on the machine. It buys playback
+and nothing else: conversion is ffmpeg's job and stays ffmpeg's job.
+
+**Find Duplicates in Tree, Alt+Shift+J.** KeyLine's delDupes examines a whole
+directory tree, which Tag Duplicate Files cannot: that one works on the list in
+front of it. This walks the current folder and everything under it, and opens
+every duplicate it finds as a VIRTUAL FOLDER rather than in a dialog of its own.
+
+That is the better answer, and FileDir already had the mechanism. A virtual
+folder is a window like any other, so every command works in it: hear a name,
+its size and its date, read what is inside a file with Question Mark, open one
+to check before deciding, tag a range with F8, invert the tagging, and then
+Delete Tagged, which asks before it deletes. Nothing new to learn and no special
+case. The list is also written where Open Virtual Folder will offer it again, so
+the same set reopens without walking the tree twice.
+
+Only duplicates are listed, never the first copy of anything, so Tag All
+followed by Delete Tagged leaves exactly one of each file on disk.
+
+The tree is walked a folder at a time rather than with the framework's recursive
+search, which throws the moment it meets one folder it cannot open and loses the
+whole result; here an unreadable folder is skipped and noted in the log.
+Junctions and symbolic links are skipped, because one pointing at a parent walks
+in a circle until the stack gives out. Files are grouped by size first, so most
+are never read at all, and empty files are ignored: they are all identical to
+each other, which is true and never useful.
+
+**Reorder Names, Alt+Shift+K.** From KeyLine's reorder. A single leading digit
+is padded with a zero, so 2name sorts before 11name instead of after it; ReadMe
+sorts to the top, along with index, introduction and overview; and licence,
+contributing, change log, credits and the rest sort to the bottom. Every rename
+is shown before anything happens, and a name already taken gets another.
+
+Not taken from KeyLine, and why: listFileProperties, because Type Extended
+already shows the same shell columns plus what ExifTool reads, in one sorted
+list; ListInstalledPrograms, because querying Win32_Product triggers an MSI
+consistency check on every installed package and can reconfigure software as a
+side effect; listStartupCommands and phoneNumber, because neither is file work.
+mainly.py, which pulls the article out of a saved web page, is worth having and
+needs Python with a package, so it belongs with the PDF reader rather than here.
+
 ## Version 5.0.29
 
 *August 2026*
@@ -1066,7 +1556,7 @@ guards the PowerShell scripts.
 Beta. FileDir gains its first new feature in years, and the rebuilding work of
 the releases before it is complete.
 
-**Translate File, Alt+Shift+L.** Tag any number of documents, name a language,
+**Translate File, Alt+Shift+F7.** Tag any number of documents, name a language,
 and FileDir writes a translation beside each one as <name>.<language>.txt. It
 reads the same formats Say Contents reads -- Word, PDF, PowerPoint, Excel,
 Markdown and plain text -- so a folder of Word documents can be translated

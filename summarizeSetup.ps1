@@ -91,16 +91,33 @@ function findExe($sName) {
   # The program's own folder is searched as well as the path, because a tool
   # installed minutes ago is not on this process's path yet. Ollama installs
   # per user, so its profile copy is tried by name.
+  # Everywhere a tool might be, not merely on this process's path. A tool
+  # installed minutes ago is not on the path of a process that started before
+  # it -- which is how the installer offered "Reinstall mpv" while this summary
+  # said it was not installed. Both were true of their own environment.
   $sPrograms = Join-Path $env:LOCALAPPDATA "Programs"
+  $sWinGet = Join-Path $env:LOCALAPPDATA "Microsoft\WinGet"
   $lCandidates = @(
     (Join-Path (Join-Path $sPrograms $sName) ($sName + ".exe")),
-    (Join-Path (Join-Path $sPrograms "Ollama") ($sName + ".exe"))
+    (Join-Path (Join-Path $sPrograms "Ollama") ($sName + ".exe")),
+    (Join-Path (Join-Path $env:ProgramFiles $sName) ($sName + ".exe")),
+    (Join-Path (Join-Path (Join-Path $env:ProgramFiles $sName) "bin") ($sName + ".exe")),
+    (Join-Path (Join-Path $sWinGet "Links") ($sName + ".exe"))
   )
   foreach ($sPath in $lCandidates) {
     if (Test-Path -LiteralPath $sPath) { return $sPath }
   }
   $oFound = Get-Command ($sName + ".exe") -ErrorAction SilentlyContinue
   if ($oFound) { return $oFound.Source }
+  # Last, the folder winget unpacks a portable package into. Its name carries
+  # the publisher and version, so it is searched rather than guessed.
+  $sPackages = Join-Path $sWinGet "Packages"
+  if (Test-Path -LiteralPath $sPackages) {
+    try {
+      $oExe = Get-ChildItem -LiteralPath $sPackages -Filter ($sName + ".exe") -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1
+      if ($oExe) { return $oExe.FullName }
+    } catch { }
+  }
   return ""
 }
 
@@ -183,17 +200,17 @@ function ollamaModels() {
 function reportChatModel($sList) {
   if ((findExe "ollama") -eq "") { return }
   if ($sList -eq "") {
-    say "Chat model llama3.2: could not be checked just now. Press Alt+Shift+L in FileDir; it offers to fetch a model if none is there."
+    say "Chat model llama3.2: could not be checked just now. Press Alt+Shift+F7 in FileDir; it offers to fetch a model if none is there."
     return
   }
-  if ($sList -match "llama3\.2") { say "Chat model llama3.2: installed. Alt+Shift+L can translate with it." }
+  if ($sList -match "llama3\.2") { say "Chat model llama3.2: installed. Alt+Shift+F7 can translate with it." }
   else { say "Chat model llama3.2: not downloaded. Run installOllama.cmd in the FileDir folder to fetch it." }
 }
 
 function reportTranslationModel($sList) {
   if ((findExe "ollama") -eq "") { return }
-  if ($sList -match "qwen2\.5:7b") { say "Translation model qwen2.5:7b: installed. Alt+Shift+L will use it." }
-  else { say "Translation model qwen2.5:7b: not installed. Alt+Shift+L uses llama3.2, quicker but less accurate." }
+  if ($sList -match "qwen2\.5:7b") { say "Translation model qwen2.5:7b: installed. Alt+Shift+F7 will use it." }
+  else { say "Translation model qwen2.5:7b: not installed. Alt+Shift+F7 uses llama3.2, quicker but less accurate." }
 }
 
 function main() {
@@ -227,6 +244,7 @@ function main() {
   reportTool "ffmpeg" "ffmpeg" "run installMediaTools.cmd in the FileDir folder"
   reportTool "yt-dlp" "yt-dlp" "run installMediaTools.cmd in the FileDir folder"
   reportPdfReader
+  reportTool "mpv" "mpv" "run installMpv.cmd in the FileDir folder"
   reportTool "Ollama" "ollama" "run installOllama.cmd in the FileDir folder"
   # One probe, read whole: the listing is short, and asking three times would
   # triple the wait on a cold service.

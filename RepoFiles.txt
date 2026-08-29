@@ -37,6 +37,7 @@ cleanFileDir.py
 homerPolicy.py
 installMediaTools.cmd
 installPdfTools.cmd
+installMpv.cmd
 pdfRich.py
 makeKeyMap.py
 

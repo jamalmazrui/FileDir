@@ -8,7 +8,7 @@ author: Jamal Mazrui
 
 ### A file manager rebuilt for the way screen reader users actually work
 
-**Version 5.0.28**  
+**Version 5.0.42**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -20,118 +20,79 @@ FileDir is free and open source, for Windows, and it aims at one thing: to be
 the most productive way a screen reader user can manage files and folders. This
 is a reborn FileDir, more capable than any version before it. Expert AI has been
 used throughout -- to review twenty years of code, modernize it, and build
-features that were not practical to write before. Several of the strongest
-things below exist because that help was available.
+features that were not practical to write before.
 
-FileDir works by tagging. You mark any set of items, and one command then acts
-on all of them. With nothing tagged, a command acts on the item you are on, so
-tagging is never something you have to do first. Almost everything below is a
-batch operation for that reason: you are rarely doing something to one file.
+FileDir works by tagging. Mark any set of items, and one command acts on all of
+them. With nothing tagged, a command acts on the item you are on, so tagging is
+never something you have to do first. Nearly everything below works on a whole
+folder at once for that reason.
 
-Nine tutorials, on the Start menu and in the Help menu, start you off by the
-kind of work you do. Here is what each one finds.
+## Converting
 
-## If you handle documents
+Choose a file and FileDir offers what that kind of file can become. Word,
+OpenDocument, EPUB, web pages, Markdown, LaTeX and rich text convert between
+each other. Older Office files and PDFs become readable text. Audio becomes MP3,
+FLAC or Ogg; video becomes MP4, Matroska or WebM, or audio alone; pictures
+convert between the common formats. Each result keeps its name and lands beside
+the original.
 
-FileDir converts between formats in batches. Tag a folder of files, choose what
-they should become, and each one is written beside the original with the same
-name. Word, OpenDocument, EPUB, web pages, Markdown, LaTeX and rich text convert
-between each other. Older Word, PowerPoint and Excel files, and PDFs, become
-readable text or web pages.
+PDFs are read with their structure intact, so headings stay headings and tables
+stay tables. No Microsoft Office is needed for any of this.
 
-You can also hear what is in a file without opening anything, whatever format it
-is in, and gather the text of many files onto the clipboard in one pass, each
-piece headed by its file name. Three scattered sources become one set of notes,
-in the order you tagged them.
+## Naming and tidying
 
-## If you work with media
+One command renames files to what identifies them inside: the title of a
+document, the caption of a photograph, the song title, the book name. Another
+finds duplicate files anywhere beneath a folder, compares them byte for byte,
+and gathers them into a window you can inspect and delete from. A third tags
+files that are versions of one another, keeping the largest. A fourth renames so
+an alphabetical list finally reads in order.
 
-The same conversion works on sound, video and pictures. A folder of videos
-becomes audio files. One video format becomes another. Pictures convert between
-the common formats. It is the same three steps as converting a document, because
-it is the same command: FileDir looks at what you have and offers what it can
-become.
+## Media
 
-FileDir also fetches media from the web. Give it the address of a page and it
-downloads the video, or just the sound as an audio file, from a great many
-sites.
+Play the tagged files, or a whole folder, or a play list you copied from
+somewhere -- including a list of web addresses, which are fetched as they play.
+Download media from a page as video or as audio alone.
 
-## If you research
+One command shows everything known about a file in a single alphabetical list:
+the Windows properties, what opens it, and the information stored inside it --
+the camera and exposure of a photograph, the artist and album of a song, the
+duration and codecs of a video.
 
-Download a page and pick out the files linked from it, filtered by type. Collect
-the text of everything you tagged into one document. Then ask an AI model
-questions about what you gathered, or about any single file: summarize this,
-list the dates in it, tell me what it is about.
+## Working across languages, and asking questions
 
-All of that runs on your own computer. There is no account, no limit, and
-nothing is sent anywhere.
+Translate whole folders of documents into a language you name. Ask an AI a
+question, or ask about the file you are on, and read the answer in a window you
+can navigate and copy from.
 
-## If you work across languages
-
-FileDir translates whole folders of documents into a language you name, writing
-each translation beside its original. It reads Word files and PDFs as readily as
-plain text.
-
-This also runs on your own machine, which is the point of it: you can translate
-a document you would never paste into a web page.
-
-## If you need to know what something is
-
-One command shows everything known about a file as a single alphabetical list:
-the Windows properties, what the file is registered to open with, and the
-information stored inside the file itself. The camera, lens and exposure of a
-photograph. The artist, album and track of a song. The duration, codecs and
-frame rate of a video. The author and page count of a PDF.
-
-## If you work in bulk
-
-Tag a range in two keystrokes, invert what you tagged, or save a set of tags and
-come back to it another day. Then copy, move, zip, extract, print, mail, rename,
-convert, translate or delete all of it at once.
-
-Archives behave like folders: open one and look inside. FileDir extracts from
-nearly every archive format, and creates and updates zip files.
+All of it runs on your own computer. No account, no limit, and nothing is sent
+anywhere -- so you can translate or summarize a document you would never paste
+into a web page.
 
 ## For everyone
 
 FileDir leaves window titles and focus changes to your screen reader, which
-announces them anyway, and speaks only what it alone knows. A describe mode lets
-you press any command key and hear what it does without doing it, and every
-command in the program now has a description.
+announces them anyway, and speaks only what it alone knows. Press any command
+key in describe mode to hear what it does without doing it; every command has a
+description. When something goes wrong, one command puts the session log on your
+clipboard, ready to attach to a message.
 
-When something goes wrong, FileDir keeps a log of the session and one command
-puts it on your clipboard ready to attach to a message. Telling me what happened
-should not require hunting through folders.
-
-Documentation comes with it and is meant to be read: a user guide covering every
-command, nine tutorials by the kind of work you do, a hotkey reference listing
-every command three ways, a questions and answers file, a history of what
-changed and why, a developer guide, and the licence. Each is a web page the
-Start menu opens, and a Markdown file you can read in FileDir itself.
+Documentation comes with it and is meant to be read: a user guide, nine
+tutorials by the kind of work you do, a hotkey reference listing every command
+three ways, questions and answers, a history, and a developer guide.
 
 ## Getting the pieces
 
 Everything optional is a checkbox on the installer's last page, each saying what
 it will do, at what version, and how large it is, and each fetched and installed
 for you. Nothing is a manual download. A component already on your computer is
-found and offered as an update or a repair rather than installed a second time,
-and one copy is shared with EdSharp and HomerScribe rather than each program
-carrying its own.
+found and offered as an update rather than installed twice, and one copy is
+shared with EdSharp and HomerScribe.
 
-The document and media tools are ticked, because without them the conversion
-features quietly do less. The AI pieces are not ticked: they are several
-gigabytes, and nobody should download that by failing to notice a checkbox.
-
-Those AI features trade installation size for local power and privacy. A few
-gigabytes of models buy translation, summarizing and file questions that ask no
-account, impose no limit, and never send a document anywhere.
-
-## This is a beta
-
-FileDir has been rebuilt from a codebase that went twenty years without a
-serious tidy. Every release is tested here, but the range of Windows machines
-and screen reader versions in the world is wider than one developer's desk.
-Problem reports are what turn a beta into a release.
+The document and media tools are ticked, because the conversion features need
+them. The AI pieces are not: they are several gigabytes, and nobody should
+download that by failing to notice a checkbox. They buy translation, summarizing
+and file questions that ask no account and never send a document anywhere.
 
 - [FileDir project page on GitHub](https://github.com/JamalMazrui/FileDir)
 - [FileDir installer for Windows](https://github.com/JamalMazrui/FileDir/releases/latest/download/FileDir_setup.exe)
