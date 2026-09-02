@@ -1,6 +1,6 @@
 ﻿# FileDir — Questions and Answers
 
-**Version 5.0.42**  
+**Version 5.0.47**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -131,12 +131,32 @@ FileDir.
 
 By PyMuPDF4LLM, a free reader the installer offers as a ticked checkbox. It
 reads the PDF's own structure, so you get headings, lists and tables rather than
-a wall of text. It needs Python, which it will tell you about if it is missing.
-Microsoft Word is not involved.
+a wall of text. Microsoft Word is not involved.
+
+**Does the "LLM" in that name mean AI reads my PDFs?**
+
+No. Nothing is sent anywhere and no AI model is involved. The name means the
+tool was built to produce Markdown that reads well when handed to an AI later —
+it describes the output format, not how the work is done. The reading itself is
+ordinary parsing: font sizes become headings, ruled areas become tables.
+
+**Does FileDir install Python?**
+
+Only if you tick the PDF reader and this computer has no Python. The reader runs
+under Python, so the installer fetches it — about 30 MB — the same way it
+fetches everything else. FileDir itself is a Windows program and needs no
+Python for anything else.
 
 A PDF that is a scan of images has no text in it at all, and needs optical
 character recognition rather than conversion. FileDir says so rather than going
 quiet.
+
+**Can I convert iPhone photos?**
+
+Yes, with the image tools installed — the installer offers them as a checkbox,
+unticked. iPhone photos are HEIC, which ffmpeg cannot read whatever build you
+have, so ImageMagick handles those along with camera raw files, SVG drawings and
+Windows icons. Ordinary PNG and JPEG work without it.
 
 **Do I need Pandoc?**
 
@@ -160,6 +180,17 @@ Yes. Copy the list, press Alt+Shift+L, and it plays in order with the track
 titles. Anything mpv can reach works, because the addresses are handed to
 yt-dlp. An address that has been taken down is skipped rather than stopping the
 rest.
+
+**I copied a podcast directory and nothing played. Why?**
+
+Because a directory usually links to each episode's web page, not to its audio
+file. The player has to fetch and examine every page before it can play
+anything, which takes seconds each and fails completely for sites it does not
+recognise. FileDir now warns you before starting in that case.
+
+What plays immediately is an address ending in .mp3 or .m4a. A podcast's RSS
+feed holds those; its web pages do not. If you can get the feed's audio
+addresses onto the clipboard, Alt+Shift+L plays them at once.
 
 **Can I add something while it is playing?**
 

@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.42**  
+**Version 5.0.47**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -19,6 +19,8 @@ MIT License
 - [Miscellaneous Commands](#miscellaneous-commands)
 - [What Is Inside a File](#what-is-inside-a-file)
 - [Renaming to What Is Inside](#renaming-to-what-is-inside)
+- [The Quick Folder](#the-quick-folder)
+- [Going Back](#going-back)
 - [Tidying a Folder](#tidying-a-folder)
 - [Converting Between Formats](#converting-between-formats)
 - [Playing Media](#playing-media)
@@ -680,6 +682,34 @@ ExifTool comes with the media tools. Without it the command still works from the
 text alone, and says so once.
 
 
+## The Quick Folder
+
+Your Quick folder holds shortcuts and web links you want to reach in one
+keystroke. Press **Accent** to go there, or **Control+Q** to open it in a new
+window.
+
+Press **Shift+Q** for Quick Shortcut to add the file or folder you are on. Press
+**Alt+Shift+Q** for Quick URL to add a web link: copy a link in any browser
+first and the address fills itself in, with the site name offered as the name.
+Both let you edit the name and the address before anything is written.
+
+A name with punctuation in it is cleaned rather than refused, so "Q: what now?"
+becomes "Q what now". A name Windows cannot use at all is refused with the
+reason.
+
+## Going Back
+
+Press **Alt+LeftArrow** to return to the folder you were in before, and
+**Alt+RightArrow** to go forward again. They work as they do in a web browser:
+going somewhere new after going back discards the forward path, and a folder
+that has been deleted since you were there is stepped over rather than stopping
+you.
+
+Press **Alt+R** for Recent Folders to pick from everywhere you have been this
+session, each folder listed once with the most recent first.
+
+Window cycling is **Control+Tab** and **Control+Shift+Tab**.
+
 ## Tidying a Folder
 
 Three commands help with a folder that has collected copies and oddly sorted
@@ -734,7 +764,14 @@ What you are offered depends on what you are on:
 - **Audio** can become MP3, M4A, WAV, FLAC, Ogg Vorbis or Opus.
 - **Video** can become MP4, Matroska, WebM, QuickTime or AVI, or MP3, M4A or WAV
   for the sound alone.
-- **Pictures** can become PNG, JPEG, WebP, BMP, GIF or TIFF.
+- **Pictures** can become PNG, JPEG, WebP, BMP, GIF, TIFF, a Windows icon or
+  AVIF. With the image tools installed, iPhone photos (HEIC), camera raw files,
+  SVG drawings and icons can be converted too — ffmpeg cannot read any of those.
+
+**Tables** — .inix records, .csv, .tsv, .xlsx and Markdown tables — convert
+between each other keeping their rows and columns, and become Word documents,
+web pages or OpenDocument files with the table intact. A spreadsheet can be read
+but not written; save it as .csv, which every spreadsheet opens.
 
 So converting a folder of MP4 files to MP3, or MKV to MP4, or PNG to JPEG, is
 the same three keystrokes as converting Word to Markdown. The format you last

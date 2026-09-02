@@ -204,6 +204,65 @@ public static string sWordProcessor = "WinWord.exe";
 public static string sTempFile;
 public static List<string> lsTempFile = new List<string>();
 public static List<string> lsRecentDirs = new List<string>();
+
+// WHERE THE HISTORY IS KEPT, and why it needed rebuilding.
+//
+// A visit used to be recorded in ONE place: the MdiChild constructor. So a
+// folder was remembered only when a new window was made for it. Going to a
+// folder that already had a window -- which activate_Helper does, returning
+// early after activating it -- recorded nothing at all, and neither did
+// refreshing or any command that reused the window in place. The Quick folder
+// on the Accent key is the everyday case: go there twice and the second visit
+// left no trace.
+//
+// recordVisit is now called from the one place every arrival passes through, so
+// it does not matter how a folder was reached.
+public static int iHistoryAt = -1;
+public static bool bReplaying = false;
+
+public static void recordVisit(string sPath) {
+// Add a folder to the history, unless this arrival IS the history moving.
+//
+// Going back must not itself be recorded, or Back and Forward would chase each
+// other: every step back would append a new entry and there would never be
+// anywhere forward to go. bReplaying says "this arrival came from the history",
+// and the pointer is moved by the command instead.
+if (bReplaying) return;
+if (sPath == null || sPath.Trim().Length == 0) return;
+
+// Arriving where you already are is not a visit. Refreshing a folder, or
+// activating the window that is already in front, would otherwise fill the
+// history with the same entry.
+if (iHistoryAt >= 0 && iHistoryAt < lsRecentDirs.Count
+&& Homer.Util.stringEquiv(lsRecentDirs[iHistoryAt], sPath)) return;
+
+// Anything ahead of the current position is discarded, as a browser does:
+// going back three folders and then somewhere new makes a new branch, and the
+// old forward path is no longer reachable or wanted.
+if (iHistoryAt >= 0 && iHistoryAt < lsRecentDirs.Count - 1)
+lsRecentDirs.RemoveRange(iHistoryAt + 1, lsRecentDirs.Count - iHistoryAt - 1);
+
+lsRecentDirs.Add(sPath);
+// A long session should not grow without limit.
+while (lsRecentDirs.Count > 200) lsRecentDirs.RemoveAt(0);
+iHistoryAt = lsRecentDirs.Count - 1;
+} // recordVisit method
+
+public static string[] recentDistinct() {
+// The history for the Recent Folders list: newest first, each folder once.
+//
+// The history itself keeps every visit in order, because Back and Forward need
+// that. A person picking from a list wants each place named once, most recent
+// at the top, which is a different question about the same data.
+List<string> lsSeen = new List<string>();
+for (int i = lsRecentDirs.Count - 1; i >= 0; i--) {
+string sPath = lsRecentDirs[i];
+bool bHad = false;
+foreach (string sOther in lsSeen) if (Homer.Util.stringEquiv(sOther, sPath)) bHad = true;
+if (!bHad) lsSeen.Add(sPath);
+}
+return lsSeen.ToArray();
+} // recentDistinct method
 public static bool Recycle = true;
 public static bool DirsBeforeFiles = true;
 public static bool bExtraSpeech = true;
@@ -364,6 +423,57 @@ catch {}
 }
 return new System.Collections.ObjectModel.ReadOnlyCollection<string>(lsMatch);
 } // findInFiles method
+
+public static string sizeFriendly(long lBytes) {
+// A size a person can take in at once, for speech.
+//
+// WHY NOT A LIBRARY. Humanizer has a ByteSize humanizer and it is a fine
+// library, but it says "1.15 GB": an abbreviation, two decimal places, and a
+// NuGet package on a .NET Framework 4.8 build -- which is the Span trap that
+// already cost this project a silent failure in 2htm. It also cannot say what
+// is wanted here, so there is nothing to gain and a dependency to lose.
+//
+// WHAT IS WANTED, and why:
+//
+//   "k" for kilobytes, because a screen reader reads KB as two letters and
+//     everyone knows what k means on a file size.
+//   "megabytes" and "gigabytes" in full, because MB and GB read as letters too
+//     and the words are short enough to say.
+//   ONE decimal place at most, and only below ten. "9.4 megabytes" carries
+//     information; "94.3 megabytes" is a number nobody holds on to. This is the
+//     ordinary significant-figures habit, and it satisfies "no more than one
+//     decimal place" without ever printing a pointless ".0".
+//   The noun matches the count, so "1 byte" and "1 megabyte" are singular and
+//     zero is said plainly as "0 bytes".
+//
+// Divided by 1024, matching what File Explorer shows for the same file, so the
+// two never disagree in front of somebody.
+if (lBytes < 0) return "unknown";
+if (lBytes < 1024) return lBytes + (lBytes == 1 ? " byte" : " bytes");
+
+string[] aSingular = {"k", "megabyte", "gigabyte", "terabyte", "petabyte"};
+string[] aPlural = {"k", "megabytes", "gigabytes", "terabytes", "petabytes"};
+double nValue = lBytes;
+int iUnit = -1;
+while (nValue >= 1024 && iUnit < aSingular.Length - 1) {
+nValue /= 1024;
+iUnit++;
+}
+
+// Below ten, one decimal place; at ten and above, none. A whole number is
+// said as a whole number: "2 megabytes", never "2.0 megabytes".
+if (nValue < 10) {
+double nRounded = Math.Round(nValue, 1);
+if (nRounded == Math.Floor(nRounded)) {
+long lWhole = (long) nRounded;
+return lWhole + " " + (lWhole == 1 ? aSingular[iUnit] : aPlural[iUnit]);
+}
+return nRounded.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)
++ " " + aPlural[iUnit];
+}
+long lRounded = (long) Math.Round(nValue);
+return lRounded + " " + (lRounded == 1 ? aSingular[iUnit] : aPlural[iUnit]);
+} // sizeFriendly method
 
 static string formatBytesShort(double nBytes) {
 string[] aUnit = {"bytes", "KB", "MB", "GB", "TB"};
@@ -851,6 +961,8 @@ public HomerToolStripMenuItem menuFileOpenItem;
 public HomerToolStripMenuItem menuFileGoToItem;
 public HomerToolStripMenuItem menuFilePrintTagged;
 public HomerToolStripMenuItem menuFileRecentFolders;
+public HomerToolStripMenuItem menuFileGoBack;
+public HomerToolStripMenuItem menuFileGoForward;
 public HomerToolStripMenuItem menuFileWindowToggle;
 public HomerToolStripMenuItem menuFileCurrentWindows;
 public HomerToolStripMenuItem menuFileNextWindow;
@@ -1085,16 +1197,18 @@ menuFileOpenItem = menu_Helper("Open Item", "Enter", MenuFileOpenItem_Click);
 menuFileGoToItem = menu_Helper("Go to Item", "Shift+Enter", MenuFileGoToItem_Click);
 menuFilePrintTagged = menu_Helper("&Print", "Control+P", menuFilePrintTagged_Click);
 menuFileRecentFolders = menu_Helper("Recent Folders ...", "Alt+R", menuFileRecentFolders_Click);
+menuFileGoBack = menu_Helper("Go Back", "Alt+LeftArrow", MenuFileGoBack_Click);
+menuFileGoForward = menu_Helper("Go Forward", "Alt+RightArrow", MenuFileGoForward_Click);
 menuFileWindowToggle = menu_Helper("Window Toggle", "Shift+W", menuFileWindowToggle_Click);
 menuFileCurrentWindows = menu_Helper("Current Windows ...", "F4", menuFileCurrentWindows_Click);
-menuFileNextWindow = menu_Helper("Next Window", "Control+Tab or Alt+RightArrow", MenuFileNextWindow_Click);
-menuFilePreviousWindow = menu_Helper("Previous Window", "Control+Shift+Tab or Alt+LeftArrow", MenuFilePreviousWindow_Click);
+menuFileNextWindow = menu_Helper("Next Window", "Control+Tab", MenuFileNextWindow_Click);
+menuFilePreviousWindow = menu_Helper("Previous Window", "Control+Shift+Tab", MenuFilePreviousWindow_Click);
 menuFileClose = menu_Helper("&Close Window", "Control+F4", MenuFileClose_Click);
 menuFileCloseAllButCurrent = menu_Helper("Close All But Current Window", "Control+Shift+F4", menuFileCloseAllButCurrent_Click);
 menuFileExit = menu_Helper("E&xit FileDir", "Alt+F4", MenuFileExit_Click);
 menuFileRestartWindows = menu_Helper("Restart Windows", "Alt+Shift+F4", MenuFileRestartWindows_Click);
 //menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewViewCopy,
-menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewItemCopy, menuFileNewFolder, menuFileOpenFolder, menuFileGoToFolder, menuFileOpenSpecialFolder, menuFileGoToSpecialFolder, menuFileOpenDrive, menuFileGoToDrive, menuFileOpenVirtualFolder, menuFileGoToVirtualFolder, menuFileOpenParentFolder, menuFileGoToParentFolder, menuFileOpenRootFolder, menuFileGoToRootFolder, menuFileOpenQuickFolder, menuFileGoToQuickFolder, menuFileQuickShortcut, menuFileQuickURL, menuFileFind, menuFileProperties, menuFileOpenItem, menuFileGoToItem, menuFilePrintTagged, menuFileRecentFolders, menuFileWindowToggle, menuFileCurrentWindows, menuFileNextWindow, menuFilePreviousWindow, menuFileClose, menuFileCloseAllButCurrent, menuFileExit, menuFileRestartWindows});
+menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewItemCopy, menuFileNewFolder, menuFileOpenFolder, menuFileGoToFolder, menuFileOpenSpecialFolder, menuFileGoToSpecialFolder, menuFileOpenDrive, menuFileGoToDrive, menuFileOpenVirtualFolder, menuFileGoToVirtualFolder, menuFileOpenParentFolder, menuFileGoToParentFolder, menuFileOpenRootFolder, menuFileGoToRootFolder, menuFileOpenQuickFolder, menuFileGoToQuickFolder, menuFileQuickShortcut, menuFileQuickURL, menuFileFind, menuFileProperties, menuFileOpenItem, menuFileGoToItem, menuFilePrintTagged, menuFileRecentFolders, menuFileGoBack, menuFileGoForward, menuFileWindowToggle, menuFileCurrentWindows, menuFileNextWindow, menuFilePreviousWindow, menuFileClose, menuFileCloseAllButCurrent, menuFileExit, menuFileRestartWindows});
 
 menuEdit = menu_Helper("&Edit");
 menuEditTagAndNext = menu_Helper("Tag and Next", "> or Shift+DownArrow", MenuEditTagAndNext_Click);
@@ -1814,6 +1928,10 @@ if (Homer.Util.stringEquiv(mdiChild.Text, sTitle)) {
 App.say("returning");
 mdiChild.Activate();
 refreshFolder_Helper(mdiChild);
+// THE VISIT THAT WAS BEING LOST. Returning to a folder that already has a
+// window never reached the MdiChild constructor, so nothing was recorded --
+// which is why the Quick folder, reached twice, appeared in the history once.
+App.recordVisit(sZip == "" ? sDir : sZip);
 return;
 }
 }
@@ -1843,6 +1961,54 @@ void menuFileGoToQuickFolder_Click(object sender, EventArgs e) {
 openQuickFolder_Helper("Go to quick folder");
 } // menuFileGoToQuickFolder_Click method
 
+string quickName_Helper(string sName, string sExtension, out string sError) {
+// A name typed by a person turned into a file name Windows will accept.
+//
+// Neither Quick command checked this. A page called "Q: what now?" or a file
+// called "report: final.docx" produced a path Windows refuses, and what the
+// person got was a raw .NET exception about an illegal character. An empty name
+// was worse: it made a file called ".lnk", which is invisible in the list and
+// impossible to pick.
+//
+// The same punctuation rule as Rename to Identify Content: dashes, commas,
+// periods, parentheses and apostrophes are kept because they occur in real
+// titles, and every run of anything else becomes one space.
+sError = "";
+if (sName == null) sName = "";
+StringBuilder sb = new StringBuilder(sName.Length);
+bool bPendingSpace = false;
+foreach (char c in sName) {
+bool bKeep = Char.IsLetterOrDigit(c)
+|| c == '-' || c == ',' || c == '.' || c == '(' || c == ')' || c == '\'' || c == '_';
+if (bKeep) {
+if (bPendingSpace && sb.Length > 0) sb.Append(' ');
+bPendingSpace = false;
+sb.Append(c);
+}
+else bPendingSpace = true;
+}
+// Windows keeps no name ending in a period or a space.
+string sClean = sb.ToString().Trim().TrimEnd(new char[] {'.', ' '});
+if (sClean.Length == 0) {
+sError = "that name has nothing in it Windows can use";
+return "";
+}
+// The old device names are still reserved, and a file called CON cannot be
+// created however it is spelled.
+string sStem = sClean.Split('.')[0].ToUpper();
+foreach (string sDevice in new string[] {"CON", "PRN", "AUX", "NUL",
+"COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
+"LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"}) {
+if (sStem == sDevice) {
+sError = sClean + " is a name Windows reserves for a device";
+return "";
+}
+}
+// Room for the folder, the extension and a number if one is needed.
+if (sClean.Length > 100) sClean = sClean.Substring(0, 100).TrimEnd(new char[] {'.', ' ', '-', ','});
+return sClean + sExtension;
+} // quickName_Helper method
+
 void menuFileQuickShortcut_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Quick shortcut");
@@ -1858,12 +2024,31 @@ if (list.Count == 0) return;
 
 sName = ((string) list[0]).Trim();
 sPath = ((string) list[1]).Trim();
-string sLink = Path.Combine(sDir, sName) + ".lnk";
+if (!App.itemExists(sPath)) {
+// A shortcut to something that is not there is a shortcut to nothing, and the
+// mistake is far easier to see now than the next time the link is followed.
+Lbc.Show(sPath + "\r\n\r\nis not a file or folder, so there is nothing to make a shortcut to.", "Quick Shortcut");
+return;
+}
+string sError;
+string sLeaf = quickName_Helper(sName, ".lnk", out sError);
+if (sLeaf.Length == 0) {
+Lbc.Show("The shortcut could not be named: " + sError + ".", "Quick Shortcut");
+return;
+}
+if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
+string sLink = Path.Combine(sDir, sLeaf);
 if (File.Exists(sLink)) File.Delete(sLink);
 
+try {
 Homer.Util.path2Link(sPath, sLink);
-if (File.Exists(sLink)) App.say("Done!", true);
-else Lbc.Show("Cannot create .lnk file", "Error");
+}
+catch (Exception ex) {
+Lbc.Show("The shortcut could not be created.\r\n\r\n" + ex.Message, "Quick Shortcut");
+return;
+}
+if (File.Exists(sLink)) App.say(sLeaf + " added to the Quick folder.", true);
+else Lbc.Show("The shortcut could not be created.", "Quick Shortcut");
 } // menuFileQuickShortcut_Click method
 
 void menuFileQuickURL_Click(object sender, EventArgs e) {
@@ -1893,11 +2078,29 @@ if (list.Count == 0) return;
 
 sName = ((string) list[0]).Trim();
 sAddress = ((string) list[1]).Trim();
-string sURL = Path.Combine(sDir, sName) + ".url";
+if (sAddress.Length == 0) {
+// A .url file with no address in it opens nothing, and the file would sit in
+// the Quick folder looking like a link for ever.
+Lbc.Show("No address was given, so there is nothing to link to.\r\n\r\n"
++ "Copy a link in your browser and run this command again, and the address fills itself in.", "Quick URL");
+return;
+}
+// A bare host is what a person pastes half the time, and Windows will not
+// follow it without a scheme.
+if (sAddress.IndexOf("://", StringComparison.Ordinal) < 0)
+sAddress = "https://" + sAddress;
+string sError;
+string sLeaf = quickName_Helper(sName, ".url", out sError);
+if (sLeaf.Length == 0) {
+Lbc.Show("The link could not be named: " + sError + ".", "Quick URL");
+return;
+}
+if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
+string sURL = Path.Combine(sDir, sLeaf);
 if (File.Exists(sURL)) File.Delete(sURL);
 App.writeValue(sURL, "InternetShortcut", "URL", sAddress);
-if (File.Exists(sURL)) App.say("Done!", true);
-else Lbc.Show("Cannot create .url file", "Error");
+if (File.Exists(sURL)) App.say(sLeaf + " added to the Quick folder.", true);
+else Lbc.Show("The link could not be created in " + sDir + ".", "Quick URL");
 } // menuFileQuickURL_Click method
 
 void menuFileFind_Click(object sender, EventArgs e) {
@@ -2083,6 +2286,54 @@ else App.say(sName + " not found!");
 App.say("Done!", true);
 } // menuFilePrintTagged_Click method
 
+void MenuFileGoBack_Click(object sender, EventArgs e) {
+// The folder visited before this one.
+//
+// Alt+LeftArrow and Alt+RightArrow used to be second keys for Previous and Next
+// Window, which is not what those keys mean anywhere else and not what anyone
+// reaches for them expecting. Window cycling keeps Control+Tab and
+// Control+Shift+Tab, which is where it belongs.
+goHistory_Helper(-1, "back");
+} // MenuFileGoBack_Click method
+
+void MenuFileGoForward_Click(object sender, EventArgs e) {
+goHistory_Helper(1, "forward");
+} // MenuFileGoForward_Click method
+
+void goHistory_Helper(int iStep, string sWay) {
+// Move one place along the history and go there.
+//
+// The arrival is marked as a replay, so recordVisit leaves the history alone
+// and the pointer is the only thing that moves. Without that, going back would
+// append the place it went to, and there would never be anywhere forward.
+int iWant = App.iHistoryAt + iStep;
+if (App.lsRecentDirs.Count == 0 || iWant < 0 || iWant >= App.lsRecentDirs.Count) {
+App.say("No folder " + sWay + ".", true);
+return;
+}
+
+// A folder deleted or a drive unplugged since the visit is stepped over rather
+// than reported as a dead end, so one stale entry does not block the way back.
+while (iWant >= 0 && iWant < App.lsRecentDirs.Count && !App.itemExists(App.lsRecentDirs[iWant]))
+iWant += iStep;
+if (iWant < 0 || iWant >= App.lsRecentDirs.Count) {
+App.say("No folder " + sWay + " that still exists.", true);
+return;
+}
+
+string sPath = App.lsRecentDirs[iWant];
+App.iHistoryAt = iWant;
+App.say(Path.GetFileName(sPath.TrimEnd(Path.DirectorySeparatorChar)));
+App.bReplaying = true;
+try {
+activate_Helper(sPath);
+}
+finally {
+// Cleared whatever happened, or every later visit would go unrecorded.
+App.bReplaying = false;
+}
+} // goHistory_Helper method
+
 void menuFileRecentFolders_Click(object sender, EventArgs e) {
 string sButton = Dialog.Choose("Choose", "", new string[] {"&Folders", "&Shortcuts"}, 0);
 if (sButton.Length == 0) return;
@@ -2093,7 +2344,7 @@ string sName, sResult = "";
 
 if (sButton == "Folders") {
 // App.say("Recent folders");
-aDirs = App.lsRecentDirs.ToArray();
+aDirs = App.recentDistinct();
 Array.Reverse(aDirs);
 aNames = new string[aDirs.Length];
 for (int i = 0; i < aNames.Length; i++) aNames[i] = (aDirs[i].EndsWith(@":\") ? aDirs[i] : Path.GetFileName(aDirs[i]));
@@ -4750,12 +5001,18 @@ if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 long lSize = (long) mdiChild.tbl.DefaultView[i]["Size"];
 if (lSize == -1) {
+// A folder's size is not known until it is added up, which can take a moment
+// on a large tree.
+App.say("Adding up");
 string sDir = (string) mdiChild.tbl.DefaultView[i]["Path"];
 DirectoryInfo di = new DirectoryInfo(sDir);
 lSize = App.DirSize(di);
 mdiChild.tbl.DefaultView[i]["Size"] = lSize;
 }
-App.say(lSize);
+// The friendly form, because this command is answering "how big is it" and a
+// nine-digit number is not an answer anybody keeps in their head. The exact
+// count is still in the list itself and in the status line for when it matters.
+App.say(App.sizeFriendly(lSize));
 status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
 } // menuQuerySize_Click method
 
@@ -4960,17 +5217,13 @@ string s = iDirs.ToString() + " folder";
 if (iDirs !=1) s += "s";
 if (iDirs > 0) App.say(s);
 
-s = lDirSize.ToString() + " byte";
-if (lDirSize != 1) s += "s";
-if (iDirs > 0) App.say(s);
+if (iDirs > 0) App.say(App.sizeFriendly(lDirSize));
 
 s = iFiles.ToString() + " file";
 if (iFiles !=1) s += "s";
 if (iFiles > 0) App.say(s);
 
-s = lFileSize.ToString() + " byte";
-if (lFileSize != 1) s += "s";
-if (iFiles > 0) App.say(s);
+if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
 if (iDirs == 0 && iFiles == 0) App.say("No items!");
 } // menuQueryYield_Click method
 
@@ -5006,17 +5259,13 @@ string s = iDirs.ToString() + " folder";
 if (iDirs !=1) s += "s";
 if (iDirs > 0) App.say(s);
 
-s = lDirSize.ToString() + " byte";
-if (lDirSize != 1) s += "s";
-if (iDirs > 0) App.say(s);
+if (iDirs > 0) App.say(App.sizeFriendly(lDirSize));
 
 s = iFiles.ToString() + " file";
 if (iFiles !=1) s += "s";
 if (iFiles > 0) App.say(s);
 
-s = lFileSize.ToString() + " byte";
-if (lFileSize != 1) s += "s";
-if (iFiles > 0) App.say(s);
+if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
 if (iDirs == 0 && iFiles == 0) App.say("No items!");
 } // menuQueryYieldTagged_Click method
 
@@ -5052,17 +5301,13 @@ string s = iDirs.ToString() + " folder";
 if (iDirs !=1) s += "s";
 if (iDirs > 0) App.say(s);
 
-s = lDirSize.ToString() + " byte";
-if (lDirSize != 1) s += "s";
-if (iDirs > 0) App.say(s);
+if (iDirs > 0) App.say(App.sizeFriendly(lDirSize));
 
 s = iFiles.ToString() + " file";
 if (iFiles !=1) s += "s";
 if (iFiles > 0) App.say(s);
 
-s = lFileSize.ToString() + " byte";
-if (lFileSize != 1) s += "s";
-if (iFiles > 0) App.say(s);
+if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
 if (iDirs == 0 && iFiles == 0) App.say("No items!");
 } // menuQueryYieldFiles_Click method
 
@@ -5114,6 +5359,16 @@ App.say("Code Page " + en.CodePage);
 // Report the file's encoding.  This used to run Encoding.exe; Homer.Util now
 // detects it with the Ude library and reports it the same way, including the
 // utf-8b / utf-8n distinction that says whether a byte-order mark is present.
+if (!File.Exists(sFile)) {
+App.say(Directory.Exists(sFile) ? "A folder has no encoding." : "Not found!");
+return;
+}
+if (!Homer.Util.looksLikeText(sFile)) {
+// Reporting an encoding for a picture or a program is a made-up answer, and
+// the detector would spend a moment inventing it.
+App.say("Not a text file, so it has no character encoding.");
+return;
+}
 App.say(Homer.Util.getFileEncodingName(sFile).ToUpper());
 } // menuQueryCharacterEncoding method
 
@@ -5650,6 +5905,7 @@ if (iTarget < 0) return;
 string sExt = aExtensions[iTarget];
 
 App.say("Writing " + sExt + " files");
+string sLastMade = "";
 int iDone = 0;
 int iSkipped = 0;
 int iFailed = 0;
@@ -5679,7 +5935,10 @@ App.say(sName + ", " + (i + 1) + " of " + aPaths.Length);
 string sTarget = Path.Combine(Path.GetDirectoryName(sPath), Path.GetFileNameWithoutExtension(sPath) + "." + sExt);
 sTarget = Homer.Web.uniquePath(sTarget);
 string sError;
-if (Homer.Convert.convertAny(sPath, sTarget, out sError)) iDone++;
+if (Homer.Convert.convertAny(sPath, sTarget, out sError)) {
+iDone++;
+sLastMade = sTarget;
+}
 else {
 App.say(sName + ": " + sError);
 iFailed++;
@@ -5691,6 +5950,11 @@ if (iSkipped > 0) sMessage += ", " + iSkipped + " skipped";
 if (iFailed > 0) sMessage += ", " + iFailed + " failed";
 App.say(sMessage + ".", true);
 refreshFolder_Helper(mdiChild);
+// Land on what was just made, rather than wherever the refresh left the
+// cursor. goTo_Helper finds the file only if the filter in effect still shows
+// it; when a filter hides it the cursor stays put, which is the honest outcome
+// rather than a jump to nothing.
+if (sLastMade.Length > 0) goTo_Helper(sLastMade);
 } // MenuMiscOutputTagged_Click method
 
 void MenuMiscAppendTagged_Click(object sender, EventArgs e) {
@@ -5710,9 +5974,27 @@ if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
-StringBuilder sbText = new StringBuilder(Clipboard.GetText().Trim());
+// THE FIRST FILE ONTO AN EMPTY CLIPBOARD KEEPS ITS FORMATTING.
+//
+// Copying one web page or one Word document and pasting it somewhere that
+// understands formatting should give the headings and links, not a flattened
+// wall of text. So when the clipboard is empty and exactly one rich file is
+// being copied, it goes on as HTML as well as text, and whatever it is pasted
+// into takes the richest form it understands.
+//
+// APPENDING IS DIFFERENT, and has to be. Two documents in two rich formats
+// cannot be joined without deciding whose styling wins, and the answer would be
+// wrong half the time. So anything appended is Markdown -- which keeps the
+// headings, lists and links as text that reads perfectly well on its own, and
+// joins cleanly.
+string sExisting = "";
+try { sExisting = Clipboard.ContainsText() ? Clipboard.GetText().Trim() : ""; }
+catch (Exception) { }
+bool bFirst = sExisting.Length == 0;
+StringBuilder sbText = new StringBuilder(sExisting);
 int iDone = 0;
 int iSkipped = 0;
+string sRichSource = "";
 for (int i = 0; i < aPaths.Length; i++) {
 string sPath = aPaths[i];
 string sName = Path.GetFileName(sPath);
@@ -5732,6 +6014,7 @@ App.say("Skipping " + sName + ": " + (sError.Length > 0 ? sError : "no text"));
 iSkipped++;
 continue;
 }
+if (Homer.Convert.hasRichForm(sPath)) sRichSource = sPath;
 if (sbText.Length > 0) sbText.Append(Homer.Util.sSectionBreak);
 // Each piece is headed by its file name, because three sources run together
 // with no seam is one document nobody can take apart again.
@@ -5740,7 +6023,28 @@ sbText.Append(sBody.Trim());
 iDone++;
 }
 sbText.Append(Homer.Util.sEndOfDocument);
-Clipboard.SetText(sbText.ToString());
+
+// One rich file onto an empty clipboard: offered as HTML as well, so a paste
+// into a mail message or a document keeps the formatting.
+bool bRich = false;
+if (bFirst && iDone == 1 && sRichSource.Length > 0) {
+string sHtmlError;
+string sHtml = Homer.Convert.toHtmlFragment(sRichSource, out sHtmlError);
+if (sHtml.Length > 0) {
+try {
+DataObject data = new DataObject();
+data.SetData(DataFormats.UnicodeText, sbText.ToString());
+data.SetData(DataFormats.Html, Homer.Convert.htmlClipboardFormat(sHtml));
+Clipboard.SetDataObject(data, true);
+bRich = true;
+}
+catch (Exception ex) {
+Homer.Log.write("Could not put HTML on the clipboard: " + ex.Message);
+}
+}
+else if (sHtmlError.Length > 0) Homer.Log.write("No HTML for the clipboard: " + sHtmlError);
+}
+if (!bRich) Clipboard.SetText(sbText.ToString());
 string sFileNoun = iDone == 1 ? "file" : "files";
 string sMessage = iDone + " " + sFileNoun + " appended";
 if (iSkipped > 0) sMessage += ", " + iSkipped + " skipped";
@@ -5762,8 +6066,11 @@ if (mdiChild == null) return;
 string[] aEncodings = Homer.Util.getEncodingNames();
 string sEncoding = App.readValue(App.sIniFile, "Data", "ConvertEncoding", "");
 int iIndex = -1;
-if (sEncoding.Length > 0) iIndex = Array.IndexOf(aEncodings, sEncoding.ToUpper());
-Clipboard.SetText(iIndex.ToString());
+// The remembered choice, matched as it is stored. This looked it up with
+// ToUpper while the list holds lower case names, so it never matched and the
+// list always opened at the top -- and a debug line beside it overwrote the
+// CLIPBOARD with the index, every single time the command was run.
+if (sEncoding.Length > 0) iIndex = Array.IndexOf(aEncodings, sEncoding.ToLower());
 if (iIndex == -1) iIndex = 0;
 bool bSort = false;
 sTitle = "Pick";
@@ -7229,6 +7536,31 @@ Lbc.Show("The play list could not be written.\n\n" + ex.Message, sTitle);
 return;
 }
 Homer.Log.write("Play Media: " + lsPlay.Count + " entries " + sWhere + ".");
+
+// Warned before the silence rather than after it. If nothing in the list names
+// a media file, every entry is a page the player has to fetch and examine
+// first, which takes seconds each and fails outright on a site yt-dlp does not
+// know. A hundred and eighty-five of those is a long wait with nothing to hear,
+// and that is what happened.
+int iPages = 0;
+int iAddresses = 0;
+foreach (string sEntry in lsPlay) {
+if (sEntry.StartsWith("#")) continue;
+if (sEntry.IndexOf("://", StringComparison.Ordinal) < 0) continue;
+iAddresses++;
+if (!isDirectMedia_Helper(sEntry)) iPages++;
+}
+if (iAddresses > 0 && iPages == iAddresses) {
+string[] aButtons = {"&Try anyway", "Cancel"};
+string sWarn = Homer.Util.stringPlural("address", iAddresses)
++ ", and not one of them names a media file. They look like web pages.\r\n\r\n"
++ "The player must fetch and examine each page before anything can play. That takes "
++ "several seconds each, and does not work at all for a site it does not recognise, so "
++ "this could be a long wait with nothing to hear.\r\n\r\n"
++ "Addresses that end in .mp3 or .m4a play at once. A podcast's own feed usually holds "
++ "those, where its web pages do not.";
+if (Dialog.Choose(sTitle, sWarn, aButtons, 1) != "&Try anyway") return;
+}
 App.say(Homer.Util.stringPlural("item", lsPlay.Count) + " " + sWhere);
 playMedia_Helper(sTemp);
 } // MenuMiscPlayFolder_Click method
@@ -7237,73 +7569,175 @@ List<string> clipboardPlaylist_Helper() {
 // The clipboard as a list of things to play, or an empty list when it holds
 // nothing of the kind.
 //
-// TOLERANT OF WHAT SURROUNDS THE LIST, strict about what the list is.
+// LINKS ARE EXTRACTED, NOT REQUIRED TO STAND ALONE.
 //
-// The first version threw everything away the moment it met one line that was
-// neither an address nor a file. That looked careful and was useless: Append to
-// Clipboard heads each file's text with the file's NAME, and ends with a rule
-// and "End of Document", so a play list appended that way arrived with three
-// lines of packaging around forty perfectly good addresses -- and all forty
-// were discarded.
+// The first version wanted every line to BE an address. That works for a plain
+// .m3u and for nothing else. A directory of podcasts written in Markdown reads
 //
-// So unplayable lines are now passed over rather than fatal, and the test moved
-// to the proportion: at least two playable lines, and at least half of the real
-// content. A play list wrapped in headings passes. A page of prose with one
-// address in it does not, which is the case the strictness was for.
+//     - [Casefile True Crime](https://feeds.megaphone.fm/casefile)
+//
+// and not one line of it is an address, so a perfectly good list of forty shows
+// was refused entirely. The same is true of a saved web page, where the
+// addresses are inside href attributes, and of rich text, where they are inside
+// HYPERLINK fields.
+//
+// So addresses are now pulled OUT of whatever the clipboard holds, in four
+// shapes: a Markdown link, an HTML href, a rich-text HYPERLINK field, and a
+// bare address on its own. The link TEXT becomes the track title, so a play
+// list made from a Markdown directory announces the show names rather than
+// reading URLs aloud.
 List<string> lsLines = new List<string>();
-string sText = "";
-try {
-if (!Clipboard.ContainsText()) return lsLines;
-sText = Clipboard.GetText();
-}
-catch (Exception) {
-return lsLines;
-}
-if (sText == null || sText.Trim().Length == 0) return lsLines;
-// A byte order mark at the front of a copied file would otherwise make the
-// first address unrecognisable.
+string sText = clipboardText_Helper();
+if (sText.Length == 0) return lsLines;
 sText = sText.TrimStart('\uFEFF');
 
 List<string> lsKept = new List<string>();
-int iPlayable = 0;
-int iContent = 0;
+List<string> lsSeen = new List<string>();
+int iFound = 0;
+
+// Markdown links first, because their text is the best title available.
+foreach (Match link in Regex.Matches(sText, @"\[([^\]]{1,120})\]\(\s*(https?://[^\s\)]+)\s*\)")) {
+if (addAddress_Helper(lsKept, lsSeen, link.Groups[2].Value, link.Groups[1].Value)) iFound++;
+}
+// Then HTML anchors, whose text is also worth keeping.
+foreach (Match link in Regex.Matches(sText,
+@"<a\b[^>]*href\s*=\s*[""']\s*(https?://[^""'\s>]+)\s*[""'][^>]*>(.*?)</a>",
+RegexOptions.IgnoreCase | RegexOptions.Singleline)) {
+string sTitle = Regex.Replace(link.Groups[2].Value, "<[^>]+>", "").Trim();
+if (addAddress_Helper(lsKept, lsSeen, link.Groups[1].Value, sTitle)) iFound++;
+}
+// Rich text keeps its addresses in HYPERLINK fields.
+foreach (Match link in Regex.Matches(sText, @"HYPERLINK\s+""(https?://[^""]+)""", RegexOptions.IgnoreCase)) {
+if (addAddress_Helper(lsKept, lsSeen, link.Groups[1].Value, "")) iFound++;
+}
+// Then anything else that is plainly an address, and file names that exist.
 foreach (string sRaw in sText.Replace("\r\n", "\n").Split('\n')) {
 string sLine = sRaw.Trim();
-if (sLine.Length == 0) continue;
-// A comment is part of a play list, not content to judge it by. #EXTINF is
-// where the track titles live, so these are kept exactly as they are.
-if (sLine.StartsWith("#")) {
-lsKept.Add(sLine);
-continue;
+if (sLine.Length == 0 || sLine.StartsWith("#")) continue;
+// ytdl:// IS AN ADDRESS TOO, and it was not being recognised.
+//
+// mpv reads "ytdl://ytsearch1:Albert King Crosscut Saw" and hands the whole
+// thing to yt-dlp, which finds and plays the first match. It is how a play
+// list can name a song without anybody having to look up a video identifier
+// that will be wrong the day the video is re-uploaded.
+//
+// The scheme list here was https, rtmp and rtsp, so a play list of ytdl
+// searches read as prose: nothing playable found, nothing played, and no
+// reason given. A search address may contain spaces, so unlike the others it
+// runs to the end of the line.
+foreach (Match search in Regex.Matches(sLine, @"ytdl://\S.*$")) {
+if (addAddress_Helper(lsKept, lsSeen, search.Value.Trim(), "")) iFound++;
 }
-// The rule Append to Clipboard draws between files is packaging, not content.
-if (sLine.TrimEnd('-').Length == 0) continue;
-iContent++;
-bool bAddress = sLine.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-|| sLine.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-|| sLine.StartsWith("rtmp://", StringComparison.OrdinalIgnoreCase)
-|| sLine.StartsWith("rtsp://", StringComparison.OrdinalIgnoreCase)
-|| sLine.StartsWith("file://", StringComparison.OrdinalIgnoreCase);
+if (sLine.StartsWith("ytdl://", StringComparison.OrdinalIgnoreCase)) continue;
+foreach (Match bare in Regex.Matches(sLine, @"(?:https?|rtmp|rtsp|mms|srt)://[^\s""'<>\)\]]+")) {
+if (addAddress_Helper(lsKept, lsSeen, bare.Value, "")) iFound++;
+}
+// A line that names a file, which is what a play list of local media holds.
+if (sLine.IndexOf("://", StringComparison.Ordinal) < 0) {
 bool bFile = false;
-if (!bAddress) {
 try { bFile = File.Exists(sLine); }
 catch (Exception) { }
+if (bFile && addAddress_Helper(lsKept, lsSeen, sLine, "")) iFound++;
 }
-if (!bAddress && !bFile) continue;
-lsKept.Add(sLine);
-iPlayable++;
 }
 
 // Two, so a single address inside a page of prose is not mistaken for a play
-// list; half, so a genuine list survives whatever was wrapped around it.
-if (iPlayable < 2 || iPlayable * 2 < iContent) return new List<string>();
+// list. There is no proportion test any more: extracting links from a document
+// full of words is the point, not a warning sign.
+if (iFound < 2) return new List<string>();
 
-// Trailing comments with nothing left to describe would be a heading over an
-// empty list.
-while (lsKept.Count > 0 && lsKept[lsKept.Count - 1].StartsWith("#"))
-lsKept.RemoveAt(lsKept.Count - 1);
+// A DIRECT MEDIA ADDRESS BEATS A PAGE ADDRESS.
+//
+// A podcast directory links to each episode's PAGE, not to its audio. mpv hands
+// a page to yt-dlp, which must fetch and examine it before anything can play,
+// and for a site it has no extractor for, nothing plays at all. A list of a
+// hundred and eighty-five of those is minutes of silence.
+//
+// So when the clipboard holds addresses that name media outright, ONLY those
+// are used: they play at once and need no fetching. Page addresses are kept
+// only when there is nothing better, and the caller warns before using them.
+List<string> lsDirect = new List<string>();
+int iDirect = 0;
+for (int i = 0; i < lsKept.Count; i++) {
+string sEntry = lsKept[i];
+if (sEntry.StartsWith("#")) continue;
+if (!isDirectMedia_Helper(sEntry)) continue;
+if (i > 0 && lsKept[i - 1].StartsWith("#EXTINF")) lsDirect.Add(lsKept[i - 1]);
+lsDirect.Add(sEntry);
+iDirect++;
+}
+if (iDirect >= 2) return lsDirect;
 return lsKept;
 } // clipboardPlaylist_Helper method
+
+bool isDirectMedia_Helper(string sAddress) {
+// A ytdl search is not a page: yt-dlp resolves it to a media stream, so it
+// plays at once and must not raise the warning meant for lists of web pages.
+if (sAddress.StartsWith("ytdl://", StringComparison.OrdinalIgnoreCase)) return true;
+// Whether an address names a media file outright, rather than a page that has
+// one somewhere on it. Judged by the extension before any query string, since a
+// podcast address usually carries tracking parameters after a question mark.
+string sPath = sAddress;
+int iQuery = sPath.IndexOfAny(new char[] {'?', '#'});
+if (iQuery >= 0) sPath = sPath.Substring(0, iQuery);
+string sExt = "";
+try { sExt = Path.GetExtension(sPath).ToLower(); }
+catch (Exception) { return false; }
+foreach (string sMedia in new string[] {
+".mp3", ".m4a", ".aac", ".ogg", ".oga", ".opus", ".flac", ".wav", ".wma",
+".mp4", ".m4v", ".mkv", ".webm", ".mov", ".avi", ".flv", ".m3u8"})
+if (sExt == sMedia) return true;
+return false;
+} // isDirectMedia_Helper method
+
+bool addAddress_Helper(List<string> lsKept, List<string> lsSeen, string sAddress, string sTitle) {
+// Add one address, with its title when there is one, unless it has been seen.
+//
+// A saved web page names the same address in several places, and a Markdown
+// document often repeats a link in a list and again in prose. Playing a show
+// three times because its address appeared three times is not what anybody
+// meant.
+if (sAddress == null) return false;
+sAddress = sAddress.Trim().TrimEnd('.', ',', ';');
+if (sAddress.Length == 0) return false;
+foreach (string sHad in lsSeen) if (Homer.Util.stringEquiv(sHad, sAddress)) return false;
+lsSeen.Add(sAddress);
+if (sTitle != null && sTitle.Trim().Length > 0) {
+// #EXTINF is where a play list keeps its titles, and mpv reads them.
+lsKept.Add("#EXTINF:-1," + sTitle.Trim().Replace("\r", " ").Replace("\n", " "));
+}
+lsKept.Add(sAddress);
+return true;
+} // addAddress_Helper method
+
+string clipboardText_Helper() {
+// The clipboard as text, whatever format it arrived in.
+//
+// A page copied from a browser is on the clipboard as HTML as well as text,
+// and a passage from Word as rich text. Asking only for plain text throws away
+// the addresses, because the visible text of a link is its title and the
+// address lives in the markup. So the richer formats are asked for first, and
+// the links are read out of the markup itself.
+try {
+DataObject data = Clipboard.GetDataObject() as DataObject;
+if (data == null) return "";
+StringBuilder sb = new StringBuilder();
+foreach (string sFormat in new string[] {"HTML Format", DataFormats.Rtf}) {
+if (!data.GetDataPresent(sFormat)) continue;
+object oValue = data.GetData(sFormat);
+if (oValue is string) sb.Append((string) oValue).Append("\r\n");
+}
+if (data.GetDataPresent(DataFormats.UnicodeText)) {
+object oText = data.GetData(DataFormats.UnicodeText);
+if (oText is string) sb.Append((string) oText);
+}
+return sb.ToString();
+}
+catch (Exception) {
+try { return Clipboard.ContainsText() ? Clipboard.GetText() : ""; }
+catch (Exception) { return ""; }
+}
+} // clipboardText_Helper method
 
 
 bool isPlayable_Helper(string sPath) {
@@ -7401,6 +7835,19 @@ sbArgs.Append("--script-opts=ytdl_hook-ytdl_path=");
 sbArgs.Append(Homer.Util.stringQuote(sYtDlp));
 sbArgs.Append(" ");
 }
+
+// A WINDOW STRAIGHT AWAY.
+//
+// Without this, mpv shows nothing until it has decoded something. A list that
+// is slow to start -- or never starts -- leaves a player running with no window
+// at all: not on the task bar, not reachable by Alt+Tab, and no way to press q
+// at it. That is exactly what happened with a list of podcast page addresses,
+// each of which had to be fetched before anything could play.
+//
+// This is the one option added back after the play list was reduced to a plain
+// file name, and it is added because a player nobody can find is worse than no
+// player. It changes nothing about what plays.
+sbArgs.Append("--force-window=immediate ");
 
 // THE PLAY LIST AS A PLAIN ARGUMENT, which is how a person would type it:
 //
@@ -8502,13 +8949,19 @@ return true;
 case Keys.F4 :
 App.frame.menuFileCurrentWindows.clickOrDescribe();
 return true;
-case Keys.Alt | Keys.Right :
 case Keys.Control | Keys.Tab :
 App.frame.menuFileNextWindow.clickOrDescribe();
 return true;
-case Keys.Alt | Keys.Left :
 case Keys.Control | Keys.Shift | Keys.Tab :
 App.frame.menuFilePreviousWindow.clickOrDescribe();
+return true;
+// Back and forward through the folders visited, which is what these two keys
+// mean in every program that has them.
+case Keys.Alt | Keys.Left :
+App.frame.menuFileGoBack.clickOrDescribe();
+return true;
+case Keys.Alt | Keys.Right :
+App.frame.menuFileGoForward.clickOrDescribe();
 return true;
 case Keys.Control | Keys.F4 :
 App.frame.menuFileClose.clickOrDescribe();
@@ -8645,10 +9098,22 @@ tbl.Columns.Add("ReadOnly", typeof(char));
 tbl.Columns.Add("System", typeof(char));
 tbl.Columns.Add("Tagged", typeof(char));
 
-DataColumn column = new DataColumn("DisplayFields");
-//column.Expression = String.Format("{0} + '\t' + {1} + '\t' + {2} + '\t' + {3} + '\t' + {4} + '\t' + {5}", "Name", "Type", "Hidden", "ReadOnly", "System", "Tagged");
-column.Expression = String.Format("{0} + ' ' + {1} + ' ' + {2} + ' ' + {3} + ' ' + {4} + ' ' + {5}", "Name", "Type", "Hidden", "ReadOnly", "System", "Tagged");
+// WHAT THE LIST SHOWS, and why this is not an expression column.
+//
+// It used to be one: DisplayFields carried an Expression joining six columns,
+// and the DataTable expression engine parsed and evaluated it for EVERY ROW.
+// That engine is a general-purpose interpreter -- it boxes each value, walks a
+// parsed tree, and re-evaluates whenever any column it mentions changes. For a
+// folder of ten thousand files that is ten thousand interpreted evaluations to
+// produce ten thousand string concatenations, and it runs again every time a
+// tag is set.
+//
+// It is an ordinary column now, written by the loader in the same pass that
+// reads the folder, and updated in the one place a tag changes. Same text, one
+// concatenation each, no interpreter.
+DataColumn column = new DataColumn("DisplayFields", typeof(string));
 tbl.Columns.Add(column);
+watchDisplayFields(tbl);
 
 lst = new ListBox();
 lst.GotFocus += checkKeyDescriber;
@@ -8702,9 +9167,7 @@ sPath = sVirtualFolder;
 else if (!Directory.Exists(sDir)) return;
 App.SetDirectory(sDir);
 
-for (int i = App.lsRecentDirs.Count - 1; i >= 0; i--) if (Homer.Util.stringEquiv(sPath, App.lsRecentDirs[i])) App.lsRecentDirs.RemoveAt(i);
-//if (App.lsRecentDirs.Contains(sPath)) App.lsRecentDirs.Remove(sPath);
-App.lsRecentDirs.Add(sPath);
+App.recordVisit(sPath);
 };
 
 this.Shown += delegate(object sender, EventArgs e) { if (Directory.Exists(sDir)) App.SetDirectory(sDir); App.say(Homer.Util.stringPlural("item", this.bs.Count)); };
@@ -8972,9 +9435,20 @@ DateTime time;
 
 tbl.Clear();
 
+// STREAMED, not gathered first. GetFileSystemInfos builds an array of every
+// entry before the first row can be added, so a folder with a hundred thousand
+// files allocated the lot and showed nothing meanwhile. EnumerateFileSystemInfos
+// hands them over as the directory is read.
+//
+// Either way the attributes, times and lengths come from the enumeration itself
+// and cost nothing extra: Windows returns them with each entry, and the
+// FileSystemInfo keeps them. Asking File.GetAttributes and File.GetLastWriteTime
+// per item -- as the older, now unused, fillTable does -- is three more trips to
+// the disk for something already in hand.
 DirectoryInfo di = new DirectoryInfo(sDir);
-FileSystemInfo[] aFS = di.GetFileSystemInfos();
-foreach (FileSystemInfo fs in aFS) {
+tbl.BeginLoadData();
+try {
+foreach (FileSystemInfo fs in di.EnumerateFileSystemInfos()) {
 sPath = fs.FullName;
 sName = Path.GetFileName(sPath);
 sExt = Path.GetExtension(sPath);
@@ -8993,7 +9467,53 @@ lSize = ((FileInfo) fs).Length;
 }
 tbl.Rows.Add(sPath, sName.PadRight(50), sExt, lSize, time, attr, type, hidden, readOnly, system, ' ');
 }
+}
+finally {
+// EndLoadData in a finally, or one unreadable entry would leave the table in
+// loading state for the rest of the session.
+tbl.EndLoadData();
+}
+// BeginLoadData suppresses the row events, so the display column is filled in
+// one pass here rather than row by row.
+refreshDisplayFields(tbl);
 } // fillTableFromDir method
+
+public static string displayFields_Helper(DataRow row) {
+// The line the list shows: the name, then the four attribute marks and the tag.
+// Exactly what the expression built, in one concatenation.
+return (string) row["Name"] + " " + row["Type"] + " " + row["Hidden"] + " "
++ row["ReadOnly"] + " " + row["System"] + " " + row["Tagged"];
+} // displayFields_Helper method
+
+public static void refreshDisplayFields(DataTable tbl) {
+// Fill the display column for every row, in one pass.
+foreach (DataRow row in tbl.Rows) row["DisplayFields"] = displayFields_Helper(row);
+} // refreshDisplayFields method
+
+public static void watchDisplayFields(DataTable tbl) {
+// Keep the display column right without every caller having to remember.
+//
+// The expression column did this automatically, at the price of an interpreted
+// evaluation per row. Two events do the same job for the cost of a string join,
+// and only when something that shows actually changes.
+//
+// FOUR places add rows and TWENTY-FIVE set a tag. Hooking the table once is not
+// merely less typing: a hook cannot be forgotten by the next command that sets
+// a tag, and twenty-nine edited call sites could be.
+tbl.RowChanged += delegate(object o, DataRowChangeEventArgs e) {
+if (e.Action != DataRowAction.Add) return;
+e.Row["DisplayFields"] = displayFields_Helper(e.Row);
+};
+tbl.ColumnChanged += delegate(object o, DataColumnChangeEventArgs e) {
+// Only the columns that show. Writing DisplayFields here would call this
+// again, so that column is passed over.
+string sColumn = e.Column.ColumnName;
+if (sColumn == "DisplayFields") return;
+if (sColumn != "Tagged" && sColumn != "Name" && sColumn != "Type"
+&& sColumn != "Hidden" && sColumn != "ReadOnly" && sColumn != "System") return;
+e.Row["DisplayFields"] = displayFields_Helper(e.Row);
+};
+} // watchDisplayFields method
 
 protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
 return App.frame.processCmdKey_Helper(ref msg, keyData);

@@ -244,6 +244,7 @@ function main() {
   reportTool "ffmpeg" "ffmpeg" "run installMediaTools.cmd in the FileDir folder"
   reportTool "yt-dlp" "yt-dlp" "run installMediaTools.cmd in the FileDir folder"
   reportPdfReader
+  reportTool "ImageMagick" "magick" "run installImageTools.cmd in the FileDir folder"
   reportTool "mpv" "mpv" "run installMpv.cmd in the FileDir folder"
   reportTool "Ollama" "ollama" "run installOllama.cmd in the FileDir folder"
   # One probe, read whole: the listing is short, and asking three times would

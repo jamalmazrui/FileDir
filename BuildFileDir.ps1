@@ -531,7 +531,7 @@ $asCscArgs += $asUdeArgs
 $asCscArgs += @(
     "/out:FileDir.exe",
     "Version.cs", "KeyMap.cs", "FileDir.cs", "Lbc.cs", "Say.cs",
-    "Inix.cs", "Web.cs", "Util.cs", "Dialogs.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Log.cs"
+    "Inix.cs", "Web.cs", "Util.cs", "Dialogs.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Log.cs", "Table.cs"
 )
 $iExit = runProgram $sCsc $asCscArgs "csc.exe"
 if ($iExit -ne 0) { stopHere ("csc.exe returned " + $iExit + ". The compiler errors are above in this log.") }

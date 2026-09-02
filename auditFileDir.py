@@ -910,6 +910,30 @@ def checkConversionChain():
     report("The conversion chain is consistent", not lFaults, "; ".join(lFaults))
 
 
+def checkHtmConvention():
+    """A file the program CREATES gets .htm, never .html.
+
+    The Homer Tools convention across every app. Both spellings are read,
+    because the world writes both, and a .html file already on disk keeps the
+    name it has -- this is only about what gets written.
+
+    The check looks at the conversion target tables, since that is where a new
+    file's extension is decided, and at the build's own document generation.
+    """
+    lFaults = []
+    sConvert = readFile("Convert.cs") or ""
+    for oMatch in re.finditer(r'\{"([^"]+)",\s*"html"\}', sConvert):
+        lFaults.append("Convert.cs offers " + oMatch.group(1) + " as .html")
+    sTable = readFile("Table.cs") or ""
+    for oMatch in re.finditer(r'\{"([^"]+)",\s*"html"\}', sTable):
+        lFaults.append("Table.cs offers " + oMatch.group(1) + " as .html")
+    # The build writes a web page for each document; those are .htm too.
+    sBuild = readFile("BuildFileDir.ps1") or ""
+    if re.search(r'ChangeExtension\([^)]*"\.html"\)', sBuild):
+        lFaults.append("BuildFileDir.ps1 generates .html documents")
+    report("New web pages are .htm, not .html", not lFaults, "; ".join(lFaults))
+
+
 def checkHistoryContents():
     """Every entry in History.md's contents must have a heading, and the reverse.
 
@@ -1256,7 +1280,7 @@ def main():
     sHotkeys = readFile("Hotkeys.ini")
 
     for sName in ("FileDir.cs", "Dialogs.cs", "Lbc.cs", "Say.cs", "Inix.cs",
-                  "Util.cs", "Web.cs", "KeyMap.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Log.cs",
+                  "Util.cs", "Web.cs", "KeyMap.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Log.cs", "Table.cs",
                   "FileDir.js",
                   "FileDir.manifest", "FileDir.ico", "version.txt",
                   "Hotkeys.ini", "FileDir_setup.iss", "RepoFiles.txt",
@@ -1296,6 +1320,7 @@ def main():
     checkLicenceDocument()
     checkKeysNamedInText()
     checkConversionChain()
+    checkHtmConvention()
     checkHistoryContents()
     check2htmAssemblies()
     checkVersionFile()

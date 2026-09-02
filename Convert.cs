@@ -98,9 +98,15 @@ return "";
 // one writes.  Kept short on purpose: Pandoc writes about forty, and a list of
 // forty is a list nobody reads.  These are the ones a file manager is asked
 // for.
+// NEW WEB PAGES ARE .htm, NOT .html.
+//
+// The Homer Tools convention throughout: a file this program CREATES gets .htm.
+// Both spellings are read, because the world writes both, and a .html file
+// already on disk is left with the name it has. Only what is written is
+// decided here.
 public static readonly string[,] c_aTargets = {
 {"Word document", "docx"},
-{"Web page", "html"},
+{"Web page", "htm"},
 {"Markdown", "md"},
 {"Plain text", "txt"},
 {"OpenDocument text", "odt"},
@@ -197,6 +203,24 @@ private static readonly string[] c_aImageSources = {
 ".png", ".jpg", ".jpeg", ".bmp", ".gif", ".tif", ".tiff", ".webp"
 };
 
+// Pictures ffmpeg cannot read, which ImageMagick can.
+//
+// HEIC is the one that matters: FFmpeg's HEIF support has been an open ticket
+// for years, is described upstream as partially fixed, and depends on how the
+// binary was built -- the build shipped here does not have it. Every photograph
+// an iPhone takes is HEIC, so without this the format most photos now arrive in
+// cannot be converted at all.
+//
+// The rest are real but narrower: camera raw from every maker, SVG drawings
+// which need rasterising rather than decoding, Windows icons, and the long tail
+// of Photoshop, GIMP and game-texture formats.
+private static readonly string[] c_aMagickSources = {
+".heic", ".heif", ".avif",
+".cr2", ".cr3", ".nef", ".arw", ".dng", ".orf", ".rw2", ".raf", ".pef", ".srw",
+".svg", ".ico", ".psd", ".xcf", ".tga", ".pcx", ".pnm", ".ppm", ".pgm", ".dds",
+".jp2", ".jxl", ".exr", ".hdr"
+};
+
 public static bool readableAsText(string sPath) {
 // Whether toPlainText has any engine for this file at all.
 //
@@ -217,13 +241,22 @@ string sExt = Path.GetExtension(sPath).ToLower();
 // Order matters: .pptx and .xlsx are documents to a person, but Pandoc cannot
 // read either, so they are their own category and are extracted here first.
 // Calling them documents offered them ten targets and then refused all ten.
-if (sExt == ".pptx" || sExt == ".xlsx") return "openxml";
+// A TABLE FIRST. .csv, .tsv, .inix and .xlsx all hold rows and columns, and
+// converting one to another should keep them. Pandoc reads .csv and .tsv but
+// writes neither, has never heard of .inix, and cannot read .xlsx at all --
+// so this category is handled by Homer.Table, which reads all four and writes
+// the ones Pandoc cannot.
+if (Homer.Table.canRead(sPath) && sExt != ".md" && sExt != ".markdown") return "table";
+if (sExt == ".pptx") return "openxml";
 if (sExt == ".pdf") return "pdf";
 if (Array.IndexOf(c_aDocumentSources, sExt) >= 0) return "document";
 if (Array.IndexOf(c_aLegacySources, sExt) >= 0) return "legacy";
 if (Array.IndexOf(c_aAudioSources, sExt) >= 0) return "audio";
 if (Array.IndexOf(c_aVideoSources, sExt) >= 0) return "video";
 if (Array.IndexOf(c_aImageSources, sExt) >= 0) return "image";
+// A picture is a picture whichever tool reads it, so the same targets are
+// offered and convertMedia decides who does the work.
+if (Array.IndexOf(c_aMagickSources, sExt) >= 0) return "image";
 return "";
 } // categoryOf method
 
@@ -233,6 +266,18 @@ public static string[,] targetsFor(string sPath) {
 // meaning.
 string sCategory = categoryOf(sPath);
 if (sCategory == "document") return c_aTargets;
+if (sCategory == "table")
+// Everything that holds rows and columns. Markdown is included because a pipe
+// table is how this reaches Word, a web page and OpenDocument.
+return new string[,] {
+{"Inix records", "inix"},
+{"Comma separated", "csv"},
+{"Tab separated", "tsv"},
+{"Markdown table", "md"},
+{"Word document", "docx"},
+{"Web page", "htm"},
+{"OpenDocument text", "odt"}
+};
 if (sCategory == "openxml" || sCategory == "pdf")
 // Extracted first, then Pandoc makes anything from that. A PDF becomes rich
 // Markdown with its headings, lists and tables, so Word and a web page are
@@ -240,7 +285,7 @@ if (sCategory == "openxml" || sCategory == "pdf")
 return new string[,] {
 {"Markdown", "md"},
 {"Plain text", "txt"},
-{"Web page", "html"},
+{"Web page", "htm"},
 {"Word document", "docx"},
 {"OpenDocument text", "odt"},
 {"Rich text", "rtf"}
@@ -277,7 +322,11 @@ return new string[,] {
 {"WebP image", "webp"},
 {"BMP image", "bmp"},
 {"GIF image", "gif"},
-{"TIFF image", "tif"}
+{"TIFF image", "tif"},
+// Written by ImageMagick only. Offered whatever the source, because turning a
+// photograph into an icon is a real thing to want and ffmpeg cannot do it.
+{"Windows icon", "ico"},
+{"AVIF image", "avif"}
 };
 return new string[0, 2];
 } // targetsFor method
@@ -293,8 +342,10 @@ string sExt = aTargets[i, 1];
 if (String.Compare(sExt, sOwn, true) == 0) continue;
 // .jpeg and .jpg are the same picture; offering both would be noise.
 if (sOwn == "jpeg" && sExt == "jpg") continue;
-if (sOwn == "htm" && sExt == "html") continue;
+// A .html file is offered "Web page" and would get a .htm; the two are the same
+// format under two spellings, so neither is offered to the other.
 if (sOwn == "html" && sExt == "htm") continue;
+if (sOwn == "htm" && sExt == "html") continue;
 lsLabels.Add(aTargets[i, 0] + " (" + sExt + ")");
 lsExts.Add(sExt);
 }
@@ -312,6 +363,78 @@ private static readonly string[] c_aPlainSources = {
 ".c", ".cpp", ".h", ".java", ".php", ".rb", ".go", ".rs", ".ts", ".css",
 ".jss", ".jsh", ".jsd", ".jkm", ".iss", ".bas", ".vb", ".sh", ".tex", ".rst"
 };
+
+// Formats worth putting on the clipboard as HTML rather than flat text.
+// Anything Pandoc can turn into a web page, and the two Open XML formats that
+// go through it as Markdown first.
+private static readonly string[] c_aRichForms = {
+".docx", ".odt", ".rtf", ".html", ".htm", ".epub", ".md", ".markdown",
+".rst", ".tex", ".csv", ".tsv", ".inix", ".xlsx", ".pdf"
+};
+
+public static bool hasRichForm(string sPath) {
+return Array.IndexOf(c_aRichForms, Path.GetExtension(sPath).ToLower()) >= 0;
+} // hasRichForm method
+
+public static string toHtmlFragment(string sPath, out string sError) {
+// A file as HTML, for the clipboard.
+//
+// A fragment rather than a whole page: the clipboard wants the body, and a
+// <html><head> wrapper pasted into a mail message is at best ignored and at
+// worst shown as markup. So Pandoc is NOT given --standalone here, which is the
+// one place in FileDir where that is right.
+sError = "";
+string sTemp = Path.Combine(Path.GetTempPath(),
+Path.GetFileNameWithoutExtension(sPath) + "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + ".htm");
+try {
+// A table format becomes a real HTML table rather than a pipe table in a
+// paragraph, which is the whole reason to bother with the rich form.
+if (categoryOf(sPath) == "table") {
+Homer.Table table = Homer.Table.read(sPath, out sError);
+if (table == null || table.fieldCount() == 0) return "";
+if (!table.write(sTemp, out sError)) return "";
+}
+else {
+string sText = toPlainText(sPath, out sError);
+if (sText.Length == 0) return "";
+string sMd = Path.ChangeExtension(sTemp, ".md");
+File.WriteAllText(sMd, sText, new UTF8Encoding(true));
+bool bMade = convertFile(sMd, sTemp, out sError);
+try { File.Delete(sMd); }
+catch (Exception) { }
+if (!bMade) return "";
+}
+string sHtml = Homer.Util.file2String(sTemp);
+File.Delete(sTemp);
+return sHtml;
+}
+catch (Exception ex) {
+sError = ex.Message;
+return "";
+}
+} // toHtmlFragment method
+
+public static string htmlClipboardFormat(string sHtml) {
+// Windows does not take bare HTML on the clipboard. It wants a header naming
+// the byte offsets of the fragment within it, and the offsets have to be right
+// or the paste is empty -- which is why this is built rather than guessed.
+//
+// The header is a fixed shape with ten-digit numbers, so its own length is
+// known before the numbers are filled in.
+string sPrefix = "<html><body><!--StartFragment-->";
+string sSuffix = "<!--EndFragment--></body></html>";
+string sHeader = "Version:0.9\r\nStartHTML:{0:D10}\r\nEndHTML:{1:D10}\r\n"
++ "StartFragment:{2:D10}\r\nEndFragment:{3:D10}\r\n";
+int iHeader = String.Format(sHeader, 0, 0, 0, 0).Length;
+// Counted in BYTES, not characters: Windows reads the offsets against the
+// UTF-8 bytes, so an accented letter would shift every number.
+int iStartHtml = iHeader;
+int iStartFragment = iStartHtml + Encoding.UTF8.GetByteCount(sPrefix);
+int iEndFragment = iStartFragment + Encoding.UTF8.GetByteCount(sHtml);
+int iEndHtml = iEndFragment + Encoding.UTF8.GetByteCount(sSuffix);
+return String.Format(sHeader, iStartHtml, iEndHtml, iStartFragment, iEndFragment)
++ sPrefix + sHtml + sSuffix;
+} // htmlClipboardFormat method
 
 public static string toPlainText(string sPath, out string sError) {
 // The text of a file, whatever the file is, by whichever engine can read it.
@@ -370,6 +493,12 @@ return "";
 }
 
 // 3. Open XML, read here rather than through anything else.
+if (sExt == ".xlsx") {
+// A spreadsheet read for its text becomes a Markdown table, so the rows and
+// columns survive being read aloud instead of arriving as a heap of strings.
+Homer.Table table = Homer.Table.read(sPath, out sError);
+if (table != null && table.fieldCount() > 0) return table.markdownText();
+}
 if (sExt == ".pptx" || sExt == ".xlsx") {
 string sOpenXml = openXmlText(sPath, out sError);
 if (sOpenXml.Length > 0) return sOpenXml;
@@ -675,6 +804,17 @@ sError = "";
 string sCategory = categoryOf(sSource);
 if (sCategory == "document") return convertFile(sSource, sTarget, out sError);
 if (sCategory == "legacy") return convertLegacy(sSource, sTarget, out sError);
+if (sCategory == "table") {
+// Read as rows and columns and written back as rows and columns, so a
+// conversion between table formats keeps the table.
+Homer.Table table = Homer.Table.read(sSource, out sError);
+if (table == null) return false;
+if (table.fieldCount() == 0) {
+if (sError.Length == 0) sError = "no table was found in " + Path.GetFileName(sSource);
+return false;
+}
+return table.write(sTarget, out sError);
+}
 if (sCategory == "openxml" || sCategory == "pdf") {
 // Extract once, then let Pandoc make the target from that. One rich
 // conversion serves every target, which is what EdSharp does with a PDF.
@@ -763,6 +903,56 @@ if (sLine.Trim().Length > 0) return sLine.Trim();
 return sText.Trim();
 } // firstLine method
 
+private static bool convertWithMagick(string sSource, string sTarget, out string sError) {
+// ImageMagick, for the pictures ffmpeg cannot reach.
+//
+//   magick "in.heic" "out.jpg"
+//
+// The command works out both formats from the two names, as ffmpeg does, so
+// nothing else has to be passed. Two exceptions are worth the extra option.
+sError = "";
+string sExe = Homer.Media.magickProgram();
+if (sExe.Length == 0) {
+string sExt = Path.GetExtension(sSource).ToLower();
+sError = "ImageMagick was not found, and it is what reads " + sExt + " files. "
++ "Run installImageTools.cmd in the FileDir folder as an administrator, or install "
++ "FileDir again and tick the image tools box. ffmpeg cannot read this format.";
+return false;
+}
+StringBuilder sbArgs = new StringBuilder();
+string sSourceExt = Path.GetExtension(sSource).ToLower();
+string sWantExt = Path.GetExtension(sTarget).ToLower();
+
+// A drawing has no size of its own until it is drawn, and ImageMagick's default
+// of 72 dots per inch turns a full page into a postage stamp.
+if (sSourceExt == ".svg") sbArgs.Append("-density 300 ");
+
+sbArgs.Append(Homer.Util.stringQuote(sSource));
+
+// A raw file, a PSD and an animated GIF all hold several images, and without
+// this every one of them is written as its own numbered file. The first is the
+// picture; the rest are thumbnails and layers.
+if (sSourceExt != ".gif" && sWantExt != ".gif" && sWantExt != ".ico")
+sbArgs.Append("[0]");
+
+// An icon holds several sizes, and Windows picks the one it needs. Written
+// without this, it holds whatever size the source happened to be.
+if (sWantExt == ".ico") sbArgs.Append(" -define icon:auto-resize=256,128,64,48,32,16");
+// A format with no transparency needs something behind a transparent picture,
+// or the clear parts come out black.
+if (sWantExt == ".jpg" || sWantExt == ".jpeg" || sWantExt == ".bmp")
+sbArgs.Append(" -background white -flatten");
+
+sbArgs.Append(" ");
+sbArgs.Append(Homer.Util.stringQuote(sTarget));
+string sOut, sErr;
+int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
+if (iCode == 0 && File.Exists(sTarget)) return true;
+sError = firstLine((sErr + "\n" + sOut).Trim());
+if (sError.Length == 0) sError = "ImageMagick returned " + iCode + ".";
+return false;
+} // convertWithMagick method
+
 private static bool convertMedia(string sSource, string sTarget, out string sError) {
 // ffmpeg works out both formats from the two file names, so the command stays
 // short and the same line serves audio, video and pictures.
@@ -773,6 +963,17 @@ private static bool convertMedia(string sSource, string sTarget, out string sErr
 //   -vn           on an audio target from a video, or ffmpeg tries to carry the
 //                 pictures into a file that cannot hold them
 sError = "";
+string sSourceExt = Path.GetExtension(sSource).ToLower();
+string sWantExt = Path.GetExtension(sTarget).ToLower();
+
+// WHICH TOOL. ImageMagick when either end is a format ffmpeg cannot handle,
+// ffmpeg otherwise. ffmpeg stays the default for the ordinary picture formats
+// because it is already installed and already ticked; ImageMagick is asked for
+// only when it is the only one that can do the job.
+bool bNeedMagick = Array.IndexOf(c_aMagickSources, sSourceExt) >= 0
+|| Array.IndexOf(c_aMagickSources, sWantExt) >= 0;
+if (bNeedMagick) return convertWithMagick(sSource, sTarget, out sError);
+
 string sExe = Homer.Media.ffmpegProgram();
 if (sExe.Length == 0) {
 sError = "ffmpeg was not found, so audio, video and pictures cannot be converted. Install the media tools from the FileDir installer, or put ffmpeg.exe in the FileDir folder.";

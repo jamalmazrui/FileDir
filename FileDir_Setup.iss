@@ -110,6 +110,8 @@ Source: "Media.cs";           DestDir: "{app}"; Flags: ignoreversion
 ; The session log, in the same place and naming as EdSharp's, beside the setup
 ; log this installer writes.
 Source: "Log.cs";             DestDir: "{app}"; Flags: ignoreversion
+; Reading and writing tables: inix records, csv, tsv, xlsx and Markdown.
+Source: "Table.cs";           DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDirScript.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.js";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.manifest";   DestDir: "{app}"; Flags: ignoreversion
@@ -148,6 +150,9 @@ Source: "installPdfTools.cmd"; DestDir: "{app}"; Flags: ignoreversion
 ; second copy of something already installed. It buys playback and nothing
 ; else -- conversion is ffmpeg's job and stays ffmpeg's job.
 Source: "installMpv.cmd";     DestDir: "{app}"; Flags: ignoreversion
+; ImageMagick, for the pictures ffmpeg cannot read: iPhone photos, camera raw,
+; SVG drawings and Windows icons.
+Source: "installImageTools.cmd"; DestDir: "{app}"; Flags: ignoreversion
 Source: "pdfRich.py";         DestDir: "{app}"; Flags: ignoreversion
 Source: "installOllama.cmd";  DestDir: "{app}"; Flags: ignoreversion
 Source: "installTranslateModel.cmd"; DestDir: "{app}"; Flags: ignoreversion
@@ -419,6 +424,15 @@ FileName: "{cmd}"; \
   Description: "{code:descTranslateModel}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: translateModelNeedsInstall
 
+; The image tools. Not ticked: ffmpeg already handles PNG, JPEG, BMP, GIF, TIFF
+; and WebP, so this is for the formats it cannot reach, which serves people with
+; phone photographs or a camera and nobody else.
+FileName: "{cmd}"; \
+  Parameters: "/c """"{app}\installImageTools.cmd""""";  \
+  WorkingDir: "{app}"; \
+  Description: "{code:descImageTools}"; \
+  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: imageToolsNeedInstall
+
 FileName: "{cmd}"; \
   Parameters: "/c """"{app}\installMpv.cmd""""";  \
   WorkingDir: "{app}"; \
@@ -440,6 +454,12 @@ FileName: "{cmd}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: ollamaNeedsUpdate
 
 ; ---- Reinstall: already current, offered only for repair ----
+
+FileName: "{cmd}"; \
+  Parameters: "/c """"{app}\installImageTools.cmd""""";  \
+  WorkingDir: "{app}"; \
+  Description: "{code:descImageTools}"; \
+  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: imageToolsAreCurrent
 
 FileName: "{cmd}"; \
   Parameters: "/c """"{app}\installMpv.cmd""""";  \
@@ -874,6 +894,35 @@ begin
   gStateKnown[2] := True;
 end;
 
+function imageToolsPresent(): boolean;
+// Whether ImageMagick answers. Only "magick" is looked for: since version 7
+// that is the single command, and Windows has its own convert.exe which formats
+// disks, so looking for "convert" would be a spectacular way to fail.
+var
+  lsLines: TArrayOfString;
+begin
+  result := probeLines('where magick', lsLines) and (GetArrayLength(lsLines) > 0)
+            and (Pos('magick', Lowercase(lsLines[0])) > 0);
+end;
+
+function imageToolsNeedInstall(): boolean;
+begin
+  result := not imageToolsPresent();
+end;
+
+function imageToolsAreCurrent(): boolean;
+begin
+  result := imageToolsPresent();
+end;
+
+function descImageTools(sParam: string): string;
+begin
+  if imageToolsPresent() then
+    result := 'Reinstall ImageMagick, for iPhone photos, camera raw, SVG and icons (installed)'
+  else
+    result := 'Install ImageMagick so iPhone photos (HEIC), camera raw files, SVG drawings and Windows icons can be converted (about 50 MB; ffmpeg cannot read these)';
+end;
+
 function mpvPresent(): boolean;
 // Whether mpv answers on this machine. Found by running it, so a copy
 // installed outside winget counts too.
@@ -937,7 +986,7 @@ begin
   if pdfToolsPresent() then
     result := 'Reinstall the PDF reader, PyMuPDF4LLM (installed)'
   else
-    result := 'Install the PDF reader, PyMuPDF4LLM, so PDFs can be read with their headings, lists and tables (about 25 MB; needs Python)';
+    result := 'Install the PDF reader, PyMuPDF4LLM, so PDFs can be read with their headings, lists and tables (about 25 MB, plus Python if this computer has none)';
 end;
 
 function mediaToolsNeedInstall(): boolean;
@@ -1030,9 +1079,11 @@ begin
     { The labels themselves, so the page has nothing left to compute. }
     WizardForm.StatusLabel.Caption := 'Checking the PDF reader ...';
     pdfToolsPresent();
+    WizardForm.StatusLabel.Caption := 'Checking the image tools ...';
+    imageToolsPresent();
     WizardForm.StatusLabel.Caption := 'Checking mpv ...';
     mpvPresent();
-    descMediaTools(''); descPandoc(''); descPdfTools(''); descMpv(''); descOllama(''); descTranslateModel('');
+    descMediaTools(''); descPandoc(''); descPdfTools(''); descImageTools(''); descMpv(''); descOllama(''); descTranslateModel('');
 
     WizardForm.ProgressGauge.Style := npbstNormal;
     WizardForm.StatusLabel.Caption := '';

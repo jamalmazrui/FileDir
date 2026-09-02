@@ -180,7 +180,7 @@
 </header>
 <h1 id="filedir-questions-and-answers">FileDir — Questions and
 Answers</h1>
-<p><strong>Version 5.0.42</strong><br />
+<p><strong>Version 5.0.47</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -285,11 +285,29 @@ through 2htm, which comes with FileDir.</p>
 <p><strong>How are PDFs read?</strong></p>
 <p>By PyMuPDF4LLM, a free reader the installer offers as a ticked
 checkbox. It reads the PDF’s own structure, so you get headings, lists
-and tables rather than a wall of text. It needs Python, which it will
-tell you about if it is missing. Microsoft Word is not involved.</p>
+and tables rather than a wall of text. Microsoft Word is not
+involved.</p>
+<p><strong>Does the “LLM” in that name mean AI reads my
+PDFs?</strong></p>
+<p>No. Nothing is sent anywhere and no AI model is involved. The name
+means the tool was built to produce Markdown that reads well when handed
+to an AI later — it describes the output format, not how the work is
+done. The reading itself is ordinary parsing: font sizes become
+headings, ruled areas become tables.</p>
+<p><strong>Does FileDir install Python?</strong></p>
+<p>Only if you tick the PDF reader and this computer has no Python. The
+reader runs under Python, so the installer fetches it — about 30 MB —
+the same way it fetches everything else. FileDir itself is a Windows
+program and needs no Python for anything else.</p>
 <p>A PDF that is a scan of images has no text in it at all, and needs
 optical character recognition rather than conversion. FileDir says so
 rather than going quiet.</p>
+<p><strong>Can I convert iPhone photos?</strong></p>
+<p>Yes, with the image tools installed — the installer offers them as a
+checkbox, unticked. iPhone photos are HEIC, which ffmpeg cannot read
+whatever build you have, so ImageMagick handles those along with camera
+raw files, SVG drawings and Windows icons. Ordinary PNG and JPEG work
+without it.</p>
 <p><strong>Do I need Pandoc?</strong></p>
 <p>Yes, for Convert Format. The installer offers it as a checkbox and
 ticks it, because it is what gives FileDir its conversions.</p>
@@ -306,6 +324,17 @@ Reinstall with the version, rather than Install.</p>
 track titles. Anything mpv can reach works, because the addresses are
 handed to yt-dlp. An address that has been taken down is skipped rather
 than stopping the rest.</p>
+<p><strong>I copied a podcast directory and nothing played.
+Why?</strong></p>
+<p>Because a directory usually links to each episode’s web page, not to
+its audio file. The player has to fetch and examine every page before it
+can play anything, which takes seconds each and fails completely for
+sites it does not recognise. FileDir now warns you before starting in
+that case.</p>
+<p>What plays immediately is an address ending in .mp3 or .m4a. A
+podcast’s RSS feed holds those; its web pages do not. If you can get the
+feed’s audio addresses onto the clipboard, Alt+Shift+L plays them at
+once.</p>
 <p><strong>Can I add something while it is playing?</strong></p>
 <p>Yes. Copy an address and press Control+V in the player window. That
 is mpv’s own key: it appends one file or address to what is already

@@ -179,7 +179,7 @@
 <h1 class="title">FileDir History</h1>
 </header>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
-<p><strong>Version 5.0.42</strong><br />
+<p><strong>Version 5.0.47</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -222,6 +222,19 @@ MIT License</p>
 <li><a href="#version-3-7">Version 3.7</a></li>
 <li><a href="#version-3-8">Version 3.8</a></li>
 <li><a href="#version-3-9">Version 3.9</a></li>
+<li><a href="#version-5-0-50">Version 5.0.50</a></li>
+<li><a href="#version-5-0-49">Version 5.0.49</a></li>
+<li><a href="#version-5-0-48">Version 5.0.48</a></li>
+<li><a href="#version-5-0-47">Version 5.0.47</a></li>
+<li><a href="#version-5-0-46">Version 5.0.46</a></li>
+<li><a href="#version-5-0-45">Version 5.0.45</a></li>
+<li><a href="#version-5-0-44">Version 5.0.44</a></li>
+<li><a href="#version-5-0-43">Version 5.0.43</a></li>
+<li><a href="#version-5-0-42">Version 5.0.42</a></li>
+<li><a href="#version-5-0-41">Version 5.0.41</a></li>
+<li><a href="#version-5-0-40">Version 5.0.40</a></li>
+<li><a href="#version-5-0-39">Version 5.0.39</a></li>
+<li><a href="#version-5-0-38">Version 5.0.38</a></li>
 <li><a href="#version-5-0-37-the-public-release">Version 5.0.37, the
 public release</a></li>
 <li><a href="#version-5-0-36">Version 5.0.36</a></li>
@@ -1483,6 +1496,391 @@ by simply marking a checkbox.</p>
 <p>Sped up time for subsequent invocations of FileDir after the initial
 one. Improved the optional JAWS scripts for FileDir so that titles of
 top-level windows are more reliably read.</p>
+<h2 id="version-5.0.50">Version 5.0.50</h2>
+<p><em>September 2026</em></p>
+<p><strong>A play list of ytdl searches on the clipboard played nothing,
+and said nothing.</strong> The clipboard reader knew three schemes –
+https, rtmp and rtsp – so a file full of lines like</p>
+<pre><code>ytdl://ytsearch1:Albert King Crosscut Saw</code></pre>
+<p>read as prose. No playable line was found, so the clipboard was
+passed over and the folder was played instead, with no reason given for
+either.</p>
+<p>That address is worth supporting. mpv hands the whole of it to
+yt-dlp, which finds and plays the first match, so a play list can name a
+song without anyone having to look up a video identifier that will be
+wrong the day the video is re-uploaded. It is the honest way to write a
+playlist of songs, and FileDir could not read it.</p>
+<p>Three changes. The scheme is recognised, and unlike the others it
+runs to the end of the line, because a search contains spaces. It counts
+as direct media, so it does not raise the warning meant for lists of web
+pages – yt-dlp resolves it to a stream, not to a page that has to be
+fetched and examined. And mms and srt were added to the ordinary scheme
+list while it was open.</p>
+<p>Checked against a real 202-entry play list: nothing before, all 202
+after.</p>
+<h2 id="version-5.0.49">Version 5.0.49</h2>
+<p><em>August 2026</em></p>
+<p><strong>The links were found; they were the wrong kind of
+link.</strong> The log shows 185 entries taken from the clipboard and
+mpv started, and then nothing: no sound, no window, and no way to reach
+the player to stop it.</p>
+<p>A podcast directory links to each episode’s PAGE, not to its audio.
+Every one of the 91 addresses in the file was an accesson.pinecast.co
+episode page. mpv hands a page to yt-dlp, which has to fetch and examine
+it before anything can play, and for a site it has no extractor for
+nothing plays at all. A hundred and eighty-five of those, several
+seconds each, is a long silence.</p>
+<p>Three fixes, and the first matters most.</p>
+<p><strong>A window appears at once.</strong> mpv used to show nothing
+until it had decoded something, so a player that never got started had
+no window at all – not on the task bar, not reachable by Alt+Tab, and no
+way to press q at it. It now opens its window immediately. This is the
+one option added back since the play list was reduced to a plain file
+name, because a player nobody can find is worse than no player.</p>
+<p><strong>Direct media addresses win.</strong> When the clipboard holds
+addresses that name media outright – ending in .mp3, .m4a and the rest –
+only those are used. They play at once and need no fetching. The
+extension is read before any query string, since a podcast address
+usually carries tracking parameters.</p>
+<p><strong>And when there are none, it says so before
+launching.</strong> A list where not one address names a media file now
+asks first, explaining that each page has to be fetched, that it may
+fail entirely, and that a feed usually holds the direct addresses its
+web pages do not. Cancel is the default button.</p>
+<h2 id="version-5.0.48">Version 5.0.48</h2>
+<p><em>August 2026</em></p>
+<p><strong>Play Media now finds links inside a document, not only lists
+of bare addresses.</strong> This is the failure with the podcast
+directories: a Markdown list reads</p>
+<pre><code>- [Casefile True Crime](https://feeds.megaphone.fm/casefile)</code></pre>
+<p>and not one line of it IS an address, so a perfectly good list of
+forty shows was refused entirely. The same was true of the saved web
+page, where the addresses sit inside href attributes.</p>
+<p>Addresses are pulled out of whatever the clipboard holds, in four
+shapes: a Markdown link, an HTML anchor, a rich-text HYPERLINK field,
+and a bare address on its own. The link TEXT becomes the track title, so
+a play list made from a directory announces the show names instead of
+reading URLs aloud. An address named twice is played once, because a
+document usually repeats a link in a list and again in prose.</p>
+<p>The clipboard is also read as HTML and rich text before plain text,
+since a page copied from a browser keeps its addresses in the markup and
+only the visible words in the text. Asking for text alone threw the
+addresses away.</p>
+<p><strong>Append to Clipboard keeps formatting for the first
+file.</strong> Copying one web page or Word document onto an empty
+clipboard now offers HTML as well as text, so pasting into a mail
+message keeps the headings and links. Appending stays Markdown: two rich
+documents cannot be joined without deciding whose styling wins, and
+Markdown keeps headings, lists and links as text that reads well and
+joins cleanly.</p>
+<p>Windows does not take bare HTML on the clipboard – it wants a header
+naming the byte offsets of the fragment, counted in BYTES rather than
+characters, and a wrong number means an empty paste. The offsets are
+computed and were checked against accented text, where a character count
+would have shifted every one.</p>
+<p><strong>Output Type moves the cursor to the file it just
+made</strong>, when the filter in effect still shows it.</p>
+<p><strong>A web page FileDir creates is a .htm.</strong> That was done
+two releases ago and is in the build you have not run yet; nothing
+offers .html any more. The .inix preference for files in ini format is
+noted and not yet done: FileDir.ini is the settings file, and renaming
+it needs a migration step so nobody loses their settings, which is worth
+its own change rather than being tacked on here.</p>
+<h2 id="version-5.0.47">Version 5.0.47</h2>
+<p><em>August 2026</em></p>
+<p><strong>Table.cs would not compile: it called FileDir.InixCodec, and
+the class is Homer.InixCodec.</strong> Five errors, all the same one.
+The namespace was assumed rather than read, and Table.cs is itself in
+the Homer namespace, so the name needs no qualifier at all.</p>
+<p>Nothing else was wrong with it – the method names, the argument
+counts and the Section and Pair members all matched what Inix.cs
+declares. That is the frustrating shape of this mistake: everything hard
+was right and one word that could have been checked in a second was
+wrong.</p>
+<p>So the symbol check that resolves method names now checks NAMESPACES
+too. Every qualified reference in the shared sources is compared against
+the namespace the class is actually declared in, across all twelve
+files. Run against the fixed tree it is clean; run against what shipped
+it names the fault.</p>
+<h2 id="version-5.0.46">Version 5.0.46</h2>
+<p><em>August 2026</em></p>
+<p><strong>The PDF reader checkbox is ticked, and could not install its
+own requirement.</strong> PyMuPDF4LLM runs under Python, and
+installPdfTools.cmd stopped when there was no Python and told the person
+to fetch it from python.org. That is a manual download in an installer
+whose stated promise is that nothing is one – and since the box is
+ticked, anyone without Python got a failure and an errand on their very
+first run.</p>
+<p>It installs Python itself now, by winget, machine wide, like every
+other component: about 30 MB. A Python installed a moment ago is not on
+the console’s path, so the fixed locations are searched again rather
+than trusting “where” – the same trap that made FileDir report mpv
+missing on a machine that had it. The checkbox label says “plus Python
+if this computer has none”, so the size is honest before the box is
+ticked rather than after.</p>
+<h2 id="version-5.0.45">Version 5.0.45</h2>
+<p><em>August 2026</em></p>
+<p><strong>ImageMagick is an optional component, for the pictures ffmpeg
+cannot read.</strong></p>
+<p>HEIC is the reason. FFmpeg’s HEIF support has been an open ticket for
+years, is described upstream as partially fixed, and depends entirely on
+how the binary was built – the build FileDir uses does not have it.
+Meanwhile every photograph an iPhone takes is HEIC, so the format most
+photographs now arrive in could not be converted at all.</p>
+<p>With it come camera raw from every maker (CR2, CR3, NEF, ARW, DNG and
+the rest), SVG drawings, Windows icons, and the long tail of Photoshop,
+GIMP and game-texture formats. Two new targets as well: a Windows icon,
+written with the sizes Windows expects rather than whatever size the
+source happened to be, and AVIF.</p>
+<p><strong>ffmpeg keeps the ordinary work.</strong> PNG, JPEG, BMP, GIF,
+TIFF and WebP go through it as before, because it is already installed
+and already ticked. ImageMagick is asked for only when one end of the
+conversion is a format ffmpeg cannot reach. A PNG becoming a JPEG never
+touches it; a PNG becoming an icon does.</p>
+<p>Four details that decide whether the results are any good. An SVG has
+no size until it is drawn, and ImageMagick’s default of 72 dots per inch
+turns a full page into a postage stamp, so it is drawn at 300. A raw
+file, a Photoshop file and an animated GIF all hold several images, and
+without asking for the first one every layer and thumbnail is written as
+its own numbered file. An icon is written at eight sizes, which is what
+an icon is for. And a transparent picture becoming a JPEG is flattened
+onto white, or the clear parts come out black.</p>
+<p>Only “magick” is looked for, never “convert”: since ImageMagick 7
+that is the single command, and Windows has its own convert.exe which
+formats disks.</p>
+<p>The checkbox is not ticked. ffmpeg already covers the common formats,
+so this serves people with phone photographs or a camera and nobody
+else. Its licence is derived from Apache 2.0, so unlike ffmpeg there is
+no GPL question.</p>
+<p><strong>Not added: images to PDF and PDF to images.</strong> ffmpeg
+cannot, and ImageMagick looks like the answer, but PyMuPDF is already
+installed for the PDF reader and does both directions better.
+ImageMagick also ships a policy file that disables PDF by default, a
+hangover from the 2018 Ghostscript vulnerabilities, so it would fail out
+of the box with an unhelpful message.</p>
+<h2 id="version-5.0.44">Version 5.0.44</h2>
+<p><em>August 2026</em></p>
+<p><strong>A web page FileDir creates is a .htm, never a .html.</strong>
+That is the Homer Tools convention across every app, and Output Type was
+offering .html for four of its target lists: documents, legacy Office
+files, PDFs and tables.</p>
+<p>Both spellings are still READ – the world writes both, and Pandoc is
+handed either without complaint – and a .html file already on disk keeps
+the name it has. This decides only what gets written. The pair of rules
+that stop a file being offered its own format still covers both
+spellings, so a .html file is not offered a “Web page” target and a .htm
+file is not either.</p>
+<p>The audit refuses any conversion target named .html, and refuses a
+build that would generate .html documents. Tested by putting one back,
+which it caught.</p>
+<h2 id="version-5.0.43">Version 5.0.43</h2>
+<p><em>August 2026</em></p>
+<p><strong>Tables convert between every format that can hold one, .inix
+included.</strong> They could not before, and the gaps were worse than
+they looked.</p>
+<p>.inix was read as raw text and written not at all, so the format
+FileDir’s own tools use for a list of records could not become anything
+else. .xlsx gave up a heap of loose strings with the rows and columns
+thrown away – fine for reading a spreadsheet aloud, useless for
+converting one. And Pandoc reads .csv and .tsv but writes neither, so
+those were input only.</p>
+<p>Added Table.cs, which reads .inix records, .csv, .tsv, .xlsx and a
+Markdown pipe table, and writes .inix, .csv, .tsv and Markdown
+itself.</p>
+<p><strong>A Markdown pipe table is the intermediate</strong>, for the
+targets FileDir does not write. The rows go out as a pipe table and
+Pandoc turns them into a real table in a Word document, a web page or an
+OpenDocument file. One intermediate serves every one of them, which is
+the arrangement the PDF reader already uses. So the round trip runs both
+ways across the whole list:</p>
+<pre><code>inix &lt;-&gt; csv &lt;-&gt; tsv &lt;-&gt; xlsx in &lt;-&gt; md &lt;-&gt; docx, html, odt out</code></pre>
+<p>Three details that decide whether this works on real files. The
+separated-values reader understands QUOTING, because a comma inside a
+quoted field is the entire reason quoting exists and a naive split on
+commas breaks every address and every “Surname, Forename” ever exported.
+The .xlsx reader places each cell by the LETTERS of its reference, so an
+empty cell in the middle of a row stays a gap rather than shifting every
+later value one place left, and it reads a numeric cell from its own
+value rather than the string table. And a .csv is written with a byte
+order mark, or a spreadsheet opening it guesses the code page and turns
+every accented letter into rubbish.</p>
+<p>Reading a spreadsheet as TEXT now produces a Markdown table too, so
+Say Contents and Append to Clipboard give the rows and columns rather
+than a heap of strings.</p>
+<p><strong>Writing .xlsx is deliberately not here.</strong> It needs the
+whole Open XML package written correctly – styles, shared strings,
+relationships – and a spreadsheet that opens with a repair warning is
+worse than one that was never written. A table becomes .csv instead,
+which every spreadsheet opens directly.</p>
+<h2 id="version-5.0.42">Version 5.0.42</h2>
+<p><em>August 2026</em></p>
+<p>Loading a folder into a window is substantially faster, and the
+reason was in one line.</p>
+<p><strong>The list text came from a DataTable EXPRESSION
+column.</strong> DisplayFields carried an Expression joining six
+columns, and the DataTable expression engine parsed and evaluated it for
+every row. That engine is a general-purpose interpreter: it boxes each
+value and walks a parsed tree. For a folder of ten thousand files that
+is ten thousand interpreted evaluations to produce ten thousand string
+joins – and it ran again every time a tag was set, on every row that
+changed.</p>
+<p>It is an ordinary string column now, and the text is identical,
+checked character for character against what the expression
+produced.</p>
+<p><strong>Four places add rows and twenty-five set a tag.</strong>
+Rather than edit twenty-nine call sites, the table is hooked once: a
+RowChanged handler fills the column for a new row and a ColumnChanged
+handler updates it when a column that shows actually changes. That is
+not merely less typing – a hook cannot be forgotten by the next command
+that sets a tag, and twenty-nine edited sites could be.</p>
+<p><strong>The folder is streamed rather than gathered first.</strong>
+GetFileSystemInfos builds an array of every entry before the first row
+can be added, so a very large folder allocated the lot and showed
+nothing meanwhile. EnumerateFileSystemInfos hands entries over as the
+directory is read.</p>
+<p><strong>Row loading is bracketed by BeginLoadData and
+EndLoadData</strong>, which turns off constraint checking and index
+maintenance for the fill, with EndLoadData in a finally so one
+unreadable entry cannot leave the table in loading state for the rest of
+the session.</p>
+<p>Worth recording what was already right, since it is the usual culprit
+elsewhere: the loader takes attributes, times and lengths from the
+enumeration itself, where Windows returns them with each entry, rather
+than asking File.GetAttributes and File.GetLastWriteTime per item –
+which would be three more trips to the disk for something already in
+hand. The older fillTable does ask that way, and is dead code; it is
+left alone rather than fixed, since nothing calls it.</p>
+<h2 id="version-5.0.41">Version 5.0.41</h2>
+<p><em>August 2026</em></p>
+<p>Traced and audited the four Quick commands. The Internet Explorer
+scraping was already gone – Quick URL used to run WebGet.exe to read
+IE’s address bar, and since Internet Explorer no longer exists on
+Windows it took the address from the clipboard instead, which works with
+every browser. That stands, and the comment saying so stays with it.</p>
+<p>What the tracing found was that neither Quick command checked the
+name it was about to use.</p>
+<p><strong>A name with ordinary punctuation in it failed with a raw .NET
+exception.</strong> A page called “Q: what now?” or a file called
+“report: final.docx” makes a path Windows refuses, and what a person got
+was a message about an illegal character in a path. Both commands now
+clean the name by the same rule Rename to Identify Content uses: dashes,
+commas, periods, parentheses, apostrophes and underscores are kept
+because they occur in real titles, and every run of anything else
+becomes one space.</p>
+<p><strong>An empty name made a file called “.lnk”</strong> – invisible
+in the list and impossible to pick again. Refused now, with the
+reason.</p>
+<p><strong>A reserved device name</strong> such as CON or LPT1 cannot be
+a file however it is spelled, and was not checked. Refused, saying
+why.</p>
+<p><strong>Quick URL would write a link with no address in it</strong>,
+which opens nothing and then sits in the Quick folder looking like a
+link for ever. And an address pasted without a scheme – just a host,
+which is half of what people paste – was written as it stood, where
+Windows will not follow it. It gets https now.</p>
+<p><strong>Quick Shortcut would make a shortcut to something that does
+not exist.</strong> The path field is editable, so a typo produced a
+link to nothing, and the mistake only showed the next time the link was
+followed. Checked when it is made.</p>
+<p>Both commands now say what they added rather than “Done!”, and both
+create the Quick folder if it has been removed. Tested against twelve
+names, including punctuation, empty, reserved and over-long: every one
+either produces a valid file name or is refused with a reason.</p>
+<h2 id="version-5.0.40">Version 5.0.40</h2>
+<p><em>August 2026</em></p>
+<p><strong>The history of folders visited was recorded in one place
+only: the MdiChild constructor.</strong> So a folder was remembered when
+a NEW WINDOW was made for it, and at no other time. Going to a folder
+that already had a window recorded nothing at all, because
+activate_Helper activates that window and returns before any constructor
+runs. The Quick folder on the Accent key is the everyday case: go there
+twice and only the first visit existed.</p>
+<p>Every arrival now passes through App.recordVisit, including the one
+that was being lost. Arriving where you already are is not counted, so
+refreshing does not fill the history with the same entry, and the list
+is capped so a long session cannot grow without limit.</p>
+<p><strong>Alt+LeftArrow and Alt+RightArrow are Go Back and Go
+Forward.</strong> They were second keys for Previous and Next Window,
+which is not what those keys mean in any other program and not what
+anyone reaches for them expecting – the behaviour reported as broken was
+the behaviour as written. Window cycling keeps Control+Tab and
+Control+Shift+Tab, which is where it belongs and always was.</p>
+<p>Going back does not itself record a visit, or back and forward would
+chase each other: each step back would append an entry and there would
+never be anywhere forward to go. A folder deleted since the visit is
+stepped over rather than reported as a dead end, so one stale entry
+cannot block the way back. Going somewhere new after going back discards
+the forward path, as a browser does.</p>
+<p><strong>Alt+R reads the same history</strong>, showing each folder
+once with the most recent first. The history keeps every visit in order
+because back and forward need that; a list to pick from wants each place
+named once. One record, two questions asked of it, so the list and the
+arrows can no longer disagree.</p>
+<h2 id="version-5.0.39">Version 5.0.39</h2>
+<p><em>August 2026</em></p>
+<p>Traced and audited the two character-encoding commands, Shift+2 and
+Control+2. The move off the retired Encoding.exe was already done –
+detection is the Ude library, a port of the Mozilla universal detector,
+and conversion is .NET’s own encoders – and the tracing found four
+faults in what replaced it.</p>
+<p><strong>Convert Encoding overwrote the clipboard.</strong> A debug
+line, Clipboard.SetText of a list index, ran every single time the
+command was used. Beside it, the remembered choice was looked up in
+upper case while the list holds lower case names, so it never matched
+and the list always opened at the top rather than at what was chosen
+last.</p>
+<p><strong>Converting a file that is not text destroyed it.</strong> The
+converter read the bytes as text and wrote them back, which rewrites
+every byte that would not decode. Running it on a picture left a .bak
+copy and a ruined original, which is not a rescue anybody wants. It is
+refused now, by name, with the reason.</p>
+<p><strong>The detector read whole files into memory.</strong> Asking
+the encoding of a two gigabyte video read two gigabytes. It reads a
+megabyte at most, which is far more than the detector needs: the Mozilla
+detector settles within a few thousand bytes.</p>
+<p><strong>Neither command asked whether the file was text at
+all.</strong> Reporting an encoding for a JPEG is a made-up answer.
+Shift+2 now says so plainly, and says something sensible for a folder as
+well.</p>
+<p>The test is a zero byte in the first eight kilobytes. Text in any
+encoding this handles does not contain one and virtually every binary
+format does, with UTF-16 the exception – it is full of zeros – so a
+byte-order mark settles that case first. Checked against ASCII, UTF-8,
+UTF-16 in both orders, windows-1252, an empty file, PNG, JPEG, a Windows
+executable, a zip and an MP3.</p>
+<p>No NuGet package was added. Ude was already here and doing the
+detection, and everything else is in the base class library.</p>
+<h2 id="version-5.0.38">Version 5.0.38</h2>
+<p><em>August 2026</em></p>
+<p><strong>Sizes are spoken in a form a person can take in at
+once.</strong> Shift+S said “1610612736 bytes”. That is exact and
+useless: nobody holds a ten-digit number in their head, and hearing it
+read out digit by digit is worse. It now says “1.5 gigabytes”.</p>
+<p>The rules, and the reason for each. <strong>“k” for
+kilobytes</strong>, because a screen reader reads KB as two letters and
+everyone knows what k means on a file size. <strong>“megabytes” and
+“gigabytes” in full</strong>, because MB and GB read as letters too and
+the words are short enough to say. <strong>One decimal place at most,
+and only below ten</strong>: “9.4 megabytes” carries information where
+“94.3 megabytes” is a number nobody keeps. That is the ordinary
+significant-figures habit, and it never prints a pointless “.0”.
+<strong>The noun matches the count</strong>, so “1 byte” and “1
+megabyte” are singular, and zero is said plainly as “0 bytes”. Sizes are
+divided by 1024, matching what File Explorer shows for the same file, so
+the two never disagree in front of somebody.</p>
+<p>The Yield commands were saying raw byte counts too, in six places
+altogether. They all use the one rule now, because Shift+S and Control+Y
+answering the same question differently about the same folder would be
+worse than either.</p>
+<p>Humanizer was considered and not used. Its ByteSize humanizer is good
+work, but it says “1.15 GB” – an abbreviation, two decimal places –
+which is not what is wanted here, and it would add a NuGet package to a
+.NET Framework 4.8 build, which is the Span trap that already cost this
+project a silent failure in 2htm. Nothing to gain and a dependency to
+lose.</p>
+<p>The exact byte count has not gone anywhere: it is still the Size
+column in the list and still in the status line, for when precision is
+the point.</p>
 <h2 id="version-5.0.37-the-public-release">Version 5.0.37, the public
 release</h2>
 <p><em>August 2026</em></p>

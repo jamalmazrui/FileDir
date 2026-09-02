@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.42**  
+**Version 5.0.47**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -554,6 +554,44 @@ legitimate. A `.cmd` wrapper cannot be started by the process object, so
 `Homer.Media.searchLog()` returns the whole search, and every failure message
 shows it. A "not found" that cannot be diagnosed from its own text costs more
 rounds than the bug.
+
+## Loading a Folder
+
+`fillTableFromDir` is the live loader. Three things about it are deliberate and
+easy to undo by accident:
+
+- **Attributes, times and lengths come from the enumeration.** Windows returns
+  them with each directory entry and `FileSystemInfo` keeps them, so reading
+  `fs.Attributes` is free. Calling `File.GetAttributes` per item instead is
+  three extra trips to the disk for data already in hand — which is what the
+  dead `fillTable` does, and why it is dead.
+- **`DisplayFields` is a plain column, not an expression column.** It was an
+  expression, evaluated by the DataTable interpreter for every row and again on
+  every tag change. `watchDisplayFields` hooks the table once to keep it right;
+  do not add the value at each `Rows.Add`, and do not turn it back into an
+  expression.
+- **The fill is bracketed by `BeginLoadData`/`EndLoadData`**, which suppresses
+  row events — hence the single `refreshDisplayFields` pass afterwards.
+
+## The .htm Convention
+
+A file any Homer Tools app **creates** gets `.htm`. Both spellings are read, and
+a `.html` file already on disk keeps its name; this is only about what is
+written. The audit refuses a conversion target named `.html` and a build that
+would generate `.html` documents.
+
+## Namespaces
+
+Two namespaces are in play and they are easy to confuse:
+
+- **`Homer`** — `Util`, `Web`, `Inix` (`InixCodec`), `Say`, `Lbc`, `Ollama`,
+  `Convert`, `Media`, `Log`, `Table`. The portable toolkit, shared with EdSharp
+  and HomerScribe.
+- **`FileDir`** — `FileDir.cs` and `Dialogs.cs` only. The application itself.
+
+A new file in `Homer` refers to its neighbours **unqualified**. Writing
+`FileDir.InixCodec` from inside `Table.cs` cost a build; the class is
+`Homer.InixCodec` and no prefix was needed.
 
 ## Traps Worth Knowing
 

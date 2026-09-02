@@ -19,6 +19,7 @@ echo [installPdfTools] started %date% %time% >> "%logFile%"
 echo.
 
 call :findPython
+if not defined pythonExe call :getPython
 if not defined pythonExe goto no_python
 echo [installPdfTools] python: %pythonExe% >> "%logFile%"
 
@@ -55,10 +56,35 @@ echo [installPdfTools] done >> "%logFile%"
 exit /b 0
 
 :no_python
-echo Python was not found, so the PDF reader cannot be installed.
+echo Python could not be installed, so the PDF reader cannot be either.
 echo Install Python from python.org, then run this script again.
-echo [installPdfTools] FAILED: no python >> "%logFile%"
+echo [installPdfTools] FAILED: no python, and winget could not install one >> "%logFile%"
 exit /b 7
+
+:getPython
+rem INSTALL PYTHON RATHER THAN ASK FOR IT.
+rem
+rem This used to stop here and tell the person to fetch Python from python.org.
+rem That is a manual download in an installer whose whole promise is that
+rem nothing is -- and the PDF reader box is TICKED, so anyone without Python
+rem got a failure and an errand on their first run.
+rem
+rem Machine wide, like every other component. About 30 MB.
+echo Installing Python, about 30 MB
+echo [installPdfTools] winget install Python.Python.3.13 >> "%logFile%"
+winget install --id Python.Python.3.13 -e --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
+set "code=%errorlevel%"
+echo [installPdfTools] python install exit %code% >> "%logFile%"
+if not "%code%"=="0" (
+  echo [installPdfTools] retrying Python without a scope >> "%logFile%"
+  winget install --id Python.Python.3.13 -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
+  echo [installPdfTools] python retry exit %errorlevel% >> "%logFile%"
+)
+rem A Python installed a moment ago is not on this console's path, so the fixed
+rem locations are searched again rather than trusting "where".
+call :findPython
+if defined pythonExe echo [installPdfTools] python now at %pythonExe% >> "%logFile%"
+exit /b 0
 
 :failed
 echo The PDF reader did not install. The log is:

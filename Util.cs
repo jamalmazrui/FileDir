@@ -415,6 +415,11 @@ public static void convertFileEncoding(string sFile, string sTargetName, bool bB
 // assumed, so a file is read correctly whatever it is in.  With bBackup, the
 // original is kept alongside as <name>.bak -- the behavior of Encoding.exe's
 // "backup" task, which is the one FileDir used.
+// Refused rather than attempted. Reading a binary file as text and writing it
+// back rewrites every byte that would not decode, and the file is gone. The
+// .bak copy would be the only survivor, which is not a rescue anybody wants.
+if (!looksLikeText(sFile))
+throw new IOException("this is not a text file, so converting it would destroy it");
 Encoding enFrom = getFileEncoding(sFile);
 string sBody = File.ReadAllText(sFile, enFrom);
 Encoding enTo = getEncodingByName(sTargetName);
@@ -451,6 +456,51 @@ catch {}
 return detectEncodingNoBom(sFile);
 } // getFileEncoding method
 
+public static byte[] readSample(string sFile, int iMost) {
+// The first bytes of a file, at most iMost of them.
+try {
+using (FileStream fs = new FileStream(sFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
+int iWanted = (int) Math.Min((long) iMost, fs.Length);
+byte[] aBytes = new byte[iWanted];
+int iRead = 0;
+while (iRead < iWanted) {
+int iThis = fs.Read(aBytes, iRead, iWanted - iRead);
+if (iThis <= 0) break;
+iRead += iThis;
+}
+if (iRead == iWanted) return aBytes;
+byte[] aShort = new byte[iRead];
+Array.Copy(aBytes, aShort, iRead);
+return aShort;
+}
+}
+catch (Exception) {
+return new byte[0];
+}
+} // readSample method
+
+public static bool looksLikeText(string sFile) {
+// Whether a file is text at all.
+//
+// NOTHING ASKED THIS BEFORE, and two commands needed it. Reporting the
+// "encoding" of a JPEG is meaningless, and CONVERTING one is destructive: the
+// converter reads the bytes as text and writes them back, which rewrites every
+// byte it could not decode. A picture would survive as a .bak and nothing else.
+//
+// A byte of zero is the test. Text in any encoding this deals with does not
+// contain one, and virtually every binary format does within its first few
+// hundred bytes. UTF-16 is the exception -- it is full of zero bytes -- so a
+// byte-order mark settles it before the question is asked.
+byte[] aBytes = readSample(sFile, 8192);
+if (aBytes.Length == 0) return true;          // an empty file is text enough
+if (aBytes.Length >= 2) {
+if (aBytes[0] == 0xFF && aBytes[1] == 0xFE) return true;
+if (aBytes[0] == 0xFE && aBytes[1] == 0xFF) return true;
+}
+foreach (byte b in aBytes) if (b == 0) return false;
+return true;
+} // looksLikeText method
+
 public static Encoding detectEncodingNoBom(string sFile) {
 // Content-based detection for a file with no byte-order mark.  A clearly detected
 // legacy or wide encoding (windows-1252, UTF-16 without a BOM, Shift-JIS, ...) is
@@ -458,7 +508,11 @@ public static Encoding detectEncodingNoBom(string sFile) {
 Encoding enDefault = Encoding.Default;
 #if HAVEUDE
 try {
-byte[] aBytes = File.ReadAllBytes(sFile);
+// A SAMPLE, not the whole file. This read every byte of whatever it was
+// given, so asking the encoding of a two gigabyte video read two gigabytes
+// into memory. A megabyte is far more than any detector needs: the Mozilla
+// detector it uses settles on an answer within a few thousand bytes.
+byte[] aBytes = readSample(sFile, 1024 * 1024);
 if (aBytes.Length == 0) return enDefault;
 Ude.CharsetDetector charsetDetector = new Ude.CharsetDetector();
 charsetDetector.Feed(aBytes, 0, aBytes.Length);

@@ -179,7 +179,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.42</strong><br />
+<p><strong>Version 5.0.47</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -805,6 +805,50 @@ to route through <code>cmd /c</code>.</p>
 <p><code>Homer.Media.searchLog()</code> returns the whole search, and
 every failure message shows it. A “not found” that cannot be diagnosed
 from its own text costs more rounds than the bug.</p>
+<h2 id="loading-a-folder">Loading a Folder</h2>
+<p><code>fillTableFromDir</code> is the live loader. Three things about
+it are deliberate and easy to undo by accident:</p>
+<ul>
+<li><strong>Attributes, times and lengths come from the
+enumeration.</strong> Windows returns them with each directory entry and
+<code>FileSystemInfo</code> keeps them, so reading
+<code>fs.Attributes</code> is free. Calling
+<code>File.GetAttributes</code> per item instead is three extra trips to
+the disk for data already in hand — which is what the dead
+<code>fillTable</code> does, and why it is dead.</li>
+<li><strong><code>DisplayFields</code> is a plain column, not an
+expression column.</strong> It was an expression, evaluated by the
+DataTable interpreter for every row and again on every tag change.
+<code>watchDisplayFields</code> hooks the table once to keep it right;
+do not add the value at each <code>Rows.Add</code>, and do not turn it
+back into an expression.</li>
+<li><strong>The fill is bracketed by
+<code>BeginLoadData</code>/<code>EndLoadData</code></strong>, which
+suppresses row events — hence the single
+<code>refreshDisplayFields</code> pass afterwards.</li>
+</ul>
+<h2 id="the-.htm-convention">The .htm Convention</h2>
+<p>A file any Homer Tools app <strong>creates</strong> gets
+<code>.htm</code>. Both spellings are read, and a <code>.html</code>
+file already on disk keeps its name; this is only about what is written.
+The audit refuses a conversion target named <code>.html</code> and a
+build that would generate <code>.html</code> documents.</p>
+<h2 id="namespaces">Namespaces</h2>
+<p>Two namespaces are in play and they are easy to confuse:</p>
+<ul>
+<li><strong><code>Homer</code></strong> — <code>Util</code>,
+<code>Web</code>, <code>Inix</code> (<code>InixCodec</code>),
+<code>Say</code>, <code>Lbc</code>, <code>Ollama</code>,
+<code>Convert</code>, <code>Media</code>, <code>Log</code>,
+<code>Table</code>. The portable toolkit, shared with EdSharp and
+HomerScribe.</li>
+<li><strong><code>FileDir</code></strong> — <code>FileDir.cs</code> and
+<code>Dialogs.cs</code> only. The application itself.</li>
+</ul>
+<p>A new file in <code>Homer</code> refers to its neighbours
+<strong>unqualified</strong>. Writing <code>FileDir.InixCodec</code>
+from inside <code>Table.cs</code> cost a build; the class is
+<code>Homer.InixCodec</code> and no prefix was needed.</p>
 <h2 id="traps-worth-knowing">Traps Worth Knowing</h2>
 <ul>
 <li><strong>Modern packages on .NET Framework 4.8.</strong> Anything

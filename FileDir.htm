@@ -179,7 +179,7 @@
 <h1 class="title">FileDir FileDir</h1>
 </header>
 <h1 id="filedir-user-guide">FileDir — User Guide</h1>
-<p><strong>Version 5.0.42</strong><br />
+<p><strong>Version 5.0.47</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -198,6 +198,8 @@ MIT License</p>
 <li><a href="#what-is-inside-a-file">What Is Inside a File</a></li>
 <li><a href="#renaming-to-what-is-inside">Renaming to What Is
 Inside</a></li>
+<li><a href="#the-quick-folder">The Quick Folder</a></li>
+<li><a href="#going-back">Going Back</a></li>
 <li><a href="#tidying-a-folder">Tidying a Folder</a></li>
 <li><a href="#converting-between-formats">Converting Between
 Formats</a></li>
@@ -1227,6 +1229,29 @@ title came from, and why any file was skipped — goes to the session log,
 which Control+F12 puts on your clipboard.</p>
 <p>ExifTool comes with the media tools. Without it the command still
 works from the text alone, and says so once.</p>
+<h2 id="the-quick-folder">The Quick Folder</h2>
+<p>Your Quick folder holds shortcuts and web links you want to reach in
+one keystroke. Press <strong>Accent</strong> to go there, or
+<strong>Control+Q</strong> to open it in a new window.</p>
+<p>Press <strong>Shift+Q</strong> for Quick Shortcut to add the file or
+folder you are on. Press <strong>Alt+Shift+Q</strong> for Quick URL to
+add a web link: copy a link in any browser first and the address fills
+itself in, with the site name offered as the name. Both let you edit the
+name and the address before anything is written.</p>
+<p>A name with punctuation in it is cleaned rather than refused, so “Q:
+what now?” becomes “Q what now”. A name Windows cannot use at all is
+refused with the reason.</p>
+<h2 id="going-back">Going Back</h2>
+<p>Press <strong>Alt+LeftArrow</strong> to return to the folder you were
+in before, and <strong>Alt+RightArrow</strong> to go forward again. They
+work as they do in a web browser: going somewhere new after going back
+discards the forward path, and a folder that has been deleted since you
+were there is stepped over rather than stopping you.</p>
+<p>Press <strong>Alt+R</strong> for Recent Folders to pick from
+everywhere you have been this session, each folder listed once with the
+most recent first.</p>
+<p>Window cycling is <strong>Control+Tab</strong> and
+<strong>Control+Shift+Tab</strong>.</p>
 <h2 id="tidying-a-folder">Tidying a Folder</h2>
 <p>Three commands help with a folder that has collected copies and oddly
 sorted names. None of them deletes anything: they tag, and Delete Tagged
@@ -1276,9 +1301,16 @@ text, EPUB, LaTeX, reStructuredText or MediaWiki.</li>
 Opus.</li>
 <li><strong>Video</strong> can become MP4, Matroska, WebM, QuickTime or
 AVI, or MP3, M4A or WAV for the sound alone.</li>
-<li><strong>Pictures</strong> can become PNG, JPEG, WebP, BMP, GIF or
-TIFF.</li>
+<li><strong>Pictures</strong> can become PNG, JPEG, WebP, BMP, GIF,
+TIFF, a Windows icon or AVIF. With the image tools installed, iPhone
+photos (HEIC), camera raw files, SVG drawings and icons can be converted
+too — ffmpeg cannot read any of those.</li>
 </ul>
+<p><strong>Tables</strong> — .inix records, .csv, .tsv, .xlsx and
+Markdown tables — convert between each other keeping their rows and
+columns, and become Word documents, web pages or OpenDocument files with
+the table intact. A spreadsheet can be read but not written; save it as
+.csv, which every spreadsheet opens.</p>
 <p>So converting a folder of MP4 files to MP3, or MKV to MP4, or PNG to
 JPEG, is the same three keystrokes as converting Word to Markdown. The
 format you last chose is remembered separately for each kind of file, so

@@ -1,6 +1,6 @@
 ﻿# FileDir — License
 
-**Version 5.0.42**  
+**Version 5.0.47**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -39,6 +39,8 @@ its own licence, which is not changed by being used here:
   separately and called as a program.
 - **ffmpeg**, GNU LGPL or GPL depending on the build. Installed separately and
   called as a program.
+- **ImageMagick**, under the ImageMagick License, which is derived from Apache
+  2.0. Installed separately and called as a program.
 - **yt-dlp**, in the public domain under the Unlicense. Installed separately and
   called as a program.
 - **Ollama** and the language models it runs, each under its own terms.

@@ -38,6 +38,7 @@ homerPolicy.py
 installMediaTools.cmd
 installPdfTools.cmd
 installMpv.cmd
+installImageTools.cmd
 pdfRich.py
 makeKeyMap.py
 

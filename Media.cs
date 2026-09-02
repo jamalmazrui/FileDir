@@ -362,6 +362,14 @@ Homer.Log.write(sSearchLog.Replace("\r\n", " | "));
 return "";
 } // findInstalled method
 
+public static string magickProgram() {
+// ImageMagick's single command. Since version 7 everything goes through
+// "magick"; the older "convert" name is not looked for, because Windows has
+// its own convert.exe that formats disks, and picking that one up would be a
+// spectacular way to fail.
+return findInstalled("magick");
+} // magickProgram method
+
 public static string ffprobeProgram() {
 return findInstalled("ffprobe");
 } // ffprobeProgram method
