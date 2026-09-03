@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.53**  
+**Version 5.0.54**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,8 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.57](#version-5-0-57)
+- [Version 5.0.56](#version-5-0-56)
 - [Version 5.0.55](#version-5-0-55)
 - [Version 5.0.54](#version-5-0-54)
 - [Version 5.0.53](#version-5-0-53)
@@ -659,6 +661,65 @@ An option at the end of the FileDir installer lets you install this by simply ma
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
 
+## Version 5.0.57
+
+*September 2026*
+
+**mpv was never installed, and the reason was a misread error code.**
+
+    [installMpv] winget install mpv
+    [installMpv] install exit -1978335212
+
+That code is APPINSTALLER_CLI_ERROR_NO_APPLICATIONS_FOUND -- "no packages
+found". It was read here, twice, as a scope problem, and two earlier entries in
+this history repeat that wrong reading. The truth is simpler and worse:
+**mpv.mpv is not a winget package id**. It does not exist. Nothing was ever
+installed, and the per-user retry only appeared to succeed because it also found
+nothing to do.
+
+The id is **shinchiro.mpv**, the Windows build wrapped in an installer that
+registers file associations and the context menu.
+
+**And the folder was guessed wrong.** The search looked for "MPV Media Player";
+the installer creates "MPV Player". A directory listing settled it in one line
+after three rounds of reasoning about PATHs and scopes. Guessing a folder name
+is no better than guessing an audio address, and it fails the same way: quietly.
+
+**Machine scope only, with no per-user retry.** A Homer Tools installer runs as
+administrator and installs machine wide; anyone wanting a copy that needs no
+privileges should use the zip archive instead. The retry blocks in installMpv
+and installImageTools are gone. They defeated the policy and, worse, turned a
+visible failure into a silent one -- which is exactly how a package id that did
+not exist survived three releases.
+
+Winget treats --scope machine as a REQUIREMENT rather than a preference: a
+package with no machine-wide installer fails outright instead of quietly going
+per-user. That is the behaviour this policy wants.
+
+## Version 5.0.56
+
+*September 2026*
+
+**The installer and its own summary disagreed about mpv, and both were wrong.**
+Everything else reported installed; only mpv said otherwise, on a machine that
+plainly has it.
+
+The installer asked "where mpv" and accepted any answer. On this machine that
+answered c:\bin\mpv.cmd -- a batch wrapper -- so it decided mpv was already
+present, offered Reinstall rather than Install, and never installed the player.
+The summary meanwhile looked for mpv.exe in a folder called "mpv" and did not
+find one, because mpv installs as "MPV MEDIA PLAYER". Two questions, two
+answers, both wrong, about the same machine at the same moment.
+
+Both now look where installers actually put things: a folder named after the
+PRODUCT, not after the command. The same table FileDir itself gained last
+release -- mpv as "MPV Media Player", Pandoc as "Pandoc", ExifTool as
+"ExifTool", ImageMagick as "ImageMagick".
+
+That is three places that had to learn the same lesson separately: FileDir, the
+installer, and the summary. Each had its own way of asking, and each was wrong
+in its own way. They ask the same question now.
+
 ## Version 5.0.55
 
 *September 2026*
@@ -694,9 +755,9 @@ guess. Pandoc is "Pandoc", ExifTool is "ExifTool", ImageMagick is "ImageMagick".
 Those are certain, machine wide, and true the moment an installer finishes,
 where a running process's PATH is only as current as the moment it started.
 
-Also worth recording: -1978335212 from winget is not a failure. mpv publishes no
-machine-scope installer, so that error is expected and the per-user retry is the
-normal path rather than a fallback.
+An earlier note here claimed -1978335212 meant mpv publishes no machine-scope
+installer. That was wrong: the code means "no packages found", and the id being
+asked for did not exist. See version 5.0.57.
 
 ## Version 5.0.54
 

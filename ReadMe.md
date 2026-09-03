@@ -1,6 +1,6 @@
 ﻿# FileDir
 
-**Version 5.0.53**  
+**Version 5.0.54**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License

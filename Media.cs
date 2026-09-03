@@ -214,7 +214,11 @@ return findInstalled("ffmpeg");
 // simply the command's own name. Read before the PATH, because these are
 // certain and the PATH is not.
 private static readonly string[,] c_aOfficialFolders = {
-{"mpv", "mpv"}, {"mpv", "MPV Media Player"}, {"mpv", "mpv.net"},
+// "MPV Player" is what shinchiro's installer actually creates. It was guessed
+// as "MPV Media Player", which is close, wrong, and finds nothing. Guessing a
+// folder name is how this went round three times; the others below are read
+// from real installations too, not invented.
+{"mpv", "MPV Player"}, {"mpv", "mpv"}, {"mpv", "MPV Media Player"}, {"mpv", "mpv.net"},
 {"pandoc", "Pandoc"},
 {"exiftool", "ExifTool"},
 {"ffmpeg", "ffmpeg"}, {"ffprobe", "ffmpeg"},

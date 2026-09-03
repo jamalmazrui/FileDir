@@ -97,13 +97,29 @@ function findExe($sName) {
   # said it was not installed. Both were true of their own environment.
   $sPrograms = Join-Path $env:LOCALAPPDATA "Programs"
   $sWinGet = Join-Path $env:LOCALAPPDATA "Microsoft\WinGet"
-  $lCandidates = @(
-    (Join-Path (Join-Path $sPrograms $sName) ($sName + ".exe")),
-    (Join-Path (Join-Path $sPrograms "Ollama") ($sName + ".exe")),
-    (Join-Path (Join-Path $env:ProgramFiles $sName) ($sName + ".exe")),
-    (Join-Path (Join-Path (Join-Path $env:ProgramFiles $sName) "bin") ($sName + ".exe")),
-    (Join-Path (Join-Path $sWinGet "Links") ($sName + ".exe"))
-  )
+  # THE FOLDER AN INSTALLER ACTUALLY USES IS NOT THE COMMAND'S NAME.
+  # mpv installs as "MPV Media Player"; looking only in a folder called "mpv"
+  # missed it and reported a program that was plainly there as not installed.
+  $dOfficial = @{
+    "mpv"      = @("MPV Player", "mpv", "MPV Media Player", "mpv.net")
+    "pandoc"   = @("Pandoc")
+    "exiftool" = @("ExifTool")
+    "ffmpeg"   = @("ffmpeg")
+    "ffprobe"  = @("ffmpeg")
+    "magick"   = @("ImageMagick")
+    "yt-dlp"   = @("yt-dlp")
+  }
+  $lCandidates = @()
+  foreach ($sFolder in ($dOfficial[$sName] + @($sName))) {
+    if (-not $sFolder) { continue }
+    foreach ($sRoot in @($env:ProgramFiles, ${env:ProgramFiles(x86)}, $sPrograms)) {
+      if (-not $sRoot) { continue }
+      $lCandidates += (Join-Path (Join-Path $sRoot $sFolder) ($sName + ".exe"))
+      $lCandidates += (Join-Path (Join-Path (Join-Path $sRoot $sFolder) "bin") ($sName + ".exe"))
+    }
+  }
+  $lCandidates += (Join-Path (Join-Path $sPrograms "Ollama") ($sName + ".exe"))
+  $lCandidates += (Join-Path (Join-Path $sWinGet "Links") ($sName + ".exe"))
   foreach ($sPath in $lCandidates) {
     if (Test-Path -LiteralPath $sPath) { return $sPath }
   }

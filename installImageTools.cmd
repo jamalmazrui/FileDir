@@ -37,12 +37,13 @@ echo [installImageTools] winget install ImageMagick.ImageMagick >> "%logFile%"
 winget install --id ImageMagick.ImageMagick -e --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
 set "code=%errorlevel%"
 echo [installImageTools] install exit %code% >> "%logFile%"
-rem winget refuses machine scope for a package published only per user; that is
-rem not a failure, so the same install is tried again without the scope.
+rem MACHINE SCOPE ONLY, no per-user retry. A Homer Tools installer runs as
+rem administrator and installs machine wide. A retry without the scope would
+rem put the program where this policy does not intend, and would turn a visible
+rem failure into a silent one.
 if not "%code%"=="0" (
-  echo [installImageTools] retrying without a scope >> "%logFile%"
-  winget install --id ImageMagick.ImageMagick -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
-  echo [installImageTools] retry exit %errorlevel% >> "%logFile%"
+  echo [installImageTools] machine-wide install failed with %code% >> "%logFile%"
+  echo ImageMagick could not be installed machine wide. The reason is in the log.
 )
 
 :verify

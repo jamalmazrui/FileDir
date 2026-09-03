@@ -924,13 +924,25 @@ begin
 end;
 
 function mpvPresent(): boolean;
-// Whether mpv answers on this machine. Found by running it, so a copy
-// installed outside winget counts too.
-var
-  lsLines: TArrayOfString;
+// Whether the mpv PLAYER is on this machine.
+//
+// This asked "where mpv" and accepted any answer. On one machine that answered
+// c:\bin\mpv.cmd, a batch wrapper, so the installer decided mpv was already
+// present, offered Reinstall rather than Install, and never installed the
+// player at all. The summary meanwhile looked only for mpv.exe and reported it
+// missing. Two questions, two answers, both wrong.
+//
+// The program itself is looked for where installers actually put it -- in a
+// folder named after the PRODUCT rather than the command, since mpv installs
+// as "MPV Media Player".
 begin
-  result := probeLines('where mpv', lsLines) and (GetArrayLength(lsLines) > 0)
-            and (Pos('mpv', Lowercase(lsLines[0])) > 0);
+  result := FileExists(ExpandConstant('{pf}\MPV Player\mpv.exe'))
+         or FileExists(ExpandConstant('{pf32}\MPV Player\mpv.exe'))
+         or FileExists(ExpandConstant('{pf}\mpv\mpv.exe'))
+         or FileExists(ExpandConstant('{pf}\MPV Media Player\mpv.exe'))
+         or FileExists(ExpandConstant('{pf32}\MPV Media Player\mpv.exe'))
+         or FileExists(ExpandConstant('{localappdata}\Programs\mpv\mpv.exe'))
+         or FileExists(ExpandConstant('{localappdata}\Microsoft\WinGet\Links\mpv.exe'));
 end;
 
 function mpvNeedsInstall(): boolean;

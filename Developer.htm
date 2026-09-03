@@ -178,7 +178,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.53</strong><br />
+<p><strong>Version 5.0.54</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -873,6 +873,27 @@ winget finishes.</p>
 <em>other</em> processes to re-read their environment and cannot help
 one already running. Add a folder to <code>c_aOfficialFolders</code>
 when adding a component.</p>
+<h2 id="component-packages">Component Packages</h2>
+<p>Every component installs <strong>machine wide, as
+administrator</strong>. The installer sets
+<code>PrivilegesRequired=admin</code> and the component scripts inherit
+that. There is no per-user fallback: a package that cannot install
+machine wide reports the failure, because a silent per-user install is
+both against the policy and impossible to find afterwards.</p>
+<p>Winget treats <code>--scope machine</code> as a requirement, not a
+preference, so this works by construction.</p>
+<p><strong>Verify a package id before trusting it.</strong>
+<code>winget show --id &lt;id&gt;</code> — an id that does not exist
+returns <code>-1978335212</code>, which reads as an error about scope
+and is not. <code>mpv.mpv</code> was wrong for three releases; the
+correct id is <code>shinchiro.mpv</code>.</p>
+<p><strong>Do not guess an install folder.</strong> mpv creates
+<code>MPV Player</code>, not <code>MPV Media Player</code> or
+<code>mpv</code>. Add the real name to <code>c_aOfficialFolders</code>
+in <code>Media.cs</code>, to <code>mpvPresent</code> in the
+<code>.iss</code>, and to <code>$dOfficial</code> in
+<code>summarizeSetup.ps1</code> — all three ask the same question and
+all three must know.</p>
 <h2 id="traps-worth-knowing">Traps Worth Knowing</h2>
 <ul>
 <li><strong>Modern packages on .NET Framework 4.8.</strong> Anything

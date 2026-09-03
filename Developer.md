@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.53**  
+**Version 5.0.54**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -613,6 +613,26 @@ installer's finish page proves the point: it starts before winget finishes.
 `WM_SETTINGCHANGE` does not fix this — it tells *other* processes to re-read
 their environment and cannot help one already running. Add a folder to
 `c_aOfficialFolders` when adding a component.
+
+## Component Packages
+
+Every component installs **machine wide, as administrator**. The installer sets
+`PrivilegesRequired=admin` and the component scripts inherit that. There is no
+per-user fallback: a package that cannot install machine wide reports the
+failure, because a silent per-user install is both against the policy and
+impossible to find afterwards.
+
+Winget treats `--scope machine` as a requirement, not a preference, so this
+works by construction.
+
+**Verify a package id before trusting it.** `winget show --id <id>` — an id that
+does not exist returns `-1978335212`, which reads as an error about scope and is
+not. `mpv.mpv` was wrong for three releases; the correct id is `shinchiro.mpv`.
+
+**Do not guess an install folder.** mpv creates `MPV Player`, not
+`MPV Media Player` or `mpv`. Add the real name to `c_aOfficialFolders` in
+`Media.cs`, to `mpvPresent` in the `.iss`, and to `$dOfficial` in
+`summarizeSetup.ps1` — all three ask the same question and all three must know.
 
 ## Traps Worth Knowing
 

@@ -29,17 +29,27 @@ echo [installMpv] upgrade exit %errorlevel% >> "%logFile%"
 goto verify
 
 :install_mpv
+rem THE PACKAGE ID IS shinchiro.mpv, NOT mpv.mpv.
+rem
+rem "mpv.mpv" does not exist. winget answered -1978335212, which is
+rem APPINSTALLER_CLI_ERROR_NO_APPLICATIONS_FOUND -- "no packages found" -- and
+rem that was read as a scope problem for three rounds. Nothing was ever
+rem installed. shinchiro.mpv is the Windows build, wrapped in an installer that
+rem registers file associations and the context menu.
+rem
+rem MACHINE SCOPE ONLY, no per-user retry. A Homer Tools installer runs as
+rem administrator and installs machine wide; anyone wanting a copy that needs no
+rem privileges should use the zip archive instead. A retry without the scope
+rem would put the program somewhere this policy does not intend and would hide
+rem the failure, which is exactly what happened here.
 echo Installing mpv, about 60 MB
-echo [installMpv] winget install mpv >> "%logFile%"
-winget install --id mpv.mpv -e --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
+echo [installMpv] winget install shinchiro.mpv --scope machine >> "%logFile%"
+winget install --id shinchiro.mpv -e --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
 set "code=%errorlevel%"
 echo [installMpv] install exit %code% >> "%logFile%"
-rem winget refuses machine scope for a package published only per user; that is
-rem not a failure, so the same install is tried again without the scope.
 if not "%code%"=="0" (
-  echo [installMpv] retrying without a scope >> "%logFile%"
-  winget install --id mpv.mpv -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
-  echo [installMpv] retry exit %errorlevel% >> "%logFile%"
+  echo [installMpv] machine-wide install failed with %code% >> "%logFile%"
+  echo mpv could not be installed machine wide. The reason is in the log.
 )
 
 :verify
@@ -51,6 +61,8 @@ rem reported as a failure, the summary repeated it, and the person reasonably
 rem installed it again. mpv was there the whole time.
 set "mpvExe="
 for %%d in (
+  "%ProgramFiles%\MPV Player\mpv.exe"
+  "%ProgramFiles(x86)%\MPV Player\mpv.exe"
   "%ProgramFiles%\mpv\mpv.exe"
   "%ProgramFiles%\MPV Media Player\mpv.exe"
   "%ProgramFiles(x86)%\MPV Media Player\mpv.exe"
