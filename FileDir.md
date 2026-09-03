@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.47**  
+**Version 5.0.50**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -812,7 +812,17 @@ is what Alt+Shift+L is for.
 Other useful keys in the player window: space to pause, left and right arrows to
 seek, angle brackets for the previous and next item, and q to stop.
 
-Press **Control+Shift+L** for Play List when the set is worth keeping. It writes
+Press **Control+Shift+L** for Play List. What it does depends on what is
+selected, in the way you would want:
+
+- **Files tagged** — it writes a play list of them and plays it.
+- **Nothing tagged, and you are on a play list** — it plays that.
+- **Nothing tagged, and you are on a sound or video file** — it plays that.
+- **Nothing tagged, and you are on any readable document** — it looks inside for
+  media links and plays those. Put the cursor on a directory of podcasts and
+  press the key; no copying needed.
+
+When the set is worth keeping, It writes
 an .m3u beside the files and plays it. Move to a play list you made earlier and
 press Control+Shift+L again to play that one rather than making another.
 

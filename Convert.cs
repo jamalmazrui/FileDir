@@ -1022,6 +1022,19 @@ sbArgs.Append(Homer.Util.stringQuote(sSource));
 string sExt = Path.GetExtension(sTarget).ToLower().TrimStart('.');
 if (sExt == "html" || sExt == "htm" || sExt == "epub" || sExt == "tex" || sExt == "rtf")
 sbArgs.Append(" --standalone");
+
+// PLAIN TEXT HAS TO BE ASKED FOR BY NAME.
+//
+// Pandoc has no writer registered for the .txt extension, and rather than
+// refuse it falls back to MARKDOWN. So asking for text gave back "# Heading",
+// "**bold**" and "[link](https://...)" -- which is why Say Contents on a web
+// page sounded like it was reading markup aloud. It was.
+//
+// "-t plain" is the writer that produces prose: no hashes, no asterisks, and a
+// link reduced to the words a person would read. Everything that wants text
+// comes through here -- Say Contents, Append to Clipboard, Translate File and
+// Chat about File -- so this one line settles all four.
+if (sExt == "txt" || sExt == "text") sbArgs.Append(" -t plain");
 sbArgs.Append(" -o ");
 sbArgs.Append(Homer.Util.stringQuote(sTarget));
 string sOut;

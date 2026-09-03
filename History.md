@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.47**  
+**Version 5.0.50**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,9 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.53](#version-5-0-53)
+- [Version 5.0.52](#version-5-0-52)
+- [Version 5.0.51](#version-5-0-51)
 - [Version 5.0.50](#version-5-0-50)
 - [Version 5.0.49](#version-5-0-49)
 - [Version 5.0.48](#version-5-0-48)
@@ -653,6 +656,90 @@ and the one for 64-bit Windows is [filterpackx64.exe](http://download.microsoft.
 An option at the end of the FileDir installer lets you install this by simply marking a checkbox.
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
+
+## Version 5.0.53
+
+*September 2026*
+
+**A name collision stopped the build.** The new branch in Play List declared
+sBody for the text it had just read, and further down that same method sBody
+already holds the play list being written. C# will not let one name mean two
+things in nested scopes even when the two never overlap in time, so the
+compiler refused it. Renamed to sText.
+
+Worth saying plainly what this cost and what it did not. The compiler found it
+in a second, which is the right tool for the job; the checks that run before the
+compiler cannot see scope and were never going to. I did try adding one, and it
+reported two hundred and thirteen collisions in code that compiles perfectly --
+it counted braces across sibling blocks rather than following nesting. A check
+that noisy teaches its reader to skim, which is worse than no check, so it was
+not kept.
+
+## Version 5.0.52
+
+*September 2026*
+
+**Say Contents on a web page read the markup aloud, and it really was reading
+markup.** Pandoc has no writer registered for the .txt extension, and rather
+than refuse it falls back to MARKDOWN. So asking for text gave back a hash for
+every heading, a pair of asterisks around every bold word, and every link
+followed by its address in brackets -- read out character by character.
+
+Pandoc is now told "-t plain" by name, which is the writer that produces prose:
+no hashes, no asterisks, and a link reduced to the words a person would read.
+Tables survive as aligned columns.
+
+Everything that wants text passes through that one call, so Say Contents,
+Append to Clipboard, Translate File and Chat about File were all affected and
+are all fixed together. Plain text as an Output Type target is better for it
+too: it was quietly producing Markdown.
+
+**Play List acts on the current item when nothing is tagged.** The same idea as
+Control+C in EdSharp taking the current line when there is no selection: with no
+selection, act on what is under the cursor, and act on it sensibly. A single
+file is not a set worth writing a list about, so the question becomes what that
+one file means, and there are three useful answers.
+
+A play list is played. A sound or video file is played. Anything else that can
+be read is searched for media links, which are then played -- the same rules
+Alt+Shift+L applies to the clipboard. That last case is the useful one: put the
+cursor on a directory of podcasts, press the key, and it plays, with no copying
+at all.
+
+Tag two or more files and the command means what it always meant: write a play
+list of them.
+
+The rules for what counts as a link now live in one place that both commands
+call, so Play List and Play Media can never disagree about the same file.
+
+## Version 5.0.51
+
+*September 2026*
+
+**A zip archive listed itself as one of its own contents.** Pressing Question
+Mark on an archive spoke one item too many, and the extra one was the path of
+the archive; opening the archive with Enter showed the same misleading entry at
+the top of the list.
+
+It was not a miscount. "7z l -slt" prints a block about the ARCHIVE first --
+its own path, type and physical size -- then a line of dashes, then a block per
+entry inside. Everything through those dashes has to be stripped, and the
+pattern doing it required a BLANK LINE after them. Some versions of 7-Zip print
+one and some do not. When there is none the pattern matches nothing at all, so
+nothing is stripped, and the archive's own record is read as the first item.
+
+The blank line is no longer required, and the run of dashes is counted rather
+than spelled out, since its length has varied between versions as well. As a
+second guard, a record naming the archive itself is dropped by name too, so a
+future change to the header cannot bring the fault back.
+
+**And an empty row at the end of every listing.** The test that decides when a
+record is complete read as "A and B, or C", where it had to be "A and, B or C".
+On the last line of the output the third condition alone was enough, so a row
+was added whether or not any path had been read. Brackets corrected.
+
+Checked against all three shapes of 7-Zip output, including a header with no
+dashes at all: contents only, in each case.
 
 ## Version 5.0.50
 

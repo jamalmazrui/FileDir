@@ -7565,66 +7565,33 @@ App.say(Homer.Util.stringPlural("item", lsPlay.Count) + " " + sWhere);
 playMedia_Helper(sTemp);
 } // MenuMiscPlayFolder_Click method
 
-List<string> clipboardPlaylist_Helper() {
-// The clipboard as a list of things to play, or an empty list when it holds
-// nothing of the kind.
+List<string> linksToPlay_Helper(string sText) {
+// Media links found in a piece of text, with their titles.
 //
-// LINKS ARE EXTRACTED, NOT REQUIRED TO STAND ALONE.
-//
-// The first version wanted every line to BE an address. That works for a plain
-// .m3u and for nothing else. A directory of podcasts written in Markdown reads
-//
-//     - [Casefile True Crime](https://feeds.megaphone.fm/casefile)
-//
-// and not one line of it is an address, so a perfectly good list of forty shows
-// was refused entirely. The same is true of a saved web page, where the
-// addresses are inside href attributes, and of rich text, where they are inside
-// HYPERLINK fields.
-//
-// So addresses are now pulled OUT of whatever the clipboard holds, in four
-// shapes: a Markdown link, an HTML href, a rich-text HYPERLINK field, and a
-// bare address on its own. The link TEXT becomes the track title, so a play
-// list made from a Markdown directory announces the show names rather than
-// reading URLs aloud.
-List<string> lsLines = new List<string>();
-string sText = clipboardText_Helper();
-if (sText.Length == 0) return lsLines;
-sText = sText.TrimStart('\uFEFF');
-
+// This was inside the clipboard reader, and is now its own so that Play List
+// on a single document can use exactly the same rules. One place decides what
+// counts as a link, so the two commands can never disagree about a file.
 List<string> lsKept = new List<string>();
 List<string> lsSeen = new List<string>();
+if (sText == null || sText.Length == 0) return lsKept;
+sText = sText.TrimStart('\uFEFF');
 int iFound = 0;
 
-// Markdown links first, because their text is the best title available.
 foreach (Match link in Regex.Matches(sText, @"\[([^\]]{1,120})\]\(\s*(https?://[^\s\)]+)\s*\)")) {
 if (addAddress_Helper(lsKept, lsSeen, link.Groups[2].Value, link.Groups[1].Value)) iFound++;
 }
-// Then HTML anchors, whose text is also worth keeping.
 foreach (Match link in Regex.Matches(sText,
 @"<a\b[^>]*href\s*=\s*[""']\s*(https?://[^""'\s>]+)\s*[""'][^>]*>(.*?)</a>",
 RegexOptions.IgnoreCase | RegexOptions.Singleline)) {
 string sTitle = Regex.Replace(link.Groups[2].Value, "<[^>]+>", "").Trim();
 if (addAddress_Helper(lsKept, lsSeen, link.Groups[1].Value, sTitle)) iFound++;
 }
-// Rich text keeps its addresses in HYPERLINK fields.
 foreach (Match link in Regex.Matches(sText, @"HYPERLINK\s+""(https?://[^""]+)""", RegexOptions.IgnoreCase)) {
 if (addAddress_Helper(lsKept, lsSeen, link.Groups[1].Value, "")) iFound++;
 }
-// Then anything else that is plainly an address, and file names that exist.
 foreach (string sRaw in sText.Replace("\r\n", "\n").Split('\n')) {
 string sLine = sRaw.Trim();
 if (sLine.Length == 0 || sLine.StartsWith("#")) continue;
-// ytdl:// IS AN ADDRESS TOO, and it was not being recognised.
-//
-// mpv reads "ytdl://ytsearch1:Albert King Crosscut Saw" and hands the whole
-// thing to yt-dlp, which finds and plays the first match. It is how a play
-// list can name a song without anybody having to look up a video identifier
-// that will be wrong the day the video is re-uploaded.
-//
-// The scheme list here was https, rtmp and rtsp, so a play list of ytdl
-// searches read as prose: nothing playable found, nothing played, and no
-// reason given. A search address may contain spaces, so unlike the others it
-// runs to the end of the line.
 foreach (Match search in Regex.Matches(sLine, @"ytdl://\S.*$")) {
 if (addAddress_Helper(lsKept, lsSeen, search.Value.Trim(), "")) iFound++;
 }
@@ -7632,7 +7599,6 @@ if (sLine.StartsWith("ytdl://", StringComparison.OrdinalIgnoreCase)) continue;
 foreach (Match bare in Regex.Matches(sLine, @"(?:https?|rtmp|rtsp|mms|srt)://[^\s""'<>\)\]]+")) {
 if (addAddress_Helper(lsKept, lsSeen, bare.Value, "")) iFound++;
 }
-// A line that names a file, which is what a play list of local media holds.
 if (sLine.IndexOf("://", StringComparison.Ordinal) < 0) {
 bool bFile = false;
 try { bFile = File.Exists(sLine); }
@@ -7640,22 +7606,10 @@ catch (Exception) { }
 if (bFile && addAddress_Helper(lsKept, lsSeen, sLine, "")) iFound++;
 }
 }
-
-// Two, so a single address inside a page of prose is not mistaken for a play
-// list. There is no proportion test any more: extracting links from a document
-// full of words is the point, not a warning sign.
 if (iFound < 2) return new List<string>();
 
-// A DIRECT MEDIA ADDRESS BEATS A PAGE ADDRESS.
-//
-// A podcast directory links to each episode's PAGE, not to its audio. mpv hands
-// a page to yt-dlp, which must fetch and examine it before anything can play,
-// and for a site it has no extractor for, nothing plays at all. A list of a
-// hundred and eighty-five of those is minutes of silence.
-//
-// So when the clipboard holds addresses that name media outright, ONLY those
-// are used: they play at once and need no fetching. Page addresses are kept
-// only when there is nothing better, and the caller warns before using them.
+// A direct media address beats a page address, since a page has to be fetched
+// and examined before anything can play.
 List<string> lsDirect = new List<string>();
 int iDirect = 0;
 for (int i = 0; i < lsKept.Count; i++) {
@@ -7668,6 +7622,19 @@ iDirect++;
 }
 if (iDirect >= 2) return lsDirect;
 return lsKept;
+} // linksToPlay_Helper method
+
+List<string> clipboardPlaylist_Helper() {
+// The clipboard as a list of things to play.
+//
+// The rules for what counts as a link live in linksToPlay_Helper, which Play
+// List uses on a document as well. One place decides, so the two commands can
+// never disagree about the same file.
+//
+// The clipboard is read as HTML and rich text before plain text, because a
+// page copied from a browser keeps its addresses in the markup and only the
+// visible words in the text: asking for text alone throws the addresses away.
+return linksToPlay_Helper(clipboardText_Helper());
 } // clipboardPlaylist_Helper method
 
 bool isDirectMedia_Helper(string sAddress) {
@@ -7769,17 +7736,70 @@ string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
 
-// Already a play list? Then play it rather than wrapping it in another. This
-// is what makes the command work a second time: run it, then come back to the
-// .m3u it made and run it again to listen.
-if (aPaths.Length == 1 && File.Exists(aPaths[0])
-&& Homer.Util.stringEquiv(Path.GetExtension(aPaths[0]), ".m3u")) {
+// WITH NOTHING TAGGED, THE COMMAND READS THE ITEM YOU ARE ON.
+//
+// The same idea as Control+C in EdSharp taking the current line when there is
+// no selection: with no selection, act on what is under the cursor, and act on
+// it sensibly. A single file is not a set worth writing a list about, so the
+// question becomes "what does this one file mean here", and there are three
+// useful answers.
+//
+//   A play list        -- play it. Nothing to write; it already exists.
+//   A sound or a video -- play it.
+//   Anything readable  -- look inside for links to media and play those, which
+//                         is exactly what Alt+Shift+L does with the clipboard.
+//                         A directory of podcasts is the case this serves: put
+//                         the cursor on it, press the key, and it plays.
+//
+// Several files tagged still means what it always meant: write a play list of
+// them. That is the case where a list is the point.
+if (aPaths.Length == 1 && File.Exists(aPaths[0])) {
+string sOne = aPaths[0];
+string sOneExt = Path.GetExtension(sOne).ToLower();
+bool bList = sOneExt == ".m3u" || sOneExt == ".m3u8" || sOneExt == ".pls";
+bool bMedia = isPlayable_Helper(sOne);
+bool bReadable = Homer.Convert.readableAsText(sOne);
+if (bList || bMedia || bReadable) {
 if (Homer.Media.mpvProgram().Length == 0) {
-Lbc.Show("That is already a play list.\n\nTo play it here, install mpv: run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box.", "Play List");
+Lbc.Show("mpv is not installed, so there is nothing to play with.\r\n\r\n"
++ "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box.\r\n\r\n"
++ "Tag two or more files and press this key again to write a play list without playing it.", "Play List");
 return;
 }
-playMedia_Helper(aPaths[0]);
+// A play list or a media file goes straight to the player.
+if (bList || bMedia) {
+playMedia_Helper(sOne);
 return;
+}
+// Otherwise the file is read and its links are gathered, the same way the
+// clipboard is read. A document with no links in it is not a failure worth a
+// dialog; it simply has nothing to play.
+App.say("Looking for media links in " + Path.GetFileName(sOne));
+// Named sText, not sBody: further down this same method sBody holds the play
+// list being written, and C# will not have one name mean two things in nested
+// scopes even when the two never overlap in time.
+string sReadError;
+string sText = Homer.Convert.toPlainText(sOne, out sReadError);
+List<string> lsFound = linksToPlay_Helper(sText);
+if (lsFound.Count == 0) {
+App.say("No media links in " + Path.GetFileName(sOne) + ".", true);
+return;
+}
+string sTempList = Path.Combine(Path.GetTempPath(), "FileDir_play.m3u");
+try {
+File.WriteAllText(sTempList, "#EXTM3U\r\n" + String.Join("\r\n", lsFound.ToArray()), new UTF8Encoding(false));
+}
+catch (Exception ex) {
+Lbc.Show("The play list could not be written.\r\n\r\n" + ex.Message, "Play List");
+return;
+}
+int iLinks = 0;
+foreach (string sEntry in lsFound) if (!sEntry.StartsWith("#")) iLinks++;
+Homer.Log.write("Play List: " + iLinks + " links from " + sOne);
+App.say(Homer.Util.stringPlural("link", iLinks) + " found");
+playMedia_Helper(sTempList);
+return;
+}
 }
 
 string sFile = "PlayList.m3u";
@@ -9247,8 +9267,22 @@ string sText = Homer.Util.getProgramOutput(sExe, sParams);
 if (App.frame != null && App.frame.TopLevelControl.Handle != (IntPtr) Homer.Util.getForegroundWindow()) Homer.Util.forceWindow(App.frame.TopLevelControl.Handle);
 sText = sText.Replace("\r\n", "\n");
 sText = sText.Replace(@"\", "/");
-// string sMatch = @"^(.|\n)*?------------------- ----- ------------ ------------  ------------------------";
-string sMatch = @"^(.|\n)*?\n----------\n\n";
+// THE ARCHIVE'S OWN RECORD, and why it kept appearing in the list.
+//
+// "7z l -slt" prints a block about the ARCHIVE first -- its own path, type and
+// physical size -- then a line of dashes, then a block per entry inside it.
+// Everything up to and including those dashes has to go, or the archive turns
+// up as an item within itself.
+//
+// The pattern required a BLANK LINE after the dashes. Some versions of 7-Zip
+// print one and some do not, and when there is none the pattern matches
+// nothing at all, so nothing is stripped and the archive's own record becomes
+// the first row. That is the extra item: it is not a miscount, it is the
+// header being read as content.
+//
+// The blank line is no longer required, and the dash run is counted rather
+// than spelled out, since its length has varied between versions too.
+string sMatch = @"^(?:.|\n)*?\n-{6,}[ \t]*\r?\n";
 string sReplace = "";
 sText = Regex.Replace(sText, sMatch, sReplace);
 /*
@@ -9259,6 +9293,28 @@ sText = Regex.Replace(sText, @"\s*$", "");
 sText = Regex.Replace(sText, @"  +", "\t");
 */
 string[] aLines = sText.Split('\n');
+
+// Belt and braces. If 7-Zip ever changes the shape of its header again, a
+// record naming the archive itself is still not an item inside it, so it is
+// dropped by name as well as by position.
+string sOwn = sZip.Replace('\\', '/');
+List<string> lsKeep = new List<string>();
+bool bSkipping = false;
+foreach (string sTest in aLines) {
+if (sTest.StartsWith("Path =")) {
+string sThis = sTest.Substring(6).Trim();
+bSkipping = Homer.Util.stringEquiv(sThis, sOwn);
+if (bSkipping) continue;
+}
+// The lines that follow a skipped Path belong to it, up to the blank line
+// that ends the record.
+if (bSkipping) {
+if (sTest.Trim().Length == 0) bSkipping = false;
+continue;
+}
+lsKeep.Add(sTest);
+}
+aLines = lsKeep.ToArray();
 /*
 List<string> lLines = new List<string>();
 foreach (string sTestLine in aLines) {
@@ -9296,7 +9352,10 @@ int iCount = aLines.Length;
 for (int i = 0; i < iCount; i++) {
 string sLine = aLines[i];
 
-if (sPath.Length > 0 && (i > 0 && sLine.StartsWith("Path =")) || (i == iCount - 1)) {
+// The brackets matter. This read as "(A and B) or C", so on the LAST line it
+// added a row whether or not a path had been read -- an empty entry at the end
+// of every listing. It has to be "A and (B or C)".
+if (sPath.Length > 0 && ((i > 0 && sLine.StartsWith("Path =")) || (i == iCount - 1))) {
 // Lbc.Show("Path", sPath);
 tbl.Rows.Add(sPath, sName.PadRight(50), sExt, size, time, attr, type, hidden, readOnly, system, tagged);
 attr = 0;

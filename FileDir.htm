@@ -179,7 +179,7 @@
 <h1 class="title">FileDir FileDir</h1>
 </header>
 <h1 id="filedir-user-guide">FileDir — User Guide</h1>
-<p><strong>Version 5.0.47</strong><br />
+<p><strong>Version 5.0.50</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -1347,10 +1347,23 @@ for.</p>
 <p>Other useful keys in the player window: space to pause, left and
 right arrows to seek, angle brackets for the previous and next item, and
 q to stop.</p>
-<p>Press <strong>Control+Shift+L</strong> for Play List when the set is
-worth keeping. It writes an .m3u beside the files and plays it. Move to
-a play list you made earlier and press Control+Shift+L again to play
-that one rather than making another.</p>
+<p>Press <strong>Control+Shift+L</strong> for Play List. What it does
+depends on what is selected, in the way you would want:</p>
+<ul>
+<li><strong>Files tagged</strong> — it writes a play list of them and
+plays it.</li>
+<li><strong>Nothing tagged, and you are on a play list</strong> — it
+plays that.</li>
+<li><strong>Nothing tagged, and you are on a sound or video
+file</strong> — it plays that.</li>
+<li><strong>Nothing tagged, and you are on any readable
+document</strong> — it looks inside for media links and plays those. Put
+the cursor on a directory of podcasts and press the key; no copying
+needed.</li>
+</ul>
+<p>When the set is worth keeping, It writes an .m3u beside the files and
+plays it. Move to a play list you made earlier and press Control+Shift+L
+again to play that one rather than making another.</p>
 <p>Neither command asks anything: they start playing, with sound and
 picture. The player runs on its own, so FileDir does not sit waiting
 while you listen. Its own keys work in its window: space to pause,
