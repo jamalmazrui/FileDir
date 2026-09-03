@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.52**  
+**Version 5.0.53**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,7 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.55](#version-5-0-55)
 - [Version 5.0.54](#version-5-0-54)
 - [Version 5.0.53](#version-5-0-53)
 - [Version 5.0.52](#version-5-0-52)
@@ -657,6 +658,45 @@ and the one for 64-bit Windows is [filterpackx64.exe](http://download.microsoft.
 An option at the end of the FileDir installer lets you install this by simply marking a checkbox.
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
+
+## Version 5.0.55
+
+*September 2026*
+
+**FileDir launched from the installer's own finish page could not find what the
+installer had just installed.** Scott ticked the mpv box, ticked Launch FileDir,
+and the FileDir that opened reported no player. The log shows why:
+
+    [installMpv] install exit -1978335212     machine scope refused
+    [installMpv] retrying without a scope
+    [installMpv] retry exit 0                 installed
+    [installMpv] FAILED: mpv not found after install
+
+mpv installed. The verification failed, and so did FileDir, for one reason: both
+asked the PATH. A process inherits its environment when it starts, and FileDir
+started from the finish page before winget had finished, so its PATH could not
+name a program written to disk a moment later.
+
+Broadcasting WM_SETTINGCHANGE is the usual answer and does not solve this one.
+It tells OTHER programs to re-read their environment; it cannot help a process
+that has already started, which is exactly the case here. So the environment is
+no longer relied upon where a real location will do.
+
+**The search now asks the PATH last, and the official location first.** In
+order: beside FileDir, then the named folder each installer actually uses, then
+Program Files under the command's own name, then the user's Programs folder and
+winget's shim folder, then the package folder winget unpacks into, and only then
+the PATH.
+
+The named folders matter because a command's name is not its folder's name. mpv
+installs as "MPV Media Player", which no rule about the command name would ever
+guess. Pandoc is "Pandoc", ExifTool is "ExifTool", ImageMagick is "ImageMagick".
+Those are certain, machine wide, and true the moment an installer finishes,
+where a running process's PATH is only as current as the moment it started.
+
+Also worth recording: -1978335212 from winget is not a failure. mpv publishes no
+machine-scope installer, so that error is expected and the per-user retry is the
+normal path rather than a fallback.
 
 ## Version 5.0.54
 

@@ -210,6 +210,18 @@ public static string ffmpegProgram() {
 return findInstalled("ffmpeg");
 } // ffmpegProgram method
 
+// Where each installer actually puts its program, when the folder is not
+// simply the command's own name. Read before the PATH, because these are
+// certain and the PATH is not.
+private static readonly string[,] c_aOfficialFolders = {
+{"mpv", "mpv"}, {"mpv", "MPV Media Player"}, {"mpv", "mpv.net"},
+{"pandoc", "Pandoc"},
+{"exiftool", "ExifTool"},
+{"ffmpeg", "ffmpeg"}, {"ffprobe", "ffmpeg"},
+{"magick", "ImageMagick"},
+{"yt-dlp", "yt-dlp"}
+};
+
 public static string mpvProgram() {
 return findInstalled("mpv");
 } // mpvProgram method
@@ -268,14 +280,48 @@ sbLog.Append("Looking for " + sName + " with " + String.Join(" ", aExtensions) +
 // the PATH before it ever looked in Program Files. The two-pass search was
 // written, shipped, and did nothing, because this one line still asked the
 // wrong question.
-string sFound = findToolOfKind(sName, aExtensions);
-sbLog.Append("  beside FileDir and on the PATH: " + (sFound.Length > 0 ? sFound : "not found") + "\r\n");
-if (sFound.Length > 0) {
+// THE OFFICIAL LOCATION IS ASKED FIRST, AND THE PATH LAST.
+//
+// The PATH used to come first, and that is the wrong order for anything the
+// installer put there itself. FileDir launched from the installer's own finish
+// page is the worst case: it starts before winget has finished, inherits a
+// PATH from before the install, and then cannot find what the installer just
+// wrote to disk. That is what Scott hit.
+//
+// Broadcasting WM_SETTINGCHANGE, the usual answer, tells OTHER programs to
+// re-read their environment. It cannot help a process that has already
+// started. So the environment is not relied on where a real location will do.
+//
+// Beside FileDir first, because a copy the developer put there is the one
+// meant to be used.
+foreach (string sExt in aExtensions) {
+string sBeside = Path.Combine(exeFolder(), sName + sExt);
+sbLog.Append("  " + sBeside + ": " + (File.Exists(sBeside) ? "found" : "no") + "\r\n");
+if (File.Exists(sBeside)) {
 sSearchLog = sbLog.ToString();
-return sFound;
+return sBeside;
+}
 }
 
 List<string> lsWhere = new List<string>();
+
+// THE NAMED FOLDER EACH INSTALLER ACTUALLY USES. Certain, machine wide, and
+// true the moment the installer finishes, whatever the PATH says. mpv installs
+// as "MPV Media Player", which no rule about the command name would guess.
+foreach (string sRoot in new string[] {
+Environment.GetEnvironmentVariable("ProgramFiles"),
+Environment.GetEnvironmentVariable("ProgramFiles(x86)"),
+Environment.GetEnvironmentVariable("ProgramW6432")}) {
+if (sRoot == null || sRoot.Length == 0) continue;
+for (int i = 0; i < c_aOfficialFolders.GetLength(0); i++) {
+if (!String.Equals(c_aOfficialFolders[i, 0], sName, StringComparison.OrdinalIgnoreCase)) continue;
+foreach (string sExt in aExtensions) {
+lsWhere.Add(Path.Combine(sRoot, Path.Combine(c_aOfficialFolders[i, 1], sName + sExt)));
+lsWhere.Add(Path.Combine(sRoot, Path.Combine(c_aOfficialFolders[i, 1], Path.Combine("bin", sName + sExt))));
+}
+}
+}
+
 foreach (string sRoot in new string[] {
 Environment.GetEnvironmentVariable("ProgramFiles"),
 Environment.GetEnvironmentVariable("ProgramFiles(x86)"),
@@ -357,10 +403,16 @@ sbLog.Append("  " + sPackages + ": no folder matching " + sName + "\r\n");
 catch (Exception) {
 }
 }
+// LAST, THE PATH, for a copy somewhere none of the above covers. It comes
+// last on purpose: everything above is a real location on disk and is true the
+// moment an installer finishes, where the PATH of a running process is only as
+// current as the moment that process started.
+string sOnPath = findToolOfKind(sName, aExtensions);
+sbLog.Append("  on the PATH: " + (sOnPath.Length > 0 ? sOnPath : "not found") + "\r\n");
 sSearchLog = sbLog.ToString();
 Homer.Log.write(sSearchLog.Replace("\r\n", " | "));
-return "";
-} // findInstalled method
+return sOnPath;
+} // findInstalledOfKind method
 
 public static string magickProgram() {
 // ImageMagick's single command. Since version 7 everything goes through

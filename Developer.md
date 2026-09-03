@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.52**  
+**Version 5.0.53**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -592,6 +592,27 @@ Two namespaces are in play and they are easy to confuse:
 A new file in `Homer` refers to its neighbours **unqualified**. Writing
 `FileDir.InixCodec` from inside `Table.cs` cost a build; the class is
 `Homer.InixCodec` and no prefix was needed.
+
+## Finding an Installed Tool: the Order
+
+`Homer.Media.findInstalled` looks in this order, and the order is the point:
+
+1. **Beside FileDir.exe** — a developer's copy wins.
+2. **The named folder the installer uses** — `c_aOfficialFolders`. mpv is "MPV
+   Media Player", Pandoc is "Pandoc". A command's name is not its folder's name.
+3. **Program Files under the command's own name**, and its `bin`.
+4. **The user's Programs folder and winget's Links folder.**
+5. **Winget's Packages folder**, searched.
+6. **The PATH, last.**
+
+The PATH is last because everything above is a real location on disk, true the
+moment an installer finishes, whereas a running process's PATH is only as
+current as the moment that process started. FileDir launched from the
+installer's finish page proves the point: it starts before winget finishes.
+
+`WM_SETTINGCHANGE` does not fix this — it tells *other* processes to re-read
+their environment and cannot help one already running. Add a folder to
+`c_aOfficialFolders` when adding a component.
 
 ## Traps Worth Knowing
 

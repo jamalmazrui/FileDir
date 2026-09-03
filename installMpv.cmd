@@ -43,8 +43,32 @@ if not "%code%"=="0" (
 )
 
 :verify
-where mpv >nul 2>&1
-if errorlevel 1 goto failed
+rem VERIFY BY LOCATION, NOT BY "where".
+rem
+rem This script asked "where mpv" straight after installing it, and a process
+rem cannot see a PATH entry added after it started. So a successful install was
+rem reported as a failure, the summary repeated it, and the person reasonably
+rem installed it again. mpv was there the whole time.
+set "mpvExe="
+for %%d in (
+  "%ProgramFiles%\mpv\mpv.exe"
+  "%ProgramFiles%\MPV Media Player\mpv.exe"
+  "%ProgramFiles(x86)%\MPV Media Player\mpv.exe"
+  "%LOCALAPPDATA%\Programs\mpv\mpv.exe"
+  "%LOCALAPPDATA%\Microsoft\WinGet\Links\mpv.exe"
+) do if not defined mpvExe if exist %%d set "mpvExe=%%~d"
+if not defined mpvExe (
+  rem The folder winget unpacks a portable package into, whose name carries the
+  rem publisher and version, so it is searched rather than guessed.
+  for /f "delims=" %%p in ('dir /s /b "%LOCALAPPDATA%\Microsoft\WinGet\Packages\mpv.exe" 2^>nul') do (
+    if not defined mpvExe set "mpvExe=%%p"
+  )
+)
+if not defined mpvExe where mpv >nul 2>&1 && for /f "delims=" %%p in ('where mpv 2^>nul') do (
+  if not defined mpvExe set "mpvExe=%%p"
+)
+if not defined mpvExe goto failed
+echo [installMpv] found at %mpvExe% >> "%logFile%"
 echo Done.
 echo [installMpv] done >> "%logFile%"
 exit /b 0

@@ -178,7 +178,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.52</strong><br />
+<p><strong>Version 5.0.53</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -848,6 +848,31 @@ HomerScribe.</li>
 <strong>unqualified</strong>. Writing <code>FileDir.InixCodec</code>
 from inside <code>Table.cs</code> cost a build; the class is
 <code>Homer.InixCodec</code> and no prefix was needed.</p>
+<h2 id="finding-an-installed-tool-the-order">Finding an Installed Tool:
+the Order</h2>
+<p><code>Homer.Media.findInstalled</code> looks in this order, and the
+order is the point:</p>
+<ol type="1">
+<li><strong>Beside FileDir.exe</strong> — a developer’s copy wins.</li>
+<li><strong>The named folder the installer uses</strong> —
+<code>c_aOfficialFolders</code>. mpv is “MPV Media Player”, Pandoc is
+“Pandoc”. A command’s name is not its folder’s name.</li>
+<li><strong>Program Files under the command’s own name</strong>, and its
+<code>bin</code>.</li>
+<li><strong>The user’s Programs folder and winget’s Links
+folder.</strong></li>
+<li><strong>Winget’s Packages folder</strong>, searched.</li>
+<li><strong>The PATH, last.</strong></li>
+</ol>
+<p>The PATH is last because everything above is a real location on disk,
+true the moment an installer finishes, whereas a running process’s PATH
+is only as current as the moment that process started. FileDir launched
+from the installer’s finish page proves the point: it starts before
+winget finishes.</p>
+<p><code>WM_SETTINGCHANGE</code> does not fix this — it tells
+<em>other</em> processes to re-read their environment and cannot help
+one already running. Add a folder to <code>c_aOfficialFolders</code>
+when adding a component.</p>
 <h2 id="traps-worth-knowing">Traps Worth Knowing</h2>
 <ul>
 <li><strong>Modern packages on .NET Framework 4.8.</strong> Anything
