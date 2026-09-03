@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.50**  
+**Version 5.0.52**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,7 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.54](#version-5-0-54)
 - [Version 5.0.53](#version-5-0-53)
 - [Version 5.0.52](#version-5-0-52)
 - [Version 5.0.51](#version-5-0-51)
@@ -656,6 +657,33 @@ and the one for 64-bit Windows is [filterpackx64.exe](http://download.microsoft.
 An option at the end of the FileDir installer lets you install this by simply marking a checkbox.
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
+
+## Version 5.0.54
+
+*September 2026*
+
+**Play List found no media links in a .htm directory, and the cause was the fix
+made in the same round.** Say Contents was reading markup aloud, so Pandoc was
+told "-t plain", which is the writer that produces prose. Plain text has no
+links in it: Pandoc DELETES every address and leaves only the words. So a page
+of podcast links came back as a list of show names with nothing to play.
+
+Markdown directories still worked, because a .md file is read straight off the
+disk rather than through Pandoc. That is exactly why this failed on .htm and not
+on .md, and why it looked as though some podcasts worked and others did not.
+
+The file is now read RAW when it is text, and the links are found in the markup
+-- the same way the clipboard is read when a page is copied from a browser. A
+format that is not text at all, a Word document or a PDF, still goes through the
+extractor: its links are gone, but an address written out in the body survives.
+
+Say Contents is unaffected and still reads prose. The two wanted different
+things from the same file, and now each asks for what it needs.
+
+**A run that found nothing left no trace in the log.** Two runs were recorded,
+both successful; the failures were invisible, so a report that some files worked
+and some did not could not be told from a report that the command was never
+pressed. The empty case is now logged with the file and how much of it was read.
 
 ## Version 5.0.53
 

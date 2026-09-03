@@ -8,7 +8,7 @@ author: Jamal Mazrui
 
 ### A file manager rebuilt for the way screen reader users actually work
 
-**Version 5.0.50**  
+**Version 5.0.52**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License

@@ -7775,13 +7775,45 @@ return;
 // clipboard is read. A document with no links in it is not a failure worth a
 // dialog; it simply has nothing to play.
 App.say("Looking for media links in " + Path.GetFileName(sOne));
+// THE FILE IS READ RAW, NOT AS PLAIN TEXT, and that distinction is the whole
+// bug this replaced.
+//
+// toPlainText hands a web page to Pandoc with "-t plain", which is right for
+// reading aloud and fatal here: plain text has no links in it, so Pandoc
+// DELETES every address and leaves only the words. A directory of podcasts came
+// back as a list of show names with nothing to play. Markdown directories still
+// worked, because those are read straight off the disk -- which is exactly why
+// this failed on .htm and not on .md.
+//
+// So the bytes are read as they are, and the links are found in the markup, the
+// same way the clipboard is read when a page is copied from a browser.
+//
 // Named sText, not sBody: further down this same method sBody holds the play
 // list being written, and C# will not have one name mean two things in nested
 // scopes even when the two never overlap in time.
+string sText = "";
+try {
+sText = Homer.Util.file2String(sOne);
+}
+catch (Exception ex) {
+Homer.Log.write("Could not read " + sOne + ": " + ex.Message);
+}
+// A format that is not text at all -- a Word document, a PDF -- has no markup
+// to scan, so it goes through the extractor after all. Its links are gone, but
+// an address written out in the body of the text still survives.
+if (sText.Length == 0 || !Homer.Convert.readableAsText(sOne)
+|| sText.IndexOf("://", StringComparison.Ordinal) < 0) {
 string sReadError;
-string sText = Homer.Convert.toPlainText(sOne, out sReadError);
+string sExtracted = Homer.Convert.toPlainText(sOne, out sReadError);
+if (sExtracted.Length > 0) sText = sExtracted;
+}
 List<string> lsFound = linksToPlay_Helper(sText);
 if (lsFound.Count == 0) {
+// LOGGED, not only spoken. The runs that found nothing left no trace at all,
+// so a report that some files worked and some did not could not be told apart
+// from a report that the command was never pressed.
+Homer.Log.write("Play List: no media links in " + sOne
++ " (" + sText.Length + " characters read).");
 App.say("No media links in " + Path.GetFileName(sOne) + ".", true);
 return;
 }

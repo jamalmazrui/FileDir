@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.10.2" />
+  <meta name="generator" content="pandoc 3.11" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>FileDir History</title>
   <style>
@@ -171,7 +171,6 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
 </head>
 <body>
@@ -179,7 +178,7 @@
 <h1 class="title">FileDir History</h1>
 </header>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
-<p><strong>Version 5.0.50</strong><br />
+<p><strong>Version 5.0.52</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -222,6 +221,7 @@ MIT License</p>
 <li><a href="#version-3-7">Version 3.7</a></li>
 <li><a href="#version-3-8">Version 3.8</a></li>
 <li><a href="#version-3-9">Version 3.9</a></li>
+<li><a href="#version-5-0-54">Version 5.0.54</a></li>
 <li><a href="#version-5-0-53">Version 5.0.53</a></li>
 <li><a href="#version-5-0-52">Version 5.0.52</a></li>
 <li><a href="#version-5-0-51">Version 5.0.51</a></li>
@@ -1499,6 +1499,31 @@ by simply marking a checkbox.</p>
 <p>Sped up time for subsequent invocations of FileDir after the initial
 one. Improved the optional JAWS scripts for FileDir so that titles of
 top-level windows are more reliably read.</p>
+<h2 id="version-5.0.54">Version 5.0.54</h2>
+<p><em>September 2026</em></p>
+<p><strong>Play List found no media links in a .htm directory, and the
+cause was the fix made in the same round.</strong> Say Contents was
+reading markup aloud, so Pandoc was told “-t plain”, which is the writer
+that produces prose. Plain text has no links in it: Pandoc DELETES every
+address and leaves only the words. So a page of podcast links came back
+as a list of show names with nothing to play.</p>
+<p>Markdown directories still worked, because a .md file is read
+straight off the disk rather than through Pandoc. That is exactly why
+this failed on .htm and not on .md, and why it looked as though some
+podcasts worked and others did not.</p>
+<p>The file is now read RAW when it is text, and the links are found in
+the markup – the same way the clipboard is read when a page is copied
+from a browser. A format that is not text at all, a Word document or a
+PDF, still goes through the extractor: its links are gone, but an
+address written out in the body survives.</p>
+<p>Say Contents is unaffected and still reads prose. The two wanted
+different things from the same file, and now each asks for what it
+needs.</p>
+<p><strong>A run that found nothing left no trace in the log.</strong>
+Two runs were recorded, both successful; the failures were invisible, so
+a report that some files worked and some did not could not be told from
+a report that the command was never pressed. The empty case is now
+logged with the file and how much of it was read.</p>
 <h2 id="version-5.0.53">Version 5.0.53</h2>
 <p><em>September 2026</em></p>
 <p><strong>A name collision stopped the build.</strong> The new branch
