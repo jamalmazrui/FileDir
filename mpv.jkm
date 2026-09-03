@@ -1,0 +1,12 @@
+﻿[Common Keys]
+;
+; mpv.jkm -- keys for the mpv scripts.
+;
+; ONE KEY, AND IT IS NOT A NEW ONE. JAWSKey+H is hot key help everywhere in
+; JAWS, so nothing has to be learned and nothing of mpv's own is taken -- every
+; mpv command is a plain letter or an arrow with no JAWS key in front of it.
+;
+; The commands themselves are reached from the view rather than from keys, which
+; is the point: a person can find them without knowing they exist.
+;
+HotKeyHelp=INSERT+H

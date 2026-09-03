@@ -835,6 +835,31 @@ if (String.Compare(sArg, "--install-jaws-settings", true) != 0) continue;
 int iCopied = 0;
 int iCompiled = 0;
 string sMessage = Homer.JawsSettingsInstaller.install("FileDir", Path.GetDirectoryName(sApp), new string[] {"FileDir.jsd", "FileDir.jcf", "Homer.jsh", "Homer.jsd", "MSAA.jsh"}, new string[] {"Homer"}, out iCopied, out iCompiled);
+
+// The mpv scripts go in beside them, by the same route.
+//
+// JAWS matches a script file to the running program by name, so mpv.jss loads
+// itself whenever mpv.exe is in front, with nothing to configure. mpv is
+// entirely keyboard driven and has no menus, so without this its commands are
+// invisible: there is nothing to explore and nothing to read.
+//
+// Installed whether or not mpv is on the machine yet. The files are harmless
+// where there is no mpv, and installing them now means the player works
+// properly the day somebody ticks that box, rather than needing the FileDir
+// installer run a second time.
+int iMpvCopied = 0;
+int iMpvCompiled = 0;
+try {
+Homer.JawsSettingsInstaller.install("mpv", Path.GetDirectoryName(sApp),
+new string[] {"mpv.jsd"}, new string[0], out iMpvCopied, out iMpvCompiled);
+iCopied += iMpvCopied;
+iCompiled += iMpvCompiled;
+}
+catch (Exception ex) {
+// A failure here must not cost the FileDir scripts, which are the point of
+// the command.
+Homer.Log.write("The mpv scripts were not installed: " + ex.Message);
+}
 // The detail always goes to the log.  It is worth having -- which folders in
 // which JAWS versions received which files -- and it is worth having later
 // rather than in front of somebody who is installing a file manager.

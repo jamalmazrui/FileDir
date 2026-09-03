@@ -123,6 +123,10 @@ Source: "FileDir.manifest";   DestDir: "{app}"; Flags: ignoreversion
 ; include headers its compile needs beside it. The .jsd files document
 ; the scripts inside JAWS; FileDir.jcf carries configuration defaults.
 Source: "FileDir.jss";        DestDir: "{app}"; Flags: ignoreversion
+; The mpv scripts, which JAWS loads whenever mpv.exe is the active window.
+Source: "mpv.jss";            DestDir: "{app}"; Flags: ignoreversion
+Source: "mpv.jkm";            DestDir: "{app}"; Flags: ignoreversion
+Source: "mpv.jsd";            DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir.jkm";        DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir.jsd";        DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir.jcf";        DestDir: "{app}"; Flags: ignoreversion

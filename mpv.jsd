@@ -1,0 +1,5 @@
+﻿Script HotKeyHelp
+Synopsis=List every mpv command in a view you can read and run commands from
+Description=mpv has no menus, so its commands are invisible. This lists them all, grouped by what you are trying to do, in a virtual view. Read it by line, word or character, and press Enter on a command to run it in the player. Escape returns you to mpv.
+Category=mpv
+/Script

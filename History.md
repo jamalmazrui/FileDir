@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.54**  
+**Version 5.0.55**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,7 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.58](#version-5-0-58)
 - [Version 5.0.57](#version-5-0-57)
 - [Version 5.0.56](#version-5-0-56)
 - [Version 5.0.55](#version-5-0-55)
@@ -660,6 +661,45 @@ and the one for 64-bit Windows is [filterpackx64.exe](http://download.microsoft.
 An option at the end of the FileDir installer lets you install this by simply marking a checkbox.
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
+
+## Version 5.0.58
+
+*September 2026*
+
+**JAWS scripts for mpv, installed with the FileDir ones.** JAWS matches a script
+file to the running program by name, so mpv.jss loads itself whenever mpv.exe is
+the active window, with nothing to configure.
+
+mpv is entirely keyboard driven and has no menus, so its commands are invisible.
+Somebody who does not already know that 9 lowers the volume cannot find that out
+from inside the player.
+
+**JAWS key with H opens a VIRTUAL VIEW listing every command as a link.** The
+view is read by line, word or character like any other document, and pressing
+Enter on a line runs that command in the player. Thirty-six commands, grouped by
+what a person is trying to do -- playing, seeking, the play list, volume, speed,
+tracks, information, the window -- with each name leading with its verb so
+moving by first letter works. Each line shows the key as well, so a command used
+a few times can be pressed directly instead.
+
+**One key, and not a new one.** JAWSKey+H is hot key help everywhere in JAWS.
+Nothing else is invented, and nothing of mpv's own is taken: every mpv command
+is a plain letter or an arrow with no JAWS key in front of it. The commands are
+reached from the view rather than from keys, which is the point.
+
+The first attempt at this used a numbered list and an InputBox, because the
+function that makes a line into a runnable link was not known here. It is
+UserBufferAddLink, and HomerView has used it all along: the second argument is a
+function name written as a string, with its arguments, called when Enter is
+pressed. Reading HomerView's own scripts answered in a minute what guessing
+would not have answered at all.
+
+Two things carried across from HomerView with it. The view must be DEACTIVATED
+before the keystroke is sent, or the virtual buffer swallows it and nothing
+reaches the player. And UserBufferAddLink is left unqualified where every other
+built-in call says Builtin::, because it resolves one of our own function names
+later and restricting its scope would restrict that lookup too -- a trap
+HomerView records having hit.
 
 ## Version 5.0.57
 
