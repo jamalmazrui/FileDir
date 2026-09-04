@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.55**  
+**Version 5.0.64**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,11 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
+- [Version 5.0.63](#version-5-0-63)
+- [Version 5.0.62](#version-5-0-62)
+- [Version 5.0.61](#version-5-0-61)
+- [Version 5.0.60](#version-5-0-60)
+- [Version 5.0.59](#version-5-0-59)
 - [Version 5.0.58](#version-5-0-58)
 - [Version 5.0.57](#version-5-0-57)
 - [Version 5.0.56](#version-5-0-56)
@@ -661,6 +666,334 @@ and the one for 64-bit Windows is [filterpackx64.exe](http://download.microsoft.
 An option at the end of the FileDir installer lets you install this by simply marking a checkbox.
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
+
+## Version 5.0.63
+
+*September 2026*
+
+**The Results box now reports what the installation DID, and nothing else.**
+
+It used to list every component whether or not the installation had touched it,
+so ten lines saying "installed" hid the one line that had changed. Each
+component script now writes a single plain sentence to an actions file when it
+installs, updates, reinstalls or fails, and those sentences are the box. A
+component that was already there and needed nothing is not mentioned. When
+nothing at all needed doing, the box says so in one line.
+
+The full picture -- every component, where it is and which version -- still goes
+to the log on every run. That is what a support conversation needs, and
+technical detail belongs in a file rather than in a box somebody is reading.
+
+The JAWS script line follows the same rule. Its log is written under the user
+profile and survives from one installation to the next, so its mere presence
+proved nothing; the installer now notes when that file was last written before
+the finish page runs, and reports the scripts as installed only when the file is
+newer afterwards.
+
+**The Reinstall checkboxes now reinstall.**
+
+Ticking Reinstall did nothing at all. The installer ran each component script
+with no arguments, and every script begins by probing for what it installs, so
+each one found the copy already there and returned without doing anything. The
+Reinstall entries now pass the word "reinstall" to the script, and each script
+acts on it: winget is given --force, which it needs before it will run an
+installer for a version it has already installed, and pip is given
+--force-reinstall for the same reason. Setting FILEDIR_REINSTALL=1 does the same
+thing for anyone running a script by hand.
+
+The PDF reader had no Reinstall entry at all. Its label offered one, but the
+only entry on the finish page appeared when the reader was missing, so a reader
+already installed could never be repaired from there. It has an entry now.
+
+**The console says less.** Every install script now writes short plain sentences
+to the screen -- "Installing Pandoc, about 100 MB", "Reinstalling mpv", "Done" --
+and sends commands, exit codes and tool output to the log. The mpv script had
+been reading out every folder it probed.
+
+Dropped "(installed)" from the Reinstall labels. A box offering to reinstall
+something has already said the thing is installed.
+
+Fixed a quiet fault in the media tools script. It captured an exit code inside a
+parenthesised block, where a command's result is substituted when the block is
+read rather than when it runs, so the code tested was the one from before the
+command. Every branch is a label now.
+
+**A dialog title was being spoken three times.** Pressing Shift+U to unarchive
+opened a window called Input, and JAWS said "Input", then "Input", then "Input".
+
+Two habits in the dialog code caused it. Every custom dialog was shown with no
+owner, and then pulled to the front by calling SetForegroundWindow from its own
+Shown handler. An unowned dialog is a separate top-level window, so opening one
+reads as leaving the program and arriving somewhere else; forcing it to the
+front a second time, after Windows had already put it there, raises another
+window event, and a screen reader announces the title again on each.
+
+Every dialog now belongs to the window it was opened from, and nothing forces
+the foreground. That fixes a second thing quietly: a dialog set to open centred
+on its parent had no parent, and centring on a parent that does not exist
+silently means centring on the screen.
+
+Removed speech that repeated a control the screen reader had just read. The
+Current, Recent, Quick and Special buttons in the folder dialog each announced
+their own name after being pressed, and the Chat with AI and Chat about File
+commands announced their name immediately before opening a window with that
+same name as its title.
+
+The rule these follow: a screen reader announces window titles and focused
+controls by itself. The program speaks only what the reader cannot know --
+progress through a long job, a count, a result, or a refusal.
+
+**Play Queue, a media player inside FileDir.** Press Control+Shift+Q. It plays
+exactly what Play List plays -- tagged files, the play list or media file you
+are on, or the media links inside the document you are on -- but the list stays
+in FileDir rather than moving to the player.
+
+Play List has not changed. It hands everything to mpv and steps out of the way,
+which is the right shape for starting something and walking away. Play Queue is
+for the other case: a list worth steering.
+
+Two things make it worth having. The tracks carry the names they came with, so a
+page of podcasts reads as "Episode 214: The Winter Reading List" rather than
+ep214_final_mix_v3.mp3. And the player has no window at all, so nothing takes
+the foreground and nothing has keys of its own: every key belongs to the dialog,
+and there is never a question of which window is listening.
+
+The dialog is built from Lbc primitives and follows the shape urlFido,
+HomerScribe and DbDo already use, rather than inventing one for media: ordinary
+controls in the order they are used, related ones banded onto a row, a different
+Alt key on every one, a sentence of description on each that the status line
+shows and the Help button lists, and the standard Use configuration box before
+the button row.
+
+The first design gave the player a dozen Alt+Shift keys taken from a web player.
+That was the wrong instinct twice over: it asked the person to learn a key space
+instead of pressing a button, and it ignored twenty years of dialogs that had
+already settled the question. Now Play or pause, Stop, Next, Back, Copy address
+and Save list are buttons with mnemonics, volume and speed are spin boxes, and
+repeat and announce are checkboxes. Only three things keep keys, because they
+have no control to press: seeking by ten seconds or a minute, returning to the
+start of a track, and asking where you are.
+
+A media player has a thousand settings that could be exposed. This one has four,
+and each is something a listener changes while listening: which track, where in
+it, how loud, how fast. Everything else mpv can do is still one Control+Shift+L
+away in mpv's own window.
+
+Speech follows the DbDo rule: short, present tense, and only what the screen
+reader cannot say for itself. The track name when playback moves on by itself,
+the position when asked, the end of the queue, and the result of a command with
+nothing visible to show for it -- "Address copied", "Stopped", "Saved
+PlayList.m3u8". The name is not spoken while the cursor is in the queue, because
+the reader is reading that line already, and the volume and speed are never
+spoken, because a spin box announces its own value.
+
+**A local variable that had moved into a helper was still being read.** Play
+List's document reading was factored out into documentLinks_Helper, and one line
+below the call still asked the old local how many characters it held:
+
+    FileDir.cs(8026,10): error CS0103: The name 'sText' does not exist in the
+    current context
+
+The count is the useful part of that log line -- it is what separates "the
+document has no links in it" from "the document could not be read" -- so the
+logging moved into the helper, where the text still exists, rather than being
+dropped. Play Queue's own duplicate of that log line went with it.
+
+**BuildFileDir gained a compile action**, because chasing a compiler error one
+round at a time is the wrong loop:
+
+    BuildFileDir compile
+
+It skips the audit, the documents, the installer and the version bump, and does
+nothing but build FileDir.exe. A full build regenerates documents and an
+installer that are about to be thrown away, and audits sources the compiler has
+not accepted yet. When the question is "does it compile", this asks only that.
+Run a full build before releasing anything; the log says so on every
+compile-only run.
+
+**The Media Player would not compile: it was written outside FileDir's own
+namespace.** csc reported it three times:
+
+    MediaPlayer.cs(333,25): error CS0246: The type or namespace name
+    'LbcDialog' could not be found
+
+Every other source in the program opens with "namespace FileDir" and names
+Homer's classes in full -- Homer.Util, Homer.Media. The new file did neither, so
+it could see neither FileDir's App and Lbc nor Homer's LbcDialog. It is in the
+namespace now, and Homer types in it are written out in full like everywhere
+else.
+
+Worth noting for the next new file: the compiler reported the three method
+signatures and stopped, so the same fault inside the method bodies was never
+mentioned. Three errors did not mean three places.
+
+**The audit did not know that a dialog control is a key.** It failed the build
+over Alt+H, Alt+N and Alt+Q, three keys the Media Player plainly answers to,
+because its rule was "every key named in a document must be a command key" and
+those three are control mnemonics rather than commands.
+
+The rule now reads the ampersands in the dialog sources as well, and knows that
+every Lbc dialog carries Help and Close. Only Alt with a single letter is
+accepted this way; Control and Alt+Shift combinations are still checked against
+the command table alone, so the rule keeps its point.
+
+FileDir.cs is deliberately not read for mnemonics: its ampersands are menu
+labels, whose keys are declared in Hotkeys.ini and checked properly.
+
+**Three habits taken from McTwit**, the Twitter client, which solved these
+problems for a screen reader years ago.
+
+Everything the player says is now also appended to the status line, so a
+command's announcements can be read back with the say-status-bar key rather than
+asked for again. Speech disappears; a status line does not. McTwit did exactly
+this: clear the line when a command starts, append every message it produces,
+and speak the same words. The shared Lbc class gained appendStatus and announce
+for it, so any Homer dialog can do the same.
+
+The queue's label now says how many tracks it holds and where they came from --
+"Queue, 12 tracks from podcasts.htm, Enter plays". McTwit's list label named the
+selected user and the item type for the same reason: a reader reads a list's
+label every time the cursor enters the list, while the title bar is read once
+and then never again.
+
+And Alt+O, Overview, says how many tracks there are and then reads their names
+straight through. That is McTwit's Yield command, and on a queue of thirty
+podcast links it is faster than arrowing.
+
+**Two additions to the shared Lbc class**, both of which its newer copy in the
+other projects already had, so this converges rather than diverges: addBand and
+endBand, which put related controls on one row so Tab goes from a field to the
+thing that acts on it; and addButton, a button inside the dialog that does its
+work and leaves the dialog open. The button row along the bottom closes the
+dialog by design, which is right for OK and Cancel and useless for Play. The
+Help list, the F7 control list and Control+Home and Control+End now look inside
+bands as well, so a banded control is as reachable as any other.
+
+**New Homer shared class: Mpv.cs.** mpv can run as a service rather than as a
+window -- started with --idle it waits, and everything afterwards travels as
+JSON over a named pipe, one message per line. That is mpv's own documented
+control channel, the one its graphical front ends use, not a trick played on it.
+
+Mpv.cs is the whole of that plumbing and nothing else: find the player, start it
+with no window and no terminal, connect the pipe, drain it on a background
+thread, keep the handful of properties worth knowing, and offer play, pause,
+stop, next, back, seek, volume and speed. It depends on no other class, reads
+mpv's shallow messages without a JSON library, and is written to be copied into
+any other Homer Tools project as it stands.
+
+Two details in it are deliberate. The reader thread never stops draining, because
+a pipe nobody reads will eventually block the end that writes -- a deadlock the
+mpv developers warn about. And the class runs mpv.exe as a separate program
+rather than loading libmpv, which keeps FileDir's own licence unaffected and
+means a media fault cannot take the file manager down with it.
+
+A note on the design paper that preceded this: it proposed the dialog, the key
+list, and the idea of taking track names from a document's own words, and all
+three are here. Its later stages -- video in a panel, chapters, transcripts,
+saving a playlist -- are not, and the shape of Mpv.cs leaves room for them.
+
+## Version 5.0.62
+
+*September 2026*
+
+The build stopped on one ambiguous name:
+
+    error CS0104: 'SearchOption' is an ambiguous reference between
+    'Microsoft.VisualBasic.FileIO.SearchOption' and 'System.IO.SearchOption'
+
+FileDir uses Microsoft.VisualBasic for its recycle bin support, and that
+namespace declares a SearchOption of its own. Both are in scope, so the bare
+name means nothing and the compiler refuses it. Written out as
+System.IO.SearchOption.
+
+The line was new -- it lists where the mpv script files landed -- so nothing
+that had ever compiled was broken by it.
+
+## Version 5.0.61
+
+*September 2026*
+
+**The mpv scripts had no configuration file, and that is why JAWS ignored
+them.** The speech history said both halves of it in the same breath:
+
+    Default settings are loaded
+    The application currently being used is mpv.exe
+
+JAWS knew perfectly well which program was in front. It had mpv.jss, mpv.jkm,
+mpv.jsd and a compiled mpv.jsb sitting in its settings folder. It loaded the
+default settings anyway.
+
+The JAWS settings folder itself gives the answer. Every application there whose
+scripts work has a configuration file beside them -- chrome, cmd, edsharp,
+excel, firefox, msedge, notepad, notetab, and FileDir. Fifteen in all. mpv was
+the only one with scripts and no .jcf.
+
+So mpv.jcf is now installed with the rest. It is almost empty on purpose:
+nothing in it changes a setting, and a section header with no settings under it
+is a valid configuration, since JAWS takes its default for everything unnamed.
+The file exists to be FOUND rather than to do anything.
+
+Three rounds went into this: the scripts were written, then the installer was
+taught to ask JAWS to reload, then JAWS was restarted by hand -- and none of it
+could work, because the thing JAWS was looking for had never been written. The
+directory listing had the answer in it the whole time, in the shape of what
+every other application had and mpv did not.
+
+## Version 5.0.60
+
+*September 2026*
+
+**The installer now asks JAWS to reload, so nobody has to restart it.**
+
+A directory listing settled the mpv script mystery: mpv.jss, mpv.jkm, mpv.jsd
+and the compiled mpv.jsb were all sitting correctly in the JAWS 2026 settings
+folder while JAWS went on reporting the default script set. The files were never
+the problem.
+
+JAWS loads its compiled scripts once, at startup. Writing a newer .jsb into the
+settings folder changes nothing until JAWS looks again -- and mpv had already
+run in that session, so JAWS had already decided which scripts applied to it.
+
+ReloadAllConfigs is Freedom Scientific's own answer, and their documentation
+describes this exact case: recompile a script and see the effect without
+restarting. It is a script function, so it has to be called from INSIDE JAWS,
+and freedomsci.jawsapi is the COM object that lets a program outside ask JAWS to
+run one. HomerView's installer has done this all along, and its comment records
+having once chased a fault for an hour against scripts that were still the
+previous build. That hour is the same hour this cost.
+
+Called by late binding, through reflection, on purpose: a compile-time reference
+would tie FileDir to a type library that exists only where JAWS is installed,
+and FileDir has to run on machines with no JAWS at all. This way its absence is
+an ordinary failed lookup rather than a program that will not start.
+
+RunFunction reports that the call was SCHEDULED rather than that it finished, so
+its answer is logged and nothing is claimed from it. If a command afterwards
+behaves like an older build, restarting JAWS remains the certain cure, and the
+log says whether the reload was asked for at all.
+
+## Version 5.0.59
+
+*September 2026*
+
+**The mpv scripts did not load, and the log could not say why.** JAWS reported
+the default scripts and JAWSKey+H did nothing. The install had said "99 copied,
+27 compiled" and listed nine folders -- and not one word about mpv, because both
+script sets were added into the same tally.
+
+Three quite different faults produce that same silence: the files were never
+written, or they were written and failed to compile, or they are present and
+compiled and JAWS is simply not matching them to the player. Nothing in the log
+chose between them, so the next step would have been a guess.
+
+The mpv install now reports its own count, and then lists every mpv.jss,
+mpv.jkm, mpv.jsb and mpv.jsd it can find under the JAWS settings tree. A count
+of zero answers the first two possibilities outright; a .jss present with no
+.jsb beside it means a compile failure; all four present means the files are
+fine and the matching is the problem.
+
+That is the whole change. No behaviour is altered, because guessing at which of
+three faults this is would waste a build either way.
 
 ## Version 5.0.58
 

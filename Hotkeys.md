@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.55**  
+**Version 5.0.64**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -127,6 +127,7 @@ Commands in alphabetical order.
 - **Path to Clipboard**, Alt+Shift+P -- Copy full path of current item to clipboard
 - **Play List**, Control+Shift+L -- With files tagged, write a play list of them; with nothing tagged, play the current item, whether it is a play list, a media file, or a document holding media links
 - **Play Media**, Alt+Shift+L -- Play the clipboard when it holds a play list or web addresses, otherwise the tagged files, otherwise everything playable in this folder
+- **Play Queue**, Control+Shift+Q -- Play the same items as Play List, but inside a FileDir dialog: the tracks stay in a list you can move through, each with the name it came with, and the player has no window of its own
 - **Previous Tagged**, Shift+P -- or Control+UpArrow, Go to previous tagged item
 - **Previous Window**, Control+Shift+Tab -- Activate the previous open window
 - **Print**, Control+P -- Print current or tagged files
@@ -347,6 +348,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+O** -- Open Special Folder: Pick one of the Windows special folders, such as Downloads or Documents, and open it in a new window
 - **Control+Shift+P** -- Path List to Clipboard: Copy to clipboard file paths below current folder item
 - **Control+Shift+Period** -- Tag with Regular Expression: Tag files that match a regular expression
+- **Control+Shift+Q** -- Play Queue: Play the same items as Play List, but inside a FileDir dialog: the tracks stay in a list you can move through, each with the name it came with, and the player has no window of its own
 - **Control+Shift+R** -- Rename with Regular Expression: Rename current or tagged items with regular expressions
 - **Control+Shift+S** -- Restore Tags: Apply previously saved tags
 - **Control+Shift+T** -- Type Extended: Show every property of the current item as one alphabetical list: Windows properties, file association details, and the metadata inside the file
@@ -494,6 +496,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+O** -- Open Special Folder
 - **Control+Shift+P** -- Path List to Clipboard
 - **Control+Shift+L** -- Play List
+- **Control+Shift+Q** -- Play Queue
 - **Control+Shift+Tab** -- Previous Window
 - **Control+Shift+I** -- Rename to Identify Content
 - **Control+Shift+R** -- Rename with Regular Expression

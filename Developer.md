@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.55**  
+**Version 5.0.64**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -633,6 +633,28 @@ not. `mpv.mpv` was wrong for three releases; the correct id is `shinchiro.mpv`.
 `MPV Media Player` or `mpv`. Add the real name to `c_aOfficialFolders` in
 `Media.cs`, to `mpvPresent` in the `.iss`, and to `$dOfficial` in
 `summarizeSetup.ps1` — all three ask the same question and all three must know.
+
+## A JAWS Script Set Needs Four Files, Not Three
+
+`.jss`, `.jkm`, `.jsb` — **and `.jcf`**. Without the configuration file, JAWS
+reports the right application and loads the default settings, so the scripts
+never run. Every scripted application in a JAWS settings folder has one; that is
+the quickest way to check the claim.
+
+The `.jcf` may be a section header with nothing under it. It exists to be found.
+
+## JAWS Scripts Do Not Take Effect Until JAWS Looks Again
+
+JAWS reads its compiled scripts at startup. A newer `.jsb` in the settings
+folder changes nothing for an application JAWS has already seen in that session.
+
+`App.reloadJaws_Helper()` asks a running JAWS to re-read everything, through
+`freedomsci.jawsapi` and `RunFunction("ReloadAllConfigs")`. It is called after
+every script install. Late binding through reflection, because the type library
+exists only where JAWS is installed and FileDir must run without it.
+
+`RunFunction` returns that the call was *scheduled*, not that it finished, so
+never treat its answer as proof. Restarting JAWS is the certain cure.
 
 ## Traps Worth Knowing
 

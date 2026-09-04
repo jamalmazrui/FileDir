@@ -622,6 +622,7 @@ public class LbcDialog : IDisposable
     private Form                        frm;
     private IWin32Window                owner;
     private Button                      btnSavedAccept;
+    private FlowLayoutPanel             pnlBand;
     private FlowLayoutPanel             pnlStack;
     private Label                       lblStatusBar;
     private int                         iTabIndex;
@@ -692,12 +693,99 @@ public class LbcDialog : IDisposable
         pnlStack.Padding = new Padding(DefaultPadding);
         frm.Controls.Add(pnlStack);
 
+        pnlBand = null;
         dFocusTips = new Dictionary<Control, string>();
         dNameCounts = new Dictionary<string, int>();
         dWidgets = new Dictionary<string, Control>(StringComparer.OrdinalIgnoreCase);
         iTabIndex = 0;
         ctlFirstFocusable = null;
         btnSavedAccept = null;
+    }
+
+    // ------- Bands: related controls on one row -------
+    //
+    // A field and the button that fills it in belong together: Tab should move
+    // from the field to the way of changing it, not past everything else in the
+    // dialog. Between addBand and endBand every add call goes onto one
+    // horizontal row instead of onto the vertical stack.
+    //
+    //     dlg.addBand();
+    //     TextBox tb = dlg.addInputBox("&Source:", "", "...");
+    //     Button btn = dlg.addButton("&Browse...", "...");
+    //     dlg.endBand();
+    //
+    // Keyboard order inside a band is the order the controls were added.
+
+    public void addBand()
+    {
+        endBand();
+        pnlBand = new FlowLayoutPanel();
+        pnlBand.FlowDirection = FlowDirection.LeftToRight;
+        pnlBand.WrapContents = true;
+        pnlBand.AutoSize = true;
+        pnlBand.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        pnlBand.Margin = new Padding(0, 0, 0, DefaultRowGap);
+        pnlBand.Width = innerWidth();
+        pnlStack.Controls.Add(pnlBand);
+    }
+
+    public void endBand()
+    {
+        pnlBand = null;
+    }
+
+    // addButton: a button INSIDE the dialog, which does its work and leaves the
+    // dialog open. The buttons in the row along the bottom all close the dialog
+    // and report which one was pressed; these do not, which is what a command
+    // like Play or Copy needs.
+    public Button addButton(string sLabel, string sTip)
+    {
+        Button btn = new Button();
+        btn.Text = sLabel ?? "";
+        btn.AccessibleName = btn.Text.Replace("&", "");
+        btn.AutoSize = true;
+        btn.MinimumSize = new Size(DefaultButtonWidth, DefaultButtonHeight);
+        btn.Margin = new Padding(0, 0, DefaultRowGap, DefaultRowGap);
+        btn.TabIndex = iTabIndex++;
+        btn.UseVisualStyleBackColor = true;
+        btn.GotFocus += handleGotFocus;
+        registerWidget(btn, "Button", btn.AccessibleName);
+        if (!string.IsNullOrEmpty(sTip)) dFocusTips[btn] = sTip;
+        addToStack(btn);
+        if (ctlFirstFocusable == null) ctlFirstFocusable = btn;
+        return btn;
+    }
+
+    public Button addButton(string sLabel)
+    {
+        return addButton(sLabel, null);
+    }
+
+    // addToStack: where a new control actually goes -- the open band when there
+    // is one, the vertical stack otherwise.
+    private void addToStack(Control ctl)
+    {
+        if (pnlBand != null) pnlBand.Controls.Add(ctl);
+        else pnlStack.Controls.Add(ctl);
+    }
+
+    // stackFields: every control the person can reach, in keyboard order, with
+    // bands and inline rows flattened. Help, the F7 control list and
+    // Control+Home / Control+End all read the dialog through this, so a control
+    // inside a band is as reachable as one on the stack.
+    private List<Control> stackFields()
+    {
+        List<Control> lsAll = new List<Control>();
+        foreach (Control ctl in pnlStack.Controls)
+        {
+            // A container the person cannot focus -- a band, or the row an
+            // inline input box makes -- is opened up; anything they can focus
+            // is taken as it is, even though a spin box has children of its own.
+            if (!ctl.CanSelect && ctl.Controls.Count > 0)
+                foreach (Control ctlInner in ctl.Controls) lsAll.Add(ctlInner);
+            else lsAll.Add(ctl);
+        }
+        return lsAll;
     }
 
     // ------- Add helpers -------
@@ -730,7 +818,7 @@ public class LbcDialog : IDisposable
         lbl.Margin = new Padding(0, 0, 0, DefaultRowGap);
         lbl.TextAlign = ContentAlignment.MiddleLeft;
         registerWidget(lbl, "Label", sText);
-        pnlStack.Controls.Add(lbl);
+        addToStack(lbl);
         return lbl;
     }
 
@@ -751,7 +839,7 @@ public class LbcDialog : IDisposable
         tb.GotFocus += handleGotFocus;
         registerWidget(tb, "TextBox", tb.AccessibleName);
         if (!string.IsNullOrEmpty(sTip)) { dFocusTips[tb] = sTip; tb.Tip = sTip; }
-        pnlStack.Controls.Add(tb);
+        addToStack(tb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = tb;
         return tb;
     }
@@ -807,7 +895,7 @@ public class LbcDialog : IDisposable
         if (!string.IsNullOrEmpty(sTip)) { dFocusTips[tb] = sTip; tb.Tip = sTip; }
         pnlRow.Controls.Add(tb, 1, 0);
 
-        pnlStack.Controls.Add(pnlRow);
+        addToStack(pnlRow);
         if (ctlFirstFocusable == null) ctlFirstFocusable = tb;
         return tb;
     }
@@ -866,7 +954,7 @@ public class LbcDialog : IDisposable
         tb.LostFocus += handleMemoLostFocus;
         registerWidget(tb, "Memo", tb.AccessibleName);
         if (!string.IsNullOrEmpty(sTip)) { dFocusTips[tb] = sTip; tb.Tip = sTip; }
-        pnlStack.Controls.Add(tb);
+        addToStack(tb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = tb;
         return tb;
     }
@@ -903,7 +991,7 @@ public class LbcDialog : IDisposable
         cb.GotFocus += handleGotFocus;
         registerWidget(cb, "CheckBox", sLabel);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[cb] = sTip;
-        pnlStack.Controls.Add(cb);
+        addToStack(cb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = cb;
         return cb;
     }
@@ -934,7 +1022,7 @@ public class LbcDialog : IDisposable
         lb.KeyDown += new KeyEventHandler(handleListBoxCopyKeys);
         registerWidget(lb, "ListBox", lb.AccessibleName);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[lb] = sTip;
-        pnlStack.Controls.Add(lb);
+        addToStack(lb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = lb;
         return lb;
     }
@@ -959,7 +1047,7 @@ public class LbcDialog : IDisposable
         clb.GotFocus += handleGotFocus;
         registerWidget(clb, "CheckedListBox", clb.AccessibleName);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[clb] = sTip;
-        pnlStack.Controls.Add(clb);
+        addToStack(clb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = clb;
         return clb;
     }
@@ -1129,7 +1217,7 @@ public class LbcDialog : IDisposable
         cb.GotFocus += handleGotFocus;
         registerWidget(cb, "ComboBox", cb.AccessibleName);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[cb] = sTip;
-        pnlStack.Controls.Add(cb);
+        addToStack(cb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = cb;
         return cb;
     }
@@ -1175,7 +1263,7 @@ public class LbcDialog : IDisposable
         cb.GotFocus += handleGotFocus;
         registerWidget(cb, "ComboBox", cb.AccessibleName);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[cb] = sTip;
-        pnlStack.Controls.Add(cb);
+        addToStack(cb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = cb;
         return cb;
     }
@@ -1196,7 +1284,7 @@ public class LbcDialog : IDisposable
         rb.GotFocus += handleGotFocus;
         registerWidget(rb, "RadioButton", sLabel);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[rb] = sTip;
-        pnlStack.Controls.Add(rb);
+        addToStack(rb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = rb;
         return rb;
     }
@@ -1224,7 +1312,7 @@ public class LbcDialog : IDisposable
         nud.GotFocus += handleGotFocus;
         registerWidget(nud, "NumericUpDown", sLabel);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[nud] = sTip;
-        pnlStack.Controls.Add(nud);
+        addToStack(nud);
         if (ctlFirstFocusable == null) ctlFirstFocusable = nud;
         return nud;
     }
@@ -1237,7 +1325,7 @@ public class LbcDialog : IDisposable
         sep.Size = new Size(innerWidth(), 2);
         sep.BorderStyle = BorderStyle.Fixed3D;
         sep.Margin = new Padding(0, DefaultRowGap, 0, DefaultRowGap);
-        pnlStack.Controls.Add(sep);
+        addToStack(sep);
     }
 
     // ------- Widget lookup helpers -------
@@ -1476,9 +1564,10 @@ public class LbcDialog : IDisposable
     // gets the label's AccessibleName.
     private Label currentLabelOrNull()
     {
-        int iCount = pnlStack.Controls.Count;
+        Control.ControlCollection ctlsHere = (pnlBand != null) ? pnlBand.Controls : pnlStack.Controls;
+        int iCount = ctlsHere.Count;
         if (iCount == 0) return null;
-        return pnlStack.Controls[iCount - 1] as Label;
+        return ctlsHere[iCount - 1] as Label;
     }
 
     // handleGotFocus: status-bar tip update on focus.
@@ -1493,7 +1582,7 @@ public class LbcDialog : IDisposable
         string sTip;
         StringBuilder sbHelp = new StringBuilder();
         sbHelp.AppendLine("Fields in this dialog:");
-        foreach (Control ctl in pnlStack.Controls)
+        foreach (Control ctl in stackFields())
         {
             if (ctl is Label) continue;
             string sName = string.IsNullOrEmpty(ctl.AccessibleName)
@@ -1535,7 +1624,7 @@ public class LbcDialog : IDisposable
         Dictionary<string, Control> dByName = new Dictionary<string, Control>();
         List<string> lsNames = new List<string>();
         string sCurrent = null;
-        foreach (Control ctl in pnlStack.Controls)
+        foreach (Control ctl in stackFields())
             addFocusEntry(ctl, lsNames, dByName);
         // The button row is a sibling FlowLayoutPanel whose
         // Controls collection is stored right-to-left (see
@@ -1612,7 +1701,7 @@ public class LbcDialog : IDisposable
     private void focusFieldEdge(bool bFirst)
     {
         Control ctlTarget = null;
-        foreach (Control ctl in pnlStack.Controls)
+        foreach (Control ctl in stackFields())
         {
             if (ctl is Label || !ctl.CanSelect) continue;
             ctlTarget = ctl;
@@ -1628,6 +1717,36 @@ public class LbcDialog : IDisposable
     public void setStatusText(string sText)
     {
         if (lblStatusBar != null) lblStatusBar.Text = sText ?? "";
+    }
+
+    // appendStatus: add a message to the status line, after whatever is
+    // already there.
+    //
+    // Speech is gone the moment it is said. McTwit answered that years ago: a
+    // command clears the status line and writes its own name there, and every
+    // message it produces afterwards is both spoken and appended, so the line
+    // ends up holding the whole of what was said. A screen reader has a key for
+    // reading the status bar, so the person can go back over it at their own
+    // pace instead of asking the program to say it all again.
+    //
+    // The next control to take focus replaces the line with its own tip, which
+    // is right: the transcript belongs to the command that produced it.
+    public void appendStatus(string sText)
+    {
+        if (lblStatusBar == null || string.IsNullOrEmpty(sText)) return;
+        string sNow = lblStatusBar.Text ?? "";
+        lblStatusBar.Text = (sNow.Length > 0) ? (sNow + "   " + sText) : sText;
+    }
+
+    // announce: say it and keep it. The one call a command should use for
+    // anything it wants heard, in an application with no speech gate of its
+    // own. FileDir has one -- extra speech off, scroll lock on -- so it speaks
+    // through its own App.say and calls appendStatus itself.
+    public void announce(string sText)
+    {
+        if (string.IsNullOrEmpty(sText)) return;
+        Say.say(sText);
+        appendStatus(sText);
     }
 
     private void handleGotFocus(object sender, EventArgs evArgs)
@@ -2068,7 +2187,7 @@ public class LbcDialog : IDisposable
         lbl.Size = new Size(innerWidth(), DefaultLabelHeight);
         lbl.Margin = new Padding(0, 0, 0, 0);
         lbl.TextAlign = ContentAlignment.MiddleLeft;
-        pnlStack.Controls.Add(lbl);
+        addToStack(lbl);
     }
 
     // populateListBox: shared logic for filling a ListBox with

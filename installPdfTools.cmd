@@ -4,92 +4,124 @@ rem Microsoft Word: PyMuPDF4LLM, which turns a PDF's own structure into Markdown
 rem with headings, lists and tables. Free, no Word, no account, about 25 MB.
 rem
 rem This is EdSharp's arrangement, kept deliberately identical so one habit and
-rem one set of packages serve both programs. EdSharp's version also installs
-rem WordNet for its thesaurus; FileDir has no thesaurus, so that part is left
-rem out and nothing else is changed.
+rem one set of packages serve both programs.
 rem
-rem Probe first, install or upgrade, verify, log milestones.
-rem NOTHING PAUSES: a console waiting for a keypress interrupts the
-rem installation. Failures are logged, and the summary shown at the very end
-rem reports the outcome of every checkbox.
+rem CONSOLE VERSUS LOG. The console gets short plain sentences. Commands, exit
+rem codes and pip output go to the log.
+rem
+rem WHAT IT DID. Anything actually done is written to
+rem FileDir_setup_actions.txt, which is what the Results box reports. A reader
+rem already installed that needed nothing writes no action.
+rem
+rem REINSTALL. Pass "reinstall" as an argument, or set FILEDIR_REINSTALL=1,
+rem which is what the installer's Reinstall checkbox does. pip is then given
+rem --force-reinstall, since an upgrade of a current package does nothing and a
+rem repair is the whole point of that checkbox.
+rem
+rem NOTHING PAUSES.
 setlocal
-set "logFile=%LOCALAPPDATA%\FileDir\logs\FileDir_setup.log"
-if not exist "%LOCALAPPDATA%\FileDir\logs" mkdir "%LOCALAPPDATA%\FileDir\logs" >nul 2>&1
-echo [installPdfTools] started %date% %time% >> "%logFile%"
-echo.
+set "logDir=%LOCALAPPDATA%\FileDir\logs"
+if not exist "%logDir%" mkdir "%logDir%" >nul 2>&1
+set "logFile=%logDir%\FileDir_setup.log"
+set "actionFile=%logDir%\FileDir_setup_actions.txt"
+set "didWhat="
+set "bReinstall="
+set "sArgs=%*"
+if not "%sArgs%"=="" echo %sArgs% | findstr /i /c:"reinstall" >nul && set "bReinstall=1"
+if /i "%FILEDIR_REINSTALL%"=="1" set "bReinstall=1"
+
+call :log "[installPdfTools] started %date% %time%"
+call :log "[installPdfTools] arguments: %sArgs%"
+call :log "[installPdfTools] reinstall requested: %bReinstall%"
 
 call :findPython
 if not defined pythonExe call :getPython
 if not defined pythonExe goto no_python
-echo [installPdfTools] python: %pythonExe% >> "%logFile%"
+call :log "[installPdfTools] python: %pythonExe%"
 
 "%pythonExe%" -c "import pymupdf4llm" >nul 2>&1
 if errorlevel 1 goto install_reader
-echo Updating the PDF reader
-echo [installPdfTools] pip install --upgrade pymupdf4llm >> "%logFile%"
+if defined bReinstall goto reinstall_reader
+
+call :say "Updating the PDF reader."
+call :log "[installPdfTools] pip install --upgrade pymupdf4llm"
 "%pythonExe%" -m pip install --upgrade pymupdf4llm >> "%logFile%" 2>&1
-echo [installPdfTools] upgrade exit %errorlevel% >> "%logFile%"
+call :log "[installPdfTools] upgrade exit %errorlevel%"
+rem pip reports success whether or not there was anything to upgrade, so this
+rem is not counted as an action.
+goto verify
+
+:reinstall_reader
+call :say "Reinstalling the PDF reader."
+call :log "[installPdfTools] pip install --force-reinstall pymupdf4llm"
+"%pythonExe%" -m pip install --force-reinstall pymupdf4llm >> "%logFile%" 2>&1
+call :log "[installPdfTools] reinstall exit %errorlevel%"
+set "didWhat=reinstalled"
 goto verify
 
 :install_reader
-echo Installing the PDF reader, about 25 MB
-echo [installPdfTools] pip install pymupdf4llm >> "%logFile%"
+call :say "Installing the PDF reader, about 25 MB."
+call :log "[installPdfTools] pip install pymupdf4llm"
 "%pythonExe%" -m pip install pymupdf4llm >> "%logFile%" 2>&1
-echo [installPdfTools] install exit %errorlevel% >> "%logFile%"
-if errorlevel 1 goto failed
+set "code=%errorlevel%"
+call :log "[installPdfTools] install exit %code%"
+set "didWhat=installed"
+if not "%code%"=="0" goto failed
 
 :verify
 rem Prove it rather than assume it. pip returning 0 means pip ran, not that the
 rem package can be imported: a wheel can install and still fail to load. The
-rem import is attempted with the SAME interpreter that did the installing, and
-rem whatever it says goes into the log, so a disagreement with the summary can
-rem never be a mystery.
+rem import is attempted with the SAME interpreter that did the installing.
 "%pythonExe%" -c "import pymupdf4llm; print('pymupdf4llm ready')" >> "%logFile%" 2>&1
 if errorlevel 1 goto failed
-echo [installPdfTools] verified pymupdf4llm with %pythonExe% >> "%logFile%"
+call :log "[installPdfTools] verified pymupdf4llm with %pythonExe%"
 rem Which interpreter has the package, recorded where FileDir will look. A
 rem machine may carry several Pythons, and the one that installed it is the one
 rem that can import it.
-echo %pythonExe%> "%LOCALAPPDATA%\FileDir\logs\FileDir_python.txt"
-echo PDF reader ready.
-echo [installPdfTools] done >> "%logFile%"
+echo %pythonExe%> "%logDir%\FileDir_python.txt"
+if not defined didWhat goto quietDone
+call :action "PDF reader (PyMuPDF4LLM) %didWhat%."
+call :say "The PDF reader is ready."
+call :log "[installPdfTools] done"
+exit /b 0
+
+:quietDone
+call :log "[installPdfTools] nothing needed doing"
 exit /b 0
 
 :no_python
-echo Python could not be installed, so the PDF reader cannot be either.
-echo Install Python from python.org, then run this script again.
-echo [installPdfTools] FAILED: no python, and winget could not install one >> "%logFile%"
+call :say "Python could not be installed, so the PDF reader could not be either."
+call :action "The PDF reader could not be installed, because Python is missing."
+call :log "[installPdfTools] FAILED: no python, and winget could not install one"
 exit /b 7
 
 :getPython
-rem INSTALL PYTHON RATHER THAN ASK FOR IT.
-rem
-rem This used to stop here and tell the person to fetch Python from python.org.
-rem That is a manual download in an installer whose whole promise is that
-rem nothing is -- and the PDF reader box is TICKED, so anyone without Python
-rem got a failure and an errand on their first run.
-rem
-rem Machine wide, like every other component. About 30 MB.
-echo Installing Python, about 30 MB
-echo [installPdfTools] winget install Python.Python.3.13 >> "%logFile%"
+rem INSTALL PYTHON RATHER THAN ASK FOR IT. The PDF reader box is TICKED, so
+rem anyone without Python would otherwise get a failure and an errand on their
+rem first run. Machine wide, like every other component. About 30 MB.
+call :say "Installing Python, about 30 MB."
+call :log "[installPdfTools] winget install Python.Python.3.13"
 winget install --id Python.Python.3.13 -e --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
 set "code=%errorlevel%"
-echo [installPdfTools] python install exit %code% >> "%logFile%"
-if not "%code%"=="0" (
-  echo [installPdfTools] retrying Python without a scope >> "%logFile%"
-  winget install --id Python.Python.3.13 -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
-  echo [installPdfTools] python retry exit %errorlevel% >> "%logFile%"
-)
+call :log "[installPdfTools] python install exit %code%"
+if "%code%"=="0" goto pythonInstalled
+call :log "[installPdfTools] retrying Python without a scope"
+winget install --id Python.Python.3.13 -e --silent --disable-interactivity --accept-package-agreements --accept-source-agreements >> "%logFile%" 2>&1
+call :log "[installPdfTools] python retry exit %errorlevel%"
+
+:pythonInstalled
 rem A Python installed a moment ago is not on this console's path, so the fixed
 rem locations are searched again rather than trusting "where".
 call :findPython
-if defined pythonExe echo [installPdfTools] python now at %pythonExe% >> "%logFile%"
-exit /b 0
+if not defined pythonExe goto :eof
+call :log "[installPdfTools] python now at %pythonExe%"
+call :action "Python installed."
+goto :eof
 
 :failed
-echo The PDF reader did not install. The log is:
-echo %logFile%
-echo [installPdfTools] FAILED >> "%logFile%"
+call :say "The PDF reader could not be installed. The log has the details."
+call :action "The PDF reader could not be installed."
+call :log "[installPdfTools] FAILED"
 exit /b 3
 
 :findPython
@@ -118,3 +150,17 @@ for %%d in (
   if not defined pythonExe if exist %%d set "pythonExe=%%~d"
 )
 exit /b 0
+
+:log
+>>"%logFile%" echo %~1
+goto :eof
+
+:say
+echo %~1
+>>"%logFile%" echo [console] %~1
+goto :eof
+
+:action
+>>"%actionFile%" echo %~1
+>>"%logFile%" echo [action] %~1
+goto :eof

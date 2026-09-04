@@ -424,6 +424,55 @@ catch {}
 return new System.Collections.ObjectModel.ReadOnlyCollection<string>(lsMatch);
 } // findInFiles method
 
+public static string reloadJaws_Helper() {
+// Ask a running JAWS to re-read its configurations.
+//
+// JAWS loads its compiled scripts once, at startup. Writing a newer .jsb into
+// the settings folder changes nothing until JAWS looks again, which is exactly
+// why the mpv scripts sat there correctly installed and compiled while JAWS
+// went on reporting the default set.
+//
+// ReloadAllConfigs is Freedom Scientific's own answer, and their documentation
+// describes this case: recompile a script and see the effect without
+// restarting. It is a script function, so it has to be called from INSIDE
+// JAWS -- freedomsci.jawsapi is the COM object that lets a program outside ask
+// JAWS to run one. HomerView's installer does the same and records having once
+// chased a fault for an hour against scripts that were still the previous
+// build.
+//
+// LATE BINDING, through reflection, on purpose. A compile-time reference would
+// tie FileDir to a type library that exists only where JAWS is installed, and
+// FileDir has to run on machines with no JAWS at all. This way its absence is
+// an ordinary failed lookup rather than a program that will not start.
+//
+// RunFunction reports that the call was SCHEDULED, not that it finished, so its
+// answer is worth logging and worth nothing else. If a command afterwards
+// behaves like an older build, restarting JAWS is still the certain cure.
+try {
+Type jawsType = Type.GetTypeFromProgID("freedomsci.jawsapi");
+if (jawsType == null) return "JAWS is not running or not installed, so no reload was needed.";
+object oJaws = Activator.CreateInstance(jawsType);
+if (oJaws == null) return "JAWS could not be reached to ask for a reload.";
+object oAnswer = jawsType.InvokeMember("RunFunction",
+System.Reflection.BindingFlags.InvokeMethod, null, oJaws,
+new object[] {"ReloadAllConfigs"});
+try {
+System.Runtime.InteropServices.Marshal.ReleaseComObject(oJaws);
+}
+catch (Exception) {
+}
+return "Asked JAWS to reload its configurations: scheduled = "
++ (oAnswer == null ? "unknown" : oAnswer.ToString())
++ ". No restart should be needed.";
+}
+catch (Exception ex) {
+// Not a failure of the install: the scripts are on disk either way, and a
+// restart of JAWS loads them.
+return "JAWS could not be asked to reload (" + ex.Message
++ "). Restart JAWS to load the new scripts.";
+}
+} // reloadJaws_Helper method
+
 public static string sizeFriendly(long lBytes) {
 // A size a person can take in at once, for speech.
 //
@@ -850,16 +899,60 @@ string sMessage = Homer.JawsSettingsInstaller.install("FileDir", Path.GetDirecto
 int iMpvCopied = 0;
 int iMpvCompiled = 0;
 try {
-Homer.JawsSettingsInstaller.install("mpv", Path.GetDirectoryName(sApp),
-new string[] {"mpv.jsd"}, new string[0], out iMpvCopied, out iMpvCompiled);
+string sMpvSaid = Homer.JawsSettingsInstaller.install("mpv", Path.GetDirectoryName(sApp),
+// mpv.jcf goes with them. Every application in the JAWS settings folder whose
+// scripts work has a configuration file beside them; mpv had scripts, a key
+// map and a compiled .jsb and no .jcf, and JAWS reported the application as
+// mpv.exe while loading the default settings.
+new string[] {"mpv.jsd", "mpv.jcf"}, new string[0], out iMpvCopied, out iMpvCompiled);
 iCopied += iMpvCopied;
 iCompiled += iMpvCompiled;
+// SAID SEPARATELY, and this is the point of the change.
+//
+// Both sets were added into one tally, so the log read "99 copied, 27
+// compiled" and listed nine FOLDERS -- and there was no way to tell from it
+// whether a single mpv file had been written or compiled. When JAWS then
+// reported the default scripts, the log could not say whether the scripts were
+// missing, uncompiled, or present and simply not being matched to the player.
+// Three quite different faults, and no way to choose between them.
+//
+// A count of zero here is the answer to the first two on its own.
+Homer.Log.write("mpv scripts: " + iMpvCopied + " copied, " + iMpvCompiled + " compiled.");
+if (sMpvSaid != null && sMpvSaid.Trim().Length > 0)
+Homer.Log.write("  " + sMpvSaid.Replace("\r\n", " | "));
+// And where they went, so their presence can be checked without guessing at
+// the folder.
+foreach (string sFile in new string[] {"mpv.jss", "mpv.jkm", "mpv.jsb", "mpv.jsd", "mpv.jcf"}) {
+string sSettings = Path.Combine(
+Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+Path.Combine("Freedom Scientific", "JAWS"));
+if (!Directory.Exists(sSettings)) continue;
+try {
+// System.IO.SearchOption written out in full: Microsoft.VisualBasic.FileIO
+// declares a SearchOption of its own, and both are in scope here, so the bare
+// name is ambiguous and the compiler refuses it.
+foreach (string sFound in Directory.GetFiles(sSettings, sFile, System.IO.SearchOption.AllDirectories))
+Homer.Log.write("  " + sFound);
+}
+catch (Exception) {
+}
+}
 }
 catch (Exception ex) {
 // A failure here must not cost the FileDir scripts, which are the point of
 // the command.
 Homer.Log.write("The mpv scripts were not installed: " + ex.Message);
 }
+
+// AND ASK JAWS TO RELOAD, SO NOBODY HAS TO RESTART IT.
+//
+// JAWS loads its compiled scripts once, at startup. Writing a newer .jsb into
+// the settings folder changes nothing until JAWS looks again, which is why the
+// mpv scripts sat there correctly installed and compiled while JAWS went on
+// reporting the default set. HomerView's installer records the same lesson and
+// the same cure, having once chased a fault for an hour against scripts that
+// were still the previous build.
+Homer.Log.write(App.reloadJaws_Helper());
 // The detail always goes to the log.  It is worth having -- which folders in
 // which JAWS versions received which files -- and it is worth having later
 // rather than in front of somebody who is installing a file manager.
@@ -1148,6 +1241,7 @@ public HomerToolStripMenuItem menuMiscChatWithAI;
 public HomerToolStripMenuItem menuMiscChatAboutFile;
 public HomerToolStripMenuItem menuMiscConfigureTimer;
 public HomerToolStripMenuItem menuMiscPlayList;
+public HomerToolStripMenuItem menuMiscPlayQueue;
 public HomerToolStripMenuItem menuMiscPlayFolder;
 public HomerToolStripMenuItem menuMiscIterateProcesses;
 public HomerToolStripMenuItem menuMiscInquireDifferences;
@@ -1390,12 +1484,13 @@ menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChat
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
 menuMiscPlayList = menu_Helper("Play List", "Control+Shift+L", menuMiscPlayList_Click);
 menuMiscPlayFolder = menu_Helper("Play Media", "Alt+Shift+L", MenuMiscPlayFolder_Click);
+menuMiscPlayQueue = menu_Helper("Play Queue", "Control+Shift+Q", menuMiscPlayQueue_Click);
 menuMiscIterateProcesses = menu_Helper("Iterate Processes ...", "Alt+I", MenuMiscIterateProcesses_Click);
 menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I", MenuMiscInquireDifferences_Click);
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscPlayQueue, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -6135,7 +6230,10 @@ void MenuMiscChatWithAI_Click(object sender, EventArgs e) {
 // question about a folder full of names, or about how to phrase a command, has
 // nothing to do with whatever the cursor happens to be on.
 string sTitle = "Chat with AI";
-App.say(sTitle);
+// Nothing is said here. Every path from this point opens a window titled
+// "Chat with AI" -- the question box, or a message box explaining why there
+// is nothing to ask -- and the screen reader reads a window's title when it
+// opens. Saying it first only makes the reader say it twice.
 if (!Homer.Ollama.isRunning()) {
 Lbc.Show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
 return;
@@ -6172,7 +6270,8 @@ void MenuMiscChatAboutFile_Click(object sender, EventArgs e) {
 // sibling program is worth more than protecting a habit few people had.
 if (abortInZip()) return;
 string sTitle = "Chat about File";
-App.say(sTitle);
+// Not said here either, for the reason given in the command above: the window
+// that opens next carries this same title.
 string sPath = Path_Helper();
 if (!File.Exists(sPath)) {
 Lbc.Show("Move to a file first. This command asks about one file, not a folder.", sTitle);
@@ -7649,6 +7748,51 @@ if (iDirect >= 2) return lsDirect;
 return lsKept;
 } // linksToPlay_Helper method
 
+List<string> documentLinks_Helper(string sPath) {
+// The media links inside one document, as play list lines.
+//
+// THE FILE IS READ RAW, NOT AS PLAIN TEXT, and that distinction is the whole
+// bug this replaced.
+//
+// toPlainText hands a web page to Pandoc with "-t plain", which is right for
+// reading aloud and fatal here: plain text has no links in it, so Pandoc
+// DELETES every address and leaves only the words. A directory of podcasts came
+// back as a list of show names with nothing to play. Markdown directories still
+// worked, because those are read straight off the disk -- which is exactly why
+// this failed on .htm and not on .md.
+//
+// So the bytes are read as they are, and the links are found in the markup, the
+// same way the clipboard is read when a page is copied from a browser.
+//
+// Play List and Play Queue both call this, so the two can never disagree about
+// what a document holds.
+string sText = "";
+try {
+sText = Homer.Util.file2String(sPath);
+}
+catch (Exception ex) {
+Homer.Log.write("Could not read " + sPath + ": " + ex.Message);
+}
+// A format that is not text at all -- a Word document, a PDF -- has no markup
+// to scan, so it goes through the extractor after all. Its links are gone, but
+// an address written out in the body of the text still survives.
+if (sText.Length == 0 || !Homer.Convert.readableAsText(sPath)
+|| sText.IndexOf("://", StringComparison.Ordinal) < 0) {
+string sReadError;
+string sExtracted = Homer.Convert.toPlainText(sPath, out sReadError);
+if (sExtracted.Length > 0) sText = sExtracted;
+}
+List<string> lsLinks = linksToPlay_Helper(sText);
+// LOGGED HERE, where the text still exists. Both commands report nothing found;
+// only this method can say how much it had to look at, which is the difference
+// between "the document has no links" and "the document could not be read".
+if (lsLinks.Count == 0) {
+Homer.Log.write("No media links in " + sPath
++ " (" + sText.Length + " characters read).");
+}
+return lsLinks;
+} // documentLinks_Helper method
+
 List<string> clipboardPlaylist_Helper() {
 // The clipboard as a list of things to play.
 //
@@ -7740,6 +7884,86 @@ string sCategory = Homer.Convert.categoryOf(sPath);
 return sCategory == "audio" || sCategory == "video";
 } // isPlayable_Helper method
 
+void menuMiscPlayQueue_Click(object sender, EventArgs e) {
+// Play the same things Play List plays, but inside FileDir rather than inside
+// mpv's own window.
+//
+// WHY BOTH COMMANDS EXIST.
+//
+// Play List (Control+Shift+L) hands everything to mpv and steps out of the
+// way. mpv takes the foreground, its keys work, and FileDir is not involved
+// again until you press q. That is the right shape for "start this and let it
+// run", and it is unchanged.
+//
+// Play Queue keeps the list here: the tracks sit in a listbox with the names
+// they arrived with -- for a document, the words somebody wrote about each
+// link -- and every key belongs to the dialog. mpv plays with no window at
+// all, so nothing takes the foreground and nothing has keys of its own.
+//
+// The sources are identical, deliberately. One command to learn about what can
+// be played, two ways to play it.
+if (abortInZip()) return;
+App.say("Play queue");
+string[] aQueueDirs, aQueueFiles;
+string[] aQueuePaths = list_Helper(out aQueueDirs, out aQueueFiles, 1);
+aQueuePaths = aQueueFiles;
+if (aQueuePaths.Length == 0) return;
+
+List<MediaTrack> lsTracks = null;
+string sQueueTitle = "Media Player";
+// Where the queue came from, in a few words. It goes in the list's own label,
+// which a screen reader reads every time the cursor enters the list, rather
+// than only in the title bar, which is read once.
+string sQueueSource = "";
+
+if (aQueuePaths.Length == 1 && File.Exists(aQueuePaths[0])) {
+string sOne = aQueuePaths[0];
+string sOneExt = Path.GetExtension(sOne).ToLower();
+string sLeaf = Path.GetFileName(sOne);
+if (sOneExt == ".m3u" || sOneExt == ".m3u8" || sOneExt == ".pls") {
+try {
+lsTracks = MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne));
+}
+catch (Exception ex) {
+Homer.Log.write("Play Queue: could not read " + sOne + ": " + ex.Message);
+}
+sQueueTitle = "Media Player - " + sLeaf;
+sQueueSource = sLeaf;
+}
+else if (isPlayable_Helper(sOne)) {
+lsTracks = MediaPlayer.fromFiles(new string[] { sOne });
+sQueueTitle = "Media Player - " + sLeaf;
+sQueueSource = sLeaf;
+}
+else {
+App.say("Looking for media links in " + sLeaf);
+List<string> lsFound = documentLinks_Helper(sOne);
+lsTracks = MediaPlayer.fromPlaylistLines(lsFound);
+sQueueTitle = "Media Player - links from " + sLeaf;
+sQueueSource = sLeaf;
+if (lsTracks.Count == 0) {
+App.say("0 media links in " + sLeaf, true);
+return;
+}
+}
+}
+else {
+// Several tagged files are a queue already. Anything that is not media is
+// left out rather than handed to the player to refuse.
+List<string> lsPlayable = new List<string>();
+foreach (string sPath in aQueuePaths) if (isPlayable_Helper(sPath)) lsPlayable.Add(sPath);
+lsTracks = MediaPlayer.fromFiles(lsPlayable);
+sQueueSource = "the tagged files";
+}
+
+if (lsTracks == null || lsTracks.Count == 0) {
+App.say("0 tracks to play", true);
+return;
+}
+Homer.Log.write("Play Queue: " + lsTracks.Count + " tracks");
+MediaPlayer.run(App.frame, sQueueTitle, sQueueSource, lsTracks);
+} // menuMiscPlayQueue_Click method
+
 void menuMiscPlayList_Click(object sender, EventArgs e) {
 // Make a play list of the tagged files, and, when mpv is installed, offer to
 // play it there and then.
@@ -7800,45 +8024,12 @@ return;
 // clipboard is read. A document with no links in it is not a failure worth a
 // dialog; it simply has nothing to play.
 App.say("Looking for media links in " + Path.GetFileName(sOne));
-// THE FILE IS READ RAW, NOT AS PLAIN TEXT, and that distinction is the whole
-// bug this replaced.
-//
-// toPlainText hands a web page to Pandoc with "-t plain", which is right for
-// reading aloud and fatal here: plain text has no links in it, so Pandoc
-// DELETES every address and leaves only the words. A directory of podcasts came
-// back as a list of show names with nothing to play. Markdown directories still
-// worked, because those are read straight off the disk -- which is exactly why
-// this failed on .htm and not on .md.
-//
-// So the bytes are read as they are, and the links are found in the markup, the
-// same way the clipboard is read when a page is copied from a browser.
-//
-// Named sText, not sBody: further down this same method sBody holds the play
-// list being written, and C# will not have one name mean two things in nested
-// scopes even when the two never overlap in time.
-string sText = "";
-try {
-sText = Homer.Util.file2String(sOne);
-}
-catch (Exception ex) {
-Homer.Log.write("Could not read " + sOne + ": " + ex.Message);
-}
-// A format that is not text at all -- a Word document, a PDF -- has no markup
-// to scan, so it goes through the extractor after all. Its links are gone, but
-// an address written out in the body of the text still survives.
-if (sText.Length == 0 || !Homer.Convert.readableAsText(sOne)
-|| sText.IndexOf("://", StringComparison.Ordinal) < 0) {
-string sReadError;
-string sExtracted = Homer.Convert.toPlainText(sOne, out sReadError);
-if (sExtracted.Length > 0) sText = sExtracted;
-}
-List<string> lsFound = linksToPlay_Helper(sText);
+List<string> lsFound = documentLinks_Helper(sOne);
 if (lsFound.Count == 0) {
-// LOGGED, not only spoken. The runs that found nothing left no trace at all,
-// so a report that some files worked and some did not could not be told apart
-// from a report that the command was never pressed.
-Homer.Log.write("Play List: no media links in " + sOne
-+ " (" + sText.Length + " characters read).");
+// The count of characters read is logged by documentLinks_Helper itself, which
+// is the only place that still has the text. A run that finds nothing must
+// leave a trace, or a report that some files worked and some did not cannot be
+// told apart from a report that the command was never pressed.
 App.say("No media links in " + Path.GetFileName(sOne) + ".", true);
 return;
 }
@@ -8738,6 +8929,9 @@ App.frame.menuQueryListTagged.clickOrDescribe();
 return true;
 case Keys.Control | Keys.Shift | Keys.L :
 App.frame.menuMiscPlayList.clickOrDescribe();
+return true;
+case Keys.Control | Keys.Shift | Keys.Q :
+App.frame.menuMiscPlayQueue.clickOrDescribe();
 return true;
 case Keys.Alt | Keys.Shift | Keys.L :
 App.frame.menuMiscPlayFolder.clickOrDescribe();

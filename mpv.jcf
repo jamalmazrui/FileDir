@@ -1,0 +1,18 @@
+﻿[Options]
+; mpv.jcf -- the JAWS configuration file for mpv.
+;
+; DELIBERATELY ALMOST EMPTY, AND PRESENT ON PURPOSE.
+;
+; Nothing here changes a setting. The file exists so that JAWS treats mpv as an
+; application it knows about rather than an unknown one, which is the difference
+; between the mpv scripts loading and not.
+;
+; The evidence for that: in the JAWS settings folder, EVERY application with
+; working scripts has one of these beside them -- chrome, cmd, edsharp, excel,
+; firefox, notepad, and FileDir itself. mpv had scripts, a key map and a
+; compiled .jsb, and no .jcf, and JAWS answered "the application currently
+; being used is mpv.exe" and "default settings are loaded" in the same breath.
+;
+; A section header with no settings under it is a valid configuration: JAWS
+; takes its default for everything unnamed, which is what is wanted. This file
+; is here to be found, not to change behaviour.

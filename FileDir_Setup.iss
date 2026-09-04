@@ -107,6 +107,8 @@ Source: "Convert.cs";         DestDir: "{app}"; Flags: ignoreversion
 ; Finding and running ExifTool, ffmpeg and ffprobe. Adapted from HomerScribe,
 ; which solved the finding; what each program does with the tools differs.
 Source: "Media.cs";           DestDir: "{app}"; Flags: ignoreversion
+Source: "Mpv.cs";             DestDir: "{app}"; Flags: ignoreversion
+Source: "MediaPlayer.cs";     DestDir: "{app}"; Flags: ignoreversion
 ; The session log, in the same place and naming as EdSharp's, beside the setup
 ; log this installer writes.
 Source: "Log.cs";             DestDir: "{app}"; Flags: ignoreversion
@@ -127,6 +129,7 @@ Source: "FileDir.jss";        DestDir: "{app}"; Flags: ignoreversion
 Source: "mpv.jss";            DestDir: "{app}"; Flags: ignoreversion
 Source: "mpv.jkm";            DestDir: "{app}"; Flags: ignoreversion
 Source: "mpv.jsd";            DestDir: "{app}"; Flags: ignoreversion
+Source: "mpv.jcf";            DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir.jkm";        DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir.jsd";        DestDir: "{app}"; Flags: ignoreversion
 Source: "FileDir.jcf";        DestDir: "{app}"; Flags: ignoreversion
@@ -460,40 +463,46 @@ FileName: "{cmd}"; \
 ; ---- Reinstall: already current, offered only for repair ----
 
 FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installImageTools.cmd""""";  \
+  Parameters: "/c """"{app}\installImageTools.cmd"" reinstall""";  \
   WorkingDir: "{app}"; \
   Description: "{code:descImageTools}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: imageToolsAreCurrent
 
 FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installMpv.cmd""""";  \
+  Parameters: "/c """"{app}\installMpv.cmd"" reinstall""";  \
   WorkingDir: "{app}"; \
   Description: "{code:descMpv}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: mpvIsCurrent
 
 FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installPandoc.cmd""""";  \
+  Parameters: "/c """"{app}\installPandoc.cmd"" reinstall""";  \
   WorkingDir: "{app}"; \
   Description: "{code:descPandoc}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: pandocIsCurrent
 
 FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installOllama.cmd""""";  \
+  Parameters: "/c """"{app}\installOllama.cmd"" reinstall""";  \
   WorkingDir: "{app}"; \
   Description: "{code:descOllama}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: ollamaIsCurrent
 
 FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installMediaTools.cmd""""";  \
+  Parameters: "/c """"{app}\installMediaTools.cmd"" reinstall""";  \
   WorkingDir: "{app}"; \
   Description: "{code:descMediaTools}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: mediaToolsAreCurrent
 
 FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installTranslateModel.cmd""""";  \
+  Parameters: "/c """"{app}\installTranslateModel.cmd"" reinstall""";  \
   WorkingDir: "{app}"; \
   Description: "{code:descTranslateModel}"; \
   Flags: postinstall skipifsilent runascurrentuser unchecked; Check: translateModelIsCurrent
+
+FileName: "{cmd}"; \
+  Parameters: "/c """"{app}\installPdfTools.cmd"" reinstall""";  \
+  WorkingDir: "{app}"; \
+  Description: "{code:descPdfTools}"; \
+  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: pdfToolsAreCurrent
 
 ; ---- After the components: what to do now ----
 ;
@@ -557,6 +566,8 @@ Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\FileDir
 
 var
   gbInstalled: boolean;
+  gbJawsTimeKnown: boolean;
+  gJawsTime: TFileTime;
 
 procedure logLine(sFolder, sText: string);
 var
@@ -733,8 +744,9 @@ var
 function devToolDesc(iIndex: integer; sIdList, sExe, sTool, sInstallLabel: string): string;
 { All three labels start with the action the checkbox performs and carry version
   numbers in parallel: "Install <tool> <latest>", "Update <tool> from <old> to
-  <new>", and "Reinstall <tool> <version> (current version)". When winget cannot
-  say which version is current, the plain label still works. }
+  <new>", and "Reinstall <tool> <version>". Nothing says "(installed)": a box
+  offering to reinstall has already said so. When winget cannot say which
+  version is current, the plain label still works. }
 var
   sInstalled, sAvailable, sId, sRest, sVersion, sFirstId: string;
   iSplit: integer;
@@ -767,14 +779,14 @@ begin
       if sAvailable <> '' then
         result := 'Update ' + sTool + ' from ' + sInstalled + ' to ' + sAvailable
       else if sInstalled <> '' then
-        result := 'Reinstall ' + sTool + ' ' + sInstalled + ' (current version)';
+        result := 'Reinstall ' + sTool + ' ' + sInstalled;
     end;
   end;
   if result = '' then
   begin
     sVersion := exeVersion(sExe);
     if sVersion <> '' then
-      result := 'Reinstall ' + sTool + ' ' + sVersion + ' (installed version)'
+      result := 'Reinstall ' + sTool + ' ' + sVersion
     else
     begin
       sVersion := wingetLatest(sFirstId);
@@ -922,7 +934,7 @@ end;
 function descImageTools(sParam: string): string;
 begin
   if imageToolsPresent() then
-    result := 'Reinstall ImageMagick, for iPhone photos, camera raw, SVG and icons (installed)'
+    result := 'Reinstall ImageMagick, for iPhone photos, camera raw, SVG and icons'
   else
     result := 'Install ImageMagick so iPhone photos (HEIC), camera raw files, SVG drawings and Windows icons can be converted (about 50 MB; ffmpeg cannot read these)';
 end;
@@ -962,7 +974,7 @@ end;
 function descMpv(sParam: string): string;
 begin
   if mpvPresent() then
-    result := 'Reinstall mpv, the media player Play List uses (installed)'
+    result := 'Reinstall mpv, the media player Play List uses'
   else
     result := 'Install mpv so Play List can play what it makes, sound and picture or sound alone (about 60 MB; conversion does not need it)';
 end;
@@ -997,10 +1009,17 @@ begin
   result := not pdfToolsPresent();
 end;
 
+function pdfToolsAreCurrent(): boolean;
+{ The PDF reader had no Reinstall entry at all, so a reader already installed
+  could not be repaired from the finish page even though its label offered to. }
+begin
+  result := pdfToolsPresent();
+end;
+
 function descPdfTools(sParam: string): string;
 begin
   if pdfToolsPresent() then
-    result := 'Reinstall the PDF reader, PyMuPDF4LLM (installed)'
+    result := 'Reinstall the PDF reader, PyMuPDF4LLM'
   else
     result := 'Install the PDF reader, PyMuPDF4LLM, so PDFs can be read with their headings, lists and tables (about 25 MB, plus Python if this computer has none)';
 end;
@@ -1018,7 +1037,7 @@ end;
 function descMediaTools(sParam: string): string;
 begin
   if mediaToolsPresent() then
-    result := 'Reinstall the media tools: ExifTool, ffmpeg and yt-dlp (installed)'
+    result := 'Reinstall the media tools: ExifTool, ffmpeg and yt-dlp'
   else
     result := 'Install the media tools: ExifTool for file metadata, ffmpeg for audio and video, yt-dlp for web media (about 200 MB, shared with other apps)';
 end;
@@ -1041,7 +1060,7 @@ begin
   { Name the model. "A stronger model" tells nobody what they are getting or
     what to look for in Ollama afterwards. }
   if translateModelIsCurrent() then
-    result := 'Reinstall qwen2.5:7b, the translation model (installed)'
+    result := 'Reinstall qwen2.5:7b, the translation model'
   else
     result := 'Install qwen2.5:7b for translation, better than the chat model (about 5 GB; needs Ollama)';
 end;
@@ -1107,6 +1126,37 @@ begin
   end;
 end;
 
+function jawsLogTime(var rTime: TFileTime): boolean;
+{ When the JAWS script log was last written, and whether it is there at all.
+  Whether that step RAN this time cannot be told from the file merely
+  existing: the log survives from the last installation, and reporting it as
+  an action every time is exactly the noise the Results box is meant to be
+  free of. }
+var
+  rFind: TFindRec;
+begin
+  result := False;
+  if FindFirst(ExpandConstant('{userappdata}\FileDir\jawsSettings.log'), rFind) then
+  begin
+    rTime := rFind.LastWriteTime;
+    FindClose(rFind);
+    result := True;
+  end;
+end;
+
+procedure addAction(sFolder, sText: string);
+{ One line saying what this installation actually DID. The Results box is built
+  from these lines and nothing else, so a component that was already there and
+  needed nothing is never mentioned. Appended, because every component script
+  writes its own lines to the same file. }
+var
+  lsLines: TArrayOfString;
+begin
+  SetArrayLength(lsLines, 1);
+  lsLines[0] := sText;
+  SaveStringsToFile(AddBackslash(sFolder) + 'FileDir_setup_actions.txt', lsLines, True);
+end;
+
 procedure saveResultsForSummary(sFolder, sText: string);
 { Hand what the installer already knows to the summary, so ONE box tells the
   whole story instead of two telling halves. }
@@ -1138,6 +1188,13 @@ begin
   if iCurStep = ssPostInstall then
   begin
     gbInstalled := True;
+    { Left over actions from a previous installation would be reported as
+      though they had just happened. The finish-page entries run after this
+      point, so clearing here loses nothing they write. }
+    DeleteFile(ExpandConstant('{localappdata}\FileDir\logs\FileDir_setup_actions.txt'));
+    { What the JAWS script log looked like BEFORE the finish page ran, so that
+      a fresh one can be told from last month's. }
+    gbJawsTimeKnown := jawsLogTime(gJawsTime);
     warmComponentProbes();
   end;
 end;
@@ -1153,6 +1210,8 @@ end;
 
 procedure DeinitializeSetup();
 var
+  bJawsNow: boolean;
+  rJawsNow: TFileTime;
   sBreak, sLogDir, sMessage: string;
 begin
   { DeinitializeSetup runs whenever Setup exits, INCLUDING WHEN THE USER
@@ -1169,18 +1228,21 @@ begin
 
   sMessage := 'FileDir is installed.' + sBreak + sBreak
     + 'Program files:' + sBreak + '  ' + ExpandConstant('{app}') + sBreak
-    + 'Logs:' + sBreak + '  ' + sLogDir + sBreak + sBreak
-    + 'Results' + sBreak;
+    + 'Logs:' + sBreak + '  ' + sLogDir;
 
   { The JAWS scripts, which run before this point and so can be reported here.
     The shared installer records what it copied in a log under the user profile;
-    its presence is what says the step ran. }
-  if FileExists(ExpandConstant('{userappdata}\FileDir\jawsSettings.log')) then
-    sMessage := sMessage + '  JAWS scripts: installed.' + sBreak
-  else if haveJaws() then
-    sMessage := sMessage + '  JAWS scripts: NOT installed. Reinstall and leave that box ticked, or run FileDir.exe --install-jaws-settings from the program folder.' + sBreak
-  else
-    sMessage := sMessage + '  JAWS scripts: not offered, because JAWS was not found on this computer.' + sBreak;
+    its presence is what says the step ran. This is an ACTION rather than a
+    header line, so it joins the ones the component scripts wrote. A computer
+    without JAWS gets no line at all: nothing was done, and "not offered" reads
+    like a fault to somebody who does not use a screen reader. }
+  bJawsNow := jawsLogTime(rJawsNow);
+  if bJawsNow and ((not gbJawsTimeKnown)
+      or (rJawsNow.dwLowDateTime <> gJawsTime.dwLowDateTime)
+      or (rJawsNow.dwHighDateTime <> gJawsTime.dwHighDateTime)) then
+    addAction(sLogDir, 'JAWS scripts installed.')
+  else if (not bJawsNow) and haveJaws() then
+    addAction(sLogDir, 'JAWS scripts were NOT installed. Run FileDir.exe --install-jaws-settings from the program folder.');
 
   { The optional installs run from the finish page AFTER this text is handed
     over, so their outcome cannot be reported here. The summary that runs last

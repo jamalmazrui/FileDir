@@ -8,6 +8,14 @@
 #     BuildFileDir nobump       recompile without taking a new number
 #     BuildFileDir noinstall    build the program but not the installer
 #     BuildFileDir audit        run the checks only, and compile nothing
+#     BuildFileDir compile      compile the program only: no audit, no
+#                               documents, no installer, no new version number
+#
+# The compile action exists for the minutes after a compiler error. A full build
+# regenerates documents and an installer that are about to be thrown away, and
+# the audit checks sources the compiler has not accepted yet. When the question
+# is "does it compile", this asks only that, and it is the quickest way to hear
+# the answer.
 #
 # The checks live in auditFileDir.py, which shares homerPolicy.py with
 # cleanFileDir. There are still only two commands to run: this one and
@@ -129,10 +137,15 @@ foreach ($sName in @("BuildFileDir.ps1", "BuildFileDir.cmd", "auditFileDir.py",
 $bNoBump = ($Action -match "(?i)nobump")
 $bNoInstall = ($Action -match "(?i)noinstall")
 $bAuditOnly = ($Action -match "(?i)^audit$")
+$bCompileOnly = ($Action -match "(?i)^compile$")
+# A compile-only run never takes a new version number: the number belongs to a
+# build that produced something to release.
+if ($bCompileOnly) { $bNoBump = $true }
 writeLog ("Setting Action: '" + $Action + "'")
 writeLog ("Setting nobump: " + $bNoBump)
 writeLog ("Setting noinstall: " + $bNoInstall)
 writeLog ("Setting auditOnly: " + $bAuditOnly)
+writeLog ("Setting compileOnly: " + $bCompileOnly)
 writeLog ("Project directory: " + $sScriptDir)
 
 Set-Location $sScriptDir
@@ -255,6 +268,11 @@ if ($iExit -ne 0) { stopHere ("makeKeyMap.py returned " + $iExit + ". See makeKe
 # check cannot form different opinions about what belongs.  Its shape follows
 # EdSharp's audit, so a check written for one project moves to the other.
 saySection "Audit"
+if ($bCompileOnly) {
+    Write-Host "Compile only, so the audit is skipped."
+    writeLog "Compile only: the audit is skipped. Run a full build before releasing anything."
+}
+else {
 if (-not (Test-Path "auditFileDir.py")) { stopHere "auditFileDir.py not found. The build will not compile without the checks." }
 Write-Host "Auditing sources ..."
 $iExit = runProgram $sPython @("auditFileDir.py") "auditFileDir.py"
@@ -268,6 +286,7 @@ if ($iExit -ne 0) {
 }
 Write-Host "Audit passed."
 writeLog "Audit passed."
+}
 
 if ($bAuditOnly) {
     Write-Host "You asked for the audit only, so nothing was compiled."
@@ -531,11 +550,18 @@ $asCscArgs += $asUdeArgs
 $asCscArgs += @(
     "/out:FileDir.exe",
     "Version.cs", "KeyMap.cs", "FileDir.cs", "Lbc.cs", "Say.cs",
-    "Inix.cs", "Web.cs", "Util.cs", "Dialogs.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Log.cs", "Table.cs"
+    "Inix.cs", "Web.cs", "Util.cs", "Dialogs.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Mpv.cs", "MediaPlayer.cs", "Log.cs", "Table.cs"
 )
 $iExit = runProgram $sCsc $asCscArgs "csc.exe"
 if ($iExit -ne 0) { stopHere ("csc.exe returned " + $iExit + ". The compiler errors are above in this log.") }
 writeLog "FileDir.exe built."
+
+if ($bCompileOnly) {
+    Write-Host "FileDir.exe compiled. No documents, no installer, no new version number."
+    writeLog "Compile only; stopping after the program."
+    writeLog ("Finished " + (Get-Date).ToString("yyyy-MM-dd HH:mm:ss"))
+    exit 0
+}
 
 # =============================================================================
 # Step 5: documents

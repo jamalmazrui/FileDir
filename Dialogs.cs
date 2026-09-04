@@ -104,6 +104,33 @@ return "N";
 return "";
 } // ConfirmDialog method
 
+// ---- who a dialog belongs to ----
+
+// ownerForm: the window a dialog should belong to.
+//
+// These dialogs used to be shown with no owner and then dragged to the front
+// with SetForegroundWindow from their own Shown handler. Both halves of that
+// were wrong for a screen reader. An unowned dialog is a separate top-level
+// window, so opening one reads as leaving the program and arriving somewhere
+// new; forcing it to the foreground a second time, after Windows had already
+// put it there, raises a second window event, and the reader announces the
+// title again. That is how one dialog title came to be spoken more than once.
+//
+// Giving the dialog an owner also makes CenterParent mean what it says: with
+// no owner it silently behaves like CenterScreen.
+//
+// Form.ActiveForm first, so a dialog opened from inside another dialog belongs
+// to that dialog rather than to the main window.
+public static Form ownerForm() {
+try {
+Form frmActive = Form.ActiveForm;
+if (frmActive != null && !frmActive.IsDisposed && frmActive.IsHandleCreated) return frmActive;
+if (App.frame != null && !App.frame.IsDisposed && App.frame.IsHandleCreated) return App.frame;
+}
+catch {}
+return null;
+} // ownerForm method
+
 // ---- file dialogs ----
 
 public static string OpenFileDialog(string sTitle, string sDefaultFile, string sFilter, int iIndex) {
@@ -246,8 +273,7 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 if (bHistory && sResult != null && sResult.Trim().Length > 0) {
 lsRecent = Homer.InputHistory.push(lsRecent, sResult.Trim(), iCount);
@@ -339,8 +365,7 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 return sResultList;
 } // FieldDialog method
@@ -419,8 +444,7 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 return listResults;
 } // ListInputDialog method
@@ -477,8 +501,7 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 } // InfoDialog method
 
@@ -563,10 +586,9 @@ frm.Controls.AddRange(new Control[] {lbl, txt, btnOk});
 frm.ResumeLayout();
 // Focus lands in the text, not on the button: reading is why the dialog opened.
 frm.Shown += delegate(object sender, EventArgs e) {
-SetForegroundWindow((int) frm.Handle);
 txt.Focus();
 };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 } // AnswerDialog method
 
@@ -635,8 +657,7 @@ iButton++;
 }
 
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 Say(sResult.Replace("&", ""));
 return sResult;
@@ -717,8 +738,7 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 return aResult;
 } // ListButtonDialog method
@@ -806,8 +826,7 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 return sResultList;
 } // MultiListDialog method
@@ -876,8 +895,7 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 return listResults;
 } // MultiListDialog method
@@ -1076,7 +1094,6 @@ flpLists.FlowDirection = FlowDirection.LeftToRight;
 Button btnCurrent = new Button();
 
 btnCurrent.Click += delegate(object o, EventArgs e) {
-Say("Current", true);
 string sDirs = "";
 foreach (MdiChild child in App.frame.MdiChildren) {
 if (Directory.Exists(child.Text)) sDirs += child.Text + "\n";
@@ -1098,7 +1115,6 @@ btnCurrent.AccessibleName = btnCurrent.Text.Replace("&", "");
 
 Button btnRecent = new Button();
 btnRecent.Click += delegate(object o, EventArgs e) {
-Say("Recent", true);
 string[] aDirs = App.lsRecentDirs.ToArray();
 string[] aNames = new string[aDirs.Length];
 for (int i = 0; i < aNames.Length; i++) aNames[i] = (aDirs[i].EndsWith(@":\") ? aDirs[i] : Path.GetFileName(aDirs[i]));
@@ -1117,7 +1133,6 @@ btnRecent.AccessibleName = btnRecent.Text.Replace("&", "");
 Button btnQuick = new Button();
 
 btnQuick.Click += delegate(object o, EventArgs e) {
-Say("Quick", true);
 string sQuickDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\FileDir\Quick";
 sQuickDir = Path.GetFullPath(sQuickDir);
 string[] aLinks = Directory.GetFiles(sQuickDir, "*.lnk");
@@ -1146,7 +1161,6 @@ btnQuick.AccessibleName = btnQuick.Text.Replace("&", "");
 Button btnSpecial = new Button();
 
 btnSpecial.Click += delegate(object o, EventArgs e) {
-Say("Special", true);
 string sDir = PickSpecialFolder();
 if (sDir.Length == 0) return;
 sResult = sDir;
@@ -1241,8 +1255,7 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {SetForegroundWindow((int) (int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(ownerForm());
 frm.Dispose();
 return sResult;
 } // DirectoryDialog method
@@ -1354,7 +1367,7 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
-frm.ShowDialog();
+frm.ShowDialog(Lbc.ownerForm());
 frm.Dispose();
 
 string s = sb.ToString();
@@ -1489,7 +1502,7 @@ if (iIndex > 0) Lbc.Say("Item " + (iIndex + 1).ToString());
 bs.Position = iIndex;
 };
 
-frm.ShowDialog();
+frm.ShowDialog(Lbc.ownerForm());
 frm.Dispose();
 
 if (sReturn.Length > 0) {
@@ -1630,7 +1643,7 @@ bs.Position = iIndex;
 }
 };
 
-frm.ShowDialog();
+frm.ShowDialog(Lbc.ownerForm());
 frm.Dispose();
 string[] aResults = listResults.ToArray();
 
@@ -1714,8 +1727,7 @@ iButton++;
 }
 
 frm.ResumeLayout();
-frm.Shown += delegate(object sender, EventArgs e) {Lbc.SetForegroundWindow((int) frm.Handle); };
-frm.ShowDialog();
+frm.ShowDialog(Lbc.ownerForm());
 frm.Dispose();
 Lbc.Say(sResult.Replace("&", ""));
 return sResult;

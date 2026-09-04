@@ -1,6 +1,6 @@
 ﻿# FileDir — Tutorials
 
-**Version 5.0.55**  
+**Version 5.0.64**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License

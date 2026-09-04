@@ -808,6 +808,23 @@ def checkKeysNamedInText():
             if sPart.strip():
                 setBound.add(sPart.strip().lower())
 
+    # DIALOG MNEMONICS ARE KEYS TOO. A control labelled "&Next" answers to Alt+N
+    # for as long as its dialog is open, and a guide that says so is telling the
+    # truth. This check knew only about command keys, and failed the build over
+    # the Media Player's own Alt+H, Alt+N and Alt+Q -- three keys that plainly
+    # work. The ampersands in the dialog sources are read for the letters they
+    # claim. FileDir.cs is left out on purpose: its ampersands are menu labels,
+    # whose keys are declared properly in Hotkeys.ini and checked above.
+    for sDialogSource in ("MediaPlayer.cs", "Dialogs.cs", "Lbc.cs"):
+        sDialogCode = readFile(sDialogSource) or ""
+        for oMatch in re.finditer(r'"[^"\n]*&([A-Za-z])[^"\n]*"', sDialogCode):
+            setBound.add("alt+" + oMatch.group(1).lower())
+
+    # Every Lbc dialog carries Help and Close buttons, whose mnemonics are made
+    # at run time rather than written in a literal.
+    setBound.add("alt+h")
+    setBound.add("alt+c")
+
     # And the ones Windows owns rather than FileDir: moving between and closing
     # child windows is the framework's job, so no command declares them.
     for sFramework in ("control+f6", "control+shift+f6", "control+f4",
@@ -1280,7 +1297,8 @@ def main():
     sHotkeys = readFile("Hotkeys.ini")
 
     for sName in ("FileDir.cs", "Dialogs.cs", "Lbc.cs", "Say.cs", "Inix.cs",
-                  "Util.cs", "Web.cs", "KeyMap.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Log.cs", "Table.cs",
+                  "Util.cs", "Web.cs", "KeyMap.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Mpv.cs",
+                  "MediaPlayer.cs", "Log.cs", "Table.cs",
                   "FileDir.js",
                   "FileDir.manifest", "FileDir.ico", "version.txt",
                   "Hotkeys.ini", "FileDir_setup.iss", "RepoFiles.txt",

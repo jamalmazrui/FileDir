@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.55**  
+**Version 5.0.64**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -829,6 +829,64 @@ press Control+Shift+L again to play that one rather than making another.
 Neither command asks anything: they start playing, with sound and picture. The
 player runs on its own, so FileDir does not sit waiting while you listen.
 Its own keys work in its window: space to pause, arrows to seek, q to stop.
+
+Press **Control+Shift+Q** for Play Queue. It plays the same things Play List
+plays, but inside FileDir instead of inside the player's own window.
+
+The difference is where the list lives. Play List hands everything to mpv and
+steps out of the way: mpv comes to the front, its keys work, and FileDir is not
+involved again until you press q. Play Queue keeps the list here, in a dialog:
+
+- The tracks are in a list you can move through, each with **the name it came
+  with**. For a document that means the words somebody wrote about the link --
+  "Episode 214: The Winter Reading List" rather than ep214_final_mix_v3.mp3.
+- The player has **no window at all**, so nothing takes the foreground and
+  nothing has keys of its own. Every key belongs to the dialog.
+- Closing the dialog stops the player.
+
+The dialog is an ordinary Homer dialog, and everything in it is an ordinary
+control with its own Alt key, in the order you use them:
+
+- **Alt+Q** the queue. Enter plays the track you are on; Control+J and F3 search
+  the list, as in every Homer list.
+- **Alt+I** now playing: track, position and address, kept up to date, read-only
+  and copyable.
+- **Alt+P** play or pause, **Alt+S** stop, **Alt+N** next, **Alt+B** back.
+- **Alt+G** go to a time inside the track. 90, 1:30 and 1:05:00 all work.
+- **Alt+V** volume and **Alt+D** speed, both as percentages you can spin.
+- **Alt+R** repeat the queue, **Alt+A** announce each track.
+- **Alt+Y** copy the address of the track you are on, **Alt+L** save the queue as
+  an .m3u8 play list with its names, **Alt+O** overview: how many tracks there
+  are, then their names read straight through.
+- **Alt+U** use configuration, which remembers the volume, speed and the two
+  boxes above for next time.
+- **Alt+C** closes, **Alt+H** or **F1** lists every field with its description.
+
+Three things have no control of their own, so they have keys: **Alt+Shift+Right**
+and **Left** seek ten seconds, **Page Down** and **Page Up** a minute, **Home**
+returns to the start of the track, and **Alt+Shift+W** says where you are --
+track, number, and position in one answer.
+
+Everything the dialog says is also written to the status line, one message after
+another, so you can read back over a command's announcements with your screen
+reader's say-status-bar key instead of asking for them again. The next control
+you move to replaces the line with its own description.
+
+The queue's label says what is in it -- how many tracks, and where they came
+from -- because a screen reader reads a list's label every time the cursor
+enters the list, while the title bar is read only once.
+
+The dialog speaks only what a screen reader cannot say for itself: the name of a
+track when playback moves on by itself, the position when you ask for it, the
+end of the queue, and the result of a command with nothing on screen to show for
+it. The track name is not spoken while the cursor is in the queue, because your
+screen reader is already reading that line. The volume and speed are not spoken
+either, because a spin box announces its own value.
+
+Which command to use is a matter of what you are doing. Play List is quicker
+when you want to start something and walk away. Play Queue is better when the
+list is worth steering: a page of podcasts where the titles matter, or a set of
+files you want to move around in.
 
 mpv is optional and the installer does not tick it. It is about 60 MB, and it
 carries its own copy of ffmpeg which FileDir already has, so it is worth adding

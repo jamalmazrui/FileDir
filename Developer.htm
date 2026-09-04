@@ -178,7 +178,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.55</strong><br />
+<p><strong>Version 5.0.64</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -894,6 +894,29 @@ in <code>Media.cs</code>, to <code>mpvPresent</code> in the
 <code>.iss</code>, and to <code>$dOfficial</code> in
 <code>summarizeSetup.ps1</code> — all three ask the same question and
 all three must know.</p>
+<h2 id="a-jaws-script-set-needs-four-files-not-three">A JAWS Script Set
+Needs Four Files, Not Three</h2>
+<p><code>.jss</code>, <code>.jkm</code>, <code>.jsb</code> — <strong>and
+<code>.jcf</code></strong>. Without the configuration file, JAWS reports
+the right application and loads the default settings, so the scripts
+never run. Every scripted application in a JAWS settings folder has one;
+that is the quickest way to check the claim.</p>
+<p>The <code>.jcf</code> may be a section header with nothing under it.
+It exists to be found.</p>
+<h2 id="jaws-scripts-do-not-take-effect-until-jaws-looks-again">JAWS
+Scripts Do Not Take Effect Until JAWS Looks Again</h2>
+<p>JAWS reads its compiled scripts at startup. A newer <code>.jsb</code>
+in the settings folder changes nothing for an application JAWS has
+already seen in that session.</p>
+<p><code>App.reloadJaws_Helper()</code> asks a running JAWS to re-read
+everything, through <code>freedomsci.jawsapi</code> and
+<code>RunFunction("ReloadAllConfigs")</code>. It is called after every
+script install. Late binding through reflection, because the type
+library exists only where JAWS is installed and FileDir must run without
+it.</p>
+<p><code>RunFunction</code> returns that the call was
+<em>scheduled</em>, not that it finished, so never treat its answer as
+proof. Restarting JAWS is the certain cure.</p>
 <h2 id="traps-worth-knowing">Traps Worth Knowing</h2>
 <ul>
 <li><strong>Modern packages on .NET Framework 4.8.</strong> Anything

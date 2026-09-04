@@ -1,5 +1,18 @@
 ﻿# summarizeSetup.ps1 -- the single Results box, shown after everything.
 #
+# WHAT THE BOX SAYS
+#
+# Only what this installation session actually DID. A component that was
+# already there and needed nothing is not mentioned: reading nine lines saying
+# "installed" to find the one line that changed is work, and the person did not
+# ask for an inventory. Each component script writes one plain line to
+# FileDir_setup_actions.txt when it installs, updates, reinstalls or fails, and
+# those lines are the box.
+#
+# The full inventory -- every component, where it is and which version -- still
+# goes to the LOG, every time. That is what a support conversation needs, and
+# the log is where technical detail belongs.
+#
 # WHY POWERSHELL RATHER THAN A BATCH FILE
 #
 # EdSharp's batch version of this summary died with exit code 255 partway
@@ -19,14 +32,21 @@ $sLogDir = Join-Path $env:LOCALAPPDATA "FileDir\logs"
 $sLogFile = Join-Path $sLogDir "FileDir_setup.log"
 $sSummaryFile = Join-Path $sLogDir "FileDir_setup_summary.txt"
 $sResultsFile = Join-Path $sLogDir "FileDir_setup_results.txt"
+$sActionsFile = Join-Path $sLogDir "FileDir_setup_actions.txt"
 $lLines = @()
 
 function say($sText) {
+  # A line for the person: the box, the summary file, and the log.
   # Straight to disk as each line is produced: a summary still in memory when
   # something goes wrong is a summary nobody can read.
   $script:lLines += $sText
   try { Add-Content -LiteralPath $sSummaryFile -Value $sText -Encoding UTF8 } catch { }
   try { if ($sText.Trim() -ne "") { Add-Content -LiteralPath $sLogFile -Value "[summary] $sText" -Encoding UTF8 } } catch { }
+}
+
+function note($sText) {
+  # A line for the log alone. Everything technical comes here.
+  try { Add-Content -LiteralPath $sLogFile -Value "[inventory] $sText" -Encoding UTF8 } catch { }
 }
 
 function startHidden($sExe, $lArguments, $sOutFile, $sErrFile) {
@@ -88,18 +108,16 @@ function runBounded($sExe, $lArguments, $iSeconds) {
 }
 
 function findExe($sName) {
-  # The program's own folder is searched as well as the path, because a tool
-  # installed minutes ago is not on this process's path yet. Ollama installs
-  # per user, so its profile copy is tried by name.
   # Everywhere a tool might be, not merely on this process's path. A tool
   # installed minutes ago is not on the path of a process that started before
   # it -- which is how the installer offered "Reinstall mpv" while this summary
   # said it was not installed. Both were true of their own environment.
+  #
+  # THE FOLDER AN INSTALLER ACTUALLY USES IS NOT THE COMMAND'S NAME. mpv's
+  # installer creates "MPV Player"; looking only in a folder called "mpv"
+  # missed it and reported a program that was plainly there as not installed.
   $sPrograms = Join-Path $env:LOCALAPPDATA "Programs"
   $sWinGet = Join-Path $env:LOCALAPPDATA "Microsoft\WinGet"
-  # THE FOLDER AN INSTALLER ACTUALLY USES IS NOT THE COMMAND'S NAME.
-  # mpv installs as "MPV Media Player"; looking only in a folder called "mpv"
-  # missed it and reported a program that was plainly there as not installed.
   $dOfficial = @{
     "mpv"      = @("MPV Player", "mpv", "MPV Media Player", "mpv.net")
     "pandoc"   = @("Pandoc")
@@ -119,16 +137,21 @@ function findExe($sName) {
     }
   }
   $lCandidates += (Join-Path (Join-Path $sPrograms "Ollama") ($sName + ".exe"))
+  # Both WinGet link folders. The machine one is where a portable package
+  # installed by an elevated setup lands, and it was missing here.
   $lCandidates += (Join-Path (Join-Path $sWinGet "Links") ($sName + ".exe"))
+  if ($env:ProgramFiles) { $lCandidates += (Join-Path (Join-Path $env:ProgramFiles "WinGet\Links") ($sName + ".exe")) }
   foreach ($sPath in $lCandidates) {
     if (Test-Path -LiteralPath $sPath) { return $sPath }
   }
   $oFound = Get-Command ($sName + ".exe") -ErrorAction SilentlyContinue
   if ($oFound) { return $oFound.Source }
-  # Last, the folder winget unpacks a portable package into. Its name carries
-  # the publisher and version, so it is searched rather than guessed.
-  $sPackages = Join-Path $sWinGet "Packages"
-  if (Test-Path -LiteralPath $sPackages) {
+  # Last, the folders winget unpacks a portable package into. Their names carry
+  # the publisher and version, so they are searched rather than guessed.
+  $lPackageRoots = @((Join-Path $sWinGet "Packages"))
+  if ($env:ProgramFiles) { $lPackageRoots += (Join-Path $env:ProgramFiles "WinGet\Packages") }
+  foreach ($sPackages in $lPackageRoots) {
+    if (-not (Test-Path -LiteralPath $sPackages)) { continue }
     try {
       $oExe = Get-ChildItem -LiteralPath $sPackages -Filter ($sName + ".exe") -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1
       if ($oExe) { return $oExe.FullName }
@@ -148,7 +171,7 @@ function findPandoc() {
   return ""
 }
 
-function reportPdfReader() {
+function notePdfReader() {
   # Asked of the interpreter that installed it, since a machine may carry
   # several Pythons and only one of them will have the package.
   $sPython = "python"
@@ -158,47 +181,28 @@ function reportPdfReader() {
     if ($sNoted) { $sPython = $sNoted.Trim() }
   }
   $sAnswer = runBounded $sPython @("-c", "import pymupdf4llm; print('ready')") 40
-  if ($sAnswer -match "ready") {
-    say "PDF reader (PyMuPDF4LLM): installed. PDFs are read with their headings, lists and tables."
-  }
-  else {
-    say "PDF reader (PyMuPDF4LLM): not installed. PDFs cannot be read. To add it later, run installPdfTools.cmd in the FileDir folder."
-  }
+  if ($sAnswer -match "ready") { note "PDF reader (PyMuPDF4LLM): installed, read by $sPython" }
+  else { note "PDF reader (PyMuPDF4LLM): not installed" }
 }
 
-function reportPandoc() {
+function notePandoc() {
   $sPandoc = findPandoc
-  if ($sPandoc -eq "") {
-    say "Pandoc: not installed. Convert Format and the richer conversions are unavailable. To add it later, run installPandoc.cmd in the FileDir folder as an administrator."
-    return
-  }
+  if ($sPandoc -eq "") { note "Pandoc: not installed"; return }
   $sVersion = runBounded $sPandoc @("--version") 30
-  say "Pandoc: installed, $sVersion at $sPandoc"
+  note "Pandoc: installed, $sVersion at $sPandoc"
 }
 
-function reportTool($sLabel, $sName, $sLater) {
+function noteTool($sLabel, $sName) {
   $sExe = findExe $sName
-  if ($sExe -eq "") {
-    say "$sLabel`: not installed. To add it later, $sLater."
-    return
-  }
+  if ($sExe -eq "") { note "$sLabel`: not installed"; return }
   # Not every tool answers --version. ExifTool prints a manual page header to
   # that, which is where the reported version "NAME" came from: the first line
   # of its own documentation. It answers -ver with a bare number.
   $lVersionArgs = @("--version")
   if ($sName -eq "exiftool") { $lVersionArgs = @("-ver") }
   $sVersion = runBounded $sExe $lVersionArgs 20
-  if ($sVersion -eq "") {
-    say "$sLabel`: installed at $sExe"
-    return
-  }
-  # ffmpeg says "ffmpeg version 8.1.2-full_build-www.gyan.dev Copyright (c)
-  # 2000-2026 the FFmpeg developers" in one breath. The version is the useful
-  # part; the copyright belongs in the log, not in a box a person is reading.
-  $iCopyright = $sVersion.IndexOf("Copyright")
-  if ($iCopyright -gt 0) { $sVersion = $sVersion.Substring(0, $iCopyright).Trim() }
-  if ($sVersion.Length -gt 60) { $sVersion = $sVersion.Substring(0, 60).Trim() + "..." }
-  say "$sLabel`: installed, $sVersion"
+  if ($sVersion -eq "") { note "$sLabel`: installed at $sExe"; return }
+  note "$sLabel`: installed, $sVersion at $sExe"
 }
 
 function ollamaModels() {
@@ -213,20 +217,48 @@ function ollamaModels() {
   }
 }
 
-function reportChatModel($sList) {
-  if ((findExe "ollama") -eq "") { return }
-  if ($sList -eq "") {
-    say "Chat model llama3.2: could not be checked just now. Press Alt+Shift+F7 in FileDir; it offers to fetch a model if none is there."
-    return
+function noteInventory() {
+  # The whole picture, for the log only. This is what a support conversation
+  # needs, and none of it belongs in a box about what just happened.
+  note "---- components on this computer ----"
+  notePandoc
+  noteTool "ExifTool" "exiftool"
+  noteTool "ffmpeg" "ffmpeg"
+  noteTool "yt-dlp" "yt-dlp"
+  notePdfReader
+  noteTool "ImageMagick" "magick"
+  noteTool "mpv" "mpv"
+  noteTool "Ollama" "ollama"
+  # One probe, read whole: the listing is short, and asking twice would double
+  # the wait on a cold service.
+  $sList = ollamaModels
+  if ((findExe "ollama") -ne "") {
+    if ($sList -eq "") { note "Ollama models: could not be listed" }
+    else { note "Ollama models: $sList" }
   }
-  if ($sList -match "llama3\.2") { say "Chat model llama3.2: installed. Alt+Shift+F7 can translate with it." }
-  else { say "Chat model llama3.2: not downloaded. Run installOllama.cmd in the FileDir folder to fetch it." }
 }
 
-function reportTranslationModel($sList) {
-  if ((findExe "ollama") -eq "") { return }
-  if ($sList -match "qwen2\.5:7b") { say "Translation model qwen2.5:7b: installed. Alt+Shift+F7 will use it." }
-  else { say "Translation model qwen2.5:7b: not installed. Alt+Shift+F7 uses llama3.2, quicker but less accurate." }
+function sayActions() {
+  # One line per thing this session did, written by the component scripts and
+  # by the installer itself. No file, or an empty one, means nothing changed.
+  $lActions = @()
+  if (Test-Path -LiteralPath $sActionsFile) {
+    # Read with the system's own encoding, which is what wrote them; a wrong
+    # guess here would turn the lines into nonsense.
+    foreach ($sLine in @(Get-Content -LiteralPath $sActionsFile -Encoding Default -ErrorAction SilentlyContinue)) {
+      if ($sLine.Trim() -ne "") { $lActions += $sLine.Trim() }
+    }
+  }
+  say "Actions"
+  if ($lActions.Count -eq 0) {
+    say "  Nothing needed changing."
+  }
+  else {
+    foreach ($sAction in $lActions) { say ("  " + $sAction) }
+  }
+  # Removed once read, so the next installation starts from an empty sheet even
+  # if it never reaches the point where the installer clears it.
+  try { if (Test-Path -LiteralPath $sActionsFile) { Remove-Item -LiteralPath $sActionsFile -Force } } catch { }
 }
 
 function main() {
@@ -239,38 +271,24 @@ function main() {
   # What the installer knew before the checkboxes ran, handed over in a file so
   # that ONE box tells the whole story instead of two telling halves.
   if (Test-Path -LiteralPath $sResultsFile) {
-    # Read with the system's own encoding, which is what the installer wrote; a
-    # wrong guess here would turn the lines into nonsense.
-    # Trailing blank lines are dropped before the block is printed. The handed
-    # over message ends with a line break of its own, and one blank line between
-    # sections is a separator while three is a gap somebody has to arrow past.
     $lResults = @(Get-Content -LiteralPath $sResultsFile -Encoding Default -ErrorAction SilentlyContinue)
+    # Trailing blank lines are dropped before the block is printed. One blank
+    # line between sections is a separator; three is a gap to arrow past.
     while (($lResults.Count -gt 0) -and ($lResults[$lResults.Count - 1].Trim() -eq "")) {
       $lResults = $lResults[0..($lResults.Count - 2)]
     }
     foreach ($sLine in $lResults) { say $sLine }
     try { Remove-Item -LiteralPath $sResultsFile -Force } catch { }
+    say ""
   }
 
-  # In the same order as the checkboxes, so the box reads as the page did.
-  say ""
-  say "Components"
-  reportPandoc
-  reportTool "ExifTool" "exiftool" "run installMediaTools.cmd in the FileDir folder"
-  reportTool "ffmpeg" "ffmpeg" "run installMediaTools.cmd in the FileDir folder"
-  reportTool "yt-dlp" "yt-dlp" "run installMediaTools.cmd in the FileDir folder"
-  reportPdfReader
-  reportTool "ImageMagick" "magick" "run installImageTools.cmd in the FileDir folder"
-  reportTool "mpv" "mpv" "run installMpv.cmd in the FileDir folder"
-  reportTool "Ollama" "ollama" "run installOllama.cmd in the FileDir folder"
-  # One probe, read whole: the listing is short, and asking three times would
-  # triple the wait on a cold service.
-  $sList = ollamaModels
-  reportChatModel $sList
-  reportTranslationModel $sList
+  sayActions
+
+  # The inventory is gathered AFTER the box's own lines are settled, so a slow
+  # probe cannot delay what the person is waiting to read.
+  noteInventory
 
   say ""
-  say "Saved as $sSummaryFile"
   say "Full log: $sLogFile"
   say ""
   say "To start FileDir, press Alt+Control+F."
