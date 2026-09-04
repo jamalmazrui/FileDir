@@ -135,6 +135,7 @@ lsNames.Add((i + 1).ToString(CultureInfo.InvariantCulture) + ". " + lsTracks[i].
 int iAnnounced = -1;
 bool bWasPlaying = false;
 bool bEndSaid = false;
+DateTime dtLastSaid = DateTime.MinValue;
 
 Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, owner);
 
@@ -198,12 +199,30 @@ CheckBox chkConfig = dlg.addCheckBox("&Use configuration", bUseConfig,
 Homer.Mpv oPlayer = player;
 List<MediaTrack> lsRef = lsTracks;
 
+// NOW PLAYING IS NOT A CLOCK.
+//
+// The first version rewrote this box twice a second, because the position was
+// in it. Every rewrite is a change a screen reader is entitled to announce, so
+// the box talked over everything else and the dialog became unusable -- keys
+// appeared to do nothing because nothing could be heard, and the position it
+// was so busy reporting was never what anybody had asked for.
+//
+// The box now changes when the track changes and when it is read: moving into
+// it refreshes it first, so it is current exactly when somebody is looking at
+// it. The position on demand is what Alt+Shift+A and Alt+Shift+W are for.
+EventHandler ehRefreshNow = delegate(object o, EventArgs e) {
+string sNowText = nowPlayingText(oPlayer, lsRef);
+if (txtNow.Text != sNowText) txtNow.Text = sNowText;
+};
+txtNow.GotFocus += ehRefreshNow;
+
 btnPlay.Click += delegate(object o, EventArgs e) {
 // The property still holds the state from before the toggle, because the
 // answer comes back over the pipe. So the OLD value names the NEW state:
 // it was playing, therefore it is now paused.
 oPlayer.togglePause();
 say(dlg, oPlayer.paused ? "Playing" : "Paused");
+ehRefreshNow(null, EventArgs.Empty);
 };
 btnStop.Click += delegate(object o, EventArgs e) { oPlayer.stop(); say(dlg, "Stopped"); };
 btnNext.Click += delegate(object o, EventArgs e) { oPlayer.next(); };
@@ -277,6 +296,7 @@ if (bHandled) { ev.Handled = true; ev.SuppressKeyPress = true; }
 // Property changes arrive on the pipe reader's thread, and touching a control
 // from there is a fault waiting to happen. A timer on the interface thread
 // asks instead. Half a second is faster than anyone notices.
+
 Timer tmrWatch = new Timer();
 tmrWatch.Interval = 500;
 tmrWatch.Tick += delegate(object o, EventArgs e) {
@@ -288,28 +308,47 @@ if (iNow != iAnnounced) {
 bool bListHasFocus = lstQueue.Focused;
 iAnnounced = iNow;
 if (lstQueue.SelectedIndex != iNow) lstQueue.SelectedIndex = iNow;
+ehRefreshNow(null, EventArgs.Empty);
+// A track name is spoken at most every second and a half. A queue of web
+// addresses that will not play walks itself to the end in a few seconds,
+// and a name for each of them is not information, it is noise.
+bool bTooSoon = (DateTime.Now - dtLastSaid).TotalMilliseconds < 1500;
 // The reader reads the new line itself when the cursor is in the queue,
 // so the name is said only when it is somewhere else.
-if (chkAnnounce.Checked && !bListHasFocus) say(dlg, lsRef[iNow].sName);
+if (chkAnnounce.Checked && !bListHasFocus && !bTooSoon) {
+dtLastSaid = DateTime.Now;
+say(dlg, lsRef[iNow].sName);
+}
 }
 }
 if (oPlayer.idle && bWasPlaying && !bEndSaid) {
 bEndSaid = true;
+ehRefreshNow(null, EventArgs.Empty);
 say(dlg, "End of queue");
 }
-txtNow.Text = nowPlayingText(oPlayer, lsRef);
 };
 
 dlg.setInitialFocus(lstQueue);
 
-// The whole queue goes to mpv at once, so Next and Back are its own list
-// operations rather than something this dialog has to keep in step.
-for (int i = 0; i < lsTracks.Count; i++) player.loadFile(lsTracks[i].sTarget, i > 0);
-player.setVolume(iVolume);
-player.setSpeed(((double) iSpeed) / 100.0);
-player.setLoopPlaylist(bRepeat);
+// THE QUEUE IS HANDED OVER ONCE THE DIALOG IS UP, not before it.
+//
+// The whole queue goes to mpv, so Next and Back are its own list operations
+// rather than something this dialog has to keep in step. A hundred tracks is a
+// hundred commands, though, and sending them before the window exists means the
+// first thing a person meets is a window that has not finished being born. The
+// Shown event fires once the dialog is on screen and the queue goes then.
+Homer.Mpv oLoader = player;
+List<MediaTrack> lsToLoad = lsTracks;
+int iStartVolume = iVolume;
+int iStartSpeed = iSpeed;
+bool bStartRepeat = bRepeat;
+dlg.form.Shown += delegate(object o, EventArgs e) {
+for (int i = 0; i < lsToLoad.Count; i++) oLoader.loadFile(lsToLoad[i].sTarget, i > 0);
+oLoader.setVolume(iStartVolume);
+oLoader.setSpeed(((double) iStartSpeed) / 100.0);
+oLoader.setLoopPlaylist(bStartRepeat);
+};
 tmrWatch.Start();
-say(dlg, sQueueLabel.Replace("&", "") + " loaded");
 
 try {
 dlg.runWithButtons(new string[] { "Close" });

@@ -73,7 +73,23 @@ public const int c_iDefaultVolume = 70;
 
 // ---- state --------------------------------------------------------------
 
-private readonly object oLock = new object();
+// TWO LOCKS, AND NO INPUT OR OUTPUT UNDER EITHER OF THEM.
+//
+// The first version had one lock held over both the shared fields and the write
+// to the pipe. That is a deadlock, and it happened: a write blocks when mpv is
+// slow to read, the caller keeps the lock while it blocks, the reader thread
+// then waits for that same lock instead of draining the pipe, mpv fills the
+// pipe and stops reading -- and everything stops. Playback carried on, because
+// mpv had already been given the list, while the dialog froze with no way to
+// close it. The mpv developers warn about exactly this shape.
+//
+// So: oStateLock guards the handful of fields and is never held across a call
+// that can block, and nothing writes to the pipe from a caller's thread at all.
+// Commands go onto a queue and a writer thread sends them.
+private readonly object oStateLock = new object();
+private readonly Queue<string> qOutgoing = new Queue<string>();
+private AutoResetEvent evOutgoing = new AutoResetEvent(false);
+private Thread threadWriter;
 private bool bDisposed;
 private bool bIdleValue = true;
 private bool bPausedValue;
@@ -163,7 +179,7 @@ return "";
 // ---- starting and stopping ----------------------------------------------
 
 public string program { get { return sProgram; } }
-public string lastError { get { lock (oLock) { return sLastError; } } }
+public string lastError { get { lock (oStateLock) { return sLastError; } } }
 public bool running { get { return oProcess != null && !oProcess.HasExited; } }
 
 // start: launch mpv as a service and connect to its pipe.
@@ -229,6 +245,11 @@ threadReader.IsBackground = true;
 threadReader.Name = "homerMpvReader";
 threadReader.Start();
 
+threadWriter = new Thread(new ThreadStart(writeLoop));
+threadWriter.IsBackground = true;
+threadWriter.Name = "homerMpvWriter";
+threadWriter.Start();
+
 // Ask once for the handful of properties worth knowing, so nothing later
 // has to wait for an answer.
 sendRaw("{\"command\": [\"observe_property\", " + c_iIdTimePos + ", \"time-pos\"]}");
@@ -241,7 +262,7 @@ return true;
 }
 catch (Exception ex) {
 sError = ex.Message;
-lock (oLock) { sLastError = ex.Message; }
+lock (oStateLock) { sLastError = ex.Message; }
 stopProcess();
 return false;
 }
@@ -255,8 +276,20 @@ catch (Exception) { }
 public void Dispose() {
 if (bDisposed) return;
 bDisposed = true;
+// The quit is queued while the writer thread is still running, and only then
+// is everything stopped: a quit that never left the queue would leave mpv
+// playing with no window and no way to reach it.
+try {
+lock (qOutgoing) { qOutgoing.Enqueue("{\"command\": [\"quit\"]}"); }
+evOutgoing.Set();
+}
+catch (Exception) { }
+try { Thread.Sleep(150); }
+catch (Exception) { }
 bStopping = true;
-try { sendRaw("{\"command\": [\"quit\"]}"); }
+try { evOutgoing.Set(); }
+catch (Exception) { }
+try { if (threadWriter != null) threadWriter.Join(300); }
 catch (Exception) { }
 try { if (threadReader != null) threadReader.Join(300); }
 catch (Exception) { }
@@ -311,12 +344,12 @@ public bool setLoopPlaylist(bool bValue) { return command("set_property", "loop-
 
 // ---- what mpv last said -------------------------------------------------
 
-public bool paused { get { lock (oLock) { return bPausedValue; } } }
-public bool idle { get { lock (oLock) { return bIdleValue; } } }
-public double duration { get { lock (oLock) { return dDurationValue; } } }
-public double position { get { lock (oLock) { return dPositionValue; } } }
-public int playlistIndex { get { lock (oLock) { return iPlaylistPosValue; } } }
-public string title { get { lock (oLock) { return sTitleValue; } } }
+public bool paused { get { lock (oStateLock) { return bPausedValue; } } }
+public bool idle { get { lock (oStateLock) { return bIdleValue; } } }
+public double duration { get { lock (oStateLock) { return dDurationValue; } } }
+public double position { get { lock (oStateLock) { return dPositionValue; } } }
+public int playlistIndex { get { lock (oStateLock) { return iPlaylistPosValue; } } }
+public string title { get { lock (oStateLock) { return sTitleValue; } } }
 
 // formatTime: seconds as a person would say them. Negative or unknown gives
 // an empty string rather than a misleading zero.
@@ -350,18 +383,42 @@ return dTotal;
 
 // ---- the pipe -----------------------------------------------------------
 
+// sendRaw: hand a line to the writer thread and return at once.
+//
+// The caller is usually the interface thread, and the interface thread must
+// never wait on a pipe. Whether the command reaches mpv is not something the
+// caller can be told here, which is honest: the answer would be a lie either
+// way, since mpv acknowledges asynchronously.
 private bool sendRaw(string sJson) {
-try {
-lock (oLock) {
-if (writer == null) return false;
-writer.Write(sJson);
-writer.Write("\n");
-}
+if (bStopping || writer == null) return false;
+lock (qOutgoing) { qOutgoing.Enqueue(sJson); }
+try { evOutgoing.Set(); }
+catch (Exception) { return false; }
 return true;
 }
+
+// writeLoop: the only thread that writes to the pipe.
+private void writeLoop() {
+try {
+while (!bStopping) {
+evOutgoing.WaitOne(200);
+while (true) {
+string sLine = null;
+lock (qOutgoing) { if (qOutgoing.Count > 0) sLine = qOutgoing.Dequeue(); }
+if (sLine == null) break;
+try {
+writer.Write(sLine);
+writer.Write("\n");
+}
 catch (Exception ex) {
-lock (oLock) { sLastError = ex.Message; }
-return false;
+lock (oStateLock) { sLastError = ex.Message; }
+return;
+}
+}
+}
+}
+catch (Exception ex) {
+lock (oStateLock) { sLastError = ex.Message; }
 }
 }
 
@@ -377,7 +434,7 @@ handleLine(sLine);
 }
 }
 catch (Exception ex) {
-lock (oLock) { sLastError = ex.Message; }
+lock (oStateLock) { sLastError = ex.Message; }
 }
 }
 
@@ -387,20 +444,22 @@ if (sEvent.Length == 0) return;
 
 if (sEvent == "property-change") {
 string sName = jsonStringValue(sLine, "name");
-if (sName == "time-pos") { lock (oLock) { dPositionValue = jsonNumberValue(sLine, "data"); } }
-else if (sName == "duration") { lock (oLock) { dDurationValue = jsonNumberValue(sLine, "data"); } }
-else if (sName == "pause") { lock (oLock) { bPausedValue = jsonBoolValue(sLine, "data"); } }
+// Parsed first, assigned second: the parsing is the slow half, and nothing
+// slow belongs inside a lock the interface thread is waiting on.
+if (sName == "time-pos") { double dNew = jsonNumberValue(sLine, "data"); lock (oStateLock) { dPositionValue = dNew; } }
+else if (sName == "duration") { double dNew = jsonNumberValue(sLine, "data"); lock (oStateLock) { dDurationValue = dNew; } }
+else if (sName == "pause") { bool bNew = jsonBoolValue(sLine, "data"); lock (oStateLock) { bPausedValue = bNew; } }
 else if (sName == "idle-active") {
 bool bIdleNow = jsonBoolValue(sLine, "data");
 bool bWasPlaying;
-lock (oLock) { bWasPlaying = !bIdleValue; bIdleValue = bIdleNow; }
+lock (oStateLock) { bWasPlaying = !bIdleValue; bIdleValue = bIdleNow; }
 if (bIdleNow && bWasPlaying && playbackEnded != null) playbackEnded();
 }
-else if (sName == "media-title") { lock (oLock) { sTitleValue = jsonStringValue(sLine, "data"); } }
+else if (sName == "media-title") { string sNew = jsonStringValue(sLine, "data"); lock (oStateLock) { sTitleValue = sNew; } }
 else if (sName == "playlist-pos") {
 int iNew = (int) jsonNumberValue(sLine, "data");
 bool bChanged = false;
-lock (oLock) {
+lock (oStateLock) {
 if (iNew != iPlaylistPosValue) { iPlaylistPosValue = iNew; bChanged = true; }
 }
 if (bChanged && iNew >= 0 && trackChanged != null) trackChanged(iNew);

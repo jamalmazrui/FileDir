@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.64**  
+**Version 5.0.66**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -786,6 +786,42 @@ nothing visible to show for it -- "Address copied", "Stopped", "Saved
 PlayList.m3u8". The name is not spoken while the cursor is in the queue, because
 the reader is reading that line already, and the volume and speed are never
 spoken, because a spin box announces its own value.
+
+**The Media Player built, ran, played -- and its dialog could not be used.**
+Tab appeared to do nothing, Escape would not close it, and JAWS could not read
+it, while the music carried on. Two faults, and either alone would have been
+enough.
+
+**Now playing was a clock.** The box was rewritten twice a second, because the
+position was in it. Every rewrite is a change a screen reader is entitled to
+announce, so the box talked over everything else: keys seemed dead because
+nothing else could be heard, and the position it was so busy reporting was never
+the one anybody had asked for.
+
+The box now changes when the track changes, when play or pause is pressed, and
+when the cursor moves into it -- which refreshes it first, so it is current
+exactly when somebody is reading it. The position on demand is what Alt+Shift+A
+and Alt+Shift+W were always for. A track name is also spoken at most once every
+second and a half: a queue of web addresses that will not play walks itself to
+the end in seconds, and a name for each is noise rather than information.
+
+**And the plumbing held one lock over both the shared values and the pipe.**
+That is a deadlock waiting for a slow moment: a write blocks, the caller keeps
+the lock while it blocks, the reader thread waits for that same lock instead of
+draining the pipe, mpv fills the pipe and stops reading, and everything stops --
+with playback continuing, because mpv had already been given the list. The mpv
+developers warn about exactly this shape, the first paper on this design quoted
+the warning, and the code did it anyway.
+
+Mpv.cs now has two locks and neither is ever held across anything that can
+block. Nothing writes to the pipe from a caller's thread at all: commands go on
+a queue and a writer thread sends them, so the interface thread can never wait
+on mpv for any reason. Property changes are parsed before the lock is taken and
+only the assignment happens inside it.
+
+The queue is also handed over once the dialog is on screen rather than before
+it, so a hundred tracks are not being loaded while the window is still being
+born.
 
 **A local variable that had moved into a helper was still being read.** Play
 List's document reading was factored out into documentLinks_Helper, and one line
