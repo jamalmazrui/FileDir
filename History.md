@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.66**  
+**Version 5.0.68**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,7 +44,7 @@ MIT License
 - [Version 3.7](#version-3-7)
 - [Version 3.8](#version-3-8)
 - [Version 3.9](#version-3-9)
-- [Version 5.0.63](#version-5-0-63)
+- [Version 5.0.67](#version-5-0-67)
 - [Version 5.0.62](#version-5-0-62)
 - [Version 5.0.61](#version-5-0-61)
 - [Version 5.0.60](#version-5-0-60)
@@ -667,7 +667,7 @@ An option at the end of the FileDir installer lets you install this by simply ma
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
 
-## Version 5.0.63
+## Version 5.0.67
 
 *September 2026*
 
@@ -786,6 +786,142 @@ nothing visible to show for it -- "Address copied", "Stopped", "Saved
 PlayList.m3u8". The name is not spoken while the cursor is in the queue, because
 the reader is reading that line already, and the volume and speed are never
 spoken, because a spin box announces its own value.
+
+**No control in Lbc sets its accessible name any more, and one of them was
+hiding what it carried.** Repetitive speech was the symptom: a screen reader
+reads a control's accessible name AND the visible text that names it, so a
+button called "OK" whose caption is "OK", or a text box called "Volume percent"
+sitting under a label reading "Volume percent", gets read twice.
+
+An Lbc dialog gives every control a visible name already -- its own caption, or
+the Label above it -- so the property was never needed and is now set nowhere.
+The one exception the guidelines allow is a read-only memo that fills its own
+dialog, where the window title is the name; those two, in the Help window and
+the record viewer, now set nothing either.
+
+The status line was the worst of them. It was named "Status", and a Label's
+accessible name REPLACES its text as far as a screen reader is concerned -- so
+that one word was all a reader could get from it, hiding every message it
+carried, including the transcript of what the dialog had just said.
+
+Help and the F7 control list work a name out from the label or the caption when
+they need one, which is the same answer without the duplication.
+
+**The player was rebuilt to a layout, and is now the Homer Player.** Five rows,
+each holding the controls that belong together: the Tracks queue; Order with
+Next and Previous; Forward and Backward with the Increment they move by; Rate
+and Volume; then Go, Stop, Help and Close.
+
+Tracks now carry a presenter and a length as well as a name, taken from the
+#EXTINF line a play list already provides, where "Presenter - Title" means what
+it has always meant. The Order list sorts by play list order, title, presenter
+or length -- titles ignoring a leading A, An or The, presenters by surname. The
+sort moves the ROWS and a map from row to queue position; it never touches the
+queue mpv is playing, so sorting during playback disturbs nothing.
+
+Sliders replaced the spin boxes for Rate and Volume and gave the Increment a
+control of its own, so Forward and Backward move by an amount that is visible
+and adjustable rather than fixed in code. A third slider was considered and left
+out: Position is the obvious candidate and the wrong one, because a control
+showing where playback has reached is either wrong most of the time or updated
+twice a second, and a control that changes twice a second is one a screen reader
+talks over everything else to report.
+
+**Scroll Lock is play and pause**, from anywhere in the dialog and nowhere else.
+It has a cost worth recording: FileDir treats Scroll Lock as silence, so the
+player now speaks globally, which is the only way a player whose pause key is
+Scroll Lock can still be heard.
+
+**Settings look after themselves.** Increment, rate, volume and order are
+written the moment they change, and the dialog closes with mpv's
+quit-watch-later, so where each track had reached is remembered -- uppercase Q's
+behaviour in mpv's own window, without anybody having to ask for it.
+
+**Four additions to the shared Lbc class.** addSlider, a track bar with a label,
+which Windows already gives arrow keys, Page keys, Home and End and announces
+for itself. runPlain, for a dialog whose buttons are commands rather than ways
+out: the bottom row closes the dialog on any button, which is right for OK and
+useless for Play. close, so such a dialog can shut itself. And a band-aware
+field width, so a list or a slider sharing a row takes a share of it.
+
+**No control sets its own accessible name any more.** A button carries its
+caption and a field carries the label above it; setting the property to the same
+words is how a control comes to be announced twice. Help and the F7 control list
+now work the name out from the label or the caption when they need it, which is
+the same answer without the duplication.
+
+**Answers are remembered the moment they are given.** Everything a command asks
+for -- the folder to copy to, the name of a play list, the address to fetch --
+was held in memory and written to FileDir.ini on the way out. That is fine until
+a session ends any other way: a crash, a hang, or a program killed because a
+dialog would not close, which is how several sessions ended this week. Then a
+whole day's answers are gone and the next session starts from the defaults.
+
+Each of those twenty values is now a property whose setter writes it. Not one
+call site changed: an assignment that used to reach only memory now reaches the
+disk as well, once, the moment the person answers. Reading the file back does
+not write it again.
+
+**The audit did not know that a dialog's own keys are keys.** It failed the
+build over Alt+Shift+Z -- undo the seek -- while passing Alt+Shift+F beside it,
+purely because some command elsewhere happened to use the same chord. It now
+reads the letters a dialog's Alt+Shift handler switches on, in files that
+actually gate a handler that way, and counts them as provided.
+
+**The player answers every command mpv's own window does -- in Windows keys,
+not mpv's.** Somebody who has learned mpv should not have to learn a second set
+of commands, but the keys themselves are a different question from the commands,
+and copying mpv's keys into a Windows dialog was wrong.
+
+Most of mpv's commands became controls, which is where they belong: Space is
+Alt+P, m is Alt+M, 9 and 0 are the volume box, Enter and the angle brackets are
+the Next and Back buttons, q is Escape, and uppercase Q -- quit while writing
+down where playback had reached -- is a new button, Keep place and close, on
+Alt+K. Its F8 playlist overlay, which mpv admits may not be spoken, is the queue
+itself with Alt+O to read it aloud, and its question-mark binding list is F1.
+
+Movement inside a track is the one thing no control expresses well, so it kept
+keys -- and the first attempt gave it mpv's own: arrows, Home, the Page keys and
+Backspace. In Windows those keys mean selecting and navigating, and in these two
+programs they mean it exactly: Shift+Home marks to the top, Alt+Shift+Home
+unmarks that span in both FileDir and DbDo, Control+Home goes to the first item,
+Control+Up and Control+Down step through marked ones, and Backspace goes up a
+level. A player command wearing one of those is a false promise, however local
+the dialog is, because the muscle memory is not local.
+
+So those commands are now Alt+Shift and a letter, which Windows leaves alone and
+which can carry a mnemonic: F and R seek forward and rewind five seconds, N and
+P move to the next and previous chapter, T returns to the top of the track, Z
+undoes a seek, A says the position and W says the track, its number and position
+together. Nothing larger than five seconds has a key, because Go to time on
+Alt+G says exactly where to land.
+
+Three commands were missing from the plumbing and are now in the shared Mpv
+class: chapter movement, revert-seek, and quit-watch-later.
+
+**No tutor messages, because Lbc was not keeping its own promise.** A screen
+reader reads a field's Alt key from the keyboard shortcut Windows reports for it.
+A button or a checkbox carries its own caption with the ampersand in it. A text
+box or a list box has no caption, so the Label above carries one, and Windows
+gives the letter to the control that follows that label in focus order.
+
+Lbc's whole layout contract is that controls are visited in the order they are
+added. It was numbering the fields and leaving every label unnumbered, so in
+focus order the labels sorted ahead of everything: no label was the thing before
+its own field, and both the Alt key and the tutor message went missing.
+
+Focus order is now settled in one place. Every control Lbc creates -- labels,
+fields, separators, the containers a band makes, and the buttons along the
+bottom -- takes the next number in a single sequence as it is added, so the
+order on screen, the order Tab visits, and the order a label sits before its
+field are the same order by construction rather than by luck. The buttons in the
+bottom row are built right to left so the row reads left to right, and are
+numbered by the order the caller named them, so Tab visits them left to right
+too.
+
+Nothing in this needs a key handler. The ampersands and the sequence are the
+whole mechanism, which is what the Windows API has provided since long before
+WinForms wrapped it.
 
 **The Media Player built, ran, played -- and its dialog could not be used.**
 Tab appeared to do nothing, Escape would not close it, and JAWS could not read

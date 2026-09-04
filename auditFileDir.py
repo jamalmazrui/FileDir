@@ -825,6 +825,22 @@ def checkKeysNamedInText():
     setBound.add("alt+h")
     setBound.add("alt+c")
 
+    # A DIALOG'S OWN KEYS ARE KEYS TOO. A dialog that handles Alt+Shift and a
+    # letter in a KeyDown handler provides those keys as surely as the hotkey
+    # table provides a command key, and a guide that names them is telling the
+    # truth. The rule failed the build over the Media Player's Alt+Shift+Z while
+    # passing its Alt+Shift+F, purely because a command elsewhere happened to
+    # use the same chord.
+    #
+    # Only files that actually gate a handler on Alt and Shift are read, and
+    # only the letters that handler switches on are taken.
+    for sDialogSource in ("MediaPlayer.cs", "Dialogs.cs", "Lbc.cs"):
+        sDialogCode = readFile(sDialogSource) or ""
+        if "!ev.Alt || !ev.Shift" not in sDialogCode:
+            continue
+        for oMatch in re.finditer(r"case Keys\.(\w+)\s*:", sDialogCode):
+            setBound.add("alt+shift+" + oMatch.group(1).lower())
+
     # And the ones Windows owns rather than FileDir: moving between and closing
     # child windows is the framework's job, so no command declares them.
     for sFramework in ("control+f6", "control+shift+f6", "control+f4",

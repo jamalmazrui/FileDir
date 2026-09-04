@@ -272,37 +272,121 @@ public static string sPassword = "";
 public static string sSenderAddress = "";
 public static string sOutgoingServer = "";
 public static string[] aTags = {};
-public static string sCopyText = "";
-public static string sMoveText = "";
+static string sCopyTextValue = "";
+public static string sCopyText {
+get { return sCopyTextValue; }
+set { sCopyTextValue = value; rememberInternal("Copy", value); }
+} // sCopyText property
+static string sMoveTextValue = "";
+public static string sMoveText {
+get { return sMoveTextValue; }
+set { sMoveTextValue = value; rememberInternal("Move", value); }
+} // sMoveText property
 public static string sFilterText = "";
-public static string sEvaluateText = "";
-public static string sCalculateText = "";
-public static int iCalculateItem = 0;
-public static string sFileFindText = "";
-public static string sFileFindFilterText = "*.*";
+static string sEvaluateTextValue = "";
+public static string sEvaluateText {
+get { return sEvaluateTextValue; }
+set { sEvaluateTextValue = value; rememberInternal("Evaluate", value); }
+} // sEvaluateText property
+static string sCalculateTextValue = "";
+public static string sCalculateText {
+get { return sCalculateTextValue; }
+set { sCalculateTextValue = value; rememberInternal("Calculate", value); }
+} // sCalculateText property
+static int iCalculateItemValue = 0;
+public static int iCalculateItem {
+get { return iCalculateItemValue; }
+set { iCalculateItemValue = value; rememberInternal("CalculateItem", value.ToString()); }
+} // iCalculateItem property
+static string sFileFindTextValue = "";
+public static string sFileFindText {
+get { return sFileFindTextValue; }
+set { sFileFindTextValue = value; rememberInternal("FileFind", value); }
+} // sFileFindText property
+static string sFileFindFilterTextValue = "*.*";
+public static string sFileFindFilterText {
+get { return sFileFindFilterTextValue; }
+set { sFileFindFilterTextValue = value; rememberInternal("FileFindFilter", value); }
+} // sFileFindFilterText property
 public static string sFileFindDir = "*.*";
 public static string[] aFileFind = {};
 public static int iFileFind = -1;
-public static string sFTPText = "";
-public static string sGoToText = "";
-public static string sJumpText = "";
-public static string sKeywordsText = "";
-public static string sOpenText = "";
+static string sFTPTextValue = "";
+public static string sFTPText {
+get { return sFTPTextValue; }
+set { sFTPTextValue = value; rememberInternal("FTP", value); }
+} // sFTPText property
+static string sGoToTextValue = "";
+public static string sGoToText {
+get { return sGoToTextValue; }
+set { sGoToTextValue = value; rememberInternal("GoTo", value); }
+} // sGoToText property
+static string sJumpTextValue = "";
+public static string sJumpText {
+get { return sJumpTextValue; }
+set { sJumpTextValue = value; rememberInternal("Jump", value); }
+} // sJumpText property
+static string sKeywordsTextValue = "";
+public static string sKeywordsText {
+get { return sKeywordsTextValue; }
+set { sKeywordsTextValue = value; rememberInternal("Keywords", value); }
+} // sKeywordsText property
+static string sOpenTextValue = "";
+public static string sOpenText {
+get { return sOpenTextValue; }
+set { sOpenTextValue = value; rememberInternal("Open", value); }
+} // sOpenText property
 public static string sOrderText = "";
 public static string sRenameWildcardsText = "";
-public static string sRenameRegexText = "";
-public static string sUnarchiveText = "";
+static string sRenameRegexTextValue = "";
+public static string sRenameRegexText {
+get { return sRenameRegexTextValue; }
+set { sRenameRegexTextValue = value; rememberInternal("RenameRegex", value); }
+} // sRenameRegexText property
+static string sUnarchiveTextValue = "";
+public static string sUnarchiveText {
+get { return sUnarchiveTextValue; }
+set { sUnarchiveTextValue = value; rememberInternal("Unarchive", value); }
+} // sUnarchiveText property
 public static string sUnarchivePassword = "";
-public static string sWebText = "";
-public static string sZipText = "";
-public static string sZipList = "";
-public static string sVirtualFolder = "";
-public static string sBatchMail = "";
+static string sWebTextValue = "";
+public static string sWebText {
+get { return sWebTextValue; }
+set { sWebTextValue = value; rememberInternal("Web", value); }
+} // sWebText property
+static string sZipTextValue = "";
+public static string sZipText {
+get { return sZipTextValue; }
+set { sZipTextValue = value; rememberInternal("Zip", value); }
+} // sZipText property
+static string sZipListValue = "";
+public static string sZipList {
+get { return sZipListValue; }
+set { sZipListValue = value; rememberInternal("ZipList", value); }
+} // sZipList property
+static string sVirtualFolderValue = "";
+public static string sVirtualFolder {
+get { return sVirtualFolderValue; }
+set { sVirtualFolderValue = value; rememberInternal("VirtualFolder", value); }
+} // sVirtualFolder property
+static string sBatchMailValue = "";
+public static string sBatchMail {
+get { return sBatchMailValue; }
+set { sBatchMailValue = value; rememberInternal("BatchMail", value); }
+} // sBatchMail property
 public static Stopwatch stopwatch = new Stopwatch();
 //public static Timer timer = null;
 public static System.Timers.Timer timer = null;
-public static string sTimerInterval = "0";
-public static string sTimerStop = "0:00";
+static string sTimerIntervalValue = "0";
+public static string sTimerInterval {
+get { return sTimerIntervalValue; }
+set { sTimerIntervalValue = value; rememberInternal("TimerInterval", value); }
+} // sTimerInterval property
+static string sTimerStopValue = "0:00";
+public static string sTimerStop {
+get { return sTimerStopValue; }
+set { sTimerStopValue = value; rememberInternal("TimerStop", value); }
+} // sTimerStop property
 public static DateTime dtTimerStart = DateTime.Now;
 public static TimeSpan tsElapsed = new TimeSpan();
 
@@ -776,6 +860,9 @@ FileSystem.MoveFile(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowE
 } // moveFile method
 
 public static void readIni() {
+// Reading is not answering: nothing read from the file is written back to it.
+bLoadingIni = true;
+try {
 App.Recycle = App.readValue(App.sIniFile, "Settings", "RecycleWithDelete", (App.Recycle ? "y" : "n")).Trim().ToLower() == "n" ? false : true;
 App.DirsBeforeFiles = App.readValue(App.sIniFile, "Settings", "DirsBeforeFiles", (App.DirsBeforeFiles ? "y" : "n")).Trim().ToLower() == "n" ? false : true;
 App.bExtraSpeech = App.readValue(App.sIniFile, "Settings", "ExtraSpeech", (App.bExtraSpeech ? "y" : "n")).Trim().ToLower() == "n" ? false : true;
@@ -814,7 +901,31 @@ App.sVirtualFolder = App.readValue(App.sIniFile, "Internal", "VirtualFolder", Ap
 App.sBatchMail = App.readValue(App.sIniFile, "Internal", "BatchMail", App.sBatchMail);
 App.sTimerInterval = App.readValue(App.sIniFile, "Internal", "TimerInterval", App.sTimerInterval);
 App.sTimerStop = App.readValue(App.sIniFile, "Internal", "TimerStop", App.sTimerStop);
+}
+finally { bLoadingIni = false; }
 } // readIni method
+
+// REMEMBERED THE MOMENT IT IS ANSWERED, not when the program closes.
+//
+// Everything a command asks for -- the folder to copy to, the name of a play
+// list, the address to fetch -- used to be held in memory and written to
+// FileDir.ini on the way out. That is fine until a session ends any other way:
+// a crash, a hang, a power cut, or a program killed because a dialog would not
+// close. Then the answers a person gave that day are gone, and the next session
+// starts with the defaults, which is exactly what it feels like when it
+// happens.
+//
+// Each of these values is now a property whose setter writes it. Nothing at any
+// call site changed: an assignment that used to reach only memory now reaches
+// the disk as well, once, the moment the person answers.
+static bool bLoadingIni = false;
+
+static void rememberInternal(string sKey, string sValue) {
+if (bLoadingIni) return;
+if (string.IsNullOrEmpty(sIniFile)) return;
+try { App.writeValue(sIniFile, "Internal", sKey, sValue == null ? "" : sValue); }
+catch (Exception) { }
+} // rememberInternal method
 
 public static void writeIni() {
 App.writeValue(App.sIniFile, "Settings", "RecycleWithDelete", (App.Recycle ? "y" : "n"));

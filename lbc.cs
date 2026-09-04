@@ -423,8 +423,10 @@ public static class HelpDialog
             tb.ScrollBars = ScrollBars.Vertical;
             tb.WordWrap = true;
             tb.Font = new Font(FontFamily.GenericMonospace, 10f);
+            // No accessible name. This is the whole dialog: a read-only memo
+            // filling a window whose title already says what it holds, and a
+            // name here would only be one more thing to read out.
             tb.Text = sText;
-            tb.AccessibleName = "Help text";
             tb.TabIndex = 0;
             tb.SelectionStart = 0;
             tb.SelectionLength = 0;
@@ -434,7 +436,6 @@ public static class HelpDialog
 
             Button btnClose = new Button();
             btnClose.Text = "&OK";
-            btnClose.AccessibleName = "OK";
             btnClose.DialogResult = DialogResult.OK;
             btnClose.Size = new Size(90, 28);
             btnClose.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -481,14 +482,15 @@ public static class HelpDialog
             tb.Multiline = true; tb.ReadOnly = true;
             tb.ScrollBars = ScrollBars.Vertical; tb.WordWrap = true;
             tb.Font = new Font(FontFamily.GenericMonospace, 10f);
-            tb.Text = sText; tb.AccessibleName = "Record";
+            // No accessible name: the window title says what this holds.
+            tb.Text = sText;
             tb.TabIndex = 0; tb.SelectionStart = 0; tb.SelectionLength = 0;
             tb.Size = new Size(dlg.ClientSize.Width - 20, dlg.ClientSize.Height - 50);
             tb.Location = new Point(10, 10);
             tb.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
 
             Button btnClose = new Button();
-            btnClose.Text = "&OK"; btnClose.AccessibleName = "OK";
+            btnClose.Text = "&OK";
             btnClose.DialogResult = DialogResult.OK;
             btnClose.Size = new Size(90, 28);
             btnClose.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -566,10 +568,18 @@ public static class HelpDialog
 //   - Each labeled control gets a Label above it (not beside).
 //     Uniform vertical rhythm, label-then-control reading order.
 //   - The label text passes through unchanged (caller may
-//     include '&' for mnemonic letters); the control's
-//     AccessibleName strips '&' and trailing ':'.
-//   - TabIndex is assigned in add order. WinForms Labels are
-//     non-focusable and naturally skipped during tab traversal.
+//     include '&' for mnemonic letters). NOTHING sets
+//     AccessibleName: a control's name is its own caption or
+//     the Label above it, both of which a screen reader
+//     already reads. Setting the property to those same words
+//     is how a control comes to be announced twice.
+//   - No control is given a TabIndex. Controls are added in the
+//     order they are meant to be visited, and that order is the
+//     tab order; a Label cannot take focus, so tabbing skips it
+//     and its ampersand goes to the control that follows it.
+//     This is the plain Windows arrangement, and it is what makes
+//     Alt+Letter and the screen reader's tutor message work with
+//     no keyboard code of our own.
 //   - The dialog auto-sizes its height to its contents up to
 //     a cap; AutoScroll engages above the cap.
 //   - Two naming patterns coexist: bare-control adders (addLabel,
@@ -622,10 +632,12 @@ public class LbcDialog : IDisposable
     private Form                        frm;
     private IWin32Window                owner;
     private Button                      btnSavedAccept;
+    private int                         iFocusOrder;
+    private const int                   DefaultBandFieldWidth = 190;
+    private const int                   DefaultSliderHeight = 45;
     private FlowLayoutPanel             pnlBand;
     private FlowLayoutPanel             pnlStack;
     private Label                       lblStatusBar;
-    private int                         iTabIndex;
     // Most-recent case-insensitive substring searched via Ctrl+J
     // inside a pick-list. F3 / Shift+F3 advance / retreat through
     // matches. Shared across all list boxes in this dialog so the
@@ -674,7 +686,10 @@ public class LbcDialog : IDisposable
         lblStatusBar = new Label();
         lblStatusBar.Text = "";
         lblStatusBar.AccessibleRole = AccessibleRole.StatusBar;
-        lblStatusBar.AccessibleName = "Status";
+        // NO ACCESSIBLE NAME. A Label's name replaces its text as far as a
+        // screen reader is concerned, so calling this one "Status" hid every
+        // message it carried -- including the transcript of what the dialog had
+        // just said, which is the whole reason it exists.
         lblStatusBar.Dock = DockStyle.Bottom;
         lblStatusBar.Height = DefaultStatusHeight;
         lblStatusBar.TextAlign = ContentAlignment.MiddleLeft;
@@ -694,12 +709,43 @@ public class LbcDialog : IDisposable
         frm.Controls.Add(pnlStack);
 
         pnlBand = null;
+        iFocusOrder = 0;
         dFocusTips = new Dictionary<Control, string>();
         dNameCounts = new Dictionary<string, int>();
         dWidgets = new Dictionary<string, Control>(StringComparer.OrdinalIgnoreCase);
-        iTabIndex = 0;
         ctlFirstFocusable = null;
         btnSavedAccept = null;
+    }
+
+    // addSlider: a track bar with a Label above it.
+    //
+    // A slider is the right control for a quantity with a range and no exact
+    // value worth typing -- how loud, how fast, how far a jump moves. Windows
+    // gives it arrow keys, Page Up and Page Down, Home and End, and announces
+    // the number as it changes, so nothing here speaks.
+    public TrackBar addSlider(string sLabel, int iValue, int iMinimum, int iMaximum, int iStep, string sTip)
+    {
+        addFieldLabel(sLabel);
+        TrackBar bar = new TrackBar();
+        bar.Minimum = iMinimum;
+        bar.Maximum = iMaximum;
+        bar.SmallChange = (iStep > 0) ? iStep : 1;
+        bar.LargeChange = bar.SmallChange * 5;
+        bar.TickFrequency = bar.SmallChange * 5;
+        bar.TickStyle = TickStyle.None;
+        if (iValue < iMinimum) iValue = iMinimum;
+        if (iValue > iMaximum) iValue = iMaximum;
+        bar.Value = iValue;
+        bar.AutoSize = false;
+        bar.Width = fieldWidth();
+        bar.Height = DefaultSliderHeight;
+        bar.Margin = new Padding(0, 0, DefaultRowGap, DefaultRowGap);
+        bar.GotFocus += handleGotFocus;
+        registerWidget(bar, "Slider", cleanLabel(sLabel));
+        if (!string.IsNullOrEmpty(sTip)) dFocusTips[bar] = sTip;
+        addToStack(bar);
+        if (ctlFirstFocusable == null) ctlFirstFocusable = bar;
+        return bar;
     }
 
     // ------- Bands: related controls on one row -------
@@ -726,6 +772,7 @@ public class LbcDialog : IDisposable
         pnlBand.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         pnlBand.Margin = new Padding(0, 0, 0, DefaultRowGap);
         pnlBand.Width = innerWidth();
+        giveFocusOrder(pnlBand);
         pnlStack.Controls.Add(pnlBand);
     }
 
@@ -742,14 +789,12 @@ public class LbcDialog : IDisposable
     {
         Button btn = new Button();
         btn.Text = sLabel ?? "";
-        btn.AccessibleName = btn.Text.Replace("&", "");
         btn.AutoSize = true;
         btn.MinimumSize = new Size(DefaultButtonWidth, DefaultButtonHeight);
         btn.Margin = new Padding(0, 0, DefaultRowGap, DefaultRowGap);
-        btn.TabIndex = iTabIndex++;
         btn.UseVisualStyleBackColor = true;
         btn.GotFocus += handleGotFocus;
-        registerWidget(btn, "Button", btn.AccessibleName);
+        registerWidget(btn, "Button", btn.Text.Replace("&", ""));
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[btn] = sTip;
         addToStack(btn);
         if (ctlFirstFocusable == null) ctlFirstFocusable = btn;
@@ -765,8 +810,30 @@ public class LbcDialog : IDisposable
     // is one, the vertical stack otherwise.
     private void addToStack(Control ctl)
     {
+        giveFocusOrder(ctl);
         if (pnlBand != null) pnlBand.Controls.Add(ctl);
         else pnlStack.Controls.Add(ctl);
+    }
+
+    // giveFocusOrder: the next place in the sequence.
+    //
+    // THE ORDER CONTROLS ARE ADDED IS THE ORDER THEY ARE VISITED. That is the
+    // whole of Lbc's layout contract, and it is stated here rather than left to
+    // chance: a control with no TabIndex of its own falls back on the order
+    // Windows happens to hold it in, which is usually the same answer and is
+    // nobody's decision.
+    //
+    // Labels are numbered too, and that matters more than it looks. A text box
+    // and a list box have no caption of their own, so the Label above carries
+    // the ampersand, and Windows gives the letter to the control that follows
+    // that label IN FOCUS ORDER. A label without a number sorts ahead of every
+    // numbered control, so it stops being the thing before its own field, and
+    // both the Alt key and the tutor message a screen reader reads go missing.
+    // Numbering everything in one sequence is what keeps a label attached to
+    // its field.
+    private void giveFocusOrder(Control ctl)
+    {
+        if (ctl != null) ctl.TabIndex = iFocusOrder++;
     }
 
     // stackFields: every control the person can reach, in keyboard order, with
@@ -830,14 +897,9 @@ public class LbcDialog : IDisposable
         LbcTextBox tb = new LbcTextBox();
         tb.Text = sValue ?? "";
         tb.Size = new Size(innerWidth(), DefaultLineHeight);
-        tb.TabIndex = iTabIndex++;
         tb.Margin = new Padding(0, 0, 0, DefaultRowGap);
-        // Inherit the AccessibleName from the most recent Label,
-        // if one was just added. Mirrors Homer LbC.
-        Label lblLast = currentLabelOrNull();
-        if (lblLast != null) tb.AccessibleName = lblLast.AccessibleName;
         tb.GotFocus += handleGotFocus;
-        registerWidget(tb, "TextBox", tb.AccessibleName);
+        registerWidget(tb, "TextBox", nameFromLabel());
         if (!string.IsNullOrEmpty(sTip)) { dFocusTips[tb] = sTip; tb.Tip = sTip; }
         addToStack(tb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = tb;
@@ -878,21 +940,20 @@ public class LbcDialog : IDisposable
         Label lbl = new Label();
         lbl.Text = (sLabel ?? "").TrimEnd();
         if (!lbl.Text.EndsWith(":")) lbl.Text = lbl.Text + ":";
-        lbl.AccessibleName = cleanLabel(sLabel);
         lbl.AutoSize = true;
         lbl.TextAlign = ContentAlignment.MiddleLeft;
         lbl.Margin = new Padding(0, 4, DefaultPadding, 0);
+        giveFocusOrder(lbl);
         pnlRow.Controls.Add(lbl, 0, 0);
 
         LbcTextBox tb = new LbcTextBox();
         tb.Text = sValue ?? "";
         tb.Dock = DockStyle.Fill;
-        tb.TabIndex = iTabIndex++;
         tb.Margin = new Padding(0, 0, 0, 0);
-        tb.AccessibleName = cleanLabel(sLabel);
         tb.GotFocus += handleGotFocus;
-        registerWidget(tb, "TextBox", tb.AccessibleName);
+        registerWidget(tb, "TextBox", nameFromLabel());
         if (!string.IsNullOrEmpty(sTip)) { dFocusTips[tb] = sTip; tb.Tip = sTip; }
+        giveFocusOrder(tb);
         pnlRow.Controls.Add(tb, 1, 0);
 
         addToStack(pnlRow);
@@ -901,7 +962,7 @@ public class LbcDialog : IDisposable
     }
 
     // addInputBox: labeled single-line text input. Adds a Label
-    // first, then a TextBox whose AccessibleName comes from the
+    // first, then a TextBox named by the
     // Label. Equivalent to AddInputBox in Homer LbC.
     //
     // Note: for the record edit dialog, callers should prefer
@@ -913,9 +974,7 @@ public class LbcDialog : IDisposable
         addFieldLabel(sLabel);
         TextBox tb = addTextBox(sValue, sTip);
         // The label inheritance happened in addTextBox via
-        // currentLabelOrNull. Set AccessibleName explicitly
         // here too as belt-and-suspenders.
-        tb.AccessibleName = cleanLabel(sLabel);
         return tb;
     }
 
@@ -946,13 +1005,10 @@ public class LbcDialog : IDisposable
         tb.ScrollBars = ScrollBars.Vertical;
         tb.WordWrap = true;
         tb.Size = new Size(innerWidth(), DefaultMemoHeight);
-        tb.TabIndex = iTabIndex++;
         tb.Margin = new Padding(0, 0, 0, DefaultRowGap);
-        Label lblLast = currentLabelOrNull();
-        if (lblLast != null) tb.AccessibleName = lblLast.AccessibleName;
         tb.GotFocus += handleMemoGotFocus;
         tb.LostFocus += handleMemoLostFocus;
-        registerWidget(tb, "Memo", tb.AccessibleName);
+        registerWidget(tb, "Memo", nameFromLabel());
         if (!string.IsNullOrEmpty(sTip)) { dFocusTips[tb] = sTip; tb.Tip = sTip; }
         addToStack(tb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = tb;
@@ -965,7 +1021,6 @@ public class LbcDialog : IDisposable
     {
         addFieldLabel(sLabel);
         TextBox tb = addMemo(sValue, sTip);
-        tb.AccessibleName = cleanLabel(sLabel);
         return tb;
     }
 
@@ -982,11 +1037,9 @@ public class LbcDialog : IDisposable
     {
         CheckBox cb = new CheckBox();
         cb.Text = sLabel ?? "";
-        cb.AccessibleName = cleanLabel(sLabel);
         cb.Checked = bValue;
         cb.AutoSize = false;
         cb.Size = new Size(innerWidth(), DefaultLineHeight);
-        cb.TabIndex = iTabIndex++;
         cb.Margin = new Padding(0, 0, 0, DefaultRowGap);
         cb.GotFocus += handleGotFocus;
         registerWidget(cb, "CheckBox", sLabel);
@@ -1007,11 +1060,8 @@ public class LbcDialog : IDisposable
     {
         ListBox lb = new ListBox();
         lb.Size = new Size(innerWidth(), DefaultListHeight);
-        lb.TabIndex = iTabIndex++;
         lb.Margin = new Padding(0, 0, 0, DefaultRowGap);
         populateListBox(lb, lsNames, sSelected);
-        Label lblLast = currentLabelOrNull();
-        if (lblLast != null) lb.AccessibleName = lblLast.AccessibleName;
         lb.GotFocus += handleGotFocus;
         // Find-in-list keys. Ctrl+J prompts for a case-insensitive
         // substring; F3 advances to the next match; Shift+F3 the
@@ -1020,7 +1070,7 @@ public class LbcDialog : IDisposable
         // Menu, Choose Table on a large schema).
         lb.KeyDown += new KeyEventHandler(handleListBoxFindKeys);
         lb.KeyDown += new KeyEventHandler(handleListBoxCopyKeys);
-        registerWidget(lb, "ListBox", lb.AccessibleName);
+        registerWidget(lb, "ListBox", nameFromLabel());
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[lb] = sTip;
         addToStack(lb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = lb;
@@ -1036,16 +1086,13 @@ public class LbcDialog : IDisposable
     {
         CheckedListBox clb = new CheckedListBox();
         clb.Size = new Size(innerWidth(), DefaultListHeight);
-        clb.TabIndex = iTabIndex++;
         clb.Margin = new Padding(0, 0, 0, DefaultRowGap);
         clb.CheckOnClick = true;
         foreach (string sName in lsNames) clb.Items.Add(sName);
         if (lsChecked != null) foreach (int iCheck in lsChecked) if (iCheck >= 0 && iCheck < clb.Items.Count) clb.SetItemChecked(iCheck, true);
         if (clb.Items.Count > 0) clb.SelectedIndex = 0;
-        Label lblLast = currentLabelOrNull();
-        if (lblLast != null) clb.AccessibleName = lblLast.AccessibleName;
         clb.GotFocus += handleGotFocus;
-        registerWidget(clb, "CheckedListBox", clb.AccessibleName);
+        registerWidget(clb, "CheckedListBox", nameFromLabel());
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[clb] = sTip;
         addToStack(clb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = clb;
@@ -1101,8 +1148,9 @@ public class LbcDialog : IDisposable
         // would complicate event routing; a vanilla Form is fine.
         using (Form prompt = new LbcForm())
         {
+            // The caption IS the accessible name of a Form; setting the
+            // property to the same text makes a reader announce it twice.
             prompt.Text = "Find in list";
-            prompt.AccessibleName = "Find in list";
             prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
             prompt.StartPosition = FormStartPosition.CenterParent;
             prompt.MinimizeBox = false;
@@ -1118,7 +1166,6 @@ public class LbcDialog : IDisposable
             tb.SelectAll();
             tb.Location = new Point(12, 36);
             tb.Size = new Size(376, 20);
-            tb.AccessibleName = "Find substring";
             Button btnOk = new Button();
             btnOk.Text = "&OK";
             btnOk.DialogResult = DialogResult.OK;
@@ -1190,9 +1237,9 @@ public class LbcDialog : IDisposable
     public ListBox addPickBox(string sLabel, IList<string> lsNames, string sSelected, string sTip)
     {
         addFieldLabel(sLabel);
-        ListBox lb = addListBox(lsNames, sSelected, sTip);
-        lb.AccessibleName = cleanLabel(sLabel);
-        return lb;
+        // No AccessibleName: the Label just added IS the name, and setting the
+        // property to the same words makes some readers say them twice.
+        return addListBox(lsNames, sSelected, sTip);
     }
 
     // addListBox(label, items, selected): backward-compat
@@ -1209,13 +1256,10 @@ public class LbcDialog : IDisposable
         ComboBox cb = new ComboBox();
         cb.DropDownStyle = ComboBoxStyle.DropDownList;
         cb.Size = new Size(innerWidth(), DefaultLineHeight);
-        cb.TabIndex = iTabIndex++;
         cb.Margin = new Padding(0, 0, 0, DefaultRowGap);
         populateComboBox(cb, lsNames, sSelected);
-        Label lblLast = currentLabelOrNull();
-        if (lblLast != null) cb.AccessibleName = lblLast.AccessibleName;
         cb.GotFocus += handleGotFocus;
-        registerWidget(cb, "ComboBox", cb.AccessibleName);
+        registerWidget(cb, "ComboBox", nameFromLabel());
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[cb] = sTip;
         addToStack(cb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = cb;
@@ -1228,7 +1272,6 @@ public class LbcDialog : IDisposable
     {
         addFieldLabel(sLabel);
         ComboBox cb = addComboBox(lsNames, sSelected, sTip);
-        cb.AccessibleName = cleanLabel(sLabel);
         return cb;
     }
 
@@ -1251,17 +1294,15 @@ public class LbcDialog : IDisposable
         ComboBox cb = new ComboBox();
         cb.DropDownStyle = ComboBoxStyle.DropDown;
         cb.Size = new Size(innerWidth(), DefaultLineHeight);
-        cb.TabIndex = iTabIndex++;
         cb.Margin = new Padding(0, 0, 0, DefaultRowGap);
         if (lsRecent != null)
             foreach (string sOne in lsRecent)
                 if (!string.IsNullOrEmpty(sOne)) cb.Items.Add(sOne);
         cb.Text = sValue ?? "";
-        cb.AccessibleName = cleanLabel(sLabel);
         cb.AccessibleDescription = "Down arrow selects from recent entries";
         cb.GotFocus += delegate(object oSender, EventArgs evArgs) { cb.SelectAll(); };
         cb.GotFocus += handleGotFocus;
-        registerWidget(cb, "ComboBox", cb.AccessibleName);
+        registerWidget(cb, "ComboBox", nameFromLabel());
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[cb] = sTip;
         addToStack(cb);
         if (ctlFirstFocusable == null) ctlFirstFocusable = cb;
@@ -1275,11 +1316,9 @@ public class LbcDialog : IDisposable
     {
         RadioButton rb = new RadioButton();
         rb.Text = sLabel ?? "";
-        rb.AccessibleName = cleanLabel(sLabel);
         rb.Checked = bChecked;
         rb.AutoSize = false;
         rb.Size = new Size(innerWidth(), DefaultLineHeight);
-        rb.TabIndex = iTabIndex++;
         rb.Margin = new Padding(0, 0, 0, DefaultRowGap);
         rb.GotFocus += handleGotFocus;
         registerWidget(rb, "RadioButton", sLabel);
@@ -1306,9 +1345,7 @@ public class LbcDialog : IDisposable
         nud.Maximum = iMax;
         nud.Value = Math.Max(iMin, Math.Min(iMax, iValue));
         nud.Size = new Size(DefaultNumericWidth, DefaultLineHeight);
-        nud.TabIndex = iTabIndex++;
         nud.Margin = new Padding(0, 0, 0, DefaultRowGap);
-        nud.AccessibleName = cleanLabel(sLabel);
         nud.GotFocus += handleGotFocus;
         registerWidget(nud, "NumericUpDown", sLabel);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[nud] = sTip;
@@ -1381,6 +1418,84 @@ public class LbcDialog : IDisposable
     private Control ctlInitialFocus;
     public void setInitialFocus(Control ctl) { ctlInitialFocus = ctl; }
 
+    // wireUniversalKeys: Control+Enter, F1, Control+Home, Control+End and F7,
+    // handled at form level. Every way of running a dialog wires these, so a
+    // dialog that builds its own buttons is no poorer for it.
+    private void wireUniversalKeys(Button btnDefault, bool bHelpHere)
+    {
+        frm.KeyPreview = true;
+        frm.KeyDown += delegate(object sender, KeyEventArgs evArgs)
+        {
+            TextBox tbActive = frm.ActiveControl as TextBox;
+            bool bInMemo = (tbActive != null) && tbActive.Multiline;
+            if (evArgs.KeyData == (Keys.Control | Keys.Enter) && btnDefault != null)
+            {
+                evArgs.Handled = true;
+                evArgs.SuppressKeyPress = true;
+                btnDefault.PerformClick();
+            }
+            else if (evArgs.KeyData == Keys.F1 && bHelpHere)
+            {
+                evArgs.Handled = true;
+                evArgs.SuppressKeyPress = true;
+                showHelp();
+            }
+            else if (evArgs.KeyData == (Keys.Control | Keys.Home) && !bInMemo)
+            {
+                evArgs.Handled = true;
+                evArgs.SuppressKeyPress = true;
+                focusFieldEdge(true);
+            }
+            else if (evArgs.KeyData == (Keys.Control | Keys.End) && !bInMemo)
+            {
+                evArgs.Handled = true;
+                evArgs.SuppressKeyPress = true;
+                focusFieldEdge(false);
+            }
+            else if (evArgs.KeyData == Keys.F7)
+            {
+                evArgs.Handled = true;
+                evArgs.SuppressKeyPress = true;
+                pickFocusControl();
+            }
+        };
+    }
+
+    // runPlain: show a dialog that builds its own buttons.
+    //
+    // runWithButtons puts a row along the bottom and closes the dialog on any
+    // of them, which is right for OK and Cancel and wrong for a dialog whose
+    // buttons are commands. Here the caller has already added its buttons with
+    // addButton; it says which one Enter should press and which one Escape
+    // should press, and the dialog does the rest.
+    public void runPlain(Button btnDefaultButton, Button btnCancelButton)
+    {
+        if (btnDefaultButton != null) frm.AcceptButton = btnDefaultButton;
+        if (btnCancelButton != null) frm.CancelButton = btnCancelButton;
+        wireUniversalKeys(btnDefaultButton, true);
+
+        int iTotalHeight = computeStackHeight() + lblStatusBar.Height + 8;
+        if (iTotalHeight > DefaultMaxHeight) iTotalHeight = DefaultMaxHeight;
+        if (iTotalHeight < 200) iTotalHeight = 200;
+        frm.ClientSize = new Size(DefaultDialogWidth, iTotalHeight);
+
+        if (ctlFirstFocusable != null) frm.ActiveControl = ctlFirstFocusable;
+        if (ctlInitialFocus != null)
+        {
+            Control ctlFocusLater = ctlInitialFocus;
+            frm.Shown += delegate(object o, EventArgs e)
+            { try { ctlFocusLater.Focus(); } catch { } };
+        }
+        frm.ShowDialog(owner);
+    }
+
+    // close: shut the dialog from a button of the caller's own.
+    public void close()
+    {
+        try { frm.Close(); }
+        catch (Exception) { }
+    }
+
     public string runWithButtons(string[] aButtonLabels)
     {
         return runWithButtons(aButtonLabels, true);
@@ -1420,11 +1535,13 @@ public class LbcDialog : IDisposable
             string sLabel = aButtonLabels[i] ?? "";
             Button btn = new Button();
             btn.Text = "&" + sLabel.Replace("&", "");
-            btn.AccessibleName = sLabel.Replace("&", "");
             btn.Size = new Size(DefaultButtonWidth, DefaultButtonHeight);
-            btn.TabIndex = iTabIndex++;
             btn.Margin = new Padding(DefaultRowGap, 0, 0, 0);
             btn.UseVisualStyleBackColor = true;
+            // Added last to first, so that the row reads left to right on
+            // screen; numbered by the caller's own order, so Tab visits them
+            // left to right as well.
+            btn.TabIndex = iFocusOrder + i;
 
             string sCaptured = sLabel.Replace("&", "");
             if (bAddHelp && string.Equals(sCaptured, "Help", StringComparison.OrdinalIgnoreCase))
@@ -1446,6 +1563,8 @@ public class LbcDialog : IDisposable
                 || string.Equals(sCaptured, "Close", StringComparison.OrdinalIgnoreCase))
                 btnCancel = btn;
         }
+        iFocusOrder += aButtonLabels.Length;
+        giveFocusOrder(pnlButtonRow);
         frm.Controls.Add(pnlButtonRow);
         if (btnAccept != null) frm.AcceptButton = btnAccept;
         if (btnCancel != null) frm.CancelButton = btnCancel;
@@ -1471,46 +1590,7 @@ public class LbcDialog : IDisposable
         //   F7             list every focusable control in
         //                  navigation order; OK moves focus to
         //                  the chosen one.
-        {
-            Button btnDefault = btnAccept;
-            bool bHelpHere = bAddHelp;
-            frm.KeyPreview = true;
-            frm.KeyDown += delegate(object sender, KeyEventArgs evArgs)
-            {
-                TextBox tbActive = frm.ActiveControl as TextBox;
-                bool bInMemo = (tbActive != null) && tbActive.Multiline;
-                if (evArgs.KeyData == (Keys.Control | Keys.Enter) && btnDefault != null)
-                {
-                    evArgs.Handled = true;
-                    evArgs.SuppressKeyPress = true;
-                    btnDefault.PerformClick();
-                }
-                else if (evArgs.KeyData == Keys.F1 && bHelpHere)
-                {
-                    evArgs.Handled = true;
-                    evArgs.SuppressKeyPress = true;
-                    showHelp();
-                }
-                else if (evArgs.KeyData == (Keys.Control | Keys.Home) && !bInMemo)
-                {
-                    evArgs.Handled = true;
-                    evArgs.SuppressKeyPress = true;
-                    focusFieldEdge(true);
-                }
-                else if (evArgs.KeyData == (Keys.Control | Keys.End) && !bInMemo)
-                {
-                    evArgs.Handled = true;
-                    evArgs.SuppressKeyPress = true;
-                    focusFieldEdge(false);
-                }
-                else if (evArgs.KeyData == Keys.F7)
-                {
-                    evArgs.Handled = true;
-                    evArgs.SuppressKeyPress = true;
-                    pickFocusControl();
-                }
-            };
-        }
+        wireUniversalKeys(btnAccept, bAddHelp);
         // Single-button confirmation dialogs (e.g., the read-only
         // memo dialog used by Invoke-Script and the speech-only
         // double-press) typically only carry an "OK" button. With
@@ -1561,7 +1641,7 @@ public class LbcDialog : IDisposable
     // by bare-control adders to inherit the accessible name
     // from an immediately-preceding Label, mirroring the Homer
     // LbC convention where AddTextBox after AddLabel automatically
-    // gets the label's AccessibleName.
+    // is named by the label above it.
     private Label currentLabelOrNull()
     {
         Control.ControlCollection ctlsHere = (pnlBand != null) ? pnlBand.Controls : pnlStack.Controls;
@@ -1585,8 +1665,7 @@ public class LbcDialog : IDisposable
         foreach (Control ctl in stackFields())
         {
             if (ctl is Label) continue;
-            string sName = string.IsNullOrEmpty(ctl.AccessibleName)
-                ? ctl.GetType().Name : ctl.AccessibleName;
+            string sName = fieldName(ctl);
             sbHelp.Append("  ").Append(sName);
             if (dFocusTips.TryGetValue(ctl, out sTip) && !string.IsNullOrEmpty(sTip))
                 sbHelp.Append(" -- ").Append(sTip);
@@ -1604,7 +1683,6 @@ public class LbcDialog : IDisposable
         {
             TextBox tbHelp = dlgHelp.addMemo(sbHelp.ToString(), null);
             tbHelp.ReadOnly = true;
-            tbHelp.AccessibleName = "Help text";
             dlgHelp.runWithButtons(new string[] { "OK" }, false);
         }
     }
@@ -1680,13 +1758,12 @@ public class LbcDialog : IDisposable
     }
 
     // addFocusEntry: register one focusable control under a
-    // unique display name (AccessibleName, else button text, else
+    // unique display name (the label above it, else its caption, else
     // type name; duplicates get a numeric suffix).
     private void addFocusEntry(Control ctl, List<string> lsNames, Dictionary<string, Control> dByName)
     {
         if (ctl is Label || !ctl.CanSelect || !ctl.Visible) return;
-        string sBase = !string.IsNullOrEmpty(ctl.AccessibleName) ? ctl.AccessibleName
-            : (!string.IsNullOrEmpty(ctl.Text) ? ctl.Text.Replace("&", "") : ctl.GetType().Name);
+        string sBase = fieldName(ctl);
         string sName = sBase;
         int iSuffix = 2;
         while (dByName.ContainsKey(sName)) { sName = sBase + " " + iSuffix; iSuffix++; }
@@ -2125,6 +2202,40 @@ public class LbcDialog : IDisposable
     // registerWidget: store the control under an auto-generated
     // name <Kind>_<CleanedLabel> in dWidgets. On collisions a
     // numeric suffix is appended (TextBox_Name, TextBox_Name_2).
+    // fieldName: what to call a control in Help and in the F7 list.
+    //
+    // Taken from the Label above it, or from its own caption, at the moment it
+    // is needed. NOT from AccessibleName, which is deliberately left alone: a
+    // control whose accessible name repeats its own caption or its label is a
+    // control some screen readers announce twice.
+    private string fieldName(Control ctl)
+    {
+        if (ctl == null) return "";
+        if (!string.IsNullOrEmpty(ctl.AccessibleName)) return ctl.AccessibleName;
+        Label lblBefore = null;
+        foreach (Control ctlEach in stackFields())
+        {
+            if (ctlEach == ctl) break;
+            Label lbl = ctlEach as Label;
+            if (lbl != null) lblBefore = lbl;
+        }
+        if (!(ctl is Button) && !(ctl is CheckBox) && !(ctl is RadioButton)
+            && lblBefore != null && !string.IsNullOrEmpty(lblBefore.Text))
+            return cleanLabel(lblBefore.Text);
+        if (!string.IsNullOrEmpty(ctl.Text)) return cleanLabel(ctl.Text);
+        return ctl.GetType().Name;
+    }
+
+    // nameFromLabel: what to file a control under, taken from the Label added
+    // just before it. Used only for the programmer-facing name and the F7 list;
+    // nothing is written to AccessibleName, which stays empty so a screen
+    // reader reads the label itself and reads it once.
+    private string nameFromLabel()
+    {
+        Label lbl = currentLabelOrNull();
+        return (lbl != null && !string.IsNullOrEmpty(lbl.Text)) ? cleanLabel(lbl.Text) : "";
+    }
+
     private void registerWidget(Control ctl, string sKind, string sLabel)
     {
         string sClean = makeIdentifier(sLabel);
@@ -2159,13 +2270,21 @@ public class LbcDialog : IDisposable
 
     // The horizontal space inside the stack panel for a control,
     // accounting for padding and a scrollbar reservation.
+    // fieldWidth: how wide a control should be. On the stack it fills the
+    // dialog; inside a band it takes a share of the row, because a band exists
+    // to put several controls side by side.
+    private int fieldWidth()
+    {
+        return (pnlBand != null) ? DefaultBandFieldWidth : innerWidth();
+    }
+
     private int innerWidth()
     {
         return DefaultDialogWidth - DefaultPadding * 2 - 24;
     }
 
     // cleanLabel: strip '&' mnemonic markers and trailing ':'
-    // before using a label as an AccessibleName.
+    // before using a label as a name.
     private string cleanLabel(string sLabel)
     {
         if (string.IsNullOrEmpty(sLabel)) return "";
@@ -2177,12 +2296,20 @@ public class LbcDialog : IDisposable
     // addFieldLabel: emit a Label above a field control. Reused
     // by every labeled-control adder (addInputBox, addMemoBox,
     // addPickBox, addComboPickBox, addNumericUpDown).
+    // addFieldLabel: the Label above a field.
+    //
+    // THE LABEL IS WHAT GIVES THE FIELD ITS ALT KEY. A text box and a list box
+    // have no caption of their own, so the Label above carries it, ampersand and
+    // all. Windows does the rest: the letter moves focus to the control that
+    // follows the label, and reports itself as that control's keyboard shortcut,
+    // which is the tutor message a screen reader reads. No key handling, no
+    // tab-index arithmetic -- controls are added in the order they are meant to
+    // be visited, and that order is the tab order.
     private void addFieldLabel(string sText)
     {
         if (string.IsNullOrEmpty(sText)) return;
         Label lbl = new Label();
         lbl.Text = sText;
-        lbl.AccessibleName = cleanLabel(sText);
         lbl.AutoSize = false;
         lbl.Size = new Size(innerWidth(), DefaultLabelHeight);
         lbl.Margin = new Padding(0, 0, 0, 0);

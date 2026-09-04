@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.66**  
+**Version 5.0.68**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -847,25 +847,50 @@ involved again until you press q. Play Queue keeps the list here, in a dialog:
 The dialog is an ordinary Homer dialog, and everything in it is an ordinary
 control with its own Alt key, in the order you use them:
 
-- **Alt+Q** the queue. Enter plays the track you are on; Control+J and F3 search
-  the list, as in every Homer list.
-- **Alt+I** now playing: track, position and address, kept up to date, read-only
-  and copyable.
-- **Alt+P** play or pause, **Alt+S** stop, **Alt+N** next, **Alt+B** back.
+- **Alt+Q** the queue. Enter plays the track you are on; Home and End move to the
+  first and last track, and Control+J then F3 search the list.
+- **Alt+I** now playing: track, position and address, refreshed as you move into
+  it.
+- **Alt+P** play or pause, **Alt+S** stop, **Alt+N** next track, **Alt+B** back
+  one track.
 - **Alt+G** go to a time inside the track. 90, 1:30 and 1:05:00 all work.
-- **Alt+V** volume and **Alt+D** speed, both as percentages you can spin.
+- **Alt+V** volume and **Alt+D** speed, both as percentages you can spin, and
+  **Alt+M** mute.
 - **Alt+R** repeat the queue, **Alt+A** announce each track.
 - **Alt+Y** copy the address of the track you are on, **Alt+L** save the queue as
-  an .m3u8 play list with its names, **Alt+O** overview: how many tracks there
-  are, then their names read straight through.
+  an .m3u8 play list, **Alt+O** overview: how many tracks, then their names.
+- **Alt+K** keep place and close: writes down where this track had reached, so
+  playing it again starts there.
 - **Alt+U** use configuration, which remembers the volume, speed and the two
   boxes above for next time.
 - **Alt+C** closes, **Alt+H** or **F1** lists every field with its description.
 
-Three things have no control of their own, so they have keys: **Alt+Shift+Right**
-and **Left** seek ten seconds, **Page Down** and **Page Up** a minute, **Home**
-returns to the start of the track, and **Alt+Shift+W** says where you are --
-track, number, and position in one answer.
+**The commands with no control of their own are Alt+Shift and a letter.**
+Movement inside a track is the one thing no control expresses well, so it has
+keys -- but not the keys mpv's own window uses for it. In Windows, and in
+FileDir and DbDo in particular, arrows and Home and End already mean selecting
+and navigating: Shift+Home marks to the top, Alt+Shift+Home unmarks it again,
+Control+Home goes to the first item, and Backspace goes up a level. A player
+command wearing one of those would be a false promise. Letters mean nothing to
+Windows, so they are free, and they can be mnemonic:
+
+- **Alt+Shift+F** forward five seconds, **Alt+Shift+R** rewind five seconds
+- **Alt+Shift+N** next chapter, **Alt+Shift+P** previous chapter
+- **Alt+Shift+T** back to the top of the track
+- **Alt+Shift+Z** undo that seek, and press it again to undo the undo
+- **Alt+Shift+A** say the position, **Alt+Shift+W** say the track, its number and
+  the position together
+
+Nothing larger than five seconds has a key, because **Alt+G** says exactly where
+to land and beats counting jumps.
+
+Everything else mpv's own window offers has a control here instead. Space is
+Alt+P, m is Alt+M, 9 and 0 are the volume box on Alt+V, Enter and the angle
+brackets are Alt+N and Alt+B, q is Escape, and uppercase Q -- quit and remember
+the position -- is Alt+K. Its F8 playlist overlay, which mpv admits may not be
+spoken, is the queue itself with Alt+O to read it aloud, and its question-mark
+key list is F1. First and last track need no key: Home and End move the cursor
+in the queue and Enter plays.
 
 Everything the dialog says is also written to the status line, one message after
 another, so you can read back over a command's announcements with your screen

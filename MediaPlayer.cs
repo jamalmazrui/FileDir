@@ -163,7 +163,11 @@ Button btnBack = dlg.addButton("&Back", "Move to the previous track in the queue
 dlg.endBand();
 
 TextBox txtGoTo = dlg.addInlineInputBox("&Go to time",
-"", "A time inside the current track, then Enter. 90, 1:30 and 1:05:00 all work. Alt+Shift+Right and Left move ten seconds, Page Down and Page Up a minute, Home returns to the start.");
+"", "A time inside the current track, then Enter. 90, 1:30 and 1:05:00 all work. "
++ "The commands with no control of their own are Alt+Shift and a letter: "
++ "F and R seek forward and rewind five seconds, N and P move to the next and previous chapter, "
++ "T returns to the top of the track, Z undoes a seek, "
++ "A says the position, and W says the track, its number and the position together.");
 
 // ---- the settings a listener changes while listening ----
 
@@ -180,6 +184,8 @@ dlg.endBand();
 
 CheckBox chkRepeat = dlg.addCheckBox("&Repeat the queue", bRepeat,
 "Start again at the first track when the last one ends.");
+CheckBox chkMute = dlg.addCheckBox("&Mute", false,
+"Silence the media without losing your place. mpv gives this to m; here it is a box, so it says whether it is on when you tab to it.");
 CheckBox chkAnnounce = dlg.addCheckBox("&Announce each track", bAnnounce,
 "Say the name of a track when playback moves to it by itself. The name is not said when the cursor is in the queue, because your screen reader is already reading that line.");
 
@@ -189,6 +195,8 @@ dlg.addBand();
 Button btnCopy = dlg.addButton("Cop&y address", "Put the address of the track you are on onto the clipboard.");
 Button btnSave = dlg.addButton("Save &list...", "Write the queue as an .m3u8 play list, names included, wherever you choose.");
 Button btnOverview = dlg.addButton("&Overview", "Say how many tracks there are and then read their names, without moving the cursor.");
+Button btnKeepPlace = dlg.addButton("&Keep place and close",
+"Close, and write down where this track had reached, so playing it again starts there. This is what uppercase Q does in mpv's own window; plain Close does not remember.");
 dlg.endBand();
 
 CheckBox chkConfig = dlg.addCheckBox("&Use configuration", bUseConfig,
@@ -230,6 +238,11 @@ btnBack.Click += delegate(object o, EventArgs e) { oPlayer.previous(); };
 
 btnCopy.Click += delegate(object o, EventArgs e) { copyAddress(dlg, oPlayer, lsRef, lstQueue); };
 btnSave.Click += delegate(object o, EventArgs e) { saveList(dlg, lsRef); };
+btnKeepPlace.Click += delegate(object o, EventArgs e) {
+oPlayer.quitRemembering();
+say(dlg, "Place kept");
+dlg.pressButton("Close");
+};
 btnOverview.Click += delegate(object o, EventArgs e) {
 // McTwit's Yield command: how many, then all of them. Faster than arrowing
 // through thirty podcast titles to find out what is in the queue.
@@ -248,6 +261,10 @@ oPlayer.setSpeed(((double) nudSpeed.Value) / 100.0);
 };
 chkRepeat.CheckedChanged += delegate(object o, EventArgs e) {
 oPlayer.setLoopPlaylist(chkRepeat.Checked);
+};
+chkMute.CheckedChanged += delegate(object o, EventArgs e) {
+// Nothing is spoken: a checkbox announces its own state as it changes.
+oPlayer.setMute(chkMute.Checked);
 };
 
 // Enter on a track plays it. Enter is the list's own key, and it means the
@@ -272,19 +289,44 @@ oPlayer.seekAbsolute(dWhen);
 say(dlg, Homer.Mpv.formatTime(dWhen));
 };
 
-// The three keys with no control of their own: seeking, and asking where you
-// are. Alt+Shift, so they cannot be mistaken for a mnemonic, and never
-// Alt+Control, which belongs to desktop shortcuts.
+// THE KEYS THAT HAVE NO CONTROL: ALT+SHIFT AND A LETTER, NEVER A NAVIGATION KEY.
+//
+// mpv's own window uses arrows, Home, the Page keys and Backspace for these,
+// and copying that into a Windows dialog would have been wrong. Those keys
+// already mean something to a Windows keyboard user, and to this pair of
+// programs in particular:
+//
+//   Shift+Home, Shift+End         select, or mark, from here to the end
+//   Alt+Shift+Home, Alt+Shift+End the reverse -- untag or unmark that span,
+//                                 which is what FileDir and DbDo both bind
+//   Control+Home, Control+End     go to the first or last item
+//   Control+Up, Control+Down      previous and next marked item
+//   Backspace                     up a level, in FileDir's own list
+//
+// A player command wearing one of those is a false promise, however local the
+// dialog is: the muscle memory belongs to selection and navigation. Letters
+// carry no such meaning, cannot collide with what the focused control needs,
+// and can be mnemonic:
+//
+//   Alt+Shift+F  forward five seconds     Alt+Shift+R  rewind five seconds
+//   Alt+Shift+N  next chapter             Alt+Shift+P  previous chapter
+//   Alt+Shift+T  top of the track         Alt+Shift+Z  undo the seek
+//   Alt+Shift+A  say the position         Alt+Shift+W  where am I
+//
+// Nothing larger than five seconds has a key, because Go to time on Alt+G says
+// exactly where to land and is quicker than counting jumps.
 dlg.form.KeyPreview = true;
 dlg.form.KeyDown += delegate(object o, KeyEventArgs ev) {
 if (!ev.Alt || !ev.Shift) return;
 bool bHandled = true;
 switch (ev.KeyCode) {
-case Keys.Right: oPlayer.seekRelative(10); say(dlg, positionText(oPlayer)); break;
-case Keys.Left: oPlayer.seekRelative(-10); say(dlg, positionText(oPlayer)); break;
-case Keys.PageDown: oPlayer.seekRelative(60); say(dlg, positionText(oPlayer)); break;
-case Keys.PageUp: oPlayer.seekRelative(-60); say(dlg, positionText(oPlayer)); break;
-case Keys.Home: oPlayer.seekAbsolute(0); say(dlg, "Start of track"); break;
+case Keys.F: oPlayer.seekRelative(5); say(dlg, positionText(oPlayer)); break;
+case Keys.R: oPlayer.seekRelative(-5); say(dlg, positionText(oPlayer)); break;
+case Keys.N: oPlayer.nextChapter(); say(dlg, positionText(oPlayer)); break;
+case Keys.P: oPlayer.previousChapter(); say(dlg, positionText(oPlayer)); break;
+case Keys.T: oPlayer.seekAbsolute(0); say(dlg, "Start of track"); break;
+case Keys.Z: oPlayer.revertSeek(); say(dlg, positionText(oPlayer)); break;
+case Keys.A: say(dlg, positionText(oPlayer)); break;
 case Keys.W: say(dlg, whereText(oPlayer, lsRef)); break;
 default: bHandled = false; break;
 }

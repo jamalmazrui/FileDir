@@ -342,6 +342,22 @@ public bool clearPlaylist() { return command("playlist-clear"); }
 // rather than a number, and "no" to stop doing it.
 public bool setLoopPlaylist(bool bValue) { return command("set_property", "loop-playlist", bValue ? "inf" : "no"); }
 
+// The rest of what mpv's own player window offers, named after the commands
+// its manual gives them.
+public bool setMute(bool bValue) { return command("set_property", "mute", bValue); }
+public bool nextChapter() { return command("add", "chapter", 1); }
+public bool previousChapter() { return command("add", "chapter", -1); }
+
+// revertSeek: mpv's own undo. A second call returns to where the undo came
+// from, so it is a toggle rather than a stack, and it works only inside the
+// track being played.
+public bool revertSeek() { return command("revert-seek"); }
+
+// quitRemembering: mpv's quit-watch-later, which writes down where playback had
+// reached before it exits, so the same file can start there next time. This is
+// what uppercase Q does in mpv's own window.
+public bool quitRemembering() { return command("quit-watch-later"); }
+
 // ---- what mpv last said -------------------------------------------------
 
 public bool paused { get { lock (oStateLock) { return bPausedValue; } } }
