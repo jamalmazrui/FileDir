@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.68**  
+**Version 5.0.75**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -42,6 +42,10 @@ FileDir itself:
 
 - `FileDir.cs` — the program. One monolithic WinForms source, about 8,170 lines.
 - `Dialogs.cs` — FileDir's own dialogs.
+- `MediaPlayer.cs` — the Homer Player dialog behind Play Queue: the queue, its
+  ordering, the transport, the clip export, and the per-play-list settings kept
+  in `HomerPlayer.inix`. It owns the mpv process for exactly as long as the
+  dialog is open.
 - `FileDir.js` — the JScript .NET expression evaluator.
 
 Shared Homer files, common to FileDir, EdSharp, and DbDo, compiled in
@@ -59,6 +63,14 @@ Shared Homer files, common to FileDir, EdSharp, and DbDo, compiled in
 - `Util.cs` — shared helpers.
 - `KeyMap.cs` — **generated**; see below.
 - `Lbc.cs` — the Layout by Code dialog toolkit.
+- `Mpv.cs` — drives the mpv media player over its documented JSON IPC pipe:
+  mpv runs with no window, no keys and no focus of its own, and every command
+  travels as one line of JSON. Three rules in it are worth keeping. Never hold a
+  lock across a write — the reader thread must never stop draining the pipe, or
+  both ends deadlock, which happened. Never write to the pipe from the interface
+  thread; commands go on a queue and a writer thread sends them. And mpv's own
+  `stop` command clears the play list as well as stopping playback, which is why
+  `stop()` here is a pause and the real thing is called `clearAndStop`.
 - `Ollama.cs` — the client for the local model server, used by Translate File.
   Base class library only: the exchange is one string in and one string out,
   which does not justify a reference to `System.Web.Extensions` or

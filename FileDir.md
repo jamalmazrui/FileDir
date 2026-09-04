@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.68**  
+**Version 5.0.75**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -844,69 +844,159 @@ involved again until you press q. Play Queue keeps the list here, in a dialog:
   nothing has keys of its own. Every key belongs to the dialog.
 - Closing the dialog stops the player.
 
-The dialog is an ordinary Homer dialog, and everything in it is an ordinary
-control with its own Alt key, in the order you use them:
+The dialog is called the Homer Player, and it is six rows of ordinary controls,
+each row holding the things that belong together:
 
-- **Alt+Q** the queue. Enter plays the track you are on; Home and End move to the
-  first and last track, and Control+J then F3 search the list.
-- **Alt+I** now playing: track, position and address, refreshed as you move into
-  it.
-- **Alt+P** play or pause, **Alt+S** stop, **Alt+N** next track, **Alt+B** back
-  one track.
-- **Alt+G** go to a time inside the track. 90, 1:30 and 1:05:00 all work.
-- **Alt+V** volume and **Alt+D** speed, both as percentages you can spin, and
-  **Alt+M** mute.
-- **Alt+R** repeat the queue, **Alt+A** announce each track.
-- **Alt+Y** copy the address of the track you are on, **Alt+L** save the queue as
-  an .m3u8 play list, **Alt+O** overview: how many tracks, then their names.
-- **Alt+K** keep place and close: writes down where this track had reached, so
-  playing it again starts there.
-- **Alt+U** use configuration, which remembers the volume, speed and the two
-  boxes above for next time.
-- **Alt+C** closes, **Alt+H** or **F1** lists every field with its description.
+- **Alt+T Track list** -- the queue, each line giving the name, the presenter
+  and the length where they are known.
+- **Alt+O Order of list**, then **Alt+N Next track** and **Alt+P Previous
+  track**. The orders are play list order, title, presenter, and length shortest
+  or longest first. Titles sort ignoring a leading A, An or The; presenters sort
+  by surname.
+- **Alt+F Forward in track** and **Alt+B Backward in track**, which jump by the
+  **Alt+I Increment of jump**: 15 or 30 seconds, 1, 3, 5, 10, 15 or 30 minutes,
+  or an hour, listed smallest first. One minute to begin with.
+- **Alt+M Chapter more** and **Alt+L Chapter less**, and the **Alt+W Where in
+  track** slider, which moves playback to a percentage through the track. Many
+  tracks have no chapters, and on those the two buttons do nothing.
+- **Alt+R Rate percent** and **Alt+V Volume percent**, both sliders. Volume
+  starts below full so the media does not drown your screen reader.
+- **Alt+E Execute playback**, **Alt+S Stop playback**, **Alt+C Clip to file**,
+  **Alt+D Default settings**, **Alt+H Help topics**, and **Close**. Escape
+  closes too.
 
-**The commands with no control of their own are Alt+Shift and a letter.**
-Movement inside a track is the one thing no control expresses well, so it has
-keys -- but not the keys mpv's own window uses for it. In Windows, and in
-FileDir and DbDo in particular, arrows and Home and End already mean selecting
-and navigating: Shift+Home marks to the top, Alt+Shift+Home unmarks it again,
-Control+Home goes to the first item, and Backspace goes up a level. A player
-command wearing one of those would be a false promise. Letters mean nothing to
-Windows, so they are free, and they can be mnemonic:
+**Shift with a navigation key is the transport**, and it works the same on the
+keypad and on the six-pack, because with Num Lock off -- which is how a screen
+reader leaves it -- both send the same keys.
 
-- **Alt+Shift+F** forward five seconds, **Alt+Shift+R** rewind five seconds
-- **Alt+Shift+N** next chapter, **Alt+Shift+P** previous chapter
-- **Alt+Shift+T** back to the top of the track
-- **Alt+Shift+Z** undo that seek, and press it again to undo the undo
-- **Alt+Shift+A** say the position, **Alt+Shift+W** say the track, its number and
-  the position together
+Each key keeps the sense it already has, applied to the media rather than to a
+list: arrows step, the Page keys move by a bigger unit, Home and End are the
+ends, and Control makes it the whole way.
 
-Nothing larger than five seconds has a key, because **Alt+G** says exactly where
-to land and beats counting jumps.
+- **Shift+Left** and **Shift+Right** -- back and forward by the increment
+- **Shift+Up** and **Shift+Down** -- previous and next track
+- **Shift+Page Up** and **Shift+Page Down** -- previous and next chapter
+- **Shift+Home** and **Shift+End** -- the start and end of this track
+- **Control+Shift+Home** and **Control+Shift+End** -- the first and last track
+- **Control+Shift+Page Up** and **Control+Shift+Page Down** -- the first and
+  last chapter
+- **Shift+keypad 5** -- play or pause, as does **Scroll Lock**
 
-Everything else mpv's own window offers has a control here instead. Space is
-Alt+P, m is Alt+M, 9 and 0 are the volume box on Alt+V, Enter and the angle
-brackets are Alt+N and Alt+B, q is Escape, and uppercase Q -- quit and remember
-the position -- is Alt+K. Its F8 playlist overlay, which mpv admits may not be
-spoken, is the queue itself with Alt+O to read it aloud, and its question-mark
-key list is F1. First and last track need no key: Home and End move the cursor
-in the queue and Enter plays.
+Bare navigation keys are left alone: they are how the Track list is read.
+Control with them belongs to the dialog, where Control+Home and Control+End move
+to the first and last field. Shift with them is free here, because this dialog
+has nothing to tag and a single-selection list does nothing with Shift.
 
-Everything the dialog says is also written to the status line, one message after
-another, so you can read back over a command's announcements with your screen
-reader's say-status-bar key instead of asking for them again. The next control
-you move to replaces the line with its own description.
+If you keep Num Lock on, the digits work too, in a grid where the left column
+goes back, the right column goes forward, and each row is a different size of
+step: 7, 8, 9 for chapters, 4, 5, 6 for the increment, 1, 2, 3 for whole tracks,
+0 to stop, and Control with any of them to go all the way. Minus and plus are
+volume, slash and star are speed.
 
-The queue's label says what is in it -- how many tracks, and where they came
-from -- because a screen reader reads a list's label every time the cursor
-enters the list, while the title bar is read only once.
+**F8 and Shift+F8 mark a piece of a track**, the way they start and complete a
+selection everywhere else in Homer Tools. F8 marks where the piece begins,
+Shift+F8 where it ends, and **Alt+C Clip to file** writes that piece out as a
+media file of its own and puts the file on the clipboard.
 
-The dialog speaks only what a screen reader cannot say for itself: the name of a
-track when playback moves on by itself, the position when you ask for it, the
-end of the queue, and the result of a command with nothing on screen to show for
-it. The track name is not spoken while the cursor is in the queue, because your
-screen reader is already reading that line. The volume and speed are not spoken
-either, because a spin box announces its own value.
+Shift+F8 pressed with nothing marked means from the beginning of the track to
+here, the same idea as Shift+Home in a line of text. For a piece that runs to
+the end, press F8, then Shift+End to reach the end of the track, then Shift+F8.
+
+The file is written beside the track it came from when that is a file on your
+computer, and in the folder FileDir is looking at otherwise. ffmpeg does the
+cutting with the streams copied rather than re-encoded, so it is quick and
+loses nothing.
+
+Windows has no clipboard format for a piece of audio that other programs
+accept. What every program does accept is a file, so what goes on the clipboard
+is the clip file: paste it into a folder, a message, or anything that takes a
+dropped file.
+
+The Where in track slider is set when you tab into it and does not follow along
+while something plays. A control that changed twice a second would be read out over
+everything else, which is worth more than a slider that is always current.
+
+**Moving through a list chooses nothing.** Arrowing down Tracks is how you find
+out what is in the queue, and arrowing down Order is how you find out what the
+orders are. Neither acts as you pass over it, so you can read the whole of
+either without starting a track or rearranging anything.
+
+**Execute playback is what makes it happen.** It applies the order the cursor
+is on, and plays the track the cursor is on -- or resumes, if that track is the
+one paused. Enter in the Play list or the Order list does the same. Stop is not
+needed first: it simply moves to what you chose.
+
+It is called Execute playback rather than Go because Gemini claims Alt+G across
+the whole desktop. A global hotkey belongs to whoever registered it and no
+dialog can take it back, so the button moved instead of the key.
+
+**Enter presses whichever button makes sense at the time.** With nothing
+playing, Enter is Execute playback, because starting is the only thing left to
+want. While something plays, Enter is Stop playback. The Play list and Order
+lists handle Enter themselves, so this applies everywhere else in the dialog.
+
+**Control+Enter is always Execute playback**, whatever is playing and wherever
+the cursor is. **Escape always closes**, and everything you chose is saved on
+the way out.
+
+**The status line carries what is playing** -- which track of how many, its
+name, whether it is playing or paused, and how long it is. It changes when
+something changes rather than as the clock moves, it is not announced, and it
+never interrupts: read it when you want it, with your screen reader's key for
+the status line. For the position, ask: Alt+Shift+A says it, and the Where in
+track slider shows it when you tab in.
+
+**Nothing plays until you ask.** Opening the player loads the queue paused;
+Execute playback, Enter, or Scroll Lock starts it.
+
+**After that, moving plays.** Next track, Previous track, the chapter buttons,
+the jumps, the ends of a track and the Where in track slider all start playing
+where they land, because listening is how you find out whether you have arrived
+where you wanted. Stop is a pause: it stops playing and leaves you exactly where you
+are, in the queue and in the track, and Execute playback carries on from there.
+It is called Stop rather than Pause because Previous track already has the P.
+
+The Increment works the same way: the list is read at the moment you press
+Forward or Backward, so moving through it changes nothing by itself. The two
+sliders are different, because moving a slider IS changing it, which is what
+its arrow keys have always meant in Windows: Rate and Volume take effect as you
+move them.
+
+**The player never moves your cursor.** When playback moves to the next track
+it says the name and leaves the Tracks list where you put it.
+
+**Scroll Lock is play and pause**, from any control in the dialog and nowhere
+else. One thing to know: FileDir treats Scroll Lock as silence, so while it is
+on, FileDir's ordinary speech is suppressed. The player speaks past that
+deliberately, so it keeps talking either way.
+
+A few commands have no control of their own, and those are Alt+Shift with a
+letter -- never an arrow, Home, End or a Page key, which in Windows and in
+FileDir mean selecting and moving:
+
+- **Alt+Shift+N** and **Alt+Shift+P** next and previous chapter
+- **Alt+Shift+T** back to the top of the track, **Alt+Shift+Z** undo that jump
+- **Alt+Shift+A** say the position, **Alt+Shift+W** say the track, its number
+  and the position together
+- **Alt+Shift+O** overview: how many tracks, then their names
+- **Alt+Shift+C** copy the address of the track you are on
+- **Alt+Shift+L** save the queue as an .m3u8 play list, in the order shown
+
+**Every queue keeps its own settings.** The volume, speed, jump size and order
+are remembered against where the queue came from, in HomerPlayer.inix beside
+your other FileDir settings, and written the moment you change them. A lecture
+can play at 150 percent and music at 100, and neither has to be set twice.
+**Alt+D Defaults** forgets what this queue has been set to, so it starts again
+from the built-in settings: one minute, normal speed, and the play list's own
+order.
+
+Where each track had reached is written down when the dialog closes -- mpv's
+own quit-watch-later, which is what uppercase Q does in its player window.
+Playing the same thing again starts where you stopped, here or in mpv.
+
+Everything the dialog says is also written to the status line, one message
+after another, so you can read back over it with your screen reader's
+say-status-bar key instead of asking again.
 
 Which command to use is a matter of what you are doing. Play List is quicker
 when you want to start something and walk away. Play Queue is better when the

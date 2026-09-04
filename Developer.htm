@@ -178,7 +178,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.68</strong><br />
+<p><strong>Version 5.0.75</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -225,6 +225,10 @@ fast.</p>
 <li><code>FileDir.cs</code> — the program. One monolithic WinForms
 source, about 8,170 lines.</li>
 <li><code>Dialogs.cs</code> — FileDir’s own dialogs.</li>
+<li><code>MediaPlayer.cs</code> — the Homer Player dialog behind Play
+Queue: the queue, its ordering, the transport, the clip export, and the
+per-play-list settings kept in <code>HomerPlayer.inix</code>. It owns
+the mpv process for exactly as long as the dialog is open.</li>
 <li><code>FileDir.js</code> — the JScript .NET expression
 evaluator.</li>
 </ul>
@@ -245,6 +249,16 @@ giving a non-destructive override.</li>
 <li><code>Util.cs</code> — shared helpers.</li>
 <li><code>KeyMap.cs</code> — <strong>generated</strong>; see below.</li>
 <li><code>Lbc.cs</code> — the Layout by Code dialog toolkit.</li>
+<li><code>Mpv.cs</code> — drives the mpv media player over its
+documented JSON IPC pipe: mpv runs with no window, no keys and no focus
+of its own, and every command travels as one line of JSON. Three rules
+in it are worth keeping. Never hold a lock across a write — the reader
+thread must never stop draining the pipe, or both ends deadlock, which
+happened. Never write to the pipe from the interface thread; commands go
+on a queue and a writer thread sends them. And mpv’s own
+<code>stop</code> command clears the play list as well as stopping
+playback, which is why <code>stop()</code> here is a pause and the real
+thing is called <code>clearAndStop</code>.</li>
 <li><code>Ollama.cs</code> — the client for the local model server, used
 by Translate File. Base class library only: the exchange is one string
 in and one string out, which does not justify a reference to

@@ -363,10 +363,98 @@ public class LbcTextBox : TextBox
 // focus sits on a listbox, so AcceptButton is not a reliable handle
 // for "OK". If no OK button is found, Control+Enter falls through
 // untouched.
+// LbcTrackBar: a slider that says what its value MEANS.
+//
+// A plain TrackBar reports its position to a screen reader as a percentage of
+// its own range, which is almost never the number on the label: a rate of 100
+// on a scale of 25 to 400 is announced as "20", and a volume of 70 out of 130
+// as "53". Both are true of the slider and useless to the listener.
+//
+// valueText turns the value into the words the label promised -- "100 percent",
+// "3 minutes" -- and the accessible object hands those to the reader instead.
+public class LbcTrackBar : TrackBar
+{
+    public Func<int, string> valueText;
+
+    protected override AccessibleObject CreateAccessibilityInstance()
+    {
+        return new LbcTrackBarAccessibleObject(this);
+    }
+
+    private class LbcTrackBarAccessibleObject : Control.ControlAccessibleObject
+    {
+        private LbcTrackBar bar;
+
+        public LbcTrackBarAccessibleObject(LbcTrackBar barOwner) : base(barOwner)
+        {
+            bar = barOwner;
+        }
+
+        public override AccessibleRole Role { get { return AccessibleRole.Slider; } }
+
+        public override string Value
+        {
+            get
+            {
+                try
+                {
+                    if (bar.valueText != null) return bar.valueText(bar.Value);
+                    return bar.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                }
+                catch (Exception) { return ""; }
+            }
+        }
+    }
+}
+
 public class LbcForm : Form
 {
+    // commandKey: a key the dialog claims before any control sees it. Set it to
+    // a function that returns true when it has dealt with the key.
+    //
+    // KeyPreview and a KeyDown handler are not always enough. A key a control
+    // considers its own -- and a key Windows treats as a system or toggle key,
+    // Scroll Lock among them -- can be swallowed before KeyDown is raised.
+    // ProcessCmdKey runs ahead of all of that.
+    public Func<Keys, bool> commandKey;
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern IntPtr SendMessage(IntPtr hWnd, int iMessage, IntPtr wParam, IntPtr lParam);
+
+    private const int WM_CHANGEUISTATE = 0x0127;
+    private const int UIS_CLEAR = 2;
+    private const int UISF_HIDEFOCUS = 1;
+    private const int UISF_HIDEACCEL = 2;
+
+    // SHOW THE ACCESS KEYS, ALWAYS.
+    //
+    // Windows hides the underline under a control's access key until somebody
+    // presses Alt, and on most machines that is the default. The underline is
+    // not decoration: it is how the access key is published, and a screen
+    // reader that cannot see it does not announce "Alt+G" as the cursor lands
+    // on Go. The keys work either way; the announcement does not.
+    //
+    // Clearing UISF_HIDEACCEL on the form says "show them from the start", for
+    // this window only. UISF_HIDEFOCUS goes with it so the focus rectangle is
+    // drawn too, which is the same courtesy for a sighted keyboard user.
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        base.OnHandleCreated(e);
+        try
+        {
+            int iState = (UIS_CLEAR << 16) | (UISF_HIDEACCEL | UISF_HIDEFOCUS);
+            SendMessage(this.Handle, WM_CHANGEUISTATE, (IntPtr) iState, IntPtr.Zero);
+        }
+        catch (Exception) { }
+    }
+
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
+        if (commandKey != null)
+        {
+            try { if (commandKey(keyData)) return true; }
+            catch (Exception) { }
+        }
         if (keyData == (Keys.Control | Keys.Enter))
         {
             Button btnOk = findButton(this, true);   // by DialogResult.OK
@@ -635,6 +723,8 @@ public class LbcDialog : IDisposable
     private int                         iFocusOrder;
     private const int                   DefaultBandFieldWidth = 190;
     private const int                   DefaultSliderHeight = 45;
+    private string                      sStatusExtra = "";
+    private string                      sStatusTip = "";
     private FlowLayoutPanel             pnlBand;
     private FlowLayoutPanel             pnlStack;
     private Label                       lblStatusBar;
@@ -655,6 +745,19 @@ public class LbcDialog : IDisposable
         // caption alone is both necessary and sufficient.
         frm.Text = sTitle ?? "";
         frm.StartPosition = FormStartPosition.CenterParent;
+        // Sizable, and "not in a dialog box" is not a fault to chase.
+        //
+        // A fixed dialog frame was tried, to stop JAWS answering "not in a
+        // dialog box" to the commands that read a dialog. It made no
+        // difference, and it could not: JAWS decides that from the WINDOW
+        // CLASS, and a real dialog is class #32770, which Windows gives only to
+        // windows built from a dialog template. Every WinForms form is class
+        // WindowsForms10.Window, whatever border it wears, so no Lbc dialog can
+        // ever be a dialog box in that sense -- and none of the ones in DbDo or
+        // EdSharp is either. The commands that matter, reading the controls and
+        // the status line, work regardless.
+        //
+        // So the border goes back to sizable, which a long track list wants.
         frm.FormBorderStyle = FormBorderStyle.Sizable;
         frm.MaximizeBox = false;
         frm.MinimizeBox = false;
@@ -725,8 +828,19 @@ public class LbcDialog : IDisposable
     // the number as it changes, so nothing here speaks.
     public TrackBar addSlider(string sLabel, int iValue, int iMinimum, int iMaximum, int iStep, string sTip)
     {
+        return addSlider(sLabel, iValue, iMinimum, iMaximum, iStep, sTip, null);
+    }
+
+    // fnValueText turns the slider's number into what a person would say --
+    // "150 percent", "35 percent of the way through". Without it a reader
+    // announces the position as a percentage of the range, which is a different
+    // number and a misleading one.
+    public TrackBar addSlider(string sLabel, int iValue, int iMinimum, int iMaximum, int iStep, string sTip,
+        Func<int, string> fnValueText)
+    {
         addFieldLabel(sLabel);
-        TrackBar bar = new TrackBar();
+        LbcTrackBar bar = new LbcTrackBar();
+        bar.valueText = fnValueText;
         bar.Minimum = iMinimum;
         bar.Maximum = iMaximum;
         bar.SmallChange = (iStep > 0) ? iStep : 1;
@@ -1624,6 +1738,13 @@ public class LbcDialog : IDisposable
         return sResult;
     }
 
+    // commandKey: hand the dialog a key to claim before its controls see it.
+    // See LbcForm.commandKey for why KeyPreview is not always enough.
+    public Func<Keys, bool> commandKey
+    {
+        set { LbcForm lbcFrm = frm as LbcForm; if (lbcFrm != null) lbcFrm.commandKey = value; }
+    }
+
     // form: outer access for callers who need to tweak something
     // the high-level API doesn't expose (e.g., add an Icon).
     public Form form { get { return frm; } }
@@ -1793,7 +1914,8 @@ public class LbcDialog : IDisposable
     // say-status-bar hotkey).
     public void setStatusText(string sText)
     {
-        if (lblStatusBar != null) lblStatusBar.Text = sText ?? "";
+        sStatusTip = sText ?? "";
+        paintStatus();
     }
 
     // appendStatus: add a message to the status line, after whatever is
@@ -1808,11 +1930,33 @@ public class LbcDialog : IDisposable
     //
     // The next control to take focus replaces the line with its own tip, which
     // is right: the transcript belongs to the command that produced it.
+    // setStatusExtra: a standing note on the status line, kept beside whatever
+    // tip the control with focus put there.
+    //
+    // For a dialog that has something worth reporting continuously -- what is
+    // playing, and how far in. It is NOT a live region and nothing announces
+    // it: it sits there to be read with the screen reader's own key for the
+    // status line, when the person wants it and not before.
+    public void setStatusExtra(string sText)
+    {
+        sStatusExtra = sText ?? "";
+        paintStatus();
+    }
+
+    private void paintStatus()
+    {
+        if (lblStatusBar == null) return;
+        string sBoth = sStatusTip ?? "";
+        if (sStatusExtra.Length > 0)
+            sBoth = (sBoth.Length > 0) ? (sBoth + "   " + sStatusExtra) : sStatusExtra;
+        lblStatusBar.Text = sBoth;
+    }
+
     public void appendStatus(string sText)
     {
         if (lblStatusBar == null || string.IsNullOrEmpty(sText)) return;
-        string sNow = lblStatusBar.Text ?? "";
-        lblStatusBar.Text = (sNow.Length > 0) ? (sNow + "   " + sText) : sText;
+        sStatusTip = (sStatusTip.Length > 0) ? (sStatusTip + "   " + sText) : sText;
+        paintStatus();
     }
 
     // announce: say it and keep it. The one call a command should use for
@@ -1829,9 +1973,10 @@ public class LbcDialog : IDisposable
     private void handleGotFocus(object sender, EventArgs evArgs)
     {
         Control ctl = sender as Control;
-        if (ctl == null) { lblStatusBar.Text = ""; return; }
-        string sTip;
-        lblStatusBar.Text = dFocusTips.TryGetValue(ctl, out sTip) ? sTip : "";
+        string sTip = "";
+        if (ctl != null) dFocusTips.TryGetValue(ctl, out sTip);
+        sStatusTip = sTip ?? "";
+        paintStatus();
     }
 
     // handleMemoGotFocus: while a memo has focus, Enter must

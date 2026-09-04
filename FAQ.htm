@@ -179,7 +179,7 @@
 </header>
 <h1 id="filedir-questions-and-answers">FileDir — Questions and
 Answers</h1>
-<p><strong>Version 5.0.68</strong><br />
+<p><strong>Version 5.0.75</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -334,6 +334,25 @@ that case.</p>
 podcast’s RSS feed holds those; its web pages do not. If you can get the
 feed’s audio addresses onto the clipboard, Alt+Shift+L plays them at
 once.</p>
+<p><strong>What is the difference between Play list and Play
+queue?</strong></p>
+<p>Play list, Control+Shift+L, hands everything to mpv and steps out of
+the way: mpv’s own window comes to the front and its keys work. Play
+queue, Control+Shift+Q, keeps the list inside FileDir in the Homer
+Player, where every control has an Alt key and the player itself has no
+window at all. The sources are the same either way – tagged files, a
+play list, or the media links in the document you are on.</p>
+<p><strong>Does the Homer Player remember anything?</strong></p>
+<p>Each play list keeps its own speed, volume, jump size and order,
+written as you change them, and where each track had reached when you
+closed it. Playing the same thing again starts where you stopped, in the
+player or in mpv’s own window. Default settings, Alt+D, forgets all of
+that for the queue you are on.</p>
+<p><strong>Can I save part of a track?</strong></p>
+<p>Yes. Play to where it should begin and press F8, play to where it
+should end and press Shift+F8, then Alt+C. FileDir writes that piece as
+a media file beside the track it came from and puts the file on the
+clipboard, ready to paste into a folder or a message.</p>
 <p><strong>Can I add something while it is playing?</strong></p>
 <p>Yes. Copy an address and press Control+V in the player window. That
 is mpv’s own key: it appends one file or address to what is already

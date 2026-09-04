@@ -8,8 +8,8 @@ author: Jamal Mazrui
 
 ### A file manager rebuilt for the way screen reader users actually work
 
-**Version 5.0.68**  
-August 2026  
+**Version 5.0.75**  
+September 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -53,6 +53,25 @@ an alphabetical list finally reads in order.
 Play the tagged files, or a whole folder, or a play list you copied from
 somewhere -- including a list of web addresses, which are fetched as they play.
 Download media from a page as video or as audio alone.
+
+**And there is now a player inside FileDir.** Control+Shift+Q opens the Homer
+Player on whatever you are on: the tagged files, a play list, or the media links
+inside a document -- a page of podcasts becomes a queue with the titles the page
+gave them.
+
+It is a dialog rather than a window that takes over. The queue is a list showing
+each track's name, presenter and length; it can be ordered by any of those.
+Buttons move by track and by chapter, jump by an amount you choose from fifteen
+seconds to an hour, and set speed and volume. Every control has its own Alt key,
+and the transport is on Shift with the arrows, the Page keys and Home and End,
+which works the same on the keypad and the six-pack. Scroll Lock plays and
+pauses from anywhere in the dialog.
+
+Moving anywhere plays what you land on, because listening is how you tell
+whether you arrived where you meant to. Mark a piece of a track with F8 and
+Shift+F8 and Clip to file writes just that piece out and puts it on the
+clipboard. Each play list remembers its own speed, volume, jump size and order,
+and where every track had reached, so playing it again starts where you stopped.
 
 One command shows everything known about a file in a single alphabetical list:
 the Windows properties, what opens it, and the information stored inside it --

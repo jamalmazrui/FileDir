@@ -1,6 +1,6 @@
 ﻿# FileDir — Tutorials
 
-**Version 5.0.68**  
+**Version 5.0.75**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -24,6 +24,7 @@ command's name and what it does instead of running it.
 - [6a. Converting a Folder to Another Format](#6a-converting-a-folder-to-another-format)
 - [7. Translating a Folder of Files](#7-translating-a-folder-of-files)
 - [8. Renaming a Batch of Files](#8-renaming-a-batch-of-files)
+- [8a. Playing a Page of Podcasts](#8a-playing-a-page-of-podcasts)
 - [9. Making FileDir Yours](#9-making-filedir-yours)
 
 ## 1. Your First Five Minutes
@@ -223,6 +224,36 @@ translations are noticeably better; you do not configure anything.
 
 **What you learned:** renaming is a review-then-commit operation, so a mistake
 costs you nothing.
+
+## 8a. Playing a Page of Podcasts
+
+**The job: listen to episodes linked from a saved web page, without leaving
+FileDir.**
+
+1. Move to the page -- a saved .htm, or a Markdown directory of shows.
+2. Press **Control+Shift+Q** for Play Queue. FileDir reads the page, finds the
+   media links, and opens the Homer Player with one track per link, named with
+   the words the page used.
+3. You land in the **Track list**. Arrow through it: nothing plays while you
+   read, and nothing is chosen until you say so.
+4. Press **Enter**, or **Alt+E** for Execute playback, to play the one you are
+   on.
+5. While it plays: **Shift+Right** and **Shift+Left** jump by the increment,
+   **Shift+Down** and **Shift+Up** move to the next and previous track,
+   **Scroll Lock** pauses and resumes. Each of those plays what it lands on, so
+   you can hear whether you got where you meant to.
+6. **Alt+Shift+A** says where you are in the track; **Alt+Shift+W** says the
+   track, its number and the position together.
+7. To change how the list is arranged, press **Alt+O**, arrow to Title or
+   Length, and press **Enter** -- reading the choices changes nothing; Enter
+   applies the one you are on.
+8. **Escape** closes. Everything you set is remembered for that page, and so is
+   where each track had reached, so opening it again starts where you stopped.
+
+**To keep a piece of an episode:** play to where it should begin and press
+**F8**, play to where it should end and press **Shift+F8**, then **Alt+C** for
+Clip to file. FileDir writes that piece as its own media file and puts the file
+on the clipboard.
 
 ## 9. Making FileDir Yours
 

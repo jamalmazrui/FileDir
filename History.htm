@@ -178,7 +178,7 @@
 <h1 class="title">FileDir History</h1>
 </header>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
-<p><strong>Version 5.0.68</strong><br />
+<p><strong>Version 5.0.75</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -221,7 +221,7 @@ MIT License</p>
 <li><a href="#version-3-7">Version 3.7</a></li>
 <li><a href="#version-3-8">Version 3.8</a></li>
 <li><a href="#version-3-9">Version 3.9</a></li>
-<li><a href="#version-5-0-67">Version 5.0.67</a></li>
+<li><a href="#version-5-0-74">Version 5.0.74</a></li>
 <li><a href="#version-5-0-62">Version 5.0.62</a></li>
 <li><a href="#version-5-0-61">Version 5.0.61</a></li>
 <li><a href="#version-5-0-60">Version 5.0.60</a></li>
@@ -1508,7 +1508,7 @@ by simply marking a checkbox.</p>
 <p>Sped up time for subsequent invocations of FileDir after the initial
 one. Improved the optional JAWS scripts for FileDir so that titles of
 top-level windows are more reliably read.</p>
-<h2 id="version-5.0.67">Version 5.0.67</h2>
+<h2 id="version-5.0.74">Version 5.0.74</h2>
 <p><em>September 2026</em></p>
 <p><strong>The Results box now reports what the installation DID, and
 nothing else.</strong></p>
@@ -1618,6 +1618,193 @@ copied”, “Stopped”, “Saved PlayList.m3u8”. The name is not spoken whil
 the cursor is in the queue, because the reader is reading that line
 already, and the volume and speed are never spoken, because a spin box
 announces its own value.</p>
+<p><strong>Stop was emptying the play list.</strong> mpv’s stop command
+does more than the word suggests: it stops playback AND CLEARS THE PLAY
+LIST. So the first Execute playback worked, Stop wiped the queue, and
+everything afterwards did nothing at all while sixty tracks still sat on
+screen. That is the hang – not a hang, an empty player wearing a full
+list.</p>
+<p>Stop is now simply a pause: it stops playing and leaves the place
+alone, in the queue and in the track, and Execute playback carries on
+from there. It is called Stop rather than Pause because Previous track
+already holds the P. mpv’s own version is still available in the shared
+class under a name that says what it does, clearAndStop.</p>
+<p>Two announcements were wrong for the same underlying reason. A track
+was announced when it was LOADED rather than when it started playing, so
+the first name was read out before anything had happened; and Stop left
+the player idle, which the watcher reported as “End of queue”. Both now
+wait for playback to be real.</p>
+<p><strong>Moving somewhere now plays it.</strong> A person who cannot
+see the display finds out where they have landed by listening to it, so
+Next track, Previous track, the chapter buttons, the jumps, the ends of
+the track and the timeline all clear the pause. The commands that only
+report – Alt+Shift+A and the rest – leave it alone.</p>
+<p><strong>And the fixed dialog frame went back to sizable.</strong> It
+was tried to stop JAWS answering “not in a dialog box”, and it made no
+difference; it could not. JAWS decides that from the window class, and a
+real dialog is class #32770, which Windows gives only to windows built
+from a dialog template. Every WinForms form is WindowsForms10.Window
+whatever border it wears, so no Lbc dialog can ever be a dialog box in
+that sense – and none of the ones in DbDo or EdSharp is either. The
+commands that matter, reading the controls and the status line, work
+regardless, and a long track list would rather be resizable.</p>
+<p><strong>The queue started playing the moment the dialog
+opened.</strong> mpv begins as soon as it is given a file, so handing it
+sixty tracks was enough to start the first one talking over the window
+that had just appeared. It is paused before anything is loaded now, and
+Execute playback, Enter or Scroll Lock is what starts it – which is what
+the button was for.</p>
+<p><strong>The status note was rewritten twice a second</strong>,
+because the position was in it. A status bar that changes that often is
+one a screen reader may decide to read out, which is the opposite of
+what a status bar is for here. It now carries the track, its number, the
+state and the length – facts that change when the person does something
+– and the position is left to Alt+Shift+A and the Where in track slider,
+which are asked rather than announced.</p>
+<p><strong>And JAWS was answering “not in a dialog box”.</strong> An Lbc
+dialog was built with a sizable border, which makes it a window rather
+than a dialog as far as Windows is concerned, so the screen reader
+commands that read a dialog had nothing to read. Every Lbc dialog now
+uses the fixed dialog frame. Nothing is lost by it: these dialogs size
+themselves to their contents and scroll past the cap, so there was never
+much to drag.</p>
+<p><strong>The Shift bindings landed outside the handler that reads the
+key.</strong> When they replaced the keypad block, they were written
+above the line that opens the delegate rather than below it, so twelve
+statements testing keyData sat in the method where no keyData exists.
+csc said so twelve times over, in the plainest possible terms, and the
+fix was to move one line.</p>
+<p>Worth recording because of what it says about editing by replacement:
+a block that reads correctly can still be in the wrong scope, and brace
+counting will not notice, because the braces balance either way.</p>
+<p><strong>The transport keys were bound to keys that never arrive, and
+are now Shift with the navigation keys.</strong> The first attempt used
+NumPad0 through NumPad9 on the reasoning that those are distinct virtual
+keys with nothing else to do. They are – when Num Lock is on. A screen
+reader turns Num Lock off and leaves it off, so the keypad sends exactly
+what the six-pack sends: keypad 4 is Left, keypad 8 is Up, keypad 5 is
+Clear. The whole scheme was unreachable on the machine it was written
+for.</p>
+<p>Shift with the navigation keys replaces it, and works the same on
+both pads for the same reason. Bare navigation belongs to whatever
+control has focus, and Control with those keys belongs to the dialog,
+where Control+Home and Control+End move between fields. Shift with them
+is free: this dialog has nothing to tag, and a single-selection list
+does nothing with Shift.</p>
+<p>Each key keeps the sense it already has, applied to the media: arrows
+step by the increment, the Page keys move a chapter, Home and End are
+the ends of the track, and Control makes it the first or last track or
+chapter. Shift with keypad 5 – which arrives as Shift+Clear, the chord
+FileDir already uses for Tag in its own list – plays and pauses. The
+digit bindings are kept for a keyboard with Num Lock on, but they are no
+longer the scheme.</p>
+<p><strong>F8 and Shift+F8 mark a piece of a track</strong>, which is
+what they do everywhere else in Homer Tools: start the selection,
+complete the selection. Here the ends are moments rather than lines.
+Clip to file then writes that piece out with ffmpeg, streams copied
+rather than re-encoded, beside the track it came from or in the folder
+FileDir is looking at.</p>
+<p><strong>And it goes on the clipboard as a FILE.</strong> Windows has
+no clipboard format for a piece of audio that other programs accept: the
+old CF_WAVE is legacy and almost nothing pastes it, and for video there
+is nothing at all. What every program on Windows 11 does accept is a
+file, so the clip is written and the file is put on the clipboard, where
+it pastes into a folder, a message, or anything that takes a dropped
+file. Same destination, a route that works.</p>
+<p><strong>Go became Execute playback, because Gemini owns
+Alt+G.</strong> Google registered a global hotkey with a single
+modifier, which is a choice the rest of the desktop has to live with: a
+hotkey registered that way belongs to whoever asked for it first, and no
+dialog can take it back from inside its own window. So the button moved
+rather than the key. Run collided with Rate, and Start with Stop, which
+has no better name than Stop playback.</p>
+<p>Every control now has a name of two words or more, so a mnemonic can
+come from either of them: Play list, Order of list, Next track, Previous
+track, Forward in track, Backward in track, Increment of jump, Rate
+percent, Volume percent, Execute playback, Stop playback, Default
+settings, Help topics.</p>
+<p><strong>Three controls were added.</strong> Chapter more and Chapter
+less move within a track that has chapters, on their own row with the
+Where in track slider, which moves playback to a percentage through the
+track.</p>
+<p>Their first names were Chapter ahead and Chapter behind, and the pair
+did not read as a pair: one took its letter from the second word and the
+other from the first, which is two things to remember where there should
+be one. Same first word, contrasting second, letter always from the
+second. More and less describe quantity rather than direction, which is
+the price; a matched shape is worth more here than a perfect word,
+because the two are pressed one after the other.</p>
+<p>That freed a letter and cost one, so Play list became Track list and
+the timeline became Where in track – plainer than the alternatives
+considered, and it echoes Alt+Shift+W, which says where you are in
+words. The timeline is set as the cursor arrives at it and does not
+follow playback afterwards: a control that changed twice a second would
+be read out over everything else, and that lesson has been learned here
+twice already.</p>
+<p><strong>The sliders were lying about their values.</strong> A screen
+reader announces a track bar’s position as a percentage of its own
+range, so a rate of 100 on a scale of 25 to 400 was announced as “20”,
+and a volume of 70 out of 130 as “53” – both true of the slider and
+useless to the listener. Lbc gained LbcTrackBar, whose accessible object
+reports the value in the words the label promised.</p>
+<p><strong>The status line now carries a standing note</strong> of what
+is playing: which track of how many, its name, whether it is playing or
+paused, and how far in. It is not a live region and nothing announces
+it. It sits there to be read with the screen reader’s own key for the
+status line, beside whatever tip the control with focus has put
+there.</p>
+<p><strong>The default button follows the player.</strong> With nothing
+playing, Enter is Go, because starting is the only thing left to want;
+while something plays, Enter is Stop. Control+Enter is Go throughout,
+whatever the default happens to be at the time and wherever the cursor
+is, so starting something new never depends on working out which button
+Enter would press. The Tracks and Order lists handle Enter themselves
+and are unaffected. Escape closes and everything chosen is written on
+the way out.</p>
+<p><strong>Reading a list was doing things.</strong> Arrowing down Order
+sorted the queue on the way past, and the player moved the cursor in
+Tracks whenever a new track began. Both are the same fault: for a screen
+reader user, moving through a list IS how the choices are read, so a
+list that acts as it is passed over cannot be read without being obeyed,
+and a cursor that moves on its own means a Say Line somewhere else reads
+a track name instead.</p>
+<p>Neither list has a selection handler now. The cursor moves, the
+reader reads, nothing happens. Go applies the order the cursor is on and
+plays the track the cursor is on, and Enter in either list does the
+same. Stop first is not required: Go on a playing queue simply moves to
+what was chosen. The player never touches the cursor again – a track
+beginning is announced, and that is all.</p>
+<p>The two sliders keep acting at once, because moving a slider IS
+changing it, which is what its arrow keys have meant in Windows since
+sliders existed.</p>
+<p><strong>Scroll Lock did nothing, and the reason is worth
+recording.</strong> It is a toggle key: Windows acts on it, and a
+KeyDown handler behind KeyPreview may never see it. It is claimed
+through ProcessCmdKey now, which runs ahead of the controls and ahead of
+that, and the shared Lbc class gained a commandKey hook so any dialog
+can claim a key the same way. It writes a line to the log when it fires,
+so the next test can tell a key that never arrived from a command that
+did nothing.</p>
+<p><strong>The increment is a list of named steps, not a
+slider.</strong> 15 and 30 seconds, 1, 3, 5, 10, 15 and 30 minutes, and
+an hour, smallest first, starting at one minute. A slider announces its
+position, so a person heard “4” where they needed to hear “3
+minutes”.</p>
+<p><strong>Every queue keeps its own settings</strong>, in
+HomerPlayer.inix, in a section named after where the queue came from. A
+lecture can play at 150 percent and music at 100 without either being
+set twice. <strong>Defaults</strong>, Alt+D, deletes that section rather
+than writing the defaults into it, so a queue that never asked for
+anything else picks up a better default later.</p>
+<p><strong>And the access keys were invisible, which is why they were
+silent.</strong> Windows hides the underline under an access key until
+somebody presses Alt, and on most machines that is the default. The
+underline is not decoration: it is how the key is published, and a
+screen reader that cannot see it does not announce “Alt+G” as the cursor
+lands on Go. Every Lbc form now clears UISF_HIDEACCEL on itself as its
+handle is created, so its access keys are shown – and announced – from
+the moment it opens. The ampersands were always there; nothing was
+listening for them.</p>
 <p><strong>No control in Lbc sets its accessible name any more, and one
 of them was hiding what it carried.</strong> Repetitive speech was the
 symptom: a screen reader reads a control’s accessible name AND the

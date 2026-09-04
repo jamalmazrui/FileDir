@@ -8021,7 +8021,7 @@ aQueuePaths = aQueueFiles;
 if (aQueuePaths.Length == 0) return;
 
 List<MediaTrack> lsTracks = null;
-string sQueueTitle = "Media Player";
+string sQueueTitle = "Homer Player";
 // Where the queue came from, in a few words. It goes in the list's own label,
 // which a screen reader reads every time the cursor enters the list, rather
 // than only in the title bar, which is read once.
@@ -8038,19 +8038,19 @@ lsTracks = MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne));
 catch (Exception ex) {
 Homer.Log.write("Play Queue: could not read " + sOne + ": " + ex.Message);
 }
-sQueueTitle = "Media Player - " + sLeaf;
+sQueueTitle = "Homer Player - " + sLeaf;
 sQueueSource = sLeaf;
 }
 else if (isPlayable_Helper(sOne)) {
 lsTracks = MediaPlayer.fromFiles(new string[] { sOne });
-sQueueTitle = "Media Player - " + sLeaf;
+sQueueTitle = "Homer Player - " + sLeaf;
 sQueueSource = sLeaf;
 }
 else {
 App.say("Looking for media links in " + sLeaf);
 List<string> lsFound = documentLinks_Helper(sOne);
 lsTracks = MediaPlayer.fromPlaylistLines(lsFound);
-sQueueTitle = "Media Player - links from " + sLeaf;
+sQueueTitle = "Homer Player - links from " + sLeaf;
 sQueueSource = sLeaf;
 if (lsTracks.Count == 0) {
 App.say("0 media links in " + sLeaf, true);

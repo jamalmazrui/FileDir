@@ -66,6 +66,7 @@ private const int c_iIdPause = 3;
 private const int c_iIdPlaylistPos = 5;
 private const int c_iIdTitle = 4;
 private const int c_iIdTimePos = 1;
+private const int c_iIdChapters = 7;
 
 // A volume below full by default, so the media does not drown the screen
 // reader. Able Player sets 7 out of 10 for exactly this reason.
@@ -95,6 +96,7 @@ private bool bIdleValue = true;
 private bool bPausedValue;
 private double dDurationValue = -1;
 private double dPositionValue = -1;
+private int iChapterCountValue = 0;
 private int iPlaylistPosValue = -1;
 private NamedPipeClientStream pipe;
 private Process oProcess;
@@ -258,6 +260,7 @@ sendRaw("{\"command\": [\"observe_property\", " + c_iIdPause + ", \"pause\"]}");
 sendRaw("{\"command\": [\"observe_property\", " + c_iIdTitle + ", \"media-title\"]}");
 sendRaw("{\"command\": [\"observe_property\", " + c_iIdPlaylistPos + ", \"playlist-pos\"]}");
 sendRaw("{\"command\": [\"observe_property\", " + c_iIdIdle + ", \"idle-active\"]}");
+sendRaw("{\"command\": [\"observe_property\", " + c_iIdChapters + ", \"chapters\"]}");
 return true;
 }
 catch (Exception ex) {
@@ -331,7 +334,21 @@ public bool next() { return command("playlist-next", "force"); }
 public bool previous() { return command("playlist-prev", "force"); }
 public bool togglePause() { return command("cycle", "pause"); }
 public bool setPause(bool bValue) { return command("set_property", "pause", bValue); }
-public bool stop() { return command("stop"); }
+// stop: STOP PLAYING AND STAY WHERE YOU ARE.
+//
+// Pausing, in other words, and nothing else -- not mpv's own "stop", which
+// stops playback AND CLEARS THE PLAY LIST. A dialog that offers Stop and then
+// cannot play anything again is the result, and that is what happened: the
+// first Execute worked, Stop emptied the queue, and everything afterwards did
+// nothing while sixty tracks still sat on screen.
+//
+// It does not rewind either. Losing your place is not what a listener asks for
+// when they stop something; carrying on from where they stopped is.
+public bool stop() { return setPause(true); }
+
+// clearAndStop: mpv's own stop, play list and all. Not what the Stop button
+// does; here for a caller that really does want the queue emptied.
+public bool clearAndStop() { return command("stop"); }
 public bool seekRelative(double dSeconds) { return command("seek", dSeconds, "relative"); }
 public bool seekAbsolute(double dSeconds) { return command("seek", dSeconds, "absolute"); }
 public bool setVolume(int iVolume) { return command("set_property", "volume", iVolume); }
@@ -346,6 +363,7 @@ public bool setLoopPlaylist(bool bValue) { return command("set_property", "loop-
 // its manual gives them.
 public bool setMute(bool bValue) { return command("set_property", "mute", bValue); }
 public bool nextChapter() { return command("add", "chapter", 1); }
+public bool setChapter(int iChapter) { return command("set_property", "chapter", iChapter); }
 public bool previousChapter() { return command("add", "chapter", -1); }
 
 // revertSeek: mpv's own undo. A second call returns to where the undo came
@@ -365,6 +383,10 @@ public bool idle { get { lock (oStateLock) { return bIdleValue; } } }
 public double duration { get { lock (oStateLock) { return dDurationValue; } } }
 public double position { get { lock (oStateLock) { return dPositionValue; } } }
 public int playlistIndex { get { lock (oStateLock) { return iPlaylistPosValue; } } }
+
+// How many chapters this track has, as mpv last reported. Zero means none, and
+// that is the ordinary case: most audio has no chapter marks at all.
+public int chapterCount { get { lock (oStateLock) { return iChapterCountValue; } } }
 public string title { get { lock (oStateLock) { return sTitleValue; } } }
 
 // formatTime: seconds as a person would say them. Negative or unknown gives
@@ -471,6 +493,7 @@ bool bWasPlaying;
 lock (oStateLock) { bWasPlaying = !bIdleValue; bIdleValue = bIdleNow; }
 if (bIdleNow && bWasPlaying && playbackEnded != null) playbackEnded();
 }
+else if (sName == "chapters") { int iNew = (int) jsonNumberValue(sLine, "data"); lock (oStateLock) { iChapterCountValue = (iNew > 0) ? iNew : 0; } }
 else if (sName == "media-title") { string sNew = jsonStringValue(sLine, "data"); lock (oStateLock) { sTitleValue = sNew; } }
 else if (sName == "playlist-pos") {
 int iNew = (int) jsonNumberValue(sLine, "data");

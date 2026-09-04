@@ -1,6 +1,6 @@
 ﻿# FileDir
 
-**Version 5.0.68**  
+**Version 5.0.75**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -44,6 +44,11 @@ blind developer for people who work by keyboard and screen reader.
   gathered into a window you can inspect and delete from.
 - **Playing media**, from the folder, the tagged files, or a play list you
   copied — including lists of web addresses.
+- **A player of its own.** Control+Shift+Q opens the Homer Player: the queue in
+  a list with each track's name, presenter and length, ordering by title,
+  presenter or length, chapters, an adjustable jump, speed and volume, and a
+  clip of any part of a track written to a file. Every control has its own Alt
+  key, and the settings are remembered for each play list.
 - **Everything a file knows about itself** in one alphabetical list: Windows
   properties, what opens it, and the metadata inside it.
 - **Translation and questions, on your own computer.** Translate whole folders,

@@ -1,6 +1,6 @@
 ﻿# FileDir — Questions and Answers
 
-**Version 5.0.68**  
+**Version 5.0.75**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -191,6 +191,29 @@ recognise. FileDir now warns you before starting in that case.
 What plays immediately is an address ending in .mp3 or .m4a. A podcast's RSS
 feed holds those; its web pages do not. If you can get the feed's audio
 addresses onto the clipboard, Alt+Shift+L plays them at once.
+
+**What is the difference between Play list and Play queue?**
+
+Play list, Control+Shift+L, hands everything to mpv and steps out of the way:
+mpv's own window comes to the front and its keys work. Play queue,
+Control+Shift+Q, keeps the list inside FileDir in the Homer Player, where every
+control has an Alt key and the player itself has no window at all. The sources
+are the same either way -- tagged files, a play list, or the media links in the
+document you are on.
+
+**Does the Homer Player remember anything?**
+
+Each play list keeps its own speed, volume, jump size and order, written as you
+change them, and where each track had reached when you closed it. Playing the
+same thing again starts where you stopped, in the player or in mpv's own window.
+Default settings, Alt+D, forgets all of that for the queue you are on.
+
+**Can I save part of a track?**
+
+Yes. Play to where it should begin and press F8, play to where it should end and
+press Shift+F8, then Alt+C. FileDir writes that piece as a media file beside the
+track it came from and puts the file on the clipboard, ready to paste into a
+folder or a message.
 
 **Can I add something while it is playing?**
 
