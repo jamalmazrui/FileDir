@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.76**  
+**Version 5.0.81**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -830,12 +830,13 @@ Neither command asks anything: they start playing, with sound and picture. The
 player runs on its own, so FileDir does not sit waiting while you listen.
 Its own keys work in its window: space to pause, arrows to seek, q to stop.
 
-Press **Control+Shift+Q** for Play Queue. It plays the same things Play List
+Press **Control+Shift+H** for the Homer Player. It plays the same things Play List
 plays, but inside FileDir instead of inside the player's own window.
 
 The difference is where the list lives. Play List hands everything to mpv and
 steps out of the way: mpv comes to the front, its keys work, and FileDir is not
-involved again until you press q. Play Queue keeps the list here, in a dialog:
+involved again until you press q. The Homer Player keeps the list here, in a
+dialog:
 
 - The tracks are in a list you can move through, each with **the name it came
   with**. For a document that means the words somebody wrote about the link --
@@ -847,8 +848,20 @@ involved again until you press q. Play Queue keeps the list here, in a dialog:
 The dialog is called the Homer Player, and it is six rows of ordinary controls,
 each row holding the things that belong together:
 
-- **Alt+T Track list** -- the queue, each line giving the name, the presenter
-  and the length where they are known.
+- **Alt+T Track list** -- the queue, each line giving the name, then the
+  presenter and the length where they are known. The name comes first and
+  carries no number, so pressing a letter jumps to the first track beginning
+  with it. **Control+J** jumps to a track by name and **Control+Shift+J** jumps
+  backwards; **F3** and **Shift+F3** jump to the next and previous match;
+  **Control+F** filters the list to what matches, and **Control+Shift+F** clears
+  the filter. J for jump, F for filter, they are the directory window's own
+  keys, and in this dialog all six act on the Track list from wherever you are
+  and leave the keyboard where it was, saying the track they land on when the
+  cursor is elsewhere.
+  **Alt+Enter** shows everything known about the track you are on -- name,
+  presenter, length, address, and for a file on this computer everything
+  ExifTool can read out of it -- as text you can read by character, word or
+  line, select from, and copy.
 - **Alt+O Order of list**, then **Alt+N Next track** and **Alt+P Previous
   track**. The orders are play list order, title, presenter, and length shortest
   or longest first. Titles sort ignoring a leading A, An or The; presenters sort
@@ -979,6 +992,8 @@ FileDir mean selecting and moving:
 - **Alt+Shift+A** say the position, **Alt+Shift+W** say the track, its number
   and the position together
 - **Alt+Shift+O** overview: how many tracks, then their names
+- **Alt+Shift+M** write what is showing, in the order shown, to a Markdown file:
+  one heading per track, and under it only the fields that are known
 - **Alt+Shift+C** copy the address of the track you are on
 - **Alt+Shift+L** save the queue as an .m3u8 play list, in the order shown
 
@@ -999,7 +1014,8 @@ after another, so you can read back over it with your screen reader's
 say-status-bar key instead of asking again.
 
 Which command to use is a matter of what you are doing. Play List is quicker
-when you want to start something and walk away. Play Queue is better when the
+when you want to start something and walk away. The Homer Player is better when
+the
 list is worth steering: a page of podcasts where the titles matter, or a set of
 files you want to move around in.
 

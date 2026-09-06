@@ -1,6 +1,6 @@
 ﻿# FileDir — Tutorials
 
-**Version 5.0.76**  
+**Version 5.0.81**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -231,7 +231,7 @@ costs you nothing.
 FileDir.**
 
 1. Move to the page -- a saved .htm, or a Markdown directory of shows.
-2. Press **Control+Shift+Q** for Play Queue. FileDir reads the page, finds the
+2. Press **Control+Shift+H** for the Homer Player. FileDir reads the page, finds the
    media links, and opens the Homer Player with one track per link, named with
    the words the page used.
 3. You land in the **Track list**. Arrow through it: nothing plays while you

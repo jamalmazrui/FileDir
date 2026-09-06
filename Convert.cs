@@ -302,7 +302,12 @@ return new string[,] {
 {"WAV audio, uncompressed", "wav"},
 {"FLAC audio, lossless", "flac"},
 {"Ogg Vorbis audio", "ogg"},
-{"Opus audio", "opus"}
+{"Opus audio", "opus"},
+// NOT A CONVERSION, AND DELIBERATELY HERE ANYWAY. Every other choice turns each
+// tagged file into a file of its own; this one writes a single play list naming
+// them all. It belongs where a person already goes to ask "what else can these
+// files become", and a list of them is one of the answers.
+{"Play list of these files", "m3u"}
 };
 if (sCategory == "video")
 return new string[,] {
@@ -313,7 +318,8 @@ return new string[,] {
 {"AVI video", "avi"},
 {"MP3 audio, sound only", "mp3"},
 {"M4A audio, sound only", "m4a"},
-{"WAV audio, sound only", "wav"}
+{"WAV audio, sound only", "wav"},
+{"Play list of these files", "m3u"}
 };
 if (sCategory == "image")
 return new string[,] {

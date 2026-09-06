@@ -178,6 +178,41 @@ catch (Exception) { }
 return "";
 }
 
+// ---- what mpv can be given ----
+
+// Extensions mpv plays. Not a complete list of what it CAN read -- that depends
+// on how it was built -- but a list of what it is asked to read here.
+private static readonly string[] c_asPlayable = {
+".mp3", ".m4a", ".aac", ".flac", ".wav", ".ogg", ".oga", ".opus", ".wma",
+".aiff", ".aif", ".ape", ".mka", ".mid", ".midi", ".cda", ".ac3", ".dts",
+".mp4", ".m4v", ".mkv", ".avi", ".mov", ".wmv", ".flv", ".webm", ".mpg",
+".mpeg", ".m2ts", ".ts", ".vob", ".ogv", ".3gp", ".divx",
+".m3u", ".m3u8", ".pls"
+};
+
+// canPlay: whether to hand this to mpv at all.
+//
+// ASKING FIRST IS AN ACCESSIBILITY MATTER, not tidiness. mpv given something it
+// cannot read puts an error on its own on-screen display, which is drawn rather
+// than spoken: a screen reader user gets silence and a window that will not go
+// away. Better to leave the thing out of the queue and say how many were left
+// out.
+//
+// A web address is allowed through whatever it ends in: mpv hands those to
+// yt-dlp, which knows far more about what a page holds than a file extension
+// ever says.
+public static bool canPlay(string sTarget) {
+if (string.IsNullOrEmpty(sTarget)) return false;
+string sLower = sTarget.Trim().ToLowerInvariant();
+if (sLower.StartsWith("http://") || sLower.StartsWith("https://")) return true;
+try {
+string sExtension = Path.GetExtension(sLower);
+if (string.IsNullOrEmpty(sExtension)) return false;
+return Array.IndexOf(c_asPlayable, sExtension) >= 0;
+}
+catch (Exception) { return false; }
+}
+
 // ---- starting and stopping ----------------------------------------------
 
 public string program { get { return sProgram; } }

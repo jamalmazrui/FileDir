@@ -118,7 +118,7 @@ def commandsInSource(sCode):
 
 
 def hotkeyEntries(sHotkeys):
-    """The command-to-value table in Hotkeys.ini."""
+    """The command-to-value table in Hotkeys.inix."""
     dEntries = {}
     for sLine in sHotkeys.splitlines():
         sLine = sLine.strip()
@@ -227,7 +227,7 @@ def checkKeysUnique(sCode):
 
 
 def checkNoRetiredCommands(sCode, sHotkeys):
-    """Hotkeys.ini must not describe a command that no longer exists.
+    """Hotkeys.inix must not describe a command that no longer exists.
 
     The Web Client Utilities were removed and their description stayed
     behind, so the Hotkey Summary advertised a command that was gone. A stale
@@ -238,7 +238,7 @@ def checkNoRetiredCommands(sCode, sHotkeys):
     for sName in sorted(hotkeyEntries(sHotkeys)):
         if sName in setLive or sName.startswith("Say ") or sName in lAllowed:
             continue
-        warn("Hotkeys.ini describes '" + sName + "', which is not a live command. "
+        warn("Hotkeys.inix describes '" + sName + "', which is not a live command. "
              "Remove it, or add it to lAllowed in this check if it is deliberate.")
 
 
@@ -785,7 +785,7 @@ def checkKeysNamedInText():
     means searching every shipped file, and the audit cannot know which sentence
     was about which command.
     """
-    sHotkeys = readFile("Hotkeys.ini")
+    sHotkeys = readFile("Hotkeys.inix")
     if sHotkeys is None:
         return
     setBound = set()
@@ -814,7 +814,7 @@ def checkKeysNamedInText():
     # the Media Player's own Alt+H, Alt+N and Alt+Q -- three keys that plainly
     # work. The ampersands in the dialog sources are read for the letters they
     # claim. FileDir.cs is left out on purpose: its ampersands are menu labels,
-    # whose keys are declared properly in Hotkeys.ini and checked above.
+    # whose keys are declared properly in Hotkeys.inix and checked above.
     for sDialogSource in ("MediaPlayer.cs", "Dialogs.cs", "Lbc.cs"):
         sDialogCode = readFile(sDialogSource) or ""
         for oMatch in re.finditer(r'"[^"\n]*&([A-Za-z])[^"\n]*"', sDialogCode):
@@ -840,6 +840,20 @@ def checkKeysNamedInText():
             continue
         for oMatch in re.finditer(r"case Keys\.(\w+)\s*:", sDialogCode):
             setBound.add("alt+shift+" + oMatch.group(1).lower())
+
+    # And the chords a dialog tests outright -- Control+J, Shift+F3 and the
+    # rest, which Lbc gives every list. Written as a comparison against a
+    # combination of Keys values, which is what the code below reads.
+    for sDialogSource in ("MediaPlayer.cs", "Dialogs.cs", "Lbc.cs"):
+        sDialogCode = readFile(sDialogSource) or ""
+        for oMatch in re.finditer(r"==\s*\(?((?:Keys\.\w+\s*\|\s*)*Keys\.\w+)\)?", sDialogCode):
+            lsParts = [sPart.strip().replace("Keys.", "").lower()
+                       for sPart in oMatch.group(1).split("|")]
+            lsModifiers = [sPart for sPart in ("control", "alt", "shift") if sPart in lsParts]
+            lsKeys = [sPart for sPart in lsParts if sPart not in ("control", "alt", "shift")]
+            if len(lsKeys) != 1:
+                continue
+            setBound.add("+".join(lsModifiers + lsKeys))
 
     # And the ones Windows owns rather than FileDir: moving between and closing
     # child windows is the framework's job, so no command declares them.
@@ -1207,6 +1221,39 @@ def checkScriptsWellFormed():
     report("Every script logs, traps and has a wrapper", not lFaults, "; ".join(lFaults))
 
 
+def checkNoAccessibleNames():
+    """No dialog control may carry an accessible name of its own.
+
+    A screen reader reads a control's accessible name AND the visible text that
+    names it. In an Lbc dialog every control has visible text already: a button
+    carries its caption, a field carries the Label above it. Setting the
+    property to those same words means the control is announced twice, which is
+    what made these dialogs tiring to use.
+
+    Forty-eight of them accumulated in Dialogs.cs while the shared class was
+    being kept clean, and nobody noticed until someone listened carefully. A
+    check costs nothing and the mistake is easy to make again, because setting
+    an accessible name looks like an accessibility improvement.
+
+    The one exception the guidelines allow -- a read-only memo that fills its
+    own dialog, named by the window title -- needs no accessible name either, so
+    there is no exception to write here.
+    """
+    lsFaults = []
+    for sName in ("Dialogs.cs", "Lbc.cs", "MediaPlayer.cs"):
+        sSource = readFile(sName)
+        if sSource is None:
+            continue
+        for iLine, sLine in enumerate(sSource.splitlines(), 1):
+            sStripped = sLine.strip()
+            if sStripped.startswith("//"):
+                continue
+            if re.search(r"\.AccessibleName\s*=", sStripped):
+                lsFaults.append(sName + " line " + str(iLine))
+    report("No dialog control sets its own accessible name",
+           not lsFaults, ", ".join(lsFaults[:8]) + ("..." if len(lsFaults) > 8 else ""))
+
+
 def checkFolderIsSorted():
     """Nothing unexpected may sit at the root.
 
@@ -1310,14 +1357,14 @@ def main():
 
     sCode = readFile("FileDir.cs")
     sIss = readFile("FileDir_setup.iss")
-    sHotkeys = readFile("Hotkeys.ini")
+    sHotkeys = readFile("Hotkeys.inix")
 
     for sName in ("FileDir.cs", "Dialogs.cs", "Lbc.cs", "Say.cs", "Inix.cs",
                   "Util.cs", "Web.cs", "KeyMap.cs", "Ollama.cs", "Convert.cs", "Media.cs", "Mpv.cs",
                   "MediaPlayer.cs", "Log.cs", "Table.cs",
                   "FileDir.js",
                   "FileDir.manifest", "FileDir.ico", "version.txt",
-                  "Hotkeys.ini", "FileDir_setup.iss", "RepoFiles.txt",
+                  "Hotkeys.inix", "FileDir_setup.iss", "RepoFiles.txt",
                   "homerPolicy.py", "makeKeyMap.py"):
         if not os.path.isfile(os.path.join(pathRoot, sName)):
             report("Source present: " + sName, False, "not found in " + pathRoot)
@@ -1330,13 +1377,15 @@ def main():
         checkCommandsReachable(sCode)
         checkAboutBox(sCode)
         if sHotkeys is None:
-            report("Hotkeys.ini is present", False, "not found in " + pathRoot)
+            report("Hotkeys.inix is present", False, "not found in " + pathRoot)
         else:
             checkCommandsDescribed(sCode, sHotkeys)
             checkNoRetiredCommands(sCode, sHotkeys)
         if sIss is not None:
             checkUpdateAssetName(sCode, sIss)
             checkDocumentsShipped(sCode, sIss)
+
+    checkNoAccessibleNames()
 
     if sIss is None:
         report("FileDir_setup.iss is present", False, "not found in " + pathRoot)

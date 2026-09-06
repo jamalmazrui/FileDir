@@ -418,41 +418,36 @@ public class LbcForm : Form
     // ProcessCmdKey runs ahead of all of that.
     public Func<Keys, bool> commandKey;
 
-    [System.Runtime.InteropServices.DllImport("user32.dll")]
-    private static extern IntPtr SendMessage(IntPtr hWnd, int iMessage, IntPtr wParam, IntPtr lParam);
+    // dialogKey: the dialog's own keys -- jump, find, filter -- claimed in the
+    // same place, and for the same reason. See below.
+    public Func<Keys, bool> dialogKey;
 
-    private const int WM_CHANGEUISTATE = 0x0127;
-    private const int UIS_CLEAR = 2;
-    private const int UISF_HIDEFOCUS = 1;
-    private const int UISF_HIDEACCEL = 2;
-
-    // SHOW THE ACCESS KEYS, ALWAYS.
-    //
-    // Windows hides the underline under a control's access key until somebody
-    // presses Alt, and on most machines that is the default. The underline is
-    // not decoration: it is how the access key is published, and a screen
-    // reader that cannot see it does not announce "Alt+G" as the cursor lands
-    // on Go. The keys work either way; the announcement does not.
-    //
-    // Clearing UISF_HIDEACCEL on the form says "show them from the start", for
-    // this window only. UISF_HIDEFOCUS goes with it so the focus rectangle is
-    // drawn too, which is the same courtesy for a sighted keyboard user.
-    protected override void OnHandleCreated(EventArgs e)
-    {
-        base.OnHandleCreated(e);
-        try
-        {
-            int iState = (UIS_CLEAR << 16) | (UISF_HIDEACCEL | UISF_HIDEFOCUS);
-            SendMessage(this.Handle, WM_CHANGEUISTATE, (IntPtr) iState, IntPtr.Zero);
-        }
-        catch (Exception) { }
-    }
+    // The access keys were once forced visible from here, by clearing
+    // UISF_HIDEACCEL as the handle was created, on the theory that a screen
+    // reader announces "Alt+E" only while Windows is drawing the underline. It
+    // made no difference to what JAWS said, and it put an extra window-state
+    // message into the moment a dialog opens -- which is the moment under
+    // investigation for saying too much. An unproven fix with a known cost is
+    // not worth keeping.
 
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
+        // KEYS ARE DISPATCHED HERE, NOT FROM A KeyDown HANDLER.
+        //
+        // This is what DbDo and EdSharp both do, and the reason is plain in the
+        // fault it fixes: F3 and Shift+F3 hung on a list box's KeyDown did
+        // nothing at all in the player, because a key can be taken by the
+        // control, by the form's dialog-key handling, or by the screen reader
+        // before any KeyDown handler is reached. ProcessCmdKey runs before all
+        // of that.
         if (commandKey != null)
         {
             try { if (commandKey(keyData)) return true; }
+            catch (Exception) { }
+        }
+        if (dialogKey != null)
+        {
+            try { if (dialogKey(keyData)) return true; }
             catch (Exception) { }
         }
         if (keyData == (Keys.Control | Keys.Enter))
@@ -1176,12 +1171,12 @@ public class LbcDialog : IDisposable
         lb.Size = new Size(innerWidth(), DefaultListHeight);
         lb.Margin = new Padding(0, 0, 0, DefaultRowGap);
         populateListBox(lb, lsNames, sSelected);
+        stateFor(lb);   // remember the full list, for finding and filtering
         lb.GotFocus += handleGotFocus;
-        // Find-in-list keys. Ctrl+J prompts for a case-insensitive
-        // substring; F3 advances to the next match; Shift+F3 the
-        // previous. Mirrors the data list's Jump-to and Find-Next
-        // chords. Useful when picking from long lists (Alternate
-        // Menu, Choose Table on a large schema).
+        // Find and filter keys, the same ones FileDir's directory window uses:
+        // Control+J and Control+Shift+J find a substring forwards or
+        // backwards, F3 and Shift+F3 repeat it, Control+F shows only what
+        // matches and Control+Shift+F shows everything again.
         lb.KeyDown += new KeyEventHandler(handleListBoxFindKeys);
         lb.KeyDown += new KeyEventHandler(handleListBoxCopyKeys);
         registerWidget(lb, "ListBox", nameFromLabel());
@@ -1237,34 +1232,225 @@ public class LbcDialog : IDisposable
         evArgs.SuppressKeyPress = true;
     }
 
+    // ------- Finding and filtering in a list -------
+    //
+    // A long list is unusable without these, and a screen reader user needs
+    // them more than anyone: reading sixty lines to find one is the difference
+    // between a list and a wall. The keys are the ones FileDir's own directory
+    // window uses, so one habit serves both:
+    //
+    //   Control+J          find a substring, forwards
+    //   Control+Shift+J    find a substring, backwards
+    //   F3, Shift+F3       the same substring again, on and back
+    //   Control+F          show only the items that match
+    //   Control+Shift+F    show everything again
+    //
+    // FILTERING CHANGES WHICH ROWS ARE SHOWN, so a caller that maps rows to
+    // anything of its own must ask listSourceIndex rather than trusting the
+    // row number. That is why the full list is kept here rather than left in
+    // the control.
+
+    private class ListState
+    {
+        public List<string> lsAll = new List<string>();
+        public List<int> liRows = new List<int>();   // visible row -> place in lsAll
+        public string sFilter = "";
+    }
+
+    private Dictionary<ListBox, ListState> dListStates = new Dictionary<ListBox, ListState>();
+
+    // primaryList: the list the jump, find and filter keys act on, wherever the
+    // cursor happens to be.
+    //
+    // A dialog built around one list -- a player around its queue -- should
+    // answer Control+J with that list from any control in it. Left unset, the
+    // keys act on whichever list has focus, which is right for a dialog with
+    // several.
+    public ListBox primaryList;
+
+    private ListState stateFor(ListBox lb)
+    {
+        ListState state;
+        if (dListStates.TryGetValue(lb, out state)) return state;
+        state = new ListState();
+        foreach (object oItem in lb.Items) state.lsAll.Add((oItem ?? "").ToString());
+        for (int i = 0; i < state.lsAll.Count; i++) state.liRows.Add(i);
+        dListStates[lb] = state;
+        return state;
+    }
+
+    // setListItems: replace what a list holds, and forget any filter on it.
+    // A caller that rebuilds a list -- because it sorted it, say -- should come
+    // through here so the find and filter machinery knows what is there now.
+    public void setListItems(ListBox lb, IList<string> lsItems)
+    {
+        if (lb == null) return;
+        ListState state = new ListState();
+        foreach (string sItem in lsItems) state.lsAll.Add(sItem ?? "");
+        for (int i = 0; i < state.lsAll.Count; i++) state.liRows.Add(i);
+        dListStates[lb] = state;
+        lb.BeginUpdate();
+        try
+        {
+            lb.Items.Clear();
+            foreach (string sItem in state.lsAll) lb.Items.Add(sItem);
+            if (lb.Items.Count > 0) lb.SelectedIndex = 0;
+        }
+        finally { lb.EndUpdate(); }
+    }
+
+    // listSourceIndex: which item a visible row really is. With no filter the
+    // answer is the row itself; with one it is not.
+    public int listSourceIndex(ListBox lb, int iRow)
+    {
+        if (lb == null || iRow < 0) return -1;
+        ListState state = stateFor(lb);
+        if (iRow >= state.liRows.Count) return -1;
+        return state.liRows[iRow];
+    }
+
+    // listIsFiltered: whether a list is showing a subset.
+    public bool listIsFiltered(ListBox lb)
+    {
+        if (lb == null) return false;
+        return stateFor(lb).sFilter.Length > 0;
+    }
+
+    private void applyFilter(ListBox lb, string sFilter)
+    {
+        ListState state = stateFor(lb);
+        string sLower = (sFilter ?? "").ToLowerInvariant();
+        List<int> liRows = new List<int>();
+        for (int i = 0; i < state.lsAll.Count; i++)
+        {
+            if (sLower.Length == 0 || state.lsAll[i].ToLowerInvariant().Contains(sLower)) liRows.Add(i);
+        }
+        // A FILTER THAT MATCHES NOTHING IS NOT APPLIED. An empty list is a
+        // dead end with no way back that is obvious from inside it, and the
+        // count is a real answer on its own.
+        if (liRows.Count == 0)
+        {
+            Say.say("0 matches. The list is unchanged.");
+            return;
+        }
+        state.sFilter = sLower;
+        state.liRows = liRows;
+        lb.BeginUpdate();
+        try
+        {
+            lb.Items.Clear();
+            foreach (int iSource in liRows) lb.Items.Add(state.lsAll[iSource]);
+            lb.SelectedIndex = 0;
+        }
+        finally { lb.EndUpdate(); }
+        if (sLower.Length == 0) Say.say(Util.stringPlural("item", liRows.Count));
+        else Say.say(liRows.Count + " of " + Util.stringPlural("item", state.lsAll.Count));
+    }
+
+    // listKeyHandled: do the jump, find or filter this key asks for, and say
+    // whether it was one of them.
+    private bool listKeyHandled(ListBox lb, Keys k)
+    {
+        if (lb == null)
+        {
+            // Only worth a line when the key was one of ours and there was no
+            // list to use it on; anything else is every keystroke in the log.
+            if (k == Keys.F3 || k == (Keys.Shift | Keys.F3) || k == (Keys.Control | Keys.J)
+                || k == (Keys.Control | Keys.Shift | Keys.J) || k == (Keys.Control | Keys.F)
+                || k == (Keys.Control | Keys.Shift | Keys.F))
+                Log.write("Lbc: " + k.ToString() + " pressed, but the control with focus is not a list.");
+            return false;
+        }
+        if (k == (Keys.Control | Keys.J)) { promptAndFindInListBox(lb, true); return true; }
+        if (k == (Keys.Control | Keys.Shift | Keys.J)) { promptAndFindInListBox(lb, false); return true; }
+        if (k == Keys.F3) { Log.write("Lbc: F3, term is " + (sListSearchTerm ?? "")); findNextInListBox(lb, true); return true; }
+        if (k == (Keys.Shift | Keys.F3)) { Log.write("Lbc: Shift+F3, term is " + (sListSearchTerm ?? "")); findNextInListBox(lb, false); return true; }
+        if (k == (Keys.Control | Keys.F))
+        {
+            string sWanted = promptWithHistory("Filter", "Filter text:", "listFilter", stateFor(lb).sFilter);
+            if (sWanted != null) applyFilter(lb, sWanted);
+            return true;
+        }
+        if (k == (Keys.Control | Keys.Shift | Keys.F))
+        {
+            ListState stateNow = stateFor(lb);
+            if (stateNow.sFilter.Length == 0) Say.say("No filter to clear");
+            else { stateNow.sFilter = ""; applyFilter(lb, ""); }
+            return true;
+        }
+        return false;
+    }
+
     private void handleListBoxFindKeys(object sender, KeyEventArgs evArgs)
     {
         ListBox lb = sender as ListBox;
         if (lb == null) return;
         Keys k = evArgs.KeyData;
-        if (k == (Keys.Control | Keys.J))
-        { promptAndFindInListBox(lb); evArgs.Handled = true; evArgs.SuppressKeyPress = true; }
-        else if (k == Keys.F3)
-        { findNextInListBox(lb, true); evArgs.Handled = true; evArgs.SuppressKeyPress = true; }
-        else if (k == (Keys.Shift | Keys.F3))
-        { findNextInListBox(lb, false); evArgs.Handled = true; evArgs.SuppressKeyPress = true; }
+        if (!listKeyHandled(lb, k)) return;
+        evArgs.Handled = true;
+        evArgs.SuppressKeyPress = true;
     }
 
-    // Ctrl+J: prompt for a case-insensitive substring, then jump
-    // to the first item containing it. The substring is stored
-    // in sListSearchTerm so subsequent F3 / Shift+F3 can advance.
-    private void promptAndFindInListBox(ListBox lb)
+    // ------- Remembering what was asked before -------
+    //
+    // Nobody wants to type the same substring twice. Each kind of prompt keeps
+    // its own short history, newest first, and the box that asks is a combo
+    // box, so the last ten answers are one Down Arrow away.
+    //
+    // WHERE THE HISTORY IS KEPT IS THE APPLICATION'S BUSINESS, not this
+    // class's. An application that wants it to survive the session sets these
+    // two, as FileDir does with its .inix; one that does not gets a history
+    // that lasts as long as the program runs.
+    public static Func<string, List<string>> historyRead;
+    public static Action<string, List<string>> historyWrite;
+
+    private const int c_iHistoryDepth = 10;
+    private static Dictionary<string, List<string>> dHistorySession = new Dictionary<string, List<string>>();
+
+    private static List<string> historyFor(string sKey)
     {
-        string sPrompt = "Find substring (case-insensitive):";
-        string sInitial = sListSearchTerm ?? "";
-        // Simple inline input: a tiny modal dialog with one input
-        // box. We don't recurse into LbcDialog because nesting
-        // would complicate event routing; a vanilla Form is fine.
+        if (historyRead != null)
+        {
+            try
+            {
+                List<string> lsFiled = historyRead(sKey);
+                if (lsFiled != null) return lsFiled;
+            }
+            catch (Exception) { }
+        }
+        List<string> lsHere;
+        if (!dHistorySession.TryGetValue(sKey, out lsHere)) { lsHere = new List<string>(); dHistorySession[sKey] = lsHere; }
+        return lsHere;
+    }
+
+    private static void historyAdd(string sKey, string sValue)
+    {
+        if (string.IsNullOrEmpty(sValue)) return;
+        List<string> lsNow = new List<string>(historyFor(sKey));
+        // Newest first, no repeats, and never more than ten: a history longer
+        // than that is a list to search rather than a shortcut.
+        for (int i = lsNow.Count - 1; i >= 0; i--)
+            if (string.Equals(lsNow[i], sValue, StringComparison.OrdinalIgnoreCase)) lsNow.RemoveAt(i);
+        lsNow.Insert(0, sValue);
+        while (lsNow.Count > c_iHistoryDepth) lsNow.RemoveAt(lsNow.Count - 1);
+        dHistorySession[sKey] = lsNow;
+        if (historyWrite != null)
+        {
+            try { historyWrite(sKey, lsNow); }
+            catch (Exception) { }
+        }
+    }
+
+    // promptWithHistory: ask for one line, with the last ten answers on hand.
+    // Returns null when the person changes their mind.
+    public string promptWithHistory(string sTitle, string sPrompt, string sHistoryKey, string sInitial)
+    {
+        string sAnswer = null;
         using (Form prompt = new LbcForm())
         {
             // The caption IS the accessible name of a Form; setting the
             // property to the same text makes a reader announce it twice.
-            prompt.Text = "Find in list";
+            prompt.Text = sTitle;
             prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
             prompt.StartPosition = FormStartPosition.CenterParent;
             prompt.MinimizeBox = false;
@@ -1275,11 +1461,13 @@ public class LbcDialog : IDisposable
             lbl.Text = sPrompt;
             lbl.AutoSize = true;
             lbl.Location = new Point(12, 12);
-            TextBox tb = new TextBox();
-            tb.Text = sInitial;
-            tb.SelectAll();
-            tb.Location = new Point(12, 36);
-            tb.Size = new Size(376, 20);
+            ComboBox cbo = new ComboBox();
+            cbo.DropDownStyle = ComboBoxStyle.DropDown;
+            cbo.Location = new Point(12, 36);
+            cbo.Size = new Size(376, 21);
+            foreach (string sPast in historyFor(sHistoryKey)) cbo.Items.Add(sPast);
+            cbo.Text = sInitial ?? "";
+            cbo.SelectAll();
             Button btnOk = new Button();
             btnOk.Text = "&OK";
             btnOk.DialogResult = DialogResult.OK;
@@ -1289,22 +1477,56 @@ public class LbcDialog : IDisposable
             btnCancel.DialogResult = DialogResult.Cancel;
             btnCancel.Location = new Point(313, 70);
             prompt.Controls.Add(lbl);
-            prompt.Controls.Add(tb);
+            prompt.Controls.Add(cbo);
             prompt.Controls.Add(btnOk);
             prompt.Controls.Add(btnCancel);
             prompt.AcceptButton = btnOk;
             prompt.CancelButton = btnCancel;
-            if (prompt.ShowDialog(frm) != DialogResult.OK) return;
-            sListSearchTerm = tb.Text ?? "";
+            if (prompt.ShowDialog(frm) != DialogResult.OK) return null;
+            sAnswer = cbo.Text ?? "";
         }
+        historyAdd(sHistoryKey, sAnswer);
+        return sAnswer;
+    }
+
+    // Control+J and Control+Shift+J: ask for a substring, then jump to the
+    // next item containing it, forwards or backwards from where the cursor is.
+    // The substring is kept so F3 and Shift+F3 can carry on.
+    private void promptAndFindInListBox(ListBox lb, bool bForward)
+    {
+        // "Jump" IS WHY THE KEY IS J. A prompt that says Find leaves the letter
+        // unexplained; one that says Jump teaches itself every time it opens,
+        // and it is the word FileDir's own directory window already uses.
+        string sWanted = promptWithHistory(bForward ? "Jump" : "Jump back", "Text:",
+            "listJump", sListSearchTerm ?? "");
+        if (sWanted == null) return;
+        sListSearchTerm = sWanted;
         if (string.IsNullOrEmpty(sListSearchTerm)) return;
-        // Start search from item 0 (Ctrl+J is "find first match
-        // from the top," not "find next from current position").
-        int iFound = findInListBoxFrom(lb, 0, true, sListSearchTerm);
-        if (iFound < 0)
-            Say.say("No match for \"" + sListSearchTerm + "\"");
-        else
-        { lb.SelectedIndex = iFound; lb.Focus(); }
+        // From where the cursor is, not from the top: the answer wanted is
+        // nearly always the next one, and wrapping means nothing is missed.
+        int iFrom = lb.SelectedIndex + (bForward ? 1 : -1);
+        if (iFrom < 0) iFrom = lb.Items.Count - 1;
+        if (iFrom >= lb.Items.Count) iFrom = 0;
+        int iFound = findInListBoxFrom(lb, iFrom, bForward, sListSearchTerm);
+        if (iFound < 0) Say.say("0 matches for " + sListSearchTerm);
+        else moveTo(lb, iFound);
+    }
+
+    // moveTo: put the cursor of a list on an item, and leave the keyboard where
+    // it was.
+    //
+    // FOCUS BELONGS TO THE PERSON. A find that drags focus into the list is a
+    // find that has also decided where they should be working, and getting back
+    // is their problem. So the list's own cursor moves and nothing else does --
+    // and when the list is not the control with focus, the item is spoken,
+    // because a screen reader only announces a list line when the list is where
+    // the cursor is.
+    private void moveTo(ListBox lb, int iRow)
+    {
+        if (lb == null || iRow < 0 || iRow >= lb.Items.Count) return;
+        bool bHasFocus = lb.Focused;
+        lb.SelectedIndex = iRow;
+        if (!bHasFocus) Say.say((lb.Items[iRow] ?? "").ToString());
     }
 
     // F3 / Shift+F3: advance / retreat through matches of the
@@ -1314,15 +1536,18 @@ public class LbcDialog : IDisposable
     private void findNextInListBox(ListBox lb, bool bForward)
     {
         if (string.IsNullOrEmpty(sListSearchTerm))
-        { Say.say("No find substring set; press Control+J first"); return; }
+        {
+            // Asking beats refusing: F3 with nothing to repeat means the person
+            // wants to find something and reached for the nearer key.
+            promptAndFindInListBox(lb, bForward);
+            return;
+        }
         int iFrom = lb.SelectedIndex + (bForward ? 1 : -1);
         if (iFrom < 0) iFrom = lb.Items.Count - 1;
         if (iFrom >= lb.Items.Count) iFrom = 0;
         int iFound = findInListBoxFrom(lb, iFrom, bForward, sListSearchTerm);
-        if (iFound < 0)
-            Say.say("No more matches for \"" + sListSearchTerm + "\"");
-        else
-            lb.SelectedIndex = iFound;
+        if (iFound < 0) Say.say("0 more matches for " + sListSearchTerm);
+        else moveTo(lb, iFound);
     }
 
     // findInListBoxFrom: case-insensitive substring search through
@@ -1535,8 +1760,54 @@ public class LbcDialog : IDisposable
     // wireUniversalKeys: Control+Enter, F1, Control+Home, Control+End and F7,
     // handled at form level. Every way of running a dialog wires these, so a
     // dialog that builds its own buttons is no poorer for it.
+    // focusedControl: which control the keyboard is in, for a caller that needs
+    // to know before claiming a key. Space belongs to a button that has focus
+    // and to a box being typed in; anywhere else a dialog may take it.
+    public Control focusedControl()
+    {
+        return deepActiveControl();
+    }
+
+    // deepActiveControl: the control that actually has focus.
+    //
+    // Form.ActiveControl is NOT that. It gives the active child of the form,
+    // which for these dialogs is the panel holding everything, and asking it
+    // for a ListBox got null every time -- which is the other half of why the
+    // find keys did nothing. The chain has to be walked to the bottom.
+    private Control deepActiveControl()
+    {
+        Control ctl = frm.ActiveControl;
+        while (ctl is ContainerControl && ((ContainerControl) ctl).ActiveControl != null)
+            ctl = ((ContainerControl) ctl).ActiveControl;
+        // A band or the stack is a plain Panel rather than a ContainerControl,
+        // so the focused control is found by asking the form what has focus.
+        if (!(ctl is ListBox))
+        {
+            Control ctlFocused = findFocused(frm);
+            if (ctlFocused != null) ctl = ctlFocused;
+        }
+        return ctl;
+    }
+
+    private static Control findFocused(Control ctlParent)
+    {
+        foreach (Control ctl in ctlParent.Controls)
+        {
+            if (ctl.Focused) return ctl;
+            Control ctlInner = findFocused(ctl);
+            if (ctlInner != null) return ctlInner;
+        }
+        return null;
+    }
+
     private void wireUniversalKeys(Button btnDefault, bool bHelpHere)
     {
+        // The jump, find and filter keys go through ProcessCmdKey, where
+        // nothing can take them first.
+        LbcForm lbcFrm = frm as LbcForm;
+        if (lbcFrm != null)
+            lbcFrm.dialogKey = delegate(Keys keyData)
+            { return listKeyHandled(primaryList != null ? primaryList : deepActiveControl() as ListBox, keyData); };
         frm.KeyPreview = true;
         frm.KeyDown += delegate(object sender, KeyEventArgs evArgs)
         {
@@ -1572,6 +1843,7 @@ public class LbcDialog : IDisposable
                 evArgs.SuppressKeyPress = true;
                 pickFocusControl();
             }
+
         };
     }
 
@@ -1593,13 +1865,12 @@ public class LbcDialog : IDisposable
         if (iTotalHeight < 200) iTotalHeight = 200;
         frm.ClientSize = new Size(DefaultDialogWidth, iTotalHeight);
 
-        if (ctlFirstFocusable != null) frm.ActiveControl = ctlFirstFocusable;
-        if (ctlInitialFocus != null)
-        {
-            Control ctlFocusLater = ctlInitialFocus;
-            frm.Shown += delegate(object o, EventArgs e)
-            { try { ctlFocusLater.Focus(); } catch { } };
-        }
+        // ONE PLACE FOR FOCUS TO START. Setting ActiveControl and then focusing
+        // something again once the window is up gives a screen reader two
+        // arrivals to announce, and the dialog is read out twice -- which is
+        // what opening the player sounded like.
+        Control ctlStart = (ctlInitialFocus != null) ? ctlInitialFocus : ctlFirstFocusable;
+        if (ctlStart != null) frm.ActiveControl = ctlStart;
         frm.ShowDialog(owner);
     }
 
@@ -1727,13 +1998,9 @@ public class LbcDialog : IDisposable
         if (iTotalHeight < 200) iTotalHeight = 200;
         frm.ClientSize = new Size(DefaultDialogWidth, iTotalHeight);
 
-        if (ctlFirstFocusable != null) frm.ActiveControl = ctlFirstFocusable;
-        if (ctlInitialFocus != null)
-        {
-            Control ctlFocusLater = ctlInitialFocus;
-            frm.Shown += delegate(object o, EventArgs e)
-            { try { ctlFocusLater.Focus(); } catch { } };
-        }
+        // One place for focus to start; see runPlain for why twice is wrong.
+        Control ctlStart = (ctlInitialFocus != null) ? ctlInitialFocus : ctlFirstFocusable;
+        if (ctlStart != null) frm.ActiveControl = ctlStart;
         frm.ShowDialog(owner);
         return sResult;
     }

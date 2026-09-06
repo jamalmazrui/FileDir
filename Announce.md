@@ -8,7 +8,7 @@ author: Jamal Mazrui
 
 ### A file manager rebuilt for the way screen reader users actually work
 
-**Version 5.0.76**  
+**Version 5.0.81**  
 September 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -54,7 +54,7 @@ Play the tagged files, or a whole folder, or a play list you copied from
 somewhere -- including a list of web addresses, which are fetched as they play.
 Download media from a page as video or as audio alone.
 
-**And there is now a player inside FileDir.** Control+Shift+Q opens the Homer
+**And there is now a player inside FileDir.** Control+Shift+H opens the Homer
 Player on whatever you are on: the tagged files, a play list, or the media links
 inside a document -- a page of podcasts becomes a queue with the titles the page
 gave them.

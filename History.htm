@@ -178,7 +178,7 @@
 <h1 class="title">FileDir History</h1>
 </header>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
-<p><strong>Version 5.0.76</strong><br />
+<p><strong>Version 5.0.81</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -1618,6 +1618,200 @@ copied”, “Stopped”, “Saved PlayList.m3u8”. The name is not spoken whil
 the cursor is in the queue, because the reader is reading that line
 already, and the volume and speed are never spoken, because a spin box
 announces its own value.</p>
+<p><strong>The rule is now checked at build time.</strong> An accessible
+name that repeats a caption or a label is easy to add again, because
+adding one looks like an accessibility improvement. The audit fails the
+build on any control in Dialogs.cs, Lbc.cs or MediaPlayer.cs that sets
+one, so the forty-eight cannot quietly come back.</p>
+<p>The reasoning behind it is written down in the developer notes, as
+four rules: say nothing the reader already says; say what it cannot
+know; layer the detail so a short answer is the default and the longer
+ones are a key away; and write every message to the status line so it
+can be read back rather than repeated.</p>
+<p><strong>Forty-eight duplicating accessible names, in FileDir’s own
+dialogs.</strong> The clean-out that emptied the shared Lbc class of
+them never touched Dialogs.cs, which holds the dialogs FileDir had
+before Lbc: Input, the folder prompt, Pick, Confirm, the button dialogs,
+all of them. Every one set AccessibleName to the words already on the
+button or on the label beside it, so each control was named twice over –
+which is precisely the repetition that was reported and precisely the
+mechanism guessed at.</p>
+<p>None of them sets it now. A button carries its own caption, a text
+box carries the label before it, and Windows reports both without
+help.</p>
+<p>This does not explain the window TITLE being announced two or three
+times as a dialog opens. That is a separate thing, it happens in Lbc
+dialogs and in these older ones alike, and nothing in either file asks
+for it.</p>
+<p><strong>The number in front of each track is gone.</strong> A line
+beginning with a digit cannot be reached by pressing its first letter,
+and first-letter navigation is how a list of sixty titles is actually
+used. Where a track sits in the queue is something a screen reader
+reports on its own, and Alt+Shift+W says it in words.</p>
+<p><strong>Space plays and pauses.</strong> Scroll Lock was meant to and
+never arrived; it is a toggle key, and something between the keyboard
+and the dialog keeps it. Space is what mpv’s own window uses and what a
+hand reaches for. It is claimed everywhere in the dialog except on a
+button, where Space is how Windows presses the thing with focus, and
+except in a box being typed in. The Jump and Filter prompts are windows
+of their own, so a search term with a space in it was never in question.
+Scroll Lock keeps its binding for anyone whose keyboard delivers it.</p>
+<p><strong>Jump, find and filter belong to the queue, wherever the
+cursor is.</strong> They acted on whichever list had focus, so Control+J
+pressed from Order of list searched the wrong list. A dialog can now
+nominate the list its find keys serve, and the player nominates the
+queue.</p>
+<p>They also leave the keyboard where they found it. A find that drags
+focus into the list has decided where the person should be working, and
+getting back is their problem. The list’s cursor moves and nothing else
+does – and when the list is not where the cursor is, the track landed on
+is spoken, because a screen reader only reads a list line when that list
+has focus.</p>
+<p><strong>The forced access-key underline was taken out again.</strong>
+It was added on the theory that a screen reader announces “Alt+E” only
+while Windows is drawing the underline; it made no difference to what
+JAWS said, and it put an extra window-state message into the moment a
+dialog opens, which is the moment being investigated for saying too
+much. An unproven fix with a known cost is not worth keeping.</p>
+<p><strong>Play List opens the Homer Player now.</strong>
+Control+Shift+L used to ask for a file name, write an .m3u, and hand it
+to mpv’s own window. Writing a play list is still available and is now
+where it belongs – one of the choices in Output Type, on Shift+O, beside
+the other things a set of files can become. Playing is a different job
+from filing, and asking for a file name before anything can be heard was
+a form to fill in on the way to pressing play.</p>
+<p>So the tagged files, the play list or media file you are on, and the
+media links in the document you are on all open in the player, which
+drives mpv directly rather than starting a window and letting go.</p>
+<p><strong>Nothing mpv cannot read is put in front of it.</strong> mpv
+given something it cannot play draws an error on its own display, which
+is never spoken: a screen reader user gets silence and a window that
+will not answer. The shared class now knows what mpv is asked to read –
+the audio and video extensions, play lists, and any web address, since
+those go to yt-dlp, which knows more than an extension does – and
+anything else is left out of the queue. What was left out is said once,
+as a count.</p>
+<p><strong>Output Type offers a play list.</strong> “Play list of these
+files” appears among the audio and video choices on Shift+O. It is the
+one choice there that makes a single file from many rather than
+converting each, and it leaves out anything mpv cannot read, because a
+play list that stops at a spreadsheet is not a play list.</p>
+<p><strong>Alt+Shift+M in the player writes track notes.</strong> A
+Markdown file of what is showing, in the order shown: the sort chosen in
+Order of list, and only the tracks a filter has left. One heading per
+track, and under it only the fields that are known – a line saying
+“Presenter: unknown” is a line to listen to for nothing.</p>
+<p><strong>Hotkeys.ini became Hotkeys.inix.</strong> No Homer tool
+should own a file with a .ini extension: .inix is the Homer format, and
+.ini is what it supersedes. The file itself is unchanged – the same
+command, key and description on each line – and everything that reads or
+ships it follows: makeKeyMap.py, which generates KeyMap.cs and
+Hotkeys.md from it, the audit, the build script, the installer script,
+the repository file list, the developer notes, and the program itself,
+which still reads a copy in its own folder ahead of the compiled
+defaults.</p>
+<p>The old Hotkeys.ini in the project folder is no longer named by
+anything. cleanFileDir will report it as not belonging, which is the
+right answer.</p>
+<p><strong>Play Queue became the Homer Player, on
+Control+Shift+H.</strong> Q was the wrong letter and there was never an
+argument for it beyond the key being free. In FileDir, Q is the QUICK
+family: Control+Q opens a quick folder, Shift+Q makes a quick shortcut,
+Alt+Shift+Q makes a quick URL. A playback command wearing Q was
+borrowing a letter that already means something else, which is the one
+thing an Lbc binding must not do.</p>
+<p>Every combination of the four candidate letters was checked against
+the hotkey table. L is used four times over – List Files, List, List
+Tagged, Play List – and its last free chord is Alt+Control, which is
+reserved for desktop shortcuts. P is used five times, from Say Path to
+Path List to Clipboard. T is used six. H is nearly empty: only
+Alt+Shift+H, the Hotkey Summary, is taken.</p>
+<p>So Control+Shift+H, and the command is named Homer Player, which is
+what the dialog has been called for several versions. H for Homer, and
+it sits beside Control+Shift+L for Play List – the two ways of playing
+the same things, sharing a chord family and differing by one letter that
+says which is which.</p>
+<p><strong>F3 still did nothing, and there were two reasons, both
+mine.</strong></p>
+<p>The keys were dispatched from a KeyDown handler. DbDo and EdSharp
+both dispatch from ProcessCmdKey, and the fault shows why: a key can be
+taken by the control, by the form’s own dialog-key handling, or by the
+screen reader before any KeyDown handler is reached. The jump, find and
+filter keys now go through ProcessCmdKey, in a hook of the dialog’s own
+beside the one an application uses, so nothing can take them first.</p>
+<p>And the dialog asked Form.ActiveControl which control had focus. That
+is not what ActiveControl means: it gives the active CHILD of the form,
+which for these dialogs is the panel holding everything, so asking it
+for a list box returned null every time. The chain is walked to the
+bottom now, and the focused control found by asking rather than
+assuming.</p>
+<p>Each of those keys also writes a line to the log when it is pressed –
+which term it has, or that the control with focus is not a list – so a
+report that says “nothing happened” can be told apart from one where
+nothing arrived.</p>
+<p><strong>Alt+Enter shows the properties as text rather than a
+list.</strong> A list gives whole lines and nothing else. A read-only
+memo gives the arrow keys for character, word and line, Shift with them
+for selecting, and Control+C for copying a piece rather than a line –
+which is what a person wants from an address they need half of. It has
+an OK button and no label, being the one case where a control needs
+none: it fills its own window and the title says what it holds.</p>
+<p><strong>The window titles were made short.</strong> A window’s title
+is read every time the window is touched, and “Homer Player - links from
+AmericanScandal.htm” was being read three times on opening and again on
+every return to it. The title is now just “Homer Player”; where the
+queue came from lives in the Track list’s own label, which is read on
+entering the list and not before. The properties window lost the track
+name from its title for the same reason – the name is in the list it is
+showing.</p>
+<p><strong>F3 was reaching nothing, and the dialog was being read
+twice.</strong> Two faults from the same habit of hanging behaviour on a
+control and hoping the key gets there.</p>
+<p>The find keys were on the list box’s own KeyDown, which is behind
+everything the dialog and the control may do with a key first. They are
+claimed by the dialog now, before any control sees them, and the
+list-level handler defers to the same code so there is one set of rules
+rather than two.</p>
+<p>And the dialog set focus twice on opening – once through
+ActiveControl, once again from a Shown handler – which gives a screen
+reader two arrivals to announce and reads the whole dialog out twice.
+Focus starts in one place now.</p>
+<p><strong>The prompt says Jump, because the key is J.</strong> A prompt
+headed Find leaves the letter unexplained; one headed Jump teaches
+itself every time it opens, and it is the word FileDir’s directory
+window already uses for the same key. Filter keeps its own word for the
+same reason. Naming a prompt after its key is worth more than naming it
+after its function.</p>
+<p><strong>Alt+Enter shows everything known about a track</strong>,
+which is what Alt+Enter means in Windows and in FileDir’s own list.
+Name, presenter, length and address first; then, for a file on this
+computer, everything ExifTool can read out of it – artist, album,
+codecs, bit rate, the date it was recorded. Sorted by field name and
+shown as a list rather than a page of text, because forty fields are
+searched rather than read: Control+J jumps to a field, Control+F
+filters, and Control+C copies the line.</p>
+<p><strong>Finding and filtering, in every Homer list.</strong> A long
+list is unusable without them, and a screen reader user needs them more
+than anyone: reading sixty lines to find one is the difference between a
+list and a wall. The keys are the directory window’s own, so one habit
+serves both.</p>
+<p>Control+J finds a substring, case ignored, from where the cursor is;
+Control+Shift+J searches backwards. F3 and Shift+F3 carry on with the
+same substring, and pressing either with nothing to repeat asks rather
+than refusing. Control+F shows only the items that match, and
+Control+Shift+F shows everything again. A filter that would match
+nothing is not applied: an empty list is a dead end, and the count is a
+real answer on its own.</p>
+<p>Both prompts are combo boxes with the last ten answers in them,
+newest first, no repeats. Where that history lives is the application’s
+business rather than Lbc’s: FileDir keeps it in its own .inix under a
+History section, tab separated, one line per prompt. An application that
+wires nothing gets a history that lasts as long as the program runs.</p>
+<p>Filtering means a row on screen is no longer the same thing as an
+item in the list, so Lbc keeps the full list and answers
+listSourceIndex; the player asks it before turning a row into a place in
+the queue, and rebuilds through setListItems when a sort changes what is
+showing.</p>
 <p><strong>Stop was emptying the play list.</strong> mpv’s stop command
 does more than the word suggests: it stops playback AND CLEARS THE PLAY
 LIST. So the first Execute playback worked, Stop wiped the queue, and

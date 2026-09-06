@@ -214,12 +214,12 @@ Source: "nvdaControllerClient.dll"; DestDir: "{app}"; Flags: ignoreversion skipi
 Source: "Scripts\*.jsb";      DestDir: "{app}\Scripts"; Flags: ignoreversion skipifsourcedoesntexist
 ; Configuration: do NOT clobber a user's existing settings on upgrade.
 Source: "FileDir.ini";        DestDir: "{app}"; Flags: onlyifdoesntexist
-; Hotkeys.ini is deliberately NOT shipped.  The key and description of every
-; command are compiled into the program (KeyMap.cs, generated from Hotkeys.ini at
+; Hotkeys.inix is deliberately NOT shipped.  The key and description of every
+; command are compiled into the program (KeyMap.cs, generated from Hotkeys.inix at
 ; build time).  Shipping the file with onlyifdoesntexist meant an existing
 ; installation kept its old copy for ever and never saw a new description; the
 ; [InstallDelete] below removes that stale copy.  A user who wants to override an
-; entry can still create Hotkeys.ini in the program folder, and it is read first.
+; entry can still create Hotkeys.inix in the program folder, and it is read first.
 ; Documentation.  The standard Homer Tools set, each Markdown file with the
 ; matching HTML the build generates from it.  gpl.txt is gone: FileDir is MIT
 ; licensed, and License.md/.htm say so.  The old plain-text hotkeys.txt and
@@ -298,11 +298,11 @@ Type: files; Name: "{app}\lbc.dll"
 ; The lbc.cs line that used to sit here removed a file the installer now ships.
 ; Windows file names are case insensitive, so "{app}\lbc.cs" and the shipped
 ; Lbc.cs are the same file: the installer deleted it and put it straight back.
-; Hotkeys.ini used to ship with onlyifdoesntexist, so an existing installation
+; Hotkeys.inix used to ship with onlyifdoesntexist, so an existing installation
 ; kept a copy that could never be updated and Key Describer read stale text from
 ; it.  The table is compiled in now, so the stale file is removed.  A user who
 ; wants to override an entry can create the file again.
-Type: files; Name: "{app}\Hotkeys.ini"
+Type: files; Name: "{app}\Hotkeys.inix"
 ; The build was three scripts for a while; it is two now.
 Type: files; Name: "{app}\auditFileDir.ps1"
 Type: files; Name: "{app}\auditFileDir.cmd"

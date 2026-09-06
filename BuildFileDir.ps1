@@ -23,7 +23,7 @@
 #
 # The shape follows the EdSharp build:
 #
-#   1. Run makeKeyMap.py to generate KeyMap.cs and Hotkeys.md from Hotkeys.ini,
+#   1. Run makeKeyMap.py to generate KeyMap.cs and Hotkeys.md from Hotkeys.inix,
 #      the single source for every command name, key, and description.
 #   2. Run auditFileDir.py and stop on failure.  Nothing is compiled until the
 #      checks a compiler cannot make have passed.
@@ -252,11 +252,11 @@ writeLog ("Python: " + $sPython)
 # =============================================================================
 # KeyMap.cs holds the shipped default key and description for every command,
 # compiled into the program, and Hotkeys.md is the reference document.  Both are
-# generated from Hotkeys.ini, so the table, the program and the document cannot
+# generated from Hotkeys.inix, so the table, the program and the document cannot
 # disagree.  This runs before the audit because the audit checks what it makes.
 saySection "Key map"
-if (-not (Test-Path "makeKeyMap.py")) { stopHere "makeKeyMap.py not found. KeyMap.cs and Hotkeys.md are generated from Hotkeys.ini and cannot be written without it." }
-Write-Host "Generating KeyMap.cs and Hotkeys.md from Hotkeys.ini ..."
+if (-not (Test-Path "makeKeyMap.py")) { stopHere "makeKeyMap.py not found. KeyMap.cs and Hotkeys.md are generated from Hotkeys.inix and cannot be written without it." }
+Write-Host "Generating KeyMap.cs and Hotkeys.md from Hotkeys.inix ..."
 $iExit = runProgram $sPython @("makeKeyMap.py") "makeKeyMap.py"
 if ($iExit -ne 0) { stopHere ("makeKeyMap.py returned " + $iExit + ". See makeKeyMap.log.") }
 

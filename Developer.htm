@@ -178,7 +178,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.76</strong><br />
+<p><strong>Version 5.0.81</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -225,10 +225,11 @@ fast.</p>
 <li><code>FileDir.cs</code> — the program. One monolithic WinForms
 source, about 8,170 lines.</li>
 <li><code>Dialogs.cs</code> — FileDir’s own dialogs.</li>
-<li><code>MediaPlayer.cs</code> — the Homer Player dialog behind Play
-Queue: the queue, its ordering, the transport, the clip export, and the
-per-play-list settings kept in <code>HomerPlayer.inix</code>. It owns
-the mpv process for exactly as long as the dialog is open.</li>
+<li><code>MediaPlayer.cs</code> — the Homer Player dialog, on
+Control+Shift+H: the queue, its ordering, the transport, the clip
+export, and the per-play-list settings kept in
+<code>HomerPlayer.inix</code>. It owns the mpv process for exactly as
+long as the dialog is open.</li>
 <li><code>FileDir.js</code> — the JScript .NET expression
 evaluator.</li>
 </ul>
@@ -248,7 +249,44 @@ giving a non-destructive override.</li>
 1.2 and 1.3 and a browser user agent, used by Elevate Version.</li>
 <li><code>Util.cs</code> — shared helpers.</li>
 <li><code>KeyMap.cs</code> — <strong>generated</strong>; see below.</li>
-<li><code>Lbc.cs</code> — the Layout by Code dialog toolkit.</li>
+<li><code>Lbc.cs</code> — the Layout by Code dialog toolkit. ### How
+much a dialog should say</li>
+</ul>
+<p>A screen reader user hears one thing at a time, in order. Speech is
+the only channel, and everything spoken is spent from the same budget,
+so the question for every announcement is not “is this true” but “is
+this worth the seconds it costs, here, now”.</p>
+<p>Four rules keep an Lbc dialog inside that budget.</p>
+<p><strong>Say nothing the reader already says.</strong> It announces
+the window title, the control with focus, the line under the cursor in a
+list, and the value of a slider as it moves. A dialog that says any of
+those again is charging twice for one fact. This is why no control sets
+an accessible name: the caption or the Label above it is the name, and
+setting the property to those same words means the control is announced
+twice. The audit checks for it, because it looks like an accessibility
+improvement and is the opposite.</p>
+<p><strong>Say what the reader cannot know.</strong> That a track has
+started on its own, that a jump landed at 12:30, that a filter left
+twelve of sixty items, that a command did nothing because there was
+nothing to do. None of that is on screen in a form the reader can
+find.</p>
+<p><strong>Layer the detail.</strong> A command answers at the size of
+the question. Alt+Shift+A gives the position; Alt+Shift+W gives the
+track, its number and the position; Alt+Enter gives everything known
+about it. The short answer is the default because it is wanted most
+often, and the longer ones are a key away rather than an
+interruption.</p>
+<p><strong>Let the person ask again.</strong> Speech vanishes; the
+status line does not. Every message a command produces is also written
+there, so it can be read back at leisure with the screen reader’s own
+key. A status line is not a live region and nothing announces it: it is
+a record, not a broadcast.</p>
+<p>The failure this guards against has been seen in both directions. Now
+playing was rewritten twice a second, so the dialog talked over
+everything else and the keys appeared dead; and a status Label was given
+the accessible name “Status”, which replaced the text it carried and hid
+every message behind one word.</p>
+<ul>
 <li><code>Mpv.cs</code> — drives the mpv media player over its
 documented JSON IPC pipe: mpv runs with no window, no keys and no focus
 of its own, and every command travels as one line of JSON. Three rules
@@ -305,7 +343,7 @@ that dies still leaves a log:</p>
 <ol type="1">
 <li><p><strong>Key map.</strong> <code>makeKeyMap.py</code> regenerates
 <code>KeyMap.cs</code> and <code>Hotkeys.md</code> from
-<code>Hotkeys.ini</code>. This runs first because the audit checks what
+<code>Hotkeys.inix</code>. This runs first because the audit checks what
 it produces.</p></li>
 <li><p><strong>Audit.</strong> <code>auditFileDir.py</code> runs, and
 the build stops if anything fails. Nothing is compiled until the checks
@@ -419,10 +457,10 @@ comments. An edit that moves it has unbalanced a block. This matters
 because whoever edits this file may not be able to compile it.</li>
 <li>Every live menu command has a description.</li>
 <li>No key is bound to two commands.</li>
-<li><code>Hotkeys.ini</code> describes no command that no longer
+<li><code>Hotkeys.inix</code> describes no command that no longer
 exists.</li>
 <li><code>KeyMap.cs</code> is not older than
-<code>Hotkeys.ini</code>.</li>
+<code>Hotkeys.inix</code>.</li>
 <li>Every file named in the installer’s <code>[Files]</code> section
 exists. An entry carrying <code>skipifsourcedoesntexist</code> fails
 silently at compile time, so a file can quietly stop shipping; that case
@@ -493,18 +531,18 @@ a stale <code>.iss</code> carrying its own <code>AppVersion</code> once
 rewound the number and the next build re-minted a version already
 published.</p>
 <p><strong>Keys and descriptions live in
-<code>Hotkeys.ini</code>.</strong> The build generates from it
+<code>Hotkeys.inix</code>.</strong> The build generates from it
 <code>KeyMap.cs</code>, a compiled-in table, and
 <code>Hotkeys.md</code>, the reference document. <code>Version.cs</code>
 and <code>KeyMap.cs</code> are generated output: do not edit them, and
 they are in <code>.gitignore</code>.</p>
 <p><code>KeyMap.cs</code> exists for a specific reason. The installer
-used to ship <code>Hotkeys.ini</code> with the
+used to ship <code>Hotkeys.inix</code> with the
 <code>onlyifdoesntexist</code> flag, so a machine that already had
 FileDir never received an updated copy, and a description added in a new
 version was never heard — Key Describer answered “no description
 available” for every new command. The table is compiled in now.
-<code>Hotkeys.ini</code> is still read first, as a user override, and
+<code>Hotkeys.inix</code> is still read first, as a user override, and
 the installer deletes the stale shipped copy on upgrade.</p>
 <h2 id="releasing">Releasing</h2>
 <pre><code>cd C:\FileDir

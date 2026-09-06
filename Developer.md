@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.76**  
+**Version 5.0.81**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -42,7 +42,7 @@ FileDir itself:
 
 - `FileDir.cs` — the program. One monolithic WinForms source, about 8,170 lines.
 - `Dialogs.cs` — FileDir's own dialogs.
-- `MediaPlayer.cs` — the Homer Player dialog behind Play Queue: the queue, its
+- `MediaPlayer.cs` — the Homer Player dialog, on Control+Shift+H: the queue, its
   ordering, the transport, the clip export, and the per-play-list settings kept
   in `HomerPlayer.inix`. It owns the mpv process for exactly as long as the
   dialog is open.
@@ -63,6 +63,44 @@ Shared Homer files, common to FileDir, EdSharp, and DbDo, compiled in
 - `Util.cs` — shared helpers.
 - `KeyMap.cs` — **generated**; see below.
 - `Lbc.cs` — the Layout by Code dialog toolkit.
+### How much a dialog should say
+
+A screen reader user hears one thing at a time, in order. Speech is the only
+channel, and everything spoken is spent from the same budget, so the question
+for every announcement is not "is this true" but "is this worth the seconds it
+costs, here, now".
+
+Four rules keep an Lbc dialog inside that budget.
+
+**Say nothing the reader already says.** It announces the window title, the
+control with focus, the line under the cursor in a list, and the value of a
+slider as it moves. A dialog that says any of those again is charging twice for
+one fact. This is why no control sets an accessible name: the caption or the
+Label above it is the name, and setting the property to those same words means
+the control is announced twice. The audit checks for it, because it looks like
+an accessibility improvement and is the opposite.
+
+**Say what the reader cannot know.** That a track has started on its own, that a
+jump landed at 12:30, that a filter left twelve of sixty items, that a command
+did nothing because there was nothing to do. None of that is on screen in a form
+the reader can find.
+
+**Layer the detail.** A command answers at the size of the question. Alt+Shift+A
+gives the position; Alt+Shift+W gives the track, its number and the position;
+Alt+Enter gives everything known about it. The short answer is the default
+because it is wanted most often, and the longer ones are a key away rather than
+an interruption.
+
+**Let the person ask again.** Speech vanishes; the status line does not. Every
+message a command produces is also written there, so it can be read back at
+leisure with the screen reader's own key. A status line is not a live region and
+nothing announces it: it is a record, not a broadcast.
+
+The failure this guards against has been seen in both directions. Now playing
+was rewritten twice a second, so the dialog talked over everything else and the
+keys appeared dead; and a status Label was given the accessible name "Status",
+which replaced the text it carried and hid every message behind one word.
+
 - `Mpv.cs` — drives the mpv media player over its documented JSON IPC pipe:
   mpv runs with no window, no keys and no focus of its own, and every command
   travels as one line of JSON. Three rules in it are worth keeping. Never hold a
@@ -114,7 +152,7 @@ an idea.
 `BuildFileDir.log` as it happens, so a build that dies still leaves a log:
 
 1. **Key map.** `makeKeyMap.py` regenerates `KeyMap.cs` and `Hotkeys.md` from
-   `Hotkeys.ini`. This runs first because the audit checks what it produces.
+   `Hotkeys.inix`. This runs first because the audit checks what it produces.
 2. **Audit.** `auditFileDir.py` runs, and the build stops if anything fails.
    Nothing is compiled until the checks a compiler cannot make have passed.
    Warnings are printed and do not stop it.
@@ -214,8 +252,8 @@ something broke, here or in EdSharp:
    compile it.
 3. Every live menu command has a description.
 4. No key is bound to two commands.
-5. `Hotkeys.ini` describes no command that no longer exists.
-6. `KeyMap.cs` is not older than `Hotkeys.ini`.
+5. `Hotkeys.inix` describes no command that no longer exists.
+6. `KeyMap.cs` is not older than `Hotkeys.inix`.
 7. Every file named in the installer's `[Files]` section exists. An entry
    carrying `skipifsourcedoesntexist` fails silently at compile time, so a file
    can quietly stop shipping; that case is reported as a warning.
@@ -278,16 +316,16 @@ Elevate Version compares. This arrangement exists because a stale `.iss`
 carrying its own `AppVersion` once rewound the number and the next build
 re-minted a version already published.
 
-**Keys and descriptions live in `Hotkeys.ini`.** The build generates from it
+**Keys and descriptions live in `Hotkeys.inix`.** The build generates from it
 `KeyMap.cs`, a compiled-in table, and `Hotkeys.md`, the reference document.
 `Version.cs` and `KeyMap.cs` are generated output: do not edit them, and they
 are in `.gitignore`.
 
 `KeyMap.cs` exists for a specific reason. The installer used to ship
-`Hotkeys.ini` with the `onlyifdoesntexist` flag, so a machine that already had
+`Hotkeys.inix` with the `onlyifdoesntexist` flag, so a machine that already had
 FileDir never received an updated copy, and a description added in a new version
 was never heard — Key Describer answered "no description available" for every
-new command. The table is compiled in now. `Hotkeys.ini` is still read first, as
+new command. The table is compiled in now. `Hotkeys.inix` is still read first, as
 a user override, and the installer deletes the stale shipped copy on upgrade.
 
 ## Releasing

@@ -178,7 +178,7 @@
 <h1 class="title">FileDir FileDir</h1>
 </header>
 <h1 id="filedir-user-guide">FileDir — User Guide</h1>
-<p><strong>Version 5.0.76</strong><br />
+<p><strong>Version 5.0.81</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -1367,13 +1367,13 @@ again to play that one rather than making another.</p>
 picture. The player runs on its own, so FileDir does not sit waiting
 while you listen. Its own keys work in its window: space to pause,
 arrows to seek, q to stop.</p>
-<p>Press <strong>Control+Shift+Q</strong> for Play Queue. It plays the
-same things Play List plays, but inside FileDir instead of inside the
-player’s own window.</p>
+<p>Press <strong>Control+Shift+H</strong> for the Homer Player. It plays
+the same things Play List plays, but inside FileDir instead of inside
+the player’s own window.</p>
 <p>The difference is where the list lives. Play List hands everything to
 mpv and steps out of the way: mpv comes to the front, its keys work, and
-FileDir is not involved again until you press q. Play Queue keeps the
-list here, in a dialog:</p>
+FileDir is not involved again until you press q. The Homer Player keeps
+the list here, in a dialog:</p>
 <ul>
 <li>The tracks are in a list you can move through, each with <strong>the
 name it came with</strong>. For a document that means the words somebody
@@ -1388,7 +1388,20 @@ dialog.</li>
 controls, each row holding the things that belong together:</p>
 <ul>
 <li><strong>Alt+T Track list</strong> – the queue, each line giving the
-name, the presenter and the length where they are known.</li>
+name, then the presenter and the length where they are known. The name
+comes first and carries no number, so pressing a letter jumps to the
+first track beginning with it. <strong>Control+J</strong> jumps to a
+track by name and <strong>Control+Shift+J</strong> jumps backwards;
+<strong>F3</strong> and <strong>Shift+F3</strong> jump to the next and
+previous match; <strong>Control+F</strong> filters the list to what
+matches, and <strong>Control+Shift+F</strong> clears the filter. J for
+jump, F for filter, they are the directory window’s own keys, and in
+this dialog all six act on the Track list from wherever you are and
+leave the keyboard where it was, saying the track they land on when the
+cursor is elsewhere. <strong>Alt+Enter</strong> shows everything known
+about the track you are on – name, presenter, length, address, and for a
+file on this computer everything ExifTool can read out of it – as text
+you can read by character, word or line, select from, and copy.</li>
 <li><strong>Alt+O Order of list</strong>, then <strong>Alt+N Next
 track</strong> and <strong>Alt+P Previous track</strong>. The orders are
 play list order, title, presenter, and length shortest or longest first.
@@ -1531,6 +1544,9 @@ and previous chapter</li>
 together</li>
 <li><strong>Alt+Shift+O</strong> overview: how many tracks, then their
 names</li>
+<li><strong>Alt+Shift+M</strong> write what is showing, in the order
+shown, to a Markdown file: one heading per track, and under it only the
+fields that are known</li>
 <li><strong>Alt+Shift+C</strong> copy the address of the track you are
 on</li>
 <li><strong>Alt+Shift+L</strong> save the queue as an .m3u8 play list,
@@ -1552,8 +1568,8 @@ in mpv.</p>
 message after another, so you can read back over it with your screen
 reader’s say-status-bar key instead of asking again.</p>
 <p>Which command to use is a matter of what you are doing. Play List is
-quicker when you want to start something and walk away. Play Queue is
-better when the list is worth steering: a page of podcasts where the
+quicker when you want to start something and walk away. The Homer Player
+is better when the list is worth steering: a page of podcasts where the
 titles matter, or a set of files you want to move around in.</p>
 <p>mpv is optional and the installer does not tick it. It is about 60
 MB, and it carries its own copy of ffmpeg which FileDir already has, so

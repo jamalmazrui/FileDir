@@ -859,6 +859,24 @@ else if (File.Exists(sTarget)) App.deleteFile(sTarget, bRecycle);
 FileSystem.MoveFile(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowException);
 } // moveFile method
 
+// The find and filter prompts in every Lbc dialog keep a short history of what
+// was typed. Lbc does not decide where that lives; this does, in the same file
+// as everything else FileDir remembers, one line per prompt.
+public static void wireListHistory() {
+Homer.LbcDialog.historyRead = delegate(string sKey) {
+List<string> lsPast = new List<string>();
+string sLine = App.readValue(App.sIniFile, "History", sKey, "");
+if (sLine.Length == 0) return lsPast;
+foreach (string sPart in sLine.Split('\t')) if (sPart.Length > 0) lsPast.Add(sPart);
+return lsPast;
+};
+Homer.LbcDialog.historyWrite = delegate(string sKey, List<string> lsValues) {
+// Tab separated, because a tab is the one character a person will not type
+// into a find box and so cannot break the line.
+App.writeValue(App.sIniFile, "History", sKey, string.Join("\t", lsValues.ToArray()));
+};
+} // wireListHistory method
+
 public static void readIni() {
 // Reading is not answering: nothing read from the file is written back to it.
 bLoadingIni = true;
@@ -1101,6 +1119,7 @@ string sQuickDir = Path.Combine(sDataDir, "Quick");
 if (!Directory.Exists(sQuickDir)) Directory.CreateDirectory(sQuickDir);
 sIniFile = Path.Combine(sDataDir, sName);
 App.readIni();
+App.wireListHistory();
 // sTempFile = Path.Combine(sDataDir, "FileDir.tmp");
 sTempFile = Path.Combine(Homer.Util.getShortPath(sDataDir), "FileDir.tmp");
 sSpeechLog = Path.Combine(sDataDir, "speech.log");
@@ -1352,7 +1371,7 @@ public HomerToolStripMenuItem menuMiscChatWithAI;
 public HomerToolStripMenuItem menuMiscChatAboutFile;
 public HomerToolStripMenuItem menuMiscConfigureTimer;
 public HomerToolStripMenuItem menuMiscPlayList;
-public HomerToolStripMenuItem menuMiscPlayQueue;
+public HomerToolStripMenuItem menuMiscHomerPlayer;
 public HomerToolStripMenuItem menuMiscPlayFolder;
 public HomerToolStripMenuItem menuMiscIterateProcesses;
 public HomerToolStripMenuItem menuMiscInquireDifferences;
@@ -1595,13 +1614,17 @@ menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChat
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
 menuMiscPlayList = menu_Helper("Play List", "Control+Shift+L", menuMiscPlayList_Click);
 menuMiscPlayFolder = menu_Helper("Play Media", "Alt+Shift+L", MenuMiscPlayFolder_Click);
-menuMiscPlayQueue = menu_Helper("Play Queue", "Control+Shift+Q", menuMiscPlayQueue_Click);
+// H FOR HOMER, beside Control+Shift+L for Play List. Q meant nothing here: in
+// FileDir, Q is the Quick family -- Control+Q opens a quick folder, Shift+Q
+// makes a quick shortcut, Alt+Shift+Q a quick URL -- so a playback command
+// wearing Q was borrowing a letter that already means something else.
+menuMiscHomerPlayer = menu_Helper("Homer Player", "Control+Shift+H", menuMiscHomerPlayer_Click);
 menuMiscIterateProcesses = menu_Helper("Iterate Processes ...", "Alt+I", MenuMiscIterateProcesses_Click);
 menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I", MenuMiscInquireDifferences_Click);
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscPlayQueue, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -6135,6 +6158,10 @@ int iTarget = Array.IndexOf(aLabels, sPicked);
 if (iTarget < 0) return;
 string sExt = aExtensions[iTarget];
 
+// A PLAY LIST IS ONE FILE MADE FROM MANY, so it leaves the loop below alone.
+// Everything else here turns each tagged file into a file of its own.
+if (sExt == "m3u") { writePlaylist_Helper(aPaths); return; }
+
 App.say("Writing " + sExt + " files");
 string sLastMade = "";
 int iDone = 0;
@@ -7875,7 +7902,7 @@ List<string> documentLinks_Helper(string sPath) {
 // So the bytes are read as they are, and the links are found in the markup, the
 // same way the clipboard is read when a page is copied from a browser.
 //
-// Play List and Play Queue both call this, so the two can never disagree about
+// Play List and Homer Player both call this, so the two can never disagree about
 // what a document holds.
 string sText = "";
 try {
@@ -7995,7 +8022,7 @@ string sCategory = Homer.Convert.categoryOf(sPath);
 return sCategory == "audio" || sCategory == "video";
 } // isPlayable_Helper method
 
-void menuMiscPlayQueue_Click(object sender, EventArgs e) {
+void menuMiscHomerPlayer_Click(object sender, EventArgs e) {
 // Play the same things Play List plays, but inside FileDir rather than inside
 // mpv's own window.
 //
@@ -8006,7 +8033,7 @@ void menuMiscPlayQueue_Click(object sender, EventArgs e) {
 // again until you press q. That is the right shape for "start this and let it
 // run", and it is unchanged.
 //
-// Play Queue keeps the list here: the tracks sit in a listbox with the names
+// Homer Player keeps the list here: the tracks sit in a listbox with the names
 // they arrived with -- for a document, the words somebody wrote about each
 // link -- and every key belongs to the dialog. mpv plays with no window at
 // all, so nothing takes the foreground and nothing has keys of its own.
@@ -8014,7 +8041,7 @@ void menuMiscPlayQueue_Click(object sender, EventArgs e) {
 // The sources are identical, deliberately. One command to learn about what can
 // be played, two ways to play it.
 if (abortInZip()) return;
-App.say("Play queue");
+App.say("Homer Player");
 string[] aQueueDirs, aQueueFiles;
 string[] aQueuePaths = list_Helper(out aQueueDirs, out aQueueFiles, 1);
 aQueuePaths = aQueueFiles;
@@ -8036,22 +8063,22 @@ try {
 lsTracks = MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne));
 }
 catch (Exception ex) {
-Homer.Log.write("Play Queue: could not read " + sOne + ": " + ex.Message);
+Homer.Log.write("Homer Player: could not read " + sOne + ": " + ex.Message);
 }
-sQueueTitle = "Homer Player - " + sLeaf;
+sQueueTitle = "Homer Player";
 sQueueSource = sLeaf;
 }
 else if (isPlayable_Helper(sOne)) {
 lsTracks = MediaPlayer.fromFiles(new string[] { sOne });
-sQueueTitle = "Homer Player - " + sLeaf;
+sQueueTitle = "Homer Player";
 sQueueSource = sLeaf;
 }
 else {
 App.say("Looking for media links in " + sLeaf);
 List<string> lsFound = documentLinks_Helper(sOne);
 lsTracks = MediaPlayer.fromPlaylistLines(lsFound);
-sQueueTitle = "Homer Player - links from " + sLeaf;
-sQueueSource = sLeaf;
+sQueueTitle = "Homer Player";
+sQueueSource = "links in " + sLeaf;
 if (lsTracks.Count == 0) {
 App.say("0 media links in " + sLeaf, true);
 return;
@@ -8071,9 +8098,9 @@ if (lsTracks == null || lsTracks.Count == 0) {
 App.say("0 tracks to play", true);
 return;
 }
-Homer.Log.write("Play Queue: " + lsTracks.Count + " tracks");
+Homer.Log.write("Homer Player: " + lsTracks.Count + " tracks");
 MediaPlayer.run(App.frame, sQueueTitle, sQueueSource, lsTracks);
-} // menuMiscPlayQueue_Click method
+} // menuMiscHomerPlayer_Click method
 
 void menuMiscPlayList_Click(object sender, EventArgs e) {
 // Make a play list of the tagged files, and, when mpv is installed, offer to
@@ -8128,7 +8155,10 @@ return;
 }
 // A play list or a media file goes straight to the player.
 if (bList || bMedia) {
-playMedia_Helper(sOne);
+List<MediaTrack> lsOne = (bList && !bMedia)
+? MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne))
+: MediaPlayer.fromFiles(new string[] { sOne });
+playQueue_Helper(lsOne, "Homer Player", Path.GetFileName(sOne));
 return;
 }
 // Otherwise the file is read and its links are gathered, the same way the
@@ -8155,35 +8185,84 @@ return;
 int iLinks = 0;
 foreach (string sEntry in lsFound) if (!sEntry.StartsWith("#")) iLinks++;
 Homer.Log.write("Play List: " + iLinks + " links from " + sOne);
-App.say(Homer.Util.stringPlural("link", iLinks) + " found");
-playMedia_Helper(sTempList);
+playQueue_Helper(MediaPlayer.fromPlaylistLines(lsFound), "Homer Player", "links in " + Path.GetFileName(sOne));
 return;
 }
 }
 
-string sFile = "PlayList.m3u";
-string sDir = Directory.GetCurrentDirectory();
-sFile = Path.Combine(sDir, sFile);
+// SEVERAL TAGGED FILES ARE A QUEUE, NOT A FILE TO NAME.
+//
+// This used to ask for a file name, write an .m3u, and hand it to mpv's own
+// window. Writing a play list is still available -- it is one of the choices in
+// Output Type, on Shift+O -- but it is a different job from playing, and asking
+// for a file name before anything can be heard was a form to fill in on the way
+// to pressing play.
+playQueue_Helper(MediaPlayer.fromFiles(aPaths), "Homer Player", "the tagged files");
+} // menuMiscPlayList_Click method
+
+void writePlaylist_Helper(string[] aPaths) {
+// One .m3u naming the tagged files, in the order they are tagged.
+//
+// Only what mpv can read goes in: a play list with a spreadsheet in it is a
+// play list that stops when it reaches the spreadsheet.
+List<string> lsMedia = new List<string>();
+foreach (string sPath in aPaths) {
+if (File.Exists(sPath) && Homer.Mpv.canPlay(sPath)) lsMedia.Add(sPath);
+}
+if (lsMedia.Count == 0) { App.say("0 media files to list", true); return; }
+int iLeftOut = aPaths.Length - lsMedia.Count;
+
+string sFile = Path.Combine(Directory.GetCurrentDirectory(), "PlayList.m3u");
 sFile = Homer.Util.getUniqueName(sFile);
-string sFilter = "Play Lists (*.m3u)|*.m3u";
-sFile = Lbc.SaveFileDialog("", sFile, sFilter, 0, true);
-if (sFile == "") return;
+sFile = Lbc.SaveFileDialog("Save Play List", sFile, "Play lists (*.m3u)|*.m3u", 1, true);
+if (sFile == null || sFile.Trim().Length == 0) return;
 
-string sBody = String.Join("\r\n", aPaths);
-Homer.Util.string2File(sBody, sFile);
-App.say("Done!", true);
-
-if (Homer.Util.stringEquiv(sDir, Path.GetDirectoryName(sFile))) {
-MdiChild mdiChild = App.frame.getActiveChild();
-if (mdiChild != null) {
+StringBuilder sbList = new StringBuilder();
+sbList.Append("#EXTM3U\r\n");
+foreach (string sPath in lsMedia) {
+sbList.Append("#EXTINF:-1,");
+sbList.Append(Path.GetFileNameWithoutExtension(sPath));
+sbList.Append("\r\n");
+sbList.Append(sPath);
+sbList.Append("\r\n");
+}
+try {
+// UTF-8 with no byte order mark: several players read a mark at the head of a
+// play list as part of the first entry and then cannot find it.
+File.WriteAllText(sFile, sbList.ToString(), new UTF8Encoding(false));
+}
+catch (Exception ex) {
+Lbc.Show("The play list could not be written.\r\n\r\n" + ex.Message, "Output Type");
+return;
+}
+Homer.Log.write("Output Type: wrote " + lsMedia.Count + " entries to " + sFile);
+if (iLeftOut > 0) App.say(Homer.Util.stringPlural("item", iLeftOut) + " left out, not media");
+App.say(Homer.Util.stringPlural("track", lsMedia.Count) + " written");
 refresh_Helper(sFile);
 goTo_Helper(sFile);
-}
-}
+} // writePlaylist_Helper method
 
-// The list is written and kept; then it plays, without asking.
-if (Homer.Media.mpvProgram().Length > 0) playMedia_Helper(sFile);
-} // menuMiscPlayList_Click method
+void playQueue_Helper(List<MediaTrack> lsTracks, string sTitle, string sSource) {
+// Open the Homer Player on a queue, leaving out anything mpv cannot read.
+//
+// WHAT IS LEFT OUT IS SAID ONCE, AS A COUNT. mpv handed something it cannot
+// read draws an error on its own display, which is never spoken: silence and a
+// window that will not answer. Asking first turns that into one short sentence.
+if (lsTracks == null || lsTracks.Count == 0) { App.say("0 tracks", true); return; }
+List<MediaTrack> lsPlayable = new List<MediaTrack>();
+foreach (MediaTrack track in lsTracks) if (Homer.Mpv.canPlay(track.sTarget)) lsPlayable.Add(track);
+int iSkipped = lsTracks.Count - lsPlayable.Count;
+if (lsPlayable.Count == 0) {
+App.say("0 tracks mpv can play", true);
+Homer.Log.write("Play List: nothing playable among " + lsTracks.Count + " items");
+return;
+}
+if (iSkipped > 0) {
+App.say(Homer.Util.stringPlural("item", iSkipped) + " left out, not media");
+Homer.Log.write("Play List: left out " + iSkipped + " items mpv cannot read");
+}
+MediaPlayer.run(App.frame, sTitle, sSource, lsPlayable);
+} // playQueue_Helper method
 
 void playMedia_Helper(string sPlayList) {
 // Hand a play list to mpv and let it play.
@@ -8575,7 +8654,7 @@ App.bKeyDescriber = true;
 void MenuHelpHotKeys_Click(object sender, EventArgs e) {
 App.say("Hot keys");
 // Hotkeys.htm, generated from Hotkeys.md, which makeKeyMap.ps1 generates from
-// Hotkeys.ini.  This opened HotKeys.txt, a hand-kept file that fell out of step
+// Hotkeys.inix.  This opened HotKeys.txt, a hand-kept file that fell out of step
 // with the program and is no longer shipped.
 string sFile = Path.Combine(App.sAppDir, "Hotkeys.htm");
 Process.Start(sFile);
@@ -9041,8 +9120,8 @@ return true;
 case Keys.Control | Keys.Shift | Keys.L :
 App.frame.menuMiscPlayList.clickOrDescribe();
 return true;
-case Keys.Control | Keys.Shift | Keys.Q :
-App.frame.menuMiscPlayQueue.clickOrDescribe();
+case Keys.Control | Keys.Shift | Keys.H :
+App.frame.menuMiscHomerPlayer.clickOrDescribe();
 return true;
 case Keys.Alt | Keys.Shift | Keys.L :
 App.frame.menuMiscPlayFolder.clickOrDescribe();
@@ -10004,7 +10083,7 @@ this.Click += eh;
 public string[] getKeySummary() {
 // string sCommand = this.Text.Replace("&", "").Replace(" ...", "");
 string sCommand = this.Name;
-string sHotkeyIni = Path.Combine(App.sAppDir, "Hotkeys.ini");
+string sHotkeyIni = Path.Combine(App.sAppDir, "Hotkeys.inix");
 string sValue = App.readValue(sHotkeyIni, "Hotkeys", sCommand, "");
 if (sCommand.StartsWith("Drive ") && sCommand.Length == 7) {
 string sLetter = sCommand.Substring(6, 1);
@@ -10013,9 +10092,9 @@ sValue = "Alt+" + iDigit + ", Open " + sCommand;
 }
 else if (sValue.Length == 0) sValue = App.readValue(sHotkeyIni, "Hotkeys", "Say " + sCommand, "");
 
-// Hotkeys.ini is a user override and is read first.  The shipped defaults live
-// in KeyMap.cs, generated from Hotkeys.ini and compiled into the program,
-// because the installer copies Hotkeys.ini with the onlyifdoesntexist flag: a
+// Hotkeys.inix is a user override and is read first.  The shipped defaults live
+// in KeyMap.cs, generated from Hotkeys.inix and compiled into the program,
+// because the installer copies Hotkeys.inix with the onlyifdoesntexist flag: a
 // machine that already has FileDir never receives an updated copy, so a
 // description added in a new version would otherwise never be heard.
 if (sValue.Length == 0) sValue = Homer.KeyMap.lookUp(sCommand);

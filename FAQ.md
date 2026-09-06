@@ -1,6 +1,6 @@
 ﻿# FileDir — Questions and Answers
 
-**Version 5.0.76**  
+**Version 5.0.81**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -192,11 +192,11 @@ What plays immediately is an address ending in .mp3 or .m4a. A podcast's RSS
 feed holds those; its web pages do not. If you can get the feed's audio
 addresses onto the clipboard, Alt+Shift+L plays them at once.
 
-**What is the difference between Play list and Play queue?**
+**What is the difference between Play list and the Homer Player?**
 
 Play list, Control+Shift+L, hands everything to mpv and steps out of the way:
-mpv's own window comes to the front and its keys work. Play queue,
-Control+Shift+Q, keeps the list inside FileDir in the Homer Player, where every
+mpv's own window comes to the front and its keys work. The Homer Player,
+Control+Shift+H, keeps the list inside FileDir in the Homer Player, where every
 control has an Alt key and the player itself has no window at all. The sources
 are the same either way -- tagged files, a play list, or the media links in the
 document you are on.

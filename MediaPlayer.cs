@@ -99,10 +99,14 @@ return sText.ToLower();
 
 // display: one line of the Tracks list. Whatever is known, in the order a
 // person would say it, with nothing invented for what is not known.
-public string display(int iNumber) {
+//
+// THE NAME COMES FIRST, WITH NO NUMBER IN FRONT OF IT. A number at the head of
+// every line stops a list dead for first-letter navigation: pressing T should
+// reach the first track beginning with T, and it cannot when every line begins
+// with a digit. Where a track sits in the queue is a question a screen reader
+// answers on its own, and Alt+Shift+W answers it in words.
+public string display() {
 StringBuilder sb = new StringBuilder();
-sb.Append(iNumber.ToString(CultureInfo.InvariantCulture));
-sb.Append(". ");
 sb.Append(sName);
 if (sPresenter.Length > 0) { sb.Append(", "); sb.Append(sPresenter); }
 string sLength = Homer.Mpv.formatTime(dSeconds);
@@ -212,7 +216,7 @@ dlg.addBand();
 string sTracksLabel = "&Track list, " + Homer.Util.stringPlural("track", lsTracks.Count);
 if (!string.IsNullOrEmpty(sSource)) sTracksLabel = sTracksLabel + " from " + sSource;
 ListBox lstTracks = dlg.addPickBox(sTracksLabel + ":", orderedNames(lsRef, aOrder), null,
-"The queue, with each track's name, presenter and length where they are known. Moving through it chooses nothing; Enter plays the one you are on.");
+"The queue, with each track's name, presenter and length where they are known. Moving through it chooses nothing; Enter plays the one you are on. Control+J jumps to a track by name, F3 jumps to the next, Control+F filters the list and Control+Shift+F clears the filter. Alt+Shift+M writes what is showing, in the order shown, to a Markdown file.");
 dlg.endBand();
 
 // ---- Order, Next, Previous ----
@@ -299,7 +303,7 @@ int iWantOrder = lstOrder.SelectedIndex;
 if (iWantOrder >= 0 && iWantOrder != iOrderNow) {
 iOrderNow = iWantOrder;
 sortQueue(lsRef, aOrder, iWantOrder);
-refillTracks(lstTracks, lsRef, aOrder);
+refillTracks(dlg, lstTracks, lsRef, aOrder);
 writeValue(sSettings, "order", iWantOrder.ToString(CultureInfo.InvariantCulture));
 say(dlg, "Ordered by " + c_asOrders[iWantOrder]);
 }
@@ -384,7 +388,7 @@ barVolume.Value = Homer.Mpv.c_iDefaultVolume;
 lstOrder.SelectedIndex = c_iDefaultOrder;
 iOrderNow = c_iDefaultOrder;
 sortQueue(lsRef, aOrder, c_iDefaultOrder);
-refillTracks(lstTracks, lsRef, aOrder);
+refillTracks(dlg, lstTracks, lsRef, aOrder);
 say(dlg, "Defaults restored");
 };
 
@@ -468,6 +472,38 @@ if (keyData == (Keys.Control | Keys.Shift | Keys.End)) { oPlayer.playIndex(lsRef
 if (keyData == (Keys.Control | Keys.Shift | Keys.PageUp)) { firstChapter(dlg, oPlayer); hear(oPlayer); return true; }
 if (keyData == (Keys.Control | Keys.Shift | Keys.PageDown)) { lastChapter(dlg, oPlayer); hear(oPlayer); return true; }
 if (keyData == (Keys.Shift | Keys.Clear)) { oPlayer.togglePause(); say(dlg, oPlayer.paused ? "Playing" : "Paused"); return true; }
+
+// SPACE PLAYS AND PAUSES, as it does in mpv's own window.
+//
+// Scroll Lock was meant to do this and never arrived -- it is a toggle key, and
+// something between the keyboard and the dialog keeps it. Space is the key a
+// person reaches for anyway.
+//
+// It is claimed everywhere in the dialog EXCEPT on a button, where Space is how
+// Windows presses the thing with focus, and except in a box that takes typing.
+// The Jump and Filter prompts are windows of their own, so a search term with a
+// space in it is never in question here. In the queue, Space stops being
+// type-ahead -- which is the trade mpv makes too, and Control+J is the better
+// way to reach a track by name.
+if (keyData == Keys.Space) {
+Control ctlFocused = dlg.focusedControl();
+if (!(ctlFocused is Button) && !(ctlFocused is TextBox) && !(ctlFocused is ComboBox)) {
+oPlayer.togglePause();
+say(dlg, oPlayer.paused ? "Playing" : "Paused");
+return true;
+}
+}
+
+// ALT+ENTER SHOWS EVERYTHING KNOWN ABOUT THE TRACK, which is what Alt+Enter
+// means in Windows and in FileDir's own list: properties of the thing under
+// the cursor.
+if (keyData == (Keys.Alt | Keys.Enter)) {
+int iRowNow = dlg.listSourceIndex(lstTracks, lstTracks.SelectedIndex);
+int iTrackNow = (iRowNow >= 0 && iRowNow < aOrder.Length) ? aOrder[iRowNow] : oPlayer.playlistIndex;
+if (iTrackNow < 0 || iTrackNow >= lsRef.Count) { say(dlg, "No track"); return true; }
+showProperties(dlg.form, lsRef[iTrackNow]);
+return true;
+}
 
 // And the same commands on the digits, for a keyboard whose Num Lock is on.
 // The grid reads as one sentence: the left column goes back, the right column
@@ -559,6 +595,7 @@ case Keys.W: say(dlg, whereText(oPlayer, lsRef)); break;
 case Keys.O: sayOverview(dlg, lsRef, aOrder); break;
 case Keys.C: copyAddress(dlg, oPlayer, lsRef, lstTracks, aOrder); break;
 case Keys.L: saveList(dlg, lsRef, aOrder); break;
+case Keys.M: saveReport(dlg, lstTracks, lsRef, aOrder); break;
 default: bHandled = false; break;
 }
 if (bHandled) { ev.Handled = true; ev.SuppressKeyPress = true; }
@@ -624,8 +661,11 @@ say(dlg, "End of queue");
 }
 };
 
+// Control+J and its relatives act on the queue from any control in this
+// dialog, and leave the keyboard where it was.
+dlg.primaryList = lstTracks;
 dlg.setInitialFocus(lstTracks);
-if (iOrder != 0) { sortQueue(lsRef, aOrder, iOrder); refillTracks(lstTracks, lsRef, aOrder); }
+if (iOrder != 0) { sortQueue(lsRef, aOrder, iOrder); refillTracks(dlg, lstTracks, lsRef, aOrder); }
 
 // The queue goes over once the dialog is up, not while the window is still
 // being born, and mpv's own list operations then drive Next and Previous.
@@ -698,7 +738,11 @@ return c_aiSteps[iPick];
 
 private static void goOrResume(Homer.LbcDialog dlg, Homer.Mpv player, List<MediaTrack> lsTracks,
 ListBox lstTracks, int[] aOrder) {
-int iRow = lstTracks.SelectedIndex;
+// THE ROW IS NOT THE TRACK. Filtering the list with Control+F leaves fewer
+// rows on screen than there are tracks, so which item a row really is has to
+// be asked rather than assumed -- and then the sort order maps that to a place
+// in the queue.
+int iRow = dlg.listSourceIndex(lstTracks, lstTracks.SelectedIndex);
 int iTrack = (iRow >= 0 && iRow < aOrder.Length) ? aOrder[iRow] : -1;
 if (iTrack < 0) { say(dlg, "No track"); return; }
 // Go on the track already playing means resume rather than start again,
@@ -721,7 +765,7 @@ say(dlg, sb.ToString());
 
 private static void copyAddress(Homer.LbcDialog dlg, Homer.Mpv player, List<MediaTrack> lsTracks,
 ListBox lstTracks, int[] aOrder) {
-int iRow = lstTracks.SelectedIndex;
+int iRow = dlg.listSourceIndex(lstTracks, lstTracks.SelectedIndex);
 int iTrack = (iRow >= 0 && iRow < aOrder.Length) ? aOrder[iRow] : player.playlistIndex;
 if (iTrack < 0 || iTrack >= lsTracks.Count) { say(dlg, "Nothing to copy"); return; }
 try {
@@ -767,18 +811,14 @@ say(dlg, "Could not save the list");
 
 private static List<string> orderedNames(List<MediaTrack> lsTracks, int[] aOrder) {
 List<string> lsNames = new List<string>();
-for (int iRow = 0; iRow < aOrder.Length; iRow++) lsNames.Add(lsTracks[aOrder[iRow]].display(iRow + 1));
+for (int iRow = 0; iRow < aOrder.Length; iRow++) lsNames.Add(lsTracks[aOrder[iRow]].display());
 return lsNames;
 }
 
-private static void refillTracks(ListBox lstTracks, List<MediaTrack> lsTracks, int[] aOrder) {
-lstTracks.BeginUpdate();
-try {
-lstTracks.Items.Clear();
-foreach (string sLine in orderedNames(lsTracks, aOrder)) lstTracks.Items.Add(sLine);
-if (lstTracks.Items.Count > 0) lstTracks.SelectedIndex = 0;
-}
-finally { lstTracks.EndUpdate(); }
+// Through the dialog rather than into the control: setListItems is what tells
+// the find and filter machinery that the list holds something else now.
+private static void refillTracks(Homer.LbcDialog dlg, ListBox lstTracks, List<MediaTrack> lsTracks, int[] aOrder) {
+dlg.setListItems(lstTracks, orderedNames(lsTracks, aOrder));
 }
 
 // sortQueue: rearrange the ROWS, never the queue mpv is playing. A plain
@@ -832,6 +872,164 @@ int iCount = player.chapterCount;
 if (iCount <= 0) { say(dlg, "No chapters"); return; }
 player.setChapter(iCount - 1);
 say(dlg, "Last chapter");
+}
+
+// saveReport: write what is in the list, as it is in the list, to a Markdown
+// file.
+//
+// AS IT IS IN THE LIST. The order chosen in Order of list, and only the tracks
+// a filter has left showing: what is written is what is on screen, so the file
+// answers the question the person had when they asked for it rather than some
+// other question about the whole queue.
+//
+// One track to a heading, and under it only the fields that are known. A blank
+// line saying "Presenter: unknown" is a line to listen to for nothing.
+private static void saveReport(Homer.LbcDialog dlg, ListBox lstTracks,
+List<MediaTrack> lsTracks, int[] aOrder) {
+List<int> liShowing = new List<int>();
+for (int iRow = 0; iRow < lstTracks.Items.Count; iRow++) {
+int iInOrder = dlg.listSourceIndex(lstTracks, iRow);
+if (iInOrder >= 0 && iInOrder < aOrder.Length) liShowing.Add(aOrder[iInOrder]);
+}
+if (liShowing.Count == 0) { say(dlg, "Nothing to write"); return; }
+
+string sPath = Lbc.SaveFileDialog("Save Track Notes", "Tracks.md",
+"Markdown (*.md)|*.md|All files (*.*)|*.*", 1, true);
+if (sPath == null || sPath.Trim().Length == 0) return;
+
+StringBuilder sb = new StringBuilder();
+sb.Append("# Tracks\r\n\r\n");
+sb.Append(Homer.Util.stringPlural("track", liShowing.Count));
+if (dlg.listIsFiltered(lstTracks)) sb.Append(", filtered from " + lsTracks.Count.ToString(CultureInfo.InvariantCulture));
+sb.Append(", in the order shown.\r\n\r\n");
+int iNumber = 0;
+foreach (int iTrack in liShowing) {
+MediaTrack track = lsTracks[iTrack];
+iNumber = iNumber + 1;
+sb.Append("## ");
+sb.Append(iNumber.ToString(CultureInfo.InvariantCulture));
+sb.Append(". ");
+sb.Append(track.sName);
+sb.Append("\r\n\r\n");
+if (track.sPresenter.Length > 0) { sb.Append("- Presenter: "); sb.Append(track.sPresenter); sb.Append("\r\n"); }
+string sLength = Homer.Mpv.formatTime(track.dSeconds);
+if (sLength.Length > 0) { sb.Append("- Length: "); sb.Append(sLength); sb.Append("\r\n"); }
+sb.Append("- Address: ");
+sb.Append(track.sTarget);
+sb.Append("\r\n\r\n");
+}
+try {
+Homer.Util.string2File(sb.ToString(), sPath);
+say(dlg, "Wrote " + Path.GetFileName(sPath));
+Homer.Log.write("Homer Player: wrote notes for " + liShowing.Count + " tracks to " + sPath);
+}
+catch (Exception ex) {
+Homer.Log.write("Homer Player: could not write " + sPath + ": " + ex.Message);
+say(dlg, "Could not write the file");
+}
+}
+
+// ---- everything known about one track ----
+
+// showProperties: a field and value list for the track under the cursor.
+//
+// What FileDir knows first -- the name, the presenter, the length, the address
+// -- and then, for a file on this computer, everything ExifTool can read out of
+// it: the artist and album of a song, the codecs and bit rate of a video, the
+// date it was recorded. Sorted by field name, because a list of forty fields is
+// searched rather than read, and a list is the right control for that: arrow
+// through it, Control+J jumps to a field, Control+C copies the line.
+private static void showProperties(IWin32Window owner, MediaTrack track) {
+List<string> lsLines = new List<string>();
+addProperty(lsLines, "Address", track.sTarget);
+addProperty(lsLines, "Length", Homer.Mpv.formatTime(track.dSeconds));
+addProperty(lsLines, "Name", track.sName);
+addProperty(lsLines, "Presenter", track.sPresenter);
+
+bool bLocal = false;
+try { bLocal = File.Exists(track.sTarget); }
+catch (Exception) { }
+
+if (bLocal) {
+try {
+System.IO.FileInfo oFile = new System.IO.FileInfo(track.sTarget);
+addProperty(lsLines, "File size", Homer.Util.formatBytes(oFile.Length));
+addProperty(lsLines, "Modified", oFile.LastWriteTime.ToString());
+}
+catch (Exception) { }
+addExifProperties(lsLines, track.sTarget);
+}
+
+lsLines.Sort(StringComparer.OrdinalIgnoreCase);
+if (lsLines.Count == 0) lsLines.Add("Nothing known about this track");
+
+// TEXT IN A READ-ONLY MEMO, NOT A LIST.
+//
+// A list gives whole lines and nothing else. A text box gives the arrow keys
+// for character, word and line, Shift with them for selecting, Control+C for
+// copying a piece rather than a line -- everything a person does with an
+// address they want half of, or a field name they want to check letter by
+// letter.
+//
+// No label above it: it fills its own window and the title says what it holds,
+// which is the one case where a control needs no label of its own.
+//
+// A SHORT TITLE, because a window's title is read every time the window is
+// touched. The track name is in the text.
+Homer.LbcDialog dlgFacts = new Homer.LbcDialog("Track properties", owner);
+TextBox txtFacts = dlgFacts.addMemo(string.Join("\r\n", lsLines.ToArray()),
+"Everything known about this track, one field to a line. Read it by character, word or line, select any of it, and Control+C copies what is selected.");
+txtFacts.ReadOnly = true;
+Button btnFactsOk = dlgFacts.addButton("&OK", "Go back to the player.");
+btnFactsOk.Click += delegate(object o, EventArgs e) { dlgFacts.close(); };
+dlgFacts.setInitialFocus(txtFacts);
+try { dlgFacts.runPlain(btnFactsOk, btnFactsOk); }
+finally { dlgFacts.Dispose(); }
+}
+
+private static void addProperty(List<string> lsLines, string sField, string sValue) {
+if (string.IsNullOrEmpty(sValue)) return;
+lsLines.Add(sField + ": " + sValue.Trim());
+}
+
+// addExifProperties: ask ExifTool, which reads far more formats than anything
+// built in and prints one field per line. -S gives "Field: value" with no
+// padding, which is exactly the shape wanted here.
+private static void addExifProperties(List<string> lsLines, string sPath) {
+string sExif = Homer.Media.findInstalled("exiftool");
+if (sExif.Length == 0) {
+lsLines.Add("Note: ExifTool is not installed, so only the basics are shown");
+return;
+}
+string sOut = "";
+try {
+System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+info.FileName = sExif;
+info.Arguments = "-S -charset filename=UTF8 " + Homer.Util.stringQuote(sPath);
+info.UseShellExecute = false;
+info.CreateNoWindow = true;
+info.RedirectStandardOutput = true;
+info.RedirectStandardError = true;
+System.Diagnostics.Process oExif = System.Diagnostics.Process.Start(info);
+sOut = oExif.StandardOutput.ReadToEnd();
+oExif.StandardError.ReadToEnd();
+if (!oExif.WaitForExit(20000)) { try { oExif.Kill(); } catch (Exception) { } }
+}
+catch (Exception ex) {
+Homer.Log.write("Homer Player: ExifTool failed. " + ex.Message);
+lsLines.Add("Note: ExifTool could not read this file");
+return;
+}
+foreach (string sLine in sOut.Split('\n')) {
+string sTrimmed = sLine.Trim();
+if (sTrimmed.Length == 0) continue;
+int iColon = sTrimmed.IndexOf(':');
+if (iColon <= 0) continue;
+string sField = sTrimmed.Substring(0, iColon).Trim();
+string sValue = sTrimmed.Substring(iColon + 1).Trim();
+if (sField.Length == 0 || sValue.Length == 0) continue;
+lsLines.Add(sField + ": " + sValue);
+}
 }
 
 // ---- taking a piece of a track away with you ----

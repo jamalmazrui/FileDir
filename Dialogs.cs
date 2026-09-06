@@ -17,6 +17,17 @@ using System.Windows.Forms;
 
 namespace FileDir {
 
+// NO CONTROL IN HERE SETS AccessibleName.
+//
+// A screen reader reads a control's accessible name AND the visible text that
+// names it. These dialogs used to set the property on 48 controls, always to
+// the words already on the button or on the label beside it, so each one was
+// announced twice: "Folder colon, Folder colon, edit". A button carries its own
+// caption and a text box carries the label before it, and Windows reports both
+// without help.
+//
+// The same clean-out was done in the shared Lbc class. This file is FileDir's
+// own older set of dialogs, and it had been missed.
 public class Lbc {
 
 // ---- utility shims to the portable Homer toolkit / App speech ----
@@ -208,7 +219,6 @@ flpInput.FlowDirection = FlowDirection.LeftToRight;
 Label lbl = new Label();
 lbl.AutoSize = true;
 lbl.Text = sLabel + ":";
-lbl.AccessibleName = lbl.Text.Replace("&", "");
 bool bPassword = lbl.Text.Contains("Password:");
 bool bHistory = !string.IsNullOrEmpty(sHistoryKey) && !bPassword;
 int iCount = Homer.InputHistory.DefaultCount;
@@ -226,7 +236,6 @@ Control ctlInput;
 if (bHistory) {
 cmb = new ComboBox();
 cmb.DropDownStyle = ComboBoxStyle.DropDown;
-cmb.AccessibleName = lbl.AccessibleName;
 cmb.AccessibleDescription = "Down arrow selects from up to " + iCount + " recent entries";
 foreach (string sOne in lsRecent) cmb.Items.Add(sOne);
 cmb.Text = sValue;
@@ -235,7 +244,6 @@ ctlInput = cmb;
 }
 else {
 txt = new TextBox();
-txt.AccessibleName = lbl.AccessibleName;
 if (bPassword) txt.UseSystemPasswordChar = true;
 txt.Text = sValue;
 txt.GotFocus += delegate(object o, EventArgs e) {txt.SelectAll();};
@@ -254,12 +262,10 @@ flpButtons.FlowDirection = FlowDirection.LeftToRight;
 Button btnOK = new Button();
 btnOK.Click += delegate(object o, EventArgs e) { sResult = (cmb != null) ? cmb.Text : txt.Text; frm.Close();};
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
 flpButtons.ResumeLayout();
@@ -318,11 +324,9 @@ tlpFields.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 Label lbl = new Label();
 lbl.AutoSize = true;
 lbl.Text = sLabelList[i] + ":";
-lbl.AccessibleName = lbl.Text.Replace("&", "").Replace(":", "");
 TextBox txt = new TextBox();
 txt.Width *= 2;
 txt.Text = sValueList[i];
-txt.AccessibleName = lbl.AccessibleName;
 if (lbl.Text.Contains("Password:")) txt.UseSystemPasswordChar = true;
 txt.GotFocus += delegate(object o, EventArgs e) {txt.SelectAll();};
 tlpFields.Controls.AddRange(new Control[] {lbl, txt});
@@ -345,12 +349,10 @@ if (ctl.GetType() == typeof(TextBox)) sResultList.Add(ctl.Text);
 frm.Close();};
 
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
 flpButtons.ResumeLayout();
@@ -393,7 +395,6 @@ flpInput.FlowDirection = FlowDirection.LeftToRight;
 
 Label lblList = new Label();
 lblList.Text = sListLabel + ":";
-lblList.AccessibleName = lblList.Text.Replace("&", "");
 
 ListBox lst = new ListBox();
 if (bSorted) lst.Sorted = true;
@@ -402,9 +403,7 @@ lst.SelectedIndex = iDefaultIndex;
 
 Label lblInput = new Label();
 lblInput.Text = sInputLabel + ":";
-lblInput.AccessibleName = lblInput.Text.Replace("&", "");
 TextBox txt = new TextBox();
-txt.AccessibleName = lblInput.AccessibleName;
 if (lblInput.Text.Contains("Password:")) txt.UseSystemPasswordChar = true;
 txt.Text = sValue;
 
@@ -425,12 +424,10 @@ listResults.Add(txt.Text);
 frm.Close();};
 
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
 flpButtons.ResumeLayout();
@@ -617,7 +614,6 @@ lbl.Width = 200;
 lbl.Height = 16 * iLines + 16;
 lbl.Margin = new Padding(3, 3, 3, 3);
 lbl.Text = sText;
-lbl.AccessibleName = lbl.Text.Replace("&", "");
 lbl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 flpMain.Controls.Add(lbl);
 }
@@ -626,7 +622,6 @@ for (int i = 0; i < sButtonList.Length; i++) {
 Button btn = new Button();
 btn.Click += delegate(object o, EventArgs e) {sResult = btn.Text; frm.Close();};
 btn.Text = sButtonList[i];
-btn.AccessibleName = sButtonList[i].Replace("&", "");
 btn.AutoSize = false;
 btn.Width = 200;
 btn.Anchor = AnchorStyles.None;
@@ -636,7 +631,6 @@ flpMain.Controls.Add(btn);
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 btnCancel.AutoSize = false;
 btnCancel.Width = 200;
 flpMain.Controls.Add(btnCancel);
@@ -716,14 +710,12 @@ frm.Close();
 };
 
 btn.Text = aButton[i];
-btn.AccessibleName = aButton[i].Replace("&", "");
 flpButtons.Controls.Add(btn);
 }
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 flpButtons.Controls.Add(btnCancel);
 
 flpButtons.ResumeLayout();
@@ -770,7 +762,6 @@ if (sLabel != "") {
 Label lbl = new Label();
 lbl.AutoSize = true;
 lbl.Text = sLabel + ":";
-lbl.AccessibleName = lbl.Text.Replace("&", "");
 flpInput.Controls.Add(lbl);
 }
 
@@ -806,12 +797,10 @@ sResultList.Add(lst.Items[i].ToString());
 frm.Close();};
 
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
 flpButtons.ResumeLayout();
@@ -875,12 +864,10 @@ foreach (int index in lst.SelectedIndices) listResults.Add(index);
 frm.Close();};
 
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
 flpButtons.ResumeLayout();
@@ -1073,13 +1060,11 @@ txt.Width *= 2;
 txt.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 txt.AutoCompleteSource = AutoCompleteSource.FileSystemDirectories;
 txt.Text = sValue;
-txt.AccessibleName = lbl.Text.Replace("&", "");
 txt.GotFocus += delegate(object o, EventArgs e) {txt.SelectAll();};
 
 Button btnBrowse = new Button();
 btnBrowse.Click += delegate(object o, EventArgs e) { txt.Text = FolderBrowseDialog("", sValue, false); txt.Select();};
 btnBrowse.Text = "&Browse";
-btnBrowse.AccessibleName = btnBrowse.Text.Replace("&", "");
 
 flpInput.Controls.AddRange(new Control[] {lbl, txt, btnBrowse});
 flpInput.ResumeLayout();
@@ -1111,7 +1096,6 @@ frm.Close();
 };
 
 btnCurrent.Text = "&Current";
-btnCurrent.AccessibleName = btnCurrent.Text.Replace("&", "");
 
 Button btnRecent = new Button();
 btnRecent.Click += delegate(object o, EventArgs e) {
@@ -1128,7 +1112,6 @@ frm.Close();
 };
 
 btnRecent.Text = "&Recent";
-btnRecent.AccessibleName = btnRecent.Text.Replace("&", "");
 
 Button btnQuick = new Button();
 
@@ -1156,7 +1139,6 @@ frm.Close();
 };
 
 btnQuick.Text = "&Quick";
-btnQuick.AccessibleName = btnQuick.Text.Replace("&", "");
 
 Button btnSpecial = new Button();
 
@@ -1168,7 +1150,6 @@ frm.Close();
 };
 
 btnSpecial.Text = "&Special";
-btnSpecial.AccessibleName = btnSpecial.Text.Replace("&", "");
 
 flpLists.Controls.AddRange(new Control[] {btnCurrent, btnRecent, btnQuick, btnSpecial});
 flpLists.ResumeLayout();
@@ -1236,12 +1217,10 @@ txt.Select();
 };
 
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); sResult = ""; frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
 flpButtons.ResumeLayout();
@@ -1321,11 +1300,9 @@ tlpFields.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 Label lbl = new Label();
 lbl.AutoSize = true;
 lbl.Text = aLabel[i] + ":";
-lbl.AccessibleName = lbl.Text.Replace("&", "");
 TextBox txt = new TextBox();
 txt.Width *= 2;
 txt.Text = aValue[i];
-txt.AccessibleName = lbl.AccessibleName;
 txt.SelectAll();
 tlpFields.Controls.AddRange(new Control[] {lbl, txt});
 }
@@ -1340,7 +1317,6 @@ flpButtons.FlowDirection = FlowDirection.LeftToRight;
 
 Button btnOK = new Button();
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 StringBuilder sb = new StringBuilder();
 btnOK.Click += delegate(object o, EventArgs e) {
@@ -1352,7 +1328,6 @@ frm.Close();
 
 Button btnCancel = new Button();
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 btnCancel.Click += delegate(object o, EventArgs e) { frm.Close();};
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
@@ -1441,7 +1416,6 @@ flpButtons.FlowDirection = FlowDirection.LeftToRight;
 
 Button btnOK = new Button();
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 btnOK.Click += delegate(object o, EventArgs e) {
 sReturn = ((DataRowView) bs.Current)[1].ToString();
@@ -1451,7 +1425,6 @@ for (int i = 0; i < aTemp.Length; i++) aValue[i] = aTemp[i];
 
 Button btnCancel = new Button();
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 btnCancel.Click += delegate(object o, EventArgs e) { frm.Close();};
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
@@ -1587,12 +1560,10 @@ for (int i = 0; i < aTemp.Length; i++) aValues[i] = aTemp[i];
 };
 
 btnOK.Text = "OK";
-btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { Lbc.Say("Cancel"); frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
 flpButtons.ResumeLayout();
@@ -1687,7 +1658,6 @@ lbl.Width = 200;
 lbl.Height = 16 * iLines + 16;
 lbl.Margin = new Padding(3, 3, 3, 3);
 lbl.Text = sText;
-lbl.AccessibleName = lbl.Text.Replace("&", "");
 lbl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 flpMain.Controls.Add(lbl);
 }
@@ -1696,7 +1666,6 @@ for (int i = 0; i < aButtons.Length; i++) {
 Button btn = new Button();
 btn.Click += delegate(object o, EventArgs e) {sResult = btn.Text; frm.Close();};
 btn.Text = aButtons[i];
-btn.AccessibleName = aButtons[i].Replace("&", "");
 btn.AutoSize = false;
 btn.Width = 200;
 btn.Anchor = AnchorStyles.None;
@@ -1706,7 +1675,6 @@ flpMain.Controls.Add(btn);
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) { frm.Close();};
 btnCancel.Text = "Cancel";
-btnCancel.AccessibleName = btnCancel.Text;
 btnCancel.AutoSize = false;
 btnCancel.Width = 200;
 flpMain.Controls.Add(btnCancel);
