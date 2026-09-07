@@ -1907,8 +1907,16 @@ public class LbcDialog : IDisposable
         frm.KeyPreview = true;
         frm.KeyDown += delegate(object sender, KeyEventArgs evArgs)
         {
-            TextBox tbActive = frm.ActiveControl as TextBox;
+            // CONTROL+HOME AND CONTROL+END BELONG TO THE CONTROL THAT HAS
+            // THEM. In a list they mean the first and last item, in every
+            // Windows program and in FileDir, DbDo and EdSharp alike; in a
+            // multiline box they mean the top and bottom of the text. Only
+            // where the control has no use for them do they move between the
+            // dialog's fields.
+            Control ctlNow = deepActiveControl();
+            TextBox tbActive = ctlNow as TextBox;
             bool bInMemo = (tbActive != null) && tbActive.Multiline;
+            bool bInList = (ctlNow is ListBox);
             if (evArgs.KeyData == (Keys.Control | Keys.Enter) && btnDefault != null)
             {
                 evArgs.Handled = true;
@@ -1921,13 +1929,13 @@ public class LbcDialog : IDisposable
                 evArgs.SuppressKeyPress = true;
                 showHelp();
             }
-            else if (evArgs.KeyData == (Keys.Control | Keys.Home) && !bInMemo)
+            else if (evArgs.KeyData == (Keys.Control | Keys.Home) && !bInMemo && !bInList)
             {
                 evArgs.Handled = true;
                 evArgs.SuppressKeyPress = true;
                 focusFieldEdge(true);
             }
-            else if (evArgs.KeyData == (Keys.Control | Keys.End) && !bInMemo)
+            else if (evArgs.KeyData == (Keys.Control | Keys.End) && !bInMemo && !bInList)
             {
                 evArgs.Handled = true;
                 evArgs.SuppressKeyPress = true;

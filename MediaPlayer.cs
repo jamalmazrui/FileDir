@@ -522,44 +522,52 @@ ehGo(null, EventArgs.Empty);
 // It has a cost worth knowing: FileDir treats Scroll Lock as silence, so while
 // it is on, ordinary FileDir speech is suppressed. That is why this dialog
 // speaks globally.
-// SHIFT AND A NAVIGATION KEY IS THE TRANSPORT.
+// CONTROL AND AN ARROW IS THE TRANSPORT, and one sentence covers it:
+// HORIZONTAL IS TIME INSIDE A TRACK, VERTICAL IS TRACKS IN THE QUEUE, THE PAGE
+// KEYS ARE CHAPTERS, AND ADDING SHIFT MEANS ALL THE WAY.
 //
-// A screen reader turns Num Lock off and leaves it off, so the keypad sends the
-// same virtual keys as the six-pack: keypad 4 IS Left, keypad 8 IS Up, keypad 5
-// is Clear. Binding NumPad4 and its neighbours, as the first attempt did, binds
-// keys that never arrive. Those bindings are still here at the bottom, for a
-// keyboard with Num Lock on, but they are not the scheme.
+//   Control+Left, Control+Right         back and forward by the increment
+//   Control+Shift+Left, +Right          start and end of the track
+//   Control+Up, Control+Down            previous and next track
+//   Control+PageUp, Control+PageDown    previous and next chapter
+//   Control+Shift+PageUp, +PageDown     first and last chapter
+//   Control+Home, Control+End           first and last item: the LIST's own
+//                                       keys, left to it
+//   Space, Shift+Clear (keypad 5)       play or pause
 //
-// The scheme is Shift with the navigation keys, which works the same on both
-// pads because both send the same keys. Bare navigation belongs to whatever
-// control has focus -- the Track list is read with it -- and Control with those
-// keys belongs to the dialog itself, where Control+Home and Control+End move to
-// the first and last field. Shift with them is free: this dialog has nothing to
-// select and nothing to tag, and a single-selection list does nothing with
-// Shift at all.
+// WHY CONTROL AND NOT SHIFT. The first version used Shift with these keys, and
+// Shift is spoken for. In FileDir, Shift+Up and Shift+Down tag and move,
+// Shift+Home and Shift+End tag to the top and bottom, and Alt+Shift with them
+// untags the same span; DbDo and EdSharp mark with Shift too. Shift means
+// MARKING throughout Homer Tools, and a player that made it mean seeking would
+// contradict the pattern inside the very program it lives in.
 //
-// Each key keeps the sense it already has, applied to the media instead of a
-// list: arrows step, the Page keys move by a bigger unit, Home and End are the
-// ends, and Control makes it the whole way.
+// Control is the movement modifier in those same programs: Control+Home and
+// Control+End are the first and last item, Control+Up and Control+Down step
+// through the marked ones, Control+PageUp and Control+PageDown move between
+// tables and windows. Moving among things is what a transport does.
 //
-//   Shift+Left, Shift+Right          back and forward by the increment
-//   Shift+Up, Shift+Down             previous and next track
-//   Shift+PageUp, Shift+PageDown     previous and next chapter
-//   Shift+Home, Shift+End            start and end of this track
-//   Control+Shift+Home, +End         first and last track
-//   Control+Shift+PageUp, +PageDown  first and last chapter
-//   Shift+Clear (keypad 5)           play or pause
+// The players agree, which is a bonus rather than the argument. VLC seeks with
+// the arrows and scales the jump with a modifier; iTunes and the usual
+// foobar2000 setup change track with Control and an arrow; mpv and VLC both put
+// chapters and titles on the Page keys. The one place this differs from them is
+// the vertical pair, which they give to volume: here the queue is a vertical
+// list of tracks, so vertical means tracks, and volume has a slider of its own
+// with the keypad's plus and minus beside it.
+//
+// A single-selection list does nothing with Control and an arrow, so nothing
+// visible is taken -- the same reasoning DbDo recorded for its own use of these
+// chords. And with Num Lock off, which is how a screen reader leaves it, the
+// keypad sends these very keys, so the two pads behave alike.
 dlg.commandKey = delegate(Keys keyData) {
-if (keyData == (Keys.Shift | Keys.Left)) { oPlayer.seekRelative(-stepSeconds(lstIncrement)); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
-if (keyData == (Keys.Shift | Keys.Right)) { oPlayer.seekRelative(stepSeconds(lstIncrement)); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
-if (keyData == (Keys.Shift | Keys.Up)) { oPlayer.previous(); hear(oPlayer); return true; }
-if (keyData == (Keys.Shift | Keys.Down)) { oPlayer.next(); hear(oPlayer); return true; }
-if (keyData == (Keys.Shift | Keys.PageUp)) { chapterMove(dlg, oPlayer, false); return true; }
-if (keyData == (Keys.Shift | Keys.PageDown)) { chapterMove(dlg, oPlayer, true); return true; }
-if (keyData == (Keys.Shift | Keys.Home)) { oPlayer.seekAbsolute(0); hear(oPlayer); say(dlg, "Start of track"); return true; }
-if (keyData == (Keys.Shift | Keys.End)) { seekToEnd(dlg, oPlayer); hear(oPlayer); return true; }
-if (keyData == (Keys.Control | Keys.Shift | Keys.Home)) { oPlayer.playIndex(0); oPlayer.setPause(false); say(dlg, "First track"); return true; }
-if (keyData == (Keys.Control | Keys.Shift | Keys.End)) { oPlayer.playIndex(lsRef.Count - 1); oPlayer.setPause(false); say(dlg, "Last track"); return true; }
+if (keyData == (Keys.Control | Keys.Left)) { oPlayer.seekRelative(-stepSeconds(lstIncrement)); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
+if (keyData == (Keys.Control | Keys.Right)) { oPlayer.seekRelative(stepSeconds(lstIncrement)); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
+if (keyData == (Keys.Control | Keys.Shift | Keys.Left)) { oPlayer.seekAbsolute(0); hear(oPlayer); say(dlg, "Start of track"); return true; }
+if (keyData == (Keys.Control | Keys.Shift | Keys.Right)) { seekToEnd(dlg, oPlayer); hear(oPlayer); return true; }
+if (keyData == (Keys.Control | Keys.Up)) { oPlayer.previous(); hear(oPlayer); return true; }
+if (keyData == (Keys.Control | Keys.Down)) { oPlayer.next(); hear(oPlayer); return true; }
+if (keyData == (Keys.Control | Keys.PageUp)) { chapterMove(dlg, oPlayer, false); return true; }
+if (keyData == (Keys.Control | Keys.PageDown)) { chapterMove(dlg, oPlayer, true); return true; }
 if (keyData == (Keys.Control | Keys.Shift | Keys.PageUp)) { firstChapter(dlg, oPlayer); hear(oPlayer); return true; }
 if (keyData == (Keys.Control | Keys.Shift | Keys.PageDown)) { lastChapter(dlg, oPlayer); hear(oPlayer); return true; }
 if (keyData == (Keys.Shift | Keys.Clear)) { oPlayer.togglePause(); say(dlg, oPlayer.paused ? "Playing" : "Paused"); return true; }
@@ -1145,11 +1153,14 @@ sb.Append("MOVING AND PLAYING\r\n");
 sb.Append("Space          play or pause, from anywhere but a button\r\n");
 sb.Append("Enter          in the queue, play the track the cursor is on\r\n");
 sb.Append("Control+Enter  execute playback, from anywhere\r\n");
-sb.Append("Shift+Left, Shift+Right    jump back and forward by the increment\r\n");
-sb.Append("Shift+Up, Shift+Down       previous and next track\r\n");
-sb.Append("Shift+PageUp, PageDown     previous and next chapter\r\n");
-sb.Append("Shift+Home, Shift+End      start and end of the track\r\n");
-sb.Append("Control+Shift+Home, End    first and last track\r\n\r\n");
+sb.Append("Control+Left, Control+Right   jump back and forward by the increment\r\n");
+sb.Append("Control+Shift+Left, Right     start and end of the track\r\n");
+sb.Append("Control+Up, Control+Down      previous and next track\r\n");
+sb.Append("Control+PageUp, PageDown      previous and next chapter\r\n");
+sb.Append("Control+Shift+PageUp, PageDown  first and last chapter\r\n");
+sb.Append("Control+Home, Control+End     first and last track in the list\r\n\r\n");
+sb.Append("Sideways is time inside a track, up and down is tracks in the queue,\r\n");
+sb.Append("the Page keys are chapters, and adding Shift means all the way.\r\n\r\n");
 sb.Append("TELLING YOU WHERE YOU ARE\r\n");
 sb.Append("Alt+Shift+A    say the position\r\n");
 sb.Append("Alt+Shift+W    say the track, its number and the position\r\n");

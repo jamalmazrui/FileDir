@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.84**  
+**Version 5.0.85**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -797,6 +797,76 @@ The reasoning behind it is written down in the developer notes, as four rules:
 say nothing the reader already says; say what it cannot know; layer the detail
 so a short answer is the default and the longer ones are a key away; and write
 every message to the status line so it can be read back rather than repeated.
+
+**The transport moved from Shift to Control, after reading what everyone else
+does with these keys.**
+
+What the players do. VLC seeks with the plain arrows and scales the jump with a
+modifier -- Alt for a few seconds, Shift for a minute -- and gives the vertical
+pair to volume. mpv is the same shape: arrows seek, Up and Down are volume, the
+Page keys move by chapter. Windows Media Player leaves the arrows to its list
+and puts the transport on Control and a letter: Control+F forward,
+Control+B back, Control+Shift with them to scan. foobar2000 ships almost no
+defaults, but the arrangement its users write down again and again is Alt with
+an arrow to seek, Control with an arrow to change track, and Alt+Enter for
+properties. iTunes on Windows uses Control and a horizontal arrow for the next
+and previous song.
+
+What Homer Tools do. Shift with a navigation key means MARKING: FileDir tags and
+moves with Shift+Up and Shift+Down, tags to the top and bottom with Shift+Home
+and Shift+End, and unmarks the same span with Alt+Shift. Control means MOVING:
+Control+Home and Control+End are the first and last item, Control+Up and
+Control+Down step through the marked ones, Control+PageUp and Control+PageDown
+move between tables and windows. DbDo and EdSharp say the same thing in their
+own words -- DbDo even records why it may take these chords, since a
+single-selection list does nothing with them natively.
+
+The player had the transport on Shift, which is the marking modifier. That was
+the fault: it contradicted the pattern inside the program it lives in. It is on
+Control now, where moving belongs, and one sentence covers the lot -- sideways
+is time inside a track, up and down is tracks in the queue, the Page keys are
+chapters, and adding Shift means all the way.
+
+The one place this differs from VLC and mpv is the vertical pair, which they
+give to volume. Here the queue is a vertical list of tracks, so vertical means
+tracks; volume has a slider of its own, with the keypad's plus and minus beside
+it. Following Homer's own list conventions matters more than following a
+full-screen video player's, and a queue is a list before it is a film.
+
+**Control+Home and Control+End went back to the list.** Lbc was using them to
+move between the fields of a dialog, which is wrong wherever the control has its
+own use for them: in a list they are the first and last item, in Windows and in
+all three of these programs. They now reach the field-edge behaviour only when
+the focused control has no use for them.
+
+**"Input" was the dialog's own title, said three times.** The speech history
+finally caught it in context:
+
+    Unarchive
+    Current file
+    Input
+    Input
+    Input
+    Folder: Edit
+    c:\filedir
+
+Twenty prompts were titled "Input" -- the word says nothing about what is being
+asked for, and a screen reader reads a window title more than once. They are
+named for what they do now: Unarchive To, Copy To, Move To, Open Folder, New
+Folder, Rename, Jump, Keywords, Filter, Evaluate, Web Address, FTP Address,
+Download Extensions, Path List Extensions, Unarchive Password, Target Folder,
+Tag with Regular Expression.
+
+**As for the three,** these dialogs size themselves to their contents with
+AutoSize left on, so the sizing happens AFTER the window is up: the window
+changes shape a moment after it appears, and a window that changes is a window a
+screen reader may announce again. The size is now worked out before the window
+exists -- PerformLayout, take the preferred size, turn AutoSize off, set it --
+so nothing about the window changes once it is on screen. Nine dialogs.
+
+That is a reasoned fix rather than a proven one, and it is testable in one
+press: if Unarchive now says its title once, the reasoning was right; if it says
+it three times, the cause is elsewhere and at least the word means something.
 
 **A field earns its line, or it does not appear.** "Read by ExifTool: yes" was
 the program telling the person about its own housekeeping -- a note to itself

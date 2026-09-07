@@ -178,7 +178,7 @@
 <h1 class="title">FileDir FileDir</h1>
 </header>
 <h1 id="filedir-user-guide">FileDir — User Guide</h1>
-<p><strong>Version 5.0.84</strong><br />
+<p><strong>Version 5.0.85</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -1495,14 +1495,42 @@ Rate and Volume take effect as you move them.</p>
 <p><strong>The player never moves your cursor.</strong> When playback
 moves to the next track it says the name and leaves the Tracks list
 where you put it.</p>
-<p><strong>Scroll Lock is play and pause</strong>, from any control in
-the dialog and nowhere else. One thing to know: FileDir treats Scroll
-Lock as silence, so while it is on, FileDir’s ordinary speech is
-suppressed. The player speaks past that deliberately, so it keeps
-talking either way.</p>
+<p><strong>Space plays and pauses</strong>, from anywhere in the dialog
+except on a button, where Space presses the thing with focus, and except
+in a box you are typing in. Shift and keypad 5 does the same, and so
+does Scroll Lock on a keyboard that delivers it.</p>
+<p><strong>Control with an arrow is the transport</strong>, and one
+sentence covers it: sideways is time inside a track, up and down is
+tracks in the queue, the Page keys are chapters, and adding Shift means
+all the way.</p>
+<ul>
+<li><strong>Control+Left</strong>, <strong>Control+Right</strong> – back
+and forward by the increment</li>
+<li><strong>Control+Shift+Left</strong>,
+<strong>Control+Shift+Right</strong> – start and end of the track</li>
+<li><strong>Control+Up</strong>, <strong>Control+Down</strong> –
+previous and next track</li>
+<li><strong>Control+Page Up</strong>, <strong>Control+Page Down</strong>
+– previous and next chapter</li>
+<li><strong>Control+Shift+Page Up</strong>, <strong>Control+Shift+Page
+Down</strong> – first and last chapter</li>
+<li><strong>Control+Home</strong>, <strong>Control+End</strong> – first
+and last track in the list, which is the list’s own behaviour rather
+than a player command</li>
+</ul>
+<p>It works the same on the keypad and the six-pack, because with Num
+Lock off – which is how a screen reader leaves it – both send the same
+keys. If you keep Num Lock on, the digits work too: 7, 8, 9 for
+chapters, 4, 5, 6 for the increment, 1, 2, 3 for whole tracks, 0 to
+stop, Control with any of them to go all the way, minus and plus for
+volume, slash and star for speed.</p>
+<p>Control rather than Shift, because Shift already means something in
+these programs: in FileDir, Shift+Up and Shift+Down tag and move, and
+Shift+Home and Shift+End tag to the top and bottom. Control is the
+movement modifier in FileDir, DbDo and EdSharp alike, and moving among
+things is what a transport does.</p>
 <p>A few commands have no control of their own, and those are Alt+Shift
-with a letter – never an arrow, Home, End or a Page key, which in
-Windows and in FileDir mean selecting and moving:</p>
+with a letter:</p>
 <ul>
 <li><strong>Alt+Shift+N</strong> and <strong>Alt+Shift+P</strong> next
 and previous chapter</li>
