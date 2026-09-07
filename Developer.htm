@@ -178,7 +178,7 @@
 <h1 class="title">FileDir Developer</h1>
 </header>
 <h1 id="filedir-developer-guide">FileDir — Developer Guide</h1>
-<p><strong>Version 5.0.83</strong><br />
+<p><strong>Version 5.0.84</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -276,6 +276,15 @@ track, its number and the position; Alt+Enter gives everything known
 about it. The short answer is the default because it is wanted most
 often, and the longer ones are a key away rather than an
 interruption.</p>
+<p><strong>A multiline box starts at its beginning.</strong> WinForms
+leaves the caret where the text ended, which puts an arriving reader at
+the bottom of something they have not heard the start of. Lbc sets it to
+the first line.</p>
+<p><strong>A field earns its line.</strong> Everything is heard one line
+at a time, so a field with an empty value, or a value that is a
+program’s word for empty, or a fact about the file rather than about the
+thing the file holds, is left out altogether rather than shown as a
+blank.</p>
 <p><strong>Let the person ask again.</strong> Speech vanishes; the
 status line does not. Every message a command produces is also written
 there, so it can be read back at leisure with the screen reader’s own

@@ -58,6 +58,10 @@ public class MediaTrack {
 // computer, ExifTool. Extra Info shows it, sorted, and Find searches it.
 public Dictionary<string, string> dFacts = new Dictionary<string, string>();
 public double dSeconds = -1;
+// Whether ExifTool has been asked about this track. NOT a fact about the
+// track, so not in the table: "Read by ExifTool: yes" was a line spent telling
+// the person about the program's own housekeeping.
+public bool bExifAsked = false;
 public string sEpisode = "";
 public string sName;
 public string sPresenter = "";
@@ -131,9 +135,30 @@ return sText.ToLower();
 }
 
 // addFact: keep a field, unless something better is already there.
+//
+// A FIELD EARNS ITS LINE. Everything here is read one line at a time, aloud, so
+// a line that says nothing costs as much to hear as a line that says something.
+// Empty values, and the words programs use to mean empty, are not kept; nor are
+// the fields that describe the file as a file rather than the recording as a
+// recording, which is most of what ExifTool has to say about an audio file.
+private static readonly string[] c_asEmptyWords = { "unknown", "n/a", "none", "null", "0" };
+private static readonly string[] c_asDullFields = {
+"ExifTool Version Number", "ExifToolVersion", "File Name", "FileName", "Directory",
+"File Permissions", "FilePermissions", "File Access Date/Time", "FileAccessDate",
+"File Inode Change Date/Time", "File Modification Date/Time", "FileModifyDate",
+"File Type Extension", "MIME Type", "MIMEType", "SourceFile", "Warning",
+"File Size", "FileSize"
+};
+
 public void addFact(string sField, string sValue) {
 if (string.IsNullOrEmpty(sField) || string.IsNullOrEmpty(sValue)) return;
-if (!dFacts.ContainsKey(sField)) dFacts[sField] = sValue.Trim();
+string sTidy = sValue.Trim();
+if (sTidy.Length == 0) return;
+foreach (string sEmpty in c_asEmptyWords)
+if (string.Equals(sTidy, sEmpty, StringComparison.OrdinalIgnoreCase)) return;
+foreach (string sDull in c_asDullFields)
+if (string.Equals(sField, sDull, StringComparison.OrdinalIgnoreCase)) return;
+if (!dFacts.ContainsKey(sField)) dFacts[sField] = sTidy;
 }
 
 // factLines: every field and value, sorted by field, as lines.
@@ -147,6 +172,9 @@ if (sPresenter.Length > 0 && !dAll.ContainsKey("Presenter")) dAll["Presenter"] =
 if (sEpisode.Length > 0 && !dAll.ContainsKey("Episode")) dAll["Episode"] = sEpisode;
 if (!dAll.ContainsKey("Address")) dAll["Address"] = sTarget;
 if (dSeconds > 0 && !dAll.ContainsKey("Length")) dAll["Length"] = Homer.Mpv.formatTime(dSeconds);
+// Duration and Length are the same fact in two notations, and the document's
+// Duration is where Length came from. One line, not two.
+if (dAll.ContainsKey("Length")) dAll.Remove("Duration");
 List<string> lsKeys = new List<string>(dAll.Keys);
 lsKeys.Sort(StringComparer.OrdinalIgnoreCase);
 List<string> lsLines = new List<string>();
@@ -267,6 +295,8 @@ bool bWasPlaying = false;
 bool bEndSaid = false;
 DateTime dtLastSaid = DateTime.MinValue;
 string sLastNote = "";
+string sTitleNow = sTitle;
+string sQueueName = sTitle;
 DateTime dtLastNote = DateTime.MinValue;
 bool bIdleLast = true;
 bool bPausedLast = true;
@@ -675,6 +705,20 @@ if (sNote != sLastNote) { sLastNote = sNote; dlg.setStatusExtra(sNote); }
 
 int iNow = oPlayer.playlistIndex;
 bool bPlayingNow2 = !oPlayer.idle && !oPlayer.paused;
+
+// THE TITLE SAYS WHAT IS PLAYING, OR WHAT THE QUEUE IS.
+//
+// It was set when a track started and never set back, so a title read after
+// pausing named a track that had stopped playing. It follows the state now:
+// the track's own line while something plays, the name of the play list when
+// nothing does.
+string sWantTitle = sQueueName;
+if (bPlayingNow2 && iNow >= 0 && iNow < lsRef.Count) sWantTitle = lsRef[iNow].display();
+if (sWantTitle != sTitleNow) {
+sTitleNow = sWantTitle;
+try { dlg.form.Text = sWantTitle; }
+catch (Exception) { }
+}
 if (iNow >= 0 && iNow < lsRef.Count && bPlayingNow2) {
 bWasPlaying = true;
 bEndSaid = false;
@@ -683,10 +727,7 @@ iAnnounced = iNow;
 // THE TITLE SAYS WHAT IS PLAYING. A screen reader has a key for reading the
 // window title, and that is the shortest way to ask "what is this?" without
 // disturbing anything.
-// THE TITLE IS WHAT IS PLAYING, word for word as the queue shows it, so the
-// screen reader's title key and the list agree.
-try { dlg.form.Text = lsRef[iNow].display(); }
-catch (Exception) { }
+
 // At most one name every second and a half: a queue of addresses that
 // will not play walks itself to the end in seconds, and a name for each
 // is noise rather than news.
@@ -711,8 +752,8 @@ if (iTrackNow < 0 || iTrackNow >= lsRef.Count) { txtExtra.Text = "No track"; ret
 MediaTrack trackNow = lsRef[iTrackNow];
 // ExifTool is asked once per track, and only for a file on this computer: it
 // is a program to start, and starting one on every arrival would be felt.
-if (!trackNow.dFacts.ContainsKey("Read by ExifTool")) {
-trackNow.addFact("Read by ExifTool", "yes");
+if (!trackNow.bExifAsked) {
+trackNow.bExifAsked = true;
 try { if (File.Exists(trackNow.sTarget)) addExifProperties(trackNow); }
 catch (Exception) { }
 }
@@ -1163,20 +1204,29 @@ if (dlg != null) dlg.appendStatus(sText);
 //
 //   Playing 3 of 60, 12 min 3 sec of 45 min
 private static string statusNote(Homer.Mpv player, List<MediaTrack> lsTracks) {
-StringBuilder sb = new StringBuilder();
-sb.Append(player.idle ? "Stopped" : (player.paused ? "Paused" : "Playing"));
+// ONE SENTENCE, IN THE ORDER A PERSON ASKS IT. What is it doing, which track
+// of how many, how far in. Nothing else: the track's name is in the window
+// title, which the reader has its own key for.
+//
+//   Playing track 3 of 60, 12 min 3 sec of 45 min
+//   Paused at track 3 of 60, 12 min 3 sec of 45 min
+//   Nothing playing, 60 tracks
 int iNow = player.playlistIndex;
-if (iNow >= 0 && iNow < lsTracks.Count) {
-sb.Append(" ");
+StringBuilder sb = new StringBuilder();
+if (player.idle || iNow < 0 || iNow >= lsTracks.Count) {
+sb.Append("Nothing playing, ");
+sb.Append(Homer.Util.stringPlural("track", lsTracks.Count));
+return sb.ToString();
+}
+sb.Append(player.paused ? "Paused at track " : "Playing track ");
 sb.Append((iNow + 1).ToString(CultureInfo.InvariantCulture));
 sb.Append(" of ");
 sb.Append(lsTracks.Count.ToString(CultureInfo.InvariantCulture));
-}
 string sAt = Homer.Mpv.saySpan(player.position);
-string sOf = Homer.Mpv.saySpan(player.duration);
 if (sAt.Length > 0) {
 sb.Append(", ");
 sb.Append(sAt);
+string sOf = Homer.Mpv.saySpan(player.duration);
 if (sOf.Length > 0) { sb.Append(" of "); sb.Append(sOf); }
 }
 return sb.ToString();

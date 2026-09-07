@@ -178,7 +178,7 @@
 <h1 class="title">FileDir History</h1>
 </header>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
-<p><strong>Version 5.0.83</strong><br />
+<p><strong>Version 5.0.84</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -1628,6 +1628,53 @@ four rules: say nothing the reader already says; say what it cannot
 know; layer the detail so a short answer is the default and the longer
 ones are a key away; and write every message to the status line so it
 can be read back rather than repeated.</p>
+<p><strong>A field earns its line, or it does not appear.</strong> “Read
+by ExifTool: yes” was the program telling the person about its own
+housekeeping – a note to itself that it had already asked, kept where
+the facts about the track are kept. It is a flag on the track now and
+shows nowhere.</p>
+<p>Everything read here is heard one line at a time, so a line that says
+nothing costs as much as a line that says something. Empty values are
+dropped, and so are the words programs use to mean empty: unknown, none,
+n/a, a bare zero. So are the fields that describe the file as a file
+rather than the recording as a recording – its name, its folder, its
+permissions, its access time, the version of ExifTool – which is most of
+what ExifTool has to say about an audio file. And Duration is dropped
+when Length is present, because they are the same fact in two
+notations.</p>
+<p><strong>A multiline box starts at its beginning.</strong> WinForms
+leaves the caret where the text ended, so arriving at a memo by Tab put
+the cursor at the bottom of it, and reading from there means reading the
+end of something whose start has not been heard. Every Lbc memo now puts
+the cursor on the first line as it arrives. This is a guideline rather
+than a fix to one dialog: it holds wherever Lbc makes a multiline
+box.</p>
+<p><strong>The title named a track that had stopped playing.</strong> It
+was set when a track started and never set back, so reading the title
+after pausing named whatever had played last. It follows the state now:
+the track’s own line while something plays, the name of the play list
+when nothing does.</p>
+<p><strong>The status line was reading as nonsense, and the reason was
+the order.</strong> The line carries two things – the standing note
+about playback and the tip for the control with focus – and the tip was
+first. A screen reader reads a status line from the beginning, so a
+person asking “where am I in this?” heard a sentence and a half of
+description before the answer. The note comes first now, and it reads as
+one sentence: “Playing track 3 of 60, 12 min 3 sec of 45 min”, or
+“Nothing playing, 60 tracks”.</p>
+<p><strong>Two more audit gates</strong>, because a fault that has to be
+found twice has cost too much already.</p>
+<p>The first checks that every member FileDir.cs uses on a track is a
+member the track has. Removing a block once took a field’s declaration
+with it and left three uses behind; the compiler caught it, at the cost
+of a build. This catches it in seconds.</p>
+<p>The second checks that the installer scripts and the Results box
+still name the same actions file. They agree through one file name in
+one folder, nothing checked it, and when they stop agreeing the box
+silently reports nothing – which is indistinguishable from an install
+that did nothing. The summary also writes the file’s path, whether it
+existed and how many lines it held into the log, so a silent box can be
+told from an empty one.</p>
 <p><strong>The Keywords command was searching compressed
 rubbish.</strong> Control+K reads every file looking for the words, and
 it read them with file2String, which hands back the bytes as they are.

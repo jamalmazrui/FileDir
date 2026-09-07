@@ -2308,10 +2308,15 @@ public class LbcDialog : IDisposable
 
     private void paintStatus()
     {
+        // THE STANDING NOTE COMES FIRST. A screen reader reads a status line
+        // from the beginning, and the tip for the control with focus can be a
+        // sentence and a half; a person asking "where am I in this?" was
+        // hearing all of that before the answer, which is how a useful line
+        // came to sound like nonsense.
         if (lblStatusBar == null) return;
-        string sBoth = sStatusTip ?? "";
-        if (sStatusExtra.Length > 0)
-            sBoth = (sBoth.Length > 0) ? (sBoth + "   " + sStatusExtra) : sStatusExtra;
+        string sBoth = sStatusExtra ?? "";
+        if (!string.IsNullOrEmpty(sStatusTip))
+            sBoth = (sBoth.Length > 0) ? (sBoth + "   " + sStatusTip) : sStatusTip;
         lblStatusBar.Text = sBoth;
     }
 
@@ -2352,6 +2357,26 @@ public class LbcDialog : IDisposable
             btnSavedAccept = frm.AcceptButton as Button;
         frm.AcceptButton = null;
         handleGotFocus(sender, evArgs);
+
+        // A MULTILINE BOX STARTS AT ITS BEGINNING.
+        //
+        // WinForms leaves the caret where the text ended, so arriving at a memo
+        // by Tab put the cursor at the bottom of it, and a screen reader user
+        // reading from there is reading the end of something they have not yet
+        // heard the start of. Set just after the control finishes arriving,
+        // because setting it during the focus event is undone by the control's
+        // own handling.
+        TextBox tb = sender as TextBox;
+        if (tb == null || !tb.Multiline) return;
+        try
+        {
+            tb.BeginInvoke((MethodInvoker) delegate
+            {
+                try { tb.SelectionStart = 0; tb.SelectionLength = 0; tb.ScrollToCaret(); }
+                catch (Exception) { }
+            });
+        }
+        catch (Exception) { }
     }
 
     // handleMemoLostFocus: restore the AcceptButton when the

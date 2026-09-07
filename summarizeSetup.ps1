@@ -249,6 +249,15 @@ function sayActions() {
       if ($sLine.Trim() -ne "") { $lActions += $sLine.Trim() }
     }
   }
+  # LOGGED, because a Results box that says nothing looks exactly like an
+  # install that did nothing. When mpv installed and the box stayed silent
+  # about it, there was no way to tell which of the two had happened.
+  # Built in a variable rather than continued across lines: PowerShell wants an
+  # operator at the END of a line, and a line beginning with + is a new
+  # statement that does nothing. The audit checks for exactly this.
+  $sActionsNote = "actions file: " + $sActionsFile + ", exists: " + (Test-Path -LiteralPath $sActionsFile) + ", lines: " + $lActions.Count
+  note $sActionsNote
+
   say "Actions"
   if ($lActions.Count -eq 0) {
     say "  Nothing needed changing."

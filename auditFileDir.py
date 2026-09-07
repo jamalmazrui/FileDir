@@ -1254,6 +1254,62 @@ def checkNoAccessibleNames():
            not lsFaults, ", ".join(lsFaults[:8]) + ("..." if len(lsFaults) > 8 else ""))
 
 
+def checkTrackMembersExist():
+    """Every member FileDir.cs uses on a MediaTrack must exist on MediaTrack.
+
+    Removing a block from MediaPlayer.cs once took a field's declaration with it
+    and left three uses behind, in two files. The compiler caught it, which cost
+    a build; this catches it before one, which costs seconds.
+
+    Crude on purpose: the declarations are read by shape rather than parsed, so
+    a member declared in an unusual way would be reported here as missing. That
+    is the right way round for a gate -- it fails loudly and is easy to check by
+    hand -- and the shapes in this file are uniform.
+    """
+    sTrackFile = readFile("MediaPlayer.cs")
+    sUser = readFile("FileDir.cs")
+    if sTrackFile is None or sUser is None:
+        return
+    iStart = sTrackFile.find("public class MediaTrack")
+    iEnd = sTrackFile.find("} // MediaTrack class")
+    if iStart < 0 or iEnd < iStart:
+        report("MediaTrack members are all declared", False, "MediaTrack class not found")
+        return
+    sBody = sTrackFile[iStart:iEnd]
+    setDeclared = set(re.findall(r"public\s+(?:static\s+)?[\w<>, \[\]\.]+\s+(\w+)\s*[;=({]", sBody))
+    setUsed = set(re.findall(r"\btrack\.(\w+)", sUser)) | set(re.findall(r"\btrack\.(\w+)", sTrackFile))
+    lsMissing = sorted(setUsed - setDeclared)
+    report("Every MediaTrack member used is a member MediaTrack has",
+           not lsMissing, ", ".join(lsMissing))
+
+
+def checkSetupActionsAgree():
+    """The installer's Results box reports what the component scripts wrote.
+
+    They agree through one file name, in one folder, and nothing checks that
+    they still spell it the same way. When they stop agreeing the Results box
+    silently reports nothing at all, which is what happened when mpv installed
+    and the box did not say so -- a fault that looks like the install failing.
+    """
+    lsFaults = []
+    sSummary = readFile("summarizeSetup.ps1")
+    if sSummary is not None and "FileDir_setup_actions.txt" not in sSummary:
+        lsFaults.append("summarizeSetup.ps1 does not name the actions file")
+    sIssSource = readFile("FileDir_setup.iss")
+    if sIssSource is not None and "FileDir_setup_actions.txt" not in sIssSource:
+        lsFaults.append("FileDir_setup.iss does not clear the actions file")
+    for sName in ("installMpv.cmd", "installPandoc.cmd", "installMediaTools.cmd",
+                  "installImageTools.cmd", "installOllama.cmd", "installTranslateModel.cmd",
+                  "installPdfTools.cmd"):
+        sScript = readFile(sName)
+        if sScript is None:
+            continue
+        if "FileDir_setup_actions.txt" not in sScript:
+            lsFaults.append(sName + " writes no actions")
+    report("The installer scripts and the Results box name the same actions file",
+           not lsFaults, ", ".join(lsFaults))
+
+
 def checkFolderIsSorted():
     """Nothing unexpected may sit at the root.
 
@@ -1386,6 +1442,8 @@ def main():
             checkDocumentsShipped(sCode, sIss)
 
     checkNoAccessibleNames()
+    checkTrackMembersExist()
+    checkSetupActionsAgree()
 
     if sIss is None:
         report("FileDir_setup.iss is present", False, "not found in " + pathRoot)

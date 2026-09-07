@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.83**  
+**Version 5.0.84**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -797,6 +797,55 @@ The reasoning behind it is written down in the developer notes, as four rules:
 say nothing the reader already says; say what it cannot know; layer the detail
 so a short answer is the default and the longer ones are a key away; and write
 every message to the status line so it can be read back rather than repeated.
+
+**A field earns its line, or it does not appear.** "Read by ExifTool: yes" was
+the program telling the person about its own housekeeping -- a note to itself
+that it had already asked, kept where the facts about the track are kept. It is
+a flag on the track now and shows nowhere.
+
+Everything read here is heard one line at a time, so a line that says nothing
+costs as much as a line that says something. Empty values are dropped, and so
+are the words programs use to mean empty: unknown, none, n/a, a bare zero. So
+are the fields that describe the file as a file rather than the recording as a
+recording -- its name, its folder, its permissions, its access time, the version
+of ExifTool -- which is most of what ExifTool has to say about an audio file.
+And Duration is dropped when Length is present, because they are the same fact
+in two notations.
+
+**A multiline box starts at its beginning.** WinForms leaves the caret where the
+text ended, so arriving at a memo by Tab put the cursor at the bottom of it, and
+reading from there means reading the end of something whose start has not been
+heard. Every Lbc memo now puts the cursor on the first line as it arrives. This
+is a guideline rather than a fix to one dialog: it holds wherever Lbc makes a
+multiline box.
+
+**The title named a track that had stopped playing.** It was set when a track
+started and never set back, so reading the title after pausing named whatever
+had played last. It follows the state now: the track's own line while something
+plays, the name of the play list when nothing does.
+
+**The status line was reading as nonsense, and the reason was the order.** The
+line carries two things -- the standing note about playback and the tip for the
+control with focus -- and the tip was first. A screen reader reads a status line
+from the beginning, so a person asking "where am I in this?" heard a sentence
+and a half of description before the answer. The note comes first now, and it
+reads as one sentence: "Playing track 3 of 60, 12 min 3 sec of 45 min", or
+"Nothing playing, 60 tracks".
+
+**Two more audit gates**, because a fault that has to be found twice has cost
+too much already.
+
+The first checks that every member FileDir.cs uses on a track is a member the
+track has. Removing a block once took a field's declaration with it and left
+three uses behind; the compiler caught it, at the cost of a build. This catches
+it in seconds.
+
+The second checks that the installer scripts and the Results box still name the
+same actions file. They agree through one file name in one folder, nothing
+checked it, and when they stop agreeing the box silently reports nothing -- which
+is indistinguishable from an install that did nothing. The summary also writes
+the file's path, whether it existed and how many lines it held into the log, so
+a silent box can be told from an empty one.
 
 **The Keywords command was searching compressed rubbish.** Control+K reads
 every file looking for the words, and it read them with file2String, which hands

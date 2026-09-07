@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.83**  
+**Version 5.0.84**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -90,6 +90,15 @@ gives the position; Alt+Shift+W gives the track, its number and the position;
 Alt+Enter gives everything known about it. The short answer is the default
 because it is wanted most often, and the longer ones are a key away rather than
 an interruption.
+
+**A multiline box starts at its beginning.** WinForms leaves the caret where the
+text ended, which puts an arriving reader at the bottom of something they have
+not heard the start of. Lbc sets it to the first line.
+
+**A field earns its line.** Everything is heard one line at a time, so a field
+with an empty value, or a value that is a program's word for empty, or a fact
+about the file rather than about the thing the file holds, is left out
+altogether rather than shown as a blank.
 
 **Let the person ask again.** Speech vanishes; the status line does not. Every
 message a command produces is also written there, so it can be read back at
