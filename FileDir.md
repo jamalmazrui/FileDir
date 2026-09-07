@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.81**  
+**Version 5.0.83**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -851,17 +851,14 @@ each row holding the things that belong together:
 - **Alt+T Track list** -- the queue, each line giving the name, then the
   presenter and the length where they are known. The name comes first and
   carries no number, so pressing a letter jumps to the first track beginning
-  with it. **Control+J** jumps to a track by name and **Control+Shift+J** jumps
-  backwards; **F3** and **Shift+F3** jump to the next and previous match;
-  **Control+F** filters the list to what matches, and **Control+Shift+F** clears
-  the filter. J for jump, F for filter, they are the directory window's own
-  keys, and in this dialog all six act on the Track list from wherever you are
-  and leave the keyboard where it was, saying the track they land on when the
-  cursor is elsewhere.
-  **Alt+Enter** shows everything known about the track you are on -- name,
-  presenter, length, address, and for a file on this computer everything
-  ExifTool can read out of it -- as text you can read by character, word or
-  line, select from, and copy.
+  with it.
+- **Alt+X Extra Info** -- everything known about the track the cursor is on, one
+  field to a line, sorted by field: what the play list said, what the document
+  the links came from said about that episode -- its date, its length, its
+  summary, the people in it -- and, for a file on this computer, everything
+  ExifTool can read out of it. Read it by character, word or line, and copy from
+  it. It fills as you arrive, so it is current when you read it and silent
+  otherwise.
 - **Alt+O Order of list**, then **Alt+N Next track** and **Alt+P Previous
   track**. The orders are play list order, title, presenter, and length shortest
   or longest first. Titles sort ignoring a leading A, An or The; presenters sort
@@ -870,64 +867,36 @@ each row holding the things that belong together:
   **Alt+I Increment of jump**: 15 or 30 seconds, 1, 3, 5, 10, 15 or 30 minutes,
   or an hour, listed smallest first. One minute to begin with.
 - **Alt+M Chapter more** and **Alt+L Chapter less**, and the **Alt+W Where in
-  track** slider, which moves playback to a percentage through the track. Many
-  tracks have no chapters, and on those the two buttons do nothing.
+  track** slider. A chapter move says which chapter it reached, or says the
+  track has none, so you never have to guess whether it worked.
 - **Alt+R Rate percent** and **Alt+V Volume percent**, both sliders. Volume
   starts below full so the media does not drown your screen reader.
-- **Alt+E Execute playback**, **Alt+S Stop playback**, **Alt+C Clip to file**,
-  **Alt+D Default settings**, **Alt+H Help topics**, and **Close**. Escape
-  closes too.
+- **Alt+E Execute playback**, **Alt+S Stop playback**, **Alt+D Default
+  settings**, **Alt+H Help**, and **Close**. Escape closes too.
 
-**Shift with a navigation key is the transport**, and it works the same on the
-keypad and on the six-pack, because with Num Lock off -- which is how a screen
-reader leaves it -- both send the same keys.
+**The same search keys as the directory window**, meaning the same things. Jump
+looks at the line the list shows; Keywords looks at everything known about each
+track, which is where a presenter's name or a word from a summary lives.
 
-Each key keeps the sense it already has, applied to the media rather than to a
-list: arrows step, the Page keys move by a bigger unit, Home and End are the
-ends, and Control makes it the whole way.
+- **Control+J** jump forward by name, **Control+Shift+J** jump back
+- **Control+K** keywords through everything, **Control+Shift+K** backwards
+- **F3** and **Shift+F3** repeat the last jump or keyword search, whichever it
+  was
+- **Control+F** filter the list, **Control+Shift+F** clear the filter
 
-- **Shift+Left** and **Shift+Right** -- back and forward by the increment
-- **Shift+Up** and **Shift+Down** -- previous and next track
-- **Shift+Page Up** and **Shift+Page Down** -- previous and next chapter
-- **Shift+Home** and **Shift+End** -- the start and end of this track
-- **Control+Shift+Home** and **Control+Shift+End** -- the first and last track
-- **Control+Shift+Page Up** and **Control+Shift+Page Down** -- the first and
-  last chapter
-- **Shift+keypad 5** -- play or pause, as does **Scroll Lock**
+Keyword syntax is the simple one FileDir has always used, not regular
+expressions: `red & blue` means both words, `red | blue` means either, and
+`re*d` means a word with anything in the middle.
 
-Bare navigation keys are left alone: they are how the Track list is read.
-Control with them belongs to the dialog, where Control+Home and Control+End move
-to the first and last field. Shift with them is free here, because this dialog
-has nothing to tag and a single-selection list does nothing with Shift.
+Each remembers its own last ten answers, and all of them ignore case. All act on
+the Track list from wherever you are, leave the keyboard where it was, and say
+the track they land on when the cursor is elsewhere.
 
-If you keep Num Lock on, the digits work too, in a grid where the left column
-goes back, the right column goes forward, and each row is a different size of
-step: 7, 8, 9 for chapters, 4, 5, 6 for the increment, 1, 2, 3 for whole tracks,
-0 to stop, and Control with any of them to go all the way. Minus and plus are
-volume, slash and star are speed.
-
-**F8 and Shift+F8 mark a piece of a track**, the way they start and complete a
-selection everywhere else in Homer Tools. F8 marks where the piece begins,
-Shift+F8 where it ends, and **Alt+C Clip to file** writes that piece out as a
-media file of its own and puts the file on the clipboard.
-
-Shift+F8 pressed with nothing marked means from the beginning of the track to
-here, the same idea as Shift+Home in a line of text. For a piece that runs to
-the end, press F8, then Shift+End to reach the end of the track, then Shift+F8.
-
-The file is written beside the track it came from when that is a file on your
-computer, and in the folder FileDir is looking at otherwise. ffmpeg does the
-cutting with the streams copied rather than re-encoded, so it is quick and
-loses nothing.
-
-Windows has no clipboard format for a piece of audio that other programs
-accept. What every program does accept is a file, so what goes on the clipboard
-is the clip file: paste it into a folder, a message, or anything that takes a
-dropped file.
-
-The Where in track slider is set when you tab into it and does not follow along
-while something plays. A control that changed twice a second would be read out over
-everything else, which is worth more than a slider that is always current.
+**The window title says what is playing** -- the same line the queue shows for
+that track -- so your screen reader's title key answers "what is this?" without
+disturbing anything. Before anything plays it is the name of the play list. The status line says where
+playback is -- "Playing 3 of 60, 12 min 3 sec of 45 min" -- and is never
+announced: read it when you want it.
 
 **Moving through a list chooses nothing.** Arrowing down Tracks is how you find
 out what is in the queue, and arrowing down Order is how you find out what the

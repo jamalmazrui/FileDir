@@ -727,7 +727,6 @@ public class LbcDialog : IDisposable
     // inside a pick-list. F3 / Shift+F3 advance / retreat through
     // matches. Shared across all list boxes in this dialog so the
     // user can chain searches across multiple lists.
-    private string                      sListSearchTerm = "";
 
     public LbcDialog(string sTitle, IWin32Window ownerWindow)
     {
@@ -1253,6 +1252,12 @@ public class LbcDialog : IDisposable
     private class ListState
     {
         public List<string> lsAll = new List<string>();
+        // WHAT A JUMP SEARCHES IS NOT ALWAYS WHAT THE LIST SHOWS. A track shows
+        // its title; the name of the person in it may be somewhere else
+        // entirely. A caller can supply a line of searchable text per item --
+        // everything it knows, as long as it likes -- and the list still shows
+        // the short version. Left unset, the two are the same.
+        public List<string> lsSearch = new List<string>();
         public List<int> liRows = new List<int>();   // visible row -> place in lsAll
         public string sFilter = "";
     }
@@ -1274,6 +1279,7 @@ public class LbcDialog : IDisposable
         if (dListStates.TryGetValue(lb, out state)) return state;
         state = new ListState();
         foreach (object oItem in lb.Items) state.lsAll.Add((oItem ?? "").ToString());
+        state.lsSearch.AddRange(state.lsAll);
         for (int i = 0; i < state.lsAll.Count; i++) state.liRows.Add(i);
         dListStates[lb] = state;
         return state;
@@ -1284,9 +1290,19 @@ public class LbcDialog : IDisposable
     // through here so the find and filter machinery knows what is there now.
     public void setListItems(ListBox lb, IList<string> lsItems)
     {
+        setListItems(lb, lsItems, null);
+    }
+
+    // lsSearchText, when given, is what Jump and Filter look through: one line
+    // per item, holding whatever the caller thinks worth finding by.
+    public void setListItems(ListBox lb, IList<string> lsItems, IList<string> lsSearchText)
+    {
         if (lb == null) return;
         ListState state = new ListState();
         foreach (string sItem in lsItems) state.lsAll.Add(sItem ?? "");
+        if (lsSearchText != null && lsSearchText.Count == state.lsAll.Count)
+            foreach (string sText in lsSearchText) state.lsSearch.Add(sText ?? "");
+        else state.lsSearch.AddRange(state.lsAll);
         for (int i = 0; i < state.lsAll.Count; i++) state.liRows.Add(i);
         dListStates[lb] = state;
         lb.BeginUpdate();
@@ -1323,7 +1339,7 @@ public class LbcDialog : IDisposable
         List<int> liRows = new List<int>();
         for (int i = 0; i < state.lsAll.Count; i++)
         {
-            if (sLower.Length == 0 || state.lsAll[i].ToLowerInvariant().Contains(sLower)) liRows.Add(i);
+            if (sLower.Length == 0 || state.lsSearch[i].ToLowerInvariant().Contains(sLower)) liRows.Add(i);
         }
         // A FILTER THAT MATCHES NOTHING IS NOT APPLIED. An empty list is a
         // dead end with no way back that is obvious from inside it, and the
@@ -1349,6 +1365,20 @@ public class LbcDialog : IDisposable
 
     // listKeyHandled: do the jump, find or filter this key asks for, and say
     // whether it was one of them.
+    // TWO SEARCHES, NOT ONE.
+    //
+    // Jump looks at the line the list SHOWS -- the title of a track -- and is
+    // for going to something you can name. Find looks at everything the caller
+    // knows about the item, which for a track is its presenter, its episode
+    // number, its address and whatever the source document said about it. The
+    // two answer different questions and each keeps its own last ten answers.
+    //
+    // F3 repeats whichever was used last, which is the Homer convention: one
+    // key for "again", and it means the thing you just did.
+    private string sJumpTerm = "";
+    private string sFindTerm = "";
+    private bool bLastWasFind = false;
+
     private bool listKeyHandled(ListBox lb, Keys k)
     {
         if (lb == null)
@@ -1361,10 +1391,16 @@ public class LbcDialog : IDisposable
                 Log.write("Lbc: " + k.ToString() + " pressed, but the control with focus is not a list.");
             return false;
         }
-        if (k == (Keys.Control | Keys.J)) { promptAndFindInListBox(lb, true); return true; }
-        if (k == (Keys.Control | Keys.Shift | Keys.J)) { promptAndFindInListBox(lb, false); return true; }
-        if (k == Keys.F3) { Log.write("Lbc: F3, term is " + (sListSearchTerm ?? "")); findNextInListBox(lb, true); return true; }
-        if (k == (Keys.Shift | Keys.F3)) { Log.write("Lbc: Shift+F3, term is " + (sListSearchTerm ?? "")); findNextInListBox(lb, false); return true; }
+        // THE SAME KEYS AS FILEDIR'S DIRECTORY WINDOW, meaning the same things.
+        // Control+J jumps by name, Control+K searches content, Control+F filters
+        // and Control+Shift+F clears the filter. A person who knows one window
+        // knows the other.
+        if (k == (Keys.Control | Keys.J)) { promptAndSearch(lb, true, false); return true; }
+        if (k == (Keys.Control | Keys.Shift | Keys.J)) { promptAndSearch(lb, false, false); return true; }
+        if (k == (Keys.Control | Keys.K)) { promptAndSearch(lb, true, true); return true; }
+        if (k == (Keys.Control | Keys.Shift | Keys.K)) { promptAndSearch(lb, false, true); return true; }
+        if (k == Keys.F3) { searchAgain(lb, true); return true; }
+        if (k == (Keys.Shift | Keys.F3)) { searchAgain(lb, false); return true; }
         if (k == (Keys.Control | Keys.F))
         {
             string sWanted = promptWithHistory("Filter", "Filter text:", "listFilter", stateFor(lb).sFilter);
@@ -1489,38 +1525,111 @@ public class LbcDialog : IDisposable
         return sAnswer;
     }
 
-    // Control+J and Control+Shift+J: ask for a substring, then jump to the
-    // next item containing it, forwards or backwards from where the cursor is.
-    // The substring is kept so F3 and Shift+F3 can carry on.
-    private void promptAndFindInListBox(ListBox lb, bool bForward)
+    // promptAndSearch: ask for a substring and go to it.
+    //
+    // bOverEverything says which of the two searches this is: false looks at
+    // the lines the list shows, true looks at everything the caller knows about
+    // each item. Each keeps its own history, so the box offers the words that
+    // belong to the question being asked.
+    private void promptAndSearch(ListBox lb, bool bForward, bool bOverEverything)
     {
-        // "Jump" IS WHY THE KEY IS J. A prompt that says Find leaves the letter
-        // unexplained; one that says Jump teaches itself every time it opens,
-        // and it is the word FileDir's own directory window already uses.
-        string sWanted = promptWithHistory(bForward ? "Jump" : "Jump back", "Text:",
-            "listJump", sListSearchTerm ?? "");
+        string sTitle = bOverEverything
+            ? (bForward ? "Keywords" : "Keywords back")
+            : (bForward ? "Jump" : "Jump back");
+        string sKey = bOverEverything ? "listKeywords" : "listJump";
+        string sWas = bOverEverything ? sFindTerm : sJumpTerm;
+        string sWanted = promptWithHistory(sTitle, "Text:", sKey, sWas);
         if (sWanted == null) return;
-        sListSearchTerm = sWanted;
-        if (string.IsNullOrEmpty(sListSearchTerm)) return;
+        if (sWanted.Length == 0) return;
+        if (bOverEverything) sFindTerm = sWanted; else sJumpTerm = sWanted;
+        bLastWasFind = bOverEverything;
+        Log.write("Lbc: " + sTitle + " for " + sWanted);
+        goToMatch(lb, bForward, bOverEverything, sWanted, true);
+    }
+
+    // searchAgain: F3 and Shift+F3, repeating whichever search was last used.
+    private void searchAgain(ListBox lb, bool bForward)
+    {
+        string sTerm = bLastWasFind ? sFindTerm : sJumpTerm;
+        Log.write("Lbc: again, " + (bLastWasFind ? "find" : "jump") + " for " + sTerm);
+        if (string.IsNullOrEmpty(sTerm))
+        {
+            // Nothing to repeat means the person wants to search and reached
+            // for the nearer key. Ask, rather than refuse.
+            promptAndSearch(lb, bForward, bLastWasFind);
+            return;
+        }
+        goToMatch(lb, bForward, bLastWasFind, sTerm, false);
+    }
+
+    private void goToMatch(ListBox lb, bool bForward, bool bOverEverything, string sTerm, bool bFirst)
+    {
         // From where the cursor is, not from the top: the answer wanted is
         // nearly always the next one, and wrapping means nothing is missed.
         int iFrom = lb.SelectedIndex + (bForward ? 1 : -1);
         if (iFrom < 0) iFrom = lb.Items.Count - 1;
         if (iFrom >= lb.Items.Count) iFrom = 0;
-        int iFound = findInListBoxFrom(lb, iFrom, bForward, sListSearchTerm);
-        if (iFound < 0) Say.say("0 matches for " + sListSearchTerm);
+        int iFound = findInListBoxFrom(lb, iFrom, bForward, sTerm, bOverEverything);
+        if (iFound < 0) Say.say((bFirst ? "0 matches for " : "0 more matches for ") + sTerm);
         else moveTo(lb, iFound);
     }
 
     // moveTo: put the cursor of a list on an item, and leave the keyboard where
     // it was.
     //
-    // FOCUS BELONGS TO THE PERSON. A find that drags focus into the list is a
-    // find that has also decided where they should be working, and getting back
-    // is their problem. So the list's own cursor moves and nothing else does --
-    // and when the list is not the control with focus, the item is spoken,
-    // because a screen reader only announces a list line when the list is where
-    // the cursor is.
+    // FOCUS BELONGS TO THE PERSON. A search that drags focus into the list has
+    // also decided where they should be working, and getting back is their
+    // problem. So the list's own cursor moves and nothing else does -- and when
+    // the list is not the control with focus, the item is spoken, because a
+    // screen reader only announces a list line when the list is where the
+    // cursor is.
+    // keywordsMatch: FileDir's keyword syntax, which is deliberately not a
+    // regular expression.
+    //
+    //   red & blue    both words, anywhere, in any order
+    //   red | blue    either word
+    //   re*d          a word with anything in the middle
+    //
+    // & and | are not mixed: whichever appears first decides how the whole line
+    // is read, which keeps the rule to one sentence and needs no brackets. This
+    // is the syntax FileDir's own Keywords command uses on file contents, and
+    // the same one is used here on what is known about each item.
+    public static bool keywordsMatch(string sHaystack, string sPattern)
+    {
+        if (string.IsNullOrEmpty(sPattern)) return false;
+        if (sHaystack == null) sHaystack = "";
+        char chJoin = sPattern.Contains("|") ? '|' : '&';
+        bool bAny = (chJoin == '|');
+        bool bSawOne = false;
+        foreach (string sRaw in sPattern.Split(chJoin))
+        {
+            string sTerm = sRaw.Trim();
+            if (sTerm.Length == 0) continue;
+            bSawOne = true;
+            bool bMatch = wildcardWithin(sHaystack, sTerm);
+            if (bAny && bMatch) return true;
+            if (!bAny && !bMatch) return false;
+        }
+        return bSawOne && !bAny;
+    }
+
+    // wildcardWithin: one term, where * stands for anything. Without a star
+    // this is a plain substring test, which is what nearly every term is.
+    private static bool wildcardWithin(string sHaystack, string sTerm)
+    {
+        if (sTerm.IndexOf('*') < 0) return sHaystack.Contains(sTerm);
+        string[] asParts = sTerm.Split('*');
+        int iAt = 0;
+        for (int i = 0; i < asParts.Length; i++)
+        {
+            if (asParts[i].Length == 0) continue;
+            int iFound = sHaystack.IndexOf(asParts[i], iAt, StringComparison.Ordinal);
+            if (iFound < 0) return false;
+            iAt = iFound + asParts[i].Length;
+        }
+        return true;
+    }
+
     private void moveTo(ListBox lb, int iRow)
     {
         if (lb == null || iRow < 0 || iRow >= lb.Items.Count) return;
@@ -1529,44 +1638,31 @@ public class LbcDialog : IDisposable
         if (!bHasFocus) Say.say((lb.Items[iRow] ?? "").ToString());
     }
 
-    // F3 / Shift+F3: advance / retreat through matches of the
-    // stored search term. If no search term is set, silently say
-    // so (don't pop up a dialog -- F3 is a navigation key, not a
-    // configuration key).
-    private void findNextInListBox(ListBox lb, bool bForward)
-    {
-        if (string.IsNullOrEmpty(sListSearchTerm))
-        {
-            // Asking beats refusing: F3 with nothing to repeat means the person
-            // wants to find something and reached for the nearer key.
-            promptAndFindInListBox(lb, bForward);
-            return;
-        }
-        int iFrom = lb.SelectedIndex + (bForward ? 1 : -1);
-        if (iFrom < 0) iFrom = lb.Items.Count - 1;
-        if (iFrom >= lb.Items.Count) iFrom = 0;
-        int iFound = findInListBoxFrom(lb, iFrom, bForward, sListSearchTerm);
-        if (iFound < 0) Say.say("0 more matches for " + sListSearchTerm);
-        else moveTo(lb, iFound);
-    }
-
-    // findInListBoxFrom: case-insensitive substring search through
-    // the ListBox starting at iFrom, wrapping at the boundary.
-    // Returns the index of the match or -1 if none.
-    private static int findInListBoxFrom(ListBox lb, int iFrom, bool bForward, string sNeedle)
+    private int findInListBoxFrom(ListBox lb, int iFrom, bool bForward, string sNeedle, bool bOverEverything)
     {
         int n = lb.Items.Count;
         if (n == 0 || string.IsNullOrEmpty(sNeedle)) return -1;
         if (iFrom < 0) iFrom = 0;
         if (iFrom >= n) iFrom = n - 1;
+        ListState state = stateFor(lb);
         string sLowerNeedle = sNeedle.ToLowerInvariant();
         for (int i = 0; i < n; i++)
         {
             int j = bForward
                 ? (iFrom + i) % n
                 : ((iFrom - i) % n + n) % n;
-            string sItem = (lb.Items[j] ?? "").ToString().ToLowerInvariant();
-            if (sItem.Contains(sLowerNeedle)) return j;
+            // Jump reads the line as shown; Keywords reads everything known
+            // about the item, which is a different string and usually a longer
+            // one, and reads it with the keyword syntax rather than as one
+            // substring.
+            string sItem = (lb.Items[j] ?? "").ToString();
+            if (bOverEverything && j < state.liRows.Count && state.liRows[j] < state.lsSearch.Count)
+                sItem = state.lsSearch[state.liRows[j]];
+            sItem = sItem.ToLowerInvariant();
+            bool bHit = bOverEverything
+                ? keywordsMatch(sItem, sLowerNeedle)
+                : sItem.Contains(sLowerNeedle);
+            if (bHit) return j;
         }
         return -1;
     }

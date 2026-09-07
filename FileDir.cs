@@ -1285,6 +1285,9 @@ public HomerToolStripMenuItem menuNavigateJump;
 public HomerToolStripMenuItem menuNavigateJumpAgain;
 public HomerToolStripMenuItem menuNavigateKeywords;
 public HomerToolStripMenuItem menuNavigateKeywordsAgain;
+public HomerToolStripMenuItem menuNavigateKeywordsBack;
+public HomerToolStripMenuItem menuNavigateSearchAgain;
+public HomerToolStripMenuItem menuNavigateSearchBack;
 public HomerToolStripMenuItem menuNavigateSetFilter;
 public HomerToolStripMenuItem menuNavigateClearFilter;
 public HomerToolStripMenuItem menuNavigateBeginningFile;
@@ -1525,6 +1528,9 @@ menuNavigateJump = menu_Helper("&Jump ...", "Control+J", menuNavigateJump_Click)
 menuNavigateJumpAgain = menu_Helper("Jump Again", "Alt+J", menuNavigateJumpAgain_Click);
 menuNavigateKeywords = menu_Helper("&Keywords ...", "Control+K", menuNavigateKeywords_Click);
 menuNavigateKeywordsAgain = menu_Helper("Keywords Again", "Alt+K", menuNavigateKeywordsAgain_Click);
+menuNavigateKeywordsBack = menu_Helper("Reverse Keywords", "Control+Shift+K", menuNavigateKeywordsBack_Click);
+menuNavigateSearchAgain = menu_Helper("Search Again", "F3", menuNavigateSearchAgain_Click);
+menuNavigateSearchBack = menu_Helper("Reverse Search Again", "Shift+F3", menuNavigateSearchBack_Click);
 menuNavigateSetFilter = menu_Helper("Set &Filter ...", "Control+F", menuNavigateSetFilter_Click);
 menuNavigateClearFilter = menu_Helper("Clear Filter", "Control+Shift+F", menuNavigateClearFilter_Click);
 menuNavigateBeginningFile = menu_Helper("Beginning File", "Alt+B", menuNavigateBeginningFile_Click);
@@ -1534,7 +1540,7 @@ menuNavigateNextTagged = menu_Helper("Next Tagged", "Shift+N or Control+DownArro
 menuNavigatePreviousTagged = menu_Helper("Previous Tagged", "Shift+P or Control+UpArrow", menuNavigatePreviousTagged_Click);
 menuNavigateInitialChange = menu_Helper("Initial Change", "Shift+I", menuNavigateInitialChange_Click);
 menuNavigateExtensionChange = menu_Helper("Extension Change", "Shift+X", menuNavigateExtensionChange_Click);
-menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateJumpAgain, menuNavigateKeywords, menuNavigateKeywordsAgain, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange});
+menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateJumpAgain, menuNavigateKeywords, menuNavigateKeywordsAgain, menuNavigateKeywordsBack, menuNavigateSearchAgain, menuNavigateSearchBack, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange});
 
 menuQuery = menu_Helper("&Query");
 menuQueryDate = menu_Helper("Date", "Shift+D", menuQueryDate_Click);
@@ -4771,8 +4777,26 @@ break;
 if (!bFound) App.say("Not found!");
 } // jump_Helper method
 
+void jumpBack_Helper(MdiChild mdiChild) {
+// The same match as jump_Helper, looked for upwards. Only the name is read
+// here: the tag and attribute shorthands belong to the forward jump, where
+// they have always been.
+DataView view = mdiChild.tbl.DefaultView;
+int iCount = view.Count;
+if (iCount == 0) { App.say("No items!", true); return; }
+string sWanted = App.sJumpText.ToLower();
+int iFrom = mdiChild.bs.Position - 1;
+for (int iStep = 0; iStep < iCount; iStep++) {
+int i = ((iFrom - iStep) % iCount + iCount) % iCount;
+string sName = ((string) view[i]["Name"]).ToLower();
+if (sName.Contains(sWanted)) { mdiChild.bs.Position = i; return; }
+}
+App.say("0 matches", true);
+} // jumpBack_Helper method
+
 void menuNavigateJump_Click(object sender, EventArgs e) {
 App.say("Jump");
+bLastSearchWasKeywords = false;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sJumpText == null) mdiChild.sJumpText = App.sJumpText;
@@ -4796,43 +4820,83 @@ jump_Helper(iStart);
 } // menuNavigateJumpAgain_Click method
 
 void keywords_Helper(int iStart) {
+keywords_Helper(iStart, true);
+} // keywords_Helper method
+
+void keywords_Helper(int iStart, bool bForward) {
+// Go to the next item whose CONTENT matches the keywords.
+//
+// TWO THINGS WERE WRONG HERE, and both are worth naming.
+//
+// It read every file with file2String, which hands back the bytes as they are.
+// For a .txt that is the text; for a Word document, a PDF or a spreadsheet it
+// is compressed rubbish, and a keyword could never match however plainly the
+// words appeared on the page. Anything not readable as text now goes through
+// the same extractor the rest of FileDir uses, so the search sees what a reader
+// would see.
+//
+// And it matched with a plain Contains, so the star in a keyword was matched
+// as a star. The syntax is now the one the command has always claimed: & for
+// all of them, | for any of them, and * for anything in the middle.
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iCount = view.Count;
-char c = '&';
-if (App.sKeywordsText.Contains("|")) c = '|';
-string[] aKeywords = App.sKeywordsText.ToLower().Split(c);
-bool bFound = false;
-for (int i = iStart; i < iCount; i++) {
+if (iCount == 0) { App.say("No items!", true); return; }
+string sPattern = App.sKeywordsText.ToLower();
+App.say("Searching");
+
+// Each file is read once per search, however many keywords there are.
+Dictionary<string, string> dRead = new Dictionary<string, string>();
+int iChecked = 0;
+for (int iStep = 0; iStep < iCount; iStep++) {
+int i = bForward
+? (iStart + iStep) % iCount
+: ((iStart - iStep) % iCount + iCount) % iCount;
+if (i < 0 || i >= iCount) continue;
 DataRowView row = view[i];
 string sPath = (string) row["Path"];
-string sBody = Homer.Util.file2String(sPath);
-sBody = sBody.ToLower();
-bool bSkip = false;
-foreach (string sKeyword in aKeywords) {
-bool bMatch = sBody.Contains(sKeyword);
-if (c == '&' && !bMatch) {
-bSkip = true;
-break;
+string sBody;
+if (!dRead.TryGetValue(sPath, out sBody)) {
+sBody = keywordText_Helper(sPath);
+dRead[sPath] = sBody;
 }
-else if (c == '|' && bMatch) {
-bFound = true;
-break;
-}
-}
-//if ((c == '&' && bSkip) || (c == '|' && !bFound)) continue;
-if (c == '&' && !bSkip) bFound = true;
-if (!bFound) continue;
+iChecked++;
+if (!Homer.LbcDialog.keywordsMatch(sBody, sPattern)) continue;
 mdiChild.bs.Position = i;
-break;
+Homer.Log.write("Keywords: " + sPattern + " found in " + sPath + " after " + iChecked + " files");
+return;
 }
-if (!bFound) App.say("Not found!");
+Homer.Log.write("Keywords: " + sPattern + " not found in " + iChecked + " files");
+App.say("0 matches", true);
 } // keywords_Helper method
+
+string keywordText_Helper(string sPath) {
+// The words in a file, whatever the file is.
+//
+// A plain text file is read as it stands. Anything else -- a Word document, a
+// PDF, a spreadsheet, a web page -- goes through the converter, which is what
+// makes the difference between searching a document and searching its
+// compression.
+try {
+if (Homer.Convert.readableAsText(sPath)) return Homer.Util.file2String(sPath).ToLower();
+string sError;
+string sText = Homer.Convert.toPlainText(sPath, out sError);
+if (sText.Length > 0) return sText.ToLower();
+// The converter had nothing to offer, so the bytes are all there is. A match
+// in them is still a match.
+return Homer.Util.file2String(sPath).ToLower();
+}
+catch (Exception ex) {
+Homer.Log.write("Keywords: could not read " + sPath + ": " + ex.Message);
+return "";
+}
+} // keywordText_Helper method
 
 void menuNavigateKeywords_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Keywords");
+bLastSearchWasKeywords = true;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
@@ -4846,6 +4910,44 @@ App.sKeywordsText = sText;
 }
 keywords_Helper(iStart);
 } // menuNavigateKeywords_Click method
+
+// WHICH SEARCH DOES F3 REPEAT? Whichever was used last. One key for "again"
+// is the Homer pattern, and a person who has just searched knows what they
+// searched for.
+bool bLastSearchWasKeywords = false;
+
+void menuNavigateKeywordsBack_Click(object sender, EventArgs e) {
+if (abortInZip()) return;
+App.say("Reverse keywords");
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
+string sText = Lbc.InputDialog("Keywords back", "Text", mdiChild.sKeywordsText, "Keywords");
+if (sText.Length == 0) return;
+mdiChild.sKeywordsText = sText;
+App.sKeywordsText = sText;
+bLastSearchWasKeywords = true;
+keywords_Helper(mdiChild.bs.Position - 1, false);
+} // menuNavigateKeywordsBack_Click method
+
+void menuNavigateSearchAgain_Click(object sender, EventArgs e) {
+if (abortInZip()) return;
+if (bLastSearchWasKeywords) menuNavigateKeywordsAgain_Click(sender, e);
+else menuNavigateJumpAgain_Click(sender, e);
+} // menuNavigateSearchAgain_Click method
+
+void menuNavigateSearchBack_Click(object sender, EventArgs e) {
+if (abortInZip()) return;
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+if (bLastSearchWasKeywords) {
+App.say("Keywords back");
+keywords_Helper(mdiChild.bs.Position - 1, false);
+return;
+}
+App.say("Jump back");
+jumpBack_Helper(mdiChild);
+} // menuNavigateSearchBack_Click method
 
 void menuNavigateKeywordsAgain_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
@@ -7886,6 +7988,77 @@ if (iDirect >= 2) return lsDirect;
 return lsKept;
 } // linksToPlay_Helper method
 
+// The facts the last document gave up, waiting to be attached to the tracks
+// built from it. One document is read at a time, so one holder is enough.
+Dictionary<string, Dictionary<string, string>> gDocumentFacts
+= new Dictionary<string, Dictionary<string, string>>();
+
+List<MediaTrack> tracksWithFacts_Helper(List<string> lsLines) {
+// Tracks from play list lines, each carrying whatever the document said about
+// it: the date, the duration, the summary, the people. The address is the key,
+// because that is the one thing both halves agree on.
+List<MediaTrack> lsTracks = MediaPlayer.fromPlaylistLines(lsLines);
+int iWithFacts = 0;
+foreach (MediaTrack track in lsTracks) {
+Dictionary<string, string> dFacts;
+if (!gDocumentFacts.TryGetValue(track.sTarget, out dFacts)) continue;
+foreach (KeyValuePair<string, string> oPair in dFacts) track.addFact(oPair.Key, oPair.Value);
+// A duration written in the document saves playing the track to find out.
+if (track.dSeconds <= 0 && dFacts.ContainsKey("Duration")) {
+double dLength = Homer.Mpv.parseTime(dFacts["Duration"]);
+if (dLength > 0) track.dSeconds = dLength;
+}
+if (track.sEpisode.Length == 0 && dFacts.ContainsKey("Episode")) track.sEpisode = dFacts["Episode"];
+iWithFacts++;
+}
+if (iWithFacts > 0) Homer.Log.write("Play List: the document described " + iWithFacts + " of " + lsTracks.Count + " tracks");
+return lsTracks;
+} // tracksWithFacts_Helper method
+
+Dictionary<string, Dictionary<string, string>> documentFacts_Helper(string sText) {
+// What a podcast directory says about each episode, keyed by the address.
+//
+// These directories are written the same way every time: a heading holding the
+// media link, and under it a run of paragraphs of the form "Field: value" --
+// Date, Duration, Summary, and often the people and topics. All of it was being
+// thrown away, so a search for somebody named in a summary found nothing and
+// the player knew only what the link text said.
+//
+// Nothing here is required: a document written some other way simply yields no
+// facts, and the player carries on with the title.
+Dictionary<string, Dictionary<string, string>> dByAddress = new Dictionary<string, Dictionary<string, string>>();
+if (string.IsNullOrEmpty(sText)) return dByAddress;
+try {
+foreach (Match oHeading in Regex.Matches(sText,
+@"<h[23][^>]*>\s*<a\b[^>]*href\s*=\s*[""']\s*(https?://[^""'\s>]+)\s*[""'][^>]*>(.*?)</a>\s*</h[23]>(.*?)(?=<h[23]\b|$)",
+RegexOptions.IgnoreCase | RegexOptions.Singleline)) {
+string sAddress = oHeading.Groups[1].Value.Trim();
+string sBlock = oHeading.Groups[3].Value;
+Dictionary<string, string> dFacts = new Dictionary<string, string>();
+foreach (Match oField in Regex.Matches(sBlock,
+@"<strong>\s*([^<:]{1,40}?)\s*:?\s*</strong>\s*:?\s*(.*?)(?=</p>)",
+RegexOptions.IgnoreCase | RegexOptions.Singleline)) {
+string sField = Regex.Replace(oField.Groups[1].Value, "<[^>]+>", "").Trim();
+string sValue = Regex.Replace(oField.Groups[2].Value, "<[^>]+>", " ").Trim();
+sValue = Regex.Replace(sValue, @"\s+", " ");
+if (sField.Length == 0 || sValue.Length == 0) continue;
+if (!dFacts.ContainsKey(sField)) dFacts[sField] = sValue;
+}
+// The episode page, which is a link rather than a field, and worth keeping:
+// it is where a person goes when the audio is not enough.
+Match oPage = Regex.Match(sBlock,
+@"<a\b[^>]*href\s*=\s*[""']\s*(https?://[^""'\s>]+)\s*[""'][^>]*>\s*Episode page\s*</a>",
+RegexOptions.IgnoreCase);
+if (oPage.Success && !dFacts.ContainsKey("Episode page")) dFacts["Episode page"] = oPage.Groups[1].Value.Trim();
+if (dFacts.Count > 0 && !dByAddress.ContainsKey(sAddress)) dByAddress[sAddress] = dFacts;
+}
+}
+catch (Exception ex) {
+Homer.Log.write("Could not read the document's own metadata: " + ex.Message);
+}
+return dByAddress;
+} // documentFacts_Helper method
+
 List<string> documentLinks_Helper(string sPath) {
 // The media links inside one document, as play list lines.
 //
@@ -7920,6 +8093,9 @@ string sReadError;
 string sExtracted = Homer.Convert.toPlainText(sPath, out sReadError);
 if (sExtracted.Length > 0) sText = sExtracted;
 }
+// The document's own account of each episode, kept for the tracks that are
+// about to be built from these links.
+gDocumentFacts = documentFacts_Helper(sText);
 List<string> lsLinks = linksToPlay_Helper(sText);
 // LOGGED HERE, where the text still exists. Both commands report nothing found;
 // only this method can say how much it had to look at, which is the difference
@@ -8048,7 +8224,7 @@ aQueuePaths = aQueueFiles;
 if (aQueuePaths.Length == 0) return;
 
 List<MediaTrack> lsTracks = null;
-string sQueueTitle = "Homer Player";
+string sQueueTitle = "Player";
 // Where the queue came from, in a few words. It goes in the list's own label,
 // which a screen reader reads every time the cursor enters the list, rather
 // than only in the title bar, which is read once.
@@ -8065,19 +8241,19 @@ lsTracks = MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne));
 catch (Exception ex) {
 Homer.Log.write("Homer Player: could not read " + sOne + ": " + ex.Message);
 }
-sQueueTitle = "Homer Player";
+sQueueTitle = sLeaf;
 sQueueSource = sLeaf;
 }
 else if (isPlayable_Helper(sOne)) {
 lsTracks = MediaPlayer.fromFiles(new string[] { sOne });
-sQueueTitle = "Homer Player";
+sQueueTitle = sLeaf;
 sQueueSource = sLeaf;
 }
 else {
 App.say("Looking for media links in " + sLeaf);
 List<string> lsFound = documentLinks_Helper(sOne);
-lsTracks = MediaPlayer.fromPlaylistLines(lsFound);
-sQueueTitle = "Homer Player";
+lsTracks = tracksWithFacts_Helper(lsFound);
+sQueueTitle = sLeaf;
 sQueueSource = "links in " + sLeaf;
 if (lsTracks.Count == 0) {
 App.say("0 media links in " + sLeaf, true);
@@ -8158,7 +8334,7 @@ if (bList || bMedia) {
 List<MediaTrack> lsOne = (bList && !bMedia)
 ? MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne))
 : MediaPlayer.fromFiles(new string[] { sOne });
-playQueue_Helper(lsOne, "Homer Player", Path.GetFileName(sOne));
+playQueue_Helper(lsOne, Path.GetFileName(sOne), Path.GetFileName(sOne));
 return;
 }
 // Otherwise the file is read and its links are gathered, the same way the
@@ -8185,7 +8361,7 @@ return;
 int iLinks = 0;
 foreach (string sEntry in lsFound) if (!sEntry.StartsWith("#")) iLinks++;
 Homer.Log.write("Play List: " + iLinks + " links from " + sOne);
-playQueue_Helper(MediaPlayer.fromPlaylistLines(lsFound), "Homer Player", "links in " + Path.GetFileName(sOne));
+playQueue_Helper(tracksWithFacts_Helper(lsFound), Path.GetFileName(sOne), "links in " + Path.GetFileName(sOne));
 return;
 }
 }
@@ -8197,7 +8373,7 @@ return;
 // Output Type, on Shift+O -- but it is a different job from playing, and asking
 // for a file name before anything can be heard was a form to fill in on the way
 // to pressing play.
-playQueue_Helper(MediaPlayer.fromFiles(aPaths), "Homer Player", "the tagged files");
+playQueue_Helper(MediaPlayer.fromFiles(aPaths), "Player", "the tagged files");
 } // menuMiscPlayList_Click method
 
 void writePlaylist_Helper(string[] aPaths) {
@@ -9107,6 +9283,15 @@ App.frame.menuNavigateJump.clickOrDescribe();
 return true;
 case Keys.Alt | Keys.J :
 App.frame.menuNavigateJumpAgain.clickOrDescribe();
+return true;
+case Keys.Control | Keys.Shift | Keys.K :
+App.frame.menuNavigateKeywordsBack.clickOrDescribe();
+return true;
+case Keys.F3 :
+App.frame.menuNavigateSearchAgain.clickOrDescribe();
+return true;
+case Keys.Shift | Keys.F3 :
+App.frame.menuNavigateSearchBack.clickOrDescribe();
 return true;
 case Keys.Control | Keys.K :
 App.frame.menuNavigateKeywords.clickOrDescribe();

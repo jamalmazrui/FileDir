@@ -1,6 +1,6 @@
 ﻿# FileDir — Questions and Answers
 
-**Version 5.0.81**  
+**Version 5.0.83**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License

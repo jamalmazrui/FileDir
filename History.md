@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.81**  
+**Version 5.0.83**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -797,6 +797,108 @@ The reasoning behind it is written down in the developer notes, as four rules:
 say nothing the reader already says; say what it cannot know; layer the detail
 so a short answer is the default and the longer ones are a key away; and write
 every message to the status line so it can be read back rather than repeated.
+
+**The Keywords command was searching compressed rubbish.** Control+K reads
+every file looking for the words, and it read them with file2String, which hands
+back the bytes as they are. For a text file that is the text; for a Word
+document, a PDF or a spreadsheet it is the compression, and a keyword could
+never match however plainly the words appeared on the page. Anything not
+readable as text now goes through the same converter the rest of FileDir uses,
+so the search sees what a reader would see. Each file is read once per search,
+however many keywords there are.
+
+It was also matching each keyword with a plain Contains, so the star in a
+keyword was looked for as a star. The syntax is now the one the command has
+always claimed: & for all of the words, | for any of them, * for anything in the
+middle. Whichever of & or | appears first decides how the line is read, which
+keeps the rule to one sentence and needs no brackets.
+
+**Control+Shift+K searches backwards**, and F3 and Shift+F3 repeat whichever
+search was last used -- jump or keywords -- which is the Homer pattern of one
+key for "again". A backwards jump was written for the same reason: Shift+F3 has
+to be able to repeat either.
+
+**The player uses the same keys for the same things.** Control+J jumps by the
+line the list shows, Control+K searches everything known about each track with
+the keyword syntax, F3 repeats the last of the two, and Control+F and
+Control+Shift+F set and clear the filter, exactly as in a directory window. A
+person who knows one window now knows the other.
+
+**The dialog is called Player.** Its title is the name of the play list until
+something plays, and then the track's own line, word for word as the queue shows
+it, so the screen reader's title key and the list agree.
+
+**The help page puts the keys first.** The commands with no control are the
+least discoverable things in the dialog, and while access keys are going
+unannounced they are the ones a person most needs written down.
+
+**The player reads the document, not just its links.** These podcast
+directories say a great deal about each episode -- date, duration, summary, and
+often the people in it -- in paragraphs under the heading that holds the media
+link. All of it was thrown away, and only the link text survived. It is now
+captured with the link and carried by the track, which is why a search for
+somebody named in a summary can now find them, and why a track knows how long it
+is before anything has played.
+
+**Extra Info, on Alt+X**, replaces the properties window that was on Alt+Enter.
+A read-only field in the dialog: everything known about the track the cursor is
+on, one field to a line, sorted by field, from the play list, the document and
+ExifTool together. It is one Alt key away, reads like any other text, and needs
+nothing closed to get back. ExifTool is asked once per track and only for a file
+on this computer.
+
+**Two searches, and one key that repeats the last of them.** Jump, on Control+J,
+looks at the line the list shows. Find, on Control+F, looks at everything known
+about each track. F3 and Shift+F3 repeat whichever was used last, which is the
+Homer convention: one key for "again", meaning the thing just done. Each keeps
+its own ten answers. Filter moved to Alt+Shift+F, where an empty answer shows
+everything again -- one key rather than two for a thing with two states.
+
+**The window title says what is playing**, so a screen reader's title key
+answers the commonest question of all without disturbing anything.
+
+**The status line was rewritten.** It said the track name, which the title now
+says, and left out the position, which is what a status line is for. It reads
+"Playing 3 of 60, 12 min 3 sec of 45 min", changes on a five-second beat rather
+than twice a second, and is still no live region.
+
+**Clip to file is gone** for now, along with the F8 marks that fed it.
+
+**Help is Help.** Alt+H shows a page written for this dialog -- what it does and
+which keys do it, grouped and short -- rather than Lbc's list of fields, which
+is right for a form and wrong for a set of commands. It also lists the keys that
+have no control, which matters while access keys are going unannounced.
+
+**Chapter moves now say whether they moved by chapter.** The question could not
+be answered over the telephone -- did that move by chapter, or do nothing? --
+and saying the position afterwards could never answer it, because a position is
+a position however it was reached. A chapter move now says "Chapter 4 of 12"
+with the time, and a track with no chapters says so outright rather than leaving
+silence to be read as success. Both write a line to the log with the chapter
+count, so the next report settles it without anybody guessing.
+
+**Times are spoken in words.** "12:03" read aloud is two numbers and a colon to
+disentangle. It is now "12 min 3 sec" -- one syllable for each unit, because
+this is said on every jump and a syllable saved is saved often. Above an hour
+the seconds are dropped: at that length nobody is counting them. The written
+form stays in the track list, where it is read by eye.
+
+**Every start of playback is logged with the name of the command that asked for
+it.** Playback has been reported starting when nobody asked, and no amount of
+reasoning from a speech history can say which command did it. The log will.
+
+**Jump and Filter look through everything known about a track**, not only the
+line it shows: the title, the presenter, the episode number and the address. A
+search for a person that found nothing may simply have been looking at a line
+that never held the name.
+
+**The episode number is back, as a field rather than a prefix.** The number
+dropped from the list was FileDir's own counting, first and second and third in
+the queue, which nobody needs on every line. An episode number is what the show
+calls that episode, and people remember shows by it -- so it stays in the title
+where the show wrote it, and Alt+Enter and the notes file carry it as a field of
+its own. "Episode 214", "#214" and a number after a bar at the end are all
+recognised, which covers what these directories actually write.
 
 **Forty-eight duplicating accessible names, in FileDir's own dialogs.** The
 clean-out that emptied the shared Lbc class of them never touched Dialogs.cs,

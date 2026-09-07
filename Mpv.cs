@@ -67,6 +67,7 @@ private const int c_iIdPlaylistPos = 5;
 private const int c_iIdTitle = 4;
 private const int c_iIdTimePos = 1;
 private const int c_iIdChapters = 7;
+private const int c_iIdChapter = 8;
 
 // A volume below full by default, so the media does not drown the screen
 // reader. Able Player sets 7 out of 10 for exactly this reason.
@@ -97,6 +98,7 @@ private bool bPausedValue;
 private double dDurationValue = -1;
 private double dPositionValue = -1;
 private int iChapterCountValue = 0;
+private int iChapterValue = -1;
 private int iPlaylistPosValue = -1;
 private NamedPipeClientStream pipe;
 private Process oProcess;
@@ -296,6 +298,7 @@ sendRaw("{\"command\": [\"observe_property\", " + c_iIdTitle + ", \"media-title\
 sendRaw("{\"command\": [\"observe_property\", " + c_iIdPlaylistPos + ", \"playlist-pos\"]}");
 sendRaw("{\"command\": [\"observe_property\", " + c_iIdIdle + ", \"idle-active\"]}");
 sendRaw("{\"command\": [\"observe_property\", " + c_iIdChapters + ", \"chapters\"]}");
+sendRaw("{\"command\": [\"observe_property\", " + c_iIdChapter + ", \"chapter\"]}");
 return true;
 }
 catch (Exception ex) {
@@ -422,6 +425,9 @@ public int playlistIndex { get { lock (oStateLock) { return iPlaylistPosValue; }
 // How many chapters this track has, as mpv last reported. Zero means none, and
 // that is the ordinary case: most audio has no chapter marks at all.
 public int chapterCount { get { lock (oStateLock) { return iChapterCountValue; } } }
+
+// Which chapter is playing, counting from zero, or -1 when the track has none.
+public int chapter { get { lock (oStateLock) { return iChapterValue; } } }
 public string title { get { lock (oStateLock) { return sTitleValue; } } }
 
 // formatTime: seconds as a person would say them. Negative or unknown gives
@@ -434,6 +440,36 @@ int iMinutes = (iWhole % 3600) / 60;
 int iSecs = iWhole % 60;
 if (iHours > 0) return iHours.ToString(CultureInfo.InvariantCulture) + ":" + iMinutes.ToString("00") + ":" + iSecs.ToString("00");
 return iMinutes.ToString(CultureInfo.InvariantCulture) + ":" + iSecs.ToString("00");
+}
+
+// saySpan: a length of time in the words a person would use.
+//
+// "12:03" IS FOR THE EYE. Read aloud it becomes "twelve colon zero three", or
+// "twelve oh three", and a listener has to work out which of the two numbers is
+// which. "12 min 3 sec" says it. The units are one syllable each on purpose:
+// this is spoken every time somebody jumps, so a syllable saved is saved often.
+public static string saySpan(double dSeconds) {
+if (dSeconds < 0 || double.IsNaN(dSeconds) || double.IsInfinity(dSeconds)) return "";
+int iWhole = (int) Math.Round(dSeconds);
+int iHours = iWhole / 3600;
+int iMinutes = (iWhole % 3600) / 60;
+int iSecs = iWhole % 60;
+StringBuilder sb = new StringBuilder();
+if (iHours > 0) { sb.Append(iHours.ToString(CultureInfo.InvariantCulture)); sb.Append(" hr"); }
+if (iMinutes > 0) {
+if (sb.Length > 0) sb.Append(" ");
+sb.Append(iMinutes.ToString(CultureInfo.InvariantCulture));
+sb.Append(" min");
+}
+// Seconds are dropped once an hour is involved: at that length nobody is
+// counting them, and three numbers is a mouthful.
+if (iSecs > 0 && iHours == 0) {
+if (sb.Length > 0) sb.Append(" ");
+sb.Append(iSecs.ToString(CultureInfo.InvariantCulture));
+sb.Append(" sec");
+}
+if (sb.Length == 0) return "0 sec";
+return sb.ToString();
 }
 
 // parseTime: "90", "1:30" and "1:05:00" all mean something to a person typing
@@ -529,6 +565,7 @@ lock (oStateLock) { bWasPlaying = !bIdleValue; bIdleValue = bIdleNow; }
 if (bIdleNow && bWasPlaying && playbackEnded != null) playbackEnded();
 }
 else if (sName == "chapters") { int iNew = (int) jsonNumberValue(sLine, "data"); lock (oStateLock) { iChapterCountValue = (iNew > 0) ? iNew : 0; } }
+else if (sName == "chapter") { int iNew = (int) jsonNumberValue(sLine, "data"); lock (oStateLock) { iChapterValue = iNew; } }
 else if (sName == "media-title") { string sNew = jsonStringValue(sLine, "data"); lock (oStateLock) { sTitleValue = sNew; } }
 else if (sName == "playlist-pos") {
 int iNew = (int) jsonNumberValue(sLine, "data");

@@ -43,13 +43,22 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace FileDir {
 
 // One thing to play: what to hand mpv, and what to call it on screen.
 public class MediaTrack {
+// EVERYTHING KNOWN ABOUT THIS TRACK, one field to a value.
+//
+// Filled from whatever source had something to say: the play list line, the
+// document the link came from -- these podcast directories carry a date, a
+// duration, a summary and often the people involved -- and, for a file on this
+// computer, ExifTool. Extra Info shows it, sorted, and Find searches it.
+public Dictionary<string, string> dFacts = new Dictionary<string, string>();
 public double dSeconds = -1;
+public string sEpisode = "";
 public string sName;
 public string sPresenter = "";
 public string sTarget;
@@ -58,6 +67,30 @@ public MediaTrack(string sTrackName, string sTrackTarget) {
 sName = sTrackName == null ? "" : sTrackName.Trim();
 sTarget = sTrackTarget == null ? "" : sTrackTarget.Trim();
 if (sName.Length == 0) sName = shortName(sTarget);
+sEpisode = episodeFrom(sName);
+}
+
+// episodeFrom: the episode number the podcaster put in the title, if they put
+// one there.
+//
+// The number dropped from the list was FileDir's own counting -- first, second,
+// third in the queue -- and nobody needs that on every line. An episode number
+// is different: it is what the show calls that episode, and people remember
+// shows by it. So it stays in the title where the show wrote it, and it is
+// pulled out as a field of its own for Extra Info.
+//
+// Three shapes cover what podcasts actually write: "Episode 214", "#214", and a
+// number after a bar at the end, which is how several of these directories end
+// a title.
+public static string episodeFrom(string sTitle) {
+if (string.IsNullOrEmpty(sTitle)) return "";
+Match oMatch = Regex.Match(sTitle, @"\bEpisode\s+(\d{1,5})\b", RegexOptions.IgnoreCase);
+if (oMatch.Success) return oMatch.Groups[1].Value;
+oMatch = Regex.Match(sTitle, @"#\s*(\d{1,5})\b");
+if (oMatch.Success) return oMatch.Groups[1].Value;
+oMatch = Regex.Match(sTitle, @"\|\s*(\d{1,5})\s*$");
+if (oMatch.Success) return oMatch.Groups[1].Value;
+return "";
 }
 
 // shortName: something to call a track that arrived with no name. The last
@@ -95,6 +128,37 @@ if (sText.Length == 0) return "zzzz";
 int iSpace = sText.LastIndexOf(' ');
 if (iSpace > 0) return sText.Substring(iSpace + 1).ToLower() + " " + sText.Substring(0, iSpace).ToLower();
 return sText.ToLower();
+}
+
+// addFact: keep a field, unless something better is already there.
+public void addFact(string sField, string sValue) {
+if (string.IsNullOrEmpty(sField) || string.IsNullOrEmpty(sValue)) return;
+if (!dFacts.ContainsKey(sField)) dFacts[sField] = sValue.Trim();
+}
+
+// factLines: every field and value, sorted by field, as lines.
+//
+// Sorted because a list of twenty fields is looked through rather than read,
+// and the same field is then in the same place whatever track it belongs to.
+public List<string> factLines() {
+Dictionary<string, string> dAll = new Dictionary<string, string>(dFacts);
+if (sName.Length > 0 && !dAll.ContainsKey("Title")) dAll["Title"] = sName;
+if (sPresenter.Length > 0 && !dAll.ContainsKey("Presenter")) dAll["Presenter"] = sPresenter;
+if (sEpisode.Length > 0 && !dAll.ContainsKey("Episode")) dAll["Episode"] = sEpisode;
+if (!dAll.ContainsKey("Address")) dAll["Address"] = sTarget;
+if (dSeconds > 0 && !dAll.ContainsKey("Length")) dAll["Length"] = Homer.Mpv.formatTime(dSeconds);
+List<string> lsKeys = new List<string>(dAll.Keys);
+lsKeys.Sort(StringComparer.OrdinalIgnoreCase);
+List<string> lsLines = new List<string>();
+foreach (string sKey in lsKeys) lsLines.Add(sKey + ": " + dAll[sKey]);
+return lsLines;
+}
+
+// searchable: the same thing as one line, for Find to look through.
+public string searchable() {
+StringBuilder sb = new StringBuilder();
+foreach (string sLine in factLines()) { sb.Append(sLine); sb.Append("  "); }
+return sb.ToString();
 }
 
 // display: one line of the Tracks list. Whatever is known, in the order a
@@ -172,7 +236,7 @@ string sMpv = Homer.Media.mpvProgram();
 if (sMpv.Length == 0) {
 Lbc.Show("mpv is not installed, so there is nothing to play with.\r\n\r\n"
 + "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box.",
-"Homer Player");
+"Player");
 return;
 }
 
@@ -186,7 +250,7 @@ Homer.Mpv player = new Homer.Mpv(sMpv, Homer.Media.findInstalled("yt-dlp"));
 string sError;
 if (!player.start(out sError)) {
 Homer.Log.write("Homer Player: mpv would not start. " + sError);
-Lbc.Show("The player would not start.\r\n\r\n" + sError, "Homer Player");
+Lbc.Show("The player would not start.\r\n\r\n" + sError, "Player");
 player.Dispose();
 return;
 }
@@ -198,13 +262,14 @@ int[] aOrder = new int[lsTracks.Count];
 for (int i = 0; i < aOrder.Length; i++) aOrder[i] = i;
 int iOrderNow = iOrder;
 bool bMovingTimeline = false;
-double dMarkStart = -1;
-double dMarkEnd = -1;
 int iAnnounced = -1;
 bool bWasPlaying = false;
 bool bEndSaid = false;
 DateTime dtLastSaid = DateTime.MinValue;
 string sLastNote = "";
+DateTime dtLastNote = DateTime.MinValue;
+bool bIdleLast = true;
+bool bPausedLast = true;
 
 Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, owner);
 Homer.Mpv oPlayer = player;
@@ -217,6 +282,15 @@ string sTracksLabel = "&Track list, " + Homer.Util.stringPlural("track", lsTrack
 if (!string.IsNullOrEmpty(sSource)) sTracksLabel = sTracksLabel + " from " + sSource;
 ListBox lstTracks = dlg.addPickBox(sTracksLabel + ":", orderedNames(lsRef, aOrder), null,
 "The queue, with each track's name, presenter and length where they are known. Moving through it chooses nothing; Enter plays the one you are on. Control+J jumps to a track by name, F3 jumps to the next, Control+F filters the list and Control+Shift+F clears the filter. Alt+Shift+M writes what is showing, in the order shown, to a Markdown file.");
+
+// EVERYTHING KNOWN ABOUT THE TRACK THE CURSOR IS ON, sorted by field.
+//
+// One Alt key away, read like any other text -- by character, word or line,
+// selected, copied -- and nothing to close to get back. Filled when the cursor
+// arrives, so it never speaks over anything and is current when it is read.
+TextBox txtExtra = dlg.addMemoBox("E&xtra Info:", "",
+"Everything known about the track the cursor is on, one field to a line, sorted by field. Read it by character, word or line; Control+C copies what is selected.");
+txtExtra.ReadOnly = true;
 dlg.endBand();
 
 // ---- Order, Next, Previous ----
@@ -276,8 +350,7 @@ dlg.addBand();
 Button btnGo = dlg.addButton("&Execute playback", "Play the track the cursor is on, or resume what is paused, applying the order the cursor is on. Control+Enter does this from anywhere in the dialog, and so does Scroll Lock.");
 Button btnStop = dlg.addButton("&Stop playback", "Stop playing and stay exactly where you are, in the queue and in the track. Execute playback carries on from there. It is a pause; the name is Stop because Previous track already has the P.");
 Button btnDefaults = dlg.addButton("&Default settings", "Forget what this queue has been set to and go back to the built-in settings: one minute, normal speed, the play list's own order.");
-Button btnClip = dlg.addButton("&Clip to file", "Write the part you marked with F8 and Shift+F8 to a media file of its own, and put that file on the clipboard so it can be pasted into a folder or a message.");
-Button btnHelp = dlg.addButton("&Help topics", "List every control in this dialog with what it does, and the keys that have no control.");
+Button btnHelp = dlg.addButton("&Help", "What this dialog does and which keys do it, in one page.");
 Button btnClose = dlg.addButton("Close", "Close the player. Where each track had reached is written down first, so playing it again starts there.");
 dlg.endBand();
 
@@ -331,16 +404,8 @@ oPlayer.seekRelative(-stepSeconds(lstIncrement));
 hear(oPlayer);
 say(dlg, positionText(oPlayer));
 };
-btnChapterAhead.Click += delegate(object o, EventArgs e) {
-oPlayer.nextChapter();
-hear(oPlayer);
-say(dlg, positionText(oPlayer));
-};
-btnChapterBehind.Click += delegate(object o, EventArgs e) {
-oPlayer.previousChapter();
-hear(oPlayer);
-say(dlg, positionText(oPlayer));
-};
+btnChapterAhead.Click += delegate(object o, EventArgs e) { chapterMove(dlg, oPlayer, true); };
+btnChapterBehind.Click += delegate(object o, EventArgs e) { chapterMove(dlg, oPlayer, false); };
 
 // THE TIMELINE IS SET WHEN YOU ARRIVE AT IT, AND NOT AFTERWARDS.
 //
@@ -370,11 +435,7 @@ oPlayer.seekAbsolute((dWhole * barTimeline.Value) / 100.0);
 hear(oPlayer);
 };
 
-btnClip.Click += delegate(object o, EventArgs e) {
-clipToFile(dlg, oPlayer, lsRef, dMarkStart, dMarkEnd);
-};
-
-btnHelp.Click += delegate(object o, EventArgs e) { dlg.showHelp(); };
+btnHelp.Click += delegate(object o, EventArgs e) { showHelp(dlg.form); };
 btnClose.Click += delegate(object o, EventArgs e) { dlg.close(); };
 
 btnDefaults.Click += delegate(object o, EventArgs e) {
@@ -463,8 +524,8 @@ if (keyData == (Keys.Shift | Keys.Left)) { oPlayer.seekRelative(-stepSeconds(lst
 if (keyData == (Keys.Shift | Keys.Right)) { oPlayer.seekRelative(stepSeconds(lstIncrement)); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
 if (keyData == (Keys.Shift | Keys.Up)) { oPlayer.previous(); hear(oPlayer); return true; }
 if (keyData == (Keys.Shift | Keys.Down)) { oPlayer.next(); hear(oPlayer); return true; }
-if (keyData == (Keys.Shift | Keys.PageUp)) { oPlayer.previousChapter(); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
-if (keyData == (Keys.Shift | Keys.PageDown)) { oPlayer.nextChapter(); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
+if (keyData == (Keys.Shift | Keys.PageUp)) { chapterMove(dlg, oPlayer, false); return true; }
+if (keyData == (Keys.Shift | Keys.PageDown)) { chapterMove(dlg, oPlayer, true); return true; }
 if (keyData == (Keys.Shift | Keys.Home)) { oPlayer.seekAbsolute(0); hear(oPlayer); say(dlg, "Start of track"); return true; }
 if (keyData == (Keys.Shift | Keys.End)) { seekToEnd(dlg, oPlayer); hear(oPlayer); return true; }
 if (keyData == (Keys.Control | Keys.Shift | Keys.Home)) { oPlayer.playIndex(0); oPlayer.setPause(false); say(dlg, "First track"); return true; }
@@ -494,16 +555,6 @@ return true;
 }
 }
 
-// ALT+ENTER SHOWS EVERYTHING KNOWN ABOUT THE TRACK, which is what Alt+Enter
-// means in Windows and in FileDir's own list: properties of the thing under
-// the cursor.
-if (keyData == (Keys.Alt | Keys.Enter)) {
-int iRowNow = dlg.listSourceIndex(lstTracks, lstTracks.SelectedIndex);
-int iTrackNow = (iRowNow >= 0 && iRowNow < aOrder.Length) ? aOrder[iRowNow] : oPlayer.playlistIndex;
-if (iTrackNow < 0 || iTrackNow >= lsRef.Count) { say(dlg, "No track"); return true; }
-showProperties(dlg.form, lsRef[iTrackNow]);
-return true;
-}
 
 // And the same commands on the digits, for a keyboard whose Num Lock is on.
 // The grid reads as one sentence: the left column goes back, the right column
@@ -513,8 +564,8 @@ if (keyData == Keys.NumPad5) { oPlayer.togglePause(); say(dlg, oPlayer.paused ? 
 if (keyData == Keys.NumPad0) { oPlayer.stop(); bWasPlaying = false; bEndSaid = true; say(dlg, "Stopped"); return true; }
 if (keyData == Keys.NumPad4) { oPlayer.seekRelative(-stepSeconds(lstIncrement)); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
 if (keyData == Keys.NumPad6) { oPlayer.seekRelative(stepSeconds(lstIncrement)); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
-if (keyData == Keys.NumPad7) { oPlayer.previousChapter(); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
-if (keyData == Keys.NumPad9) { oPlayer.nextChapter(); hear(oPlayer); say(dlg, positionText(oPlayer)); return true; }
+if (keyData == Keys.NumPad7) { chapterMove(dlg, oPlayer, false); return true; }
+if (keyData == Keys.NumPad9) { chapterMove(dlg, oPlayer, true); return true; }
 if (keyData == Keys.NumPad8) { oPlayer.seekAbsolute(0); hear(oPlayer); say(dlg, "Start of track"); return true; }
 if (keyData == Keys.NumPad1) { oPlayer.previous(); hear(oPlayer); return true; }
 if (keyData == Keys.NumPad3) { oPlayer.next(); hear(oPlayer); return true; }
@@ -535,31 +586,6 @@ if (keyData == Keys.Add) { barVolume.Value = Math.Min(barVolume.Maximum, barVolu
 if (keyData == Keys.Divide) { barRate.Value = Math.Max(barRate.Minimum, barRate.Value - 5); return true; }
 if (keyData == Keys.Multiply) { barRate.Value = Math.Min(barRate.Maximum, barRate.Value + 5); return true; }
 
-// F8 AND SHIFT+F8 MARK A SPAN, which is what they do everywhere else in Homer
-// Tools: start the selection, then complete it. Here the two ends are moments
-// in the track rather than lines in a file, and the span they make is what
-// Clip to file writes out.
-if (keyData == Keys.F8) {
-dMarkStart = oPlayer.position;
-dMarkEnd = -1;
-say(dlg, (dMarkStart >= 0) ? ("Start marked at " + Homer.Mpv.formatTime(dMarkStart)) : "Nothing playing");
-return true;
-}
-if (keyData == (Keys.Shift | Keys.F8)) {
-// SHIFT+F8 ON ITS OWN MEANS FROM THE BEGINNING. Shift+End selects from here to
-// the end of a line and Shift+Home from the start of one; completing a
-// selection nobody started is the same idea, and it saves going back to the
-// top of the track to press F8 there.
-if (dMarkStart < 0) {
-dMarkStart = 0;
-say(dlg, "Marking from the start of the track");
-}
-dMarkEnd = oPlayer.position;
-if (dMarkEnd <= dMarkStart) { say(dlg, "The end must come after the start"); dMarkEnd = -1; return true; }
-say(dlg, "Marked " + Homer.Mpv.formatTime(dMarkStart) + " to " + Homer.Mpv.formatTime(dMarkEnd)
-+ ", " + Homer.Mpv.formatTime(dMarkEnd - dMarkStart) + " long");
-return true;
-}
 // CONTROL+ENTER IS ALWAYS GO, whatever the default button is at the time.
 // The default button changes with what the player is doing -- Stop while
 // something plays -- and a person who wants to start something should not
@@ -586,8 +612,8 @@ dlg.form.KeyDown += delegate(object o, KeyEventArgs ev) {
 if (!ev.Alt || !ev.Shift) return;
 bool bHandled = true;
 switch (ev.KeyCode) {
-case Keys.N: oPlayer.nextChapter(); say(dlg, positionText(oPlayer)); break;
-case Keys.P: oPlayer.previousChapter(); say(dlg, positionText(oPlayer)); break;
+case Keys.N: chapterMove(dlg, oPlayer, true); break;
+case Keys.P: chapterMove(dlg, oPlayer, false); break;
 case Keys.T: oPlayer.seekAbsolute(0); say(dlg, "Start of track"); break;
 case Keys.Z: oPlayer.revertSeek(); say(dlg, positionText(oPlayer)); break;
 case Keys.A: say(dlg, positionText(oPlayer)); break;
@@ -636,8 +662,16 @@ catch (Exception) { }
 // The standing note on the status line. It is not a live region and nothing
 // announces it: it is there to be read with the screen reader's own key for
 // the status line, when the person wants it.
+// Every five seconds, or whenever the state changes. A status bar rewritten
+// twice a second is one a screen reader may decide to read out loud.
+if ((DateTime.Now - dtLastNote).TotalMilliseconds >= 5000
+|| oPlayer.idle != bIdleLast || oPlayer.paused != bPausedLast) {
+dtLastNote = DateTime.Now;
+bIdleLast = oPlayer.idle;
+bPausedLast = oPlayer.paused;
 string sNote = statusNote(oPlayer, lsRef);
 if (sNote != sLastNote) { sLastNote = sNote; dlg.setStatusExtra(sNote); }
+}
 
 int iNow = oPlayer.playlistIndex;
 bool bPlayingNow2 = !oPlayer.idle && !oPlayer.paused;
@@ -646,6 +680,13 @@ bWasPlaying = true;
 bEndSaid = false;
 if (iNow != iAnnounced) {
 iAnnounced = iNow;
+// THE TITLE SAYS WHAT IS PLAYING. A screen reader has a key for reading the
+// window title, and that is the shortest way to ask "what is this?" without
+// disturbing anything.
+// THE TITLE IS WHAT IS PLAYING, word for word as the queue shows it, so the
+// screen reader's title key and the list agree.
+try { dlg.form.Text = lsRef[iNow].display(); }
+catch (Exception) { }
 // At most one name every second and a half: a queue of addresses that
 // will not play walks itself to the end in seconds, and a name for each
 // is noise rather than news.
@@ -663,7 +704,25 @@ say(dlg, "End of queue");
 
 // Control+J and its relatives act on the queue from any control in this
 // dialog, and leave the keyboard where it was.
+txtExtra.GotFocus += delegate(object o, EventArgs e) {
+int iRowNow = dlg.listSourceIndex(lstTracks, lstTracks.SelectedIndex);
+int iTrackNow = (iRowNow >= 0 && iRowNow < aOrder.Length) ? aOrder[iRowNow] : -1;
+if (iTrackNow < 0 || iTrackNow >= lsRef.Count) { txtExtra.Text = "No track"; return; }
+MediaTrack trackNow = lsRef[iTrackNow];
+// ExifTool is asked once per track, and only for a file on this computer: it
+// is a program to start, and starting one on every arrival would be felt.
+if (!trackNow.dFacts.ContainsKey("Read by ExifTool")) {
+trackNow.addFact("Read by ExifTool", "yes");
+try { if (File.Exists(trackNow.sTarget)) addExifProperties(trackNow); }
+catch (Exception) { }
+}
+txtExtra.Text = string.Join("\r\n", trackNow.factLines().ToArray());
+};
+
 dlg.primaryList = lstTracks;
+// Jump and Filter look through everything known about a track, not only the
+// line it shows.
+dlg.setListItems(lstTracks, orderedNames(lsRef, aOrder), searchText(lsRef, aOrder));
 dlg.setInitialFocus(lstTracks);
 if (iOrder != 0) { sortQueue(lsRef, aOrder, iOrder); refillTracks(dlg, lstTracks, lsRef, aOrder); }
 
@@ -725,7 +784,21 @@ dlg.Dispose();
 // every command that moves clears the pause; the ones that only report, like
 // Alt+Shift+A, leave it alone.
 private static void hear(Homer.Mpv player) {
+// LOGGED, because playback has been reported starting when nobody asked for
+// it. The caller's name turns "it just started" into a fact about which
+// command did it.
+Homer.Log.write("Homer Player: playing, asked by " + callerName());
 player.setPause(false);
+}
+
+private static string callerName() {
+try {
+System.Diagnostics.StackTrace oTrace = new System.Diagnostics.StackTrace();
+// Frame 0 is this method, frame 1 is hear, frame 2 is whoever wanted it.
+if (oTrace.FrameCount > 2) return oTrace.GetFrame(2).GetMethod().Name;
+}
+catch (Exception) { }
+return "unknown";
 }
 
 // stepSeconds: how far Forward and Backward move, read at the moment they are
@@ -818,7 +891,16 @@ return lsNames;
 // Through the dialog rather than into the control: setListItems is what tells
 // the find and filter machinery that the list holds something else now.
 private static void refillTracks(Homer.LbcDialog dlg, ListBox lstTracks, List<MediaTrack> lsTracks, int[] aOrder) {
-dlg.setListItems(lstTracks, orderedNames(lsTracks, aOrder));
+dlg.setListItems(lstTracks, orderedNames(lsTracks, aOrder), searchText(lsTracks, aOrder));
+}
+
+// searchText: what Jump and Filter look through -- everything known about a
+// track rather than the line it shows. A search for a presenter's surname, or
+// for a word in an address, finds the track even though neither is on the line.
+private static List<string> searchText(List<MediaTrack> lsTracks, int[] aOrder) {
+List<string> lsText = new List<string>();
+for (int iRow = 0; iRow < aOrder.Length; iRow++) lsText.Add(lsTracks[aOrder[iRow]].searchable());
+return lsText;
 }
 
 // sortQueue: rearrange the ROWS, never the queue mpv is playing. A plain
@@ -859,6 +941,30 @@ double dTarget = dWhole - 3;
 if (dTarget < 0) dTarget = 0;
 player.seekAbsolute(dTarget);
 say(dlg, "End of track");
+}
+
+// chapterMove: forwards or back by one chapter, and SAY WHAT HAPPENED.
+//
+// This is the question that could not be answered over the telephone: did that
+// move by chapter, or did it do nothing? Saying the position afterwards cannot
+// tell anybody -- a position is a position however it was reached. So the
+// answer names the chapter and how many there are, and a track with none says
+// so outright instead of leaving silence to be interpreted.
+private static void chapterMove(Homer.LbcDialog dlg, Homer.Mpv player, bool bForward) {
+int iCount = player.chapterCount;
+Homer.Log.write("Homer Player: chapter " + (bForward ? "more" : "less")
++ ", track has " + iCount + " chapters, now at " + player.chapter);
+if (iCount <= 0) { say(dlg, "No chapters in this track"); return; }
+if (bForward) player.nextChapter(); else player.previousChapter();
+hear(player);
+// mpv answers over the pipe, so the new chapter number arrives a moment later.
+// A short wait buys an announcement that is true rather than one step behind.
+System.Threading.Thread.Sleep(120);
+int iNow = player.chapter;
+string sWhere = (iNow >= 0)
+? ("Chapter " + (iNow + 1).ToString(CultureInfo.InvariantCulture) + " of " + iCount.ToString(CultureInfo.InvariantCulture))
+: "Chapter";
+say(dlg, sWhere + ", " + Homer.Mpv.saySpan(player.position));
 }
 
 private static void firstChapter(Homer.LbcDialog dlg, Homer.Mpv player) {
@@ -931,76 +1037,14 @@ say(dlg, "Could not write the file");
 
 // ---- everything known about one track ----
 
-// showProperties: a field and value list for the track under the cursor.
-//
-// What FileDir knows first -- the name, the presenter, the length, the address
-// -- and then, for a file on this computer, everything ExifTool can read out of
-// it: the artist and album of a song, the codecs and bit rate of a video, the
-// date it was recorded. Sorted by field name, because a list of forty fields is
-// searched rather than read, and a list is the right control for that: arrow
-// through it, Control+J jumps to a field, Control+C copies the line.
-private static void showProperties(IWin32Window owner, MediaTrack track) {
-List<string> lsLines = new List<string>();
-addProperty(lsLines, "Address", track.sTarget);
-addProperty(lsLines, "Length", Homer.Mpv.formatTime(track.dSeconds));
-addProperty(lsLines, "Name", track.sName);
-addProperty(lsLines, "Presenter", track.sPresenter);
-
-bool bLocal = false;
-try { bLocal = File.Exists(track.sTarget); }
-catch (Exception) { }
-
-if (bLocal) {
-try {
-System.IO.FileInfo oFile = new System.IO.FileInfo(track.sTarget);
-addProperty(lsLines, "File size", Homer.Util.formatBytes(oFile.Length));
-addProperty(lsLines, "Modified", oFile.LastWriteTime.ToString());
-}
-catch (Exception) { }
-addExifProperties(lsLines, track.sTarget);
-}
-
-lsLines.Sort(StringComparer.OrdinalIgnoreCase);
-if (lsLines.Count == 0) lsLines.Add("Nothing known about this track");
-
-// TEXT IN A READ-ONLY MEMO, NOT A LIST.
-//
-// A list gives whole lines and nothing else. A text box gives the arrow keys
-// for character, word and line, Shift with them for selecting, Control+C for
-// copying a piece rather than a line -- everything a person does with an
-// address they want half of, or a field name they want to check letter by
-// letter.
-//
-// No label above it: it fills its own window and the title says what it holds,
-// which is the one case where a control needs no label of its own.
-//
-// A SHORT TITLE, because a window's title is read every time the window is
-// touched. The track name is in the text.
-Homer.LbcDialog dlgFacts = new Homer.LbcDialog("Track properties", owner);
-TextBox txtFacts = dlgFacts.addMemo(string.Join("\r\n", lsLines.ToArray()),
-"Everything known about this track, one field to a line. Read it by character, word or line, select any of it, and Control+C copies what is selected.");
-txtFacts.ReadOnly = true;
-Button btnFactsOk = dlgFacts.addButton("&OK", "Go back to the player.");
-btnFactsOk.Click += delegate(object o, EventArgs e) { dlgFacts.close(); };
-dlgFacts.setInitialFocus(txtFacts);
-try { dlgFacts.runPlain(btnFactsOk, btnFactsOk); }
-finally { dlgFacts.Dispose(); }
-}
-
-private static void addProperty(List<string> lsLines, string sField, string sValue) {
-if (string.IsNullOrEmpty(sValue)) return;
-lsLines.Add(sField + ": " + sValue.Trim());
-}
 
 // addExifProperties: ask ExifTool, which reads far more formats than anything
 // built in and prints one field per line. -S gives "Field: value" with no
 // padding, which is exactly the shape wanted here.
-private static void addExifProperties(List<string> lsLines, string sPath) {
+private static void addExifProperties(MediaTrack track) {
+string sPath = track.sTarget;
 string sExif = Homer.Media.findInstalled("exiftool");
-if (sExif.Length == 0) {
-lsLines.Add("Note: ExifTool is not installed, so only the basics are shown");
-return;
-}
+if (sExif.Length == 0) { track.addFact("Note", "ExifTool is not installed, so only the basics are known"); return; }
 string sOut = "";
 try {
 System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
@@ -1017,7 +1061,7 @@ if (!oExif.WaitForExit(20000)) { try { oExif.Kill(); } catch (Exception) { } }
 }
 catch (Exception ex) {
 Homer.Log.write("Homer Player: ExifTool failed. " + ex.Message);
-lsLines.Add("Note: ExifTool could not read this file");
+track.addFact("Note", "ExifTool could not read this file");
 return;
 }
 foreach (string sLine in sOut.Split('\n')) {
@@ -1028,118 +1072,65 @@ if (iColon <= 0) continue;
 string sField = sTrimmed.Substring(0, iColon).Trim();
 string sValue = sTrimmed.Substring(iColon + 1).Trim();
 if (sField.Length == 0 || sValue.Length == 0) continue;
-lsLines.Add(sField + ": " + sValue);
+track.addFact(sField, sValue);
 }
 }
 
-// ---- taking a piece of a track away with you ----
-
-// clipToFile: write the marked span to a media file of its own, then put that
-// file on the clipboard.
+// showHelp: what this dialog does and which keys do it, in one page.
 //
-// ON THE CLIPBOARD QUESTION. Windows has no clipboard format for a piece of
-// audio that other programs will accept -- the old CF_WAVE is legacy and
-// almost nothing pastes it, and there is nothing at all for video. What every
-// program on Windows 11 does accept is a FILE: a file on the clipboard pastes
-// into Explorer, into mail, into a chat window, into anything that takes a
-// dropped file. So the clip is written to disk and the file goes on the
-// clipboard, which is the same thing the person wanted by a route that works.
-//
-// ffmpeg does the cutting, with the streams copied rather than re-encoded: it
-// is quick, it loses nothing, and the clip keeps the format it came from.
-private static void clipToFile(Homer.LbcDialog dlg, Homer.Mpv player, List<MediaTrack> lsTracks,
-double dStart, double dEnd) {
-if (dStart < 0 || dEnd <= dStart) {
-say(dlg, "Nothing marked. Press F8 where the piece should start and Shift+F8 where it should end.");
-return;
-}
-int iNow = player.playlistIndex;
-if (iNow < 0 || iNow >= lsTracks.Count) { say(dlg, "Nothing playing"); return; }
-MediaTrack track = lsTracks[iNow];
-
-string sFfmpeg = Homer.Media.findInstalled("ffmpeg");
-if (sFfmpeg.Length == 0) {
-Lbc.Show("ffmpeg is not installed, and it is what cuts the clip.\r\n\r\n"
-+ "Install FileDir again with the media tools box ticked, or run installMediaTools.cmd in the FileDir folder.",
-"Homer Player");
-return;
-}
-
-// Where it goes: beside the file it came from when that is a file of ours,
-// and in the folder FileDir is looking at otherwise -- which is where a person
-// who just made something expects to find it.
-string sExtension = ".mp3";
-string sFolder = App.sDefaultDir;
-try {
-if (File.Exists(track.sTarget)) {
-sFolder = Path.GetDirectoryName(track.sTarget);
-sExtension = Path.GetExtension(track.sTarget);
-if (string.IsNullOrEmpty(sExtension)) sExtension = ".mp3";
-}
-}
-catch (Exception) { }
-if (string.IsNullOrEmpty(sFolder) || !Directory.Exists(sFolder)) sFolder = Path.GetTempPath();
-
-string sLeaf = safeName(track.sName) + " " + stamp(dStart) + " to " + stamp(dEnd) + sExtension;
-string sPath = Path.Combine(sFolder, sLeaf);
-
-say(dlg, "Making the clip");
-try {
-System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-info.FileName = sFfmpeg;
-info.Arguments = "-y -ss " + dStart.ToString("0.###", CultureInfo.InvariantCulture)
-+ " -to " + dEnd.ToString("0.###", CultureInfo.InvariantCulture)
-+ " -i " + Homer.Util.stringQuote(track.sTarget)
-+ " -c copy " + Homer.Util.stringQuote(sPath);
-info.UseShellExecute = false;
-info.CreateNoWindow = true;
-Homer.Log.write("Homer Player: " + info.FileName + " " + info.Arguments);
-System.Diagnostics.Process oFfmpeg = System.Diagnostics.Process.Start(info);
-// A minute is generous for a copy with no re-encoding, and a limit means a
-// stalled download cannot leave the dialog waiting for ever.
-if (!oFfmpeg.WaitForExit(60000)) {
-try { oFfmpeg.Kill(); } catch (Exception) { }
-say(dlg, "The clip took too long and was stopped");
-return;
-}
-Homer.Log.write("Homer Player: ffmpeg exit " + oFfmpeg.ExitCode);
-if (oFfmpeg.ExitCode != 0 || !File.Exists(sPath)) {
-say(dlg, "The clip could not be made. The log has what ffmpeg said.");
-return;
-}
-}
-catch (Exception ex) {
-Homer.Log.write("Homer Player: clip failed. " + ex.Message);
-say(dlg, "The clip could not be made");
-return;
-}
-
-try {
-System.Collections.Specialized.StringCollection lsFiles = new System.Collections.Specialized.StringCollection();
-lsFiles.Add(sPath);
-Clipboard.SetFileDropList(lsFiles);
-say(dlg, "Clip saved as " + sLeaf + " and put on the clipboard");
-}
-catch (Exception) {
-say(dlg, "Clip saved as " + sLeaf);
-}
-}
-
-// stamp: a time as it can appear in a file name, since a colon cannot.
-private static string stamp(double dSeconds) {
-return Homer.Mpv.formatTime(dSeconds).Replace(":", "-");
-}
-
-// safeName: a track name with the characters Windows will not have in a file
-// name taken out.
-private static string safeName(string sName) {
+// Lbc's own help lists the fields and their descriptions, which is right for a
+// form being filled in. A player is a set of commands, and what a person wants
+// from its help is the keys -- especially the ones with no control to tab to.
+// Short lines, grouped, no prose.
+private static void showHelp(IWin32Window owner) {
 StringBuilder sb = new StringBuilder();
-foreach (char ch in (sName ?? "")) {
-if (Array.IndexOf(Path.GetInvalidFileNameChars(), ch) < 0) sb.Append(ch);
-}
-string sClean = sb.ToString().Trim();
-if (sClean.Length > 60) sClean = sClean.Substring(0, 60).Trim();
-return (sClean.Length > 0) ? sClean : "Clip";
+sb.Append("PLAYER\r\n\r\n");
+sb.Append("Every control has its own Alt key, the letter underlined in its name.\r\n");
+sb.Append("These commands have no control, so they are listed first.\r\n\r\n");
+sb.Append("FINDING A TRACK\r\n");
+sb.Append("Control+J          jump to a track by name, as the list shows it\r\n");
+sb.Append("Control+Shift+J    jump back\r\n");
+sb.Append("Control+K          keywords: search everything known about the tracks\r\n");
+sb.Append("Control+Shift+K    keywords, backwards\r\n");
+sb.Append("F3, Shift+F3       repeat the last jump or keyword search\r\n");
+sb.Append("Control+F          filter the list to what matches\r\n");
+sb.Append("Control+Shift+F    clear the filter\r\n\r\n");
+sb.Append("Keyword syntax: red & blue means both words, red | blue means either,\r\n");
+sb.Append("and re*d means a word with anything in the middle. Case never matters.\r\n");
+sb.Append("Keywords looks at the title, the presenter, the episode, the address,\r\n");
+sb.Append("and whatever the source document said -- the date, the summary, the\r\n");
+sb.Append("people. Jump looks only at the line the list shows.\r\n\r\n");
+sb.Append("MOVING AND PLAYING\r\n");
+sb.Append("Space          play or pause, from anywhere but a button\r\n");
+sb.Append("Enter          in the queue, play the track the cursor is on\r\n");
+sb.Append("Control+Enter  execute playback, from anywhere\r\n");
+sb.Append("Shift+Left, Shift+Right    jump back and forward by the increment\r\n");
+sb.Append("Shift+Up, Shift+Down       previous and next track\r\n");
+sb.Append("Shift+PageUp, PageDown     previous and next chapter\r\n");
+sb.Append("Shift+Home, Shift+End      start and end of the track\r\n");
+sb.Append("Control+Shift+Home, End    first and last track\r\n\r\n");
+sb.Append("TELLING YOU WHERE YOU ARE\r\n");
+sb.Append("Alt+Shift+A    say the position\r\n");
+sb.Append("Alt+Shift+W    say the track, its number and the position\r\n");
+sb.Append("Alt+Shift+O    say how many tracks, then their names\r\n");
+sb.Append("Alt+X          extra info: everything known about this track\r\n\r\n");
+sb.Append("THE REST\r\n");
+sb.Append("Alt+Shift+C    copy the address of the track\r\n");
+sb.Append("Alt+Shift+L    save the queue as a play list\r\n");
+sb.Append("Alt+Shift+M    write track notes to a Markdown file\r\n");
+sb.Append("Alt+Shift+Z    undo the last jump within a track\r\n");
+sb.Append("Escape         close, remembering where each track had reached\r\n\r\n");
+sb.Append("F7 lists the controls; F1 lists them with their descriptions.\r\n");
+
+Homer.LbcDialog dlgHelp = new Homer.LbcDialog("Player Help", owner);
+TextBox txtHelp = dlgHelp.addMemo(sb.ToString(),
+"The keys this dialog answers to. Read it by line, or Control+C to copy.");
+txtHelp.ReadOnly = true;
+Button btnOk = dlgHelp.addButton("&OK", "Go back to the player.");
+btnOk.Click += delegate(object o, EventArgs e) { dlgHelp.close(); };
+dlgHelp.setInitialFocus(txtHelp);
+try { dlgHelp.runPlain(btnOk, btnOk); }
+finally { dlgHelp.Dispose(); }
 }
 
 // ---- the words the dialog says ----
@@ -1163,27 +1154,40 @@ if (dlg != null) dlg.appendStatus(sText);
 // carries the track, the count and whether it is playing -- facts that change
 // when the person does something -- and the position is left to Alt+Shift+A and
 // to the Where in track slider, which are asked rather than announced.
+// statusNote: where playback is, in one short line.
+//
+// The track's NAME is not here: it is in the window title, which a screen
+// reader reads with its own key, and repeating it in both places wastes the
+// line. What is here is what the title cannot say -- which of how many, whether
+// it is going, and how far in.
+//
+//   Playing 3 of 60, 12 min 3 sec of 45 min
 private static string statusNote(Homer.Mpv player, List<MediaTrack> lsTracks) {
-int iNow = player.playlistIndex;
 StringBuilder sb = new StringBuilder();
+sb.Append(player.idle ? "Stopped" : (player.paused ? "Paused" : "Playing"));
+int iNow = player.playlistIndex;
 if (iNow >= 0 && iNow < lsTracks.Count) {
-sb.Append("Track ");
+sb.Append(" ");
 sb.Append((iNow + 1).ToString(CultureInfo.InvariantCulture));
 sb.Append(" of ");
 sb.Append(lsTracks.Count.ToString(CultureInfo.InvariantCulture));
-sb.Append(", ");
-sb.Append(lsTracks[iNow].sName);
-sb.Append(", ");
 }
-sb.Append(player.idle ? "stopped" : (player.paused ? "paused" : "playing"));
-string sOf = Homer.Mpv.formatTime(player.duration);
-if (sOf.Length > 0) { sb.Append(", "); sb.Append(sOf); sb.Append(" long"); }
+string sAt = Homer.Mpv.saySpan(player.position);
+string sOf = Homer.Mpv.saySpan(player.duration);
+if (sAt.Length > 0) {
+sb.Append(", ");
+sb.Append(sAt);
+if (sOf.Length > 0) { sb.Append(" of "); sb.Append(sOf); }
+}
 return sb.ToString();
 }
 
+// SPOKEN, NOT SHOWN. "12:03" read aloud is two numbers and a colon to
+// disentangle; "12 min 3 sec" is the answer. The list keeps the short written
+// form, which is for the eye.
 private static string positionText(Homer.Mpv player) {
-string sAt = Homer.Mpv.formatTime(player.position);
-string sOf = Homer.Mpv.formatTime(player.duration);
+string sAt = Homer.Mpv.saySpan(player.position);
+string sOf = Homer.Mpv.saySpan(player.duration);
 if (sAt.Length == 0) return "Not playing";
 if (sOf.Length == 0) return sAt;
 return sAt + " of " + sOf;

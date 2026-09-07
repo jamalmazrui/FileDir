@@ -178,7 +178,7 @@
 <h1 class="title">FileDir FileDir</h1>
 </header>
 <h1 id="filedir-user-guide">FileDir — User Guide</h1>
-<p><strong>Version 5.0.81</strong><br />
+<p><strong>Version 5.0.83</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -1390,18 +1390,14 @@ controls, each row holding the things that belong together:</p>
 <li><strong>Alt+T Track list</strong> – the queue, each line giving the
 name, then the presenter and the length where they are known. The name
 comes first and carries no number, so pressing a letter jumps to the
-first track beginning with it. <strong>Control+J</strong> jumps to a
-track by name and <strong>Control+Shift+J</strong> jumps backwards;
-<strong>F3</strong> and <strong>Shift+F3</strong> jump to the next and
-previous match; <strong>Control+F</strong> filters the list to what
-matches, and <strong>Control+Shift+F</strong> clears the filter. J for
-jump, F for filter, they are the directory window’s own keys, and in
-this dialog all six act on the Track list from wherever you are and
-leave the keyboard where it was, saying the track they land on when the
-cursor is elsewhere. <strong>Alt+Enter</strong> shows everything known
-about the track you are on – name, presenter, length, address, and for a
-file on this computer everything ExifTool can read out of it – as text
-you can read by character, word or line, select from, and copy.</li>
+first track beginning with it.</li>
+<li><strong>Alt+X Extra Info</strong> – everything known about the track
+the cursor is on, one field to a line, sorted by field: what the play
+list said, what the document the links came from said about that episode
+– its date, its length, its summary, the people in it – and, for a file
+on this computer, everything ExifTool can read out of it. Read it by
+character, word or line, and copy from it. It fills as you arrive, so it
+is current when you read it and silent otherwise.</li>
 <li><strong>Alt+O Order of list</strong>, then <strong>Alt+N Next
 track</strong> and <strong>Alt+P Previous track</strong>. The orders are
 play list order, title, presenter, and length shortest or longest first.
@@ -1412,72 +1408,45 @@ in track</strong>, which jump by the <strong>Alt+I Increment of
 jump</strong>: 15 or 30 seconds, 1, 3, 5, 10, 15 or 30 minutes, or an
 hour, listed smallest first. One minute to begin with.</li>
 <li><strong>Alt+M Chapter more</strong> and <strong>Alt+L Chapter
-less</strong>, and the <strong>Alt+W Where in track</strong> slider,
-which moves playback to a percentage through the track. Many tracks have
-no chapters, and on those the two buttons do nothing.</li>
+less</strong>, and the <strong>Alt+W Where in track</strong> slider. A
+chapter move says which chapter it reached, or says the track has none,
+so you never have to guess whether it worked.</li>
 <li><strong>Alt+R Rate percent</strong> and <strong>Alt+V Volume
 percent</strong>, both sliders. Volume starts below full so the media
 does not drown your screen reader.</li>
 <li><strong>Alt+E Execute playback</strong>, <strong>Alt+S Stop
-playback</strong>, <strong>Alt+C Clip to file</strong>, <strong>Alt+D
-Default settings</strong>, <strong>Alt+H Help topics</strong>, and
-<strong>Close</strong>. Escape closes too.</li>
+playback</strong>, <strong>Alt+D Default settings</strong>,
+<strong>Alt+H Help</strong>, and <strong>Close</strong>. Escape closes
+too.</li>
 </ul>
-<p><strong>Shift with a navigation key is the transport</strong>, and it
-works the same on the keypad and on the six-pack, because with Num Lock
-off – which is how a screen reader leaves it – both send the same
-keys.</p>
-<p>Each key keeps the sense it already has, applied to the media rather
-than to a list: arrows step, the Page keys move by a bigger unit, Home
-and End are the ends, and Control makes it the whole way.</p>
+<p><strong>The same search keys as the directory window</strong>,
+meaning the same things. Jump looks at the line the list shows; Keywords
+looks at everything known about each track, which is where a presenter’s
+name or a word from a summary lives.</p>
 <ul>
-<li><strong>Shift+Left</strong> and <strong>Shift+Right</strong> – back
-and forward by the increment</li>
-<li><strong>Shift+Up</strong> and <strong>Shift+Down</strong> – previous
-and next track</li>
-<li><strong>Shift+Page Up</strong> and <strong>Shift+Page Down</strong>
-– previous and next chapter</li>
-<li><strong>Shift+Home</strong> and <strong>Shift+End</strong> – the
-start and end of this track</li>
-<li><strong>Control+Shift+Home</strong> and
-<strong>Control+Shift+End</strong> – the first and last track</li>
-<li><strong>Control+Shift+Page Up</strong> and
-<strong>Control+Shift+Page Down</strong> – the first and last
-chapter</li>
-<li><strong>Shift+keypad 5</strong> – play or pause, as does
-<strong>Scroll Lock</strong></li>
+<li><strong>Control+J</strong> jump forward by name,
+<strong>Control+Shift+J</strong> jump back</li>
+<li><strong>Control+K</strong> keywords through everything,
+<strong>Control+Shift+K</strong> backwards</li>
+<li><strong>F3</strong> and <strong>Shift+F3</strong> repeat the last
+jump or keyword search, whichever it was</li>
+<li><strong>Control+F</strong> filter the list,
+<strong>Control+Shift+F</strong> clear the filter</li>
 </ul>
-<p>Bare navigation keys are left alone: they are how the Track list is
-read. Control with them belongs to the dialog, where Control+Home and
-Control+End move to the first and last field. Shift with them is free
-here, because this dialog has nothing to tag and a single-selection list
-does nothing with Shift.</p>
-<p>If you keep Num Lock on, the digits work too, in a grid where the
-left column goes back, the right column goes forward, and each row is a
-different size of step: 7, 8, 9 for chapters, 4, 5, 6 for the increment,
-1, 2, 3 for whole tracks, 0 to stop, and Control with any of them to go
-all the way. Minus and plus are volume, slash and star are speed.</p>
-<p><strong>F8 and Shift+F8 mark a piece of a track</strong>, the way
-they start and complete a selection everywhere else in Homer Tools. F8
-marks where the piece begins, Shift+F8 where it ends, and <strong>Alt+C
-Clip to file</strong> writes that piece out as a media file of its own
-and puts the file on the clipboard.</p>
-<p>Shift+F8 pressed with nothing marked means from the beginning of the
-track to here, the same idea as Shift+Home in a line of text. For a
-piece that runs to the end, press F8, then Shift+End to reach the end of
-the track, then Shift+F8.</p>
-<p>The file is written beside the track it came from when that is a file
-on your computer, and in the folder FileDir is looking at otherwise.
-ffmpeg does the cutting with the streams copied rather than re-encoded,
-so it is quick and loses nothing.</p>
-<p>Windows has no clipboard format for a piece of audio that other
-programs accept. What every program does accept is a file, so what goes
-on the clipboard is the clip file: paste it into a folder, a message, or
-anything that takes a dropped file.</p>
-<p>The Where in track slider is set when you tab into it and does not
-follow along while something plays. A control that changed twice a
-second would be read out over everything else, which is worth more than
-a slider that is always current.</p>
+<p>Keyword syntax is the simple one FileDir has always used, not regular
+expressions: <code>red &amp; blue</code> means both words,
+<code>red | blue</code> means either, and <code>re*d</code> means a word
+with anything in the middle.</p>
+<p>Each remembers its own last ten answers, and all of them ignore case.
+All act on the Track list from wherever you are, leave the keyboard
+where it was, and say the track they land on when the cursor is
+elsewhere.</p>
+<p><strong>The window title says what is playing</strong> – the same
+line the queue shows for that track – so your screen reader’s title key
+answers “what is this?” without disturbing anything. Before anything
+plays it is the name of the play list. The status line says where
+playback is – “Playing 3 of 60, 12 min 3 sec of 45 min” – and is never
+announced: read it when you want it.</p>
 <p><strong>Moving through a list chooses nothing.</strong> Arrowing down
 Tracks is how you find out what is in the queue, and arrowing down Order
 is how you find out what the orders are. Neither acts as you pass over
