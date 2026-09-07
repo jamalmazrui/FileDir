@@ -1,0 +1,35 @@
+﻿; Tutorial_Tagging.inix -- tagging files and doing one thing to all of them.
+;
+; A task tutorial: one job, start to finish, in as few steps as it takes.
+; makeTutorial.py adds it to Tutorials.md; sayTutorial Tutorial_Tagging speaks
+; it into Tutorial_Tagging.mp3.
+
+[about]
+Title=Tagging Files and Copying Them Somewhere
+Intro=This is a simulation, not a recording.
+Setup=A folder of files is open.
+
+[step]
+Say=Arrow to a file you want, and press the semicolon to tag it. Tagging marks a file for the next command without moving you.
+Key=Semicolon
+Hear=Tagged
+Note=The slash key untags. Shift plus Home tags everything from here to the top.
+
+[step]
+Say=Arrow to another file and tag that one too. FileDir says how many are tagged as the number changes.
+Key=Semicolon
+Hear=2 tagged files
+Note=Alt plus Y says the count at any time.
+
+[step]
+Say=Press Control plus C to copy the tagged files. FileDir asks where to.
+Key=Control+C
+Hear=Copy To
+Hear=Folder edit
+Note=The window is named for the command. The box remembers the last ten answers.
+
+[step]
+Say=Type the folder, or press Alt plus B to browse for it, then Enter.
+Key=Enter
+Hear=2 files copied
+Note=Nothing is moved unless you use Control plus M instead, which moves.

@@ -41,6 +41,12 @@ installMpv.cmd
 installImageTools.cmd
 pdfRich.py
 makeKeyMap.py
+Tutorial.inix
+Tutorial_Tagging.inix
+makeTutorial.cmd
+makeTutorial.py
+sayTutorial.cmd
+sayTutorial.ps1
 
 # Sources of the two small association programs the installer ships. The
 # programs are shipped; without their sources a clone cannot rebuild them.
@@ -108,7 +114,11 @@ yt-dlp.exe
 # Scratch files used to capture console output when a script fails before it
 # can write its own log. They stay at the root so they are easy to reach.
 temp.txt
+makeTutorial.log
+sayTutorial.log
 tmp.txt
+Tutorial.mp3
+Tutorial_Tagging.mp3
 
 # Working documents kept at the root because something points at them or
 # because they are wanted in plain sight. They are not part of FileDir, so

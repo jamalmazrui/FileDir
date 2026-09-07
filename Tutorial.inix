@@ -1,0 +1,111 @@
+﻿; Tutorial.inix -- the first walk through FileDir and the Player.
+;
+; WHAT THIS FILE IS
+;
+; One step to a section, in the order a person would do them. Each step says
+; three things: what a narrator should explain, which key to press, and what a
+; screen reader says in answer.
+;
+;   Say=    the narration, in plain words
+;   Key=    the key to press, written the way the documents write keys
+;   Hear=   one line of what JAWS says, repeated for each line it says
+;   Note=   a remark for the reader of the written version; not spoken
+;
+; The Hear lines are the point of the format. They come from real JAWS speech
+; histories rather than from anybody's idea of what ought to be said, so the
+; written tutorial matches what a person actually hears, and the same file can
+; be replayed later to check that it still does.
+;
+; The settings assumed are the factory ones, with tutor messages limited to
+; controls that are not standard, and punctuation not announced.
+;
+; makeTutorial.py turns this into the walkthrough section of Tutorials.md.
+; sayTutorial.cmd turns it into a spoken walkthrough, clearly announced as a
+; simulation.
+
+[about]
+Title=A First Walk Through FileDir
+Intro=This is a simulation, not a recording. The words a screen reader would say are written out and spoken by a different voice from the narrator, so you can hear the shape of the work before you do it yourself.
+Setup=FileDir is open and looking at a folder of saved podcast directories. JAWS is running with its usual settings.
+
+[step]
+Say=Start in the file list. Every folder opens as a list you arrow through, and the first thing JAWS says is how many items are in it.
+Key=
+Hear=FileDir
+Hear=List box C:\PodcastDirectories
+Hear=119 items
+Note=The count comes once, when the folder opens.
+
+[step]
+Say=Press Control plus J to jump to a file by name. FileDir asks for the text to jump to, and remembers the last ten answers.
+Key=Control+J
+Hear=Jump
+Hear=Text edit combo
+Note=The window is called Jump because the key is J. Every prompt is named for what it does.
+
+[step]
+Say=Type access and press Enter. The cursor lands on the first name containing that word, whatever its capitalisation.
+Key=Enter
+Hear=AccessOn.htm
+Note=Jump looks at names. Control plus K looks inside the files themselves.
+
+[step]
+Say=This is a directory of podcast episodes, saved as a web page. Press Control plus Shift plus L to play what is in it. FileDir reads the page, finds the media links, and opens the Player.
+Key=Control+Shift+L
+Hear=Play list
+Hear=Looking for media links in AccessOn.htm
+Hear=AccessOn.htm
+Hear=Track list, 92 tracks from links in AccessOn.htm: List box
+Hear=Access On is coming soon, 1 colon 10
+Note=The window is named after the play list until something plays. Nothing plays yet: the queue is loaded paused.
+
+[step]
+Say=You are in the track list. Arrow down to hear the episodes. Each line gives the name, and the length where the page said what it was.
+Key=Down Arrow
+Hear=Welcome to Access on, and AI to help you use your technology, 1 colon 09 colon 23
+Note=No number in front of the name, so pressing a letter jumps to the first track beginning with it.
+
+[step]
+Say=Press Space to play the track you are on.
+Key=Space
+Hear=Playing
+Note=Space plays and pauses from anywhere in the dialog except on a button, where Space presses the button.
+
+[step]
+Say=Control with the arrow keys moves you about. Sideways is time inside the track, up and down is tracks in the queue. Press Control plus Right Arrow to jump forward by a minute.
+Key=Control+Right Arrow
+Hear=1 min of 1 hr 9 min
+Note=A minute is the increment to begin with. The Increment of jump list offers fifteen seconds up to an hour.
+
+[step]
+Say=Press Control plus Down Arrow for the next track. It starts playing where it lands, because listening is how you tell whether you arrived where you meant to.
+Key=Control+Down Arrow
+Hear=NFB Convention, ChatGPT agents, and an accessible thermostat
+Note=Control plus Page Down moves by chapter instead, on the shows that have them.
+
+[step]
+Say=Press Alt plus X for extra information about the track the cursor is on. Everything known about it, one field to a line, sorted by field.
+Key=Alt+X
+Hear=Extra Info: edit read only
+Hear=Address https colon slash slash pinecast dot com
+Note=The fields come from the page the links were on, from the play list, and from ExifTool for a file on this computer. The cursor starts on the first line.
+
+[step]
+Say=Press Alt plus H for help. It lists the keys that have no button, which are the ones hardest to discover.
+Key=Alt+H
+Hear=Player Help
+Hear=PLAYER
+Note=Read it by line. OK closes it.
+
+[step]
+Say=Press Escape to leave the help, and Escape again to close the Player. Everything you chose is remembered against this play list, and so is where each track had reached.
+Key=Escape
+Hear=FileDir
+Hear=List box C:\PodcastDirectories
+Note=Open the same page again tomorrow and it starts where you stopped.
+
+[step]
+Say=That is the whole of it. One key to find a file, one key to play what is in it, arrows to move about, and Escape to come back.
+Key=
+Hear=
+Note=Alt plus H inside the Player lists every key. F1 lists every control with what it does.

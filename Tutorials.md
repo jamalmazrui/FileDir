@@ -1,6 +1,6 @@
 ﻿# FileDir — Tutorials
 
-**Version 5.0.85**  
+**Version 5.0.86**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -15,6 +15,8 @@ command's name and what it does instead of running it.
 
 ## Contents
 
+- [0. A First Walk Through FileDir](#0-a-first-walk-through-filedir)
+- [0a. Tagging Files and Copying Them Somewhere](#0a-tagging-files-and-copying-them-somewhere)
 - [1. Your First Five Minutes](#1-your-first-five-minutes)
 - [2. Finding Something in a Crowded Folder](#2-finding-something-in-a-crowded-folder)
 - [3. Tagging, and Why It Changes Everything](#3-tagging-and-why-it-changes-everything)
@@ -26,6 +28,189 @@ command's name and what it does instead of running it.
 - [8. Renaming a Batch of Files](#8-renaming-a-batch-of-files)
 - [8a. Playing a Page of Podcasts](#8a-playing-a-page-of-podcasts)
 - [9. Making FileDir Yours](#9-making-filedir-yours)
+
+<!-- walkthrough: written by makeTutorial.py, do not edit between the markers -->
+
+## 0. A First Walk Through FileDir
+
+This is a simulation, not a recording. The words a screen reader would say are written out and spoken by a different voice from the narrator, so you can hear the shape of the work before you do it yourself.
+
+**Before you start:** FileDir is open and looking at a folder of saved podcast directories. JAWS is running with its usual settings.
+
+### Step 1
+
+Start in the file list. Every folder opens as a list you arrow through, and the first thing JAWS says is how many items are in it.
+
+You hear:
+
+- FileDir
+- List box C:\PodcastDirectories
+- 119 items
+
+The count comes once, when the folder opens.
+
+### Step 2: Control+J
+
+Press Control plus J to jump to a file by name. FileDir asks for the text to jump to, and remembers the last ten answers.
+
+You hear:
+
+- Jump
+- Text edit combo
+
+The window is called Jump because the key is J. Every prompt is named for what it does.
+
+### Step 3: Enter
+
+Type access and press Enter. The cursor lands on the first name containing that word, whatever its capitalisation.
+
+You hear:
+
+- AccessOn.htm
+
+Jump looks at names. Control plus K looks inside the files themselves.
+
+### Step 4: Control+Shift+L
+
+This is a directory of podcast episodes, saved as a web page. Press Control plus Shift plus L to play what is in it. FileDir reads the page, finds the media links, and opens the Player.
+
+You hear:
+
+- Play list
+- Looking for media links in AccessOn.htm
+- AccessOn.htm
+- Track list, 92 tracks from links in AccessOn.htm: List box
+- Access On is coming soon, 1 colon 10
+
+The window is named after the play list until something plays. Nothing plays yet: the queue is loaded paused.
+
+### Step 5: Down Arrow
+
+You are in the track list. Arrow down to hear the episodes. Each line gives the name, and the length where the page said what it was.
+
+You hear:
+
+- Welcome to Access on, and AI to help you use your technology, 1 colon 09 colon 23
+
+No number in front of the name, so pressing a letter jumps to the first track beginning with it.
+
+### Step 6: Space
+
+Press Space to play the track you are on.
+
+You hear:
+
+- Playing
+
+Space plays and pauses from anywhere in the dialog except on a button, where Space presses the button.
+
+### Step 7: Control+Right Arrow
+
+Control with the arrow keys moves you about. Sideways is time inside the track, up and down is tracks in the queue. Press Control plus Right Arrow to jump forward by a minute.
+
+You hear:
+
+- 1 min of 1 hr 9 min
+
+A minute is the increment to begin with. The Increment of jump list offers fifteen seconds up to an hour.
+
+### Step 8: Control+Down Arrow
+
+Press Control plus Down Arrow for the next track. It starts playing where it lands, because listening is how you tell whether you arrived where you meant to.
+
+You hear:
+
+- NFB Convention, ChatGPT agents, and an accessible thermostat
+
+Control plus Page Down moves by chapter instead, on the shows that have them.
+
+### Step 9: Alt+X
+
+Press Alt plus X for extra information about the track the cursor is on. Everything known about it, one field to a line, sorted by field.
+
+You hear:
+
+- Extra Info: edit read only
+- Address https colon slash slash pinecast dot com
+
+The fields come from the page the links were on, from the play list, and from ExifTool for a file on this computer. The cursor starts on the first line.
+
+### Step 10: Alt+H
+
+Press Alt plus H for help. It lists the keys that have no button, which are the ones hardest to discover.
+
+You hear:
+
+- Player Help
+- PLAYER
+
+Read it by line. OK closes it.
+
+### Step 11: Escape
+
+Press Escape to leave the help, and Escape again to close the Player. Everything you chose is remembered against this play list, and so is where each track had reached.
+
+You hear:
+
+- FileDir
+- List box C:\PodcastDirectories
+
+Open the same page again tomorrow and it starts where you stopped.
+
+### Step 12
+
+That is the whole of it. One key to find a file, one key to play what is in it, arrows to move about, and Escape to come back.
+
+Alt plus H inside the Player lists every key. F1 lists every control with what it does.
+
+## 0a. Tagging Files and Copying Them Somewhere
+
+This is a simulation, not a recording.
+
+**Before you start:** A folder of files is open.
+
+### Step 1: Semicolon
+
+Arrow to a file you want, and press the semicolon to tag it. Tagging marks a file for the next command without moving you.
+
+You hear:
+
+- Tagged
+
+The slash key untags. Shift plus Home tags everything from here to the top.
+
+### Step 2: Semicolon
+
+Arrow to another file and tag that one too. FileDir says how many are tagged as the number changes.
+
+You hear:
+
+- 2 tagged files
+
+Alt plus Y says the count at any time.
+
+### Step 3: Control+C
+
+Press Control plus C to copy the tagged files. FileDir asks where to.
+
+You hear:
+
+- Copy To
+- Folder edit
+
+The window is named for the command. The box remembers the last ten answers.
+
+### Step 4: Enter
+
+Type the folder, or press Alt plus B to browse for it, then Enter.
+
+You hear:
+
+- 2 files copied
+
+Nothing is moved unless you use Control plus M instead, which moves.
+
+<!-- walkthrough ends -->
 
 ## 1. Your First Five Minutes
 

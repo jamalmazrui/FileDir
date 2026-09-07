@@ -267,6 +267,17 @@ if ($iExit -ne 0) { stopHere ("makeKeyMap.py returned " + $iExit + ". See makeKe
 # script, and shares homerPolicy.py with cleanFileDir, so the sweep and the
 # check cannot form different opinions about what belongs.  Its shape follows
 # EdSharp's audit, so a check written for one project moves to the other.
+saySection "Tutorial"
+if (Test-Path "makeTutorial.py") {
+    Write-Host "Writing the walkthrough into Tutorials.md ..."
+    & $sPython "makeTutorial.py" 2>&1 | ForEach-Object { writeLog ("  | " + $_) }
+    writeLog ("  makeTutorial.py exit code: " + $LASTEXITCODE)
+    if ($LASTEXITCODE -ne 0) { stopHere "makeTutorial.py failed. Its log is makeTutorial.log." }
+}
+else {
+    writeLog "makeTutorial.py not found; the walkthrough section is left as it stands."
+}
+
 saySection "Audit"
 if ($bCompileOnly) {
     Write-Host "Compile only, so the audit is skipped."
