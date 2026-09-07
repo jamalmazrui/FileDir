@@ -1,0 +1,95 @@
+2026-09-07 14:16:03  sayTutorial starting
+2026-09-07 14:16:03  script: C:\FileDir\sayTutorial.ps1
+2026-09-07 14:16:03  PowerShell: 5.1.26100.9278
+2026-09-07 14:16:03  platform: Microsoft Windows NT 10.0.26200.0
+2026-09-07 14:16:03  working directory: C:\FileDir
+2026-09-07 14:16:03  command line: powershell.exe  -NoProfile -ExecutionPolicy Bypass -File "C:\FileDir\sayTutorial.ps1" 
+2026-09-07 14:16:03  source: C:\FileDir\Tutorial.inix
+2026-09-07 14:16:03  output: C:\FileDir\Tutorial.mp3
+2026-09-07 14:16:03  work folder: C:\Users\Jamal\AppData\Local\Temp\sayTutorial_6bd082ef5dcb4151ade7421f7f2d77d4
+2026-09-07 14:16:03  ffmpeg: C:\FileDir\ffmpeg.exe
+2026-09-07 14:16:03  live: False
+2026-09-07 14:16:03  voices installed: Microsoft David Desktop, Microsoft Zira Desktop
+2026-09-07 14:16:03  no Eloquence-like voice found; using a second voice or a different rate
+2026-09-07 14:16:03  narrator voice: Microsoft David Desktop, reader voice: Microsoft Zira Desktop
+2026-09-07 14:16:03  sections read: 19
+2026-09-07 14:16:03  steps: 18
+2026-09-07 14:16:03  Speaking 18 steps into Tutorial.mp3.
+2026-09-07 14:16:03  piece 1 [Microsoft David Desktop rate 4]: Simulated walk through FileDir. Not a recording. One voice narrates; the other stands in for the screen reader.
+2026-09-07 14:16:03  piece 3 [Microsoft David Desktop rate 4]: A First Walk Through FileDir
+2026-09-07 14:16:03  piece 5 [Microsoft David Desktop rate 4]: FileDir is open on a folder of saved podcast directories, and JAWS is running.
+2026-09-07 14:16:03  piece 7 [Microsoft David Desktop rate 4]: Every folder opens as a list you arrow through. JAWS says the folder and how many items are in it.
+2026-09-07 14:16:03  piece 9 [Microsoft Zira Desktop rate 6]: FileDir
+2026-09-07 14:16:03  piece 10 [Microsoft Zira Desktop rate 6]: List box C:\PodcastDirectories
+2026-09-07 14:16:03  piece 11 [Microsoft Zira Desktop rate 6]: 119 items
+2026-09-07 14:16:03  piece 13 [Microsoft David Desktop rate 4]: Control plus J jumps to a file by name. FileDir asks for the text and remembers your last ten answers.
+2026-09-07 14:16:03  piece 15 [Microsoft David Desktop rate 4]: Press Control+J
+2026-09-07 14:16:03  piece 17 [Microsoft Zira Desktop rate 6]: Jump
+2026-09-07 14:16:03  piece 18 [Microsoft Zira Desktop rate 6]: Text edit combo
+2026-09-07 14:16:03  piece 20 [Microsoft David Desktop rate 4]: Type access and press Enter.
+2026-09-07 14:16:03  piece 22 [Microsoft David Desktop rate 4]: Press Enter
+2026-09-07 14:16:03  piece 24 [Microsoft Zira Desktop rate 6]: AccessOn.htm
+2026-09-07 14:16:04  piece 26 [Microsoft David Desktop rate 4]: This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
+2026-09-07 14:16:04  piece 28 [Microsoft David Desktop rate 4]: Press Control+Shift+L
+2026-09-07 14:16:04  piece 30 [Microsoft Zira Desktop rate 6]: Play list
+2026-09-07 14:16:04  piece 31 [Microsoft Zira Desktop rate 6]: Looking for media links in AccessOn.htm
+2026-09-07 14:16:04  piece 32 [Microsoft Zira Desktop rate 6]: AccessOn.htm
+2026-09-07 14:16:04  piece 33 [Microsoft Zira Desktop rate 6]: Track list, 92 tracks from links in AccessOn.htm: List box
+2026-09-07 14:16:04  piece 35 [Microsoft David Desktop rate 4]: The Player is a dialog, so Tab moves through it. In order: the track list, extra info, the sort order, next and previous track, forward and backward, the jump size, the two chapter buttons, where in track, rate, volume, then execute, stop, defaults, help and close.
+2026-09-07 14:16:04  piece 37 [Microsoft David Desktop rate 4]: Press Tab
+2026-09-07 14:16:04  piece 39 [Microsoft Zira Desktop rate 6]: Extra Info: edit read only
+2026-09-07 14:16:04  piece 41 [Microsoft David Desktop rate 4]: Three keys do most of the work. Enter plays the track the cursor is on. Space plays and pauses from anywhere but a button. Escape closes the Player.
+2026-09-07 14:16:04  piece 43 [Microsoft David Desktop rate 4]: Press Shift+Tab
+2026-09-07 14:16:04  piece 45 [Microsoft Zira Desktop rate 6]: Track list, 92 tracks from links in AccessOn.htm: List box
+2026-09-07 14:16:04  piece 46 [Microsoft Zira Desktop rate 6]: Access On is coming soon
+2026-09-07 14:16:04  piece 48 [Microsoft David Desktop rate 4]: The track list holds one line for each episode: its name, and its length where the page gave one. There is no number in front, so pressing a letter jumps to the first episode beginning with it.
+2026-09-07 14:16:04  piece 50 [Microsoft David Desktop rate 4]: Press Down Arrow
+2026-09-07 14:16:04  piece 52 [Microsoft Zira Desktop rate 6]: Welcome to Access on, and AI to help you use your technology, 1 colon 09 colon 23
+2026-09-07 14:16:04  piece 54 [Microsoft David Desktop rate 4]: Press Enter to play the one you are on.
+2026-09-07 14:16:04  piece 56 [Microsoft David Desktop rate 4]: Press Enter
+2026-09-07 14:16:04  piece 58 [Microsoft Zira Desktop rate 6]: Playing
+2026-09-07 14:16:04  piece 60 [Microsoft David Desktop rate 4]: There are two modes, and Enter follows them. While something plays, Enter is stop. While nothing plays, Enter is execute playback. The status line says which: press your screen reader's key for it.
+2026-09-07 14:16:04  piece 62 [Microsoft Zira Desktop rate 6]: Playing track 2 of 92, 12 min 3 sec of 1 hr 9 min
+2026-09-07 14:16:04  piece 64 [Microsoft David Desktop rate 4]: Control with an arrow is the transport. Sideways is time inside the track, up and down is tracks in the queue, the Page keys are chapters, and adding Shift means all the way.
+2026-09-07 14:16:04  piece 66 [Microsoft David Desktop rate 4]: Press Control+Right Arrow
+2026-09-07 14:16:04  piece 68 [Microsoft Zira Desktop rate 6]: 13 min 3 sec of 1 hr 9 min
+2026-09-07 14:16:05  piece 70 [Microsoft David Desktop rate 4]: Press Space to pause.
+2026-09-07 14:16:05  piece 72 [Microsoft David Desktop rate 4]: Press Space
+2026-09-07 14:16:05  piece 74 [Microsoft Zira Desktop rate 6]: Paused
+2026-09-07 14:16:05  piece 76 [Microsoft David Desktop rate 4]: Now the two searches, which answer different questions. Control plus J jumps by the line the list shows. Type braillenote and press Enter.
+2026-09-07 14:16:05  piece 78 [Microsoft David Desktop rate 4]: Press Control+J
+2026-09-07 14:16:05  piece 80 [Microsoft Zira Desktop rate 6]: Jump
+2026-09-07 14:16:05  piece 81 [Microsoft Zira Desktop rate 6]: Text edit combo
+2026-09-07 14:16:05  piece 82 [Microsoft Zira Desktop rate 6]: The BrailleNote Evolve from HumanWare
+2026-09-07 14:16:05  piece 84 [Microsoft David Desktop rate 4]: Control plus K searches everything known about each episode: the presenter, the date, the address, and the summary the page gave. Type meta glasses and press Enter.
+2026-09-07 14:16:05  piece 86 [Microsoft David Desktop rate 4]: Press Control+K
+2026-09-07 14:16:05  piece 88 [Microsoft Zira Desktop rate 6]: Keywords
+2026-09-07 14:16:05  piece 89 [Microsoft Zira Desktop rate 6]: Text edit combo
+2026-09-07 14:16:05  piece 90 [Microsoft Zira Desktop rate 6]: Workaround for the Braille Screen Input Uber bug, Android becomes more restrictive, and assigning a Braille keyboard command to Sound Curtin
+2026-09-07 14:16:05  piece 92 [Microsoft David Desktop rate 4]: Keywords takes more than one word. An ampersand means both, a bar means either, and a star stands for anything in the middle. F3 repeats whichever search you used last, and Shift plus F3 goes back.
+2026-09-07 14:16:05  piece 94 [Microsoft David Desktop rate 4]: Press F3
+2026-09-07 14:16:05  piece 96 [Microsoft Zira Desktop rate 6]: 0 more matches for meta glasses
+2026-09-07 14:16:05  piece 98 [Microsoft David Desktop rate 4]: Alt plus X is extra info: everything known about the episode the cursor is on, one field to a line, sorted by field. The cursor starts at the top.
+2026-09-07 14:16:05  piece 100 [Microsoft David Desktop rate 4]: Press Alt+X
+2026-09-07 14:16:05  piece 102 [Microsoft Zira Desktop rate 6]: Extra Info: edit read only
+2026-09-07 14:16:05  piece 103 [Microsoft Zira Desktop rate 6]: Address https colon slash slash pinecast dot com slash listen
+2026-09-07 14:16:05  piece 105 [Microsoft David Desktop rate 4]: Alt plus H is help. It leads with the keys that have no button, because those are the hardest to find.
+2026-09-07 14:16:05  piece 107 [Microsoft David Desktop rate 4]: Press Alt+H
+2026-09-07 14:16:05  piece 109 [Microsoft Zira Desktop rate 6]: Player Help
+2026-09-07 14:16:05  piece 110 [Microsoft Zira Desktop rate 6]: PLAYER
+2026-09-07 14:16:05  piece 111 [Microsoft Zira Desktop rate 6]: Every control has its own Alt key, the letter underlined in its name.
+2026-09-07 14:16:05  piece 112 [Microsoft Zira Desktop rate 6]: These commands have no control, so they are listed first.
+2026-09-07 14:16:05  piece 113 [Microsoft Zira Desktop rate 6]: FINDING A TRACK
+2026-09-07 14:16:05  piece 114 [Microsoft Zira Desktop rate 6]: Control plus J jump to a track by name, as the list shows it
+2026-09-07 14:16:05  piece 115 [Microsoft Zira Desktop rate 6]: Control plus K keywords, search everything known about the tracks
+2026-09-07 14:16:05  piece 116 [Microsoft Zira Desktop rate 6]: F3, Shift plus F3 repeat the last jump or keyword search
+2026-09-07 14:16:05  piece 118 [Microsoft David Desktop rate 4]: Escape leaves the help. Escape again closes the Player, remembering the settings for this play list and where each episode had reached.
+2026-09-07 14:16:05  piece 120 [Microsoft David Desktop rate 4]: Press Escape
+2026-09-07 14:16:06  piece 122 [Microsoft Zira Desktop rate 6]: FileDir
+2026-09-07 14:16:06  piece 123 [Microsoft Zira Desktop rate 6]: List box C:\PodcastDirectories
+2026-09-07 14:16:06  piece 125 [Microsoft David Desktop rate 4]: That is the whole of it. One key to find a file, one key to play what is in it, Control with the arrows to move about, and Escape to come back.
+2026-09-07 14:16:06  piece 127 [Microsoft David Desktop rate 4]: End of the walk.
+2026-09-07 14:16:06  pieces made: 127
+2026-09-07 14:16:06  list file: C:\Users\Jamal\AppData\Local\Temp\sayTutorial_6bd082ef5dcb4151ade7421f7f2d77d4\pieces.txt
+2026-09-07 14:16:06  ffmpeg exit code: 0
+2026-09-07 14:16:06  Wrote C:\FileDir\Tutorial.mp3

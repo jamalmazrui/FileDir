@@ -1,6 +1,6 @@
 ﻿# FileDir — Tutorials
 
-**Version 5.0.86**  
+**Version 5.0.87**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -33,13 +33,13 @@ command's name and what it does instead of running it.
 
 ## 0. A First Walk Through FileDir
 
-This is a simulation, not a recording. The words a screen reader would say are written out and spoken by a different voice from the narrator, so you can hear the shape of the work before you do it yourself.
+This is a simulation, not a recording.
 
-**Before you start:** FileDir is open and looking at a folder of saved podcast directories. JAWS is running with its usual settings.
+**Before you start:** FileDir is open on a folder of saved podcast directories, and JAWS is running.
 
 ### Step 1
 
-Start in the file list. Every folder opens as a list you arrow through, and the first thing JAWS says is how many items are in it.
+Every folder opens as a list you arrow through. JAWS says the folder and how many items are in it.
 
 You hear:
 
@@ -51,28 +51,28 @@ The count comes once, when the folder opens.
 
 ### Step 2: Control+J
 
-Press Control plus J to jump to a file by name. FileDir asks for the text to jump to, and remembers the last ten answers.
+Control plus J jumps to a file by name. FileDir asks for the text and remembers your last ten answers.
 
 You hear:
 
 - Jump
 - Text edit combo
 
-The window is called Jump because the key is J. Every prompt is named for what it does.
+The window is named Jump because the key is J.
 
 ### Step 3: Enter
 
-Type access and press Enter. The cursor lands on the first name containing that word, whatever its capitalisation.
+Type access and press Enter.
 
 You hear:
 
 - AccessOn.htm
 
-Jump looks at names. Control plus K looks inside the files themselves.
+Jump looks at names. Control plus K looks inside the files.
 
 ### Step 4: Control+Shift+L
 
-This is a directory of podcast episodes, saved as a web page. Press Control plus Shift plus L to play what is in it. FileDir reads the page, finds the media links, and opens the Player.
+This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
 
 You hear:
 
@@ -80,86 +80,156 @@ You hear:
 - Looking for media links in AccessOn.htm
 - AccessOn.htm
 - Track list, 92 tracks from links in AccessOn.htm: List box
-- Access On is coming soon, 1 colon 10
 
-The window is named after the play list until something plays. Nothing plays yet: the queue is loaded paused.
+The window is named after the play list until something plays. Nothing plays yet.
 
-### Step 5: Down Arrow
+### Step 5: Tab
 
-You are in the track list. Arrow down to hear the episodes. Each line gives the name, and the length where the page said what it was.
+The Player is a dialog, so Tab moves through it. In order: the track list, extra info, the sort order, next and previous track, forward and backward, the jump size, the two chapter buttons, where in track, rate, volume, then execute, stop, defaults, help and close.
+
+You hear:
+
+- Extra Info: edit read only
+
+Every control has its own Alt key: T for the track list, X for extra info, O for order, E for execute, S for stop, H for help.
+
+### Step 6: Shift+Tab
+
+Three keys do most of the work. Enter plays the track the cursor is on. Space plays and pauses from anywhere but a button. Escape closes the Player.
+
+You hear:
+
+- Track list, 92 tracks from links in AccessOn.htm: List box
+- Access On is coming soon
+
+Shift plus Tab goes back the way you came.
+
+### Step 7: Down Arrow
+
+The track list holds one line for each episode: its name, and its length where the page gave one. There is no number in front, so pressing a letter jumps to the first episode beginning with it.
 
 You hear:
 
 - Welcome to Access on, and AI to help you use your technology, 1 colon 09 colon 23
 
-No number in front of the name, so pressing a letter jumps to the first track beginning with it.
+Arrowing through the list chooses nothing and plays nothing.
 
-### Step 6: Space
+### Step 8: Enter
 
-Press Space to play the track you are on.
+Press Enter to play the one you are on.
 
 You hear:
 
 - Playing
 
-Space plays and pauses from anywhere in the dialog except on a button, where Space presses the button.
+Now the window title is the track, so your screen reader's title key says what is playing.
 
-### Step 7: Control+Right Arrow
+### Step 9
 
-Control with the arrow keys moves you about. Sideways is time inside the track, up and down is tracks in the queue. Press Control plus Right Arrow to jump forward by a minute.
-
-You hear:
-
-- 1 min of 1 hr 9 min
-
-A minute is the increment to begin with. The Increment of jump list offers fifteen seconds up to an hour.
-
-### Step 8: Control+Down Arrow
-
-Press Control plus Down Arrow for the next track. It starts playing where it lands, because listening is how you tell whether you arrived where you meant to.
+There are two modes, and Enter follows them. While something plays, Enter is stop. While nothing plays, Enter is execute playback. The status line says which: press your screen reader's key for it.
 
 You hear:
 
-- NFB Convention, ChatGPT agents, and an accessible thermostat
+- Playing track 2 of 92, 12 min 3 sec of 1 hr 9 min
 
-Control plus Page Down moves by chapter instead, on the shows that have them.
+The status line is never announced. It waits until you ask.
 
-### Step 9: Alt+X
+### Step 10: Control+Right Arrow
 
-Press Alt plus X for extra information about the track the cursor is on. Everything known about it, one field to a line, sorted by field.
+Control with an arrow is the transport. Sideways is time inside the track, up and down is tracks in the queue, the Page keys are chapters, and adding Shift means all the way.
+
+You hear:
+
+- 13 min 3 sec of 1 hr 9 min
+
+The jump is a minute to begin with. Alt plus I offers fifteen seconds up to an hour.
+
+### Step 11: Space
+
+Press Space to pause.
+
+You hear:
+
+- Paused
+
+Space plays and pauses from any control except a button, where Space presses the button.
+
+### Step 12: Control+J
+
+Now the two searches, which answer different questions. Control plus J jumps by the line the list shows. Type braillenote and press Enter.
+
+You hear:
+
+- Jump
+- Text edit combo
+- The BrailleNote Evolve from HumanWare
+
+That title has the word in it, so Jump finds it.
+
+### Step 13: Control+K
+
+Control plus K searches everything known about each episode: the presenter, the date, the address, and the summary the page gave. Type meta glasses and press Enter.
+
+You hear:
+
+- Keywords
+- Text edit combo
+- Workaround for the Braille Screen Input Uber bug, Android becomes more restrictive, and assigning a Braille keyboard command to Sound Curtin
+
+Those words are nowhere in that title. They are in the summary, which is why Keywords found it and Jump could not.
+
+### Step 14: F3
+
+Keywords takes more than one word. An ampersand means both, a bar means either, and a star stands for anything in the middle. F3 repeats whichever search you used last, and Shift plus F3 goes back.
+
+You hear:
+
+- 0 more matches for meta glasses
+
+Control plus F filters the list to what matches; Control plus Shift plus F clears it.
+
+### Step 15: Alt+X
+
+Alt plus X is extra info: everything known about the episode the cursor is on, one field to a line, sorted by field. The cursor starts at the top.
 
 You hear:
 
 - Extra Info: edit read only
-- Address https colon slash slash pinecast dot com
+- Address https colon slash slash pinecast dot com slash listen
 
-The fields come from the page the links were on, from the play list, and from ExifTool for a file on this computer. The cursor starts on the first line.
+The fields come from the page, from the play list, and from ExifTool for a file on this computer.
 
-### Step 10: Alt+H
+### Step 16: Alt+H
 
-Press Alt plus H for help. It lists the keys that have no button, which are the ones hardest to discover.
+Alt plus H is help. It leads with the keys that have no button, because those are the hardest to find.
 
 You hear:
 
 - Player Help
 - PLAYER
+- Every control has its own Alt key, the letter underlined in its name.
+- These commands have no control, so they are listed first.
+- FINDING A TRACK
+- Control plus J jump to a track by name, as the list shows it
+- Control plus K keywords, search everything known about the tracks
+- F3, Shift plus F3 repeat the last jump or keyword search
 
-Read it by line. OK closes it.
+Read it by line, or copy it. OK closes it.
 
-### Step 11: Escape
+### Step 17: Escape
 
-Press Escape to leave the help, and Escape again to close the Player. Everything you chose is remembered against this play list, and so is where each track had reached.
+Escape leaves the help. Escape again closes the Player, remembering the settings for this play list and where each episode had reached.
 
 You hear:
 
 - FileDir
 - List box C:\PodcastDirectories
 
-Open the same page again tomorrow and it starts where you stopped.
+Open the same page tomorrow and it starts where you stopped.
 
-### Step 12
+### Step 18
 
-That is the whole of it. One key to find a file, one key to play what is in it, arrows to move about, and Escape to come back.
+That is the whole of it. One key to find a file, one key to play what is in it, Control with the arrows to move about, and Escape to come back.
 
 Alt plus H inside the Player lists every key. F1 lists every control with what it does.
 

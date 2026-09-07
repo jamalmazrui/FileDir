@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.86**  
+**Version 5.0.87**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -797,6 +797,34 @@ The reasoning behind it is written down in the developer notes, as four rules:
 say nothing the reader already says; say what it cannot know; layer the detail
 so a short answer is the default and the longer ones are a key away; and write
 every message to the status line so it can be read back rather than repeated.
+
+**The walk got longer where it needed to and Eloquence where it could.**
+
+The first tutorial now opens the play list, walks the Tab order and names the
+Alt key for each control, states what Enter, Space and Escape do, explains the
+two modes -- Enter stops while something plays and starts while nothing does --
+and demonstrates the transport. Then it shows the two searches against a real
+directory: Jump finds the BrailleNote Evolve because those words are in a title,
+and Keywords finds the Ray Ban Meta Glasses because those words are only in a
+summary. That contrast is the reason both searches exist, and one example
+teaches it better than a paragraph.
+
+The help step said nothing about help, because its Hear lines named the window
+and stopped. It now carries the first lines of the help page itself.
+
+**Eloquence for the screen reader's lines**, where the machine has it. People
+who use JAWS recognise that voice before they have understood a word, so
+hearing it says "this is the screen reader talking" faster than any wording
+could. The script looks through the SAPI voices Windows reports for Eloquence
+and its relatives, and falls back to a second voice, and then to one voice at
+two rates.
+
+**And a live switch**, because JAWS's own Eloquence is not a SAPI voice and
+cannot be written to a file -- it speaks over its own audio path, and capturing
+that needs a loopback recorder this script has no business installing. So
+sayTutorial with -live performs the walk instead: the narration through Windows,
+the screen reader's lines through the JAWS COM server, exactly as they would
+sound in use. It writes no file and says so.
 
 **The tutorial tools are general now, and the audio is faster.**
 

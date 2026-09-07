@@ -41,8 +41,11 @@ $sLog = Join-Path $sHere "sayTutorial.log"
 # and the audio takes the file's own name: Tutorial_Tagging.inix becomes
 # Tutorial_Tagging.mp3.
 $sName = "Tutorial"
-if ($args.Count -gt 0 -and $args[0].Trim().Length -gt 0) {
-  $sName = [System.IO.Path]::GetFileNameWithoutExtension($args[0].Trim())
+foreach ($sArg in $args) {
+  $sTrimmed = $sArg.Trim()
+  if ($sTrimmed.Length -eq 0 -or $sTrimmed.StartsWith("-")) { continue }
+  $sName = [System.IO.Path]::GetFileNameWithoutExtension($sTrimmed)
+  break
 }
 $sSource = Join-Path $sHere ($sName + ".inix")
 $sOut = Join-Path $sHere ($sName + ".mp3")
@@ -82,10 +85,38 @@ if (-not (Test-Path -LiteralPath $sFfmpeg)) {
   if ($oFound) { $sFfmpeg = $oFound.Source }
 }
 note ("ffmpeg: " + $sFfmpeg)
-if (-not (Test-Path -LiteralPath $sFfmpeg)) {
+if (-not $bLive -and -not (Test-Path -LiteralPath $sFfmpeg)) {
   say "ffmpeg was not found, and it is what joins the pieces together."
   say "Install the media tools, or run installMediaTools.cmd in this folder."
   exit 1
+}
+
+# LIVE: SPOKEN BY JAWS ITSELF, AND WRITTEN TO NOTHING.
+#
+# JAWS speaks through its own synthesizer over its own audio path, so its voice
+# cannot be captured to a file without a loopback recorder this script has no
+# business installing. What it CAN do is perform the walk live: the narrator
+# through Windows, the screen reader's lines through JAWS, exactly as they would
+# sound in use.
+#
+# So there are two things here, and they are different on purpose:
+#   sayTutorial <name>          writes <name>.mp3, Eloquence where available
+#   sayTutorial <name> -live    performs it now, through JAWS, and writes no file
+$bLive = $false
+foreach ($sArg in $args) { if ($sArg -eq "-live") { $bLive = $true } }
+note ("live: " + $bLive)
+
+$oJaws = $null
+if ($bLive) {
+  try {
+    $oJaws = New-Object -ComObject FreedomSci.JawsApi
+    note "JAWS COM server attached"
+  }
+  catch {
+    note ("JAWS COM server not available: " + $_.Exception.Message)
+    say "JAWS is not running, or its COM server is not available, so the live walk cannot be spoken."
+    exit 1
+  }
 }
 
 Add-Type -AssemblyName System.Speech
@@ -96,11 +127,35 @@ if ($lsVoices.Count -eq 0) {
   say "Windows reports 0 voices, so nothing can be spoken."
   exit 1
 }
-$sNarrator = $lsVoices[0]
-$sReader = if ($lsVoices.Count -gt 1) { $lsVoices[1] } else { $lsVoices[0] }
+# ELOQUENCE FOR THE SCREEN READER'S LINES, WHERE THE MACHINE HAS IT.
+#
+# People who use JAWS have heard Eloquence for twenty years, and recognise it
+# before they have understood a word. Hearing it here says "this is the screen
+# reader talking" faster than any wording could. It is picked by name, from
+# whatever SAPI voices Windows reports; failing that, any second voice will do,
+# and failing that the one voice speaks both parts at different rates.
+#
+# JAWS's own Eloquence is not a SAPI voice and cannot be written to a file --
+# see the -live switch below for hearing the real thing.
+$sReader = ""
+foreach ($sWanted in @("eloquence", "eti-eloquence", "ibmtts", "vocalizer")) {
+  foreach ($sVoice in $lsVoices) {
+    if ($sReader -eq "" -and $sVoice.ToLower().Contains($sWanted)) { $sReader = $sVoice }
+  }
+}
+$sNarrator = ""
+foreach ($sVoice in $lsVoices) {
+  if ($sNarrator -eq "" -and $sVoice -ne $sReader) { $sNarrator = $sVoice }
+}
+if ($sNarrator -eq "") { $sNarrator = $lsVoices[0] }
+if ($sReader -eq "") {
+  note "no Eloquence-like voice found; using a second voice or a different rate"
+  $sReader = if ($lsVoices.Count -gt 1 -and $lsVoices[1] -ne $sNarrator) { $lsVoices[1] } else { $lsVoices[0] }
+}
 note ("narrator voice: " + $sNarrator + ", reader voice: " + $sReader)
+$script:sReaderVoice = $sReader
 
-New-Item -ItemType Directory -Path $sWork -Force | Out-Null
+if (-not $bLive) { New-Item -ItemType Directory -Path $sWork -Force | Out-Null }
 $iPiece = 0
 $lsPieces = New-Object System.Collections.Generic.List[string]
 
@@ -115,7 +170,29 @@ $lsPieces = New-Object System.Collections.Generic.List[string]
 $script:iNarratorRate = 4
 $script:iReaderRate = 6
 
+function speakLive([string] $sText, [bool] $bAsReader) {
+  # Live: the reader's lines go through JAWS, the narrator's through Windows.
+  # SayString returns before it has finished speaking, so the wait is worked out
+  # from the length of the words -- rough, but the alternative is talking over
+  # itself.
+  if ($bAsReader) {
+    $oJaws.SayString($sText, $true) | Out-Null
+    Start-Sleep -Milliseconds ([Math]::Max(400, $sText.Length * 38))
+  }
+  else {
+    $oSpeaker.SelectVoice($sNarrator)
+    $oSpeaker.Rate = $script:iNarratorRate
+    $oSpeaker.SetOutputToDefaultAudioDevice()
+    $oSpeaker.Speak($sText)
+  }
+  note ("live [" + $(if ($bAsReader) { "JAWS" } else { "narrator" }) + "]: " + $sText)
+}
+
 function speakTo([string] $sText, [string] $sVoice, [int] $iRate) {
+  if ($bLive) {
+    speakLive $sText ($sVoice -eq $script:sReaderVoice)
+    return
+  }
   # One line of speech, written as a wave file of its own. Separate files
   # rather than one long one: a piece that fails is then one piece, and the
   # pauses between them are made by the joining rather than by the voice.
@@ -131,6 +208,7 @@ function speakTo([string] $sText, [string] $sVoice, [int] $iRate) {
 }
 
 function silenceFor([double] $dSeconds) {
+  if ($bLive) { Start-Sleep -Milliseconds ([int]($dSeconds * 1000)); return }
   # A gap, made by ffmpeg rather than by the voice, so it is the same length
   # every time.
   $script:iPiece = $script:iPiece + 1
@@ -170,7 +248,8 @@ if ($lsSteps.Count -eq 0) {
   exit 1
 }
 
-say ("Speaking " + $lsSteps.Count + " steps. This takes a minute or two.")
+if ($bLive) { say ("Speaking " + $lsSteps.Count + " steps aloud now.") }
+else { say ("Speaking " + $lsSteps.Count + " steps into " + [System.IO.Path]::GetFileName($sOut) + ".") }
 
 # SAID FIRST, EVERY TIME. Anyone hearing this should know within a sentence
 # that they are hearing a reconstruction rather than a recording of a session.
@@ -196,6 +275,14 @@ speakTo "End of the walk." $sNarrator $script:iNarratorRate
 
 $oSpeaker.Dispose()
 note ("pieces made: " + $lsPieces.Count)
+
+if ($bLive) {
+  # Nothing was written, because nothing could be: JAWS speaks over its own
+  # audio path. The walk has just been performed instead.
+  try { Remove-Item -LiteralPath $sWork -Recurse -Force } catch { }
+  say "The walk was spoken live. No file was written."
+  exit 0
+}
 
 # ffmpeg joins them. A list file rather than a long command line: a hundred
 # pieces do not fit on one.
