@@ -1332,6 +1332,17 @@ public class LbcDialog : IDisposable
         return stateFor(lb).sFilter.Length > 0;
     }
 
+    // applyFilter: show only the items that match.
+    //
+    // THE SAME SYNTAX AS KEYWORDS, AND FOR THE SAME REASON. Filter used a plain
+    // substring test, so "chap*" found nothing at all: no line contains a star.
+    // Meanwhile the directory window's own filter has taken wildcards for
+    // years, and Keywords here takes & and | and *. Three commands that narrow
+    // a list by text should not need three sets of rules, and the one anybody
+    // would guess is the one already written down.
+    //
+    // Jump is deliberately left out of that: it is the plain substring jump it
+    // is in FileDir, where the whole point is typing a few letters fast.
     private void applyFilter(ListBox lb, string sFilter)
     {
         ListState state = stateFor(lb);
@@ -1339,7 +1350,7 @@ public class LbcDialog : IDisposable
         List<int> liRows = new List<int>();
         for (int i = 0; i < state.lsAll.Count; i++)
         {
-            if (sLower.Length == 0 || state.lsSearch[i].ToLowerInvariant().Contains(sLower)) liRows.Add(i);
+            if (sLower.Length == 0 || keywordsMatch(state.lsSearch[i].ToLowerInvariant(), sLower)) liRows.Add(i);
         }
         // A FILTER THAT MATCHES NOTHING IS NOT APPLIED. An empty list is a
         // dead end with no way back that is obvious from inside it, and the
@@ -1403,7 +1414,10 @@ public class LbcDialog : IDisposable
         if (k == (Keys.Shift | Keys.F3)) { searchAgain(lb, false); return true; }
         if (k == (Keys.Control | Keys.F))
         {
-            string sWanted = promptWithHistory("Filter", "Filter text:", "listFilter", stateFor(lb).sFilter);
+            // The prompt says what it takes, because a syntax nobody is told
+            // about is a syntax nobody uses.
+            string sWanted = promptWithHistory("Filter", "Filter text, with & or | or *:",
+                "listFilter", stateFor(lb).sFilter);
             if (sWanted != null) applyFilter(lb, sWanted);
             return true;
         }
@@ -1538,7 +1552,8 @@ public class LbcDialog : IDisposable
             : (bForward ? "Jump" : "Jump back");
         string sKey = bOverEverything ? "listKeywords" : "listJump";
         string sWas = bOverEverything ? sFindTerm : sJumpTerm;
-        string sWanted = promptWithHistory(sTitle, "Text:", sKey, sWas);
+        string sWanted = promptWithHistory(sTitle,
+            bOverEverything ? "Text, with & or | or *:" : "Text:", sKey, sWas);
         if (sWanted == null) return;
         if (sWanted.Length == 0) return;
         if (bOverEverything) sFindTerm = sWanted; else sJumpTerm = sWanted;

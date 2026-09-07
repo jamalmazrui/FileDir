@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.87**  
+**Version 5.0.88**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -797,6 +797,85 @@ The reasoning behind it is written down in the developer notes, as four rules:
 say nothing the reader already says; say what it cannot know; layer the detail
 so a short answer is the default and the longer ones are a key away; and write
 every message to the status line so it can be read back rather than repeated.
+
+**Filter and Keywords now share one syntax, because they always should have.**
+A filter of "chap*" found nothing: Filter was doing a plain substring test, and
+no line contains a star. Meanwhile the directory window's own filter has taken
+wildcards for years, and Keywords in the same dialog takes & and | and *. Three
+commands that narrow a list by text had three sets of rules, and the one anybody
+would guess was the one already written down.
+
+Filter now reads its text the same way Keywords does: & for both words, a bar
+for either, a star for anything. Both prompts say so, which they did not.
+
+Jump is deliberately left out of it. It is the plain substring jump it is in the
+file list, where the whole point is typing three letters and arriving -- which
+is why Control+J with "Chap" worked while the filter did not.
+
+**One command builds a tutorial: buildTutorial.** It writes the documents and
+the feed, speaks each script into its own .mp3, and writes the feed again so the
+audio it just made is in it. sayTutorial is gone, folded in. makeTutorial.py
+stays as the documents step -- Python is the right tool for splicing Markdown --
+and buildTutorial -docs is the way to run just that.
+
+    buildTutorial                    every script: documents, then audio
+    buildTutorial Tutorial_Tagging   just that one
+    buildTutorial -docs              documents and feed only
+    buildTutorial -sapi              Windows voices, fetch nothing
+    buildTutorial -live              perform it now through JAWS
+
+**Two voices that cannot be confused, and both free.** The whole point of a
+walkthrough is knowing which words came from the program, so one voice should
+sound like a person and the other should sound like a machine.
+
+The narrator is PIPER with the en_US-lessac-medium voice: a small neural engine
+from the Rhasspy project, MIT-licensed, entirely offline once fetched, and the
+best free English narration available on Windows. NVDA add-ons and other
+accessibility software use the same engine, so it is a known quantity.
+
+The screen reader's stand-in is ESPEAK NG: free, tiny, and unmistakably
+synthetic. A listener knows it is a machine within two words, which here is the
+requirement rather than a shortcoming.
+
+Neither is installed unless it is missing. Piper comes from its own release
+page and the voice from the project's own voice repository; eSpeak NG is looked
+for first and fetched through winget only if it is not already on the machine,
+which it often is. Anything that falls short is written in the log and the
+Windows voices take over, and -sapi skips the fetching altogether.
+
+**Three things learned from the QUILL Cast, which does this well.** It is a
+54-episode two-host course whose voices are generated on the machine rather than
+in a service, with a transcript for every episode and a plain RSS feed. Three of
+its habits were worth taking.
+
+**Something to try, at the end of each walk.** A Homework line in the script,
+written into the document and spoken after the closing sentence. Listening
+becomes practice at the cost of one field.
+
+**The narrator has a name.** Two voices are easier to follow when one of them is
+somebody: "I am Homer, your narrator; the other voice stands in for the screen
+reader." The screen reader's stand-in stays a role rather than a person, because
+that is what it is.
+
+**A feed of the walks.** makeTutorial now writes TutorialFeed.xml beside the
+audio: one item per tutorial that has been spoken, each linking to its section
+of Tutorials.htm as the transcript. The durations are measured with ffprobe
+rather than guessed -- the QUILL feed carries 00:00:00 on most of its episodes,
+and a duration a player will show and that is wrong is worse than none at all.
+A tutorial with no audio yet is left out, because an item without an enclosure
+is not an episode.
+
+The feed's own details -- its title, description, author and the address the
+files will live at once published -- sit in a feed section of the first script.
+Left empty, the addresses are plain file names, which works from a folder on
+disk and can be subscribed to in the Player itself.
+
+**And the name.** The proposal was Screen Access Markup Language, which collides
+head-on with Security Assertion Markup Language, the single sign-on standard. It
+is also one letter from SAMI, Microsoft's caption format of the late nineties,
+which did not take -- and the format here is not markup at all but key and value
+in .inix, so it can be read and edited by ear. The name recorded here is SPEAK:
+Spoken Procedure with Expected Announcements and Keys.
 
 **The walk got longer where it needed to and Eloquence where it could.**
 

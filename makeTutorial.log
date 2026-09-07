@@ -1,13 +1,15 @@
-2026-09-07 14:15:57  makeTutorial 2026-09-07 14:15:57
-2026-09-07 14:15:57  script: C:\FileDir\makeTutorial.py
-2026-09-07 14:15:57  Python: 3.14.3
-2026-09-07 14:15:57  platform: win32
-2026-09-07 14:15:57  working directory: C:\FileDir
-2026-09-07 14:15:57  command line: makeTutorial.py
-2026-09-07 14:15:57  scripts: C:\FileDir\Tutorial*.inix
-2026-09-07 14:15:57  target: C:\FileDir\Tutorials.md
-2026-09-07 14:15:57  scripts found: 2 -- Tutorial.inix, Tutorial_Tagging.inix
-2026-09-07 14:15:57  Tutorial.inix: sections 19, steps 18
-2026-09-07 14:15:57  Tutorial_Tagging.inix: sections 5, steps 4
-2026-09-07 14:15:57  Wrote 2 tutorials into Tutorials.md: 22 steps.
-2026-09-07 14:15:57  finished
+2026-09-07 15:13:10  makeTutorial 2026-09-07 15:13:10
+2026-09-07 15:13:10  script: C:\FileDir\makeTutorial.py
+2026-09-07 15:13:10  Python: 3.13.15
+2026-09-07 15:13:10  platform: win32
+2026-09-07 15:13:10  working directory: C:\FileDir
+2026-09-07 15:13:10  command line: makeTutorial.py
+2026-09-07 15:13:10  scripts: C:\FileDir\Tutorial*.inix
+2026-09-07 15:13:10  target: C:\FileDir\Tutorials.md
+2026-09-07 15:13:10  scripts found: 2 -- Tutorial.inix, Tutorial_Tagging.inix
+2026-09-07 15:13:10  Tutorial.inix: sections 20, steps 18
+2026-09-07 15:13:11  Tutorial_Tagging.inix: sections 5, steps 4
+2026-09-07 15:13:11  no audio yet for Tutorial_Tagging; it will join the feed once sayTutorial has run
+2026-09-07 15:13:11  Wrote 2 tutorials into Tutorials.md: 22 steps.
+2026-09-07 15:13:11  Wrote TutorialFeed.xml: 1 with audio.
+2026-09-07 15:13:11  finished

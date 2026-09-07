@@ -1,6 +1,6 @@
 ﻿# FileDir — User Guide
 
-**Version 5.0.87**  
+**Version 5.0.88**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -884,9 +884,11 @@ track, which is where a presenter's name or a word from a summary lives.
   was
 - **Control+F** filter the list, **Control+Shift+F** clear the filter
 
-Keyword syntax is the simple one FileDir has always used, not regular
-expressions: `red & blue` means both words, `red | blue` means either, and
-`re*d` means a word with anything in the middle.
+**Keywords and Filter share one syntax**, the simple one FileDir has always
+used, not regular expressions: `red & blue` means both words, `red | blue` means
+either, and `chap*` means anything starting that way. Case never matters. Jump
+is the exception on purpose: it is the plain substring jump it is in the file
+list, where the point is typing a few letters fast.
 
 Each remembers its own last ten answers, and all of them ignore case. All act on
 the Track list from wherever you are, leave the keyboard where it was, and say

@@ -178,7 +178,7 @@
 <h1 class="title">FileDir FileDir</h1>
 </header>
 <h1 id="filedir-user-guide">FileDir — User Guide</h1>
-<p><strong>Version 5.0.87</strong><br />
+<p><strong>Version 5.0.88</strong><br />
 August 2026<br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
@@ -1433,10 +1433,13 @@ jump or keyword search, whichever it was</li>
 <li><strong>Control+F</strong> filter the list,
 <strong>Control+Shift+F</strong> clear the filter</li>
 </ul>
-<p>Keyword syntax is the simple one FileDir has always used, not regular
-expressions: <code>red &amp; blue</code> means both words,
-<code>red | blue</code> means either, and <code>re*d</code> means a word
-with anything in the middle.</p>
+<p><strong>Keywords and Filter share one syntax</strong>, the simple one
+FileDir has always used, not regular expressions:
+<code>red &amp; blue</code> means both words, <code>red | blue</code>
+means either, and <code>chap*</code> means anything starting that way.
+Case never matters. Jump is the exception on purpose: it is the plain
+substring jump it is in the file list, where the point is typing a few
+letters fast.</p>
 <p>Each remembers its own last ten answers, and all of them ignore case.
 All act on the Track list from wherever you are, leave the keyboard
 where it was, and say the track they land on when the cursor is

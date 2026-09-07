@@ -1,6 +1,6 @@
 ﻿# FileDir — Developer Guide
 
-**Version 5.0.87**  
+**Version 5.0.88**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -63,6 +63,30 @@ Shared Homer files, common to FileDir, EdSharp, and DbDo, compiled in
 - `Util.cs` — shared helpers.
 - `KeyMap.cs` — **generated**; see below.
 - `Lbc.cs` — the Layout by Code dialog toolkit.
+### SPEAK: the walkthrough format
+
+A Tutorial\*.inix file is a SPEAK script -- Spoken Procedure with Expected
+Announcements and Keys. One step to a section, and each step says what a
+narrator explains, which key to press, what a screen reader says in answer, and
+a note for the reader of the written version.
+
+The Hear lines come from real speech histories rather than from anybody's idea
+of what ought to be said. That is what makes the file worth more than a
+tutorial: the same script can be replayed later -- against NVDA, whose system
+tests already assert speech, or against an exported JAWS history -- and what
+taught somebody the program becomes what checks it still behaves.
+
+buildTutorial does the lot: the sections of Tutorials.md, the podcast feed, and
+an .mp3 for each script -- or a live performance through JAWS with -live. It
+narrates with Piper (en_US-lessac-medium, free and offline) and answers with
+eSpeak NG, so the person and the machine are never mistaken for one another;
+both are fetched once if missing, and -sapi uses the Windows voices instead.
+makeTutorial.py is the documents step it calls, and which the build calls.
+Adding a tutorial means adding one file.
+
+It is not called SAML: that is Security Assertion Markup Language, and it is one
+letter from SAMI, Microsoft's abandoned caption format. It is also not markup.
+
 ### How much a dialog should say
 
 A screen reader user hears one thing at a time, in order. Speech is the only

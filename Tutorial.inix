@@ -27,10 +27,21 @@
 ; sayTutorial.cmd turns it into a spoken walk, clearly announced as a
 ; simulation.
 
+; The feed section is read from whichever script has one, and describes the
+; whole set rather than this tutorial. Base is where the files will live when
+; published; leave it as it is to keep the feed working from a folder on disk.
+[feed]
+Title=Homer Tools Walkthroughs
+Description=Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.
+Author=Jamal Mazrui
+Email=empowermentzone@gmail.com
+Base=
+
 [about]
 Title=A First Walk Through FileDir
 Intro=This is a simulation, not a recording.
 Setup=FileDir is open on a folder of saved podcast directories, and JAWS is running.
+Homework=Open a different page of podcast links, play the third episode, and use Control plus K to find a word you know is in a summary rather than a title.
 
 [step]
 Say=Every folder opens as a list you arrow through. JAWS says the folder and how many items are in it.

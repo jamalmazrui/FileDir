@@ -1,6 +1,6 @@
 ﻿# FileDir — Tutorials
 
-**Version 5.0.87**  
+**Version 5.0.88**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -233,6 +233,8 @@ That is the whole of it. One key to find a file, one key to play what is in it, 
 
 Alt plus H inside the Player lists every key. F1 lists every control with what it does.
 
+**Something to try:** Open a different page of podcast links, play the third episode, and use Control plus K to find a word you know is in a summary rather than a title.
+
 ## 0a. Tagging Files and Copying Them Somewhere
 
 This is a simulation, not a recording.
@@ -279,6 +281,8 @@ You hear:
 - 2 files copied
 
 Nothing is moved unless you use Control plus M instead, which moves.
+
+**Something to try:** Tag three files, copy them to a new folder, then untag with the slash key and check the count with Alt plus Y.
 
 <!-- walkthrough ends -->
 

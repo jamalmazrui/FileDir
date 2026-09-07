@@ -8,6 +8,7 @@
 Title=Tagging Files and Copying Them Somewhere
 Intro=This is a simulation, not a recording.
 Setup=A folder of files is open.
+Homework=Tag three files, copy them to a new folder, then untag with the slash key and check the count with Alt plus Y.
 
 [step]
 Say=Arrow to a file you want, and press the semicolon to tag it. Tagging marks a file for the next command without moving you.

@@ -311,7 +311,7 @@ dlg.addBand();
 string sTracksLabel = "&Track list, " + Homer.Util.stringPlural("track", lsTracks.Count);
 if (!string.IsNullOrEmpty(sSource)) sTracksLabel = sTracksLabel + " from " + sSource;
 ListBox lstTracks = dlg.addPickBox(sTracksLabel + ":", orderedNames(lsRef, aOrder), null,
-"The queue, with each track's name, presenter and length where they are known. Moving through it chooses nothing; Enter plays the one you are on. Control+J jumps to a track by name, F3 jumps to the next, Control+F filters the list and Control+Shift+F clears the filter. Alt+Shift+M writes what is showing, in the order shown, to a Markdown file.");
+"The queue, with each track's name, presenter and length where they are known. Moving through it chooses nothing; Enter plays the one you are on. Control+J jumps to a track by name, F3 jumps to the next, Control+F filters the list to what matches and Control+Shift+F clears the filter. Filter and Keywords take & for both words, a bar for either, and a star for anything. Alt+Shift+M writes what is showing, in the order shown, to a Markdown file.");
 
 // EVERYTHING KNOWN ABOUT THE TRACK THE CURSOR IS ON, sorted by field.
 //
@@ -1144,8 +1144,9 @@ sb.Append("Control+Shift+K    keywords, backwards\r\n");
 sb.Append("F3, Shift+F3       repeat the last jump or keyword search\r\n");
 sb.Append("Control+F          filter the list to what matches\r\n");
 sb.Append("Control+Shift+F    clear the filter\r\n\r\n");
-sb.Append("Keyword syntax: red & blue means both words, red | blue means either,\r\n");
-sb.Append("and re*d means a word with anything in the middle. Case never matters.\r\n");
+sb.Append("Keywords and Filter share one syntax: red & blue means both words,\r\n");
+sb.Append("red | blue means either, and chap* means anything starting that way.\r\n");
+sb.Append("Case never matters. Jump is a plain substring, as in the file list.\r\n");
 sb.Append("Keywords looks at the title, the presenter, the episode, the address,\r\n");
 sb.Append("and whatever the source document said -- the date, the summary, the\r\n");
 sb.Append("people. Jump looks only at the line the list shows.\r\n\r\n");

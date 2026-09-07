@@ -23,6 +23,7 @@ RUN IT WITH NO ARGUMENTS. The log is written beside this script.
 
 import datetime
 import os
+import subprocess
 import platform
 import sys
 import traceback
@@ -38,6 +39,7 @@ import glob
 c_sPattern = os.path.join(c_sHere, "Tutorial*.inix")
 c_sTarget = os.path.join(c_sHere, "Tutorials.md")
 
+c_sFeed = os.path.join(c_sHere, "TutorialFeed.xml")
 c_sStartMark = "<!-- walkthrough: written by makeTutorial.py, do not edit between the markers -->"
 c_sEndMark = "<!-- walkthrough ends -->"
 
@@ -162,6 +164,11 @@ def buildMarkdown(lsSections, sNumber):
             lsOut.append(sNote)
             lsOut.append("")
 
+    sHomework = firstOf(dAbout, "Homework")
+    if sHomework:
+        lsOut.append("**Something to try:** " + sHomework)
+        lsOut.append("")
+
     return "\n".join(lsOut).rstrip()
 
 
@@ -217,6 +224,94 @@ def addToContents(sDocument, sSection):
     return sDocument[:iAt] + "\n".join(lsEntries) + "\n" + sDocument[iAt:]
 
 
+def secondsOf(sPath):
+    """How long an audio file runs, asked of ffprobe.
+
+    A duration of zero in a feed is worse than no duration at all: a player
+    shows it, and it is a lie. So the length is measured rather than guessed,
+    and left out when it cannot be.
+    """
+    sProbe = os.path.join(c_sHere, "ffprobe.exe")
+    if not os.path.isfile(sProbe):
+        sProbe = "ffprobe"
+    try:
+        oResult = subprocess.run(
+            [sProbe, "-v", "error", "-show_entries", "format=duration",
+             "-of", "default=noprint_wrappers=1:nokey=1", sPath],
+            capture_output=True, text=True, timeout=30)
+        dSeconds = float(oResult.stdout.strip())
+        return int(round(dSeconds))
+    except Exception as oError:
+        note("could not measure " + sPath + ": " + str(oError))
+        return 0
+
+
+def clockOf(iSeconds):
+    return "%02d:%02d:%02d" % (iSeconds // 3600, (iSeconds % 3600) // 60, iSeconds % 60)
+
+
+def anchorOf(sTitle):
+    """The anchor Pandoc gives a heading, so a link lands on the right one."""
+    sAnchor = "".join((ch.lower() if ch.isalnum() else ("-" if ch in " ." else "")) for ch in sTitle)
+    while "--" in sAnchor:
+        sAnchor = sAnchor.replace("--", "-")
+    return sAnchor.strip("-")
+
+
+def writeFeed(lsEpisodes, dFeed):
+    """A podcast feed for the walkthroughs, so they can be subscribed to.
+
+    Only the tutorials that have been spoken appear: an item without audio is
+    not an episode. Each one links to its transcript, which is the section of
+    Tutorials.htm the same run wrote.
+    """
+    if not lsEpisodes:
+        note("no audio files found, so no feed is written")
+        return 0
+    sBase = dFeed.get("Base", "")
+    if sBase and not sBase.endswith("/"):
+        sBase += "/"
+    sNow = datetime.datetime.now(datetime.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
+
+    lsOut = []
+    lsOut.append('<?xml version="1.0" encoding="UTF-8"?>')
+    lsOut.append('<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">')
+    lsOut.append("  <channel>")
+    lsOut.append("    <title>" + escape(dFeed.get("Title", "Homer Tools Walkthroughs")) + "</title>")
+    lsOut.append("    <link>" + escape(sBase or "Tutorials.htm") + "</link>")
+    lsOut.append("    <description>" + escape(dFeed.get("Description", "")) + "</description>")
+    lsOut.append("    <language>en-us</language>")
+    lsOut.append("    <lastBuildDate>" + sNow + "</lastBuildDate>")
+    lsOut.append("    <itunes:author>" + escape(dFeed.get("Author", "")) + "</itunes:author>")
+    lsOut.append("    <itunes:explicit>false</itunes:explicit>")
+    lsOut.append('    <itunes:category text="Technology"/>')
+    if dFeed.get("Email", ""):
+        lsOut.append("    <itunes:owner><itunes:name>" + escape(dFeed.get("Author", ""))
+                     + "</itunes:name><itunes:email>" + escape(dFeed["Email"]) + "</itunes:email></itunes:owner>")
+    for iAt, dEpisode in enumerate(lsEpisodes, 1):
+        sTranscript = (sBase or "") + "Tutorials.htm#" + anchorOf(dEpisode["number"] + ". " + dEpisode["title"])
+        lsOut.append("    <item>")
+        lsOut.append("      <title>" + escape(dEpisode["title"]) + "</title>")
+        lsOut.append("      <description>" + escape(dEpisode["intro"] + " Full transcript: " + sTranscript)
+                     + "</description>")
+        lsOut.append("      <link>" + escape(sTranscript) + "</link>")
+        lsOut.append('      <guid isPermaLink="false">homer-' + escape(dEpisode["stem"].lower()) + "</guid>")
+        lsOut.append("      <enclosure url=\"" + escape((sBase or "") + dEpisode["audio"])
+                     + "\" length=\"" + str(dEpisode["bytes"]) + "\" type=\"audio/mpeg\"/>")
+        if dEpisode["seconds"] > 0:
+            lsOut.append("      <itunes:duration>" + clockOf(dEpisode["seconds"]) + "</itunes:duration>")
+        lsOut.append("      <itunes:explicit>false</itunes:explicit>")
+        lsOut.append("    </item>")
+    lsOut.append("  </channel>")
+    lsOut.append("</rss>")
+    writeFile(c_sFeed, "\n".join(lsOut) + "\n")
+    return len(lsEpisodes)
+
+
+def escape(sText):
+    return (sText or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
 def main():
     startLog()
     lsSources = sorted(glob.glob(c_sPattern))
@@ -230,6 +325,8 @@ def main():
         return 1
 
     lsBlocks = []
+    lsEpisodes = []
+    dFeed = {}
     iStepsAll = 0
     iLetter = 0
     for sSource in lsSources:
@@ -254,6 +351,28 @@ def main():
             iLetter += 1
         lsBlocks.append(buildMarkdown(lsSections, sNumber))
 
+        dAbout = {}
+        for dSection in lsSections:
+            if dSection["_name"] == "about":
+                dAbout = dSection
+            elif dSection["_name"] == "feed" and not dFeed:
+                for sKey in dSection:
+                    if sKey != "_name":
+                        dFeed[sKey] = dSection[sKey][0]
+        sStem = os.path.splitext(os.path.basename(sSource))[0]
+        sAudio = os.path.join(c_sHere, sStem + ".mp3")
+        if os.path.isfile(sAudio):
+            lsEpisodes.append({
+                "stem": sStem,
+                "number": sNumber,
+                "title": firstOf(dAbout, "Title") or sStem,
+                "intro": firstOf(dAbout, "Setup") or firstOf(dAbout, "Intro"),
+                "audio": sStem + ".mp3",
+                "bytes": os.path.getsize(sAudio),
+                "seconds": secondsOf(sAudio)})
+        else:
+            note("no audio yet for " + sStem + "; it will join the feed once sayTutorial has run")
+
     try:
         sSection = c_sStartMark + "\n\n" + "\n\n".join(lsBlocks) + "\n\n" + c_sEndMark
         sDocument = readFile(c_sTarget)
@@ -266,6 +385,14 @@ def main():
         return 1
 
     say("Wrote " + str(len(lsSources)) + " tutorials into Tutorials.md: " + str(iStepsAll) + " steps.")
+    try:
+        iFeed = writeFeed(lsEpisodes, dFeed)
+        if iFeed > 0:
+            say("Wrote TutorialFeed.xml: " + str(iFeed) + " with audio.")
+    except Exception as oError:
+        note("feed failed: " + str(oError))
+        note(traceback.format_exc())
+        say("The feed could not be written. The log has why.")
     note("finished")
     return 0
 

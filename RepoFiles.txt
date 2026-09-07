@@ -43,10 +43,10 @@ pdfRich.py
 makeKeyMap.py
 Tutorial.inix
 Tutorial_Tagging.inix
+buildTutorial.cmd
 makeTutorial.cmd
+buildTutorial.ps1
 makeTutorial.py
-sayTutorial.cmd
-sayTutorial.ps1
 
 # Sources of the two small association programs the installer ships. The
 # programs are shipped; without their sources a clone cannot rebuild them.
@@ -115,9 +115,11 @@ yt-dlp.exe
 # can write its own log. They stay at the root so they are easy to reach.
 temp.txt
 makeTutorial.log
-sayTutorial.log
+buildTutorial.log
+voices
 tmp.txt
 Tutorial.mp3
+TutorialFeed.xml
 Tutorial_Tagging.mp3
 
 # Working documents kept at the root because something points at them or

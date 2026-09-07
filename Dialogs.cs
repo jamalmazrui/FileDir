@@ -279,6 +279,19 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 if (bHistory && sResult != null && sResult.Trim().Length > 0) {
@@ -367,6 +380,19 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 return sResultList;
@@ -441,6 +467,19 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 return listResults;
@@ -498,6 +537,19 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 } // InfoDialog method
@@ -651,6 +703,19 @@ iButton++;
 }
 
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 Say(sResult.Replace("&", ""));
@@ -730,6 +795,19 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 return aResult;
@@ -815,6 +893,19 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 return sResultList;
@@ -882,6 +973,19 @@ if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 return listResults;
@@ -1234,6 +1338,19 @@ frm.StartPosition = FormStartPosition.CenterParent;
 frm.Text = sTitle;
 frm.Controls.Add(flpMain);
 frm.ResumeLayout();
+// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+//
+// These dialogs size themselves to their contents, and with AutoSize left on
+// the sizing happens after the window is up: the window changes shape a moment
+// after it appears, and a screen reader treats a window that changes as a
+// window to announce again. The title was being read three times over.
+//
+// PerformLayout works the size out now; fixing it and turning AutoSize off
+// means nothing about the window changes once it is on screen.
+frm.PerformLayout();
+System.Drawing.Size sizeWanted = frm.PreferredSize;
+frm.AutoSize = false;
+if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
 frm.ShowDialog(ownerForm());
 frm.Dispose();
 return sResult;

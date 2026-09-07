@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Homer Tools Walkthroughs</title>
+    <link>Tutorials.htm</link>
+    <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Sep 2026 22:13:11 +0000</lastBuildDate>
+    <itunes:author>Jamal Mazrui</itunes:author>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:category text="Technology"/>
+    <itunes:owner><itunes:name>Jamal Mazrui</itunes:name><itunes:email>empowermentzone@gmail.com</itunes:email></itunes:owner>
+    <item>
+      <title>A First Walk Through FileDir</title>
+      <description>FileDir is open on a folder of saved podcast directories, and JAWS is running. Full transcript: Tutorials.htm#0-a-first-walk-through-filedir</description>
+      <link>Tutorials.htm#0-a-first-walk-through-filedir</link>
+      <guid isPermaLink="false">homer-tutorial</guid>
+      <enclosure url="Tutorial.mp3" length="1528776" type="audio/mpeg"/>
+      <itunes:duration>00:03:48</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>

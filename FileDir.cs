@@ -1798,7 +1798,7 @@ else return false;
 
 void menuFileNewFolder_Click(object sender, EventArgs e) {
 App.say("New folder");
-string sDir = Lbc.InputDialog("Input", "Folder", "", "NewFolder").Trim();
+string sDir = Lbc.InputDialog("New Folder", "Folder", "", "NewFolder").Trim();
 if (sDir == "") return;
 if (Directory.Exists(sDir)) App.say(sDir + " already exists!");
 else {
@@ -1930,7 +1930,7 @@ string sDefaultDir;
 if (bOpen)sDefaultDir = App.sOpenText;
 else sDefaultDir = App.sGoToText;
 
-string sDir = Lbc.DirectoryDialog("Input", "Folder", sDefaultDir).Trim();
+string sDir = Lbc.DirectoryDialog("Open Folder", "Folder", sDefaultDir).Trim();
 if (sDir.Length == 0) return;
 if (!Directory.Exists(sDir)) {
 App.say("Folder " + sDir + " not found!");
@@ -3298,7 +3298,7 @@ MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 App.say("Tag with regular expression");
-string sText = Lbc.InputDialog("Input", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Lbc.InputDialog("Tag with Regular Expression", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -3488,7 +3488,7 @@ ReadOnlyCollection<string> pathList = App.getFiles(sDir, mdiChild.sFilterText);
 string[] aFiles = new string[pathList.Count];
 for (int i = 0; i < pathList.Count; i++) aFiles[i] = pathList[i];
 string sExts = Homer.Util.getExtensions(aFiles);
-string sResult = Lbc.InputDialog("Input", "Extensions", sExts, "PathListExtensions").Trim();
+string sResult = Lbc.InputDialog("Path List Extensions", "Extensions", sExts, "PathListExtensions").Trim();
 if (sResult.Length == 0) return;
 
 string[] aResults = Homer.Util.getFilesWithExtensions(aFiles, sResult);
@@ -3549,7 +3549,7 @@ if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sCopyText == null) mdiChild.sCopyText = App.sCopyText;
-string sDir = Lbc.DirectoryDialog("Input", "Folder", mdiChild.sCopyText).Trim();
+string sDir = Lbc.DirectoryDialog("Copy To", "Folder", mdiChild.sCopyText).Trim();
 if (sDir.Length == 0) return;
 mdiChild.sCopyText = sDir;
 App.sCopyText = sDir;
@@ -3650,7 +3650,7 @@ if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sMoveText == null) mdiChild.sMoveText = App.sMoveText;
-string sDir = Lbc.DirectoryDialog("Input", "Folder", mdiChild.sMoveText).Trim();
+string sDir = Lbc.DirectoryDialog("Move To", "Folder", mdiChild.sMoveText).Trim();
 if (sDir.Length == 0) return;
 mdiChild.sMoveText = sDir;
 App.sMoveText = sDir;
@@ -3878,7 +3878,7 @@ int i = mdiChild.bs.Position;
 string sSource = (string) mdiChild.tbl.DefaultView[i]["Path"];
 string sName = Path.GetFileName(sSource);
 string sDir = Path.GetDirectoryName(sSource);
-string sNewName = Lbc.InputDialog("Input", "Name", sName, "Rename").Trim();
+string sNewName = Lbc.InputDialog("Rename", "Name", sName, "Rename").Trim();
 if (sNewName.Length == 0) return;
 string sTarget = Path.Combine(sDir, sNewName);
 try {
@@ -4179,7 +4179,7 @@ MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 App.say("Extract with regular expression");
-string sText = Lbc.InputDialog("Input", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Lbc.InputDialog("Tag with Regular Expression", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -4800,7 +4800,7 @@ bLastSearchWasKeywords = false;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sJumpText == null) mdiChild.sJumpText = App.sJumpText;
-string sText = Lbc.InputDialog("Input", "Text", mdiChild.sJumpText, "Jump");
+string sText = Lbc.InputDialog("Jump", "Text", mdiChild.sJumpText, "Jump");
 if (sText.Length == 0) return;
 int iStart = 0;
 if (sText == mdiChild.sJumpText) iStart = mdiChild.bs.Position + 1;
@@ -4900,7 +4900,7 @@ bLastSearchWasKeywords = true;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
-string sText = Lbc.InputDialog("Input", "Text", mdiChild.sKeywordsText, "Keywords");
+string sText = Lbc.InputDialog("Keywords", "Text", mdiChild.sKeywordsText, "Keywords");
 if (sText.Length == 0) return;
 int iStart = 0;
 if (sText == mdiChild.sKeywordsText) iStart = mdiChild.bs.Position + 1;
@@ -5035,7 +5035,7 @@ App.say("Filter");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sFilterText == null) mdiChild.sFilterText = App.sFilterText;
-string sText = Lbc.InputDialog("Input", "Expression", mdiChild.sFilterText, "Filter");
+string sText = Lbc.InputDialog("Filter", "Expression", mdiChild.sFilterText, "Filter");
 if (sText.Length == 0) return;
 
 filter_Helper(App.frame, mdiChild, sText);
@@ -6963,7 +6963,7 @@ sUnarchiveDir = Path.Combine(sUnarchiveDir, Path.GetFileNameWithoutExtension(Pat
 }
 else if (!Directory.Exists(sUnarchiveDir)) sUnarchiveDir = Directory.GetCurrentDirectory();
 
-string sDir = Lbc.DirectoryDialog("Input", "Folder", sUnarchiveDir).Trim();
+string sDir = Lbc.DirectoryDialog("Unarchive To", "Folder", sUnarchiveDir).Trim();
 if (sDir == "") return;
 if (!bSameName) App.sUnarchiveText = sDir;
 App.sGoToText = sDir;
@@ -7050,7 +7050,7 @@ unarchive_Helper("Unarchive to same name", true, true);
 
 void menuMiscUnarchivePassword_Click(object sender, EventArgs e) {
 //App.say("Unarchive password");
-string sUnarchivePassword = Lbc.InputDialog("Input", "&UnarchivePassword", App.sUnarchivePassword);
+string sUnarchivePassword = Lbc.InputDialog("Unarchive Password", "&UnarchivePassword", App.sUnarchivePassword);
 if (sUnarchivePassword == "") return;
 App.sUnarchivePassword = sUnarchivePassword;
 } // menuMiscUnarchivePassword_Click method
@@ -7260,7 +7260,7 @@ sPassword = (string) sResultList[2];
 else {
 sUserName = App.sUserName;
 sPassword = App.sPassword;
-sURL = Lbc.InputDialog("Input", "&Address", App.sFTPText, "FtpAddress");
+sURL = Lbc.InputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
 if (sURL == "") return;
 }
 
@@ -7325,7 +7325,7 @@ sPassword = (string) sResultList[2];
 else {
 sUserName = App.sUserName;
 sPassword = App.sPassword;
-sURL = Lbc.InputDialog("Input", "&Address", App.sFTPText, "FtpAddress");
+sURL = Lbc.InputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
 if (sURL == "") return;
 }
 
@@ -7448,7 +7448,7 @@ string sUrl = Homer.Util.getUrl();
 if (sUrl.Length == 0) sUrl = App.sWebText;
 else App.sWebText = sUrl;
 
-sUrl = Lbc.InputDialog("Input", "Address", sUrl, "WebAddress");
+sUrl = Lbc.InputDialog("Web Address", "Address", sUrl, "WebAddress");
 if (sUrl.Length == 0) return;
 
 // A page of links and a page holding a video want opposite treatment, and no
@@ -7493,7 +7493,7 @@ listFiles.Add(sFile);
 
 string[] aFiles = listFiles.ToArray();
 string sText = Homer.Util.getExtensions(aFiles);
-string sResult = Lbc.InputDialog("Input", "Extensions", sText, "DownloadExtensions").Replace(".", "").Trim().ToLower();
+string sResult = Lbc.InputDialog("Download Extensions", "Extensions", sText, "DownloadExtensions").Replace(".", "").Trim().ToLower();
 if (sResult.Length == 0) return;
 
 string[] aResults = Homer.Util.getFilesWithExtensions(aFiles, sResult);
@@ -7557,7 +7557,7 @@ string sTmp = Path.Combine(App.sAppDir, "WebGet.tmp");
 string s = Homer.Util.getUrl();
 if (s != "") App.sWebText = s;
 
-string sURL = Lbc.InputDialog("Input", "&Address", App.sWebText, "WebAddress");
+string sURL = Lbc.InputDialog("Web Address", "&Address", App.sWebText, "WebAddress");
 if (sURL.Length > 0) App.sWebText = sURL;
 if (sURL.Trim() == "") return;
 
@@ -7633,7 +7633,7 @@ App.say("Done!", true);
 void menuMiscEvaluate_Click(object sender, EventArgs e) {
 App.say("Evaluate");
 string sExp = App.sEvaluateText;
-sExp = Lbc.InputDialog("Input", "Expression", sExp, "Evaluate");
+sExp = Lbc.InputDialog("Evaluate", "Expression", sExp, "Evaluate");
 if (sExp == "") return;
 App.sEvaluateText = sExp;
 MdiChild mdiChild = App.frame.getActiveChild();
@@ -8666,7 +8666,7 @@ string sEndOfDocument = "\n----------\nEnd of Document\n";
 string sSourceDir = Directory.GetCurrentDirectory();
 string sTargetDir = App.sGoToText;
 if (sTargetDir == null || sTargetDir.Length == 0) sTargetDir = App.sOpenText;
-sTargetDir = Lbc.DirectoryDialog("Input", "Folder", sTargetDir).Trim();
+sTargetDir = Lbc.DirectoryDialog("Target Folder", "Folder", sTargetDir).Trim();
 if (sTargetDir.Length == 0) return;
 
 string[] aSourceDirs, aSourceFiles;
