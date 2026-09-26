@@ -196,30 +196,16 @@ return InputDialog(sTitle, sLabel, sValue, null);
 // Password prompts and callers that pass no key keep the plain text box,
 // so passwords are never recorded.
 public static string InputDialog(string sTitle, string sLabel, string sValue, string sHistoryKey) {
-string sResult = "";
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpInput = new FlowLayoutPanel();
-flpInput.SuspendLayout();
-flpInput.Anchor = AnchorStyles.None;
-flpInput.AutoSize = true;
-flpInput.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpInput.FlowDirection = FlowDirection.LeftToRight;
-
-Label lbl = new Label();
-lbl.AutoSize = true;
-lbl.Text = sLabel + ":";
-bool bPassword = lbl.Text.Contains("Password:");
+// One line of input, built on the kit's LbcDialog.
+//
+// With a history key the field is an editable combo whose list holds the
+// recent answers for that command, newest first -- the Windows Run-dialog
+// pattern. The history is kept where it always was, in [Recent<key>] of
+// FileDir.ini as term1, term2 and so on, so nobody loses what they had typed.
+// A label containing "Password" gets a masked box and no history, so a
+// password is never recorded. Returns the text, or "" when cancelled.
+string sPrompt = fieldLabel(sLabel);
+bool bPassword = sPrompt.Contains("Password");
 bool bHistory = !string.IsNullOrEmpty(sHistoryKey) && !bPassword;
 int iCount = Homer.InputHistory.DefaultCount;
 string sSection = null;
@@ -229,71 +215,21 @@ iCount = Homer.InputHistory.clampCount(App.readValue(App.sIniFile, "General", "h
 sSection = "Recent" + sHistoryKey;
 lsRecent = Homer.InputHistory.load(delegate(string sKey) { return App.readValue(App.sIniFile, sSection, sKey, ""); }, iCount);
 }
-
-TextBox txt = null;
+string sResult = "";
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
 ComboBox cmb = null;
-Control ctlInput;
-if (bHistory) {
-cmb = new ComboBox();
-cmb.DropDownStyle = ComboBoxStyle.DropDown;
-cmb.AccessibleDescription = "Down arrow selects from up to " + iCount + " recent entries";
-foreach (string sOne in lsRecent) cmb.Items.Add(sOne);
-cmb.Text = sValue;
-cmb.GotFocus += delegate(object o, EventArgs e) {cmb.SelectAll();};
-ctlInput = cmb;
-}
+TextBox txt = null;
+if (bHistory) cmb = dlg.addComboHistoryBox(sPrompt, lsRecent, sValue ?? "", null);
 else {
-txt = new TextBox();
+txt = dlg.addInputBox(sPrompt, sValue ?? "", null);
 if (bPassword) txt.UseSystemPasswordChar = true;
-txt.Text = sValue;
-txt.GotFocus += delegate(object o, EventArgs e) {txt.SelectAll();};
-ctlInput = txt;
 }
-flpInput.Controls.AddRange(new Control[] {lbl, ctlInput});
-flpInput.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-btnOK.Click += delegate(object o, EventArgs e) { sResult = (cmb != null) ? cmb.Text : txt.Text; frm.Close();};
-btnOK.Text = "OK";
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
-btnCancel.Text = "Cancel";
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpInput, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+if (!dlg.runOkCancel()) {
+Say("Cancel", true);
+return "";
+}
+sResult = (cmb != null) ? cmb.Text : txt.Text;
+}
 if (bHistory && sResult != null && sResult.Trim().Length > 0) {
 lsRecent = Homer.InputHistory.push(lsRecent, sResult.Trim(), iCount);
 Homer.InputHistory.store(lsRecent, delegate(string sKey, string sVal) { App.writeValue(App.sIniFile, sSection, sKey, sVal); }, iCount);
@@ -301,704 +237,251 @@ Homer.InputHistory.store(lsRecent, delegate(string sKey, string sVal) { App.writ
 return sResult;
 } // InputDialog method (history overload)
 
+// fieldLabel: a label as a field shows it, with the colon these dialogs have
+// always had, and no second colon when the caller wrote one.
+private static string fieldLabel(string sLabel) {
+string sText = (sLabel ?? "").Trim();
+if (sText.Length == 0) return "";
+return sText.EndsWith(":") ? sText : sText + ":";
+} // fieldLabel method
+
 public static ArrayList FieldDialog(string sTitle, string[] sLabelList, string[] sValueList) {
 return FieldDialog(sTitle, sLabelList, sValueList, false);
 } // FieldDialog method
 
 public static ArrayList FieldDialog(string sTitle, string[] sLabelList, string[] sValueList, bool bPassword) {
+// Several lines of input at once, built on the kit's LbcDialog: one labelled
+// field per value, in order. Returns the values in the same order, or an
+// empty list when the dialog is cancelled, as it always has.
+//
+// A label containing "Password" gets a masked box, as before. The count in the
+// title is kept too -- "Rename (3)" -- unless the caller ends the title with a
+// space, which is how a caller has always asked for no count.
 ArrayList sResultList = new ArrayList();
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-TableLayoutPanel tlpFields = new TableLayoutPanel();
-tlpFields.SuspendLayout();
-tlpFields.AutoSize = true;
-tlpFields.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-tlpFields.Anchor = AnchorStyles.None;
-tlpFields.ColumnCount = 2;
-
-for (int i = 0; i < tlpFields.ColumnCount; i++) {
-tlpFields.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-}
-
-tlpFields.RowCount = sLabelList.Length;
-
-for (int i = 0; i < tlpFields.RowCount; i++) {
-tlpFields.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-Label lbl = new Label();
-lbl.AutoSize = true;
-lbl.Text = sLabelList[i] + ":";
-TextBox txt = new TextBox();
-txt.Width *= 2;
-txt.Text = sValueList[i];
-if (lbl.Text.Contains("Password:")) txt.UseSystemPasswordChar = true;
-txt.GotFocus += delegate(object o, EventArgs e) {txt.SelectAll();};
-tlpFields.Controls.AddRange(new Control[] {lbl, txt});
-}
-tlpFields.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-
-btnOK.Click += delegate(object o, EventArgs e) {
-foreach (Control ctl in tlpFields.Controls) {
-if (ctl.GetType() == typeof(TextBox)) sResultList.Add(ctl.Text);
-}
-frm.Close();};
-
-btnOK.Text = "OK";
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
-btnCancel.Text = "Cancel";
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {tlpFields, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
+if (sLabelList == null || sLabelList.Length == 0) return sResultList;
 if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (" + sValueList.Length + ")";
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+List<TextBox> lsFields = new List<TextBox>();
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle.TrimEnd(), ownerForm())) {
+for (int i = 0; i < sLabelList.Length; i++) {
+string sPrompt = fieldLabel(sLabelList[i]);
+string sValue = (sValueList != null && i < sValueList.Length) ? sValueList[i] : "";
+TextBox txt = dlg.addInputBox(sPrompt, sValue ?? "", null);
+if (sPrompt.Contains("Password")) txt.UseSystemPasswordChar = true;
+lsFields.Add(txt);
+}
+if (!dlg.runOkCancel()) {
+Say("Cancel", true);
+return sResultList;
+}
+foreach (TextBox txt in lsFields) sResultList.Add(txt.Text);
+}
 return sResultList;
 } // FieldDialog method
 
 public static List<string> ListInputDialog(string sTitle, string sListLabel, string[] sValueList, string sInputLabel, string sValue, bool bSorted, int iDefaultIndex) {
+// A choice and a value together -- the units and the number, say. Built on the
+// kit's LbcDialog. Returns two strings, the item chosen and the text typed, or
+// an empty list when cancelled.
 List<string> listResults = new List<string>();
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpInput = new FlowLayoutPanel();
-flpInput.SuspendLayout();
-flpInput.Anchor = AnchorStyles.None;
-flpInput.AutoSize = true;
-flpInput.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpInput.FlowDirection = FlowDirection.LeftToRight;
-
-Label lblList = new Label();
-lblList.Text = sListLabel + ":";
-
-ListBox lst = new ListBox();
-if (bSorted) lst.Sorted = true;
-lst.Items.AddRange(sValueList);
-lst.SelectedIndex = iDefaultIndex;
-
-Label lblInput = new Label();
-lblInput.Text = sInputLabel + ":";
-TextBox txt = new TextBox();
-if (lblInput.Text.Contains("Password:")) txt.UseSystemPasswordChar = true;
-txt.Text = sValue;
-
-flpInput.Controls.AddRange(new Control[] {lblList, lst, lblInput, txt});
-flpInput.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-btnOK.Click += delegate(object o, EventArgs e) {
-listResults.Add(lst.Text);
+List<string> lsItems = new List<string>(sValueList ?? new string[0]);
+if (bSorted) lsItems = Homer.LbcDialog.sortedIgnoringCase(lsItems);
+string sSelected = (iDefaultIndex >= 0 && iDefaultIndex < lsItems.Count) ? lsItems[iDefaultIndex] : (lsItems.Count > 0 ? lsItems[0] : "");
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
+ListBox lb = dlg.addPickBox(fieldLabel(sListLabel), lsItems, sSelected, null);
+dlg.primaryList = lb;
+string sPrompt = fieldLabel(sInputLabel);
+TextBox txt = dlg.addInputBox(sPrompt, sValue ?? "", null);
+if (sPrompt.Contains("Password")) txt.UseSystemPasswordChar = true;
+if (!dlg.runOkCancel()) {
+Say("Cancel", true);
+return listResults;
+}
+listResults.Add(lb.SelectedItem == null ? "" : lb.SelectedItem.ToString());
 listResults.Add(txt.Text);
-frm.Close();};
-
-btnOK.Text = "OK";
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
-btnCancel.Text = "Cancel";
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpInput, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+}
 return listResults;
 } // ListInputDialog method
 
 // ---- info dialog ----
 
 public static void InfoDialog(string sTitle, string sValue, bool bSelectText) {
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-RichTextBox info = new RichTextBox();
-info.AutoSize = false;
-info.Width = 300;
-info.Height = 300;
-info.Multiline = true;
-info.ReadOnly = true;
-info.ScrollBars = RichTextBoxScrollBars.Vertical;
-info.Text = sValue;
-info.WordWrap = true;
-
-if (bSelectText) info.SelectAll();
-else {
-info.SelectionLength = 0;
-info.SelectionStart = 0;
-}
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnClose = new Button();
-btnClose.Click += delegate(object o, EventArgs e) { frm.Close();};
-btnClose.Text = "Close";
-
-flpButtons.Controls.Add(btnClose);
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {info, flpButtons});
-flpMain.ResumeLayout();
-
-frm.CancelButton = btnClose;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+// A report to read: the kit's read-only viewer. It opens on the first line
+// rather than with everything selected, which is the Homer rule for a text box
+// -- bSelectText is kept in the signature so no caller changes, and Control+A
+// still selects the lot when that is what is wanted.
+Homer.HelpDialog.show(ownerForm(), sTitle, sValue ?? "");
 } // InfoDialog method
 
 // ---- answer dialog ----
 
 public static void AnswerDialog(string sTitle, string sLabel, string sText) {
-// A long piece of text to read, move around in, and copy from, with one OK
-// button and three ways to leave.
-//
-// WHY NOT InfoDialog
-//
-// InfoDialog is 300 by 300 with a Close button, which suits a short report. An
-// answer from a language model is prose of unknown length, and the reader wants
-// to arrow through it line by line, select part of it, and copy that part out.
-// So this is larger, it is labelled, and it can be dismissed without leaving
-// the text.
-//
-// READ ONLY BUT NOT DISABLED. A read-only text box still takes focus, still
-// moves by character, word and line, and still copies with Control+C, which is
-// exactly what is wanted. A disabled one does none of those and a screen reader
-// skips it.
-//
-// THREE WAYS OUT. Escape and Enter are the usual pair, through CancelButton and
-// AcceptButton. The Spacebar is added because in a read-only box it does
-// nothing else, and a reader whose hand is on the text should not have to find
-// another key. Enter is handled on the box as well, since a multiline text box
-// consumes it before the form's AcceptButton ever sees it.
-Form frm = new Form();
-frm.SuspendLayout();
-frm.FormBorderStyle = FormBorderStyle.Sizable;
-frm.MinimizeBox = false;
-frm.MaximizeBox = true;
-frm.ShowInTaskbar = false;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.ClientSize = new Size(640, 460);
-
-Label lbl = new Label();
-lbl.AutoSize = true;
-lbl.Location = new Point(12, 9);
-// The label names the box for a screen reader, and its trigger letter reaches
-// it from the button, per the Homer form guidelines.
-lbl.Text = sLabel;
-
-TextBox txt = new TextBox();
-txt.Multiline = true;
-txt.ReadOnly = true;
-txt.WordWrap = true;
-txt.ScrollBars = ScrollBars.Vertical;
-txt.AcceptsReturn = false;
-txt.AcceptsTab = false;
-txt.Location = new Point(12, lbl.Bottom + 4);
-txt.Size = new Size(616, 380);
-txt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
-// Windows line endings, or a text box shows one long run with no line breaks.
-txt.Text = sText.Replace("\r\n", "\n").Replace("\n", "\r\n");
-// The caret starts at the top with nothing selected, so the first arrow key
-// reads the first line rather than moving off a selection nobody made.
-txt.SelectionStart = 0;
-txt.SelectionLength = 0;
-
-Button btnOk = new Button();
-// No ampersand on OK, per the Homer form guidelines: its keys are Enter and
-// Escape, and leaving O free lets another control claim it.
-btnOk.Text = "OK";
-btnOk.Location = new Point(12, txt.Bottom + 8);
-btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-btnOk.Click += delegate(object o, EventArgs e) { frm.Close(); };
-
-txt.KeyDown += delegate(object o, KeyEventArgs e) {
-if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter || e.KeyCode == Keys.Escape) {
-// Handled, so the box neither beeps nor tries to insert anything.
-e.Handled = true;
-e.SuppressKeyPress = true;
-frm.Close();
-}
-};
-
-frm.AcceptButton = btnOk;
-frm.CancelButton = btnOk;
-frm.Controls.AddRange(new Control[] {lbl, txt, btnOk});
-frm.ResumeLayout();
-// Focus lands in the text, not on the button: reading is why the dialog opened.
-frm.Shown += delegate(object sender, EventArgs e) {
-txt.Focus();
-};
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+// A long answer to read, move around in and copy from: the kit's read-only
+// viewer, which opens on the first line, keeps Control+C, and closes on Enter
+// or Escape. The label, when there is one, becomes the first line, since the
+// window title already says what the dialog is.
+string sBody = string.IsNullOrEmpty(sLabel) ? (sText ?? "") : (sLabel + "\r\n\r\n" + (sText ?? ""));
+Homer.HelpDialog.show(ownerForm(), sTitle, sBody);
 } // AnswerDialog method
 
 // ---- button dialog ----
 
 public static string ButtonDialog(string sTitle, string sText, string[] sButtonList, int iDefaultButton) {
-string sResult = "";
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-if (sText != "") {
-Label lbl = new Label();
-lbl.AutoSize = true;
-int iLines = sText.Split('\n').Length;
-lbl.AutoSize = false;
-lbl.Width = 200;
-lbl.Height = 16 * iLines + 16;
-lbl.Margin = new Padding(3, 3, 3, 3);
-lbl.Text = sText;
-lbl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-flpMain.Controls.Add(lbl);
-}
-
-for (int i = 0; i < sButtonList.Length; i++) {
-Button btn = new Button();
-btn.Click += delegate(object o, EventArgs e) {sResult = btn.Text; frm.Close();};
-btn.Text = sButtonList[i];
-btn.AutoSize = false;
-btn.Width = 200;
-btn.Anchor = AnchorStyles.None;
-flpMain.Controls.Add(btn);
-}
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
-btnCancel.Text = "Cancel";
-btnCancel.AutoSize = false;
-btnCancel.Width = 200;
-flpMain.Controls.Add(btnCancel);
-
-flpMain.ResumeLayout();
-
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-
-int iButton = 0;
-foreach (Control ctl in flpMain.Controls) {
-if (ctl.GetType() == typeof(Button)) {
-if (iButton == iDefaultButton) ctl.Select();
-iButton++;
-}
-}
-
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
+// A question with a row of answers. Built on the kit's LbcDialog.
 //
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
-Say(sResult.Replace("&", ""));
-return sResult;
+// THE CONTRACT IS KEPT EXACTLY, because every caller switches on it: the
+// answer comes back as the caller wrote it, ampersand and all ("&Yes"), and a
+// cancel comes back as "". The kit returns the plain label, so the plain label
+// is matched back to the caller's own.
+if (sButtonList == null || sButtonList.Length == 0) return "";
+List<string> lsButtons = new List<string>(sButtonList);
+lsButtons.Add("Cancel");
+int iDefault = (iDefaultButton >= 0 && iDefaultButton < sButtonList.Length) ? iDefaultButton : 0;
+string sDefault = sButtonList[iDefault].Replace("&", "");
+string sPressed;
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
+if (!string.IsNullOrEmpty(sText)) dlg.addLabel(sText);
+sPressed = dlg.runWithButtons(lsButtons.ToArray(), false, sDefault);
+}
+if (string.IsNullOrEmpty(sPressed) || sPressed == "Cancel") {
+Say("Cancel", true);
+return "";
+}
+foreach (string sButton in sButtonList) {
+if (sButton.Replace("&", "") == sPressed) return sButton;
+}
+return sPressed;
 } // ButtonDialog method
 
 public static object[] ListButtonDialog(string sTitle, object[] aValue, string[] aDisplay, string[] aButton, bool bSort, int iIndex) {
+// A list and a row of actions to take on the item chosen. Built on the kit's
+// LbcDialog. Returns the item's value and the button's label exactly as the
+// caller wrote it ("&Activate"), since callers switch on that; an empty array
+// when cancelled. The count goes in the title unless it ends with a space.
 object[] aResult = {};
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpData = new FlowLayoutPanel();
-flpData.SuspendLayout();
-flpData.Anchor = AnchorStyles.None;
-flpData.AutoSize = true;
-flpData.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpData.FlowDirection = FlowDirection.LeftToRight;
-
-ListBox lst = new ListBox();
-lst.Sorted = false;
-if (aDisplay == null) lst.Items.AddRange(aValue);
-else lst.Items.AddRange(aDisplay);
-if (bSort) lst.Sorted = true;
-lst.SelectedIndex = iIndex;
-
-flpData.Controls.Add(lst);
-flpData.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-for (int i = 0; i < aButton.Length; i++) {
-Button btn = new Button();
-btn.Click += delegate(object o, EventArgs e) {
-object oItem;
-if (aDisplay == null) oItem = lst.Text;
-else {
-int iValue = Array.IndexOf(aDisplay, lst.Text);
-oItem = aValue[iValue];
-}
-aResult = new object[] {oItem, btn.Text};
-Say(btn.Text.Replace("&", ""), true);
-frm.Close();
-};
-
-btn.Text = aButton[i];
-flpButtons.Controls.Add(btn);
-}
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
-btnCancel.Text = "Cancel";
-flpButtons.Controls.Add(btnCancel);
-
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpData, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = (Button) flpButtons.Controls[0];
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
+if (aValue == null || aValue.Length == 0 || aButton == null || aButton.Length == 0) return aResult;
+List<string> lsItems = new List<string>();
+if (aDisplay == null) foreach (object oItem in aValue) lsItems.Add(System.Convert.ToString(oItem));
+else lsItems.AddRange(aDisplay);
+if (bSort) lsItems = Homer.LbcDialog.sortedIgnoringCase(lsItems);
+string sSelected = (iIndex >= 0 && iIndex < lsItems.Count) ? lsItems[iIndex] : lsItems[0];
 if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (" + aValue.Length + ")";
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+List<string> lsButtons = new List<string>(aButton);
+lsButtons.Add("Cancel");
+string sPressed;
+string sChosen = "";
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle.TrimEnd(), ownerForm())) {
+ListBox lb = dlg.addListBox(lsItems, sSelected, null);
+dlg.primaryList = lb;
+sPressed = dlg.runWithButtons(lsButtons.ToArray(), false, aButton[0].Replace("&", ""));
+if (lb.SelectedItem != null) sChosen = lb.SelectedItem.ToString();
+}
+if (string.IsNullOrEmpty(sPressed) || sPressed == "Cancel") {
+Say("Cancel", true);
 return aResult;
+}
+string sButton = sPressed;
+foreach (string sOne in aButton) if (sOne.Replace("&", "") == sPressed) sButton = sOne;
+object oValue;
+if (aDisplay == null) oValue = sChosen;
+else {
+int iValue = Array.IndexOf(aDisplay, sChosen);
+if (iValue < 0) return aResult;
+oValue = aValue[iValue];
+}
+Say(sPressed, true);
+return new object[] {oValue, sButton};
 } // ListButtonDialog method
 
 // ---- multi-select list dialogs ----
 
 public static ArrayList MultiListDialog(string sTitle, string sLabel, string[] sValueList, bool bSorted, int iDefaultIndex, int[] iSelectList) {
+// Choose several items from a list. A CHECKED list rather than a multi-select
+// one: a screen reader says "checked" and "not checked" for each item, where a
+// multi-select list leaves the person to remember which lines Space turned on.
+// Built on the kit's LbcDialog. The indexes to pre-check and to start on refer
+// to the list as shown, sorted or not, as they always have. Returns the chosen
+// items in list order, or an empty list when cancelled.
 ArrayList sResultList = new ArrayList();
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpInput = new FlowLayoutPanel();
-flpInput.SuspendLayout();
-flpInput.Anchor = AnchorStyles.None;
-flpInput.AutoSize = true;
-flpInput.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpInput.FlowDirection = FlowDirection.LeftToRight;
-
-if (sLabel != "") {
-Label lbl = new Label();
-lbl.AutoSize = true;
-lbl.Text = sLabel + ":";
-flpInput.Controls.Add(lbl);
+if (sValueList == null || sValueList.Length == 0) return sResultList;
+List<string> lsItems = new List<string>(sValueList);
+if (bSorted) lsItems = Homer.LbcDialog.sortedIgnoringCase(lsItems);
+List<int> lsChecked = new List<int>();
+if (iSelectList != null) foreach (int iAt in iSelectList) if (iAt >= 0 && iAt < lsItems.Count) lsChecked.Add(iAt);
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
+CheckedListBox clb = string.IsNullOrEmpty(sLabel)
+? dlg.addCheckListBox(lsItems, lsChecked, null)
+: dlg.addCheckListBox(fieldLabel(sLabel), lsItems, lsChecked, null);
+if (iDefaultIndex >= 0 && iDefaultIndex < clb.Items.Count) clb.SelectedIndex = iDefaultIndex;
+if (!dlg.runOkCancel()) {
+Say("Cancel", true);
+return sResultList;
 }
-
-ListBox lst = new ListBox();
-lst.SelectionMode = SelectionMode.MultiSimple;
-if (bSorted) lst.Sorted = true;
-lst.Items.AddRange(sValueList);
-
-for (int i = 0; i < iSelectList.Length; i++) {
-lst.SetSelected(iSelectList[i], true);
+for (int i = 0; i < clb.Items.Count; i++) if (clb.GetItemChecked(i)) sResultList.Add(clb.Items[i].ToString());
 }
-
-bool bState = lst.GetSelected(iDefaultIndex);
-lst.SelectedIndex = iDefaultIndex;
-lst.SetSelected(iDefaultIndex, bState);
-
-flpInput.Controls.Add(lst);
-flpInput.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-
-btnOK.Click += delegate(object o, EventArgs e) {
-foreach (int i in lst.SelectedIndices) {
-sResultList.Add(lst.Items[i].ToString());
-}
-frm.Close();};
-
-btnOK.Text = "OK";
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
-btnCancel.Text = "Cancel";
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpInput, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (" + sValueList.Length + ")";
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
 return sResultList;
 } // MultiListDialog method
 
 public static List<int> MultiListDialog(string sTitle, string[] aValues, bool bSorted) {
+// Choose several items; the answer is their positions in the list as shown.
+// A checked list, built on the kit's LbcDialog. Empty when cancelled.
 List<int> listResults = new List<int>();
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpInput = new FlowLayoutPanel();
-flpInput.SuspendLayout();
-flpInput.Anchor = AnchorStyles.None;
-flpInput.AutoSize = true;
-flpInput.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpInput.FlowDirection = FlowDirection.LeftToRight;
-
-ListBox lst = new ListBox();
-lst.SelectionMode = SelectionMode.MultiSimple;
-if (bSorted) lst.Sorted = true;
-lst.Width = 2 * lst.Width;
-lst.Items.AddRange(aValues);
-
-flpInput.Controls.AddRange(new Control[] {lst});
-flpInput.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-
-btnOK.Click += delegate(object o, EventArgs e) {
-foreach (int index in lst.SelectedIndices) listResults.Add(index);
-frm.Close();};
-
-btnOK.Text = "OK";
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); frm.Close();};
-btnCancel.Text = "Cancel";
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpInput, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-if (sTitle.Length > 0 && sTitle.Length == sTitle.TrimEnd().Length) sTitle += " (" + aValues.Length + ")";
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+if (aValues == null || aValues.Length == 0) return listResults;
+List<string> lsItems = new List<string>(aValues);
+if (bSorted) lsItems = Homer.LbcDialog.sortedIgnoringCase(lsItems);
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
+CheckedListBox clb = dlg.addCheckListBox(lsItems, new List<int>(), null);
+if (!dlg.runOkCancel()) {
+Say("Cancel", true);
+return listResults;
+}
+for (int i = 0; i < clb.Items.Count; i++) if (clb.GetItemChecked(i)) listResults.Add(i);
+}
 return listResults;
 } // MultiListDialog method
 
 // ---- list / check dialogs (delegate to Dialog helpers) ----
 
 public static string ListDialog(string sTitle, string sLabel, string[] sValueList, bool bSorted, int iDefaultIndex) {
-return Dialog.Pick(sTitle, sValueList, bSorted, iDefaultIndex);
+// Pick one item from a list. Built on the kit's LbcDialog, so the list gets
+// what every Homer list has: Control+J to jump by name, Control+K to search,
+// Control+F to filter, F3 to repeat, and F1 for help on the dialog.
+//
+// With no label the list names itself, which is the one case the kit gives a
+// control an accessible name; with one, the label before it does that job.
+// Returns the chosen item, or "" when the dialog is cancelled.
+if (sValueList == null || sValueList.Length == 0) return "";
+List<string> lsItems = new List<string>(sValueList);
+if (bSorted) lsItems = Homer.LbcDialog.sortedIgnoringCase(lsItems);
+string sSelected = (iDefaultIndex >= 0 && iDefaultIndex < lsItems.Count) ? lsItems[iDefaultIndex] : lsItems[0];
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
+ListBox lb = string.IsNullOrEmpty(sLabel)
+? dlg.addListBox(lsItems, sSelected, null)
+: dlg.addPickBox(fieldLabel(sLabel), lsItems, sSelected, null);
+dlg.primaryList = lb;
+if (!dlg.runOkCancel()) return "";
+return (lb.SelectedItem == null) ? "" : lb.SelectedItem.ToString();
+}
 } // ListDialog method
 
 public static string[] MultiCheckDialog(string sTitle, string[] aValues, int[] aSelect, bool bSort, int iIndex) {
-return Dialog.MultiCheck(sTitle, aValues, aSelect, bSort, iIndex);
+// Check several items; the answer is the checked items themselves. Built on
+// the kit's LbcDialog. Empty when cancelled.
+if (aValues == null || aValues.Length == 0) return new string[0];
+List<string> lsItems = new List<string>(aValues);
+if (bSort) lsItems = Homer.LbcDialog.sortedIgnoringCase(lsItems);
+List<int> lsChecked = new List<int>();
+if (aSelect != null) foreach (int iAt in aSelect) if (iAt >= 0 && iAt < lsItems.Count) lsChecked.Add(iAt);
+List<string> lsResult = new List<string>();
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
+CheckedListBox clb = dlg.addCheckListBox(lsItems, lsChecked, null);
+if (iIndex >= 0 && iIndex < clb.Items.Count) clb.SelectedIndex = iIndex;
+if (!dlg.runOkCancel()) {
+Say("Cancel", true);
+return new string[0];
+}
+for (int i = 0; i < clb.Items.Count; i++) if (clb.GetItemChecked(i)) lsResult.Add(clb.Items[i].ToString());
+}
+return lsResult.ToArray();
 } // MultiCheckDialog method
 
 // ---- special folder picker ----
@@ -1136,225 +619,123 @@ if (pPath != IntPtr.Zero) Marshal.FreeCoTaskMem(pPath);
 // ---- directory dialog (FileDir-specific: Current/Recent/Quick/Special) ----
 
 public static string DirectoryDialog(string sTitle, string sLabel, string sValue) {
+// A folder: typed, browsed for, or picked from the folders open now, the
+// folders visited recently, the Quick folders, or the special folders. Built
+// on the kit's LbcDialog with runPlain, because five of its buttons do work and
+// leave the dialog open rather than closing it.
+//
+// Behaviour kept exactly: the typed box completes folder names; OK on a UNC
+// path offers to map it to a free drive letter; OK on a folder that does not
+// exist offers to create it; OK on nothing leaves the dialog open. Returns the
+// folder, or "" when cancelled.
 string sResult = "";
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpInput = new FlowLayoutPanel();
-flpInput.SuspendLayout();
-flpInput.Anchor = AnchorStyles.None;
-flpInput.AutoSize = true;
-flpInput.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpInput.FlowDirection = FlowDirection.LeftToRight;
-
-Label lbl = new Label();
-lbl.AutoSize = true;
-lbl.Text = sLabel + ":";
-TextBox txt = new TextBox();
-txt.Width *= 2;
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
+TextBox txt = dlg.addInputBox(fieldLabel(sLabel), sValue ?? "", null);
 txt.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 txt.AutoCompleteSource = AutoCompleteSource.FileSystemDirectories;
-txt.Text = sValue;
-txt.GotFocus += delegate(object o, EventArgs e) {txt.SelectAll();};
 
-Button btnBrowse = new Button();
-btnBrowse.Click += delegate(object o, EventArgs e) { txt.Text = FolderBrowseDialog("", sValue, false); txt.Select();};
-btnBrowse.Text = "&Browse";
+dlg.addBand();
+Button btnBrowse = dlg.addButton("&Browse", "Browse for the folder in the Windows folder picker");
+Button btnCurrent = dlg.addButton("&Current", "Pick from the folders open in FileDir now");
+Button btnRecent = dlg.addButton("&Recent", "Pick from the folders visited recently");
+Button btnQuick = dlg.addButton("&Quick", "Pick from the Quick folders");
+Button btnSpecial = dlg.addButton("&Special", "Pick a special folder, such as Documents or Downloads");
+dlg.endBand();
 
-flpInput.Controls.AddRange(new Control[] {lbl, txt, btnBrowse});
-flpInput.ResumeLayout();
+dlg.addBand();
+Button btnOK = dlg.addButton("OK");
+Button btnCancel = dlg.addButton("Cancel");
+dlg.endBand();
 
-FlowLayoutPanel flpLists = new FlowLayoutPanel();
-flpLists.SuspendLayout();
-flpLists.Anchor = AnchorStyles.None;
-flpLists.AutoSize = true;
-flpLists.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpLists.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnCurrent = new Button();
-
+btnBrowse.Click += delegate(object o, EventArgs e) {
+string sPicked = FolderBrowseDialog("", txt.Text.Trim().Length > 0 ? txt.Text.Trim() : sValue, false);
+if (sPicked.Length > 0) txt.Text = sPicked;
+txt.Select();
+};
 btnCurrent.Click += delegate(object o, EventArgs e) {
-string sDirs = "";
-foreach (MdiChild child in App.frame.MdiChildren) {
-if (Directory.Exists(child.Text)) sDirs += child.Text + "\n";
-}
-string[] aDirs = sDirs.Trim().Split('\n');
-string[] aNames = new string[aDirs.Length];
-for (int i = 0; i < aNames.Length; i++) aNames[i] = (aDirs[i].EndsWith(@":\") ? aDirs[i] : Path.GetFileName(aDirs[i]));
-Array.Sort(aDirs, aNames);
-string sName = ListDialog("Pick", "", aNames, true, 0);
-if (sName.Length == 0) return;
-
-int iName = Array.IndexOf(aNames, sName);
-sResult = aDirs[iName];
-frm.Close();
+List<string> lsDirs = new List<string>();
+foreach (MdiChild child in App.frame.MdiChildren) if (Directory.Exists(child.Text)) lsDirs.Add(child.Text);
+string sDir = pickFolder(lsDirs);
+if (sDir.Length == 0) return;
+sResult = sDir;
+dlg.close();
 };
-
-btnCurrent.Text = "&Current";
-
-Button btnRecent = new Button();
 btnRecent.Click += delegate(object o, EventArgs e) {
-string[] aDirs = App.lsRecentDirs.ToArray();
-string[] aNames = new string[aDirs.Length];
-for (int i = 0; i < aNames.Length; i++) aNames[i] = (aDirs[i].EndsWith(@":\") ? aDirs[i] : Path.GetFileName(aDirs[i]));
-Array.Sort(aDirs, aNames);
-string sName = ListDialog("Pick", "", aNames, true, 0);
-if (sName.Length == 0) return;
-
-int iName = Array.IndexOf(aNames, sName);
-sResult = aDirs[iName];
-frm.Close();
+string sDir = pickFolder(new List<string>(App.lsRecentDirs));
+if (sDir.Length == 0) return;
+sResult = sDir;
+dlg.close();
 };
-
-btnRecent.Text = "&Recent";
-
-Button btnQuick = new Button();
-
 btnQuick.Click += delegate(object o, EventArgs e) {
-string sQuickDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\FileDir\Quick";
-sQuickDir = Path.GetFullPath(sQuickDir);
-string[] aLinks = Directory.GetFiles(sQuickDir, "*.lnk");
-string sDirs = "";
-foreach (string sLink in aLinks) {
+List<string> lsDirs = new List<string>();
+try {
+string sQuickDir = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\FileDir\Quick");
+foreach (string sLink in Directory.GetFiles(sQuickDir, "*.lnk")) {
 object oLink = CreateObject("WScript.Shell");
 oLink = CallMethod(oLink, "CreateShortcut", new object[] {sLink});
 string sDir = (string) GetProperty(oLink, "TargetPath");
-if (Directory.Exists(sDir)) sDirs += sDir + "\n";
+if (Directory.Exists(sDir)) lsDirs.Add(sDir);
 }
-string[] aDirs = sDirs.Trim().Split('\n');
-string[] aNames = new string[aDirs.Length];
-for (int i = 0; i < aNames.Length; i++) aNames[i] = (aDirs[i].EndsWith(@":\") ? aDirs[i] : Path.GetFileName(aDirs[i]));
-Array.Sort(aDirs, aNames);
-string sName = ListDialog("Pick", "", aNames, true, 0);
-if (sName.Length == 0) return;
-
-int iName = Array.IndexOf(aNames, sName);
-sResult = aDirs[iName];
-frm.Close();
+}
+catch (Exception) {}
+string sPicked = pickFolder(lsDirs);
+if (sPicked.Length == 0) return;
+sResult = sPicked;
+dlg.close();
 };
-
-btnQuick.Text = "&Quick";
-
-Button btnSpecial = new Button();
-
 btnSpecial.Click += delegate(object o, EventArgs e) {
 string sDir = PickSpecialFolder();
 if (sDir.Length == 0) return;
 sResult = sDir;
-frm.Close();
+dlg.close();
 };
-
-btnSpecial.Text = "&Special";
-
-flpLists.Controls.AddRange(new Control[] {btnCurrent, btnRecent, btnQuick, btnSpecial});
-flpLists.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
 btnOK.Click += delegate(object o, EventArgs e) {
-sResult = txt.Text.Trim();
-if (sResult != "" && !Directory.Exists(sResult)) {
-string sPath = sResult;
-if (sPath.StartsWith(@"\\")) {
-string sDrive;
+string sTyped = txt.Text.Trim();
+if (sTyped != "" && !Directory.Exists(sTyped)) {
+if (sTyped.StartsWith(@"\\")) {
 string sUnmapped = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ";
-DriveInfo[] allDrives = DriveInfo.GetDrives();
-foreach (DriveInfo d in allDrives){
-sDrive = d.Name.Substring(0, 1);
-sUnmapped = sUnmapped.Replace(sDrive + " ", "");
-}
-string[] aUnmapped = sUnmapped.Trim().Split(' ');
-string s = "Pick Drive to Map";
-sDrive = ListDialog(s, "", aUnmapped, true, 0);
+foreach (DriveInfo d in DriveInfo.GetDrives()) sUnmapped = sUnmapped.Replace(d.Name.Substring(0, 1) + " ", "");
+string sDrive = ListDialog("Pick Drive to Map", "", sUnmapped.Trim().Split(' '), true, 0);
 if (sDrive.Length == 0) return;
-
-string sExe = "net.exe";
-string sParams = "use " + sDrive + ": " + sPath;
-try {
-string sTempFile = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "FileDir.tmp");
-if (File.Exists(sTempFile)) File.Delete(sTempFile);
-string sCommand = sExe + " " + sParams + " 2>" + sTempFile;
-MapDrive2Share(sDrive, sPath);
-if (File.Exists(sTempFile)) {
-string sOutput = File2String(sTempFile).Trim();
-if (sOutput.Length > 0) Show(sOutput, "Result");
+try { MapDrive2Share(sDrive, sTyped); }
+catch (Exception ex) { Show(ex.Message, "Error"); }
+}
+else if (ConfirmDialog("Confirm", "Cannot find folder " + sTyped + "\nCreate it?", "Y") == "Y") {
+try { new DirectoryInfo(sTyped).Create(); }
+catch (Exception ex) { Show(ex.Message, "Error"); }
 }
 }
-catch (Exception ex) {
-Show(ex.Message, "Error");
+if (Directory.Exists(sTyped)) {
+sResult = sTyped;
+dlg.close();
 }
-}
-
-else {
-string sChoice = ConfirmDialog("Confirm", "Cannot find folder " + sResult + "\nCreate it?", "Y");
-if (sChoice == "Y") {
-try {
-DirectoryInfo di = new DirectoryInfo(sResult);
-di.Create();
-}
-catch (Exception ex) {
-Show(ex.Message, "Error");
-}
-}
-}
-}
-if (Directory.Exists(sResult)) frm.Close();
 else {
 txt.SelectAll();
 txt.Select();
 }
 };
-
-btnOK.Text = "OK";
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Say("Cancel", true); sResult = ""; frm.Close();};
-btnCancel.Text = "Cancel";
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpInput, flpLists, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-// SETTLE THE SIZE BEFORE THE WINDOW EXISTS.
-//
-// These dialogs size themselves to their contents, and with AutoSize left on
-// the sizing happens after the window is up: the window changes shape a moment
-// after it appears, and a screen reader treats a window that changes as a
-// window to announce again. The title was being read three times over.
-//
-// PerformLayout works the size out now; fixing it and turning AutoSize off
-// means nothing about the window changes once it is on screen.
-frm.PerformLayout();
-System.Drawing.Size sizeWanted = frm.PreferredSize;
-frm.AutoSize = false;
-if (sizeWanted.Width > 0 && sizeWanted.Height > 0) frm.Size = sizeWanted;
-frm.ShowDialog(ownerForm());
-frm.Dispose();
+btnCancel.Click += delegate(object o, EventArgs e) {
+Say("Cancel", true);
+sResult = "";
+dlg.close();
+};
+dlg.runPlain(btnOK, btnCancel);
+}
 return sResult;
 } // DirectoryDialog method
+
+// pickFolder: choose one folder from a list, shown by its own name -- or by its
+// full path for a drive root, whose name would be empty. "" when cancelled or
+// when there is nothing to choose from.
+private static string pickFolder(List<string> lsDirs) {
+if (lsDirs == null || lsDirs.Count == 0) return "";
+List<string> lsNames = new List<string>();
+foreach (string sDir in lsDirs) lsNames.Add(sDir.EndsWith(@":\") ? sDir : Path.GetFileName(sDir));
+string sName = ListDialog("Pick", "", lsNames.ToArray(), true, 0);
+if (sName.Length == 0) return "";
+int iAt = lsNames.IndexOf(sName);
+return (iAt >= 0) ? lsDirs[iAt] : "";
+} // pickFolder method
 
 } // Lbc class
 
@@ -1377,97 +758,7 @@ public static void Show(object oTitle, object oText) {
 MessageBox.Show(oText.ToString(), oTitle.ToString());
 } // Show method
 
-public static string Input(string sTitle, string sLabel, string sValue) {
-string[] aLabel = new string[] {sLabel};
-string[] aValue = new string[] {sValue};
-string[] aReturn = MultiInput(sTitle, aLabel, aValue);
-string sReturn = "";
-if (aReturn != null && aReturn.Length > 0) sReturn = aReturn[0];
-return sReturn;
-} // Input method
 
-public static string[] MultiInput(string sTitle, string[] aLabel, string[] aValue) {
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-frm.AutoScroll = true;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-TableLayoutPanel tlpFields = new TableLayoutPanel();
-tlpFields.SuspendLayout();
-tlpFields.Anchor = AnchorStyles.None;
-tlpFields.AutoSize = true;
-tlpFields.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-tlpFields.ColumnCount = 2;
-
-for (int i = 0; i < tlpFields.ColumnCount; i++) {
-tlpFields.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-}
-
-tlpFields.RowCount = aLabel.Length;
-
-for (int i = 0; i < tlpFields.RowCount; i++) {
-tlpFields.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-Label lbl = new Label();
-lbl.AutoSize = true;
-lbl.Text = aLabel[i] + ":";
-TextBox txt = new TextBox();
-txt.Width *= 2;
-txt.Text = aValue[i];
-txt.SelectAll();
-tlpFields.Controls.AddRange(new Control[] {lbl, txt});
-}
-tlpFields.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-btnOK.Text = "OK";
-
-StringBuilder sb = new StringBuilder();
-btnOK.Click += delegate(object o, EventArgs e) {
-foreach (Control ctl in tlpFields.Controls) {
-if (ctl.GetType() == typeof(TextBox)) sb.Append(ctl.Text + "\n");
-}
-frm.Close();
-};
-
-Button btnCancel = new Button();
-btnCancel.Text = "Cancel";
-btnCancel.Click += delegate(object o, EventArgs e) { frm.Close();};
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {tlpFields, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-frm.ShowDialog(Lbc.ownerForm());
-frm.Dispose();
-
-string s = sb.ToString();
-if (s.Length > 0) s = s.Substring(0, s.Length - 1);
-string[] aReturn = {};
-if (s.Length > 0) aReturn = s.Split('\n');
-return aReturn;
-} // MultiInput method
 
 public static string Pick(string sTitle, string[] aValue, bool bSort) {
 return Pick(sTitle, aValue, null, bSort, 0);
@@ -1478,664 +769,64 @@ return Pick(sTitle, aValue, null, bSort, iIndex);
 } // Pick method
 
 public static string Pick(string sTitle, string[] aValue, string[] aDisplay, bool bSort, int iIndex) {
-string sReturn = "";
-
-ListForm frm = new ListForm();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-frm.AutoScroll = true;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpInput = new FlowLayoutPanel();
-flpInput.SuspendLayout();
-flpInput.Anchor = AnchorStyles.None;
-flpInput.AutoSize = true;
-flpInput.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpInput.FlowDirection = FlowDirection.LeftToRight;
-
-ListBox lst = new ListBox();
-frm.lst = lst;
-lst.Sorted = false;
-
-string[] aTemp = (string[]) aValue.Clone();
-if (aDisplay == null) {
-if (bSort) Array.Sort(aValue, new CaseInsensitiveComparer());
-aDisplay = (string[]) aValue.Clone();
+// Pick one item, shown by one name and answered with another: aDisplay is
+// what the list says, aValue what comes back. With no aDisplay the two are the
+// same. Built on the kit's LbcDialog, so the list has jump, search and filter.
+// Returns the value, or "" when cancelled.
+if (aValue == null || aValue.Length == 0) return "";
+string[] aShown = (aDisplay != null && aDisplay.Length == aValue.Length) ? aDisplay : aValue;
+List<int> lsOrder = new List<int>();
+for (int i = 0; i < aShown.Length; i++) lsOrder.Add(i);
+if (bSort) lsOrder.Sort(delegate(int a, int b) { return string.Compare(aShown[a], aShown[b], StringComparison.OrdinalIgnoreCase); });
+List<string> lsNames = new List<string>();
+foreach (int iAt in lsOrder) lsNames.Add(aShown[iAt]);
+string sSelected = (iIndex >= 0 && iIndex < lsNames.Count) ? lsNames[iIndex] : lsNames[0];
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, Lbc.ownerForm())) {
+ListBox lb = dlg.addListBox(lsNames, sSelected, null);
+dlg.primaryList = lb;
+if (!dlg.runOkCancel()) {
+Lbc.Say("Cancel", true);
+return "";
 }
-else if (bSort) Array.Sort(aDisplay, aValue);
-
-DataTable tbl = new DataTable();
-frm.tbl = tbl;
-tbl.Columns.Add("Item", typeof(string));
-tbl.Columns.Add("Value", typeof(string));
-BindingSource bs = new BindingSource();
-frm.bs = bs;
-bs.DataSource = tbl;
-lst.DataSource = bs;
-lst.DisplayMember = "Item";
-for (int i = 0; i < aDisplay.Length; i++) tbl.Rows.Add(aDisplay[i], aValue[i]);
-
-flpInput.Controls.Add(lst);
-flpInput.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-btnOK.Text = "OK";
-
-btnOK.Click += delegate(object o, EventArgs e) {
-sReturn = ((DataRowView) bs.Current)[1].ToString();
-frm.Close();
-for (int i = 0; i < aTemp.Length; i++) aValue[i] = aTemp[i];
-};
-
-Button btnCancel = new Button();
-btnCancel.Text = "Cancel";
-btnCancel.Click += delegate(object o, EventArgs e) { frm.Close();};
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpInput, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-
-frm.Load += delegate(object sender, EventArgs e) {
-if (iIndex == 0) {
-string sFilter = "";
-if (hashFilter.TryGetValue(sTitle, out sFilter) && sFilter != null && sFilter != ""){
-string sFilterSql = frm.GetFilterSql(sFilter);
-bs.Filter = sFilterSql;
-if (bs.Count == 0) bs.Filter = "";
-else Lbc.Say("Filter " + sFilter);
+// By the text chosen, not the row: a filtered list (Control+F) shows fewer
+// rows than it holds, so a row number would point at the wrong item.
+if (lb.SelectedItem == null) return "";
+int iRow = lsNames.IndexOf(lb.SelectedItem.ToString());
+if (iRow < 0) return "";
+return aValue[lsOrder[iRow]];
 }
-
-string sSort = "";
-if (hashSort.TryGetValue(sTitle, out sSort) && sSort != null && sSort != ""){
-bs.Sort = sSort;
-if (sSort.EndsWith(" asc")) Lbc.Say("Alpha order");
-else if (sSort.EndsWith(" desc")) Lbc.Say("Reverse alpha order");
-}
-
-string sItem = "";
-if (hashItem.TryGetValue(sTitle, out sItem)) {
-iIndex = -1;
-for (int i = 0; i < bs.Count; i++) {
-DataRowView row = (DataRowView) bs[i];
-if (row[1].ToString() == sItem) {
-iIndex = i;
-break;
-}
-}
-}
-}
-
-if (iIndex == -1) iIndex = 0;
-if (iIndex > 0) Lbc.Say("Item " + (iIndex + 1).ToString());
-bs.Position = iIndex;
-};
-
-frm.ShowDialog(Lbc.ownerForm());
-frm.Dispose();
-
-if (sReturn.Length > 0) {
-if (hashFilter.ContainsKey(sTitle)) hashFilter.Remove(sTitle);
-string sFilter = frm.Filter;
-hashFilter.Add(sTitle, sFilter);
-
-if (hashSort.ContainsKey(sTitle)) hashSort.Remove(sTitle);
-string sSort = bs.Sort;
-hashSort.Add(sTitle, sSort);
-
-if (hashItem.ContainsKey(sTitle)) hashItem.Remove(sTitle);
-hashItem.Add(sTitle, sReturn);
-}
-return sReturn;
 } // Pick method
 
-public static string[] MultiCheck(string sTitle, string[] aValues, int[] aSelect, bool bSort, int iIndex) {
-return MultiCheck(sTitle, null, aValues, aSelect, bSort, iIndex);
-} // MultiCheck method
 
-public static string[] MultiCheck(string sTitle, string[] aDisplay, string[] aValues, int[] aSelect, bool bSort, int iIndex) {
-List<string> listResults = new List<string>();
-
-ListForm frm = new ListForm();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-FlowLayoutPanel flpInput = new FlowLayoutPanel();
-flpInput.SuspendLayout();
-flpInput.Anchor = AnchorStyles.None;
-flpInput.AutoSize = true;
-flpInput.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpInput.FlowDirection = FlowDirection.LeftToRight;
-
-CheckedListBox lst = new CheckedListBox();
-frm.lst = lst;
-lst.Sorted = false;
-lst.SelectionMode = SelectionMode.One;
-
-string[] aTemp = (string[]) aValues.Clone();
-if (aDisplay == null) {
-if (bSort) Array.Sort(aValues, new CaseInsensitiveComparer());
-aDisplay = (string[]) aValues.Clone();
-}
-else if (bSort) Array.Sort(aDisplay, aValues);
-
-DataTable tbl = new DataTable();
-frm.tbl = tbl;
-tbl.Columns.Add("Item", typeof(string));
-tbl.Columns.Add("Value", typeof(string));
-BindingSource bs = new BindingSource();
-frm.bs = bs;
-bs.DataSource = tbl;
-lst.DataSource = bs;
-lst.DisplayMember = "Item";
-for (int i = 0; i < aDisplay.Length; i++) tbl.Rows.Add(aDisplay[i], aValues[i]);
-
-flpInput.Controls.AddRange(new Control[] {lst});
-flpInput.ResumeLayout();
-
-FlowLayoutPanel flpButtons = new FlowLayoutPanel();
-flpButtons.SuspendLayout();
-flpButtons.Anchor = AnchorStyles.None;
-flpButtons.AutoSize = true;
-flpButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpButtons.FlowDirection = FlowDirection.LeftToRight;
-
-Button btnOK = new Button();
-
-btnOK.Click += delegate(object o, EventArgs e) {
-foreach (int i in lst.CheckedIndices) listResults.Add(((DataRowView) bs[i])[1].ToString());
-frm.Close();
-for (int i = 0; i < aTemp.Length; i++) aValues[i] = aTemp[i];
-};
-
-btnOK.Text = "OK";
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { Lbc.Say("Cancel"); frm.Close();};
-btnCancel.Text = "Cancel";
-
-flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
-flpButtons.ResumeLayout();
-
-flpMain.Controls.AddRange(new Control[] {flpInput, flpButtons});
-flpMain.ResumeLayout();
-
-frm.AcceptButton = btnOK;
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-frm.ResumeLayout();
-frm.Load += delegate(object sender, EventArgs e) {
-if (iIndex == 0) {
-for (int i = 0; i < aSelect.Length; i++) lst.SetItemChecked(aSelect[i], true);
-
-string sFilter = "";
-if (hashFilter.TryGetValue(sTitle, out sFilter) && sFilter != null && sFilter != ""){
-string sFilterSql = frm.GetFilterSql(sFilter);
-bs.Filter = sFilterSql;
-if (bs.Count == 0) bs.Filter = "";
-else Lbc.Say("Filter " + sFilter);
-}
-
-string sSort = "";
-if (hashSort.TryGetValue(sTitle, out sSort) && sSort != null && sSort != ""){
-bs.Sort = sSort;
-if (sSort.EndsWith(" asc")) Lbc.Say("Alpha order");
-else if (sSort.EndsWith(" desc")) Lbc.Say("Reverse alpha order");
-}
-
-string sItem = "";
-if (hashItem.TryGetValue(sTitle, out sItem)) {
-iIndex = -1;
-for (int i = 0; i < bs.Count; i++) {
-DataRowView row = (DataRowView) bs[i];
-if (row[1].ToString() == sItem) {
-iIndex = i;
-break;
-}
-}
-}
-
-if (iIndex == -1) iIndex = 0;
-if (iIndex > 0) Lbc.Say("Item " + (iIndex + 1).ToString());
-bs.Position = iIndex;
-}
-};
-
-frm.ShowDialog(Lbc.ownerForm());
-frm.Dispose();
-string[] aResults = listResults.ToArray();
-
-if (aResults.Length > 0) {
-if (hashFilter.ContainsKey(sTitle)) hashFilter.Remove(sTitle);
-string sFilter = frm.Filter;
-hashFilter.Add(sTitle, sFilter);
-
-if (hashSort.ContainsKey(sTitle)) hashSort.Remove(sTitle);
-string sSort = bs.Sort;
-hashSort.Add(sTitle, sSort);
-
-if (hashItem.ContainsKey(sTitle)) hashItem.Remove(sTitle);
-string sItem = ((DataRowView) bs.Current)[1].ToString();
-hashItem.Add(sTitle, sItem);
-}
-
-return aResults;
-} // MultiCheck method
 
 public static string Choose(string sTitle, string sText, string[] aButtons, int iDefault) {
-string sResult = "";
-
-Form frm = new Form();
-frm.SuspendLayout();
-frm.AutoSize = true;
-frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-FlowLayoutPanel flpMain = new FlowLayoutPanel();
-flpMain.SuspendLayout();
-flpMain.AutoSize = true;
-flpMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-flpMain.FlowDirection = FlowDirection.TopDown;
-
-if (sText != "") {
-Label lbl = new Label();
-lbl.AutoSize = true;
-int iLines = sText.Split('\n').Length;
-lbl.AutoSize = false;
-lbl.Width = 200;
-lbl.Height = 16 * iLines + 16;
-lbl.Margin = new Padding(3, 3, 3, 3);
-lbl.Text = sText;
-lbl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-flpMain.Controls.Add(lbl);
+// A question with a row of answers, as ButtonDialog but for callers that list
+// their own Cancel. Built on the kit's LbcDialog. The answer comes back as the
+// caller wrote it ("&Try anyway"); Escape gives the caller's own "Cancel" when
+// it listed one, and "" otherwise. The answer chosen is spoken, as before.
+if (aButtons == null || aButtons.Length == 0) return "";
+List<string> lsButtons = new List<string>(aButtons);
+bool bOwnCancel = false;
+foreach (string sOne in aButtons) if (sOne.Replace("&", "") == "Cancel") bOwnCancel = true;
+if (!bOwnCancel) lsButtons.Add("Cancel");
+int iAt = (iDefault >= 0 && iDefault < aButtons.Length) ? iDefault : 0;
+string sPressed;
+using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, Lbc.ownerForm())) {
+if (!string.IsNullOrEmpty(sText)) dlg.addLabel(sText);
+sPressed = dlg.runWithButtons(lsButtons.ToArray(), false, aButtons[iAt].Replace("&", ""));
 }
-
-for (int i = 0; i < aButtons.Length; i++) {
-Button btn = new Button();
-btn.Click += delegate(object o, EventArgs e) {sResult = btn.Text; frm.Close();};
-btn.Text = aButtons[i];
-btn.AutoSize = false;
-btn.Width = 200;
-btn.Anchor = AnchorStyles.None;
-flpMain.Controls.Add(btn);
-}
-
-Button btnCancel = new Button();
-btnCancel.Click += delegate(object o, EventArgs e) { frm.Close();};
-btnCancel.Text = "Cancel";
-btnCancel.AutoSize = false;
-btnCancel.Width = 200;
-flpMain.Controls.Add(btnCancel);
-
-flpMain.ResumeLayout();
-
-frm.CancelButton = btnCancel;
-frm.StartPosition = FormStartPosition.CenterParent;
-frm.Text = sTitle;
-frm.Controls.Add(flpMain);
-
-int iButton = 0;
-foreach (Control ctl in flpMain.Controls) {
-if (ctl.GetType() == typeof(Button)) {
-if (iButton == iDefault) ctl.Select();
-iButton++;
+if (string.IsNullOrEmpty(sPressed)) sPressed = "Cancel";
+if (sPressed == "Cancel" && !bOwnCancel) return "";
+foreach (string sOne in aButtons) {
+if (sOne.Replace("&", "") == sPressed) {
+Lbc.Say(sPressed);
+return sOne;
 }
 }
-
-frm.ResumeLayout();
-frm.ShowDialog(Lbc.ownerForm());
-frm.Dispose();
-Lbc.Say(sResult.Replace("&", ""));
-return sResult;
+return "";
 } // Choose method
 
 } // Dialog class
-
-// ===========================================================================
-// ListForm - ListBox/CheckedListBox host with filter, sort, jump key handling
-// ===========================================================================
-
-public class ListForm : Form {
-
-public ListBox lst;
-public DataTable tbl;
-public BindingSource bs;
-public string Filter;
-public DataTable tblDefault = null;
-public int CheckFirst = -1;
-public int CheckLast = -1;
-
-protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
-ListBox lst = this.lst;
-bool bChecked = false;
-if (lst is CheckedListBox) bChecked = true;
-
-switch (keyData) {
-case Keys.Alt | Keys.A :
-Lbc.Say("Alpha order");
-bs.Sort = "Item asc";
-bs.Position = 0;
-return true;
-case Keys.Alt | Keys.Shift | Keys.A :
-Lbc.Say("Reverse alpha order");
-bs.Sort = "Item desc";
-bs.Position = 0;
-return true;
-case Keys.Alt | Keys.D :
-Lbc.Say("Default order");
-if (this.tblDefault == null) {
-this.tblDefault = new DataTable();
-this.tblDefault.Columns.Add("Item", typeof(string));
-this.tblDefault.Columns.Add("Value", typeof(string));
-for (int i = 0; i < tbl.Rows.Count; i++) this.tblDefault.Rows.Add(tbl.Rows[i][0].ToString(), tbl.Rows[i][1].ToString());
-}
-
-tbl = this.tblDefault;
-bs.Sort = "";
-bs.Position = 0;
-return true;
-case Keys.Alt | Keys.Shift | Keys.D :
-Lbc.Say("Reverse default order");
-if (this.tblDefault == null) {
-this.tblDefault = new DataTable();
-this.tblDefault.Columns.Add("Item", typeof(string));
-this.tblDefault.Columns.Add("Value", typeof(string));
-for (int i = 0; i < tbl.Rows.Count; i++) this.tblDefault.Rows.Add(tbl.Rows[i][0].ToString(), tbl.Rows[i][1].ToString());
-}
-
-DataTable tblNew = new DataTable();
-tblNew.Columns.Add("Item", typeof(string));
-tblNew.Columns.Add("Value", typeof(string));
-for (int i = this.tblDefault.Rows.Count - 1; i >= 0; i--) tblNew.Rows.Add(this.tblDefault.Rows[i][0].ToString(), tblDefault.Rows[i][1].ToString());
-tbl = tblNew;
-bs.DataSource = tbl;
-bs.Sort = "";
-bs.Position = 0;
-return true;
-case Keys.Alt | Keys.Delete :
-Lbc.Say((bs.Position + 1) + " of " + tbl.DefaultView.Count);
-return true;
-case Keys.Shift | Keys.Space :
-if (bChecked) {
-int iChecked = ((CheckedListBox) lst).CheckedItems.Count;
-if (iChecked == 0) Lbc.Say("No items checked!");
-else Lbc.Say("Checked" + iChecked);
-List<int> listChecked = new List<int>();
-foreach (int i in ((CheckedListBox) lst).CheckedIndices) listChecked.Add(i);
-listChecked.Sort();
-foreach (int i in listChecked) Lbc.Say(tbl.DefaultView[i][0].ToString());
-}
-else {
-Lbc.Say("Selected");
-foreach (int i in lst.SelectedIndices) Lbc.Say(tbl.DefaultView[i][0].ToString());
-}
-return true;
-case Keys.Space :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-{
-int i = bs.Position;
-bool b = ((CheckedListBox) lst).GetItemChecked(i);
-((CheckedListBox) lst).SetItemChecked(i, !b);
-return true;
-}
-case Keys.Control | Keys.Home :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-int iStart = -1;
-for (int i = 0; i < tbl.DefaultView.Count; i++) {
-if (((CheckedListBox) lst).GetItemChecked(i)) {
-iStart = i;
-break;
-}
-}
-
-if (iStart >= 0) bs.Position = iStart;
-else Lbc.Say("Not found!");
-return true;
-case Keys.Control | Keys.End :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-int iEnd = -1;
-for (int i = tbl.DefaultView.Count - 1; i >= 0; i--) {
-if (((CheckedListBox) lst).GetItemChecked(i)) {
-iEnd = i;
-break;
-}
-}
-
-if (iEnd >= 0) bs.Position = iEnd;
-else Lbc.Say("Not found!");
-return true;
-case Keys.Control | Keys.Down :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-int iNext = -1;
-for (int i = bs.Position + 1; i < tbl.DefaultView.Count; i++) {
-if (((CheckedListBox) lst).GetItemChecked(i)) {
-iNext = i;
-break;
-}
-}
-
-if (iNext >= 0) bs.Position = iNext;
-else Lbc.Say("Not found!");
-return true;
-case Keys.F8 :
-case Keys.Shift | Keys.F8 :
-case Keys.Alt | Keys.Shift | Keys.F8 :
-case Keys.Shift | Keys.Clear :
-case Keys.Alt | Keys.Shift | Keys.Clear :
-case Keys.Shift | Keys.Down :
-case Keys.Alt | Keys.Shift | Keys.Down :
-case Keys.Shift | Keys.Up :
-case Keys.Alt | Keys.Shift | Keys.Up :
-case Keys.Shift | Keys.End :
-case Keys.Alt | Keys.Shift | Keys.End :
-case Keys.Shift | Keys.Home :
-case Keys.Alt | Keys.Shift | Keys.Home :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-bool bState;
-int iFirst, iLast;
-int iAfter = bs.Position;
-string sKey = Lbc.Key2String(keyData);
-
-if (keyData == Keys.F8) {
-Lbc.Say("Start Check or Uncheck");
-this.CheckFirst = iAfter;
-return true;
-}
-else if (keyData == (Keys.Shift | Keys.F8)) {
-Lbc.Say("Complete Check");
-bState = true;
-iFirst = this.CheckFirst;
-iLast = iAfter;
-}
-else if (keyData == (Keys.Alt | Keys.Shift | Keys.F8)) {
-Lbc.Say("Complete Uncheck");
-bState = false;
-iFirst = this.CheckFirst;
-iLast = iAfter;
-}
-else {
-if (sKey.IndexOf("Alt+") >= 0) bState = false;
-else bState = true;
-
-if (sKey.IndexOf("+End") >= 0) {
-iLast = tbl.DefaultView.Count - 1;
-iAfter = iLast;
-}
-else iLast = iAfter;
-
-if (sKey.IndexOf("+Home") >= 0) {
-iFirst = 0;
-iAfter = iFirst;
-}
-else iFirst = iAfter;
-
-if (sKey.IndexOf("+Up") >= 0) iAfter--;
-if (sKey.IndexOf("+Down") >= 0) iAfter++;
-
-}
-
-if (iFirst > iLast) Lbc.Swap(ref iFirst, ref iLast);
-for (int iPosition = iFirst; iPosition <= iLast; iPosition++) ((CheckedListBox) lst).SetItemChecked(iPosition, bState);
-if (iAfter != bs.Position && iAfter >= 0 && iAfter < tbl.DefaultView.Count) bs.Position = iAfter;
-return true;
-case Keys.Control | Keys.Up :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-int iPrevious = -1;
-for (int i = bs.Position - 1; i >= 0; i--) {
-if (((CheckedListBox) lst).GetItemChecked(i)) {
-iPrevious = i;
-break;
-}
-}
-
-if (iPrevious >= 0) bs.Position = iPrevious;
-else Lbc.Say("Not found!");
-return true;
-case Keys.Control | Keys.A :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-if (bChecked) {
-Lbc.Say("Check All");
-for (int i = 0; i < tbl.DefaultView.Count; i++) ((CheckedListBox) lst).SetItemChecked(i, true);
-}
-return true;
-case Keys.Control | Keys.Shift | Keys.A :
-if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
-
-if (bChecked) {
-Lbc.Say("Uncheck All");
-for (int i = 0; i < tbl.DefaultView.Count; i++) ((CheckedListBox) lst).SetItemChecked(i, false);
-}
-return true;
-case Keys.Control | Keys.F :
-case Keys.Control | Keys.Shift | Keys.F :
-string sFilterSql = "";
-string sFilter = "";
-if (keyData == (Keys.Control | Keys.Shift | Keys.F)) Lbc.Say("Clear filter");
-else {
-Dialog.hashFilter.TryGetValue(this.Text, out sFilter);
-sFilter = Dialog.Input("Filter", "Text", sFilter);
-if (sFilter.Length == 0) return true;
-sFilterSql = GetFilterSql(sFilter);
-}
-
-string sTemp = bs.Filter;
-try {
-bs.Filter = sFilterSql;
-this.Filter = sFilter;
-}
-catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
-bs.Filter = sTemp;
-return true;
-}
-
-bs.Position = 0;
-Lbc.Say(Lbc.Pluralize(bs.Count, "item"));
-
-if (Dialog.hashFilter.ContainsKey(this.Text)) Dialog.hashFilter.Remove(this.Text);
-if (sFilter.Trim().Length > 0) Dialog.hashFilter.Add(this.Text, sFilter);
-return true;
-case Keys.Control | Keys.J :
-case Keys.Alt | Keys.J :
-string sTitle = this.Text;
-string sJump = "";
-Dialog.hashJump.TryGetValue(sTitle, out sJump);
-if (keyData == (Keys.Control | Keys.J)) {
-sJump = Dialog.Input("Jump", "Text", sJump);
-if (sJump.Length == 0) return true;
-}
-
-int iIndex = bs.Position;
-if (keyData == (Keys.Alt | Keys.J) || sJump == Dialog.Jump) iIndex++;
-else iIndex = 0;
-if (Dialog.hashJump.ContainsKey(sTitle)) Dialog.hashJump.Remove(sTitle);
-Dialog.hashJump.Add(sTitle, sJump);
-
-int iCount = tbl.DefaultView.Count;
-while (iIndex < iCount && tbl.DefaultView[iIndex][0].ToString().ToLower().IndexOf(sJump) == -1) {
-iIndex++;
-}
-if (iIndex < iCount) bs.Position = iIndex;
-else Lbc.Say("Not found!");
-return true;
-}
-
-return base.ProcessCmdKey (ref msg, keyData);
-} // ProcessCmdKey handler
-
-public string GetFilterSql(string sText) {
-if (sText == null) sText = "";
-sText = sText.Trim();
-if (sText == "" || sText == "*") return "";
-string[] aFilters = sText.Split('|');
-string s = "";
-for (int i = 0; i < aFilters.Length; i++) {
-if (i == 0) s += "(";
-string[] a = aFilters[i].Split('*');
-for (int j = 0; j < a.Length; j++) {
-string sPrefix = "";
-string sSuffix = "";
-if (j == 0) s += " (";
-if (a[j].Length > 0) {
-if (j > 0) sPrefix = "*";
-if (j < a.Length - 1) sSuffix = "*";
-s += "Item like '" + sPrefix + a[j] + sSuffix + "'";
-}
-
-if (j == a.Length - 1) s += ") ";
-else s += " and ";
-}
-if (i == aFilters.Length - 1) s += ")";
-else s += " or ";
-}
-
-s = s.Replace("( and ", "(");
-s = s.Replace(" and )", ")");
-s = s.Replace("**", "*");
-s = s.Replace("  ", " ");
-s = s.Replace("( ", "(");
-s = s.Replace(" )", ")");
-s = s.Trim();
-return s;
-} // GetFilterSql method
-
-} // ListForm class
 
 // ===========================================================================
 // NetworkDrive - map/unmap UNC shares (aejw.com, CC BY-SA 2.5); used by

@@ -1248,8 +1248,17 @@ def checkNoAccessibleNames():
             sStripped = sLine.strip()
             if sStripped.startswith("//"):
                 continue
-            if re.search(r"\.AccessibleName\s*=", sStripped):
-                lsFaults.append(sName + " line " + str(iLine))
+            if not re.search(r"\.AccessibleName\s*=", sStripped):
+                continue
+            # A LAYOUT CONTAINER IS THE ONE ALLOWED CASE, and only when the
+            # name is empty. A panel has no visible text to duplicate, and
+            # without a name of its own a screen reader reports it under the
+            # window's name -- which is how one dialog title came to be spoken
+            # three times, once for the window and once for each nameless
+            # container focus passed through on the way in.
+            if re.match(r"^(flp|pnl|tbl)\w*\.AccessibleName\s*=\s*\"\";$", sStripped):
+                continue
+            lsFaults.append(sName + " line " + str(iLine))
     report("No dialog control sets its own accessible name",
            not lsFaults, ", ".join(lsFaults[:8]) + ("..." if len(lsFaults) > 8 else ""))
 

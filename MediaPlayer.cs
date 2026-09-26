@@ -277,7 +277,7 @@ int iOrder = readNumber(sSettings, "order", c_iDefaultOrder, 0, c_asOrders.Lengt
 Homer.Mpv player = new Homer.Mpv(sMpv, Homer.Media.findInstalled("yt-dlp"));
 string sError;
 if (!player.start(out sError)) {
-Homer.Log.write("Homer Player: mpv would not start. " + sError);
+Homer.Log.info("Homer Player: mpv would not start. " + sError);
 Lbc.Show("The player would not start.\r\n\r\n" + sError, "Player");
 player.Dispose();
 return;
@@ -308,9 +308,17 @@ List<MediaTrack> lsRef = lsTracks;
 // ---- Tracks ----
 
 dlg.addBand();
-string sTracksLabel = "&Track list, " + Homer.Util.stringPlural("track", lsTracks.Count);
-if (!string.IsNullOrEmpty(sSource)) sTracksLabel = sTracksLabel + " from " + sSource;
-ListBox lstTracks = dlg.addPickBox(sTracksLabel + ":", orderedNames(lsRef, aOrder), null,
+// THE LABEL IS A NAME, NOT A REPORT.
+//
+// It used to carry the count and the source: "Track list, 150 tracks from links
+// in BlackBoxDown.md". A screen reader reads a control's label every time focus
+// arrives, so every jump, every keyword search and every filter began by
+// reciting how many tracks there were in total -- which is the one number the
+// person had just moved away from caring about.
+//
+// The count belongs where it is asked for: spoken once as the dialog opens, and
+// in the status line at any time after.
+ListBox lstTracks = dlg.addPickBox("&Track list:", orderedNames(lsRef, aOrder), null,
 "The queue, with each track's name, presenter and length where they are known. Moving through it chooses nothing; Enter plays the one you are on. Control+J jumps to a track by name, F3 jumps to the next, Control+F filters the list to what matches and Control+Shift+F clears the filter. Filter and Keywords take & for both words, a bar for either, and a star for anything. Alt+Shift+M writes what is showing, in the order shown, to a Markdown file.");
 
 // EVERYTHING KNOWN ABOUT THE TRACK THE CURSOR IS ON, sorted by field.
@@ -585,8 +593,14 @@ if (keyData == (Keys.Shift | Keys.Clear)) { oPlayer.togglePause(); say(dlg, oPla
 // type-ahead -- which is the trade mpv makes too, and Control+J is the better
 // way to reach a track by name.
 if (keyData == Keys.Space) {
+// Space belongs to a button, which it presses, and to a box being TYPED in.
+// A read-only box is neither: nothing can be typed into Extra Info, so Space
+// there is free, and a person reading a track's details is exactly the person
+// who wants to pause it.
 Control ctlFocused = dlg.focusedControl();
-if (!(ctlFocused is Button) && !(ctlFocused is TextBox) && !(ctlFocused is ComboBox)) {
+TextBox tbFocused = ctlFocused as TextBox;
+bool bTyping = (tbFocused != null && !tbFocused.ReadOnly) || (ctlFocused is ComboBox);
+if (!(ctlFocused is Button) && !bTyping) {
 oPlayer.togglePause();
 say(dlg, oPlayer.paused ? "Playing" : "Paused");
 return true;
@@ -633,7 +647,7 @@ ehGo(null, EventArgs.Empty);
 return true;
 }
 if ((keyData & Keys.KeyCode) != Keys.Scroll) return false;
-Homer.Log.write("Homer Player: Scroll Lock, play or pause");
+Homer.Log.info("Homer Player: Scroll Lock, play or pause");
 oPlayer.togglePause();
 // The property still holds the state from before the toggle, because the
 // answer travels back over the pipe: it was playing, so it is now paused.
@@ -781,6 +795,12 @@ Homer.Mpv oLoader = player;
 List<MediaTrack> lsToLoad = lsTracks;
 int iStartVolume = iVolume;
 int iStartRate = iRate;
+// Said once, as the dialog opens, because a person arriving does want to know
+// how much is here and where it came from.
+string sOpening = Homer.Util.stringPlural("track", lsTracks.Count);
+if (!string.IsNullOrEmpty(sSource)) sOpening = sOpening + " from " + sSource;
+dlg.form.Shown += delegate(object o, EventArgs e) { say(dlg, sOpening); };
+
 dlg.form.Shown += delegate(object o, EventArgs e) {
 // PAUSED BEFORE ANYTHING IS LOADED. mpv starts playing the moment it is given
 // a file, so the queue arriving was enough to start the first track talking
@@ -836,7 +856,7 @@ private static void hear(Homer.Mpv player) {
 // LOGGED, because playback has been reported starting when nobody asked for
 // it. The caller's name turns "it just started" into a fact about which
 // command did it.
-Homer.Log.write("Homer Player: playing, asked by " + callerName());
+Homer.Log.info("Homer Player: playing, asked by " + callerName());
 player.setPause(false);
 }
 
@@ -921,10 +941,10 @@ try {
 // as part of the first entry and then cannot find it.
 File.WriteAllText(sPath, sb.ToString(), new UTF8Encoding(false));
 say(dlg, "Saved " + Path.GetFileName(sPath));
-Homer.Log.write("Homer Player: saved " + lsTracks.Count + " tracks to " + sPath);
+Homer.Log.info("Homer Player: saved " + lsTracks.Count + " tracks to " + sPath);
 }
 catch (Exception ex) {
-Homer.Log.write("Homer Player: could not save " + sPath + ": " + ex.Message);
+Homer.Log.info("Homer Player: could not save " + sPath + ": " + ex.Message);
 say(dlg, "Could not save the list");
 }
 }
@@ -1001,7 +1021,7 @@ say(dlg, "End of track");
 // so outright instead of leaving silence to be interpreted.
 private static void chapterMove(Homer.LbcDialog dlg, Homer.Mpv player, bool bForward) {
 int iCount = player.chapterCount;
-Homer.Log.write("Homer Player: chapter " + (bForward ? "more" : "less")
+Homer.Log.info("Homer Player: chapter " + (bForward ? "more" : "less")
 + ", track has " + iCount + " chapters, now at " + player.chapter);
 if (iCount <= 0) { say(dlg, "No chapters in this track"); return; }
 if (bForward) player.nextChapter(); else player.previousChapter();
@@ -1076,10 +1096,10 @@ sb.Append("\r\n\r\n");
 try {
 Homer.Util.string2File(sb.ToString(), sPath);
 say(dlg, "Wrote " + Path.GetFileName(sPath));
-Homer.Log.write("Homer Player: wrote notes for " + liShowing.Count + " tracks to " + sPath);
+Homer.Log.info("Homer Player: wrote notes for " + liShowing.Count + " tracks to " + sPath);
 }
 catch (Exception ex) {
-Homer.Log.write("Homer Player: could not write " + sPath + ": " + ex.Message);
+Homer.Log.info("Homer Player: could not write " + sPath + ": " + ex.Message);
 say(dlg, "Could not write the file");
 }
 }
@@ -1109,7 +1129,7 @@ oExif.StandardError.ReadToEnd();
 if (!oExif.WaitForExit(20000)) { try { oExif.Kill(); } catch (Exception) { } }
 }
 catch (Exception ex) {
-Homer.Log.write("Homer Player: ExifTool failed. " + ex.Message);
+Homer.Log.info("Homer Player: ExifTool failed. " + ex.Message);
 track.addFact("Note", "ExifTool could not read this file");
 return;
 }
@@ -1279,7 +1299,7 @@ if (iValue < iMinimum || iValue > iMaximum) return iDefault;
 return iValue;
 }
 }
-catch (Exception ex) { Homer.Log.write("Homer Player: could not read settings. " + ex.Message); }
+catch (Exception ex) { Homer.Log.info("Homer Player: could not read settings. " + ex.Message); }
 return iDefault;
 }
 
@@ -1287,7 +1307,7 @@ return iDefault;
 // leaves the answer behind.
 private static void writeValue(string sSection, string sKey, string sValue) {
 try { Homer.InixCodec.writeValue(settingsPath(), sSection, sKey, sValue); }
-catch (Exception ex) { Homer.Log.write("Homer Player: could not save " + sKey + ". " + ex.Message); }
+catch (Exception ex) { Homer.Log.info("Homer Player: could not save " + sKey + ". " + ex.Message); }
 }
 
 // forgetSettings: remove this queue's section entirely, so the next time it is
@@ -1304,7 +1324,7 @@ if (!string.Equals(section.Name, sSection, StringComparison.OrdinalIgnoreCase)) 
 }
 Homer.InixCodec.writeAsConfig(sPath, lsKeep);
 }
-catch (Exception ex) { Homer.Log.write("Homer Player: could not clear settings. " + ex.Message); }
+catch (Exception ex) { Homer.Log.info("Homer Player: could not clear settings. " + ex.Message); }
 }
 
 // ---- turning what FileDir has into tracks ----

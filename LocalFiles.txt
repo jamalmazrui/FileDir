@@ -1,0 +1,17 @@
+﻿# LocalFiles.txt -- what stays on this machine and is never pushed.
+#
+# Built, fetched or generated here. A clone rebuilds every one of them.
+
+exec/
+logs/
+notes/
+work/
+packages/
+version.txt
+Version.cs
+KeyText.cs
+help/tutorials/
+*.mp3
+*.zip
+*.exe
+*.dll

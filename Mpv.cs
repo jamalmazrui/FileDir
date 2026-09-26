@@ -192,6 +192,18 @@ private static readonly string[] c_asPlayable = {
 ".m3u", ".m3u8", ".pls"
 };
 
+// Sites yt-dlp can be relied on to turn into something playable. Not a
+// complete list of what it supports -- that runs to a thousand -- but the ones
+// worth guessing about without asking it.
+private static readonly string[] c_asMediaSites = {
+"youtube.com", "youtu.be", "vimeo.com", "soundcloud.com", "mixcloud.com",
+"bandcamp.com", "archive.org", "dailymotion.com", "twitch.tv", "podbean.com",
+"libsyn.com", "buzzsprout.com", "megaphone.fm", "simplecast.com", "anchor.fm",
+"pinecast.com", "podtrac.com", "spreaker.com", "acast.com", "captivate.fm",
+"transistor.fm", "fireside.fm", "redcircle.com", "art19.com", "omny.fm",
+"blubrry.com", "audioboom.com", "whooshkaa.com", "chrt.fm", "pdst.fm"
+};
+
 // canPlay: whether to hand this to mpv at all.
 //
 // ASKING FIRST IS AN ACCESSIBILITY MATTER, not tidiness. mpv given something it
@@ -200,13 +212,27 @@ private static readonly string[] c_asPlayable = {
 // away. Better to leave the thing out of the queue and say how many were left
 // out.
 //
-// A web address is allowed through whatever it ends in: mpv hands those to
-// yt-dlp, which knows far more about what a page holds than a file extension
-// ever says.
+// A WEB ADDRESS HAS TO LOOK LIKE MEDIA, which it did not have to before. Every
+// http address was let through on the reasoning that yt-dlp knows more than an
+// extension does. That is true of a page of podcast links and false of an email
+// newsletter: one saved newsletter turned into a queue of a hundred and
+// fifty-four tracking links, none of which was media, and the person was told
+// none of that. So an address passes when its path names a media file, or its
+// host is one of the sites above; anything else is left out and counted.
 public static bool canPlay(string sTarget) {
 if (string.IsNullOrEmpty(sTarget)) return false;
 string sLower = sTarget.Trim().ToLowerInvariant();
-if (sLower.StartsWith("http://") || sLower.StartsWith("https://")) return true;
+if (sLower.StartsWith("http://") || sLower.StartsWith("https://")) {
+// The extension may sit anywhere in the path, since a podcast address is
+// often a chain of redirects ending in the real file name.
+foreach (string sExt in c_asPlayable) {
+if (sLower.Contains(sExt + "?") || sLower.EndsWith(sExt) || sLower.Contains(sExt + "&")) return true;
+}
+foreach (string sSite in c_asMediaSites) {
+if (sLower.Contains("//" + sSite) || sLower.Contains("." + sSite)) return true;
+}
+return false;
+}
 try {
 string sExtension = Path.GetExtension(sLower);
 if (string.IsNullOrEmpty(sExtension)) return false;

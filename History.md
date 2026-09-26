@@ -1,6 +1,6 @@
 ﻿# FileDir — Change History
 
-**Version 5.0.88**  
+**Version 5.0.92**  
 August 2026  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
@@ -797,6 +797,92 @@ The reasoning behind it is written down in the developer notes, as four rules:
 say nothing the reader already says; say what it cannot know; layer the detail
 so a short answer is the default and the longer ones are a key away; and write
 every message to the status line so it can be read back rather than repeated.
+
+**The track count was in the label, so it was recited on every arrival.** The
+list was called "Track list, 150 tracks from links in BlackBoxDown.md". A screen
+reader reads a control's label every time focus arrives at it, so every jump,
+every keyword search and every filter began by announcing the total -- the one
+number the person had just stopped caring about, at the moment they were waiting
+to hear where they had landed.
+
+The label is a name now: "Track list". The count and the source are said once as
+the dialog opens, where somebody arriving does want them, and are in the status
+line at any time after.
+
+**The status line held a sentence of instruction.** Pressing the screen reader's
+key for it produced the tip for whichever control had focus -- an explanation of
+what the queue is -- before, or instead of, where playback had reached.
+
+This was reported before, and what I changed then was the ORDER: the note was
+put ahead of the tip. That was not the fix. The tip was still there, still a
+sentence long, and still not status. Where a dialog has a standing note, the
+note is now the whole line; tips remain the whole line only in dialogs that
+report nothing, which is what they were for.
+
+A sweep of every speech call in the player and the shared class went with this,
+rather than fixing the two that were reported. Four places name a total, and
+each is now asked for: the opening announcement, the overview on Alt+Shift+O,
+the notes file, and the status line.
+
+**Enter and Space did nothing in Extra Info, and both had the same shape of
+cause: a rule written for a box you type in, applied to one you cannot.**
+
+Space was withheld from every text box, so that a person typing could type a
+space. Extra Info is read only -- nothing can be typed into it -- so the rule
+bought nothing and cost the play and pause key exactly where somebody reading a
+track's details would reach for it. Space is now withheld only from a box that
+can actually be written in.
+
+Enter was withheld the same way. Lbc clears the default button while a memo has
+focus, so Enter makes a new line rather than submitting. Right for a writable
+box, wrong for a read-only one, where Enter simply did nothing. The default
+button now survives arrival at a read-only memo.
+
+**And the title said three times has a cause at last: nameless containers.**
+
+Every one of these dialogs is a form holding a panel holding a panel holding the
+controls. A container with no name of its own is reported to a screen reader
+under the WINDOW's name, so focus arriving at the folder box passes the window
+and two nameless panels, and the title is announced once for each. Three, every
+time, in every dialog with that shape -- and the same count appeared in the
+player, where the middle of the three was heard as "List box" plus the window
+title, which is the same fallback showing its working.
+
+The layout panels are now marked as groupings with an empty name, in the shared
+class and in FileDir's own dialogs, thirty-seven of them. A panel has no visible
+text to duplicate, so this is the one place an accessible name is right rather
+than wrong, and the audit rule that forbids accessible names now says so.
+
+Earlier attempts at this fault -- the focus set twice, the access-key underline,
+the window resizing after it opened -- were guesses that did not hold. This one
+explains the number.
+
+**A saved newsletter became a queue of a hundred and fifty-four tracking
+links.** Play List on an email saved to disk should have said there was no media
+in it. Instead it opened the Player full of addresses that played nothing.
+
+The cause was a rule written for one case and applied to all of them: any web
+address was called playable, on the reasoning that yt-dlp knows more about what
+a page holds than a file extension does. That is true of a page of podcast links
+and false of a newsletter, where every link is a redirect to a web page.
+
+A web address now has to look like media: its path names a media file --
+anywhere in the path, since a podcast address is usually a chain of redirects
+ending in the real name -- or its host is one of thirty known audio and video
+sites. Run over the actual documents: the newsletter yields none of its 116
+links, the Access On directory yields 92 of 184, and American Scandal yields all
+162.
+
+And when nothing qualifies, the message says so in a way that can be acted on:
+"0 media links, of 154 links". The old wording, "0 tracks mpv can play", was
+true and told nobody anything.
+
+**Mail-rewritten links are unwrapped first.** Outlook's Safe Links turns every
+forwarded address into a safelinks.protection.outlook.com address with the
+original buried in a url parameter, so a saved newsletter has no recognisable
+media links at all -- only tracking addresses that look alike. The real address
+is taken back out before anything is judged or played, which also fixes the
+duplicate detection: a hundred wrappers around ten addresses are ten addresses.
 
 **Filter and Keywords now share one syntax, because they always should have.**
 A filter of "chap*" found nothing: Filter was doing a plain substring test, and

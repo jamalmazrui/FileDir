@@ -414,7 +414,7 @@ catch (Exception) {
 string sOnPath = findToolOfKind(sName, aExtensions);
 sbLog.Append("  on the PATH: " + (sOnPath.Length > 0 ? sOnPath : "not found") + "\r\n");
 sSearchLog = sbLog.ToString();
-Homer.Log.write(sSearchLog.Replace("\r\n", " | "));
+Homer.Log.info(sSearchLog.Replace("\r\n", " | "));
 return sOnPath;
 } // findInstalledOfKind method
 
@@ -586,12 +586,13 @@ process.Start();
 sOut = process.StandardOutput.ReadToEnd();
 sErr = process.StandardError.ReadToEnd();
 process.WaitForExit();
-Homer.Log.command(sProgram, sArguments, process.ExitCode, sErr);
+Homer.Log.command(sProgram + " " + sArguments, process.ExitCode);
+if (!string.IsNullOrEmpty(sErr)) Homer.Log.info("  said: " + sErr.Trim());
 return process.ExitCode;
 }
 catch (Exception ex) {
 sErr = ex.Message;
-Homer.Log.write("Could not start " + sProgram + ": " + ex.Message);
+Homer.Log.info("Could not start " + sProgram + ": " + ex.Message);
 return -1;
 }
 } // run method

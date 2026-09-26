@@ -798,6 +798,8 @@ public class LbcDialog : IDisposable
         // AutoScroll on so dialogs with many fields scroll instead
         // of overflowing the screen.
         pnlStack = new FlowLayoutPanel();
+        pnlStack.AccessibleRole = AccessibleRole.Grouping;
+        pnlStack.AccessibleName = "";
         pnlStack.FlowDirection = FlowDirection.TopDown;
         pnlStack.WrapContents = false;
         pnlStack.AutoScroll = true;
@@ -874,6 +876,8 @@ public class LbcDialog : IDisposable
     {
         endBand();
         pnlBand = new FlowLayoutPanel();
+        pnlBand.AccessibleRole = AccessibleRole.Grouping;
+        pnlBand.AccessibleName = "";
         pnlBand.FlowDirection = FlowDirection.LeftToRight;
         pnlBand.WrapContents = true;
         pnlBand.AutoSize = true;
@@ -1035,6 +1039,8 @@ public class LbcDialog : IDisposable
     public TextBox addInlineInputBox(string sLabel, string sValue, string sTip)
     {
         TableLayoutPanel pnlRow = new TableLayoutPanel();
+        pnlRow.AccessibleRole = AccessibleRole.Grouping;
+        pnlRow.AccessibleName = "";
         pnlRow.ColumnCount = 2;
         pnlRow.RowCount = 1;
         pnlRow.AutoSize = true;
@@ -2020,6 +2026,8 @@ public class LbcDialog : IDisposable
             aButtonLabels = lsAll.ToArray();
         }
         FlowLayoutPanel pnlButtonRow = new FlowLayoutPanel();
+        pnlButtonRow.AccessibleRole = AccessibleRole.Grouping;
+        pnlButtonRow.AccessibleName = "";
         pnlButtonRow.FlowDirection = FlowDirection.RightToLeft;
         pnlButtonRow.AutoSize = false;
         pnlButtonRow.Dock = DockStyle.Bottom;
@@ -2331,16 +2339,17 @@ public class LbcDialog : IDisposable
 
     private void paintStatus()
     {
-        // THE STANDING NOTE COMES FIRST. A screen reader reads a status line
-        // from the beginning, and the tip for the control with focus can be a
-        // sentence and a half; a person asking "where am I in this?" was
-        // hearing all of that before the answer, which is how a useful line
-        // came to sound like nonsense.
+        // A STATUS LINE CARRIES STATUS, AND NOTHING ELSE.
+        //
+        // It held two things: the dialog's standing note, and the tip for the
+        // control with focus. Putting the note first was not enough -- the tip
+        // is a sentence of instruction, and somebody who presses the key for
+        // the status line wants to know where playback is, not to be told again
+        // what the queue does. Where a dialog has a note, the note is the whole
+        // line. Where it has none, the tip still has a place to be read, which
+        // is what tips were for in dialogs that report nothing.
         if (lblStatusBar == null) return;
-        string sBoth = sStatusExtra ?? "";
-        if (!string.IsNullOrEmpty(sStatusTip))
-            sBoth = (sBoth.Length > 0) ? (sBoth + "   " + sStatusTip) : sStatusTip;
-        lblStatusBar.Text = sBoth;
+        lblStatusBar.Text = (!string.IsNullOrEmpty(sStatusExtra)) ? sStatusExtra : (sStatusTip ?? "");
     }
 
     public void appendStatus(string sText)
@@ -2376,9 +2385,18 @@ public class LbcDialog : IDisposable
     // Also update the status bar.
     private void handleMemoGotFocus(object sender, EventArgs evArgs)
     {
-        if (frm.AcceptButton != null)
-            btnSavedAccept = frm.AcceptButton as Button;
-        frm.AcceptButton = null;
+        // ENTER IS ONLY TAKEN AWAY FROM A BOX THAT CAN USE IT. The default
+        // button is cleared while a memo has focus so that Enter makes a new
+        // line instead of submitting -- which is right for a box being written
+        // in, and wrong for a read-only one, where Enter did nothing at all.
+        TextBox tbArriving = sender as TextBox;
+        bool bWritable = (tbArriving != null) && !tbArriving.ReadOnly;
+        if (bWritable)
+        {
+            if (frm.AcceptButton != null)
+                btnSavedAccept = frm.AcceptButton as Button;
+            frm.AcceptButton = null;
+        }
         handleGotFocus(sender, evArgs);
 
         // A MULTILINE BOX STARTS AT ITS BEGINNING.

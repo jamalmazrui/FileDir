@@ -1073,7 +1073,8 @@ using (Process process = Process.Start(info)) {
 sOut = process.StandardOutput.ReadToEnd();
 string sErr = process.StandardError.ReadToEnd();
 process.WaitForExit();
-Homer.Log.command(sExe, sArguments, process.ExitCode, sErr);
+Homer.Log.command(sExe + " " + sArguments, process.ExitCode);
+if (!string.IsNullOrEmpty(sErr)) Homer.Log.info("  said: " + sErr.Trim());
 if (process.ExitCode != 0) {
 sError = sErr.Trim();
 if (sError.Length == 0) sError = "Pandoc returned " + process.ExitCode + ".";
@@ -1084,7 +1085,7 @@ return true;
 }
 catch (Exception ex) {
 sError = ex.Message;
-Homer.Log.write("Could not start " + sExe + ": " + ex.Message);
+Homer.Log.info("Could not start " + sExe + ": " + ex.Message);
 return false;
 }
 } // run method

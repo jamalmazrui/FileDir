@@ -193,6 +193,16 @@ public static bool bKeyDescriber = false;
 public static Dictionary<string, string> dDirectory = new Dictionary<string, string>();
 public static Frame frame = null;
 public static string sAppDir;
+
+// THE HOMER LAYOUT. The program sits in exec; its settings are in configs, its
+// sounds in data, its documents in help, and the screen reader scripts in
+// scripts\jaws. The kit's Paths works these out from where the program is, so
+// the same code runs from C:\FileDir\exec while developing and from
+// C:\Program Files\FileDir\exec once installed.
+public static string sShippedConfigs { get { return Homer.Paths.shippedConfigs(); } }
+public static string sShippedData { get { return Homer.Paths.shippedData(); } }
+public static string sShippedHelp { get { return Homer.Paths.shippedHelp(); } }
+public static string sShippedJaws { get { return Path.Combine(Homer.Paths.shippedScripts(), "jaws"); } }
 public static string sDataDir;
 public static string sIniFile;
 public static string sSpeechLog;
@@ -999,7 +1009,16 @@ sAppDir = Path.GetDirectoryName(sApp);
 //
 // This is started before anything else can fail, and starting it can never fail
 // the program: a read-only profile simply means no log.
-Homer.Log.start("FileDir", BuildVersion.Version, sApp, args);
+Homer.Paths.start("FileDir");
+Homer.Log.start("FileDir");
+Homer.Log.keyValue("Version", BuildVersion.Version);
+Homer.Log.keyValue("Program", sApp);
+Homer.Log.keyValue("Arguments", string.Join(" ", args));
+
+// F11 OFFERS THE NEWER VERSION. Elevate asks GitHub what the latest release is
+// and Lbc's Help box offers to fetch and run the installer, so a person updates
+// without visiting a web page.
+Homer.Elevate.configure("JamalMazrui", "FileDir", BuildVersion.Version);
 
 // --install-jaws-settings: copy this app's JAWS script family into every
 // installed version of JAWS and compile it there, then exit.  The installer's
@@ -1012,7 +1031,7 @@ foreach (string sArg in args) {
 if (String.Compare(sArg, "--install-jaws-settings", true) != 0) continue;
 int iCopied = 0;
 int iCompiled = 0;
-string sMessage = Homer.JawsSettingsInstaller.install("FileDir", Path.GetDirectoryName(sApp), new string[] {"FileDir.jsd", "FileDir.jcf", "Homer.jsh", "Homer.jsd", "MSAA.jsh"}, new string[] {"Homer"}, out iCopied, out iCompiled);
+string sMessage = Homer.JawsSettingsInstaller.install("FileDir", App.sShippedJaws, new string[] {"FileDir.jsd", "FileDir.jcf", "Homer.jsh", "Homer.jsd", "MSAA.jsh"}, new string[] {"Homer"}, out iCopied, out iCompiled);
 
 // The mpv scripts go in beside them, by the same route.
 //
@@ -1028,7 +1047,7 @@ string sMessage = Homer.JawsSettingsInstaller.install("FileDir", Path.GetDirecto
 int iMpvCopied = 0;
 int iMpvCompiled = 0;
 try {
-string sMpvSaid = Homer.JawsSettingsInstaller.install("mpv", Path.GetDirectoryName(sApp),
+string sMpvSaid = Homer.JawsSettingsInstaller.install("mpv", App.sShippedJaws,
 // mpv.jcf goes with them. Every application in the JAWS settings folder whose
 // scripts work has a configuration file beside them; mpv had scripts, a key
 // map and a compiled .jsb and no .jcf, and JAWS reported the application as
@@ -1046,9 +1065,9 @@ iCompiled += iMpvCompiled;
 // Three quite different faults, and no way to choose between them.
 //
 // A count of zero here is the answer to the first two on its own.
-Homer.Log.write("mpv scripts: " + iMpvCopied + " copied, " + iMpvCompiled + " compiled.");
+Homer.Log.info("mpv scripts: " + iMpvCopied + " copied, " + iMpvCompiled + " compiled.");
 if (sMpvSaid != null && sMpvSaid.Trim().Length > 0)
-Homer.Log.write("  " + sMpvSaid.Replace("\r\n", " | "));
+Homer.Log.info("  " + sMpvSaid.Replace("\r\n", " | "));
 // And where they went, so their presence can be checked without guessing at
 // the folder.
 foreach (string sFile in new string[] {"mpv.jss", "mpv.jkm", "mpv.jsb", "mpv.jsd", "mpv.jcf"}) {
@@ -1061,7 +1080,7 @@ try {
 // declares a SearchOption of its own, and both are in scope here, so the bare
 // name is ambiguous and the compiler refuses it.
 foreach (string sFound in Directory.GetFiles(sSettings, sFile, System.IO.SearchOption.AllDirectories))
-Homer.Log.write("  " + sFound);
+Homer.Log.info("  " + sFound);
 }
 catch (Exception) {
 }
@@ -1070,7 +1089,7 @@ catch (Exception) {
 catch (Exception ex) {
 // A failure here must not cost the FileDir scripts, which are the point of
 // the command.
-Homer.Log.write("The mpv scripts were not installed: " + ex.Message);
+Homer.Log.info("The mpv scripts were not installed: " + ex.Message);
 }
 
 // AND ASK JAWS TO RELOAD, SO NOBODY HAS TO RESTART IT.
@@ -1081,13 +1100,13 @@ Homer.Log.write("The mpv scripts were not installed: " + ex.Message);
 // reporting the default set. HomerView's installer records the same lesson and
 // the same cure, having once chased a fault for an hour against scripts that
 // were still the previous build.
-Homer.Log.write(App.reloadJaws_Helper());
+Homer.Log.info(App.reloadJaws_Helper());
 // The detail always goes to the log.  It is worth having -- which folders in
 // which JAWS versions received which files -- and it is worth having later
 // rather than in front of somebody who is installing a file manager.
-Homer.Log.write("JAWS settings: " + iCopied + " copied, " + iCompiled + " compiled.");
+Homer.Log.info("JAWS settings: " + iCopied + " copied, " + iCompiled + " compiled.");
 foreach (string sLine in sMessage.Replace("\r\n", "\n").Split('\n'))
-if (sLine.Trim().Length > 0) Homer.Log.write("  " + sLine.Trim());
+if (sLine.Trim().Length > 0) Homer.Log.info("  " + sLine.Trim());
 // The box appears only when a person asked for this from the Help menu.  The
 // installer passes --quiet, because a wall of "JAWS 2024 / enu: jkm jss jsb"
 // lines is a report to nobody: it interrupts an installation to say that the
@@ -2995,9 +3014,9 @@ File.WriteAllText(sListFile, String.Join("\r\n", lsDuplicates.ToArray()), new UT
 App.sVirtualFolder = sListFile;
 }
 catch (Exception ex) {
-Homer.Log.write("Could not write the duplicate list: " + ex.Message);
+Homer.Log.info("Could not write the duplicate list: " + ex.Message);
 }
-Homer.Log.write("Duplicates under " + sRoot + ": " + lsDuplicates.Count + " of " + lsAll.Count + " files.");
+Homer.Log.info("Duplicates under " + sRoot + ": " + lsDuplicates.Count + " of " + lsAll.Count + " files.");
 
 App.say(Homer.Util.stringPlural("duplicate", lsDuplicates.Count) + " found. Opening them as a virtual folder.", true);
 string sDir = "";
@@ -3018,7 +3037,7 @@ try {
 foreach (string sFile in Directory.GetFiles(sFolder)) lsInto.Add(sFile);
 }
 catch (Exception ex) {
-Homer.Log.write("Could not read files in " + sFolder + ": " + ex.Message);
+Homer.Log.info("Could not read files in " + sFolder + ": " + ex.Message);
 return;
 }
 string[] aSubFolders;
@@ -3026,7 +3045,7 @@ try {
 aSubFolders = Directory.GetDirectories(sFolder);
 }
 catch (Exception ex) {
-Homer.Log.write("Could not list folders in " + sFolder + ": " + ex.Message);
+Homer.Log.info("Could not list folders in " + sFolder + ": " + ex.Message);
 return;
 }
 foreach (string sSub in aSubFolders) {
@@ -3035,7 +3054,7 @@ foreach (string sSub in aSubFolders) {
 try {
 FileAttributes attributes = File.GetAttributes(sSub);
 if ((attributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint) {
-Homer.Log.write("Skipping the link " + sSub);
+Homer.Log.info("Skipping the link " + sSub);
 continue;
 }
 }
@@ -3263,7 +3282,7 @@ using (FileStream stream = File.OpenRead(sPath))
 return BitConverter.ToString(hasher.ComputeHash(stream));
 }
 catch (Exception ex) {
-Homer.Log.write("Could not hash " + sPath + ": " + ex.Message);
+Homer.Log.info("Could not hash " + sPath + ": " + ex.Message);
 return "";
 }
 } // fileHash_Helper method
@@ -3287,7 +3306,7 @@ for (int i = 0; i < iLeft; i++) if (aLeft[i] != aRight[i]) return false;
 }
 }
 catch (Exception ex) {
-Homer.Log.write("Could not compare " + sLeft + " and " + sRight + ": " + ex.Message);
+Homer.Log.info("Could not compare " + sLeft + " and " + sRight + ": " + ex.Message);
 return false;
 }
 } // sameBytes_Helper method
@@ -3985,7 +4004,7 @@ if (Homer.Media.exifToolProgram().Length == 0) {
 // Not fatal: the first line of the text still gives a name. Said once, so
 // nobody wonders why a photograph kept its camera name.
 App.say("ExifTool was not found, so only the text of each file can be used.");
-Homer.Log.write("Rename to Title without ExifTool. " + Homer.Media.exifToolLog());
+Homer.Log.info("Rename to Title without ExifTool. " + Homer.Media.exifToolLog());
 }
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
@@ -4037,7 +4056,7 @@ lsPlan.Add(new string[] {sPath, Path.Combine(Path.GetDirectoryName(sPath), sRoot
 if (lsPlan.Count == 0) {
 // One file, one sentence, spoken. Several, a window to read: the reasons
 // differ per file and a single spoken line could not carry them.
-foreach (string sLine in lsSkipped) Homer.Log.write("Not renamed, " + sLine);
+foreach (string sLine in lsSkipped) Homer.Log.info("Not renamed, " + sLine);
 if (lsSkipped.Count == 1) {
 App.say("Not renamed. " + lsSkipped[0], true);
 return;
@@ -4065,7 +4084,7 @@ foreach (string[] aPair in lsPlan) {
 string sTarget = uniqueTitleName_Helper(aPair[1]);
 try {
 File.Move(aPair[0], sTarget);
-Homer.Log.write("Renamed " + aPair[0] + " to " + Path.GetFileName(sTarget)
+Homer.Log.info("Renamed " + aPair[0] + " to " + Path.GetFileName(sTarget)
 + " from the " + aPair[2] + " field.");
 App.say(Path.GetFileName(sTarget));
 sLast = sTarget;
@@ -4073,11 +4092,11 @@ iDone++;
 }
 catch (Exception ex) {
 App.say(Path.GetFileName(aPair[0]) + ": " + ex.Message);
-Homer.Log.write("Could not rename " + aPair[0] + ": " + ex.Message);
+Homer.Log.info("Could not rename " + aPair[0] + ": " + ex.Message);
 iFailed++;
 }
 }
-foreach (string sLine in lsSkipped) Homer.Log.write("Not renamed, " + sLine);
+foreach (string sLine in lsSkipped) Homer.Log.info("Not renamed, " + sLine);
 string sMessage = Homer.Util.stringPlural("file", iDone) + " renamed";
 if (iFailed > 0) sMessage += ", " + iFailed + " failed";
 if (lsSkipped.Count > 0) sMessage += ", " + lsSkipped.Count + " skipped";
@@ -4864,10 +4883,10 @@ dRead[sPath] = sBody;
 iChecked++;
 if (!Homer.LbcDialog.keywordsMatch(sBody, sPattern)) continue;
 mdiChild.bs.Position = i;
-Homer.Log.write("Keywords: " + sPattern + " found in " + sPath + " after " + iChecked + " files");
+Homer.Log.info("Keywords: " + sPattern + " found in " + sPath + " after " + iChecked + " files");
 return;
 }
-Homer.Log.write("Keywords: " + sPattern + " not found in " + iChecked + " files");
+Homer.Log.info("Keywords: " + sPattern + " not found in " + iChecked + " files");
 App.say("0 matches", true);
 } // keywords_Helper method
 
@@ -4888,7 +4907,7 @@ if (sText.Length > 0) return sText.ToLower();
 return Homer.Util.file2String(sPath).ToLower();
 }
 catch (Exception ex) {
-Homer.Log.write("Keywords: could not read " + sPath + ": " + ex.Message);
+Homer.Log.info("Keywords: could not read " + sPath + ": " + ex.Message);
 return "";
 }
 } // keywordText_Helper method
@@ -5215,7 +5234,7 @@ return "";
 string sError;
 string sText = Homer.Convert.toPlainText(sFile, out sError);
 if (sText.Length > 0) return sText;
-Homer.Log.write("No text from " + sName + ": " + sError);
+Homer.Log.info("No text from " + sName + ": " + sError);
 if (bBlankDefault) return "";
 // Said rather than shown: this is called from commands that speak, and a box
 // in the middle of a batch of twenty files would stop the batch.
@@ -6399,10 +6418,10 @@ Clipboard.SetDataObject(data, true);
 bRich = true;
 }
 catch (Exception ex) {
-Homer.Log.write("Could not put HTML on the clipboard: " + ex.Message);
+Homer.Log.info("Could not put HTML on the clipboard: " + ex.Message);
 }
 }
-else if (sHtmlError.Length > 0) Homer.Log.write("No HTML for the clipboard: " + sHtmlError);
+else if (sHtmlError.Length > 0) Homer.Log.info("No HTML for the clipboard: " + sHtmlError);
 }
 if (!bRich) Clipboard.SetText(sbText.ToString());
 string sFileNoun = iDone == 1 ? "file" : "files";
@@ -7647,7 +7666,7 @@ void menuMiscConvertUnits_Click(object sender, EventArgs e) {
 //App.say("Convert Units");
 App.say("Calculate");
 int iItem = App.iCalculateItem;
-string sBody = Homer.Util.file2String(Path.Combine(App.sAppDir, "Convert.txt")).Trim().Replace("\r\n", "\n");
+string sBody = Homer.Util.file2String(Path.Combine(App.sShippedConfigs, "Convert.txt")).Trim().Replace("\r\n", "\n");
 string[] aBody = sBody.Split('\n');
 //Array.Sort(aBody);
 string[] aKeys = new string[aBody.Length];
@@ -7684,8 +7703,8 @@ App.say(sResult);
 } // menuMiscConvertUnits_Click method
 
 void menuMiscStartTimer_Click(object sender, EventArgs e) {
-//App.playWav(Path.Combine(App.sAppDir, "BuzzerLong.wav"));
-//App.playWav(Path.Combine(App.sAppDir, "whistle.wav"));
+//App.playWav(Path.Combine(App.sShippedData, "BuzzerLong.wav"));
+//App.playWav(Path.Combine(App.sShippedData, "whistle.wav"));
 //App.playSystemSound(SystemSounds.Exclamation);
 //App.playSystemSound(SystemSounds.Question);
 //App.playSystemSound(SystemSounds.Hand);
@@ -7730,7 +7749,7 @@ App.timer.Enabled = false;
 App.timer.Elapsed += delegate(object o, System.Timers.ElapsedEventArgs args) {
 //dtStop = DateTime.Parse(App.sTimerStop);
 if (App.sTimerStop != "0" && args.SignalTime >= dtStop) {
-string sWav = Path.Combine(App.sAppDir, "chimes.wav");
+string sWav = Path.Combine(App.sShippedData, "chimes.wav");
 for (int i = 0; i < 5; i++) App.playWav(sWav);
 menuMiscStopTimer.clickOrDescribe();
 return;
@@ -7899,7 +7918,7 @@ catch (Exception ex) {
 Lbc.Show("The play list could not be written.\n\n" + ex.Message, sTitle);
 return;
 }
-Homer.Log.write("Play Media: " + lsPlay.Count + " entries " + sWhere + ".");
+Homer.Log.info("Play Media: " + lsPlay.Count + " entries " + sWhere + ".");
 
 // Warned before the silence rather than after it. If nothing in the list names
 // a media file, every entry is a page the player has to fetch and examine
@@ -8011,7 +8030,7 @@ if (dLength > 0) track.dSeconds = dLength;
 if (track.sEpisode.Length == 0 && dFacts.ContainsKey("Episode")) track.sEpisode = dFacts["Episode"];
 iWithFacts++;
 }
-if (iWithFacts > 0) Homer.Log.write("Play List: the document described " + iWithFacts + " of " + lsTracks.Count + " tracks");
+if (iWithFacts > 0) Homer.Log.info("Play List: the document described " + iWithFacts + " of " + lsTracks.Count + " tracks");
 return lsTracks;
 } // tracksWithFacts_Helper method
 
@@ -8054,7 +8073,7 @@ if (dFacts.Count > 0 && !dByAddress.ContainsKey(sAddress)) dByAddress[sAddress] 
 }
 }
 catch (Exception ex) {
-Homer.Log.write("Could not read the document's own metadata: " + ex.Message);
+Homer.Log.info("Could not read the document's own metadata: " + ex.Message);
 }
 return dByAddress;
 } // documentFacts_Helper method
@@ -8082,7 +8101,7 @@ try {
 sText = Homer.Util.file2String(sPath);
 }
 catch (Exception ex) {
-Homer.Log.write("Could not read " + sPath + ": " + ex.Message);
+Homer.Log.info("Could not read " + sPath + ": " + ex.Message);
 }
 // A format that is not text at all -- a Word document, a PDF -- has no markup
 // to scan, so it goes through the extractor after all. Its links are gone, but
@@ -8101,7 +8120,7 @@ List<string> lsLinks = linksToPlay_Helper(sText);
 // only this method can say how much it had to look at, which is the difference
 // between "the document has no links" and "the document could not be read".
 if (lsLinks.Count == 0) {
-Homer.Log.write("No media links in " + sPath
+Homer.Log.info("No media links in " + sPath
 + " (" + sText.Length + " characters read).");
 }
 return lsLinks;
@@ -8140,6 +8159,27 @@ if (sExt == sMedia) return true;
 return false;
 } // isDirectMedia_Helper method
 
+string unwrapAddress_Helper(string sAddress) {
+// The real address inside a wrapper.
+//
+// Mail systems rewrite every link they forward. Outlook's Safe Links turns
+// https://example.com/show.mp3 into a safelinks.protection.outlook.com address
+// with the original buried in a url parameter, so a saved newsletter has no
+// recognisable media links in it at all -- only tracking addresses that all
+// look alike. Unwrapping gives back the address the sender wrote, which is the
+// one worth judging and the one worth playing.
+if (sAddress.IndexOf("safelinks.protection.outlook.com", StringComparison.OrdinalIgnoreCase) < 0
+&& sAddress.IndexOf("urldefense", StringComparison.OrdinalIgnoreCase) < 0) return sAddress;
+try {
+Match oInner = Regex.Match(sAddress, @"[?&]url=([^&]+)", RegexOptions.IgnoreCase);
+if (!oInner.Success) return sAddress;
+string sReal = Uri.UnescapeDataString(oInner.Groups[1].Value);
+if (sReal.StartsWith("http", StringComparison.OrdinalIgnoreCase)) return sReal;
+}
+catch (Exception) { }
+return sAddress;
+} // unwrapAddress_Helper method
+
 bool addAddress_Helper(List<string> lsKept, List<string> lsSeen, string sAddress, string sTitle) {
 // Add one address, with its title when there is one, unless it has been seen.
 //
@@ -8148,7 +8188,7 @@ bool addAddress_Helper(List<string> lsKept, List<string> lsSeen, string sAddress
 // three times because its address appeared three times is not what anybody
 // meant.
 if (sAddress == null) return false;
-sAddress = sAddress.Trim().TrimEnd('.', ',', ';');
+sAddress = unwrapAddress_Helper(sAddress.Trim().TrimEnd('.', ',', ';'));
 if (sAddress.Length == 0) return false;
 foreach (string sHad in lsSeen) if (Homer.Util.stringEquiv(sHad, sAddress)) return false;
 lsSeen.Add(sAddress);
@@ -8239,7 +8279,7 @@ try {
 lsTracks = MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne));
 }
 catch (Exception ex) {
-Homer.Log.write("Homer Player: could not read " + sOne + ": " + ex.Message);
+Homer.Log.info("Homer Player: could not read " + sOne + ": " + ex.Message);
 }
 sQueueTitle = sLeaf;
 sQueueSource = sLeaf;
@@ -8274,7 +8314,7 @@ if (lsTracks == null || lsTracks.Count == 0) {
 App.say("0 tracks to play", true);
 return;
 }
-Homer.Log.write("Homer Player: " + lsTracks.Count + " tracks");
+Homer.Log.info("Homer Player: " + lsTracks.Count + " tracks");
 MediaPlayer.run(App.frame, sQueueTitle, sQueueSource, lsTracks);
 } // menuMiscHomerPlayer_Click method
 
@@ -8360,7 +8400,7 @@ return;
 }
 int iLinks = 0;
 foreach (string sEntry in lsFound) if (!sEntry.StartsWith("#")) iLinks++;
-Homer.Log.write("Play List: " + iLinks + " links from " + sOne);
+Homer.Log.info("Play List: " + iLinks + " links from " + sOne);
 playQueue_Helper(tracksWithFacts_Helper(lsFound), Path.GetFileName(sOne), "links in " + Path.GetFileName(sOne));
 return;
 }
@@ -8411,7 +8451,7 @@ catch (Exception ex) {
 Lbc.Show("The play list could not be written.\r\n\r\n" + ex.Message, "Output Type");
 return;
 }
-Homer.Log.write("Output Type: wrote " + lsMedia.Count + " entries to " + sFile);
+Homer.Log.info("Output Type: wrote " + lsMedia.Count + " entries to " + sFile);
 if (iLeftOut > 0) App.say(Homer.Util.stringPlural("item", iLeftOut) + " left out, not media");
 App.say(Homer.Util.stringPlural("track", lsMedia.Count) + " written");
 refresh_Helper(sFile);
@@ -8429,13 +8469,16 @@ List<MediaTrack> lsPlayable = new List<MediaTrack>();
 foreach (MediaTrack track in lsTracks) if (Homer.Mpv.canPlay(track.sTarget)) lsPlayable.Add(track);
 int iSkipped = lsTracks.Count - lsPlayable.Count;
 if (lsPlayable.Count == 0) {
-App.say("0 tracks mpv can play", true);
-Homer.Log.write("Play List: nothing playable among " + lsTracks.Count + " items");
+// THE ANSWER IS THE COUNT, AND THE COUNT IS THE ANSWER. A document with links
+// in it but no media -- a saved newsletter, say -- used to open a player full
+// of tracking addresses that played nothing. It now says what is true.
+App.say("0 media links, of " + Homer.Util.stringPlural("link", lsTracks.Count), true);
+Homer.Log.info("Play List: nothing playable among " + lsTracks.Count + " links");
 return;
 }
 if (iSkipped > 0) {
 App.say(Homer.Util.stringPlural("item", iSkipped) + " left out, not media");
-Homer.Log.write("Play List: left out " + iSkipped + " items mpv cannot read");
+Homer.Log.info("Play List: left out " + iSkipped + " items mpv cannot read");
 }
 MediaPlayer.run(App.frame, sTitle, sSource, lsPlayable);
 } // playQueue_Helper method
@@ -8497,8 +8540,8 @@ sbArgs.Append("--force-window=immediate ");
 // Nothing else is passed. Every option is one more thing that can refuse the
 // list, and the default experience is the whole one.
 sbArgs.Append(Homer.Util.stringQuote(sPlayList));
-Homer.Log.write("Playing " + sPlayList + " with " + sMpv);
-Homer.Log.write("  Arguments: " + sbArgs.ToString());
+Homer.Log.info("Playing " + sPlayList + " with " + sMpv);
+Homer.Log.info("  Arguments: " + sbArgs.ToString());
 try {
 System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
 if (Homer.Media.needsShell(sMpv)) {
@@ -8521,7 +8564,7 @@ System.Diagnostics.Process process = System.Diagnostics.Process.Start(info);
 // refusing a list exits at once. Rather than say "Playing" and leave a person
 // waiting for sound that is not coming, the exit is noticed and said.
 if (process != null && process.WaitForExit(2000)) {
-Homer.Log.write("The player exited immediately, code " + process.ExitCode + ".");
+Homer.Log.info("The player exited immediately, code " + process.ExitCode + ".");
 App.say("The player closed straight away. Nothing played.", true);
 Lbc.Show("mpv started and closed again without playing.\r\n\r\n"
 + "This is what it was given:\r\n\r\n"
@@ -8804,7 +8847,7 @@ MessageBox.Show(sText, "About");
 
 void MenuHelpDocumentation_Click(object sender, EventArgs e) {
 App.say("Documentation");
-string sFile = Path.Combine(App.sAppDir, "FileDir.htm");
+string sFile = Path.Combine(App.sShippedHelp, "FileDir.htm");
 Process.Start(sFile);
 } // menuHelpDocumentation_Click method
 
@@ -8812,7 +8855,7 @@ void MenuHelpChangeHistory_Click(object sender, EventArgs e) {
 App.say("Change history");
 // History.htm, generated from History.md by the build.  This opened History.txt,
 // which the documentation set replaced and the installer now deletes on upgrade.
-string sFile = Path.Combine(App.sAppDir, "History.htm");
+string sFile = Path.Combine(App.sShippedHelp, "History.htm");
 Process.Start(sFile);
 } // menuHelpChangeHistory_Click method
 
@@ -8832,7 +8875,7 @@ App.say("Hot keys");
 // Hotkeys.htm, generated from Hotkeys.md, which makeKeyMap.ps1 generates from
 // Hotkeys.inix.  This opened HotKeys.txt, a hand-kept file that fell out of step
 // with the program and is no longer shipped.
-string sFile = Path.Combine(App.sAppDir, "Hotkeys.htm");
+string sFile = Path.Combine(App.sShippedHelp, "Hotkeys.htm");
 Process.Start(sFile);
 } // menuHelpHotKeys_Click method
 
@@ -8888,16 +8931,16 @@ void MenuHelpCopyLog_Click(object sender, EventArgs e) {
 // This exists so that "send me the log" is one keystroke rather than a hunt
 // through a profile folder nobody should have to know the shape of.
 string sTitle = "Copy Log";
-if (Homer.Log.sFile.Length == 0 || !File.Exists(Homer.Log.sFile)) {
+if (Homer.Log.path.Length == 0 || !File.Exists(Homer.Log.path)) {
 App.say("No log for this session!");
 return;
 }
 try {
 DataObject dataLog = new DataObject();
 System.Collections.Specialized.StringCollection colFiles = new System.Collections.Specialized.StringCollection();
-colFiles.Add(Homer.Log.sFile);
+colFiles.Add(Homer.Log.path);
 dataLog.SetFileDropList(colFiles);
-dataLog.SetText(Homer.Log.sFile);
+dataLog.SetText(Homer.Log.path);
 Clipboard.SetDataObject(dataLog, true);
 App.say("Log path copied");
 }
@@ -10268,7 +10311,7 @@ this.Click += eh;
 public string[] getKeySummary() {
 // string sCommand = this.Text.Replace("&", "").Replace(" ...", "");
 string sCommand = this.Name;
-string sHotkeyIni = Path.Combine(App.sAppDir, "Hotkeys.inix");
+string sHotkeyIni = Path.Combine(App.sShippedConfigs, "Hotkeys.inix");
 string sValue = App.readValue(sHotkeyIni, "Hotkeys", sCommand, "");
 if (sCommand.StartsWith("Drive ") && sCommand.Length == 7) {
 string sLetter = sCommand.Substring(6, 1);
@@ -10282,7 +10325,7 @@ else if (sValue.Length == 0) sValue = App.readValue(sHotkeyIni, "Hotkeys", "Say 
 // because the installer copies Hotkeys.inix with the onlyifdoesntexist flag: a
 // machine that already has FileDir never receives an updated copy, so a
 // description added in a new version would otherwise never be heard.
-if (sValue.Length == 0) sValue = Homer.KeyMap.lookUp(sCommand);
+if (sValue.Length == 0) sValue = FileDir.KeyText.lookUp(sCommand);
 
 if (sValue.Length == 0) sValue = "No description available";
 string sKey = "";

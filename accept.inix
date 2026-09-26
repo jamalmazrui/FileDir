@@ -1,0 +1,34 @@
+﻿# accept.inix -- what "done" means for FileDir.
+#
+# checkHomerApp reads this and tagRelease refuses to release when a check
+# fails. Each line is a statement that must be true of a finished build.
+
+[documents]
+ReadMe = ReadMe.md and ReadMe.htm exist at the top
+License = License.md and License.htm exist at the top
+Guide = help\FileDir.md and help\FileDir.htm exist
+Developer = help\Developer.md and help\Developer.htm exist
+History = help\History.md and help\History.htm exist
+Hotkeys = help\Hotkeys.md and help\Hotkeys.htm exist, generated from configs\Hotkeys.inix
+Tutorials = help\Tutorials.md exists, with one section per walk
+
+[build]
+Script = buildFileDir.cmd returns 0
+Program = exec\FileDir.exe is built and carries the version in version.txt
+Installer = exec\FileDir_setup.exe is built and carries the same version
+Kit = the build compiles against C:\HomerDev\CSharp and carries no copy of a kit class
+
+[repository]
+Lists = RepoFiles.txt and LocalFiles.txt are present and current
+Ignore = .gitignore is the whitelist homerTidy writes from RepoFiles.txt
+Binaries = no binary is named in RepoFiles.txt
+
+[encoding]
+Homer = every file RepoFiles.txt names is UTF-8 with a byte order mark and CRLF, except .cmd and .bat which take CRLF and no mark
+
+[logging]
+Runs = every script writes one log per run in logs, named FileDir-<task>-yyyyMMdd-HHmmss.log
+
+[speech]
+Duplication = no control sets an accessible name that repeats its caption or its label
+Status = the status line carries status, and nothing announces it

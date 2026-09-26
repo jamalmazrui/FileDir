@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Homer Tools Walkthroughs</title>
+    <link>Tutorials.htm</link>
+    <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 26 Sep 2026 17:17:30 +0000</lastBuildDate>
+    <itunes:author>Jamal Mazrui</itunes:author>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:category text="Technology"/>
+    <itunes:owner><itunes:name>Jamal Mazrui</itunes:name><itunes:email>empowermentzone@gmail.com</itunes:email></itunes:owner>
+    <item>
+      <title>A First Walk Through FileDir</title>
+      <description>FileDir is open on a folder of saved podcast directories, and a screen reader is running. Full transcript: Tutorials.htm#0-a-first-walk-through-filedir</description>
+      <link>Tutorials.htm#0-a-first-walk-through-filedir</link>
+      <guid isPermaLink="false">homer-tutorial_00_overview</guid>
+      <enclosure url="tutorials/Tutorial_00_Overview.mp3" length="1942664" type="audio/mpeg"/>
+      <itunes:duration>00:04:26</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Tagging Files and Copying Them Somewhere</title>
+      <description>A folder of files is open. Full transcript: Tutorials.htm#0a-tagging-files-and-copying-them-somewhere</description>
+      <link>Tutorials.htm#0a-tagging-files-and-copying-them-somewhere</link>
+      <guid isPermaLink="false">homer-tutorial_01_tagging</guid>
+      <enclosure url="tutorials/Tutorial_01_Tagging.mp3" length="301757" type="audio/mpeg"/>
+      <itunes:duration>00:00:45</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Tagging Files and Copying Them Somewhere</title>
+      <description>A folder of files is open. Full transcript: Tutorials.htm#0b-tagging-files-and-copying-them-somewhere</description>
+      <link>Tutorials.htm#0b-tagging-files-and-copying-them-somewhere</link>
+      <guid isPermaLink="false">homer-tutorial_tagging</guid>
+      <enclosure url="tutorials/Tutorial_Tagging.mp3" length="307523" type="audio/mpeg"/>
+      <itunes:duration>00:00:45</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>

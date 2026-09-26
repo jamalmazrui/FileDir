@@ -1,1252 +1,789 @@
-﻿; FileDir_setup.iss -- Inno Setup script for AnyCPU FileDir 5.0 (x64 and ARM64).
+﻿; FileDir_setup.iss -- installer for FileDir, built from the HomerDev template.
 ;
-; Compile with ISCC.exe (Inno Setup 5.6+ or 6.x). Run BuildFileDir.cmd first
-; so FileDir.exe exists. Produces FileDir_setup.exe in C:\FileDir.
+; WHAT IS FILEDIR'S OWN HERE, against the template: the file list, which follows
+; the Homer layout FileDir keeps; seven components on the finish page in place
+; of the template's one; the file-association helpers; and the AppId, which is
+; not a GUID because it never was -- see the note at AppId.
 ;
-; OutputBaseFilename is FileDir_setup so the Elevate Version (F11) command can
-; fetch releases/latest/download/FileDir_setup.exe -- GitHub asset URLs are
-; case-sensitive, so this name and the F11 asset name must stay identical.
+; ---- What this template settles, so no app decides again ---------------------
 ;
-; This is a slimmed, 64-bit replacement for the old FileDir_setup.iss. Removed:
-; the Java / JRE detection block (Java Access Bridge), the .NET 2.0/4.0 probing,
-; the dead 2015 filter-pack / calibre / .NET download links, the dotnet.exe
-; report, PSetup/unicows, and the fragile PostHotkey/CurStepChanged shortcut
-; hack. The single Alt+Control+F hot-key shortcut now follows the DbDo/EdSharp
-; model, with an [InstallDelete] that clears the legacy desktop shortcut first.
-; Native code generation via ngen is kept (installer-time, elevated).
+; MACHINE WIDE, ADMINISTRATOR. Program Files, no per-user fallback, no "who is
+; this for" page. Somebody who wants a portable copy takes the zip.
 ;
-; Interim notes (resolved by later modernization steps):
-;  - Text extraction uses 2htm.exe (plain-text mode). The old gettext.exe and
-;    the filters\ DLLs it drove are retired and no longer shipped.
-;  - JAWS scripts install via "FileDir.exe --install-jaws-settings" (shared
-;    Homer.JawsSettingsInstaller), the same way DbDo and EdSharp do it.  The old
-;    Scripts\FileDir_Scripts_setup.exe is retired.
-;  - Speech goes through Homer.Say (JAWS, NVDA, then a UIA notification that
-;    Narrator announces).  The old 32-bit saapi32/nvdaControllerClient32 DLLs
-;    and the Web Client Utilities tree are no longer shipped, and are deleted
-;    from existing installs.
+; THE VERSION COMES FROM version.txt, read at compile time. No version literal
+; appears here, so a stale copy of this file cannot rewind the number.
+;
+; IT KNOWS WHAT IS ALREADY INSTALLED. The [Code] section reads the version of
+; any previous install from this app's own uninstall key and compares it with
+; the version being installed. The checkboxes are worded from that comparison --
+; "Install" when nothing is there, "Update" when something older is -- by
+; pairing two [Run] lines with Check: functions so only one of each pair
+; appears. Nothing says "Install" over the top of a copy that is already there.
+;
+; CHECKBOX ORDER AND DEFAULTS, in the order the user meets them (HomerDev
+; rule, 25 September 2026; the [Run] section says how it is done):
+;   1. Install entries, TICKED: screen reader scripts first -- a blind user
+;      installing a Homer tool wants its JAWS scripts and its NVDA add-on --
+;      then components in alphabetical order.
+;   2. Update entries, TICKED, alphabetical.
+;   3. Reinstall entries, UNTICKED, alphabetical.
+;   4. Launch, TICKED, after the Results box has been read.
+;   5. Open the user guide, UNTICKED: there when wanted, out of the way when not.
+;
+; THE RESULTS BOX COMES BEFORE THE LAUNCH. The Launch entry only leaves a
+; marker; CurStepChanged(ssDone) shows one Results box -- a past-tense line per
+; box that was ticked, probed after its script ran, and nothing about the rest
+; -- and starts the program only after that box is dismissed.
 
-; ---- Version -----------------------------------------------------------------
-; The version number is NOT stored in this script.  It lives in version.txt, one
-; line, which Build<App>.cmd increments on every build.  Inno reads it here, and
-; Build<App>.cmd also generates Version.cs from it, so the program, the installer,
-; and the release tag always report the same number -- which is what Elevate
-; Version (F11) compares.  Because no version literal appears in this file, a
-; stale copy of it can never rewind the version.
+#define AppName       "FileDir"
+
 #define VerFile FileOpen(AddBackslash(SourcePath) + "version.txt")
 #define AppVersion Trim(FileRead(VerFile))
 #expr FileClose(VerFile)
 #undef VerFile
 
+#define AppPublisher  "Jamal Mazrui"
+#define AppUrl        "https://github.com/JamalMazrui/FileDir"
+#define AppExeName    "FileDir.exe"
+#define AppCopyright  "Copyright (c) 2006-2026 Jamal Mazrui. MIT License."
+
+; The desktop shortcut's hotkey. HotKey is the Inno Setup directive
+; value, which requires Ctrl syntax; HotKeyDisplay is the same key in the
+; notation a person reads -- Control rather than Ctrl, modifiers in alphabetical
+; order. Alt+Control+key space belongs to desktop shortcuts, and a shortcut's own
+; hotkey is the sanctioned use of it, so it is the right space to take here.
+; Alt+Control+F has been FileDir's since 2006.
+#define HotKey        "Alt+Ctrl+F"
+#define HotKeyDisplay "Alt+Control+F"
+
 [Setup]
-AppName=FileDir
+; NOT A GUID, AND NOT TO BE CHANGED. FileDir has shipped since 2006 with no
+; AppId line, so Inno used the AppName, and every installed copy is registered
+; under the uninstall key FileDir_is1. Giving it a GUID now would make the next
+; installer fail to recognise the copy already there -- no Update wording, no
+; upgrade, a second entry in Programs and Features. The name stays.
+AppId=FileDir
+
+AppName={#AppName}
 AppVersion={#AppVersion}
-AppVerName=FileDir {#AppVersion}
+AppVerName={#AppName} {#AppVersion}
+AppPublisher={#AppPublisher}
+AppPublisherURL={#AppUrl}
+AppSupportURL={#AppUrl}
+AppUpdatesURL={#AppUrl}/releases
+AppCopyright={#AppCopyright}
+
+; The version resource of the built setup. tagRelease reads the FileVersion
+; STRING from it and tags v<that>, so the text form is set explicitly: the tag
+; wanted is v1.0.0, not v1.0.0.0.
 VersionInfoVersion={#AppVersion}
-AppPublisher=NonvisualDevelopment.org
-AppPublisherURL=https://github.com/JamalMazrui/FileDir
-AppContact=Jamal Mazrui
-AppCopyright=Copyright 2006-2026 by Jamal Mazrui
-UninstallDisplayIcon={app}\FileDir.exe
-SetupIconFile=FileDir.ico
-DefaultDirName={autopf}\FileDir
-DefaultGroupName=FileDir
-; x64compatible matches both x64 and ARM64 (Inno Setup 6.3+), so the AnyCPU
-; FileDir.exe installs and runs natively on both. MinVersion 10.0 matches the
-; .NET Framework 4.8 / Windows 10+ requirement.
-ArchitecturesAllowed=x64compatible
-ArchitecturesInstallIn64BitMode=x64compatible
-MinVersion=10.0
-Compression=lzma2/max
-SolidCompression=yes
-OutputBaseFilename=FileDir_setup
-OutputDir=C:\FileDir
-SourceDir=C:\FileDir
-PrivilegesRequired=admin
-ChangesAssociations=yes
-ChangesEnvironment=yes
+VersionInfoTextVersion={#AppVersion}
+VersionInfoProductVersion={#AppVersion}
+VersionInfoProductTextVersion={#AppVersion}
+VersionInfoCompany={#AppPublisher}
+VersionInfoCopyright={#AppCopyright}
+VersionInfoDescription={#AppName} Setup
+
+DefaultDirName={autopf}\{#AppName}
+DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
-DisableStartupPrompt=yes
-Uninstallable=yes
+UsePreviousAppDir=yes
+; Hide the destination page when a previous install of the same AppId is found:
+; a reinstall then asks nothing at all and goes where the last one went. A first
+; install still chooses the folder.
+DisableDirPage=auto
+UsePreviousGroup=yes
+
+; THE INSTALLER KEEPS A LOG, always, and puts it where the program's own logs
+; go. SetupLogging makes Inno write a detailed log of every file, registry key
+; and run entry into the temporary folder; the [Code] section at the foot of
+; this file copies it to
+;     %LOCALAPPDATA%\{#AppName}\logs\{#AppName}-setup-<yyyymmdd-hhmmss>.log
+; when setup finishes, so an install can be explained a week later. Writing it
+; costs nothing; not having it costs an evening.
 SetupLogging=yes
 
-[Files]
-; Built artifact (present after BuildFileDir.cmd).
-Source: "FileDir.exe";        DestDir: "{app}"; Flags: ignoreversion
-; Runtime configuration: startup tuning (disables Authenticode publisher-evidence
-; / CRL check at launch, enables concurrent GC). Must sit next to FileDir.exe;
-; ignoreversion keeps it in sync with the executable.
-Source: "FileDir.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "FileDir.ico";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Referenced assemblies still loaded at run time (until the Homer port retires them).
-Source: "Tektosyne.dll";      DestDir: "{app}"; Flags: ignoreversion
-; Ude.dll: character-encoding autodetection (a port of the Mozilla universal
-; detector).  The .NET base class library cannot detect an encoding, and this is
-; what the retired Encoding.exe did.  EdSharp ships the same library.
-Source: "Ude.dll";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "ICSharpCode.SharpZipLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "FileAssociation.dll"; DestDir: "{app}"; Flags: ignoreversion
-; Source and build inputs (shipped so users can recompile, EdSharp-style).
-Source: "FileDir.cs";         DestDir: "{app}"; Flags: ignoreversion
-Source: "Web.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Say.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Inix.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Util.cs";            DestDir: "{app}"; Flags: ignoreversion
-Source: "KeyMap.cs";          DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Dialogs.cs";         DestDir: "{app}"; Flags: ignoreversion
-; Lbc.cs is compiled into FileDir.exe alongside the others and was the one
-; source the installer never shipped, so the source that came with the program
-; could not be rebuilt from what was there.
-Source: "Lbc.cs";             DestDir: "{app}"; Flags: ignoreversion
-; The Ollama client, used by Translate File. Shared in shape with the other
-; Homer Tools, which talk to the same local server and the same models.
-Source: "Ollama.cs";          DestDir: "{app}"; Flags: ignoreversion
-; The Pandoc conversion class, shared in shape with EdSharp and HomerScribe,
-; which drive the same machine-wide Pandoc.
-Source: "Convert.cs";         DestDir: "{app}"; Flags: ignoreversion
-; Finding and running ExifTool, ffmpeg and ffprobe. Adapted from HomerScribe,
-; which solved the finding; what each program does with the tools differs.
-Source: "Media.cs";           DestDir: "{app}"; Flags: ignoreversion
-Source: "Mpv.cs";             DestDir: "{app}"; Flags: ignoreversion
-Source: "MediaPlayer.cs";     DestDir: "{app}"; Flags: ignoreversion
-; The session log, in the same place and naming as EdSharp's, beside the setup
-; log this installer writes.
-Source: "Log.cs";             DestDir: "{app}"; Flags: ignoreversion
-; Reading and writing tables: inix records, csv, tsv, xlsx and Markdown.
-Source: "Table.cs";           DestDir: "{app}"; Flags: ignoreversion
-Source: "FileDirScript.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "FileDir.js";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "FileDir.manifest";   DestDir: "{app}"; Flags: ignoreversion
+OutputDir=exec
+OutputBaseFilename={#AppName}_setup
+SolidCompression=yes
+LicenseFile=
+WizardStyle=modern
+Compression=lzma2/max
+MinVersion=10.0
+AppComments=A file manager worked by typed command rather than mouse, for keyboard and screen reader users.
 
-; JAWS script family, installed into each JAWS version by
-; "FileDir.exe --install-jaws-settings" (the [Run] checkbox below) and
-; removed by the [UninstallRun] entry. FileDir.jss says Use "Homer.jsb",
-; so Homer.jss ships too and compiles first; Homer.jsh and MSAA.jsh are
-; include headers its compile needs beside it. The .jsd files document
-; the scripts inside JAWS; FileDir.jcf carries configuration defaults.
-Source: "FileDir.jss";        DestDir: "{app}"; Flags: ignoreversion
-; The mpv scripts, which JAWS loads whenever mpv.exe is the active window.
-Source: "mpv.jss";            DestDir: "{app}"; Flags: ignoreversion
-Source: "mpv.jkm";            DestDir: "{app}"; Flags: ignoreversion
-Source: "mpv.jsd";            DestDir: "{app}"; Flags: ignoreversion
-Source: "mpv.jcf";            DestDir: "{app}"; Flags: ignoreversion
-Source: "FileDir.jkm";        DestDir: "{app}"; Flags: ignoreversion
-Source: "FileDir.jsd";        DestDir: "{app}"; Flags: ignoreversion
-Source: "FileDir.jcf";        DestDir: "{app}"; Flags: ignoreversion
-Source: "Homer.jss";          DestDir: "{app}"; Flags: ignoreversion
-Source: "Homer.jsd";          DestDir: "{app}"; Flags: ignoreversion
-Source: "Homer.jsh";          DestDir: "{app}"; Flags: ignoreversion
-Source: "MSAA.jsh";           DestDir: "{app}"; Flags: ignoreversion
-Source: "BuildFileDir.cmd";   DestDir: "{app}"; Flags: ignoreversion
-Source: "BuildFileDir.ps1";   DestDir: "{app}"; Flags: ignoreversion
-Source: "cleanFileDir.cmd";   DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "cleanFileDir.py";    DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "auditFileDir.py";    DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Optional local AI. One Ollama installation and one set of models serve every
-; Homer Tools program on the machine, so these scripts probe before they fetch.
-; Pandoc, machine-wide in C:\Program Files\Pandoc. About 100 MB, and one copy
-; serves FileDir, EdSharp and HomerScribe -- which is why it is installed there
-; rather than inside each program's own folder.
-Source: "installPandoc.cmd";  DestDir: "{app}"; Flags: ignoreversion
-; The PDF reader, EdSharp's arrangement kept identical: PyMuPDF4LLM through
-; Python, which reads a PDF's own structure into Markdown with headings, lists
-; and tables. No Microsoft Word anywhere in it.
-Source: "installPdfTools.cmd"; DestDir: "{app}"; Flags: ignoreversion
-; mpv, the player Play List hands its list to. Not ticked: it carries its own
-; copy of ffmpeg, which FileDir already has, so much of the download is a
-; second copy of something already installed. It buys playback and nothing
-; else -- conversion is ffmpeg's job and stays ffmpeg's job.
-Source: "installMpv.cmd";     DestDir: "{app}"; Flags: ignoreversion
-; ImageMagick, for the pictures ffmpeg cannot read: iPhone photos, camera raw,
-; SVG drawings and Windows icons.
-Source: "installImageTools.cmd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "pdfRich.py";         DestDir: "{app}"; Flags: ignoreversion
-Source: "installOllama.cmd";  DestDir: "{app}"; Flags: ignoreversion
-Source: "installTranslateModel.cmd"; DestDir: "{app}"; Flags: ignoreversion
-; The single Results box, shown after every finish-page checkbox has run.
-Source: "summarizeSetup.cmd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "summarizeSetup.ps1"; DestDir: "{app}"; Flags: ignoreversion
-Source: "makeKeyMap.py";      DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; homerPolicy.py is the same file in every Homer Tools project. Both the audit
-; and the sweep read it, so they cannot disagree about what belongs.
-Source: "homerPolicy.py";     DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "RepoFiles.txt";      DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "FileDir_setup.iss";  DestDir: "{app}"; Flags: ignoreversion
-; Helper tools shipped alongside the app.
-Source: "7z.*";               DestDir: "{app}"; Flags: ignoreversion
-Source: "chimes.wav";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Burn2CD.exe";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Burn2CD.dll";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "AssocOn.exe";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "AssocOff.exe";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Text-extraction engine: 2htm (plain-text mode) replaces gettext.exe + filters\.
-Source: "2htm.exe";           DestDir: "{app}"; Flags: ignoreversion
-; 2htm needs System.Memory beside it on .NET Framework 4.8 -- the Span trap.
-; Without it, it fails on EVERY file and still exits with code 0, so callers
-; that trusted the exit code got silence. Shipped when present.
-Source: "System.Memory.dll";  DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "System.Buffers.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; ---- Media tools ----
-;
-; ExifTool, ffmpeg with ffprobe, and yt-dlp are NOT shipped here. Together they
-; are well over 100 MB, and EdSharp, HomerScribe and FileDir all want them --
-; exactly the argument that moved Pandoc to Program Files. They are offered as
-; one finish-page checkbox instead, installed machine wide by winget.
-;
-; Media.cs still looks in the program folder first, so a copy dropped into
-; C:\FileDir during development is used in preference to anything installed.
-Source: "installMediaTools.cmd"; DestDir: "{app}"; Flags: ignoreversion
-; NVDA direct speech.  Homer.Say P/Invokes nvdaControllerClient.dll -- the
-; 64-bit build, with no architecture suffix.  The 32-bit nvdaControllerClient32.dll
-; that older releases shipped cannot load in this process at all.  When the DLL is
-; absent, speech falls back to the UIA notification, which NVDA does read, so this
-; is a quality improvement rather than a requirement.
-Source: "nvdaControllerClient.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; The 32-bit client is useless in a 64-bit process; remove it from an upgraded install.
+SetupIconFile=FileDir.ico
 
-; JAWS settings family.  FileDir installs these itself via --install-jaws-settings;
-; the old FileDir_Scripts_setup.exe is no longer used and is deleted on upgrade.
-; Only the compiled JAWS scripts.  This used to be Scripts\*, the whole folder,
-; which shipped the retired FileDir_Scripts_setup.exe and its .iss -- and the
-; [InstallDelete] below then removed the .exe, so the installer put a file in
-; place and took it out again in the same run.
-Source: "Scripts\*.jsb";      DestDir: "{app}\Scripts"; Flags: ignoreversion skipifsourcedoesntexist
-; Configuration: do NOT clobber a user's existing settings on upgrade.
-Source: "FileDir.ini";        DestDir: "{app}"; Flags: onlyifdoesntexist
-; Hotkeys.inix is deliberately NOT shipped.  The key and description of every
-; command are compiled into the program (KeyMap.cs, generated from Hotkeys.inix at
-; build time).  Shipping the file with onlyifdoesntexist meant an existing
-; installation kept its old copy for ever and never saw a new description; the
-; [InstallDelete] below removes that stale copy.  A user who wants to override an
-; entry can still create Hotkeys.inix in the program folder, and it is read first.
-; Documentation.  The standard Homer Tools set, each Markdown file with the
-; matching HTML the build generates from it.  gpl.txt is gone: FileDir is MIT
-; licensed, and License.md/.htm say so.  The old plain-text hotkeys.txt and
-; history.txt are replaced by Hotkeys.md and History.md.
-Source: "ReadMe.md";          DestDir: "{app}"; Flags: ignoreversion
-Source: "ReadMe.htm";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "FileDir.md";         DestDir: "{app}"; Flags: ignoreversion
-Source: "FileDir.htm";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Developer.md";       DestDir: "{app}"; Flags: ignoreversion
-Source: "Developer.htm";      DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "License.md";         DestDir: "{app}"; Flags: ignoreversion
-Source: "License.htm";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "History.md";         DestDir: "{app}"; Flags: ignoreversion
-Source: "History.htm";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Hotkeys.md";         DestDir: "{app}"; Flags: ignoreversion
-Source: "Hotkeys.htm";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Announce.md";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Announce.htm";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "FAQ.md";             DestDir: "{app}"; Flags: ignoreversion
-Source: "FAQ.htm";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Tutorials.md";       DestDir: "{app}"; Flags: ignoreversion
-Source: "Tutorials.htm";      DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Data files the program reads.
-Source: "Convert.txt";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Quick.txt";          DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Coding style, shipped with the source so a modification follows it.
-Source: "Camel_Type_C#.md";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "CamelType_CSharp.md";    DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "CamelType_JAWSScript.md"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+PrivilegesRequired=admin
+; THE PER-USER AREAS ARE USED ON PURPOSE, so the warning about them is off. The
+; setup log and the launch marker go to the profile of whoever answered the
+; elevation prompt, which on a machine one person uses is that person -- and the
+; template says so where it uses them.
+UsedUserAreasWarning=no
+PrivilegesRequiredOverridesAllowed=
+
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+
+Uninstallable=yes
+UninstallDisplayIcon={app}\exec\{#AppExeName}
+UninstallDisplayName={#AppName} {#AppVersion}
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+
+[Messages]
+WelcomeLabel2=This will install [name/ver] on your computer.%n%n[name] is licensed under the MIT License: free to use, copy, modify, and distribute; provided "as is" with no warranty. The full license is installed as License.htm in the program folder.%n%nIt is recommended that you close all other applications before continuing.
 
 [Dirs]
-Name: "{userappdata}\FileDir";
-Name: "{userappdata}\FileDir\Temp";
+; THE HOMER FOLDER LAYOUT. Every folder starts with a different letter, so a
+; screen reader user reaches any of them with one keystroke:
+;   configs data exec help scripts templates
+; temp and logs are not here: they belong to the per-user tree, which the
+; program makes for itself. A temp folder under Program Files could not be
+; written to anyway.
+Name: "{app}\configs"
+Name: "{app}\data"
+Name: "{app}\help"
+Name: "{app}\exec"
+Name: "{app}\scripts"
+Name: "{app}\templates"
 
-[InstallDelete]
-; Clear any pre-existing FileDir desktop shortcut before [Icons] recreates the
-; single hot-key shortcut below. The legacy installer placed an Alt+Ctrl+F
-; shortcut on the USER's desktop pointing at the old exe (via a FileCopy hack);
-; removing it from both the user and common desktops leaves the {autodesktop}
-; shortcut as the sole owner of Alt+Ctrl+F. (InstallDelete runs before [Icons],
-; so the recreate still wins.)
-Type: files; Name: "{userdesktop}\FileDir.lnk"
-Type: files; Name: "{commondesktop}\FileDir.lnk"
+[Files]
+; THE PROGRAM AND WHAT RUNS WITH IT go in exec: the executable, the libraries it
+; links, the tools it starts, and the icon, manifest and config that are compiled
+; in or read beside it. Only the executable is required; every other line says
+; skipifsourcedoesntexist so a missing optional piece does not abort the build.
+Source: "exec\{#AppExeName}"; DestDir: "{app}\exec"; Flags: ignoreversion
+Source: "FileDir.exe.config"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "FileDir.ico"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "FileDir.manifest"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\FileDirScript.dll"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\*.dll"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\7z.*"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\2htm.exe"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\AssocOn.exe"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\AssocOff.exe"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\Burn2CD.exe"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 
-; Remove components retired in 5.0 so upgrading over a 4.x install does not
-; leave orphans: the LbcVB / LbcJS helper assemblies and their sources, the
-; GetProps.js shell script, the old gettext text engine (now 2htm), and the
-; LayoutByCode dialog library (lbc.dll / lbc.cs), now folded into Homer and
-; the FileDir-local Dialogs.cs.
-Type: files; Name: "{app}\LbcVB.dll"
-Type: files; Name: "{app}\LbcVB.VB"
-Type: files; Name: "{app}\LbcJS.dll"
-Type: files; Name: "{app}\LbcJS.js"
-Type: files; Name: "{app}\GetProps.js"
-Type: files; Name: "{app}\gettext.exe"
-Type: files; Name: "{app}\Scripts\FileDir_Scripts_setup.exe"
-; WebGet.exe scraped Internet Explorer's address bar for the Quick URL and Web
-; Download commands.  Internet Explorer is gone; those commands now take the
-; address from the clipboard, and downloading is done by FileDir itself.
-Type: files; Name: "{app}\WebGet.exe"
-Type: files; Name: "{app}\WebGet.tmp"
-; Encoding.exe was the external character-encoding tool; the Ude library does the
-; detection now, and the base class library does the conversion.
-Type: files; Name: "{app}\Encoding.exe"
-; Web Client Utilities: the ~35 Python "web 2.0" scripts and the InPy interpreter
-; they ran under.  The services they called are long gone, so the feature has been
-; removed from FileDir; delete the whole tree from an existing install.
-Type: filesandordirs; Name: "{app}\WebClient"
-Type: files; Name: "{app}\InPy.exe"
-Type: files; Name: "{app}\InPyC.exe"
-; 32-bit screen-reader client DLLs.  System Access is gone, and these cannot load
-; in the 64-bit process anyway; speech now goes through JAWS/NVDA/UIA (Homer.Say).
-Type: files; Name: "{app}\saapi32.dll"
-Type: files; Name: "{app}\nvdaControllerClient32.dll"
-Type: files; Name: "{app}\lbc.dll"
-; The lbc.cs line that used to sit here removed a file the installer now ships.
-; Windows file names are case insensitive, so "{app}\lbc.cs" and the shipped
-; Lbc.cs are the same file: the installer deleted it and put it straight back.
-; Hotkeys.inix used to ship with onlyifdoesntexist, so an existing installation
-; kept a copy that could never be updated and Key Describer read stale text from
-; it.  The table is compiled in now, so the stale file is removed.  A user who
-; wants to override an entry can create the file again.
-Type: files; Name: "{app}\Hotkeys.inix"
-; The build was three scripts for a while; it is two now.
-Type: files; Name: "{app}\auditFileDir.ps1"
-Type: files; Name: "{app}\auditFileDir.cmd"
-Type: files; Name: "{app}\makeKeyMap.ps1"
-Type: files; Name: "{app}\makeKeyMap.cmd"
-; Documents replaced by the Markdown set.  gpl.txt goes with the licence change
-; to MIT; hotkeys.txt and history.txt are now Hotkeys.md and History.md.
-Type: files; Name: "{app}\gpl.txt"
-Type: files; Name: "{app}\hotkeys.txt"
-Type: files; Name: "{app}\history.txt"
-Type: files; Name: "{app}\FileDir.txt"
-; The text-extraction filter DLLs that gettext.exe drove.  2htm replaced the
-; whole pipeline, so the folder is orphaned on an upgraded install.
-Type: filesandordirs; Name: "{app}\filters"
+; THE DOCUMENTS. ReadMe and License at the root, where a person looking for them
+; expects them; everything else in help, which is where F1 and the Help menu read
+; from. Markdown for an editor or a braille display, HTML for a browser.
+Source: "ReadMe.md"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "ReadMe.htm"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "License.md"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "License.htm"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "help\*.md"; DestDir: "{app}\help"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "help\*.htm"; DestDir: "{app}\help"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "help\Tutorial_*.inix"; DestDir: "{app}\help"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "help\TutorialFeed.xml"; DestDir: "{app}\help"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "help\tutorials\*.mp3"; DestDir: "{app}\help\tutorials"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "help\tutorials\Tutorials.m3u"; DestDir: "{app}\help\tutorials"; Flags: ignoreversion skipifsourcedoesntexist
+
+; THE SOURCES, because FileDir has always shipped them: anyone can rebuild what
+; they installed. The shared classes are not here; they are the kit's.
+Source: "FileDir.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Convert.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Dialogs.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Media.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "MediaPlayer.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Mpv.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Table.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "FileDir.js"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "buildFileDir.cmd"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "FileDir_setup.iss"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "RepoFiles.txt"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "LocalFiles.txt"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "accept.inix"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+
+; SETTINGS AND DATA. FileDir.ini seeds the per-user settings and is never
+; overwritten; the program writes its own copy under AppData from the first run.
+Source: "configs\FileDir.ini"; DestDir: "{app}\configs"; Flags: onlyifdoesntexist skipifsourcedoesntexist
+Source: "configs\Convert.txt"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "configs\Quick.txt"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "configs\Hotkeys.inix"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "data\*"; DestDir: "{app}\data"; Flags: ignoreversion skipifsourcedoesntexist
+
+; THE FINISH HELPER, always shipped: the common half of every install script.
+Source: "scripts\homerInstall.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion
+; ONE SCRIPT PER COMPONENT on the finish page, each calling homerInstall.cmd for
+; its log and then doing one thing. Every component appears three times in
+; [Run] -- install, update, reinstall -- and only one is ever shown.
+Source: "scripts\installExifTool.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installFfmpeg.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installImageMagick.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installModels.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installMpv.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installOllama.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installPandoc.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installPdfTools.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\installYtDlp.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\pdfRich.py"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+; SCREEN READER support: the JAWS scripts zipped by the build from scripts\jaws,
+; and the NVDA add-on when there is one, plus the kit's script that puts each
+; where its reader looks.
+Source: "scripts\installScreenReaderSupport.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "exec\FileDir_JAWS.zip"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "FileDir.nvda-addon"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\jaws\*"; DestDir: "{app}\scripts\jaws"; Flags: ignoreversion skipifsourcedoesntexist
 
 [Icons]
-Name: "{group}\Launch FileDir";   Filename: "{app}\FileDir.exe"; WorkingDir: "{app}"
-Name: "{group}\FileDir Manual";   Filename: "{app}\FileDir.htm"
-Name: "{group}\Set Extensions to Open with FileDir"; Filename: "{app}\AssocOn.exe"; WorkingDir: "{app}"
-Name: "{group}\Turn off Association between Extensions and FileDir"; Filename: "{app}\AssocOff.exe"; WorkingDir: "{app}"
-Name: "{group}\View License for FileDir"; Filename: "{app}\License.htm"
-Name: "{group}\FileDir Hotkeys"; Filename: "{app}\Hotkeys.htm"
-Name: "{group}\FileDir Tutorials"; Filename: "{app}\Tutorials.htm"
-Name: "{group}\FileDir Questions and Answers"; Filename: "{app}\FAQ.htm"
-Name: "{group}\Uninstall FileDir"; Filename: "{uninstallexe}"
-; Single hot-key shortcut (DbDo/EdSharp model): the one shortcut that owns
-; Alt+Ctrl+F is created with {autodesktop} (user desktop for a per-user install,
-; common desktop for an all-users install) and HotKey. No Start Menu item carries
-; a hot key, so Alt+Ctrl+F has exactly one owner. FileDir is single-instance:
-; OnStartupNextInstance brings the running copy to the foreground, so a plain
-; relaunch activates rather than starting a second copy.
-Name: "{autodesktop}\FileDir"; Filename: "{app}\FileDir.exe"; WorkingDir: "{app}"; IconFilename: "{app}\FileDir.ico"; HotKey: Alt+Ctrl+F; Comment: "Launch or activate FileDir 5.0 (Alt+Control+F)"
+; The documents stay at the root of the installed tree, where somebody looking
+; for the ReadMe expects them. Everything that runs is one folder down.
+Name: "{group}\{#AppName}"; Filename: "{app}\exec\{#AppExeName}"; WorkingDir: "{userdocs}"
+Name: "{group}\{#AppName} documentation"; Filename: "{app}\ReadMe.htm"; Flags: createonlyiffileexists
+Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}"
+Name: "{autodesktop}\{#AppName}"; Filename: "{app}\exec\{#AppExeName}"; WorkingDir: "{userdocs}"; IconFilename: "{app}\exec\FileDir.ico"; HotKey: "{#HotKey}"; Comment: "Launch or activate FileDir ({#HotKeyDisplay})"
 
 [Run]
-; ---- The Finish-page checkbox list, in the Homer Tools pattern ----
+; FINISH-PAGE ORDER, a HomerDev rule (25 September 2026):
+;   1. Install entries, ticked -- screen reader scripts first, then components
+;      in alphabetical order.
+;   2. Update entries, ticked, alphabetical.
+;   3. Reinstall entries, UNTICKED, alphabetical.
+;   4. Launch, ticked.
+;   5. Open the user guide, unticked.
+; Inno shows [Run] entries in script order and Check: hides the ones that do not
+; apply, so three entries per component -- one per verb, each with its own
+; Check: from Templates\HomerComponents.iss -- group the page by themselves.
+; The label function words each one: "Install X 1.2 (what it is for)",
+; "Update X from 1.1 to 1.2 (...)", "Reinstall X 1.2 (...)".
 ;
-; No Tasks page and no Components page: every optional install is a checkbox in
-; this list at the end, each running a probe-first script that reuses whatever
-; is already installed, logs to the consolidated setup log, and never pauses.
-; runascurrentuser matters for the optional installs: winget installs per user,
-; into the profile of whoever is signed in, while this installer runs elevated.
+; AI NOTE FOR CUSTOMIZING: register each component once in InitializeSetup
+; (see homerAdd below), then copy its three entries here into the three groups,
+; keeping each group in alphabetical order. A model has Install and Reinstall
+; only: ollama pull always fetches the current one.
 ;
-; WHICH BOXES ARE TICKED BY DEFAULT. The question is what a FileDir user gets
-; for the download:
-;   The screen reader support and the program itself are TICKED. They are what
-;     FileDir is, they cost nothing to fetch, and they are what the person came
-;     for.
-;   Ollama with its chat model (about 2 GB) and the larger translation model
-;     (about 5 GB) are NOT ticked. Each serves a real feature -- translating
-;     files without sending them anywhere -- but each serves some users and not
-;     others, and together they cost several gigabytes. Nobody should download
-;     that by not noticing a checkbox.
-;
-; WHY EACH TOOL APPEARS THREE TIMES BELOW. The label says what the box will do,
-; and the boxes are grouped so the ones that do something come first:
-; everything to be installed, then everything to be updated, then anything
-; already current, which is offered last and never ticked because there is
-; nothing to gain. Only one entry per tool is ever shown; the other two are
-; skipped by their Check function.
-;
-; The two screen reader checkboxes come first, both ticked. Launching FileDir
-; and opening the guide come LAST, after every component, because they are not
-; installations -- the same order EdSharp uses.
-;
-; 1. JAWS scripts.  "FileDir.exe --install-jaws-settings" copies the script family into
-;    every installed version of JAWS and compiles it there.  The implementation is the
-;    shared Homer.JawsSettingsInstaller (in Say.cs), so EdSharp, FileDir, and DbDo all
-;    install scripts by the same code, and the command can be re-run later.
-FileName: "{app}\FileDir.exe"; \
-  Parameters: "--install-jaws-settings --quiet"; \
-  WorkingDir: "{app}"; \
-  Description: "Install scripts for improving use with the JAWS screen reader"; \
-  Flags: postinstall waituntilterminated runhidden skipifsilent
+; Scripts run DIRECTLY, with "noPause" as their argument -- never through a cmd
+; wrapper with a "set X=1 &&" prefix, which cmd /s cannot quote correctly.
 
-; 2. NVDA add-on.  Shell-executing the .nvda-addon hands it to NVDA's own file
-;    association, so NVDA shows its native add-on install dialog.  skipifdoesntexist
-;    means the checkbox simply does not appear if the app ships no add-on yet.
-FileName: "{app}\FileDir.nvda-addon"; \
-  WorkingDir: "{app}"; \
-  Description: "Install add-on for improving use with the NVDA screen reader"; \
-  Flags: postinstall shellexec waituntilterminated skipifsilent skipifdoesntexist
+; ---- 1. Install ---------------------------------------------------------------
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "Install the JAWS scripts and the NVDA add-on for {#AppName}"; \
+  Check: isFreshInstall; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-; ---- Install: not on this computer yet ----
+FileName: "{app}\scripts\installExifTool.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelExifTool}"; \
+  Check: isInstallExifTool; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-; Pandoc is the one optional component that IS ticked. It is what gives FileDir
-; its conversions: Convert Format, and reading the formats Say Contents cannot
-; reach on its own. Without it FileDir still works, but a third of what the
-; Transfer and Query commands can do quietly disappears. About 100 MB, machine
-; wide, shared with EdSharp and HomerScribe.
+FileName: "{app}\scripts\installFfmpeg.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelffmpeg}"; \
+  Check: isInstallffmpeg; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installImageMagick.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelImageMagick}"; \
+  Check: isInstallImageMagick; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installMpv.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelmpv}"; \
+  Check: isInstallmpv; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installOllama.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelOllama}"; \
+  Check: isInstallOllama; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installPandoc.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelPandoc}"; \
+  Check: isInstallPandoc; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installPdfTools.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelPdfTools}"; \
+  Check: isInstallPdfTools; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installYtDlp.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelYtDlp}"; \
+  Check: isInstallYtDlp; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installModels.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelModel}"; \
+  Check: isModelInstall; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+; ---- 2. Update ----------------------------------------------------------------
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "Update the JAWS scripts and the NVDA add-on for {#AppName}"; \
+  Check: isUpgradeOrSame; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installExifTool.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelExifTool}"; \
+  Check: isUpdateExifTool; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installFfmpeg.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelffmpeg}"; \
+  Check: isUpdateffmpeg; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installImageMagick.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelImageMagick}"; \
+  Check: isUpdateImageMagick; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installMpv.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelmpv}"; \
+  Check: isUpdatempv; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installOllama.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelOllama}"; \
+  Check: isUpdateOllama; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installPandoc.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelPandoc}"; \
+  Check: isUpdatePandoc; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installPdfTools.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelPdfTools}"; \
+  Check: isUpdatePdfTools; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installYtDlp.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelYtDlp}"; \
+  Check: isUpdateYtDlp; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+; ---- 3. Reinstall, unticked ---------------------------------------------------
+FileName: "{app}\scripts\installExifTool.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelExifTool}"; \
+  Check: isReinstallExifTool; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installFfmpeg.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelffmpeg}"; \
+  Check: isReinstallffmpeg; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installImageMagick.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelImageMagick}"; \
+  Check: isReinstallImageMagick; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installMpv.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelmpv}"; \
+  Check: isReinstallmpv; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installOllama.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelOllama}"; \
+  Check: isReinstallOllama; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installPandoc.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelPandoc}"; \
+  Check: isReinstallPandoc; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installPdfTools.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelPdfTools}"; \
+  Check: isReinstallPdfTools; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installYtDlp.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelYtDlp}"; \
+  Check: isReinstallYtDlp; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installModels.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelModel}"; \
+  Check: isModelReinstall; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+; ---- 4. Launch, ticked --------------------------------------------------------
+; The entry only leaves a marker. The program starts from CurStepChanged(ssDone),
+; AFTER the Results box has been read and closed -- so the box is not hidden
+; behind the program's own window. Inno runs postinstall entries before ssDone.
+; TWO pairs of quotes: this Parameters value starts with a quote, which is the
+; one case where cmd /s strips the outer pair correctly.
 FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installPandoc.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descPandoc}"; \
-  Flags: postinstall skipifsilent runascurrentuser; Check: pandocNeedsInstall
+  Parameters: "/c echo launch > ""{localappdata}\{#AppName}\logs\{#AppName}_launch.flag"""; \
+  Description: "Launch {#AppName} now (desktop hotkey: {#HotKeyDisplay})"; \
+  Flags: postinstall skipifsilent runhidden runasoriginaluser
 
-; The media tools, ticked. Three commands need them: Type Extended reads the
-; metadata inside a file with ExifTool, Output As converts audio, video and
-; pictures with ffmpeg, and Web Download fetches media with yt-dlp. Ticked for
-; the same reason Pandoc is: without them those commands quietly do less.
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installMediaTools.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descMediaTools}"; \
-  Flags: postinstall skipifsilent runascurrentuser; Check: mediaToolsNeedInstall
+; ---- 5. Open the user guide, unticked -----------------------------------------
+FileName: "{app}\help\FileDir.htm"; \
+  Description: "Open the user guide (F1 opens it inside {#AppName})"; \
+  Flags: postinstall shellexec nowait skipifsilent skipifdoesntexist runasoriginaluser unchecked
 
-; The PDF reader. Ticked: without it, Say Contents and the conversions do
-; nothing useful with a PDF, and PDF is the format people most often have.
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installPdfTools.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descPdfTools}"; \
-  Flags: postinstall skipifsilent runascurrentuser; Check: pdfToolsNeedInstall
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installOllama.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descOllama}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: ollamaNeedsInstall
-
-; The larger translation model, offered next to Ollama itself because it is
-; useless without it. Unticked: five gigabytes is a real decision, and the small
-; chat model translates well enough to try the feature first.
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installTranslateModel.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descTranslateModel}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: translateModelNeedsInstall
-
-; The image tools. Not ticked: ffmpeg already handles PNG, JPEG, BMP, GIF, TIFF
-; and WebP, so this is for the formats it cannot reach, which serves people with
-; phone photographs or a camera and nobody else.
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installImageTools.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descImageTools}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: imageToolsNeedInstall
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installMpv.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descMpv}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: mpvNeedsInstall
-
-; ---- Update: installed, but a newer version is available ----
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installPandoc.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descPandoc}"; \
-  Flags: postinstall skipifsilent runascurrentuser; Check: pandocNeedsUpdate
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installOllama.cmd""""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descOllama}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: ollamaNeedsUpdate
-
-; ---- Reinstall: already current, offered only for repair ----
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installImageTools.cmd"" reinstall""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descImageTools}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: imageToolsAreCurrent
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installMpv.cmd"" reinstall""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descMpv}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: mpvIsCurrent
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installPandoc.cmd"" reinstall""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descPandoc}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: pandocIsCurrent
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installOllama.cmd"" reinstall""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descOllama}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: ollamaIsCurrent
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installMediaTools.cmd"" reinstall""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descMediaTools}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: mediaToolsAreCurrent
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installTranslateModel.cmd"" reinstall""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descTranslateModel}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: translateModelIsCurrent
-
-FileName: "{cmd}"; \
-  Parameters: "/c """"{app}\installPdfTools.cmd"" reinstall""";  \
-  WorkingDir: "{app}"; \
-  Description: "{code:descPdfTools}"; \
-  Flags: postinstall skipifsilent runascurrentuser unchecked; Check: pdfToolsAreCurrent
-
-; ---- After the components: what to do now ----
-;
-; Two ordinary things a person may want the moment setup ends, offered last
-; because they are not installations. Both unticked: somebody reinstalling to
-; fix one component does not want a file manager opening over their work. The
-; label names the key as a friendly reminder rather than an instruction.
-;
-; runasoriginaluser matters -- setup is elevated, and a program started from
-; here would otherwise run as the administrator, writing its settings into the
-; wrong profile.
-FileName: "{app}\FileDir.exe"; \
-  WorkingDir: "{app}"; \
-  Description: "Launch FileDir (Alt+Control+F starts it any time)"; \
-  Flags: postinstall skipifsilent nowait runasoriginaluser unchecked
-
-FileName: "{app}\FileDir.htm"; \
-  Description: "Open the user guide (F1 opens it inside FileDir)"; \
-  Flags: postinstall skipifsilent shellexec nowait runasoriginaluser unchecked
-
-; The results summary is NOT listed here. It is not an option -- it always runs,
-; and it must run last of all -- so it is started from code at the very end,
-; once every entry above has finished. See DeinitializeSetup.
-
-; Native image generation.  Not checkboxes: these run automatically and elevated, so
-; the installed copy starts from a cached native image instead of JIT-compiling.
-; Identical in all three apps.  HasNgen skips them if ngen.exe is absent.
-FileName: "{code:NgenExe}"; Parameters: "uninstall FileDir /nologo /silent"; Flags: runhidden; Check: HasNgen
-FileName: "{code:NgenExe}"; Parameters: "install ""{app}\FileDir.exe"" /AppBase:""{app}"" /nologo /silent"; Flags: runhidden; Check: HasNgen
-
-[UninstallRun]
-; Symmetric to the JAWS-install [Run] entry above. Removes only the
-; files FileDir placed in the JAWS settings folders, tracked via the
-; install-time log at %APPDATA%\FileDir\jawsSettings.log. runhidden so
-; no console window flashes; skipped if FileDir.exe is already gone.
-FileName: "{app}\FileDir.exe"; \
-  Parameters: "--uninstall-jaws-settings"; \
-  WorkingDir: "{app}"; \
-  Flags: runhidden waituntilterminated skipifdoesntexist
-
-Filename: "{code:NgenExe}"; Parameters: "uninstall FileDir /nologo /silent"; Flags: runhidden; Check: HasNgen
+[InstallDelete]
+; UPGRADING FROM THE FLAT LAYOUT. Every FileDir before 5.0.106 put the program,
+; its libraries, its tools, its documents and its scripts at the root of the
+; program folder. They are all one level down now, and an old copy left at the
+; root would be found first by anything looking there. Each is named rather than
+; wildcarded where a wildcard could take something a person put there.
+Type: files; Name: "{app}\FileDir.exe"
+Type: files; Name: "{app}\FileDirScript.dll"
+Type: files; Name: "{app}\*.dll"
+Type: files; Name: "{app}\7z.*"
+Type: files; Name: "{app}\2htm.exe"
+Type: files; Name: "{app}\AssocOn.exe"
+Type: files; Name: "{app}\AssocOff.exe"
+Type: files; Name: "{app}\Burn2CD.exe"
+Type: files; Name: "{app}\FileDir.ico"
+Type: files; Name: "{app}\FileDir.manifest"
+Type: files; Name: "{app}\FileDir.exe.config"
+Type: files; Name: "{app}\FileDir.htm"
+Type: files; Name: "{app}\FileDir.md"
+Type: files; Name: "{app}\Developer.htm"
+Type: files; Name: "{app}\Developer.md"
+Type: files; Name: "{app}\History.htm"
+Type: files; Name: "{app}\History.md"
+Type: files; Name: "{app}\Hotkeys.htm"
+Type: files; Name: "{app}\Hotkeys.md"
+Type: files; Name: "{app}\Announce.htm"
+Type: files; Name: "{app}\Announce.md"
+Type: files; Name: "{app}\FAQ.htm"
+Type: files; Name: "{app}\FAQ.md"
+Type: files; Name: "{app}\Tutorials.htm"
+Type: files; Name: "{app}\Tutorials.md"
+Type: files; Name: "{app}\Hotkeys.inix"
+Type: files; Name: "{app}\Convert.txt"
+Type: files; Name: "{app}\chimes.wav"
+Type: files; Name: "{app}\install*.cmd"
+Type: files; Name: "{app}\summarizeSetup.*"
+Type: files; Name: "{app}\BuildFileDir.*"
+Type: files; Name: "{app}\cleanFileDir.*"
+Type: files; Name: "{app}\auditFileDir.py"
+Type: files; Name: "{app}\homerPolicy.py"
+Type: files; Name: "{app}\makeKeyMap.py"
+Type: files; Name: "{app}\pdfRich.py"
+Type: files; Name: "{app}\*.jss"
+Type: files; Name: "{app}\*.jsd"
+Type: files; Name: "{app}\*.jsh"
+Type: files; Name: "{app}\*.jkm"
+Type: files; Name: "{app}\*.jcf"
+Type: files; Name: "{app}\Web.cs"
+Type: files; Name: "{app}\Say.cs"
+Type: files; Name: "{app}\Inix.cs"
+Type: files; Name: "{app}\Util.cs"
+Type: files; Name: "{app}\KeyMap.cs"
+Type: files; Name: "{app}\Lbc.cs"
+Type: files; Name: "{app}\Ollama.cs"
+Type: files; Name: "{app}\Log.cs"
+Type: filesandordirs; Name: "{app}\Scripts"
 
 [UninstallDelete]
-Type: files; Name: "{app}\FileDir.exe"
-Type: files; Name: "{app}\BuildFileDir.log"
-
-[Registry]
-Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\FileDir.exe"; ValueType: string; ValueName: ""; ValueData: "{app}\FileDir.exe"; Flags: uninsdeletekey
+; ONLY WHAT THIS PROGRAM WROTE. Never the whole {localappdata}\{#AppName}
+; folder: every upgrade runs the uninstaller first, and a folder that may hold
+; something a user installed or made is never removed wholesale. On
+; 24 September 2026 a wholesale line here deleted Whisper on every HomerScribe
+; upgrade.
+Type: filesandordirs; Name: "{localappdata}\FileDir\logs"
 
 [Code]
-
-{ ---- Probing, in the Homer Tools pattern -------------------------------------
-
-  Every optional component is probed before it is offered, so an existing
-  installation is reused rather than duplicated. Each probe is asked once and
-  cached: winget takes a second or two per question, and the finish page asks
-  several.
-
-  All of this is lifted from the EdSharp installer, which reached this shape
-  over many iterations. It is deliberately not reinvented here. }
-
-var
-  gbInstalled: boolean;
-  gbJawsTimeKnown: boolean;
-  gJawsTime: TFileTime;
-
-procedure logLine(sFolder, sText: string);
-var
-  lsLine: TArrayOfString;
-begin
-  SetArrayLength(lsLine, 1);
-  lsLine[0] := '[' + GetDateTimeString('yyyy/mm/dd hh:nn:ss', '-', ':') + '] ' + sText;
-  SaveStringsToFile(AddBackslash(sFolder) + 'FileDir_setup.log', lsLine, True);
-end;
-
-function probeLines(sCommand: string; var lsLines: TArrayOfString): boolean;
-{ Run a command and read what it printed, recording both in the log. }
-var
-  iResult, i: integer;
-  sLogDir, sCaptureFile: string;
-begin
-  sLogDir := ExpandConstant('{localappdata}\FileDir\logs');
-  ForceDirectories(sLogDir);
-  sCaptureFile := sLogDir + '\FileDir_probe.tmp';
-  // The probes run 64-bit like everything else here: the installer itself is
-  // marked x64, so the cmd constant gives the 64-bit shell and winget reports
-  // the machine's real 64-bit packages rather than a WOW64 view.
-  //
-  // Note the comment style. A brace comment ends at the FIRST closing brace,
-  // so one that mentions an Inno constant ends in the middle of its own
-  // sentence and hands the rest of the prose to the compiler as code. Any
-  // comment naming a constant uses double slashes instead.
-  result := Exec(ExpandConstant('{cmd}'), '/c ' + sCommand + ' > "' + sCaptureFile + '" 2>&1', '', SW_HIDE, ewWaitUntilTerminated, iResult);
-  if result then
-    result := LoadStringsFromFile(sCaptureFile, lsLines);
-  logLine(sLogDir, '[probe] ' + sCommand);
-  if result then
-    for i := 0 to GetArrayLength(lsLines) - 1 do
-      if Trim(lsLines[i]) <> '' then
-        logLine(sLogDir, '[probe]   ' + lsLines[i])
-  else
-    logLine(sLogDir, '[probe]   the command could not be run');
-  if FileExists(sCaptureFile) then
-    DeleteFile(sCaptureFile);
-end;
-
-var
-  gModelList: string;
-  gModelListKnown: boolean;
-
-function ollamaModelList(): string;
-{ Ollama's model list, read once. Two labels ask about it, and each reading
-  costs a second or more.
-
-  Asked over Ollama's web interface rather than by running its command line
-  client, which starts the server in a console of its own when it is not
-  already running -- a window on screen during setup that looks like a fault.
-  This opens nothing. }
-var
-  lsLines: TArrayOfString;
-  i: integer;
-  sQuote, sCommand: string;
-begin
-  if gModelListKnown then
-  begin
-    result := gModelList;
-    exit;
-  end;
-  gModelListKnown := True;
-  gModelList := '';
-  { The command is assembled with Chr(39) rather than written with doubled
-    apostrophes. Four levels of quoting meet on this one line: Pascal, the
-    command interpreter, the double quotes PowerShell needs, and the single
-    quotes inside them. Writing them literally is how this line was corrupted
-    once already. Built this way, each apostrophe is visibly one apostrophe,
-    and no apostrophe appears in this comment to confuse a reader either. }
-  sQuote := Chr(39);
-  sCommand := 'powershell -NoProfile -Command "try { (Invoke-RestMethod'
-    + ' -Uri http://localhost:11434/api/tags -TimeoutSec 10).models.name'
-    + ' -join ' + sQuote + ' ' + sQuote
-    + ' } catch { ' + sQuote + sQuote + ' }"';
-  if probeLines(sCommand, lsLines) then
-    for i := 0 to GetArrayLength(lsLines) - 1 do
-      gModelList := gModelList + lsLines[i] + Chr(10);
-  result := gModelList;
-end;
-
-function wingetInfo(sId: string; var sInstalled, sAvailable: string): boolean;
-{ True when winget lists the package as installed; fills the installed version
-  and, when an update exists, the available version. Columns are located by the
-  header line, since names can contain spaces. }
-var
-  lsLines: TArrayOfString;
-  i, iVer, iAvail, iSrc: integer;
-  sLine: string;
-begin
-  result := false;
-  sInstalled := '';
-  sAvailable := '';
-  iVer := 0;
-  iAvail := 0;
-  iSrc := 0;
-  if not probeLines('winget list --id ' + sId + ' --exact --disable-interactivity', lsLines) then
-    exit;
-  for i := 0 to GetArrayLength(lsLines) - 1 do
-  begin
-    sLine := lsLines[i];
-    if (iVer = 0) and (Pos('Name', sLine) > 0) and (Pos('Version', sLine) > 0) then
-    begin
-      iVer := Pos('Version', sLine);
-      iAvail := Pos('Available', sLine);
-      iSrc := Pos('Source', sLine);
-      continue;
-    end;
-    if (iVer > 0) and (Pos(sId, sLine) > 0) then
-    begin
-      result := true;
-      if iAvail > 0 then
-      begin
-        sInstalled := Trim(Copy(sLine, iVer, iAvail - iVer));
-        if iSrc > iAvail then
-          sAvailable := Trim(Copy(sLine, iAvail, iSrc - iAvail))
-        else
-          sAvailable := Trim(Copy(sLine, iAvail, 200));
-      end
-      else if iSrc > iVer then
-        sInstalled := Trim(Copy(sLine, iVer, iSrc - iVer))
-      else
-        sInstalled := Trim(Copy(sLine, iVer, 200));
-      exit;
-    end;
-  end;
-end;
-
-function exeVersion(sExe: string): string;
-{ The tool's own version line, for an install winget does not know about. }
-var
-  lsLines: TArrayOfString;
-  i: integer;
-begin
-  result := '';
-  if not probeLines(sExe + ' --version', lsLines) then
-    exit;
-  for i := 0 to GetArrayLength(lsLines) - 1 do
-    if Trim(lsLines[i]) <> '' then
-    begin
-      result := Trim(lsLines[i]);
-      exit;
-    end;
-end;
-
-function wingetLatest(sId: string): string;
-{ The newest version winget offers for a package, installed or not, so the
-  Install label can carry a number parallel to the Update one. }
-var
-  lsLines: TArrayOfString;
-  i: integer;
-  sLine: string;
-begin
-  result := '';
-  if not probeLines('winget show --id ' + sId + ' --exact --disable-interactivity', lsLines) then
-    exit;
-  for i := 0 to GetArrayLength(lsLines) - 1 do
-  begin
-    sLine := Trim(lsLines[i]);
-    if Pos('Version:', sLine) = 1 then
-    begin
-      result := Trim(Copy(sLine, 9, 100));
-      exit;
-    end;
-  end;
-end;
-
-var
-  gDescCache: array[0..3] of string;
-  gStateCache: array[0..3] of integer;
-  gStateKnown: array[0..3] of boolean;
-
-function devToolDesc(iIndex: integer; sIdList, sExe, sTool, sInstallLabel: string): string;
-{ All three labels start with the action the checkbox performs and carry version
-  numbers in parallel: "Install <tool> <latest>", "Update <tool> from <old> to
-  <new>", and "Reinstall <tool> <version>". Nothing says "(installed)": a box
-  offering to reinstall has already said so. When winget cannot say which
-  version is current, the plain label still works. }
-var
-  sInstalled, sAvailable, sId, sRest, sVersion, sFirstId: string;
-  iSplit: integer;
-begin
-  if gDescCache[iIndex] <> '' then
-  begin
-    result := gDescCache[iIndex];
-    exit;
-  end;
-  result := '';
-  sFirstId := sIdList;
-  if Pos(';', sFirstId) > 0 then
-    sFirstId := Copy(sFirstId, 1, Pos(';', sFirstId) - 1);
-  sRest := sIdList;
-  while (result = '') and (sRest <> '') do
-  begin
-    iSplit := Pos(';', sRest);
-    if iSplit > 0 then
-    begin
-      sId := Copy(sRest, 1, iSplit - 1);
-      sRest := Copy(sRest, iSplit + 1, 500);
-    end
-    else
-    begin
-      sId := sRest;
-      sRest := '';
-    end;
-    if wingetInfo(sId, sInstalled, sAvailable) then
-    begin
-      if sAvailable <> '' then
-        result := 'Update ' + sTool + ' from ' + sInstalled + ' to ' + sAvailable
-      else if sInstalled <> '' then
-        result := 'Reinstall ' + sTool + ' ' + sInstalled;
-    end;
-  end;
-  if result = '' then
-  begin
-    sVersion := exeVersion(sExe);
-    if sVersion <> '' then
-      result := 'Reinstall ' + sTool + ' ' + sVersion
-    else
-    begin
-      sVersion := wingetLatest(sFirstId);
-      if sVersion <> '' then
-        result := 'Install ' + sTool + ' ' + sVersion
-      else
-        result := sInstallLabel;
-    end;
-  end;
-  gDescCache[iIndex] := result;
-end;
-
-function devToolState(iIndex: integer; sIdList, sExe: string): integer;
-{ Which of the three things a box would do: 0 install, 1 update, 2 reinstall.
-  Computed from the same probes the labels use, cached so winget is asked once,
-  and consulted by the Check functions that decide which of a tool's three
-  entries is shown. }
-var
-  sInstalled, sAvailable, sId, sRest: string;
-  iSplit: integer;
-begin
-  if gStateKnown[iIndex] then
-  begin
-    result := gStateCache[iIndex];
-    exit;
-  end;
-  result := 0;
-  sRest := sIdList;
-  while sRest <> '' do
-  begin
-    iSplit := Pos(';', sRest);
-    if iSplit > 0 then
-    begin
-      sId := Copy(sRest, 1, iSplit - 1);
-      sRest := Copy(sRest, iSplit + 1, 500);
-    end
-    else
-    begin
-      sId := sRest;
-      sRest := '';
-    end;
-    if wingetInfo(sId, sInstalled, sAvailable) then
-    begin
-      if sAvailable <> '' then result := 1
-      else result := 2;
-      break;
-    end;
-  end;
-  { Installed outside winget's knowledge still counts as installed: the person
-    should be offered a reinstall, not a second copy. }
-  if (result = 0) and (exeVersion(sExe) <> '') then result := 2;
-  gStateCache[iIndex] := result;
-  gStateKnown[iIndex] := True;
-end;
-
-function ollamaNeedsInstall(): boolean;
-begin
-  result := devToolState(0, 'Ollama.Ollama', 'ollama') = 0;
-end;
-
-function ollamaNeedsUpdate(): boolean;
-begin
-  result := devToolState(0, 'Ollama.Ollama', 'ollama') = 1;
-end;
-
-function ollamaIsCurrent(): boolean;
-begin
-  result := devToolState(0, 'Ollama.Ollama', 'ollama') = 2;
-end;
-
-function pandocNeedsInstall(): boolean;
-begin
-  result := devToolState(1, 'JohnMacFarlane.Pandoc', 'pandoc') = 0;
-end;
-
-function pandocNeedsUpdate(): boolean;
-begin
-  result := devToolState(1, 'JohnMacFarlane.Pandoc', 'pandoc') = 1;
-end;
-
-function pandocIsCurrent(): boolean;
-begin
-  result := devToolState(1, 'JohnMacFarlane.Pandoc', 'pandoc') = 2;
-end;
-
-function descPandoc(sParam: string): string;
-var
-  sMachineCopy: string;
-begin
-  // Pandoc installs machine-wide, so its own folder answers for a version even
-  // when it is not yet on this process PATH -- which it will not be, moments
-  // after winget put it there.
-  sMachineCopy := ExpandConstant('{pf}\Pandoc\pandoc.exe');
-  if FileExists(sMachineCopy) then
-    result := devToolDesc(1, 'JohnMacFarlane.Pandoc', '"' + sMachineCopy + '"', 'Pandoc', 'Install Pandoc for document conversion: Word, ODT, EPUB, RTF, LaTeX, HTML and more (about 100 MB, shared with other apps)')
-  else
-    result := devToolDesc(1, 'JohnMacFarlane.Pandoc', 'pandoc', 'Pandoc', 'Install Pandoc for document conversion: Word, ODT, EPUB, RTF, LaTeX, HTML and more (about 100 MB, shared with other apps)');
-end;
-
-function mediaToolsPresent(): boolean;
-// The three are treated as one, the way EdSharp treats its document tools: they
-// are used together, and a half set leaves a command half working. Found by
-// running each, so a copy installed outside winget counts too.
-var
-  lsLines: TArrayOfString;
-begin
-  if gStateKnown[2] then
-  begin
-    result := (gStateCache[2] = 2);
-    exit;
-  end;
-  result := probeLines('where exiftool', lsLines) and (GetArrayLength(lsLines) > 0)
-            and (Pos('exiftool', Lowercase(lsLines[0])) > 0);
-  if result then
-    result := probeLines('where ffmpeg', lsLines) and (GetArrayLength(lsLines) > 0)
-              and (Pos('ffmpeg', Lowercase(lsLines[0])) > 0);
-  if result then
-    result := probeLines('where yt-dlp', lsLines) and (GetArrayLength(lsLines) > 0)
-              and (Pos('yt-dlp', Lowercase(lsLines[0])) > 0);
-  if result then gStateCache[2] := 2 else gStateCache[2] := 0;
-  gStateKnown[2] := True;
-end;
-
-function imageToolsPresent(): boolean;
-// Whether ImageMagick answers. Only "magick" is looked for: since version 7
-// that is the single command, and Windows has its own convert.exe which formats
-// disks, so looking for "convert" would be a spectacular way to fail.
-var
-  lsLines: TArrayOfString;
-begin
-  result := probeLines('where magick', lsLines) and (GetArrayLength(lsLines) > 0)
-            and (Pos('magick', Lowercase(lsLines[0])) > 0);
-end;
-
-function imageToolsNeedInstall(): boolean;
-begin
-  result := not imageToolsPresent();
-end;
-
-function imageToolsAreCurrent(): boolean;
-begin
-  result := imageToolsPresent();
-end;
-
-function descImageTools(sParam: string): string;
-begin
-  if imageToolsPresent() then
-    result := 'Reinstall ImageMagick, for iPhone photos, camera raw, SVG and icons'
-  else
-    result := 'Install ImageMagick so iPhone photos (HEIC), camera raw files, SVG drawings and Windows icons can be converted (about 50 MB; ffmpeg cannot read these)';
-end;
-
-function mpvPresent(): boolean;
-// Whether the mpv PLAYER is on this machine.
+//  WHAT THE CODE SECTION DOES, in one screen:
+//    - registers the components this app needs, in the shared table from
+//      Templates\HomerComponents.iss, which probes each once (winget, then a
+//      file, then the exe, then the registry) and words every checkbox;
+//    - reads the version of any previous install, so the screen reader
+//      script entries say Install or Update truthfully;
+//    - records which boxes were ticked when Finish is pressed, and after
+//      the scripts have run, reports what happened to each of THOSE -- one
+//      past-tense line per ticked box, nothing about the rest;
+//    - keeps the setup log with the program's own logs;
+//    - starts the program only after the Results box has been closed.
 //
-// This asked "where mpv" and accepted any answer. On one machine that answered
-// c:\bin\mpv.cmd, a batch wrapper, so the installer decided mpv was already
-// present, offered Reinstall rather than Install, and never installed the
-// player at all. The summary meanwhile looked only for mpv.exe and reported it
-// missing. Two questions, two answers, both wrong.
-//
-// The program itself is looked for where installers actually put it -- in a
-// folder named after the PRODUCT rather than the command, since mpv installs
-// as "MPV Media Player".
-begin
-  result := FileExists(ExpandConstant('{pf}\MPV Player\mpv.exe'))
-         or FileExists(ExpandConstant('{pf32}\MPV Player\mpv.exe'))
-         or FileExists(ExpandConstant('{pf}\mpv\mpv.exe'))
-         or FileExists(ExpandConstant('{pf}\MPV Media Player\mpv.exe'))
-         or FileExists(ExpandConstant('{pf32}\MPV Media Player\mpv.exe'))
-         or FileExists(ExpandConstant('{localappdata}\Programs\mpv\mpv.exe'))
-         or FileExists(ExpandConstant('{localappdata}\Microsoft\WinGet\Links\mpv.exe'));
-end;
+//  The include goes INSIDE [Code], and HomerComponents.iss carries no [Code]
+//  header of its own. Comments inside [Code] use // or (* *), never ;.
+#include "C:\HomerDev\Templates\HomerComponents.iss"
 
-function mpvNeedsInstall(): boolean;
-begin
-  result := not mpvPresent();
-end;
-
-function mpvIsCurrent(): boolean;
-begin
-  result := mpvPresent();
-end;
-
-function descMpv(sParam: string): string;
-begin
-  if mpvPresent() then
-    result := 'Reinstall mpv, the media player Play List uses'
-  else
-    result := 'Install mpv so Play List can play what it makes, sound and picture or sound alone (about 60 MB; conversion does not need it)';
-end;
-
-function pdfToolsPresent(): boolean;
-// Whether a Python on this machine can import the PDF reader. Asked of the
-// interpreter installPdfTools recorded, when there is one, because a machine
-// may carry several Pythons and only one of them will have the package.
 var
-  lsLines: TArrayOfString;
-  sRecord, sPython: string;
+  iExifTool, iFfmpeg, iImageMagick, iMpv, iOllama, iPandoc, iPdfTools, iYtDlp: Integer;
+  sActions: String;
+  sPriorVersion: String;
+
+//  AI NOTE FOR CUSTOMIZING: one homerAdd per component. Arguments: name,
+//  winget ids (semicolon separated, or ''), an exe that answers --version,
+//  a file that proves it (Inno constants allowed), three or four words of
+//  use, and the uninstall registry key name (or ''). Add a var above for each.
+function InitializeSetup(): Boolean;
 begin
-  if gStateKnown[3] then
+  //  Each line: name, winget id, an exe that answers --version, a file that
+  //  proves it, what it is for in a few words, and the uninstall key name.
+  //  Machine-wide tools go to their own default folders; an app upgrade must
+  //  never remove them, so none is under {app}.
+  iExifTool := homerAdd('ExifTool', 'OliverBetz.ExifTool', 'exiftool',
+    '', 'reads what a recording or photo knows about itself', 'ExifTool');
+  iFfmpeg := homerAdd('ffmpeg', 'Gyan.FFmpeg', 'ffmpeg',
+    '', 'converts audio and video, with ffprobe', '');
+  iImageMagick := homerAdd('ImageMagick', 'ImageMagick.ImageMagick', 'magick',
+    '', 'converts and resizes images', 'ImageMagick');
+  iMpv := homerAdd('mpv', 'shinchiro.mpv', 'mpv',
+    '{pf}\MPV Player\mpv.exe', 'plays audio and video for the Player', 'mpv');
+  iOllama := homerAdd('Ollama', 'Ollama.Ollama', 'ollama',
+    '{localappdata}\Programs\Ollama\ollama.exe', 'runs the local AI model', 'Ollama');
+  iPandoc := homerAdd('Pandoc', 'JohnMacFarlane.Pandoc', 'pandoc',
+    '{pf}\Pandoc\pandoc.exe', 'converts documents between formats', 'Pandoc');
+  iPdfTools := homerAdd('PDF tools', 'Python.Python.3.13', 'python',
+    '', 'reads PDF files as text, through Python', 'Python 3.13');
+  iYtDlp := homerAdd('yt-dlp', 'yt-dlp.yt-dlp', 'yt-dlp',
+    '', 'fetches audio and video from web pages', '');
+  sPriorVersion := '';
+  Result := True;
+end;
+
+//  ---- the previous install, for the screen reader script entries ----------
+function priorVersion(): String;
+var
+  sKey, sFound: String;
+begin
+  Result := '';
+  sKey := 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#SetupSetting("AppId")}_is1';
+  if RegQueryStringValue(HKLM, sKey, 'DisplayVersion', sFound) then Result := sFound
+  else if RegQueryStringValue(HKCU, sKey, 'DisplayVersion', sFound) then Result := sFound;
+end;
+
+function isFreshInstall(): Boolean;
+begin
+  if sPriorVersion = '' then sPriorVersion := priorVersion();
+  Result := (sPriorVersion = '');
+end;
+
+function isUpgradeOrSame(): Boolean;
+begin
+  Result := not isFreshInstall();
+end;
+
+//  versionPart: the Nth dotted number of a version, or 0 where there is none.
+//  Written out rather than using PackVersionString, which this Inno Setup does
+//  not have: the version check must not depend on the compiler's own version.
+function versionPart(sVersion: String; iWanted: Integer): Integer;
+var
+  iAt, iPart: Integer;
+  sNumber: String;
+begin
+  Result := 0;
+  iPart := 1;
+  sNumber := '';
+  for iAt := 1 to Length(sVersion) do
   begin
-    result := (gStateCache[3] = 2);
-    exit;
+    if sVersion[iAt] = '.' then
+    begin
+      if iPart = iWanted then begin Result := StrToIntDef(sNumber, 0); exit; end;
+      iPart := iPart + 1;
+      sNumber := '';
+    end
+    else if (sVersion[iAt] >= '0') and (sVersion[iAt] <= '9') then
+      sNumber := sNumber + sVersion[iAt];
   end;
-  sPython := 'python';
-  sRecord := ExpandConstant('{localappdata}\FileDir\logs\FileDir_python.txt');
-  if FileExists(sRecord) then
-    if LoadStringsFromFile(sRecord, lsLines) then
-      if GetArrayLength(lsLines) > 0 then
-        if Trim(lsLines[0]) <> '' then sPython := '"' + Trim(lsLines[0]) + '"';
-  result := probeLines(sPython + ' -c "import pymupdf4llm; print(1)"', lsLines)
-            and (GetArrayLength(lsLines) > 0) and (Pos('1', lsLines[0]) > 0);
-  if result then gStateCache[3] := 2 else gStateCache[3] := 0;
-  gStateKnown[3] := True;
+  if iPart = iWanted then Result := StrToIntDef(sNumber, 0);
 end;
 
-function pdfToolsNeedInstall(): boolean;
-begin
-  result := not pdfToolsPresent();
-end;
-
-function pdfToolsAreCurrent(): boolean;
-{ The PDF reader had no Reinstall entry at all, so a reader already installed
-  could not be repaired from the finish page even though its label offered to. }
-begin
-  result := pdfToolsPresent();
-end;
-
-function descPdfTools(sParam: string): string;
-begin
-  if pdfToolsPresent() then
-    result := 'Reinstall the PDF reader, PyMuPDF4LLM'
-  else
-    result := 'Install the PDF reader, PyMuPDF4LLM, so PDFs can be read with their headings, lists and tables (about 25 MB, plus Python if this computer has none)';
-end;
-
-function mediaToolsNeedInstall(): boolean;
-begin
-  result := not mediaToolsPresent();
-end;
-
-function mediaToolsAreCurrent(): boolean;
-begin
-  result := mediaToolsPresent();
-end;
-
-function descMediaTools(sParam: string): string;
-begin
-  if mediaToolsPresent() then
-    result := 'Reinstall the media tools: ExifTool, ffmpeg and yt-dlp'
-  else
-    result := 'Install the media tools: ExifTool for file metadata, ffmpeg for audio and video, yt-dlp for web media (about 200 MB, shared with other apps)';
-end;
-
-function translateModelIsCurrent(): boolean;
-{ The translation model is an Ollama model rather than a winget package, so
-  "installed" means its name appears in Ollama's own list. Without this test it
-  would be offered as an install however often it was installed. }
-begin
-  result := Pos('qwen2.5:7b', ollamaModelList()) > 0;
-end;
-
-function translateModelNeedsInstall(): boolean;
-begin
-  result := not translateModelIsCurrent();
-end;
-
-function descTranslateModel(sParam: string): string;
-begin
-  { Name the model. "A stronger model" tells nobody what they are getting or
-    what to look for in Ollama afterwards. }
-  if translateModelIsCurrent() then
-    result := 'Reinstall qwen2.5:7b, the translation model'
-  else
-    result := 'Install qwen2.5:7b for translation, better than the chat model (about 5 GB; needs Ollama)';
-end;
-
-function descOllama(sParam: string): string;
+function versionIsOlder(sHave, sWant: String): Boolean;
 var
-  sUserCopy: string;
+  iPart, iHave, iWant: Integer;
 begin
-  { Ollama installs per user; when it is absent from PATH, its own exe in the
-    profile still answers for a version. }
-  sUserCopy := ExpandConstant('{localappdata}\Programs\Ollama\ollama.exe');
-  if FileExists(sUserCopy) then
-    result := devToolDesc(0, 'Ollama.Ollama', '"' + sUserCopy + '"', 'Ollama', 'Install Ollama with the llama3.2 chat model, for Translate File (about 2 GB, shared with other apps)')
-  else
-    result := devToolDesc(0, 'Ollama.Ollama', 'ollama', 'Ollama', 'Install Ollama with the llama3.2 chat model, for Translate File (about 2 GB, shared with other apps)');
-end;
-
-function NgenExe(sParam: string): string;
-begin
-  // ngen ships with the 64-bit .NET Framework runtime; on an ARM64 system the
-  // Framework64 path is the ARM64 framework. HasNgen guards a missing file.
-  result := ExpandConstant('{win}\Microsoft.NET\Framework64\v4.0.30319\ngen.exe');
-end;
-
-function HasNgen(): boolean;
-begin
-  result := FileExists(ExpandConstant('{code:NgenExe}'));
-end;
-
-procedure warmComponentProbes();
-{ Ask every question the finish page will ask, while the progress bar is still
-  on screen and can say what is happening. Each winget or Ollama query takes a
-  second or two; asked when the finish page is being built, they add up to a
-  silent wait with nothing to read. Asked here, the answers are cached, the page
-  appears at once, and no extra screen is added -- the existing status line does
-  the talking. }
-begin
-  try
-    WizardForm.StatusLabel.Caption := 'Checking which components are installed ...';
-    WizardForm.ProgressGauge.Style := npbstMarquee;
-    WizardForm.Refresh();
-
-    WizardForm.StatusLabel.Caption := 'Checking the media tools ...';
-    mediaToolsPresent();
-    WizardForm.StatusLabel.Caption := 'Checking Pandoc ...';
-    devToolState(1, 'JohnMacFarlane.Pandoc', 'pandoc');
-    WizardForm.StatusLabel.Caption := 'Checking Ollama ...';
-    devToolState(0, 'Ollama.Ollama', 'ollama');
-    WizardForm.StatusLabel.Caption := 'Checking the AI models ...';
-    ollamaModelList();
-    { The labels themselves, so the page has nothing left to compute. }
-    WizardForm.StatusLabel.Caption := 'Checking the PDF reader ...';
-    pdfToolsPresent();
-    WizardForm.StatusLabel.Caption := 'Checking the image tools ...';
-    imageToolsPresent();
-    WizardForm.StatusLabel.Caption := 'Checking mpv ...';
-    mpvPresent();
-    descMediaTools(''); descPandoc(''); descPdfTools(''); descImageTools(''); descMpv(''); descOllama(''); descTranslateModel('');
-
-    WizardForm.ProgressGauge.Style := npbstNormal;
-    WizardForm.StatusLabel.Caption := '';
-  except
-  end;
-end;
-
-function jawsLogTime(var rTime: TFileTime): boolean;
-{ When the JAWS script log was last written, and whether it is there at all.
-  Whether that step RAN this time cannot be told from the file merely
-  existing: the log survives from the last installation, and reporting it as
-  an action every time is exactly the noise the Results box is meant to be
-  free of. }
-var
-  rFind: TFindRec;
-begin
-  result := False;
-  if FindFirst(ExpandConstant('{userappdata}\FileDir\jawsSettings.log'), rFind) then
+  Result := False;
+  for iPart := 1 to 4 do
   begin
-    rTime := rFind.LastWriteTime;
-    FindClose(rFind);
-    result := True;
+    iHave := versionPart(sHave, iPart);
+    iWant := versionPart(sWant, iPart);
+    if iHave < iWant then begin Result := True; exit; end;
+    if iHave > iWant then exit;
   end;
 end;
 
-procedure addAction(sFolder, sText: string);
-{ One line saying what this installation actually DID. The Results box is built
-  from these lines and nothing else, so a component that was already there and
-  needed nothing is never mentioned. Appended, because every component script
-  writes its own lines to the same file. }
-var
-  lsLines: TArrayOfString;
+function isOlderInstalled(): Boolean;
 begin
-  SetArrayLength(lsLines, 1);
-  lsLines[0] := sText;
-  SaveStringsToFile(AddBackslash(sFolder) + 'FileDir_setup_actions.txt', lsLines, True);
+  Result := False;
+  if isFreshInstall() then exit;
+  Result := versionIsOlder(sPriorVersion, '{#AppVersion}');
 end;
 
-procedure saveResultsForSummary(sFolder, sText: string);
-{ Hand what the installer already knows to the summary, so ONE box tells the
-  whole story instead of two telling halves. }
-var
-  lsLines: TArrayOfString;
+//  ---- checkbox wording and visibility, one line each ----------------------
+//  AI NOTE FOR CUSTOMIZING: three functions per component, one per verb, and
+//  a label function; two per model. Name the model as installModels.cmd does.
+function labelExifTool(sParam: String): String;  begin Result := homerLabel(iExifTool); end;
+function isInstallExifTool(): Boolean;           begin Result := homerIs(iExifTool, 0); end;
+function isUpdateExifTool(): Boolean;            begin Result := homerIs(iExifTool, 1); end;
+function isReinstallExifTool(): Boolean;         begin Result := homerIs(iExifTool, 2); end;
+function labelffmpeg(sParam: String): String;  begin Result := homerLabel(iffmpeg); end;
+function isInstallffmpeg(): Boolean;           begin Result := homerIs(iffmpeg, 0); end;
+function isUpdateffmpeg(): Boolean;            begin Result := homerIs(iffmpeg, 1); end;
+function isReinstallffmpeg(): Boolean;         begin Result := homerIs(iffmpeg, 2); end;
+function labelImageMagick(sParam: String): String;  begin Result := homerLabel(iImageMagick); end;
+function isInstallImageMagick(): Boolean;           begin Result := homerIs(iImageMagick, 0); end;
+function isUpdateImageMagick(): Boolean;            begin Result := homerIs(iImageMagick, 1); end;
+function isReinstallImageMagick(): Boolean;         begin Result := homerIs(iImageMagick, 2); end;
+function labelmpv(sParam: String): String;  begin Result := homerLabel(impv); end;
+function isInstallmpv(): Boolean;           begin Result := homerIs(impv, 0); end;
+function isUpdatempv(): Boolean;            begin Result := homerIs(impv, 1); end;
+function isReinstallmpv(): Boolean;         begin Result := homerIs(impv, 2); end;
+function labelOllama(sParam: String): String;  begin Result := homerLabel(iOllama); end;
+function isInstallOllama(): Boolean;           begin Result := homerIs(iOllama, 0); end;
+function isUpdateOllama(): Boolean;            begin Result := homerIs(iOllama, 1); end;
+function isReinstallOllama(): Boolean;         begin Result := homerIs(iOllama, 2); end;
+function labelPandoc(sParam: String): String;  begin Result := homerLabel(iPandoc); end;
+function isInstallPandoc(): Boolean;           begin Result := homerIs(iPandoc, 0); end;
+function isUpdatePandoc(): Boolean;            begin Result := homerIs(iPandoc, 1); end;
+function isReinstallPandoc(): Boolean;         begin Result := homerIs(iPandoc, 2); end;
+function labelPdfTools(sParam: String): String;  begin Result := homerLabel(iPdfTools); end;
+function isInstallPdfTools(): Boolean;           begin Result := homerIs(iPdfTools, 0); end;
+function isUpdatePdfTools(): Boolean;            begin Result := homerIs(iPdfTools, 1); end;
+function isReinstallPdfTools(): Boolean;         begin Result := homerIs(iPdfTools, 2); end;
+function labelYtDlp(sParam: String): String;  begin Result := homerLabel(iYtDlp); end;
+function isInstallYtDlp(): Boolean;           begin Result := homerIs(iYtDlp, 0); end;
+function isUpdateYtDlp(): Boolean;            begin Result := homerIs(iYtDlp, 1); end;
+function isReinstallYtDlp(): Boolean;         begin Result := homerIs(iYtDlp, 2); end;
+function labelModel(sParam: String): String;   begin Result := homerModelLabel('qwen2.5:7b', 'translates text', 'about 4.7 GB'); end;
+function isModelInstall(): Boolean;            begin Result := homerModelIs('qwen2.5:7b', False); end;
+function isModelReinstall(): Boolean;          begin Result := homerModelIs('qwen2.5:7b', True); end;
+
+//  ---- the Results box: one line per ticked box, probed after the scripts ran
+procedure addAction(sText: String);
 begin
-  SetArrayLength(lsLines, 1);
-  lsLines[0] := sText;
-  SaveStringsToFile(AddBackslash(sFolder) + 'FileDir_setup_results.txt', lsLines, False);
+  if sText = '' then exit;
+  if sActions <> '' then sActions := sActions + #13#10;
+  sActions := sActions + '  ' + sText;
 end;
 
-procedure showResultsSummary();
-{ The single Results box: always shown, always last. Inno reaches this point
-  after the finish page's entries have run, which is the only moment at which
-  the disposition of every checkbox is actually known. The script is hidden and
-  shows one message box; setup does not wait for it, so closing the box is the
-  last thing that happens. }
-var
-  iResult: integer;
+function NextButtonClick(CurPageID: Integer): Boolean;
+//  Finish pressed: the boxes are settled, the scripts have not yet run.
 begin
-  try
-    Exec(ExpandConstant('{cmd}'), '/c ""' + ExpandConstant('{app}\summarizeSetup.cmd') + '""', ExpandConstant('{app}'), SW_HIDE, ewNoWait, iResult);
-  except
-  end;
+  Result := True;
+  if CurPageID = wpFinished then homerNoteTicked();
 end;
 
-procedure CurStepChanged(iCurStep: TSetupStep);
+procedure startIfAsked();
+//  Starts the program if the Launch box left its marker, and removes the marker.
+//  Started from cmd so it runs as the person, not as the elevated installer.
+var
+  sFlag: String;
+  iResult: Integer;
 begin
-  if iCurStep = ssPostInstall then
+  sFlag := ExpandConstant('{localappdata}\{#AppName}\logs\{#AppName}_launch.flag');
+  if not FileExists(sFlag) then exit;
+  DeleteFile(sFlag);
+  Exec(ExpandConstant('{cmd}'),
+       '/s /c ""' + ExpandConstant('{app}\exec\{#AppExeName}') + '""',
+       ExpandConstant('{userdocs}'), SW_SHOW, ewNoWait, iResult);
+end;
+
+procedure reportWhatHappened();
+var
+  sBody: String;
+begin
+  //  AI NOTE FOR CUSTOMIZING: one addAction per component and per model, in
+  //  the same alphabetical order as the [Run] section.
+  addAction(homerOutcomeLine(iExifTool));
+  addAction(homerOutcomeLine(iffmpeg));
+  addAction(homerOutcomeLine(iImageMagick));
+  addAction(homerOutcomeLine(impv));
+  addAction(homerOutcomeLine(iOllama));
+  addAction(homerOutcomeLine(iPandoc));
+  addAction(homerOutcomeLine(iPdfTools));
+  addAction(homerOutcomeLine(iYtDlp));
+  addAction(homerModelOutcomeLine('qwen2.5:7b', 'translates text', 'about 4.7 GB'));
+  sBody := '{#AppName} {#AppVersion} is installed.';
+  if sActions <> '' then sBody := sBody + #13#10 + #13#10 + sActions;
+  sBody := sBody + #13#10 + #13#10
+         + 'Logs are kept in ' + ExpandConstant('{localappdata}\{#AppName}\logs') + '.';
+  MsgBox(sBody, mbInformation, MB_OK);
+  startIfAsked();
+end;
+
+//  ---- keep the setup log with the program's own logs ------------------------
+//  Inno writes its log to the temporary folder, where nobody finds it. One
+//  caveat: the installer runs elevated, so {localappdata} is the profile of
+//  whoever answered the elevation prompt.
+procedure keepSetupLog();
+var
+  sFolder, sTarget: String;
+begin
+  sFolder := ExpandConstant('{localappdata}\{#AppName}\logs');
+  if not DirExists(sFolder) then
+    if not ForceDirectories(sFolder) then exit;
+  sTarget := sFolder + '\{#AppName}-setup-' + GetDateTimeString('yyyymmdd-hhnnss', #0, #0) + '.log';
+  CopyFile(ExpandConstant('{log}'), sTarget, False);
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssDone then
   begin
-    gbInstalled := True;
-    { Left over actions from a previous installation would be reported as
-      though they had just happened. The finish-page entries run after this
-      point, so clearing here loses nothing they write. }
-    DeleteFile(ExpandConstant('{localappdata}\FileDir\logs\FileDir_setup_actions.txt'));
-    { What the JAWS script log looked like BEFORE the finish page ran, so that
-      a fresh one can be told from last month's. }
-    gbJawsTimeKnown := jawsLogTime(gJawsTime);
-    warmComponentProbes();
+    keepSetupLog();
+    reportWhatHappened();
   end;
 end;
 
-function haveJaws(): boolean;
-{ Whether JAWS is on this computer at all, so the Results box can say "not
-  offered" rather than "not installed" -- which would read as a failure to
-  somebody who does not use JAWS. }
+procedure CurPageChanged(CurPageID: Integer);
+//  Say on the welcome page what is about to happen, because a user reading by
+//  ear should not have to work it out from a version number in a caption.
 begin
-  result := DirExists(ExpandConstant('{userappdata}\Freedom Scientific\JAWS'))
-            or DirExists(ExpandConstant('{commonappdata}\Freedom Scientific\JAWS'));
-end;
-
-procedure DeinitializeSetup();
-var
-  bJawsNow: boolean;
-  rJawsNow: TFileTime;
-  sBreak, sLogDir, sMessage: string;
-begin
-  { DeinitializeSetup runs whenever Setup exits, INCLUDING WHEN THE USER
-    CANCELS. Announcing success to somebody who has just backed out would be a
-    plain lie, so the summary is shown only if the files were copied. And there
-    is nobody to read a box in a silent installation, where it would wait for
-    ever for a click a script cannot give. }
-  if (not gbInstalled) or WizardSilent then
-    exit;
-
-  sBreak := Chr(13) + Chr(10);
-  sLogDir := ExpandConstant('{localappdata}\FileDir\logs');
-  ForceDirectories(sLogDir);
-
-  sMessage := 'FileDir is installed.' + sBreak + sBreak
-    + 'Program files:' + sBreak + '  ' + ExpandConstant('{app}') + sBreak
-    + 'Logs:' + sBreak + '  ' + sLogDir;
-
-  { The JAWS scripts, which run before this point and so can be reported here.
-    The shared installer records what it copied in a log under the user profile;
-    its presence is what says the step ran. This is an ACTION rather than a
-    header line, so it joins the ones the component scripts wrote. A computer
-    without JAWS gets no line at all: nothing was done, and "not offered" reads
-    like a fault to somebody who does not use a screen reader. }
-  bJawsNow := jawsLogTime(rJawsNow);
-  if bJawsNow and ((not gbJawsTimeKnown)
-      or (rJawsNow.dwLowDateTime <> gJawsTime.dwLowDateTime)
-      or (rJawsNow.dwHighDateTime <> gJawsTime.dwHighDateTime)) then
-    addAction(sLogDir, 'JAWS scripts installed.')
-  else if (not bJawsNow) and haveJaws() then
-    addAction(sLogDir, 'JAWS scripts were NOT installed. Run FileDir.exe --install-jaws-settings from the program folder.');
-
-  { The optional installs run from the finish page AFTER this text is handed
-    over, so their outcome cannot be reported here. The summary that runs last
-    says how each one fared. }
-  saveResultsForSummary(sLogDir, sMessage);
-  showResultsSummary();
+  if CurPageID = wpWelcome then
+  begin
+    if isFreshInstall() then
+      WizardForm.WelcomeLabel1.Caption := 'Install {#AppName} {#AppVersion}'
+    else if isOlderInstalled() then
+      WizardForm.WelcomeLabel1.Caption := 'Update {#AppName} from ' + sPriorVersion + ' to {#AppVersion}'
+    else
+      WizardForm.WelcomeLabel1.Caption := 'Reinstall {#AppName} {#AppVersion}';
+  end;
 end;

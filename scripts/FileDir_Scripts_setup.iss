@@ -1,4 +1,4 @@
-; Inno Setup source file for FileDir Scripts
+﻿; Inno Setup source file for FileDir Scripts
 [Setup]
 AppName=FileDir Scripts
 AppVerName=FileDir Scripts 2.0
