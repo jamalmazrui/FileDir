@@ -28,12 +28,12 @@ build script whenever FileDir starts depending on something newer.
    `KeyText.cs` and `help\Hotkeys.md` from `configs\Hotkeys.inix`, builds
    `FileDirScript.dll` and `exec\FileDir.exe`, speaks any walk with no audio,
    puts the project's files in the Homer encoding, refreshes the kit's scripts,
-   and builds the installer.
-2. `scripts\gitPush "message"` -- rewrites the whitelist from `RepoFiles.txt`,
+   and builds `FileDir_setup.exe` at the top of the project.
+2. `scripts\push "message"` -- rewrites the whitelist from `RepoFiles.txt`,
    adds what it names, commits and pushes.
-3. `scripts\homerTidy --do-it` -- the periodic clean.
-4. `scripts\tagRelease` -- runs `checkHomerApp --build`, tags the pushed commit
-   with the version stamped in the installer, and publishes it.
+3. `scripts\tidy` -- the periodic clean.
+4. `scripts\release` -- runs `scripts\check`, tags the pushed commit with the
+   version stamped in the installer, and publishes it.
 
 `scripts\postPage` stays FileDir's own: it publishes `help\FileDir.md` to the
 `main` branch as the GitHub Pages site after a release.
@@ -67,7 +67,7 @@ earlier FileDir used, so an upgrade does not leave a second program at the root.
 Everything else is the kit's: `HomerComponents.iss` probes each component once
 and words its checkbox as Install, Update or Reinstall with the versions in
 play; `installScreenReaderSupport.cmd` unpacks `exec\FileDir_JAWS.zip`, which
-the build makes from `scripts\jaws`; `homerInstall.cmd` is the logging half of
+the build makes from `scripts\jaws`; `installCommon.cmd` is the logging half of
 every install script; and the Results box after Finish reports one past-tense
 line per box that was ticked. `summarizeSetup` and FileDir's own finish-page
 code are gone.
@@ -113,7 +113,7 @@ the kit, since an app follows the kit and not the other way round.
   compiles `FileDir.js` into `FileDirScript.dll`, the expression evaluator
   behind the Evaluate command.
 - Inno Setup 6 (or 5.6 and later) for `ISCC.exe`, which compiles the installer.
-- `git` and the GitHub CLI `gh`, used by `tagRelease`.
+- `git` and the GitHub CLI `gh`, used by `scripts\release`.
 
 Nothing is fetched from NuGet and there is no MSBuild project. The build is a
 direct compiler invocation, which keeps it inspectable and fast.
@@ -417,7 +417,7 @@ one.
 
 **The version lives in `version.txt`**, one line and nothing else, as plain
 UTF-8 with **no byte order mark**. Four things read it — the audit, the build,
-`FileDir_setup.iss` and `tagRelease` — and only PowerShell is forgiving about a
+`FileDir_setup.iss` and `scripts\release` — and only PowerShell is forgiving about a
 mark. It both writes one, with `Set-Content -Encoding UTF8`, and silently strips
 it again on reading, so the fault is invisible from that side; Inno Setup reads
 it as part of the number and refuses to compile. The build writes the file with
@@ -425,7 +425,7 @@ it as part of the number and refuses to compile. The build writes the file with
 a `TrimStart` on the mark, so a file that already has one is repaired.
 `BuildFileDir.ps1` increments it and generates `Version.cs`;
 `FileDir_setup.iss` reads the same file with `FileOpen`/`FileRead`, so no
-version literal appears in the installer script; `tagRelease` tags with it. The
+version literal appears in the installer script; `scripts\release` tags with it. The
 program, the installer, and the tag therefore always agree, which is what
 Elevate Version compares. This arrangement exists because a stale `.iss`
 carrying its own `AppVersion` once rewound the number and the next build
@@ -447,14 +447,12 @@ a user override, and the installer deletes the stale shipped copy on upgrade.
 
 ```
 cd C:\FileDir
-BuildFileDir.cmd
-git add -A
-git commit -m "..."
-git push
-tagRelease
+buildFileDir
+scripts\push "What changed."
+scripts\release
 ```
 
-`tagRelease` reads the version from the built installer, tags the commit, and
+`scripts\release` reads the version from the built installer, tags the commit, and
 publishes the release with `FileDir_setup.exe` as its asset. GitHub asset URLs
 are case sensitive, so the installer's `OutputBaseFilename` and the name Elevate
 Version requests must stay identical.
@@ -462,7 +460,7 @@ Version requests must stay identical.
 Commit a new Markdown document before tagging, or its `.htm` will not exist in
 the release.
 
-The network check for an already-published version belongs in `tagRelease`, not
+The network check for an already-published version belongs in `scripts\release`, not
 in the build. An earlier build script asked GitHub whether a number was taken,
 and because `gh` has no timeout a slow network hung the build with no message
 and no way to interrupt it. A build script must never wait on the network.

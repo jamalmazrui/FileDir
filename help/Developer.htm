@@ -197,13 +197,14 @@ script whenever FileDir starts depending on something newer.</p>
 <code>help\Hotkeys.md</code> from <code>configs\Hotkeys.inix</code>,
 builds <code>FileDirScript.dll</code> and <code>exec\FileDir.exe</code>,
 speaks any walk with no audio, puts the project’s files in the Homer
-encoding, refreshes the kit’s scripts, and builds the installer.</li>
-<li><code>scripts\gitPush "message"</code> – rewrites the whitelist from
+encoding, refreshes the kit’s scripts, and builds
+<code>FileDir_setup.exe</code> at the top of the project.</li>
+<li><code>scripts\push "message"</code> – rewrites the whitelist from
 <code>RepoFiles.txt</code>, adds what it names, commits and pushes.</li>
-<li><code>scripts\homerTidy --do-it</code> – the periodic clean.</li>
-<li><code>scripts\tagRelease</code> – runs
-<code>checkHomerApp --build</code>, tags the pushed commit with the
-version stamped in the installer, and publishes it.</li>
+<li><code>scripts\tidy</code> – the periodic clean.</li>
+<li><code>scripts\release</code> – runs <code>scripts\check</code>, tags
+the pushed commit with the version stamped in the installer, and
+publishes it.</li>
 </ol>
 <p><code>scripts\postPage</code> stays FileDir’s own: it publishes
 <code>help\FileDir.md</code> to the <code>main</code> branch as the
@@ -243,7 +244,7 @@ each component once and words its checkbox as Install, Update or
 Reinstall with the versions in play;
 <code>installScreenReaderSupport.cmd</code> unpacks
 <code>exec\FileDir_JAWS.zip</code>, which the build makes from
-<code>scripts\jaws</code>; <code>homerInstall.cmd</code> is the logging
+<code>scripts\jaws</code>; <code>installCommon.cmd</code> is the logging
 half of every install script; and the Results box after Finish reports
 one past-tense line per box that was ticked. <code>summarizeSetup</code>
 and FileDir’s own finish-page code are gone.</p>
@@ -294,7 +295,7 @@ Evaluate command.</li>
 <li>Inno Setup 6 (or 5.6 and later) for <code>ISCC.exe</code>, which
 compiles the installer.</li>
 <li><code>git</code> and the GitHub CLI <code>gh</code>, used by
-<code>tagRelease</code>.</li>
+<code>scripts\release</code>.</li>
 </ul>
 <p>Nothing is fetched from NuGet and there is no MSBuild project. The
 build is a direct compiler invocation, which keeps it inspectable and
@@ -624,8 +625,8 @@ one.</p>
 <p><strong>The version lives in <code>version.txt</code></strong>, one
 line and nothing else, as plain UTF-8 with <strong>no byte order
 mark</strong>. Four things read it — the audit, the build,
-<code>FileDir_setup.iss</code> and <code>tagRelease</code> — and only
-PowerShell is forgiving about a mark. It both writes one, with
+<code>FileDir_setup.iss</code> and <code>scripts\release</code> — and
+only PowerShell is forgiving about a mark. It both writes one, with
 <code>Set-Content -Encoding UTF8</code>, and silently strips it again on
 reading, so the fault is invisible from that side; Inno Setup reads it
 as part of the number and refuses to compile. The build writes the file
@@ -635,12 +636,12 @@ with <code>[System.IO.File]::WriteAllText</code> and a
 repaired. <code>BuildFileDir.ps1</code> increments it and generates
 <code>Version.cs</code>; <code>FileDir_setup.iss</code> reads the same
 file with <code>FileOpen</code>/<code>FileRead</code>, so no version
-literal appears in the installer script; <code>tagRelease</code> tags
-with it. The program, the installer, and the tag therefore always agree,
-which is what Elevate Version compares. This arrangement exists because
-a stale <code>.iss</code> carrying its own <code>AppVersion</code> once
-rewound the number and the next build re-minted a version already
-published.</p>
+literal appears in the installer script; <code>scripts\release</code>
+tags with it. The program, the installer, and the tag therefore always
+agree, which is what Elevate Version compares. This arrangement exists
+because a stale <code>.iss</code> carrying its own
+<code>AppVersion</code> once rewound the number and the next build
+re-minted a version already published.</p>
 <p><strong>Keys and descriptions live in
 <code>Hotkeys.inix</code>.</strong> The build generates from it
 <code>KeyMap.cs</code>, a compiled-in table, and
@@ -657,22 +658,20 @@ available” for every new command. The table is compiled in now.
 the installer deletes the stale shipped copy on upgrade.</p>
 <h2 id="releasing">Releasing</h2>
 <pre><code>cd C:\FileDir
-BuildFileDir.cmd
-git add -A
-git commit -m &quot;...&quot;
-git push
-tagRelease</code></pre>
-<p><code>tagRelease</code> reads the version from the built installer,
-tags the commit, and publishes the release with
+buildFileDir
+scripts\push &quot;What changed.&quot;
+scripts\release</code></pre>
+<p><code>scripts\release</code> reads the version from the built
+installer, tags the commit, and publishes the release with
 <code>FileDir_setup.exe</code> as its asset. GitHub asset URLs are case
 sensitive, so the installer’s <code>OutputBaseFilename</code> and the
 name Elevate Version requests must stay identical.</p>
 <p>Commit a new Markdown document before tagging, or its
 <code>.htm</code> will not exist in the release.</p>
 <p>The network check for an already-published version belongs in
-<code>tagRelease</code>, not in the build. An earlier build script asked
-GitHub whether a number was taken, and because <code>gh</code> has no
-timeout a slow network hung the build with no message and no way to
+<code>scripts\release</code>, not in the build. An earlier build script
+asked GitHub whether a number was taken, and because <code>gh</code> has
+no timeout a slow network hung the build with no message and no way to
 interrupt it. A build script must never wait on the network.</p>
 <h2 id="keeping-the-folder-clean">Keeping the Folder Clean</h2>
 <p><strong>Nothing in this project keeps a second list of what

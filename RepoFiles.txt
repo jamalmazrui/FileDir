@@ -1,8 +1,8 @@
 ﻿# RepoFiles.txt -- what the FileDir repository carries.
 #
 # ONE PATH PER LINE. A trailing slash names a folder wholesale; a wildcard is
-# allowed. homerTidy writes .gitignore from this as a whitelist -- everything
-# ignored, then exactly these allowed -- and gitPush rewrites it before every
+# allowed. scripts\tidy writes .gitignore from this as a whitelist -- everything
+# ignored, then exactly these allowed -- and scripts\push rewrites it before every
 # push, so "git add -A" means "add what the project has named" and never
 # "everything in the folder".
 #
@@ -30,7 +30,8 @@ FileDir.exe.config
 FileDir.ico
 FileDir.manifest
 
-# The two lists, and what done means
+# The two lists, what done means, and how git keeps the Homer CRLF line endings
+.gitattributes
 RepoFiles.txt
 LocalFiles.txt
 accept.inix

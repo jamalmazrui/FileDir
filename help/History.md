@@ -966,6 +966,13 @@ An option at the end of the FileDir installer lets you install this by simply ma
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
 
+## 26 September 2026 -- brought up to HomerDev 1.43.12
+
+- **The installer is written to the top of the project**, where the kit's release script looks for it. The release that day stopped with "FileDir_setup.exe not found" because the installer was in exec.
+- **The kit's scripts under their plain names.** The build refreshes check, push, release, tidy, unpushed, finish and installCommon into scripts and deletes the old checkHomerApp, gitPush, gitUnpushed, homerFinish, homerInstall, homerTidy and tagRelease copies. FileDir's own install scripts and the installer use installCommon.cmd, the shared half of every install script; under its old name it would soon have stopped being refreshed, and every install script would have stopped with "missing".
+- **The installer finds the kit wherever it is.** The build passes the kit folder to Inno Setup, and the include of HomerComponents.iss follows it, rather than naming C:\HomerDev.
+- **Tidier repository.** The copies of the kit's classes and the root tagRelease files are removed from the top of the project; git records buildFileDir.cmd, buildFileDir.ps1 and FileDir_setup.iss under their current capitals; and `.gitattributes` keeps the Homer CRLF line endings as they are, rather than converting them.
+
 ## Version 5.0.86
 
 *September 2026*
