@@ -107,7 +107,7 @@ rem than somewhere inside the compiler. 1.41.2 is the release that took in
 rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
-set "kitNeeded=1.43.12"
+set "kitNeeded=1.43.15"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -577,6 +577,9 @@ for %%F in (Elevate.cs Inix.cs KeyMap.cs KeyName.cs Lbc.cs Log.cs Mdi.cs Ollama.
 )
 rem The release script's old home was the top of the project; scripts\release
 rem is its home now.
+rem Hotkeys.inix lives in configs; a copy left at the top from the layout before
+rem the kit still named the old Alt+Control timer keys, and the kit's check read it.
+if exist "Hotkeys.inix" if exist "configs\Hotkeys.inix" del /q "Hotkeys.inix" && echo Removed the old top-level Hotkeys.inix; configs\Hotkeys.inix is the one the build reads>> "%log%"
 for %%F in (tagRelease.cmd tagRelease.ps1 tagRelease_README.md) do if exist "%%F" if exist "scripts\release.ps1" del /q "%%F" && echo Removed the old top-level %%F>> "%log%"
 rem GIT STILL SPELLS THREE NAMES THE OLD WAY -- BuildFileDir.cmd,
 rem BuildFileDir.ps1 and FileDir_Setup.iss -- because Windows' git treats a

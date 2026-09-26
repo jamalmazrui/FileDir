@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.115**  
+**Version 5.0.116**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -166,7 +166,7 @@ Commands in alphabetical order.
 - **Say Size**, Shift+S -- Say the size of the current item in a form you can take in at once, such as 1.5 megabytes
 - **Say Status**, Alt+Z -- Say status line, containing date and time of current item, its size, the sort order, and filter specification (if any)
 - **Say Time**, Alt+Semicolon -- Say current time and date
-- **Say Timer**, Alt+Control+Y -- Say elapsed time since start of timer (not counting any paused periods)
+- **Say Timer**, no key -- Say elapsed time since start of timer, not counting any paused periods (on the Query menu)
 - **Say Type**, Shift+T -- Say type/extension of current item
 - **Say What Content**, Question -- Say textual content of current file item, or list contained items if current item is a folder or zip archive
 - **Say Windows Open**, Shift+F4 -- or Alt+NumPad5, Say titles of open windows
@@ -180,8 +180,8 @@ Commands in alphabetical order.
 - **Size Order**, Alt+S -- Sort items in size order
 - **Stamp with Date and Time**, Exclamation -- Point, Stamp date and time of current or tagged items
 - **Start Tag or Untag**, F8 -- Mark start of sequence to be tagged or untagged
-- **Start Timer**, Alt+Control+T -- Start, pause, or resume timer
-- **Stop Timer**, Alt+Control+S -- Stop running or paused timer
+- **Start Timer**, no key -- Start, pause, or resume timer (on the Misc menu)
+- **Stop Timer**, no key -- Stop running or paused timer (on the Misc menu)
 - **System**, RightBrace -- Set System attribute of current or tagged items
 - **Tag**, Semicolon -- or Shift+NumPad5, Tag current item
 - **Tag All**, Control+A -- Tag all items
@@ -195,7 +195,7 @@ Commands in alphabetical order.
 - **Tag with Regular Expression**, Control+Shift+Period -- Tag files that match a regular expression
 - **Tile Horizontal**, Alt+Shift+F11 -- Tile open windows horizontally
 - **Tile Vertical**, Control+Shift+F11 -- Tile open windows vertically
-- **Timer**, Alt+Control+Y -- Say elapsed time since the timer started
+- **Timer**, no key -- Say elapsed time since the timer started (on the Query menu)
 - **Toggle Tag**, Space -- Invert tagged state of current item
 - **Translate File**, Alt+Shift+F7 -- Translate the tagged files, or the current one, into a language you name, using a language model running on this computer
 - **Type Extended**, Control+Shift+T -- Show every property of the current item as one alphabetical list: Windows properties, file association details, and the metadata inside the file
@@ -237,10 +237,6 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+C** -- Copy Append: Copy and append current or tagged items to clipboard (listing paths in both binary and text formats)
 - **Alt+Comma** -- Untag All But Current: Untag all but current item
 - **Alt+Control+F** -- Launch FileDir: Launch or activate the FileDir application from a Windows desktop shortcut
-- **Alt+Control+S** -- Stop Timer: Stop running or paused timer
-- **Alt+Control+T** -- Start Timer: Start, pause, or resume timer
-- **Alt+Control+Y** -- Timer: Say elapsed time since the timer started
-- **Alt+Control+Y** -- Say Timer: Say elapsed time since start of timer (not counting any paused periods)
 - **Alt+D** -- Date Order: Sort items in date/time order
 - **Alt+Enter** -- Properties: Invoke Windows properties dialog for current item
 - **Alt+F1** -- About: Display FileDir version number and release date
@@ -481,10 +477,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 ### Alt+Control
 
 - **Alt+Control+F** -- Launch FileDir
-- **Alt+Control+Y** -- Say Timer
-- **Alt+Control+T** -- Start Timer
-- **Alt+Control+S** -- Stop Timer
-- **Alt+Control+Y** -- Timer
 
 ### Control+Shift
 

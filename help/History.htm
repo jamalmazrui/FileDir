@@ -1812,6 +1812,12 @@ FileDir’s own install scripts and the installer use installCommon.cmd,
 the shared half of every install script; under its old name it would
 soon have stopped being refreshed, and every install script would have
 stopped with “missing”.</li>
+<li><strong>The timer commands have no keys.</strong> Start Timer, Stop
+Timer and Timer (Say Timer) stay on the Misc and Query menus, but their
+Alt+Control+T, Alt+Control+S and Alt+Control+Y keys are gone:
+Alt+Control keys belong to Windows desktop shortcuts, and the kit’s
+check refused the release over them. The hotkey reference lists them as
+having no key.</li>
 <li><strong>The installer finds the kit wherever it is.</strong> The
 build passes the kit folder to Inno Setup, and the include of
 HomerComponents.iss follows it, rather than naming C:.</li>

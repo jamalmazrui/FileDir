@@ -1587,7 +1587,7 @@ menuQueryFullFolder = menu_Helper("Folder", "Control+'", menuQueryFullFolder_Cli
 menuQueryClipboard = menu_Helper("Clipboard", "Alt+'", menuQueryClipboard_Click);
 menuQueryNow = menu_Helper("Time", "Alt+;", menuQueryNow_Click);
 menuQueryWhat = menu_Helper("What Content", "?", menuQueryWhat_Click);
-menuQueryTimer = menu_Helper("Timer", "Alt+Control+Y", menuQueryTimer_Click);
+menuQueryTimer = menu_Helper("Timer", "", menuQueryTimer_Click);
 menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryList, menuQueryListTagged, menuQuerySelected, menuQueryListFiles, menuQueryPath, menuQuerySize, menuQueryType, menuQueryTypeExtended, menuQueryWindowsOpen, menuQueryYield, menuQueryYieldTagged, menuQueryYieldFiles, menuQueryYieldOnDrive, menuQueryYieldInOperatingSystem, menuQueryStatus, menuQueryCharacterEncoding, menuQueryPercentThrough, menuQueryFilter, menuQueryName, menuQueryFolderName, menuQueryFullFolder, menuQueryClipboard, menuQueryNow, menuQueryWhat, menuQueryTimer});
 
 menuMisc = menu_Helper("&Misc");
@@ -1632,8 +1632,8 @@ menuMiscGetFTP = menu_Helper("Get FTP ...", "Shift+G", menuMiscGetFTP_Click);
 menuMiscWebDownload = menu_Helper("Web Download ...", "Alt+Shift+W", menuMiscWebDownload_Click);
 menuMiscEvaluate = menu_Helper("Evaluate Expression ...", "Control+Equals", menuMiscEvaluate_Click);
 menuMiscConvertUnits = menu_Helper("Convert Units ...", "Shift+3", menuMiscConvertUnits_Click);
-menuMiscStartTimer = menu_Helper("Start Timer ...", "Alt+Control+T", menuMiscStartTimer_Click);
-menuMiscStopTimer = menu_Helper("Stop Timer", "Alt+Control+S", menuMiscStopTimer_Click);
+menuMiscStartTimer = menu_Helper("Start Timer ...", "", menuMiscStartTimer_Click);
+menuMiscStopTimer = menu_Helper("Stop Timer", "", menuMiscStopTimer_Click);
 menuMiscChatWithAI = menu_Helper("Chat with AI", "F12", MenuMiscChatWithAI_Click);
 menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChatAboutFile_Click);
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
@@ -1782,8 +1782,12 @@ HomerToolStripMenuItem menu_Helper(string sText, string sKeys, EventHandler eh) 
 //sText += "\t" + sKeys;
 //sText += "   " + sKeys;
 HomerToolStripMenuItem menuItem = new HomerToolStripMenuItem(sText, null, eh);
+// A command with no key -- the timer commands since 26 September 2026 -- is
+// named by its caption alone, which the menu already speaks.
+if (!String.IsNullOrEmpty(sKeys)) {
 menuItem.AccessibleName = (sText + "   " + sKeys).Replace("&", "");
 menuItem.ShortcutKeyDisplayString = sKeys;
+}
 
 menuItem.Paint += delegate(object oSender, PaintEventArgs e) {
 foreach (ToolStripMenuItem menu in App.frame.menuMain.Items) {

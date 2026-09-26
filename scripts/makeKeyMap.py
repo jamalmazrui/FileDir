@@ -253,19 +253,25 @@ def writeHotkeys(lEntries, pathMd, sVersion):
         "Commands in alphabetical order.",
         "",
     ]
+    # A COMMAND WITH NO KEY is listed by name only, and left out of the lists
+    # by key, where it has nothing to be sorted by. The timer commands became
+    # menu-only on 26 September 2026: Alt+Control keys belong to desktop
+    # shortcuts.
     for oEntry in sorted(lEntries, key=lambda o: o["Command"].lower()):
-        lOut.append("- **" + oEntry["Command"] + "**, " + oEntry["Key"]
+        sKeyShown = oEntry["Key"] if oEntry["Key"] else "no key"
+        lOut.append("- **" + oEntry["Command"] + "**, " + sKeyShown
                     + " -- " + oEntry["Description"])
+    lKeyed = [o for o in lEntries if o["Key"]]
     lOut += ["", "## By Key", "",
              "The same commands, in alphabetical order of the key that runs them.", ""]
-    for oEntry in sorted(lEntries, key=lambda o: o["Key"].lower()):
+    for oEntry in sorted(lKeyed, key=lambda o: o["Key"].lower()):
         lOut.append("- **" + oEntry["Key"] + "** -- " + oEntry["Command"]
                     + ": " + oEntry["Description"])
     lOut += ["", "## By First Modifier", "",
              "Grouped by the modifier key a command starts with, which is often the "
              "quickest way to see what a family of keys does.", ""]
     for sGroup in c_lModifierGroups:
-        lInGroup = [o for o in sorted(lEntries, key=lambda o: o["Command"].lower())
+        lInGroup = [o for o in sorted(lKeyed, key=lambda o: o["Command"].lower())
                     if inGroup(sGroup, o["Key"])]
         if not lInGroup:
             continue
