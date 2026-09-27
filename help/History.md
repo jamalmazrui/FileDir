@@ -966,6 +966,10 @@ An option at the end of the FileDir installer lets you install this by simply ma
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
 
+## 27 September 2026 -- setup fixes
+
+- **Setup.** The Results box at the end of setup is titled "FileDir Setup Results", and the finish page uses the Homer wording: the verb first, no "recommended", and "Launch FileDir (desktop hotkey ...)". The JAWS scripts and NVDA add-on have a box each, JAWS first. Under kit 1.43.20 the script behind them also finds the right folder: it had been naming the app "scripts", and so installed nothing.
+
 ## 26 September 2026 -- built with HomerDev 1.43.19
 
 - **The kit's tools carry the day's fixes.** `scripts\tidy` keeps a file where the project says it lives and untracks only what RepoFiles.txt leaves out; `scripts\check` reads keys and access letters without false alarms, reads only the project's own files, and never waits for a key; and `scripts\release` publishes a draft and confirms the release is GitHub's latest before calling it published.
