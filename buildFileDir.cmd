@@ -107,7 +107,7 @@ rem than somewhere inside the compiler. 1.41.2 is the release that took in
 rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
-set "kitNeeded=1.43.15"
+set "kitNeeded=1.43.19"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and

@@ -966,6 +966,11 @@ An option at the end of the FileDir installer lets you install this by simply ma
 
 Sped up time for subsequent invocations of FileDir after the  initial one.  Improved the optional JAWS scripts for FileDir so that titles of top-level windows are more reliably  read.
 
+## 26 September 2026 -- built with HomerDev 1.43.19
+
+- **The kit's tools carry the day's fixes.** `scripts\tidy` keeps a file where the project says it lives and untracks only what RepoFiles.txt leaves out; `scripts\check` reads keys and access letters without false alarms, reads only the project's own files, and never waits for a key; and `scripts\release` publishes a draft and confirms the release is GitHub's latest before calling it published.
+- **The grave accent key is unchanged.** The kit now gives the key to speech -- volume, rate and punctuation -- in apps that have speech commands. FileDir has none, so Grave still goes to a quick folder and Shift+Grave still copies the short path.
+
 ## 26 September 2026 -- brought up to HomerDev 1.43.12
 
 - **The installer is written to the top of the project**, where the kit's release script looks for it. The release that day stopped with "FileDir_setup.exe not found" because the installer was in exec.
