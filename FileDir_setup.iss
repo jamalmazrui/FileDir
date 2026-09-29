@@ -757,6 +757,7 @@ var
 begin
   //  AI NOTE FOR CUSTOMIZING: one addAction per component and per model, in
   //  the same alphabetical order as the [Run] section.
+  addAction(homerScreenReaderOutcome());
   addAction(homerOutcomeLine(iExifTool));
   addAction(homerOutcomeLine(iffmpeg));
   addAction(homerOutcomeLine(iImageMagick));
