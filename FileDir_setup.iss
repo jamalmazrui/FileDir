@@ -230,7 +230,7 @@ Source: "scripts\pdfRich.py"; DestDir: "{app}\scripts"; Flags: ignoreversion ski
 Source: "scripts\installScreenReaderSupport.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "exec\FileDir_JAWS.zip"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.nvda-addon"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "scripts\jaws\*"; DestDir: "{app}\scripts\jaws"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "scripts\jaws\*"; Excludes: "*.jsb"; DestDir: "{app}\scripts\jaws"; Flags: ignoreversion skipifsourcedoesntexist
 
 [Icons]
 ; The documents stay at the root of the installed tree, where somebody looking

@@ -537,6 +537,11 @@ rem The JAWS scripts are shipped as <App>_JAWS.zip and the NVDA add-on as
 rem <App>.nvda-addon; the installer offers both, checked by default. Packing
 rem them here means the installer always carries the current ones.
 if not defined useScreenReaderScripts goto :readersDone
+rem Old compiled scripts in scripts\jaws are removed: nothing ships a .jsb.
+if exist "scripts\jaws\*.jsb" (
+  del /q "scripts\jaws\*.jsb" >> "%log%" 2>&1
+  echo Removed the compiled .jsb files from scripts\jaws; the installer compiles its own.>> "%log%"
+)
 if exist "scripts\jaws\*.js*" (
   rem SOURCES ONLY, NEVER A COMPILED .jsb (HomerDev 1.43.38): a .jsb runs on
   rem the JAWS version that built it and later ones, so shipping one risks a
