@@ -538,8 +538,12 @@ rem <App>.nvda-addon; the installer offers both, checked by default. Packing
 rem them here means the installer always carries the current ones.
 if not defined useScreenReaderScripts goto :readersDone
 if exist "scripts\jaws\*.js*" (
+  rem SOURCES ONLY, NEVER A COMPILED .jsb (HomerDev 1.43.38): a .jsb runs on
+  rem the JAWS version that built it and later ones, so shipping one risks a
+  rem binary from the wrong version. The installer compiles each .jss with
+  rem each installed JAWS version's own compiler.
   powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "Compress-Archive -Path 'scripts\jaws\*' -DestinationPath 'exec\%app%_JAWS.zip' -Force" >> "%log%" 2>&1
+    "Compress-Archive -Path (Get-ChildItem -LiteralPath 'scripts\jaws' -File | Where-Object { $_.Extension -ne '.jsb' } | ForEach-Object { $_.FullName }) -DestinationPath 'exec\%app%_JAWS.zip' -Force" >> "%log%" 2>&1
   echo Packed %app%_JAWS.zip>> "%log%"
 )
 if exist "addon\manifest.ini" (
