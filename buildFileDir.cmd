@@ -67,7 +67,12 @@ rem chronological one, and zipping logs\ gathers everything.
 for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set "sStamp=%%i"
 if not exist "%~dp0logs" mkdir "%~dp0logs"
 set "log=%~dp0logs\%app%-build-%sStamp%.log"
-echo %app% build started %DATE% %TIME%> "%log%"
+rem THE START AND END LINES CARRY AN ISO 8601 TIME (HomerDev 1.43.21), with
+rem the UTC offset, from PowerShell rather than %DATE% %TIME%, whose form
+rem follows the regional settings; and they name the event and its result as
+rem every Homer log does.
+for /f "usebackq delims=" %%i in (`powershell -NoProfile -Command "Get-Date -Format 'yyyy-MM-ddTHH:mm:ss.fffzzz'"`) do set "sIso=%%i"
+> "%log%" echo %sIso% INFO  build start app=%app%
 echo Script: %~f0>> "%log%"
 echo Folder: %CD%>> "%log%"
 echo Command line: %0 %*>> "%log%"
@@ -75,9 +80,9 @@ echo Build log: %log%
 
 rem ---- the Homer Development Kit -------------------------------------
 set "homerDev="
-if defined HomerDev if exist "%HomerDev%\CSharp\Lbc.cs" set "homerDev=%HomerDev%"
-if not defined homerDev if exist "C:\HomerDev\CSharp\Lbc.cs" set "homerDev=C:\HomerDev"
-if not defined homerDev if exist "%CD%\CSharp\Lbc.cs" set "homerDev=%CD%"
+if defined HomerDev if exist "%HomerDev%\exec\CSharp\Lbc.cs" set "homerDev=%HomerDev%"
+if not defined homerDev if exist "C:\HomerDev\exec\CSharp\Lbc.cs" set "homerDev=C:\HomerDev"
+if not defined homerDev if exist "%CD%\exec\CSharp\Lbc.cs" set "homerDev=%CD%"
 if not defined homerDev (
   echo ERROR: the Homer Development Kit was not found.
   echo         Looked in %%HomerDev%%, C:\HomerDev, and this folder.
@@ -107,7 +112,7 @@ rem than somewhere inside the compiler. 1.41.2 is the release that took in
 rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
-set "kitNeeded=1.43.20"
+set "kitNeeded=1.43.29"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -168,20 +173,20 @@ rem not exist in the current context", which is exactly how this comment came to
 rem be written. Nothing else in the kit has a dependency of its own.
 set "homerSources="
 rem Elevate.cs: Lbc's Help box checks the web for a newer release through it.
-set "homerSources=!homerSources! "!homerDev!\CSharp\Elevate.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Inix.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\KeyName.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Elevate.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Inix.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\KeyName.cs""
 rem MDI ONLY (EdSharp, FileDir, DbDo): a multiple-document app needs both of
 rem these, and needs them together. Uncomment the pair.
-set "homerSources=!homerSources! "!homerDev!\CSharp\KeyMap.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Mdi.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Lbc.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Log.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Paths.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Ollama.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Say.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Util.cs""
-set "homerSources=!homerSources! "!homerDev!\CSharp\Web.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\KeyMap.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Mdi.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Lbc.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Log.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Paths.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Ollama.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Say.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Util.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Web.cs""
 echo Homer modules: !homerSources!>> "%log%"
 
 rem ---- component options ----------------------------------------------
@@ -570,10 +575,10 @@ for %%F in (summarizeSetup.cmd summarizeSetup.ps1 installMediaTools.cmd installI
 )
 
 rem ---- carried over to the Homer layout (September 2026) -------------------
-rem THE KIT'S CLASSES ARE COMPILED FROM C:\HomerDev\CSharp, so a copy at the
+rem THE KIT'S CLASSES ARE COMPILED FROM C:\HomerDev\exec\CSharp, so a copy at the
 rem top of the project is a stale one, waiting to be read or shipped by mistake.
 for %%F in (Elevate.cs Inix.cs KeyMap.cs KeyName.cs Lbc.cs Log.cs Mdi.cs Ollama.cs Paths.cs Say.cs Util.cs Web.cs) do (
-  if exist "%%F" if exist "!homerDev!\CSharp\%%F" del /q "%%F" && echo Removed the old top-level %%F; the kit's is compiled instead>> "%log%"
+  if exist "%%F" if exist "!homerDev!\exec\CSharp\%%F" del /q "%%F" && echo Removed the old top-level %%F; the kit's is compiled instead>> "%log%"
 )
 rem The release script's old home was the top of the project; scripts\release
 rem is its home now.
@@ -686,7 +691,8 @@ echo Built %app%_setup.exe version !ver!>> "%log%"
 echo Built %app%_setup.exe version !ver!
 
 :done
-echo Build succeeded %DATE% %TIME%>> "%log%"
+for /f "usebackq delims=" %%i in (`powershell -NoProfile -Command "Get-Date -Format 'yyyy-MM-ddTHH:mm:ss.fffzzz'"`) do set "sIso=%%i"
+>> "%log%" echo %sIso% INFO  build end result=succeeded
 echo(
 echo To publish: scripts\push "What changed.", then scripts\release. It reads the
 echo version from the version resource of %app%_setup.exe and tags v!ver!.
@@ -694,7 +700,17 @@ endlocal
 exit /b 0
 
 :failed
-echo Build FAILED %DATE% %TIME%>> "%log%"
+rem A FAILED BUILD TAKES NO NUMBER (HomerDev 1.43.29). version.txt is stepped
+rem when a build begins; when it fails, the number goes back, so the next build
+rem takes it again and the release never finds an installer one version behind
+rem version.txt (HomerScribe, 28 September 2026: 1.0.260 stepped, the kit not
+rem found, the release refused).
+if defined verOld if not "!ver!"=="!verOld!" (
+  > version.txt echo !verOld!
+  >> "%log%" echo Version: restored to !verOld!; a failed build takes no number
+)
+for /f "usebackq delims=" %%i in (`powershell -NoProfile -Command "Get-Date -Format 'yyyy-MM-ddTHH:mm:ss.fffzzz'"`) do set "sIso=%%i"
+>> "%log%" echo %sIso% ERROR build end result=failed
 endlocal
 exit /b 1
 
