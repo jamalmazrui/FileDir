@@ -262,22 +262,10 @@ Name: "{autodesktop}\{#AppName}"; Filename: "{app}\exec\{#AppExeName}"; WorkingD
 ; Scripts run DIRECTLY, with "noPause" as their argument -- never through a cmd
 ; wrapper with a "set X=1 &&" prefix, which cmd /s cannot quote correctly.
 
-; ---- 1. Install ---------------------------------------------------------------
-; JAWS AND NVDA HAVE A BOX EACH, JAWS first, worded alike (1.43.20).
-FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
-  Parameters: "noPause jaws"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "Install JAWS scripts"; \
-  Check: isFreshInstall; \
-  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
-
-FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
-  Parameters: "noPause nvda"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "Install NVDA add-on"; \
-  Check: isFreshInstall; \
-  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
-
+; ---- 1. Install, ticked --------------------------------------------------------
+; Alphabetical by name within each group, the JAWS scripts and NVDA add-on
+; among the others, each worded Install, Update or Reinstall by its state
+; (HomerDev 1.43.43; help\FinishPage.md).
 FileName: "{app}\scripts\installExifTool.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -299,11 +287,25 @@ FileName: "{app}\scripts\installImageMagick.cmd"; \
   Check: isInstallImageMagick; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause jaws"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelJaws}"; \
+  Check: isInstallJaws; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
 FileName: "{app}\scripts\installMpv.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelmpv}"; \
   Check: isInstallmpv; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause nvda"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelNvda}"; \
+  Check: isInstallNvda; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installOllama.cmd"; \
@@ -327,13 +329,6 @@ FileName: "{app}\scripts\installPdfTools.cmd"; \
   Check: isInstallPdfTools; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-FileName: "{app}\scripts\installYtDlp.cmd"; \
-  Parameters: "noPause"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "{code:labelYtDlp}"; \
-  Check: isInstallYtDlp; \
-  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
-
 FileName: "{app}\scripts\installModels.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -341,21 +336,14 @@ FileName: "{app}\scripts\installModels.cmd"; \
   Check: isModelInstall; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-; ---- 2. Update ----------------------------------------------------------------
-FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
-  Parameters: "noPause jaws"; \
+FileName: "{app}\scripts\installYtDlp.cmd"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
-  Description: "Update JAWS scripts"; \
-  Check: isUpgradeOrSame; \
+  Description: "{code:labelYtDlp}"; \
+  Check: isInstallYtDlp; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
-  Parameters: "noPause nvda"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "Update NVDA add-on"; \
-  Check: isUpgradeOrSame; \
-  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
-
+; ---- 2. Update, ticked ---------------------------------------------------------
 FileName: "{app}\scripts\installExifTool.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -377,11 +365,25 @@ FileName: "{app}\scripts\installImageMagick.cmd"; \
   Check: isUpdateImageMagick; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause jaws"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelJaws}"; \
+  Check: isUpdateJaws; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
 FileName: "{app}\scripts\installMpv.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelmpv}"; \
   Check: isUpdatempv; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause nvda"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelNvda}"; \
+  Check: isUpdateNvda; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installOllama.cmd"; \
@@ -412,7 +414,7 @@ FileName: "{app}\scripts\installYtDlp.cmd"; \
   Check: isUpdateYtDlp; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-; ---- 3. Reinstall, unticked ---------------------------------------------------
+; ---- 3. Reinstall, unticked ----------------------------------------------------
 FileName: "{app}\scripts\installExifTool.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -434,11 +436,25 @@ FileName: "{app}\scripts\installImageMagick.cmd"; \
   Check: isReinstallImageMagick; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause jaws"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelJaws}"; \
+  Check: isReinstallJaws; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
 FileName: "{app}\scripts\installMpv.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelmpv}"; \
   Check: isReinstallmpv; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
+  Parameters: "noPause nvda"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelNvda}"; \
+  Check: isReinstallNvda; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installOllama.cmd"; \
@@ -462,18 +478,18 @@ FileName: "{app}\scripts\installPdfTools.cmd"; \
   Check: isReinstallPdfTools; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
-FileName: "{app}\scripts\installYtDlp.cmd"; \
-  Parameters: "noPause"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "{code:labelYtDlp}"; \
-  Check: isReinstallYtDlp; \
-  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
-
 FileName: "{app}\scripts\installModels.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelModel}"; \
   Check: isModelReinstall; \
+  Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installYtDlp.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelYtDlp}"; \
+  Check: isReinstallYtDlp; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 ; ---- 4. Launch, ticked --------------------------------------------------------
