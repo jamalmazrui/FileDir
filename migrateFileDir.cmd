@@ -189,7 +189,7 @@ rem tagRelease do these jobs, and the build refreshes them into scripts\ on
 rem every run. Two tools for one job is how the wrong one gets run.
 for %%F in (cleanFileDir.cmd cleanFileDir.py homerPolicy.py auditFileDir.py) do call :retire "%%F"
 for %%F in (buildTutorial.cmd buildTutorial.ps1 makeTutorial.cmd makeTutorial.py makeTutorial.log) do call :retire "%%F"
-for %%F in (tagRelease.cmd tagRelease.ps1 tagRelease_README.md BuildFileDir.cmd BuildFileDir.ps1 installOllama.cmd) do call :retire "%%F"
+for %%F in (tagRelease.cmd tagRelease.ps1 tagRelease_README.md Build.cmd Build.ps1 installOllama.cmd) do call :retire "%%F"
 rem The results box is the kit's now, and the grouped tool installers became one
 rem script per component; these are retired wherever they are.
 for %%F in (summarizeSetup.cmd summarizeSetup.ps1 installMediaTools.cmd installImageTools.cmd installTranslateModel.cmd) do call :retire "%%F"
@@ -206,7 +206,7 @@ echo(
 echo Migration finished. The log lists every move and deletion:
 echo   %log%
 echo(
-echo Next: buildFileDir
+echo Next: build
 endlocal
 exit /b 0
 
@@ -245,7 +245,7 @@ set "sName=%~1"
 set "bKnown="
 for %%K in (FileDir.cs Convert.cs Dialogs.cs Media.cs MediaPlayer.cs Mpv.cs Table.cs^
  Version.cs KeyText.cs FileDir.js FileDir.ico FileDir.manifest FileDir.exe.config^
- AssocOn.bas AssocOff.bas buildFileDir.cmd migrateFileDir.cmd FileDir_setup.iss^
+ AssocOn.bas AssocOff.bas build.cmd migrateFileDir.cmd FileDir_setup.iss^
  ReadMe.md ReadMe.htm License.md License.htm RepoFiles.txt LocalFiles.txt^
  accept.inix version.txt .gitignore) do if /i "%%K"=="!sName!" set "bKnown=1"
 if defined bKnown goto :eof

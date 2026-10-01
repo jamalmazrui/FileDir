@@ -13,7 +13,7 @@ Hotkeys = help\Hotkeys.md and help\Hotkeys.htm exist, generated from configs\Hot
 Tutorials = help\Tutorials.md exists, with one section per walk
 
 [build]
-Script = buildFileDir.cmd returns 0
+Script = build.cmd returns 0
 Program = exec\FileDir.exe is built and carries the version in version.txt
 Installer = FileDir_setup.exe is built, at the top of the project, and carries the same version
 Kit = the build compiles against C:\HomerDev\CSharp and carries no copy of a kit class

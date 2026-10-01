@@ -195,7 +195,7 @@ Source: "MediaPlayer.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoe
 Source: "Mpv.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Table.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.js"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "buildFileDir.cmd"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "build.cmd"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir_setup.iss"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "RepoFiles.txt"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "LocalFiles.txt"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
@@ -544,7 +544,7 @@ Type: files; Name: "{app}\Convert.txt"
 Type: files; Name: "{app}\chimes.wav"
 Type: files; Name: "{app}\install*.cmd"
 Type: files; Name: "{app}\summarizeSetup.*"
-Type: files; Name: "{app}\BuildFileDir.*"
+Type: files; Name: "{app}\Build.*"
 Type: files; Name: "{app}\cleanFileDir.*"
 Type: files; Name: "{app}\auditFileDir.py"
 Type: files; Name: "{app}\homerPolicy.py"

@@ -12,7 +12,7 @@ assumes familiarity with Windows, C#, and the command line.
 
 FileDir carries no copy of a shared class. It compiles against
 `C:\HomerDev\CSharp`, so there is one `Lbc.cs` on the machine and every app
-gets a fix the moment the kit gets it. `buildFileDir.cmd` finds the kit through
+gets a fix the moment the kit gets it. `build.cmd` finds the kit through
 the `HomerDev` environment variable, then `C:\HomerDev`, then this folder, and
 stops with a sentence if the kit is older than the version FileDir needs.
 
@@ -24,7 +24,7 @@ build script whenever FileDir starts depending on something newer.
 
 ### The four scripts, in order
 
-1. `buildFileDir` -- steps `version.txt`, writes `Version.cs`, generates
+1. `build` -- steps `version.txt`, writes `Version.cs`, generates
    `KeyText.cs` and `help\Hotkeys.md` from `configs\Hotkeys.inix`, builds
    `FileDirScript.dll` and `exec\FileDir.exe`, speaks any walk with no audio,
    puts the project's files in the Homer encoding, refreshes the kit's scripts,
@@ -248,14 +248,14 @@ behaviour. Its absence can never fail a build.
 
 ```
 cd C:\FileDir
-BuildFileDir.cmd
+Build.cmd
 ```
 
-**There are two commands to run.** `BuildFileDir` builds; `cleanFileDir` tidies.
+**There are two commands to run.** `Build` builds; `cleanFileDir` tidies.
 Each is a `.cmd` wrapper, so neither PowerShell's execution-policy parameters nor
 a Python path ever has to be typed, and each writes its own log beside itself.
 `makeKeyMap.py`, `auditFileDir.py` and `homerPolicy.py` are called by those two
-rather than run directly; to run the checks alone, use `BuildFileDir audit`.
+rather than run directly; to run the checks alone, use `Build audit`.
 
 The build is PowerShell and the checks and the sweep are Python, which matches
 EdSharp: `BuildEdSharp.ps1` with `auditEdSharp.py` and `repoPolicy.py` beside
@@ -263,8 +263,8 @@ it. PowerShell suits the compiler and installer work; Python suits the text and
 policy work, and is what lets the two projects share code rather than share only
 an idea.
 
-`BuildFileDir.ps1` does six things, in order, and appends every step to
-`BuildFileDir.log` as it happens, so a build that dies still leaves a log:
+`Build.ps1` does six things, in order, and appends every step to
+`Build.log` as it happens, so a build that dies still leaves a log:
 
 1. **Key map.** `makeKeyMap.py` regenerates `KeyMap.cs` and `Hotkeys.md` from
    `Hotkeys.inix`. This runs first because the audit checks what it produces.
@@ -299,9 +299,9 @@ an idea.
 
 Three optional words:
 
-- `BuildFileDir nobump` recompiles without taking a new version number.
-- `BuildFileDir noinstall` builds the program but skips the installer.
-- `BuildFileDir audit` runs the checks and compiles nothing.
+- `Build nobump` recompiles without taking a new version number.
+- `Build noinstall` builds the program but skips the installer.
+- `Build audit` runs the checks and compiles nothing.
 
 If `ISCC.exe` is not found the build still succeeds and says so; only the
 installer is skipped.
@@ -323,12 +323,12 @@ PowerShell joins an argument list with spaces and quotes nothing. Kept apart, no
 quoting rule applies at all.
 
 **Check the script stamps first when a fault looks familiar.** Both
-`BuildFileDir.log` and `auditFileDir.log` open with the date and size of every
+`Build.log` and `auditFileDir.log` open with the date and size of every
 script in the build. A failure that was supposedly fixed is far more often a
 stale copy — an archive not unarchived, or unarchived after the build ran — than
 a fix that did not work, and the stamps tell the two apart at a glance.
 
-When a build fails, `BuildFileDir.log` is the file to send. The script opens
+When a build fails, `Build.log` is the file to send. The script opens
 that log before doing anything that could fail and then traps unexpected errors.
 
 **A log always exists, including for a parse error.** PowerShell parses a whole
@@ -336,7 +336,7 @@ script before running a line of it, so a script that will not parse never
 reaches its own logging. That happened three times, each leaving no log at all.
 Both wrappers now open the log and write the first lines *before* starting the
 interpreter, capture everything it prints, and append that at the end; the
-scripts append rather than truncate. So `BuildFileDir.log` is the file to send
+scripts append rather than truncate. So `Build.log` is the file to send
 whatever went wrong, and `python auditFileDir.py` is no longer the only way to
 see a parse error.
 
@@ -390,7 +390,7 @@ produces, since GitHub addresses are case sensitive; that nothing sits at the
 root which the setup script and `RepoFiles.txt` do not claim; and that no Markdown file in the folder
 belongs to another project.
 
-Run the checks alone with `BuildFileDir audit`, which compiles nothing. The
+Run the checks alone with `Build audit`, which compiles nothing. The
 audit prints PASS or FAIL for each check with a plain sentence, warns separately
 about things that are wrong but not fatal, and returns 1 when anything fails so
 the build can stop on it.
@@ -423,7 +423,7 @@ it again on reading, so the fault is invisible from that side; Inno Setup reads
 it as part of the number and refuses to compile. The build writes the file with
 `[System.IO.File]::WriteAllText` and a `UTF8Encoding($false)`, and reads it with
 a `TrimStart` on the mark, so a file that already has one is repaired.
-`BuildFileDir.ps1` increments it and generates `Version.cs`;
+`Build.ps1` increments it and generates `Version.cs`;
 `FileDir_setup.iss` reads the same file with `FileOpen`/`FileRead`, so no
 version literal appears in the installer script; `scripts\release` tags with it. The
 program, the installer, and the tag therefore always agree, which is what
@@ -447,7 +447,7 @@ a user override, and the installer deletes the stale shipped copy on upgrade.
 
 ```
 cd C:\FileDir
-buildFileDir
+build
 scripts\push "What changed."
 scripts\release
 ```

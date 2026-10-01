@@ -16,7 +16,7 @@
 !/accept.inix
 !/AssocOff.bas
 !/AssocOn.bas
-!/buildFileDir.cmd
+!/build.cmd
 !/configs/
 !/Convert.cs
 !/data/

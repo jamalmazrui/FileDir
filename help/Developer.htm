@@ -180,10 +180,10 @@ Development Kit</h2>
 <p>FileDir carries no copy of a shared class. It compiles against
 <code>C:\HomerDev\CSharp</code>, so there is one <code>Lbc.cs</code> on
 the machine and every app gets a fix the moment the kit gets it.
-<code>buildFileDir.cmd</code> finds the kit through the
-<code>HomerDev</code> environment variable, then
-<code>C:\HomerDev</code>, then this folder, and stops with a sentence if
-the kit is older than the version FileDir needs.</p>
+<code>build.cmd</code> finds the kit through the <code>HomerDev</code>
+environment variable, then <code>C:\HomerDev</code>, then this folder,
+and stops with a sentence if the kit is older than the version FileDir
+needs.</p>
 <p><strong>The kit version FileDir needs is 1.40.0</strong>, the release
 that took in FileDir’s work on Lbc: the slider that says its value in
 words, the list searching (Control+J, Control+K, Control+F, F3), the
@@ -192,7 +192,7 @@ accessible-name clean-out. Raise <code>kitNeeded</code> in the build
 script whenever FileDir starts depending on something newer.</p>
 <h3 id="the-four-scripts-in-order">The four scripts, in order</h3>
 <ol type="1">
-<li><code>buildFileDir</code> – steps <code>version.txt</code>, writes
+<li><code>build</code> – steps <code>version.txt</code>, writes
 <code>Version.cs</code>, generates <code>KeyText.cs</code> and
 <code>help\Hotkeys.md</code> from <code>configs\Hotkeys.inix</code>,
 builds <code>FileDirScript.dll</code> and <code>exec\FileDir.exe</code>,
@@ -434,24 +434,23 @@ and detection falls back to the byte order mark, which was the old
 behaviour. Its absence can never fail a build.</p>
 <h2 id="building">Building</h2>
 <pre><code>cd C:\FileDir
-BuildFileDir.cmd</code></pre>
-<p><strong>There are two commands to run.</strong>
-<code>BuildFileDir</code> builds; <code>cleanFileDir</code> tidies. Each
-is a <code>.cmd</code> wrapper, so neither PowerShell’s execution-policy
-parameters nor a Python path ever has to be typed, and each writes its
-own log beside itself. <code>makeKeyMap.py</code>,
-<code>auditFileDir.py</code> and <code>homerPolicy.py</code> are called
-by those two rather than run directly; to run the checks alone, use
-<code>BuildFileDir audit</code>.</p>
+Build.cmd</code></pre>
+<p><strong>There are two commands to run.</strong> <code>Build</code>
+builds; <code>cleanFileDir</code> tidies. Each is a <code>.cmd</code>
+wrapper, so neither PowerShell’s execution-policy parameters nor a
+Python path ever has to be typed, and each writes its own log beside
+itself. <code>makeKeyMap.py</code>, <code>auditFileDir.py</code> and
+<code>homerPolicy.py</code> are called by those two rather than run
+directly; to run the checks alone, use <code>Build audit</code>.</p>
 <p>The build is PowerShell and the checks and the sweep are Python,
 which matches EdSharp: <code>BuildEdSharp.ps1</code> with
 <code>auditEdSharp.py</code> and <code>repoPolicy.py</code> beside it.
 PowerShell suits the compiler and installer work; Python suits the text
 and policy work, and is what lets the two projects share code rather
 than share only an idea.</p>
-<p><code>BuildFileDir.ps1</code> does six things, in order, and appends
-every step to <code>BuildFileDir.log</code> as it happens, so a build
-that dies still leaves a log:</p>
+<p><code>Build.ps1</code> does six things, in order, and appends every
+step to <code>Build.log</code> as it happens, so a build that dies still
+leaves a log:</p>
 <ol type="1">
 <li><p><strong>Key map.</strong> <code>makeKeyMap.py</code> regenerates
 <code>KeyMap.cs</code> and <code>Hotkeys.md</code> from
@@ -496,12 +495,11 @@ conversion.</p></li>
 </ol>
 <p>Three optional words:</p>
 <ul>
-<li><code>BuildFileDir nobump</code> recompiles without taking a new
-version number.</li>
-<li><code>BuildFileDir noinstall</code> builds the program but skips the
+<li><code>Build nobump</code> recompiles without taking a new version
+number.</li>
+<li><code>Build noinstall</code> builds the program but skips the
 installer.</li>
-<li><code>BuildFileDir audit</code> runs the checks and compiles
-nothing.</li>
+<li><code>Build audit</code> runs the checks and compiles nothing.</li>
 </ul>
 <p>If <code>ISCC.exe</code> is not found the build still succeeds and
 says so; only the installer is skipped.</p>
@@ -522,25 +520,24 @@ stripping after <code>/c</code> defeats a quoted program with a quoted
 argument, and PowerShell joins an argument list with spaces and quotes
 nothing. Kept apart, no quoting rule applies at all.</p>
 <p><strong>Check the script stamps first when a fault looks
-familiar.</strong> Both <code>BuildFileDir.log</code> and
+familiar.</strong> Both <code>Build.log</code> and
 <code>auditFileDir.log</code> open with the date and size of every
 script in the build. A failure that was supposedly fixed is far more
 often a stale copy — an archive not unarchived, or unarchived after the
 build ran — than a fix that did not work, and the stamps tell the two
 apart at a glance.</p>
-<p>When a build fails, <code>BuildFileDir.log</code> is the file to
-send. The script opens that log before doing anything that could fail
-and then traps unexpected errors.</p>
+<p>When a build fails, <code>Build.log</code> is the file to send. The
+script opens that log before doing anything that could fail and then
+traps unexpected errors.</p>
 <p><strong>A log always exists, including for a parse error.</strong>
 PowerShell parses a whole script before running a line of it, so a
 script that will not parse never reaches its own logging. That happened
 three times, each leaving no log at all. Both wrappers now open the log
 and write the first lines <em>before</em> starting the interpreter,
 capture everything it prints, and append that at the end; the scripts
-append rather than truncate. So <code>BuildFileDir.log</code> is the
-file to send whatever went wrong, and
-<code>python auditFileDir.py</code> is no longer the only way to see a
-parse error.</p>
+append rather than truncate. So <code>Build.log</code> is the file to
+send whatever went wrong, and <code>python auditFileDir.py</code> is no
+longer the only way to see a parse error.</p>
 <p>Two PowerShell traps have caused those parse errors, and the audit
 now refuses both:</p>
 <ul>
@@ -598,11 +595,10 @@ for exactly the file name the installer produces, since GitHub addresses
 are case sensitive; that nothing sits at the root which the setup script
 and <code>RepoFiles.txt</code> do not claim; and that no Markdown file
 in the folder belongs to another project.</p>
-<p>Run the checks alone with <code>BuildFileDir audit</code>, which
-compiles nothing. The audit prints PASS or FAIL for each check with a
-plain sentence, warns separately about things that are wrong but not
-fatal, and returns 1 when anything fails so the build can stop on
-it.</p>
+<p>Run the checks alone with <code>Build audit</code>, which compiles
+nothing. The audit prints PASS or FAIL for each check with a plain
+sentence, warns separately about things that are wrong but not fatal,
+and returns 1 when anything fails so the build can stop on it.</p>
 <p>Add a check whenever something breaks. That habit is the point of
 it.</p>
 <p><strong>Where a check belongs.</strong> Anything the build
@@ -633,7 +629,7 @@ as part of the number and refuses to compile. The build writes the file
 with <code>[System.IO.File]::WriteAllText</code> and a
 <code>UTF8Encoding($false)</code>, and reads it with a
 <code>TrimStart</code> on the mark, so a file that already has one is
-repaired. <code>BuildFileDir.ps1</code> increments it and generates
+repaired. <code>Build.ps1</code> increments it and generates
 <code>Version.cs</code>; <code>FileDir_setup.iss</code> reads the same
 file with <code>FileOpen</code>/<code>FileRead</code>, so no version
 literal appears in the installer script; <code>scripts\release</code>
@@ -658,7 +654,7 @@ available” for every new command. The table is compiled in now.
 the installer deletes the stale shipped copy on upgrade.</p>
 <h2 id="releasing">Releasing</h2>
 <pre><code>cd C:\FileDir
-buildFileDir
+build
 scripts\push &quot;What changed.&quot;
 scripts\release</code></pre>
 <p><code>scripts\release</code> reads the version from the built

@@ -1,6 +1,6 @@
 @echo off
 rem ===================================================================
-rem buildFileDir.cmd -- build FileDir.exe from FileDir.cs and the Homer
+rem build.cmd -- build FileDir.exe from FileDir.cs and the Homer
 rem Development Kit modules in C:\HomerDev.
 rem
 rem This is the HomerDev TEMPLATE. newHomerApp.cmd writes a copy of it
@@ -29,8 +29,8 @@ rem tagRelease reads it back out of the built setup's version resource
 rem to form the tag. No version literal appears anywhere else, so a
 rem stale file cannot rewind it.
 rem
-rem   buildFileDir.cmd          increments the version, then builds
-rem   buildFileDir.cmd nobump   keeps the current number
+rem   build.cmd          increments the version, then builds
+rem   build.cmd nobump   keeps the current number
 rem
 rem COMPILER: Roslyn is preferred, from Visual Studio or the free Build
 rem Tools. The pre-Roslyn csc.exe under Microsoft.NET\Framework64 is
@@ -155,7 +155,7 @@ if "!iKitCheck!"=="2" (
 )
 if "!iKitCheck!"=="1" (
   echo FileDir needs HomerDev !kitNeeded! or later, and the kit is !homerVer!.
-  echo Unzip the newer HomerDev, run buildHomerDev, then build again.
+  echo Unzip the newer HomerDev, run build, then build again.
   echo ERROR: kit !homerVer! is older than !kitNeeded!.>> "%log%"
   goto :failed
 )
@@ -613,14 +613,14 @@ rem Hotkeys.inix lives in configs; a copy left at the top from the layout before
 rem the kit still named the old Alt+Control timer keys, and the kit's check read it.
 if exist "Hotkeys.inix" if exist "configs\Hotkeys.inix" del /q "Hotkeys.inix" && echo Removed the old top-level Hotkeys.inix; configs\Hotkeys.inix is the one the build reads>> "%log%"
 for %%F in (tagRelease.cmd tagRelease.ps1 tagRelease_README.md) do if exist "%%F" if exist "scripts\release.ps1" del /q "%%F" && echo Removed the old top-level %%F>> "%log%"
-rem GIT STILL SPELLS THREE NAMES THE OLD WAY -- BuildFileDir.cmd,
-rem BuildFileDir.ps1 and FileDir_Setup.iss -- because Windows' git treats a
+rem GIT STILL SPELLS THREE NAMES THE OLD WAY -- Build.cmd,
+rem Build.ps1 and FileDir_Setup.iss -- because Windows' git treats a
 rem change of capitals alone as no change. The file on disk is left exactly as
 rem it is (renaming this script while it runs would lose cmd's place in it);
 rem only the name git records is corrected.
 powershell -NoProfile -Command ^
   "$lTracked = @(git ls-files 2>$null);" ^
-  "foreach ($sPair in @('BuildFileDir.cmd>buildFileDir.cmd', 'BuildFileDir.ps1>buildFileDir.ps1', 'FileDir_Setup.iss>FileDir_setup.iss')) {" ^
+  "foreach ($sPair in @('Build.cmd>build.cmd', 'Build.ps1>build.ps1', 'FileDir_Setup.iss>FileDir_setup.iss')) {" ^
   "  $sOld, $sNew = $sPair.Split('>');" ^
   "  if (-not ($lTracked -ccontains $sOld)) { continue }" ^
   "  git rm --cached --quiet -- $sOld 2>&1 | Out-Null; git add -- $sNew 2>&1 | Out-Null;" ^

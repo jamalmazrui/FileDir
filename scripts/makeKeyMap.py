@@ -2,7 +2,7 @@
 
     python makeKeyMap.py            (run from C:\FileDir)
 
-BuildFileDir runs this before the audit, because the audit checks what it
+Build runs this before the audit, because the audit checks what it
 produces. There is no command wrapper for it: it is a step in the build, not
 something to run by hand.
 
@@ -25,7 +25,7 @@ Both are generated output. Do not edit them; edit Hotkeys.inix instead.
 
 WHY THIS IS PYTHON RATHER THAN PART OF THE BUILD SCRIPT
 
-It used to be a function inside BuildFileDir.ps1, and it broke the build. C#
+It used to be a function inside Build.ps1, and it broke the build. C#
 source is full of double quotes, and the PowerShell that emitted it wrote
 them as \" -- which is a C escape, not a PowerShell one. PowerShell escapes a
 quote with a backtick. The script would not parse, so it never reached its

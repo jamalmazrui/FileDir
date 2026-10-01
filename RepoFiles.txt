@@ -23,7 +23,7 @@ AssocOff.bas
 AssocOn.bas
 
 # Build and installer
-buildFileDir.cmd
+build.cmd
 migrateFileDir.cmd
 FileDir_setup.iss
 FileDir.exe.config
