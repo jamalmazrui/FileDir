@@ -103,26 +103,21 @@ rem ---- NVDA ----------------------------------------------------------------
 if "%bNvda%"=="0" goto :done
 if not exist "%~dp0%sApp%.nvda-addon" goto :done
 call :logLine "Found %sApp%.nvda-addon"
-where nvda >nul 2>&1
-if errorlevel 1 (
-  if exist "%ProgramFiles(x86)%\NVDA\nvda.exe" (
-    set "sNvda=%ProgramFiles(x86)%\NVDA\nvda.exe"
-  ) else if exist "%ProgramFiles%\NVDA\nvda.exe" (
-    set "sNvda=%ProgramFiles%\NVDA\nvda.exe"
-  )
-) else (
-  set "sNvda=nvda"
-)
-if not defined sNvda (
-  echo NVDA was not found on this computer, so its add-on was skipped.
-  call :logLine "NVDA not found."
-  >> "%sResult%" echo NVDA add-on: not installed, because NVDA was not found
-  goto :done
-)
-echo Installing the NVDA add-on. NVDA will ask you to confirm.
-call :logLine "Handing the add-on to NVDA: !sNvda!"
-start "" "!sNvda!" --install-add-on="%~dp0%sApp%.nvda-addon"
->> "%sResult%" echo NVDA add-on: handed to NVDA to install, which asks you to confirm
+rem INSTALLED WITHOUT STARTING NVDA (HomerDev 1.43.46). Starting nvda.exe
+rem --install-add-on brought a second screen reader up talking over JAWS, and
+rem for EdSharp on 29 September stopped on an invalid command line parameter.
+rem NVDA's own installer unpacks the add-on into %APPDATA%\nvda\addons and, at
+rem its next start, moves it into place under its own name; an add-on already
+rem there under its name is simply loaded. The PowerShell part puts it there
+rem directly, moving any old copy aside to <name>.delete, which NVDA skips.
+echo Installing the NVDA add-on; NVDA loads it when it next starts.
+set "HS_MODE=nvda"
+set "HS_APP=%sApp%"
+set "HS_ADDON=%~dp0%sApp%.nvda-addon"
+set "HS_LOG=%sLog%"
+set "HS_RESULT=%sResult%"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$s=[IO.File]::ReadAllText('%~f0'); iex $s.Substring($s.LastIndexOf('#<jawsScripts>') + 14)"
+call :logLine "NVDA add-on step exit code: %ERRORLEVEL%"
 set /a iInstalled=iInstalled+1
 
 :done
@@ -187,6 +182,70 @@ function addonManifest([string] $sPath) {
 
 $sMarkerName = "$sApp.scripts.fingerprint"
 
+# THE FINGERPRINTS LIVE IN THE LOCAL TREE (30 September 2026). A Homer app keeps
+# nothing of its own under %APPDATA%, JAWS's folders included: the only files
+# it puts there are the scripts themselves, where JAWS reads them. Which JAWS
+# versions have current scripts is recorded in %LOCALAPPDATA%\<App>\
+# jawsScripts.inix, one "version = fingerprint" line each; a marker file an
+# earlier installer left in a JAWS settings folder is removed.
+$sPrintsFile = Join-Path $env:LOCALAPPDATA ($sApp + "\jawsScripts.inix")
+function readPrints() {
+    $dPrints = @{}
+    if (Test-Path -LiteralPath $sPrintsFile) {
+        foreach ($sLine in [IO.File]::ReadAllLines($sPrintsFile)) {
+            if ($sLine -match '^\s*([^=\[;]+?)\s*=\s*(\S+)\s*$') { $dPrints[$Matches[1]] = $Matches[2] }
+        }
+    }
+    return $dPrints
+}
+function writePrints($dPrints) {
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $sPrintsFile) | Out-Null
+    $lsLines = @("[fingerprints]")
+    foreach ($sKey in @($dPrints.Keys | Sort-Object)) { $lsLines += "$sKey = $($dPrints[$sKey])" }
+    [IO.File]::WriteAllText($sPrintsFile, (($lsLines -join "`r`n") + "`r`n"), (New-Object Text.UTF8Encoding($true)))
+}
+function versionOfSettings([string] $sSettings) {
+    return (Split-Path -Leaf (Split-Path -Parent (Split-Path -Parent $sSettings)))
+}
+function removeOldMarker([string] $sSettings) {
+    $sOld = Join-Path $sSettings $sMarkerName
+    if (Test-Path -LiteralPath $sOld) { try { Remove-Item -LiteralPath $sOld -Force } catch { } }
+}
+
+if ($env:HS_MODE -eq "nvda") {
+    $sAddon = $env:HS_ADDON
+    try {
+        $sNvdaConfig = Join-Path $env:APPDATA "nvda"
+        if (-not (Test-Path -LiteralPath $sNvdaConfig)) { throw "NVDA's settings folder $sNvdaConfig was not found" }
+        $dManifest = addonManifest $sAddon
+        $sName = $dManifest["name"]
+        if (-not $sName) { throw "the add-on's manifest.ini names no add-on" }
+        logLine "NVDA add-on: name=$sName version=$($dManifest['version']) minimumNVDAVersion=$($dManifest['minimumNVDAVersion']) lastTestedNVDAVersion=$($dManifest['lastTestedNVDAVersion'])"
+        $oArchive = [IO.Compression.ZipFile]::OpenRead($sAddon)
+        try { if ($oArchive.GetEntry("installTasks.py")) { logLine "WARNING: the add-on has installTasks.py, whose onInstall step does not run in a direct install" } } finally { $oArchive.Dispose() }
+        $bRunning = [bool](Get-Process -Name nvda -ErrorAction SilentlyContinue)
+        logLine "NVDA running: $bRunning"
+        $sAddonsDir = Join-Path $sNvdaConfig "addons"
+        New-Item -ItemType Directory -Force -Path $sAddonsDir | Out-Null
+        $sTarget = Join-Path $sAddonsDir $sName
+        $sOld = Join-Path $sAddonsDir "$sName.delete"
+        $sUnpack = Join-Path $env:TEMP ("$sApp-nvda-" + (Get-Date -Format "yyyyMMddHHmmss"))
+        [IO.Compression.ZipFile]::ExtractToDirectory($sAddon, $sUnpack)
+        if (Test-Path -LiteralPath $sOld) { Remove-Item -LiteralPath $sOld -Recurse -Force -ErrorAction SilentlyContinue }
+        $bMovedOld = $false
+        if (Test-Path -LiteralPath $sTarget) { Move-Item -LiteralPath $sTarget -Destination $sOld; $bMovedOld = $true }
+        try { Move-Item -LiteralPath $sUnpack -Destination $sTarget }
+        catch { if ($bMovedOld) { Move-Item -LiteralPath $sOld -Destination $sTarget }; throw }
+        if ($bMovedOld) { Remove-Item -LiteralPath $sOld -Recurse -Force -ErrorAction SilentlyContinue }
+        logLine "NVDA add-on: installed at $sTarget"
+        resultLine $(if ($bRunning) { "NVDA add-on: installed. Restart NVDA to use it" } else { "NVDA add-on: installed. NVDA loads it when it next starts" })
+    } catch {
+        logLine ("NVDA add-on: ERROR " + $_.Exception.Message)
+        resultLine "NVDA add-on: NOT installed -- $($_.Exception.Message)"
+    }
+    exit 0
+}
+
 if ($env:HS_MODE -eq "state") {
     $sState = "none"
     try {
@@ -201,10 +260,11 @@ if ($env:HS_MODE -eq "state") {
                 $sPrint = zipFingerprint $sZip
                 $iSame = 0; $iAny = 0
                 foreach ($sSettings in $lsSettings) {
-                    $sMarker = Join-Path $sSettings $sMarkerName
-                    if (Test-Path -LiteralPath $sMarker) {
+                    $dPrints = readPrints
+                    $sHave = $dPrints[(versionOfSettings $sSettings)]
+                    if ($sHave -and (Test-Path -LiteralPath (Join-Path $sSettings "$sApp.jsb"))) {
                         $iAny += 1
-                        if (([IO.File]::ReadAllText($sMarker)).Trim() -eq $sPrint) { $iSame += 1 }
+                        if ($sHave -eq $sPrint) { $iSame += 1 }
                     } elseif (Test-Path -LiteralPath (Join-Path $sSettings "$sApp.jsb")) {
                         # Our scripts from before fingerprints were kept: there,
                         # but not known to be current.
@@ -224,12 +284,33 @@ if ($env:HS_MODE -eq "state") {
             if ($bNvda -and (Test-Path -LiteralPath $sAddon)) {
                 $dShipped = addonManifest $sAddon
                 $sInstalled = Join-Path $env:APPDATA ("nvda\addons\" + $dShipped["name"] + "\manifest.ini")
+                # NVDA keeps an add-on it has just accepted as <name>.pendingInstall
+                # until it restarts; that counts as installed.
+                $sPending = Join-Path $env:APPDATA ("nvda\addons\" + $dShipped["name"] + ".pendingInstall\manifest.ini")
+                if (-not (Test-Path -LiteralPath $sInstalled) -and (Test-Path -LiteralPath $sPending)) { $sInstalled = $sPending }
                 if (-not $dShipped["name"] -or -not (Test-Path -LiteralPath $sInstalled)) { $sState = "install" }
                 else {
                     $dHave = readManifest ([IO.File]::ReadAllText($sInstalled))
                     $sState = if ($dHave["version"] -eq $dShipped["version"]) { "reinstall" } else { "update" }
                 }
-                logLine "state nvda: shipped $($dShipped['version']), $sState"
+                $sHave = if (Test-Path -LiteralPath $sInstalled) { (readManifest ([IO.File]::ReadAllText($sInstalled)))["version"] } else { "none" }
+                logLine "state nvda: add-on name=$($dShipped['name']) shipped version=$($dShipped['version']); installed version=$sHave; $sState"
+                # NVDA's own record: an installed NVDA logs to %TEMP%\nvda.log and
+                # keeps the previous session's as nvda-old.log; the lines about
+                # add-ons, from both, go into this log (read with sharing, since
+                # NVDA holds its log open).
+                foreach ($sLogName in @("nvda-old.log", "nvda.log")) {
+                    $sNvdaLog = Join-Path $env:TEMP $sLogName
+                    if (-not (Test-Path -LiteralPath $sNvdaLog)) { logLine "  ${sLogName}: not found in $env:TEMP"; continue }
+                    try {
+                        $oStream = New-Object IO.FileStream($sNvdaLog, [IO.FileMode]::Open, [IO.FileAccess]::Read, [IO.FileShare]::ReadWrite)
+                        $oReader = New-Object IO.StreamReader($oStream)
+                        $lsHits = @(($oReader.ReadToEnd() -split "`r?`n") | Where-Object { $_ -match [regex]::Escape($dShipped["name"]) -or $_ -match "addonHandler" })
+                        $oReader.Dispose()
+                        logLine "  ${sLogName}: $($lsHits.Count) line(s) about add-ons"
+                        foreach ($sHit in @($lsHits | Select-Object -Last 15)) { logLine "  | $sHit" }
+                    } catch { logLine "  ${sLogName}: could not be read: $($_.Exception.Message)" }
+                }
             } else { logLine "state nvda: none (NVDA not found, or no $sApp.nvda-addon)" }
         }
     } catch {
@@ -262,7 +343,8 @@ try {
         }
         # Every file this run will write, including the .jsb compiled from each
         # .jss, so that a failure can undo exactly what was done.
-        $lsTargets = @((Join-Path $sSettings $sMarkerName))
+        removeOldMarker $sSettings
+        $lsTargets = @()
         foreach ($oEntry in $oZip.Entries) {
             if (-not $oEntry.Name) { continue }
             $lsTargets += (Join-Path $sSettings $oEntry.FullName)
@@ -307,13 +389,14 @@ try {
                 if (Test-Path -LiteralPath $sTarget) { Remove-Item -LiteralPath $sTarget -Force }
                 if ($dReplaced.ContainsKey($sTarget)) { Copy-Item -LiteralPath $dReplaced[$sTarget] -Destination $sTarget -Force }
             }
+            $dPrints = readPrints; if ($dPrints.ContainsKey($sVersion)) { $dPrints.Remove($sVersion); writePrints $dPrints }
             logLine "JAWS ${sVersion}: ERROR the scripts did not compile; every file this run placed was removed and $($dReplaced.Count) earlier file(s) put back"
             $sWhich = if ($lsFailed.Count) { " (" + ($lsFailed -join ", ") + ")" } else { "" }
             resultLine "JAWS $sVersion scripts: NOT installed -- they did not compile$sWhich; nothing was left behind, and the setup log has the compiler's words"
         } else {
             # What makes the next installer's box say Reinstall rather than
             # Update: the fingerprint of the sources compiled here.
-            Set-Content -LiteralPath (Join-Path $sSettings $sMarkerName) -Value $sPrint -Encoding ASCII
+            $dPrints = readPrints; $dPrints[$sVersion] = $sPrint; writePrints $dPrints
             logLine "JAWS ${sVersion}: scripts installed and compiled"
             resultLine "JAWS $sVersion scripts: installed and compiled"
         }

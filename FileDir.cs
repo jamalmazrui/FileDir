@@ -493,6 +493,9 @@ return Homer.Util.readValue(sFile, sSection, sKey, sDefault);
 public static bool writeValue(string sFile, string sSection, string sKey, string sValue) {
 bool bResult = Homer.Util.writeValue(sFile, sSection, sKey, sValue);
 inixSyncWrite(sFile, sSection, sKey, sValue);
+// Every saved choice, in the log, so a setting that does not come back next
+// time can be traced to whether it was written, and where (30 September 2026).
+Homer.Log.info("setting saved file=" + sFile + " section=" + sSection + " key=" + sKey + " ok=" + bResult);
 return bResult;
 } // writeValue method
 
@@ -1011,6 +1014,11 @@ sAppDir = Path.GetDirectoryName(sApp);
 // the program: a read-only profile simply means no log.
 Homer.Paths.start("FileDir");
 Homer.Log.start("FileDir");
+// ONLY THE LOCAL TREE (30 September 2026): FileDir's settings, Quick folder and
+// temporary file live under %LOCALAPPDATA%\FileDir. What an earlier FileDir kept
+// under %APPDATA%\FileDir -- FileDir.ini above all -- is moved here now, before
+// any setting is read, each move logged.
+foreach (string sMoved in Homer.Paths.moveFromRoaming()) Homer.Log.info(sMoved);
 Homer.Log.keyValue("Version", BuildVersion.Version);
 Homer.Log.keyValue("Program", sApp);
 Homer.Log.keyValue("Arguments", string.Join(" ", args));
@@ -1130,13 +1138,16 @@ return;
 sAppDir = Homer.Util.getShortPath(sAppDir);
 string sRoot = Path.GetFileNameWithoutExtension(sApp);
 string sName = sRoot + ".ini";
-sDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+sDataDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 sDataDir = Path.Combine(sDataDir, sRoot);
 if (!Directory.Exists(sDataDir)) Directory.CreateDirectory(sDataDir);
 sDataDir = Homer.Util.getShortPath(sDataDir);
 string sQuickDir = Path.Combine(sDataDir, "Quick");
 if (!Directory.Exists(sQuickDir)) Directory.CreateDirectory(sQuickDir);
 sIniFile = Path.Combine(sDataDir, sName);
+// WHERE THE SETTINGS COME FROM, IN THE LOG (30 September 2026): FileDir was
+// forgetting choices between sessions, and nothing recorded which file it read.
+Homer.Log.info("settings file=" + sIniFile + " exists=" + File.Exists(sIniFile) + (File.Exists(sIniFile) ? " bytes=" + new FileInfo(sIniFile).Length + " written=" + File.GetLastWriteTime(sIniFile).ToString("s") : ""));
 App.readIni();
 App.wireListHistory();
 // sTempFile = Path.Combine(sDataDir, "FileDir.tmp");

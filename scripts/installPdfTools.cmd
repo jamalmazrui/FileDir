@@ -59,12 +59,12 @@ if not "%iCode%"=="0" echo The PDF reader could not be updated; the log says why
 goto :done
 
 :updateWinget
-echo PDF tools is installed. Checking for a newer version.
+echo Updating PDF tools to the newest version. Nothing is asked of you while it runs.
 winget upgrade --id Python.Python.3.13 --exact --silent --accept-source-agreements --accept-package-agreements --disable-interactivity >> "%log%" 2>&1
 set "iCode=%ERRORLEVEL%"
 call "%~dp0installCommon.cmd" log "winget upgrade Python.Python.3.13 exit code %iCode%"
 if "%iCode%"=="0" echo PDF tools was updated.
-if not "%iCode%"=="0" echo PDF tools is already the newest winget offers.
+if not "%iCode%"=="0" echo PDF tools was NOT updated; the log has winget's answer.
 goto :done
 
 :failed

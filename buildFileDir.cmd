@@ -536,6 +536,24 @@ rem ---- screen reader scripts -----------------------------------------
 rem The JAWS scripts are shipped as <App>_JAWS.zip and the NVDA add-on as
 rem <App>.nvda-addon; the installer offers both, checked by default. Packing
 rem them here means the installer always carries the current ones.
+rem 2HTM GOES WITH FILEDIR (30 September 2026). Question Mark reads legacy Office
+rem files and PDFs through 2htm, and the installer ships exec\2htm.exe only when
+rem one is there -- this build never put one there, so Question Mark usually
+rem found none. The current 2htm is taken from the 2htm project beside this
+rem one (C:\2htm\exec), and the log says whether it was.
+if exist "%~dp0..\2htm\exec\2htm.exe" (
+  copy /y "%~dp0..\2htm\exec\2htm.exe" "exec\2htm.exe" >> "%log%" 2>&1
+  echo Copied 2htm.exe from %~dp0..\2htm\exec into exec, exit !errorlevel!>> "%log%"
+) else (
+  echo WARNING: no 2htm.exe in %~dp0..\2htm\exec; build 2htm first, or Question Mark will look for an installed 2htm.>> "%log%"
+)
+rem Old stand-alone JAWS script installers, which nothing builds now: removed.
+for %%F in ("scripts\FileDir_Scripts_setup.iss" "scripts\jaws\FileDir_Scripts_setup.iss") do (
+  if exist %%F (
+    del /q %%F >> "%log%" 2>&1
+    echo Removed %%~F, an old stand-alone JAWS script installer.>> "%log%"
+  )
+)
 if not defined useScreenReaderScripts goto :readersDone
 rem Old compiled scripts in scripts\jaws are removed: nothing ships a .jsb.
 if exist "scripts\jaws\*.jsb" (
