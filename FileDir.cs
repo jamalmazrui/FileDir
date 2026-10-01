@@ -136,6 +136,19 @@ else Process.Start("Explorer.exe", Microsoft.VisualBasic.Interaction.Command());
 
 } // singleInstanceApplication class
 
+// A FILE ANOTHER PROGRAM IS STILL WRITING CAN BE ZIPPED (1 October 2026).
+// SharpZipLib opens each file to add with FileShare.Read, which Windows refuses
+// while a program holds the file open for writing -- every running Homer app's
+// live log, for one. The refusal came in the middle of writing the archive,
+// after the entries and before the central directory, and left a .zip that
+// nothing could open. This source opens the file the way the kit's Log opens
+// its own: read, write and delete sharing allowed.
+public class SharedFileSource : IStaticDataSource {
+string sPath;
+public SharedFileSource(string sPathGiven) { sPath = sPathGiven; }
+public Stream GetSource() { return new FileStream(sPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete); }
+} // SharedFileSource class
+
 public static class App {
 // Dotted-numeric version used by the Elevate Version command to compare with
 // the latest release tag.
@@ -6866,6 +6879,9 @@ if (sZip == "") return;
 App.sZipText = sZip;
 }
 
+List<string> lsSkipped = new List<string>();
+bool bNewZip = !File.Exists(sZip);
+Homer.Log.info("zip start archive=" + sZip + " new=" + bNewZip + " items=" + aPaths.Length);
 ZipFile z;
 if (File.Exists(sZip)) {
 App.say("Updating");
@@ -6908,9 +6924,11 @@ else sFile = s.Substring(2);
 else sFile = s.Substring(Path.GetDirectoryName(sPath).Length).TrimStart('\\');
 sName = Path.GetFileName(sFile);
 if (!Homer.Util.stringEquiv(Path.GetFullPath(sFile), sZip)) {
+if (canReadShared(sFile, lsSkipped)) {
 App.say(sName);
-z.Add(sFile);
+z.Add(new SharedFileSource(sFile), ZipEntry.CleanName(sFile));
 iFileCount ++;
+}
 }
 }
 }
@@ -6922,8 +6940,10 @@ if (sPath.ToLower().StartsWith(sZipDir.ToLower())) sName = sPath.Substring(sZipD
 else sName = sPath.Substring(2);
 }
 }
-z.Add(sName);
+if (canReadShared(sName, lsSkipped)) {
+z.Add(new SharedFileSource(sName), ZipEntry.CleanName(sName));
 iFileCount ++;
+}
 }
 else {
 App.say(sName +" not found!");
@@ -6932,11 +6952,19 @@ App.say(sName +" not found!");
 
 z.CommitUpdate();
 z.Close();
+Homer.Log.info("zip done archive=" + sZip + " files=" + iFileCount + " skipped=" + lsSkipped.Count);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+// NO HALF-WRITTEN ARCHIVE IS LEFT BEHIND: the update is abandoned and a
+// new archive that never completed is removed, so nobody sends one on.
+Homer.Log.error("zip failed archive=" + sZip + ": " + ex.ToString());
+try { z.AbortUpdate(); } catch (Exception) { }
+try { z.Close(); } catch (Exception) { }
+if (bNewZip) { try { File.Delete(sZip); } catch (Exception) { } }
+Lbc.Show(ex.Message + (bNewZip ? "\r\n\r\nThe unfinished archive was removed." : ""), "Error");
 return;
 }
+if (lsSkipped.Count > 0) Lbc.Show(Homer.Util.stringPlural("file", lsSkipped.Count) + " could not be read, so " + (lsSkipped.Count == 1 ? "it was" : "they were") + " left out:\r\n" + String.Join("\r\n", lsSkipped.ToArray()), "Left Out");
 
 if (testZip(sZip) && bDelete) {
 App.say(App.Recycle ? "Recycling" : "Deleting");
@@ -6961,6 +6989,20 @@ App.sGoToText = sDir;
 App.sOpenText = sDir;
 }
 } // zip_Helper method
+
+bool canReadShared(string sFile, List<string> lsSkipped) {
+// Open the file as the archive will, before it is added: one that cannot be
+// read is left out and named, rather than failing the whole archive.
+try {
+using (FileStream oStream = new FileStream(sFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete)) { }
+return true;
+}
+catch (Exception ex) {
+lsSkipped.Add(sFile);
+Homer.Log.warn("zip left out " + sFile + ": " + ex.Message);
+return false;
+}
+} // canReadShared method
 
 void menuMiscZipTagged_Click(object sender, EventArgs e) {
 zip_Helper("Zip", false);
