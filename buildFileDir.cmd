@@ -699,6 +699,11 @@ if not defined iscc (
 echo Inno Setup: !iscc!>> "%log%"
 rem The kit folder goes to Inno as HomerDev, so the installer's #include of
 rem HomerComponents.iss follows the kit wherever it is.
+rem WHICH INSTALLER SCRIPT IS COMPILED (1 October 2026): its size, date and
+rem fingerprint go to the log, so a log shows whether a delivered change is the
+rem one on disk.
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$f = Get-Item -LiteralPath '%app%_setup.iss'; 'Installer script: ' + $f.FullName + ' bytes=' + $f.Length + ' written=' + $f.LastWriteTime.ToString('s') + ' sha256=' + (Get-FileHash -LiteralPath $f.FullName -Algorithm SHA256).Hash" >> "%log%" 2>&1
 "!iscc!" /DHomerDev="!homerDev!" "%app%_setup.iss" >> "%log%" 2>&1
 if errorlevel 1 (
   echo ERROR: the installer build failed. See %log%.
