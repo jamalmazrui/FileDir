@@ -1,0 +1,41 @@
+﻿[about]
+Title=01 - Install and Launch
+Intro=The download, the installer's pages, the finish page and its boxes, and FileDir opening by itself.
+Setup=The installer is downloaded, and your reader is running.
+Homework=Install FileDir and open it from its desktop shortcut.
+
+[step]
+
+Say=The installer is downloaded; Enter opens it. Windows may first ask whether to run a file from the Internet; Alt plus R, Run, answers it.
+Key=Enter
+Hear=FileDir Setup dialog
+
+[step]
+
+Say=Each page of the installer is a dialog like any other: Tab through it, Enter for Next. The last page is the finish page, with boxes for what else to install -- the screen reader scripts, and mpv, which the Homer Player plays with.
+Key=Enter
+Hear=Next button
+
+[step]
+
+Say=A box that is ticked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
+Key=
+Hear=
+
+[step]
+
+Say=Enter on Finish, and FileDir opens by itself on a folder. The desktop shortcut's key, Alt plus Control plus F, opens it from anywhere after that, and brings it forward if it is open already.
+Key=Enter
+Hear=FileDir, List box
+
+[step]
+
+Say=What this walk taught. I say the key; the reader says what it does.
+Key=
+Hear=
+
+[step]
+
+Say=Alt plus Control plus F.
+Key=
+Hear=Open FileDir

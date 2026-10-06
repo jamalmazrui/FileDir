@@ -1,0 +1,47 @@
+﻿[about]
+Title=04 - Open a Folder and Find a File
+Intro=A folder as a list: arrowing it, jumping to a file by name with Jump, and opening what you find. This walk assumes walks one to three.
+Setup=FileDir is open on a folder of saved web pages.
+Homework=Open a folder of your own, jump to a file by its first letters, and open it.
+
+[step]
+
+Say=Every folder opens as a list you arrow through. the reader says the folder and how many items are in it.
+Key=
+Hear=FileDir
+Hear=List box C:\PodcastDirectories
+Hear=119 items
+Note=The count comes once, when the folder opens.
+
+[step]
+
+Say=Up and Down Arrows move through the list; a letter jumps to the first name starting with it. Enter on a folder goes in; Backspace comes back up.
+Key=DownArrow
+Hear=Blind Movers dot h t m
+
+[step]
+
+Say=Control plus J jumps to a file by name. FileDir asks for the text and remembers your last ten answers.
+Key=Control+J
+Hear=Jump
+Hear=Text edit combo
+Note=The window is named Jump because the key is J.
+
+[step]
+
+Say=Type access and press Enter.
+Key=Enter
+Hear=Access On dot h t m
+Note=Jump looks at names. Control plus K looks inside the files.
+
+[step]
+
+Say=What this walk taught. I say the key; the reader says what it does.
+Key=
+Hear=
+
+[step]
+
+Say=Control plus J.
+Key=
+Hear=Jump

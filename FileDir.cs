@@ -136,19 +136,6 @@ else Process.Start("Explorer.exe", Microsoft.VisualBasic.Interaction.Command());
 
 } // singleInstanceApplication class
 
-// A FILE ANOTHER PROGRAM IS STILL WRITING CAN BE ZIPPED (1 October 2026).
-// SharpZipLib opens each file to add with FileShare.Read, which Windows refuses
-// while a program holds the file open for writing -- every running Homer app's
-// live log, for one. The refusal came in the middle of writing the archive,
-// after the entries and before the central directory, and left a .zip that
-// nothing could open. This source opens the file the way the kit's Log opens
-// its own: read, write and delete sharing allowed.
-public class SharedFileSource : IStaticDataSource {
-string sPath;
-public SharedFileSource(string sPathGiven) { sPath = sPathGiven; }
-public Stream GetSource() { return new FileStream(sPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete); }
-} // SharedFileSource class
-
 public static class App {
 // Dotted-numeric version used by the Elevate Version command to compare with
 // the latest release tag.
@@ -506,9 +493,6 @@ return Homer.Util.readValue(sFile, sSection, sKey, sDefault);
 public static bool writeValue(string sFile, string sSection, string sKey, string sValue) {
 bool bResult = Homer.Util.writeValue(sFile, sSection, sKey, sValue);
 inixSyncWrite(sFile, sSection, sKey, sValue);
-// Every saved choice, in the log, so a setting that does not come back next
-// time can be traced to whether it was written, and where (30 September 2026).
-Homer.Log.info("setting saved file=" + sFile + " section=" + sSection + " key=" + sKey + " ok=" + bResult);
 return bResult;
 } // writeValue method
 
@@ -1027,11 +1011,6 @@ sAppDir = Path.GetDirectoryName(sApp);
 // the program: a read-only profile simply means no log.
 Homer.Paths.start("FileDir");
 Homer.Log.start("FileDir");
-// ONLY THE LOCAL TREE (30 September 2026): FileDir's settings, Quick folder and
-// temporary file live under %LOCALAPPDATA%\FileDir. What an earlier FileDir kept
-// under %APPDATA%\FileDir -- FileDir.ini above all -- is moved here now, before
-// any setting is read, each move logged.
-foreach (string sMoved in Homer.Paths.moveFromRoaming()) Homer.Log.info(sMoved);
 Homer.Log.keyValue("Version", BuildVersion.Version);
 Homer.Log.keyValue("Program", sApp);
 Homer.Log.keyValue("Arguments", string.Join(" ", args));
@@ -1151,16 +1130,13 @@ return;
 sAppDir = Homer.Util.getShortPath(sAppDir);
 string sRoot = Path.GetFileNameWithoutExtension(sApp);
 string sName = sRoot + ".ini";
-sDataDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+sDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 sDataDir = Path.Combine(sDataDir, sRoot);
 if (!Directory.Exists(sDataDir)) Directory.CreateDirectory(sDataDir);
 sDataDir = Homer.Util.getShortPath(sDataDir);
 string sQuickDir = Path.Combine(sDataDir, "Quick");
 if (!Directory.Exists(sQuickDir)) Directory.CreateDirectory(sQuickDir);
 sIniFile = Path.Combine(sDataDir, sName);
-// WHERE THE SETTINGS COME FROM, IN THE LOG (30 September 2026): FileDir was
-// forgetting choices between sessions, and nothing recorded which file it read.
-Homer.Log.info("settings file=" + sIniFile + " exists=" + File.Exists(sIniFile) + (File.Exists(sIniFile) ? " bytes=" + new FileInfo(sIniFile).Length + " written=" + File.GetLastWriteTime(sIniFile).ToString("s") : ""));
 App.readIni();
 App.wireListHistory();
 // sTempFile = Path.Combine(sDataDir, "FileDir.tmp");
@@ -6879,9 +6855,6 @@ if (sZip == "") return;
 App.sZipText = sZip;
 }
 
-List<string> lsSkipped = new List<string>();
-bool bNewZip = !File.Exists(sZip);
-Homer.Log.info("zip start archive=" + sZip + " new=" + bNewZip + " items=" + aPaths.Length);
 ZipFile z;
 if (File.Exists(sZip)) {
 App.say("Updating");
@@ -6924,11 +6897,9 @@ else sFile = s.Substring(2);
 else sFile = s.Substring(Path.GetDirectoryName(sPath).Length).TrimStart('\\');
 sName = Path.GetFileName(sFile);
 if (!Homer.Util.stringEquiv(Path.GetFullPath(sFile), sZip)) {
-if (canReadShared(sFile, lsSkipped)) {
 App.say(sName);
-z.Add(new SharedFileSource(sFile), ZipEntry.CleanName(sFile));
+z.Add(sFile);
 iFileCount ++;
-}
 }
 }
 }
@@ -6940,10 +6911,8 @@ if (sPath.ToLower().StartsWith(sZipDir.ToLower())) sName = sPath.Substring(sZipD
 else sName = sPath.Substring(2);
 }
 }
-if (canReadShared(sName, lsSkipped)) {
-z.Add(new SharedFileSource(sName), ZipEntry.CleanName(sName));
+z.Add(sName);
 iFileCount ++;
-}
 }
 else {
 App.say(sName +" not found!");
@@ -6952,19 +6921,11 @@ App.say(sName +" not found!");
 
 z.CommitUpdate();
 z.Close();
-Homer.Log.info("zip done archive=" + sZip + " files=" + iFileCount + " skipped=" + lsSkipped.Count);
 }
 catch (Exception ex) {
-// NO HALF-WRITTEN ARCHIVE IS LEFT BEHIND: the update is abandoned and a
-// new archive that never completed is removed, so nobody sends one on.
-Homer.Log.error("zip failed archive=" + sZip + ": " + ex.ToString());
-try { z.AbortUpdate(); } catch (Exception) { }
-try { z.Close(); } catch (Exception) { }
-if (bNewZip) { try { File.Delete(sZip); } catch (Exception) { } }
-Lbc.Show(ex.Message + (bNewZip ? "\r\n\r\nThe unfinished archive was removed." : ""), "Error");
+Lbc.Show(ex.Message, "Error");
 return;
 }
-if (lsSkipped.Count > 0) Lbc.Show(Homer.Util.stringPlural("file", lsSkipped.Count) + " could not be read, so " + (lsSkipped.Count == 1 ? "it was" : "they were") + " left out:\r\n" + String.Join("\r\n", lsSkipped.ToArray()), "Left Out");
 
 if (testZip(sZip) && bDelete) {
 App.say(App.Recycle ? "Recycling" : "Deleting");
@@ -6989,20 +6950,6 @@ App.sGoToText = sDir;
 App.sOpenText = sDir;
 }
 } // zip_Helper method
-
-bool canReadShared(string sFile, List<string> lsSkipped) {
-// Open the file as the archive will, before it is added: one that cannot be
-// read is left out and named, rather than failing the whole archive.
-try {
-using (FileStream oStream = new FileStream(sFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete)) { }
-return true;
-}
-catch (Exception ex) {
-lsSkipped.Add(sFile);
-Homer.Log.warn("zip left out " + sFile + ": " + ex.Message);
-return false;
-}
-} // canReadShared method
 
 void menuMiscZipTagged_Click(object sender, EventArgs e) {
 zip_Helper("Zip", false);

@@ -1,0 +1,65 @@
+﻿[about]
+Title=09 - Glossary
+Intro=The words FileDir uses, in alphabetical order. I say the term; the reader says what it means.
+Setup=Nothing is needed.
+Homework=Pick three terms you did not know and find each one in FileDir.
+
+[step]
+
+Say=extra info.
+Key=
+Hear=Everything known about the file or episode you are on, one field to a line. Alt plus X.
+
+[step]
+
+Say=folder.
+Key=
+Hear=A list of files and folders, said with its path and its count as you arrive. Enter goes in; Backspace comes up.
+
+[step]
+
+Say=jump.
+Key=
+Hear=Reaching a file by the line the list shows: type a few letters of its name. Control plus J.
+
+[step]
+
+Say=keywords.
+Key=
+Hear=A search across everything known about each file or episode: name, date, address, summary. Control plus K; F3 finds the next.
+
+[step]
+
+Say=Homer Player.
+Key=
+Hear=The player shared by the Homer Tools: a queue of tracks, transport on Control plus the arrows, Scroll Lock to pause, and Alt plus Shift plus R to record.
+
+[step]
+
+Say=play list.
+Key=
+Hear=Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+
+[step]
+
+Say=status line.
+Key=
+Hear=The folder, the line, and how many files are tagged; the bottom of the window. Shift plus Z says it.
+
+[step]
+
+Say=tag.
+Key=
+Hear=A mark on a file so the next command acts on it and on every other tagged file. The semicolon tags and untags.
+
+[step]
+
+Say=transport.
+Key=
+Hear=Control with an arrow, in the player: sideways is time in the track, up and down is tracks, Page keys are chapters; Shift makes the step larger.
+
+[step]
+
+Say=Nine terms. The guide, F1, has each of them in context.
+Key=
+Hear=

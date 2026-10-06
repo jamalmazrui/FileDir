@@ -16,8 +16,18 @@ command's name and what it does instead of running it.
 ## Contents
 
 - [0. A First Walk Through FileDir](#0-a-first-walk-through-filedir)
-- [0a. Tagging Files and Copying Them Somewhere](#0a-tagging-files-and-copying-them-somewhere)
-- [0b. Tagging Files and Copying Them Somewhere](#0b-tagging-files-and-copying-them-somewhere)
+- [00 - Overview and Table of Contents](#00-overview-and-table-of-contents)
+- [01 - Install and Launch](#01-install-and-launch)
+- [0c. Tagging Files and Copying Them Somewhere](#0c-tagging-files-and-copying-them-somewhere)
+- [02 - User Interface Concepts](#02-user-interface-concepts)
+- [03 - Key Patterns](#03-key-patterns)
+- [04 - Open a Folder and Find a File](#04-open-a-folder-and-find-a-file)
+- [05 - Tag Files and Copy Them](#05-tag-files-and-copy-them)
+- [06 - Play a Page's Media in the Homer Player](#06-play-a-pages-media-in-the-homer-player)
+- [09 - Glossary](#09-glossary)
+- [10 - Conclusion](#10-conclusion)
+- [11 - More Information](#11-more-information)
+- [0l. Tagging Files and Copying Them Somewhere](#0l-tagging-files-and-copying-them-somewhere)
 - [1. Your First Five Minutes](#1-your-first-five-minutes)
 - [2. Finding Something in a Crowded Folder](#2-finding-something-in-a-crowded-folder)
 - [3. Tagging, and Why It Changes Everything](#3-tagging-and-why-it-changes-everything)
@@ -1926,7 +1936,163 @@ Alt plus H inside the Player lists every key. F1 lists every control with what i
 
 **Something to try:** Open a different page of podcast links, play the third episode, and use Control plus K to find a word you know is in a summary rather than a title.
 
-## 0a. Tagging Files and Copying Them Somewhere
+## 00 - Overview and Table of Contents
+
+What FileDir is, in a paragraph; the two reader keys every walk assumes; then the table of contents, one line per walk.
+
+**Before you start:** Nothing is needed; this walk is listened to.
+
+### Step 1
+
+FileDir is a file manager for working by ear. A folder is a list you arrow through; a file is a line you hear; tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
+
+### Step 2: Insert+UpArrow
+
+Two keys before anything else, both the reader's own. If a line goes by too fast, Insert plus Up Arrow says it again.
+
+Screen reader:
+
+- (the last line, read a second time)
+
+### Step 3: Insert+Tab
+
+And if you lose your place, Insert plus Tab says where you are: the control, its state, its position, and any hint it carries. The walks are heard with those hints off, the way most people work.
+
+Screen reader:
+
+- (the current control, with its state and position)
+
+### Step 4
+
+Now the table of contents. I say the number and the title; the reader says what the walk covers.
+
+### Step 5
+
+One, Install and Launch.
+
+Screen reader:
+
+- The download, the installer's pages and boxes, and FileDir opening by itself.
+
+### Step 6
+
+Two, User Interface Concepts.
+
+Screen reader:
+
+- A folder as a list, the line you hear and the file behind it, dialogs that all work one way, the status line, and where help is.
+
+### Step 7
+
+Three, Key Patterns.
+
+Screen reader:
+
+- The rules every key follows, so a key can be guessed before it is learned, and the keys that explain the keys.
+
+### Step 8
+
+Four, Open a Folder and Find a File.
+
+Screen reader:
+
+- Arrowing a folder, jumping to a file by name, and opening it.
+
+### Step 9
+
+Five, Tag Files and Copy Them.
+
+Screen reader:
+
+- The semicolon tags; a command then acts on every tagged file at once.
+
+### Step 10
+
+Six, Play a Page's Media in the Homer Player.
+
+Screen reader:
+
+- A podcast page's episodes found, queued and played; the two searches; extra info.
+
+### Step 11
+
+Nine, Glossary.
+
+Screen reader:
+
+- The words FileDir uses, in alphabetical order, one line each.
+
+### Step 12
+
+Ten, Conclusion.
+
+Screen reader:
+
+- Four sentences to carry away, and where to begin.
+
+### Step 13
+
+Eleven, More Information.
+
+Screen reader:
+
+- The guide and history from inside FileDir, the documents, the project page, updates, and the other Homer Tools.
+
+### Step 14
+
+Nine walks, each under five minutes, well under an hour together. They are a course, not a reference: each one assumes those before it.
+
+**Something to try:** Listen to the walks in order; each one assumes the ones before it.
+
+## 01 - Install and Launch
+
+The download, the installer's pages, the finish page and its boxes, and FileDir opening by itself.
+
+**Before you start:** The installer is downloaded, and your reader is running.
+
+### Step 1: Enter
+
+The installer is downloaded; Enter opens it. Windows may first ask whether to run a file from the Internet; Alt plus R, Run, answers it.
+
+Screen reader:
+
+- FileDir Setup dialog
+
+### Step 2: Enter
+
+Each page of the installer is a dialog like any other: Tab through it, Enter for Next. The last page is the finish page, with boxes for what else to install -- the screen reader scripts, and mpv, which the Homer Player plays with.
+
+Screen reader:
+
+- Next button
+
+### Step 3
+
+A box that is ticked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
+
+### Step 4: Enter
+
+Enter on Finish, and FileDir opens by itself on a folder. The desktop shortcut's key, Alt plus Control plus F, opens it from anywhere after that, and brings it forward if it is open already.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 5
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 6
+
+Alt plus Control plus F.
+
+Screen reader:
+
+- Open FileDir
+
+**Something to try:** Install FileDir and open it from its desktop shortcut.
+
+## 0c. Tagging Files and Copying Them Somewhere
 
 This is a simulation, not a recording.
 
@@ -1975,7 +2141,568 @@ Nothing is moved unless you use Control plus M instead, which moves.
 
 **Something to try:** Tag three files, copy them to a new folder, then untag with the slash key and check the count with Alt plus Y.
 
-## 0b. Tagging Files and Copying Them Somewhere
+## 02 - User Interface Concepts
+
+What FileDir is made of: the folder as a list, the line you hear and the file behind it, Enter and Backspace, dialogs that all work one way, the status line, and where help is.
+
+**Before you start:** FileDir is open on any folder. Nothing needs pressing in this walk; it is listened to.
+
+### Step 1
+
+FileDir is one window. The main view is a list box: the folder you are in, one line per file or folder, with the folder's path and its count said as you arrive.
+
+### Step 2
+
+A line is a file: its name, and more when you ask. Alt plus X, Extra Info, shows everything known about it, one field to a line.
+
+### Step 3
+
+Enter on a folder goes in; Backspace goes up a level. Enter on a file opens it in the program Windows has for it; a page of media opens in the Homer Player.
+
+### Step 4
+
+Every dialog is built the same way: a label and its control, Tab between them, Alt plus the underlined letter to jump to one, Control plus Enter for OK from anywhere, Escape to cancel. Text boxes that ask for a name remember your last ten answers.
+
+### Step 5
+
+The status line says the folder, the line, and how many files are tagged. Shift plus Z says it; Z is the bottom of the alphabet, like the line is the bottom of the window.
+
+### Step 6
+
+Help is in four places, and they are the same in every Homer program. F1 opens the guide, the whole program in one document. Shift plus F1 opens the history of changes. Alt plus F1 says the version and offers the newer one if there is one.
+
+### Step 7
+
+The Help menu, F10 then H, Hotel, holds the same three, and Play Tutorials, which plays these walks. And the menus themselves are help: arrow through any menu and the reader says each command with its key and its letter.
+
+### Step 8
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 9
+
+F1.
+
+Screen reader:
+
+- Guide
+
+### Step 10
+
+Alt plus X.
+
+Screen reader:
+
+- Extra Info
+
+**Something to try:** Open a folder and name each thing as you reach it: the list, the line, the status line.
+
+## 03 - Key Patterns
+
+The rules every FileDir key follows, so a key can be guessed before it is learned: the word gives the letter, Control does, Shift asks, Shift widens, Alt Shift is a command with no control, the semicolon tags, and the function keys follow Windows.
+
+**Before you start:** FileDir is open on any folder.
+
+### Step 1
+
+Every key in FileDir is named for a word in its command: Control plus J is Jump, Control plus K is Keywords, Control plus C is Copy. A key never comes from the middle of a word.
+
+### Step 2
+
+Control plus a letter does something. Shift plus a letter asks something, and changes nothing: Shift plus Z says the status.
+
+### Step 3
+
+Adding Shift to a key reverses or widens it: Control plus L plays a file; Control plus Shift plus L plays every media link a page holds.
+
+### Step 4
+
+Alt plus Shift plus a letter is a command with no control of its own. Alt plus a letter alone jumps to a control in a dialog.
+
+### Step 5
+
+The function keys follow Windows and Office: F1 help, F2 rename, F3 find again, F4 pick from a list, F5 refresh, F10 the menus, F11 the version, F12 files.
+
+### Step 6
+
+One key is FileDir's own: the semicolon tags the file you are on, and the next command acts on every tagged file. Semicolon again untags.
+
+### Step 7: Control+F1
+
+The keys that explain the keys. Control plus F1 is the Key Describer: on, every key says what it does instead of doing it, the safe way to explore the keyboard. Hotkeys, in the Help menu, lists every key three ways; F1 opens the guide; and your reader's own Insert plus Tab says where you are.
+
+Screen reader:
+
+- Key Describer On
+
+### Step 8: Control+F1
+
+Control plus F1 again turns it off.
+
+Screen reader:
+
+- No Key Describer
+
+### Step 9
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 10
+
+Control plus F1.
+
+Screen reader:
+
+- Key Describer
+
+**Something to try:** Guess the key for Keywords, Extra Info and Rename before you look them up, then check with Control plus F1.
+
+## 04 - Open a Folder and Find a File
+
+A folder as a list: arrowing it, jumping to a file by name with Jump, and opening what you find. This walk assumes walks one to three.
+
+**Before you start:** FileDir is open on a folder of saved web pages.
+
+### Step 1
+
+Every folder opens as a list you arrow through. the reader says the folder and how many items are in it.
+
+Screen reader:
+
+- FileDir
+- List box C:\PodcastDirectories
+- 119 items
+
+The count comes once, when the folder opens.
+
+### Step 2: DownArrow
+
+Up and Down Arrows move through the list; a letter jumps to the first name starting with it. Enter on a folder goes in; Backspace comes back up.
+
+Screen reader:
+
+- Blind Movers dot h t m
+
+### Step 3: Control+J
+
+Control plus J jumps to a file by name. FileDir asks for the text and remembers your last ten answers.
+
+Screen reader:
+
+- Jump
+- Text edit combo
+
+The window is named Jump because the key is J.
+
+### Step 4: Enter
+
+Type access and press Enter.
+
+Screen reader:
+
+- Access On dot h t m
+
+Jump looks at names. Control plus K looks inside the files.
+
+### Step 5
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 6
+
+Control plus J.
+
+Screen reader:
+
+- Jump
+
+**Something to try:** Open a folder of your own, jump to a file by its first letters, and open it.
+
+## 05 - Tag Files and Copy Them
+
+Tagging two files with the semicolon and copying both at once: the one idea behind every FileDir command that acts on several files. This walk assumes walk four.
+
+**Before you start:** A folder of files is open.
+
+### Step 1: Semicolon
+
+Arrow to a file you want, and press the semicolon to tag it. Tagging marks a file for the next command without moving you.
+
+Screen reader:
+
+- Tagged
+
+The slash key untags. Shift plus Home tags everything from here to the top.
+
+### Step 2: Semicolon
+
+Arrow to another file and tag that one too. FileDir says how many are tagged as the number changes.
+
+Screen reader:
+
+- 2 tagged files
+
+Alt plus Y says the count at any time.
+
+### Step 3: Control+C
+
+Press Control plus C to copy the tagged files. FileDir asks where to.
+
+Screen reader:
+
+- Copy To
+- Folder edit
+
+The window is named for the command. The box remembers the last ten answers.
+
+### Step 4: Enter
+
+Type the folder, or press Alt plus B to browse for it, then Enter.
+
+Screen reader:
+
+- 2 files copied
+
+Nothing is moved unless you use Control plus M instead, which moves.
+
+### Step 5
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 6
+
+Control plus C.
+
+Screen reader:
+
+- Copy
+
+**Something to try:** Tag three files and move them to a folder of your own.
+
+## 06 - Play a Page's Media in the Homer Player
+
+A saved podcast page's episodes found and queued in the Homer Player; the transport keys; the two searches, by name and by everything known; and Extra Info. This walk assumes walks four and five, and the player's own help, F1 inside it, has the rest.
+
+**Before you start:** FileDir is open on a folder of saved podcast directories, on Access On dot h t m.
+
+### Step 1: Control+Shift+L
+
+This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
+
+Screen reader:
+
+- Play list
+- Looking for media links in Access On dot h t m
+- Access On dot h t m
+- Track list, 92 tracks from links in Access On dot h t m: List box
+
+The window is named after the play list until something plays. Nothing plays yet.
+
+### Step 2: Tab
+
+The Player is a dialog, so Tab moves through it. In order: the track list, extra info, the sort order, next and previous track, forward and backward, the jump size, the two chapter buttons, where in track, rate, volume, then execute, stop, defaults, help and close.
+
+Screen reader:
+
+- Extra Info: edit read only
+
+Every control has its own Alt key: T for the track list, X for extra info, O for order, E for execute, S for stop, H for help.
+
+### Step 3: Shift+Tab
+
+Three keys do most of the work. Enter plays the track the cursor is on. Space plays and pauses from anywhere but a button. Escape closes the Player.
+
+Screen reader:
+
+- Track list, 92 tracks from links in Access On dot h t m: List box
+- Access On is coming soon
+
+Shift plus Tab goes back the way you came.
+
+### Step 4: DownArrow
+
+The track list holds one line for each episode: its name, and its length where the page gave one. There is no number in front, so pressing a letter jumps to the first episode beginning with it.
+
+Screen reader:
+
+- Welcome to Access on, and AI to help you use your technology, 1 colon 09 colon 23
+
+Arrowing through the list chooses nothing and plays nothing.
+
+### Step 5: Enter
+
+Press Enter to play the one you are on.
+
+Screen reader:
+
+- Playing
+
+Now the window title is the track, so your screen reader's title key says what is playing.
+
+### Step 6
+
+There are two modes, and Enter follows them. While something plays, Enter is stop. While nothing plays, Enter is execute playback. The status line says which: press your screen reader's key for it.
+
+Screen reader:
+
+- Playing track 2 of 92, 12 min 3 sec of 1 hr 9 min
+
+The status line is never announced. It waits until you ask.
+
+### Step 7: Control+RightArrow
+
+Control with an arrow is the transport. Sideways is time inside the track, up and down is tracks in the queue, the Page keys are chapters, and adding Shift means all the way.
+
+Screen reader:
+
+- 13 min 3 sec of 1 hr 9 min
+
+The jump is a minute to begin with. Alt plus I offers fifteen seconds up to an hour.
+
+### Step 8: Space
+
+Press Space to pause.
+
+Screen reader:
+
+- Paused
+
+Space plays and pauses from any control except a button, where Space presses the button.
+
+### Step 9: Control+J
+
+Now the two searches, which answer different questions. Control plus J jumps by the line the list shows. Type braillenote and press Enter.
+
+Screen reader:
+
+- Jump
+- Text edit combo
+- The BrailleNote Evolve from HumanWare
+
+That title has the word in it, so Jump finds it.
+
+### Step 10: Control+K
+
+Control plus K searches everything known about each episode: the presenter, the date, the address, and the summary the page gave. Type meta glasses and press Enter.
+
+Screen reader:
+
+- Keywords
+- Text edit combo
+- Workaround for the Braille Screen Input Uber bug, Android becomes more restrictive, and assigning a Braille keyboard command to Sound Curtin
+
+Those words are nowhere in that title. They are in the summary, which is why Keywords found it and Jump could not.
+
+### Step 11: F3
+
+Keywords takes more than one word. An ampersand means both, a bar means either, and a star stands for anything in the middle. F3 repeats whichever search you used last, and Shift plus F3 goes back.
+
+Screen reader:
+
+- 0 more matches for meta glasses
+
+Control plus F filters the list to what matches; Control plus Shift plus F clears it.
+
+### Step 12: Alt+X
+
+Alt plus X is extra info: everything known about the episode the cursor is on, one field to a line, sorted by field. The cursor starts at the top.
+
+Screen reader:
+
+- Extra Info: edit read only
+- Address https colon slash slash pinecast dot com slash listen
+
+The fields come from the page, from the play list, and from ExifTool for a file on this computer.
+
+### Step 13: Alt+H
+
+Alt plus H is help. It leads with the keys that have no button, because those are the hardest to find.
+
+Screen reader:
+
+- Player Help
+- PLAYER
+- Every control has its own Alt key, the letter underlined in its name.
+- These commands have no control, so they are listed first.
+- FINDING A TRACK
+- Control plus J jump to a track by name, as the list shows it
+- Control plus K keywords, search everything known about the tracks
+- F3, Shift plus F3 repeat the last jump or keyword search
+
+Read it by line, or copy it. OK closes it.
+
+### Step 14: Escape
+
+Escape leaves the help. Escape again closes the Player, remembering the settings for this play list and where each episode had reached.
+
+Screen reader:
+
+- FileDir
+- List box C:\PodcastDirectories
+
+Open the same page tomorrow and it starts where you stopped.
+
+### Step 15
+
+That is the whole of it. One key to find a file, one key to play what is in it, Control with the arrows to move about, and Escape to come back.
+
+Alt plus H inside the Player lists every key. F1 lists every control with what it does.
+
+### Step 16
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 17
+
+Control plus Shift plus L.
+
+Screen reader:
+
+- Play list
+
+### Step 18
+
+Control plus K.
+
+Screen reader:
+
+- Keywords
+
+### Step 19
+
+Alt plus X.
+
+Screen reader:
+
+- Extra Info
+
+**Something to try:** Open a podcast page of your own, play an episode, pause it, and search the queue for a word.
+
+## 09 - Glossary
+
+The words FileDir uses, in alphabetical order. I say the term; the reader says what it means.
+
+**Before you start:** Nothing is needed.
+
+### Step 1
+
+extra info.
+
+Screen reader:
+
+- Everything known about the file or episode you are on, one field to a line. Alt plus X.
+
+### Step 2
+
+folder.
+
+Screen reader:
+
+- A list of files and folders, said with its path and its count as you arrive. Enter goes in; Backspace comes up.
+
+### Step 3
+
+jump.
+
+Screen reader:
+
+- Reaching a file by the line the list shows: type a few letters of its name. Control plus J.
+
+### Step 4
+
+keywords.
+
+Screen reader:
+
+- A search across everything known about each file or episode: name, date, address, summary. Control plus K; F3 finds the next.
+
+### Step 5
+
+Homer Player.
+
+Screen reader:
+
+- The player shared by the Homer Tools: a queue of tracks, transport on Control plus the arrows, Scroll Lock to pause, and Alt plus Shift plus R to record.
+
+### Step 6
+
+play list.
+
+Screen reader:
+
+- Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+
+### Step 7
+
+status line.
+
+Screen reader:
+
+- The folder, the line, and how many files are tagged; the bottom of the window. Shift plus Z says it.
+
+### Step 8
+
+tag.
+
+Screen reader:
+
+- A mark on a file so the next command acts on it and on every other tagged file. The semicolon tags and untags.
+
+### Step 9
+
+transport.
+
+Screen reader:
+
+- Control with an arrow, in the player: sideways is time in the track, up and down is tracks, Page keys are chapters; Shift makes the step larger.
+
+### Step 10
+
+Nine terms. The guide, F1, has each of them in context.
+
+**Something to try:** Pick three terms you did not know and find each one in FileDir.
+
+## 10 - Conclusion
+
+What to carry away from the walks, in four sentences, and where to begin.
+
+**Before you start:** Nothing is needed.
+
+### Step 1
+
+Four things to carry away. A key is named for a word of its command, so it can be guessed. The semicolon tags, and every command then acts on all of them. Jump finds by name; Keywords finds by everything known. And the Homer Player is the same in every Homer program.
+
+### Step 2
+
+Start in a folder you use every day, tag what you want to move, and move it. The rest follows from that.
+
+**Something to try:** Open the folder you use most and tag three files.
+
+## 11 - More Information
+
+Where the rest is: the guide and history from inside FileDir, the documents, the GitHub page, updates, and the other Homer Tools.
+
+**Before you start:** Nothing is needed.
+
+### Step 1
+
+F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+
+### Step 2
+
+The ReadMe is the short start; the guide is the reference; Hotkeys lists every key three ways. All three are in the help folder of the installation, and on the project's GitHub page.
+
+### Step 3
+
+F11 checks for a newer version and offers to install it. The project is at github dot com, slash JamalMazrui, slash FileDir.
+
+### Step 4
+
+FileDir is one of the Homer Tools, free programs for working by ear: EdSharp for text, FileDir for files, DbDo for data. They share their keys and their player, so learning one is most of learning the next.
+
+**Something to try:** Press F1 and read the first section of the guide.
+
+## 0l. Tagging Files and Copying Them Somewhere
 
 This is a simulation, not a recording.
 

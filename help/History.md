@@ -983,6 +983,18 @@ Sped up time for subsequent invocations of FileDir after the  initial one.  Impr
 - **The installer finds the kit wherever it is.** The build passes the kit folder to Inno Setup, and the include of HomerComponents.iss follows it, rather than naming C:\HomerDev.
 - **Tidier repository.** The copies of the kit's classes and the root tagRelease files are removed from the top of the project; git records buildFileDir.cmd, buildFileDir.ps1 and FileDir_setup.iss under their current capitals; and `.gitattributes` keeps the Homer CRLF line endings as they are, rather than converting them.
 
+## Version 5.0.135
+
+**The walks take the Homer pattern of nine.** 00 Overview and Table of Contents, 01
+Install and Launch, 02 User Interface Concepts, 03 Key Patterns, three tasks --
+04 Open a Folder and Find a File, 05 Tag Files and Copy Them, 06 Play a Page's
+Media in the Homer Player -- then 09 Glossary, 10 Conclusion and 11 More
+Information. The earlier two walks were regrouped into these, nothing dropped;
+the concept walks, the glossary and the summaries are new, and every recap is
+two voices. The audio is named like a chapter, 04_Open_a_Folder_and_Find_a_File.mp3,
+and the build speaks any walk whose audio is missing or stale. Needs HomerDev
+1.52.3.
+
 ## Version 5.0.86
 
 *September 2026*

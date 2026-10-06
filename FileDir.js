@@ -1,4 +1,4 @@
-/*
+﻿/*
 FileDir.js -- JScript .NET scripting host for FileDir, compiled by jsc.exe
 into FileDirScript.dll. FileDir.exe loads this assembly at run time via
 Assembly.LoadFrom(<full path>) and calls FileDirScript.JS.runScript by

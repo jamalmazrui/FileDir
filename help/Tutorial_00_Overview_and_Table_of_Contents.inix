@@ -1,0 +1,129 @@
+﻿; Tutorial.inix -- the first walk through FileDir and the Player.
+;
+; WHAT THIS FILE IS
+;
+; One step to a section, in the order a person would do them. Each step says
+; three things: what a narrator should explain, which key to press, and what a
+; screen reader says in answer.
+;
+;   Say=    the narration, in plain words
+;   Key=    the key to press, written the way the documents write keys
+;   Hear=   one line of what a screen reader says, repeated for each line it says
+;   Note=   a remark for the reader of the written version; not spoken
+;
+; The Hear lines are the point of the format. They come from real speech
+; histories rather than from anybody's idea of what ought to be said, so the
+; written tutorial matches what a person actually hears, and the same file can
+; be replayed later to check that it still does.
+;
+; The settings assumed are the factory ones, with tutor messages limited to
+; controls that are not standard, and punctuation not announced.
+;
+; The two searches use a real directory: the Access On show, whose episodes
+; mention the BrailleNote Evolve in a title and the Ray Ban Meta Glasses only in
+; a summary. That contrast is the whole reason both searches exist.
+;
+; makeTutorial.py turns this into a section of Tutorials.md.
+; sayTutorial.cmd turns it into a spoken walk, clearly announced as a
+; simulation.
+
+; The feed section is read from whichever script has one, and describes the
+; whole set rather than this tutorial. Base is where the files will live when
+; published; leave it as it is to keep the feed working from a folder on disk.
+[feed]
+Title=Homer Tools Walkthroughs
+Description=Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.
+Author=Jamal Mazrui
+Email=empowermentzone@gmail.com
+Base=
+
+[about]
+Title=00 - Overview and Table of Contents
+Intro=What FileDir is, in a paragraph; the two reader keys every walk assumes; then the table of contents, one line per walk.
+Setup=Nothing is needed; this walk is listened to.
+Homework=Listen to the walks in order; each one assumes the ones before it.
+
+[step]
+
+Say=FileDir is a file manager for working by ear. A folder is a list you arrow through; a file is a line you hear; tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
+Key=
+Hear=
+
+[step]
+
+Say=Two keys before anything else, both the reader's own. If a line goes by too fast, Insert plus Up Arrow says it again.
+Key=Insert+UpArrow
+Hear=(the last line, read a second time)
+Say=Nothing changed; the key only repeats.
+
+[step]
+
+Say=And if you lose your place, Insert plus Tab says where you are: the control, its state, its position, and any hint it carries. The walks are heard with those hints off, the way most people work.
+Key=Insert+Tab
+Hear=(the current control, with its state and position)
+
+[step]
+
+Say=Now the table of contents. I say the number and the title; the reader says what the walk covers.
+Key=
+Hear=
+
+[step]
+
+Say=One, Install and Launch.
+Key=
+Hear=The download, the installer's pages and boxes, and FileDir opening by itself.
+
+[step]
+
+Say=Two, User Interface Concepts.
+Key=
+Hear=A folder as a list, the line you hear and the file behind it, dialogs that all work one way, the status line, and where help is.
+
+[step]
+
+Say=Three, Key Patterns.
+Key=
+Hear=The rules every key follows, so a key can be guessed before it is learned, and the keys that explain the keys.
+
+[step]
+
+Say=Four, Open a Folder and Find a File.
+Key=
+Hear=Arrowing a folder, jumping to a file by name, and opening it.
+
+[step]
+
+Say=Five, Tag Files and Copy Them.
+Key=
+Hear=The semicolon tags; a command then acts on every tagged file at once.
+
+[step]
+
+Say=Six, Play a Page's Media in the Homer Player.
+Key=
+Hear=A podcast page's episodes found, queued and played; the two searches; extra info.
+
+[step]
+
+Say=Nine, Glossary.
+Key=
+Hear=The words FileDir uses, in alphabetical order, one line each.
+
+[step]
+
+Say=Ten, Conclusion.
+Key=
+Hear=Four sentences to carry away, and where to begin.
+
+[step]
+
+Say=Eleven, More Information.
+Key=
+Hear=The guide and history from inside FileDir, the documents, the project page, updates, and the other Homer Tools.
+
+[step]
+
+Say=Nine walks, each under five minutes, well under an hour together. They are a course, not a reference: each one assumes those before it.
+Key=
+Hear=

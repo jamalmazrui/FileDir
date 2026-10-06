@@ -1,0 +1,65 @@
+﻿[about]
+Title=02 - User Interface Concepts
+Intro=What FileDir is made of: the folder as a list, the line you hear and the file behind it, Enter and Backspace, dialogs that all work one way, the status line, and where help is.
+Setup=FileDir is open on any folder. Nothing needs pressing in this walk; it is listened to.
+Homework=Open a folder and name each thing as you reach it: the list, the line, the status line.
+
+[step]
+
+Say=FileDir is one window. The main view is a list box: the folder you are in, one line per file or folder, with the folder's path and its count said as you arrive.
+Key=
+Hear=
+
+[step]
+
+Say=A line is a file: its name, and more when you ask. Alt plus X, Extra Info, shows everything known about it, one field to a line.
+Key=
+Hear=
+
+[step]
+
+Say=Enter on a folder goes in; Backspace goes up a level. Enter on a file opens it in the program Windows has for it; a page of media opens in the Homer Player.
+Key=
+Hear=
+
+[step]
+
+Say=Every dialog is built the same way: a label and its control, Tab between them, Alt plus the underlined letter to jump to one, Control plus Enter for OK from anywhere, Escape to cancel. Text boxes that ask for a name remember your last ten answers.
+Key=
+Hear=
+
+[step]
+
+Say=The status line says the folder, the line, and how many files are tagged. Shift plus Z says it; Z is the bottom of the alphabet, like the line is the bottom of the window.
+Key=
+Hear=
+
+[step]
+
+Say=Help is in four places, and they are the same in every Homer program. F1 opens the guide, the whole program in one document. Shift plus F1 opens the history of changes. Alt plus F1 says the version and offers the newer one if there is one.
+Key=
+Hear=
+
+[step]
+
+Say=The Help menu, F10 then H, Hotel, holds the same three, and Play Tutorials, which plays these walks. And the menus themselves are help: arrow through any menu and the reader says each command with its key and its letter.
+Key=
+Hear=
+
+[step]
+
+Say=What this walk taught. I say the key; the reader says what it does.
+Key=
+Hear=
+
+[step]
+
+Say=F1.
+Key=
+Hear=Guide
+
+[step]
+
+Say=Alt plus X.
+Key=
+Hear=Extra Info

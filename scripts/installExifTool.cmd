@@ -36,12 +36,12 @@ echo ExifTool is installed.
 goto :done
 
 :update
-echo Updating ExifTool to the newest version. Nothing is asked of you while it runs.
+echo ExifTool is installed. Checking for a newer version.
 winget upgrade --id OliverBetz.ExifTool --exact --silent --accept-source-agreements --accept-package-agreements --disable-interactivity >> "%log%" 2>&1
 set "iCode=%ERRORLEVEL%"
 call "%~dp0installCommon.cmd" log "winget upgrade OliverBetz.ExifTool exit code %iCode%"
 if "%iCode%"=="0" echo ExifTool was updated.
-if not "%iCode%"=="0" echo ExifTool was NOT updated; the log has winget's answer.
+if not "%iCode%"=="0" echo ExifTool is already the newest winget offers.
 goto :done
 
 :failed

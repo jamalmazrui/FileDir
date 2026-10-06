@@ -1,0 +1,65 @@
+﻿[about]
+Title=03 - Key Patterns
+Intro=The rules every FileDir key follows, so a key can be guessed before it is learned: the word gives the letter, Control does, Shift asks, Shift widens, Alt Shift is a command with no control, the semicolon tags, and the function keys follow Windows.
+Setup=FileDir is open on any folder.
+Homework=Guess the key for Keywords, Extra Info and Rename before you look them up, then check with Control plus F1.
+
+[step]
+
+Say=Every key in FileDir is named for a word in its command: Control plus J is Jump, Control plus K is Keywords, Control plus C is Copy. A key never comes from the middle of a word.
+Key=
+Hear=
+
+[step]
+
+Say=Control plus a letter does something. Shift plus a letter asks something, and changes nothing: Shift plus Z says the status.
+Key=
+Hear=
+
+[step]
+
+Say=Adding Shift to a key reverses or widens it: Control plus L plays a file; Control plus Shift plus L plays every media link a page holds.
+Key=
+Hear=
+
+[step]
+
+Say=Alt plus Shift plus a letter is a command with no control of its own. Alt plus a letter alone jumps to a control in a dialog.
+Key=
+Hear=
+
+[step]
+
+Say=The function keys follow Windows and Office: F1 help, F2 rename, F3 find again, F4 pick from a list, F5 refresh, F10 the menus, F11 the version, F12 files.
+Key=
+Hear=
+
+[step]
+
+Say=One key is FileDir's own: the semicolon tags the file you are on, and the next command acts on every tagged file. Semicolon again untags.
+Key=
+Hear=
+
+[step]
+
+Say=The keys that explain the keys. Control plus F1 is the Key Describer: on, every key says what it does instead of doing it, the safe way to explore the keyboard. Hotkeys, in the Help menu, lists every key three ways; F1 opens the guide; and your reader's own Insert plus Tab says where you are.
+Key=Control+F1
+Hear=Key Describer On
+
+[step]
+
+Say=Control plus F1 again turns it off.
+Key=Control+F1
+Hear=No Key Describer
+
+[step]
+
+Say=What this walk taught. I say the key; the reader says what it does.
+Key=
+Hear=
+
+[step]
+
+Say=Control plus F1.
+Key=
+Hear=Key Describer

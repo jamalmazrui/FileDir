@@ -682,34 +682,12 @@ catch (Exception) { }
 return bMade;
 } // fromText method
 
-private static string twoHtmExe() {
-// WHICH 2HTM, AND WHERE (30 September 2026). The copy beside FileDir first;
-// then the one the 2htm installer put in Program Files; then one on the PATH.
-// "?" usually failed, and nothing recorded which 2htm it tried, or whether any
-// was there at all. Each place looked at, and the one used, goes to the log.
-System.Collections.Generic.List<string> lsPlaces = new System.Collections.Generic.List<string>();
-lsPlaces.Add(Path.Combine(Homer.Media.exeFolder(), "2htm.exe"));
-string sProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-lsPlaces.Add(Path.Combine(sProgramFiles, @"2htm\exec\2htm.exe"));
-lsPlaces.Add(Path.Combine(sProgramFiles, @"2htm\2htm.exe"));
-foreach (string sFolder in (Environment.GetEnvironmentVariable("PATH") ?? "").Split(';')) {
-if (sFolder.Trim().Length > 0) lsPlaces.Add(Path.Combine(sFolder.Trim(), "2htm.exe"));
-}
-foreach (string sPlace in lsPlaces) {
-bool bThere = false;
-try { bThere = File.Exists(sPlace); } catch (Exception) { }
-if (bThere) { Homer.Log.info("2htm found=" + sPlace); return sPlace; }
-}
-Homer.Log.warn("2htm not found; looked in " + lsPlaces[0] + ", " + lsPlaces[1] + ", " + lsPlaces[2] + " and the PATH");
-return lsPlaces[0];
-} // twoHtmExe method
-
 private static string throughTwoHtm(string sPath, out string sError) {
 // 2htm into a temporary text file, read back.
 sError = "";
-string sExe = twoHtmExe();
+string sExe = Path.Combine(Homer.Media.exeFolder(), "2htm.exe");
 if (!File.Exists(sExe)) {
-sError = "2htm was not found: not beside FileDir, not in Program Files\\2htm, and not on the PATH. Install 2htm, and press Question Mark again.";
+sError = "2htm.exe is not in the FileDir folder.";
 return "";
 }
 string sTemp = Path.Combine(Path.GetTempPath(),
@@ -862,9 +840,9 @@ private static bool convertLegacy(string sSource, string sTarget, out string sEr
 // Word, PowerPoint and Excel, and PDF. Plain text uses its -p switch; anything
 // else gets its HTML.
 sError = "";
-string sExe = twoHtmExe();
+string sExe = Path.Combine(Homer.Media.exeFolder(), "2htm.exe");
 if (!File.Exists(sExe)) {
-sError = "2htm was not found: not beside FileDir, not in Program Files\\2htm, and not on the PATH, so this format cannot be converted.";
+sError = "2htm.exe was not found in the FileDir folder, so this format cannot be converted.";
 return false;
 }
 string sExt = Path.GetExtension(sTarget).ToLower().TrimStart('.');
@@ -877,8 +855,6 @@ sbArgs.Append(" ");
 sbArgs.Append(Homer.Util.stringQuote(sSource));
 string sOut, sErr;
 int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
-Homer.Log.info("run exit=" + iCode + " cmd=\"" + sExe + " " + sbArgs.ToString() + "\"");
-if ((sOut + sErr).Trim().Length > 0) Homer.Log.info("2htm said: " + (sOut + " " + sErr).Trim().Replace("\r\n", " | ").Replace("\n", " | "));
 
 // 2HTM REPORTS FAILURE IN ITS OUTPUT AND STILL RETURNS ZERO.
 //
@@ -907,7 +883,6 @@ return false;
 // 2htm names its own output after the source, so the file it wrote may not be
 // the name asked for; it is renamed rather than left with a surprising name.
 string sMade = Path.Combine(sOutDir, Path.GetFileNameWithoutExtension(sSource) + "." + (sExt == "txt" ? "txt" : "htm"));
-Homer.Log.info("2htm output=" + sMade + " exists=" + File.Exists(sMade) + (File.Exists(sMade) ? " bytes=" + new FileInfo(sMade).Length : ""));
 if (File.Exists(sMade)) {
 if (String.Compare(sMade, sTarget, true) != 0) {
 try {
@@ -978,8 +953,6 @@ sbArgs.Append(" ");
 sbArgs.Append(Homer.Util.stringQuote(sTarget));
 string sOut, sErr;
 int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
-Homer.Log.info("run exit=" + iCode + " cmd=\"" + sExe + " " + sbArgs.ToString() + "\"");
-if ((sOut + sErr).Trim().Length > 0) Homer.Log.info("2htm said: " + (sOut + " " + sErr).Trim().Replace("\r\n", " | ").Replace("\n", " | "));
 if (iCode == 0 && File.Exists(sTarget)) return true;
 sError = firstLine((sErr + "\n" + sOut).Trim());
 if (sError.Length == 0) sError = "ImageMagick returned " + iCode + ".";
@@ -1022,8 +995,6 @@ sbArgs.Append(" ");
 sbArgs.Append(Homer.Util.stringQuote(sTarget));
 string sOut, sErr;
 int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
-Homer.Log.info("run exit=" + iCode + " cmd=\"" + sExe + " " + sbArgs.ToString() + "\"");
-if ((sOut + sErr).Trim().Length > 0) Homer.Log.info("2htm said: " + (sOut + " " + sErr).Trim().Replace("\r\n", " | ").Replace("\n", " | "));
 if (iCode == 0 && File.Exists(sTarget)) return true;
 sError = sErr.Trim();
 if (sError.Length == 0) sError = "ffmpeg returned " + iCode + ".";

@@ -36,12 +36,12 @@ echo Pandoc is installed.
 goto :done
 
 :update
-echo Updating Pandoc to the newest version. Nothing is asked of you while it runs.
+echo Pandoc is installed. Checking for a newer version.
 winget upgrade --id JohnMacFarlane.Pandoc --exact --silent --accept-source-agreements --accept-package-agreements --disable-interactivity >> "%log%" 2>&1
 set "iCode=%ERRORLEVEL%"
 call "%~dp0installCommon.cmd" log "winget upgrade JohnMacFarlane.Pandoc exit code %iCode%"
 if "%iCode%"=="0" echo Pandoc was updated.
-if not "%iCode%"=="0" echo Pandoc was NOT updated; the log has winget's answer.
+if not "%iCode%"=="0" echo Pandoc is already the newest winget offers.
 goto :done
 
 :failed

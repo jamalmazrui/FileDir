@@ -345,21 +345,21 @@ FileName: "{app}\scripts\installYtDlp.cmd"; \
 
 ; ---- 2. Update, ticked ---------------------------------------------------------
 FileName: "{app}\scripts\installExifTool.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelExifTool}"; \
   Check: isUpdateExifTool; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installFfmpeg.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelffmpeg}"; \
   Check: isUpdateffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installImageMagick.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelImageMagick}"; \
   Check: isUpdateImageMagick; \
@@ -373,7 +373,7 @@ FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installMpv.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelmpv}"; \
   Check: isUpdatempv; \
@@ -387,28 +387,28 @@ FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installOllama.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelOllama}"; \
   Check: isUpdateOllama; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installPandoc.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelPandoc}"; \
   Check: isUpdatePandoc; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installPdfTools.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelPdfTools}"; \
   Check: isUpdatePdfTools; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installYtDlp.cmd"; \
-  Parameters: "noPause update"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelYtDlp}"; \
   Check: isUpdateYtDlp; \
@@ -416,21 +416,21 @@ FileName: "{app}\scripts\installYtDlp.cmd"; \
 
 ; ---- 3. Reinstall, unticked ----------------------------------------------------
 FileName: "{app}\scripts\installExifTool.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelExifTool}"; \
   Check: isReinstallExifTool; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installFfmpeg.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelffmpeg}"; \
   Check: isReinstallffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installImageMagick.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelImageMagick}"; \
   Check: isReinstallImageMagick; \
@@ -444,7 +444,7 @@ FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installMpv.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelmpv}"; \
   Check: isReinstallmpv; \
@@ -458,35 +458,35 @@ FileName: "{app}\scripts\installScreenReaderSupport.cmd"; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installOllama.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelOllama}"; \
   Check: isReinstallOllama; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installPandoc.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelPandoc}"; \
   Check: isReinstallPandoc; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installPdfTools.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelPdfTools}"; \
   Check: isReinstallPdfTools; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installModels.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelModel}"; \
   Check: isModelReinstall; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
 FileName: "{app}\scripts\installYtDlp.cmd"; \
-  Parameters: "noPause reinstall"; \
+  Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
   Description: "{code:labelYtDlp}"; \
   Check: isReinstallYtDlp; \
@@ -701,14 +701,6 @@ end;
 //  ---- checkbox wording and visibility, one line each ----------------------
 //  AI NOTE FOR CUSTOMIZING: three functions per component, one per verb, and
 //  a label function; two per model. Name the model as installModels.cmd does.
-function labelJaws(sParam: String): String;    begin Result := homerReaderLabel('jaws'); end;
-function isInstallJaws(): Boolean;             begin Result := homerReaderIs('jaws', 0); end;
-function isUpdateJaws(): Boolean;              begin Result := homerReaderIs('jaws', 1); end;
-function isReinstallJaws(): Boolean;           begin Result := homerReaderIs('jaws', 2); end;
-function labelNvda(sParam: String): String;    begin Result := homerReaderLabel('nvda'); end;
-function isInstallNvda(): Boolean;             begin Result := homerReaderIs('nvda', 0); end;
-function isUpdateNvda(): Boolean;              begin Result := homerReaderIs('nvda', 1); end;
-function isReinstallNvda(): Boolean;           begin Result := homerReaderIs('nvda', 2); end;
 function labelExifTool(sParam: String): String;  begin Result := homerLabel(iExifTool); end;
 function isInstallExifTool(): Boolean;           begin Result := homerIs(iExifTool, 0); end;
 function isUpdateExifTool(): Boolean;            begin Result := homerIs(iExifTool, 1); end;

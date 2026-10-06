@@ -36,12 +36,12 @@ echo mpv is installed.
 goto :done
 
 :update
-echo Updating mpv to the newest version. Nothing is asked of you while it runs.
+echo mpv is installed. Checking for a newer version.
 winget upgrade --id shinchiro.mpv --exact --silent --accept-source-agreements --accept-package-agreements --disable-interactivity >> "%log%" 2>&1
 set "iCode=%ERRORLEVEL%"
 call "%~dp0installCommon.cmd" log "winget upgrade shinchiro.mpv exit code %iCode%"
 if "%iCode%"=="0" echo mpv was updated.
-if not "%iCode%"=="0" echo mpv was NOT updated; the log has winget's answer.
+if not "%iCode%"=="0" echo mpv is already the newest winget offers.
 goto :done
 
 :failed
