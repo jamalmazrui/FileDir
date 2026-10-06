@@ -1,17 +1,77 @@
 ﻿[about]
 Title=10 - Conclusion
-Intro=What to carry away from the walks, in four sentences, and where to begin.
+Intro=What to carry away from the walks: four principles, one thing kept from each task walk, three habits, and where to begin. I say the idea; the reader says the key.
 Setup=Nothing is needed.
-Homework=Open the folder you use most and tag three files.
+Homework=Open the folder you use most, tag three files, and move them; then do one thing from each task walk.
 
 [step]
 
-Say=Four things to carry away. A key is named for a word of its command, so it can be guessed. The semicolon tags, and every command then acts on all of them. Jump finds by name; Keywords finds by everything known. And the Homer Player is the same in every Homer program.
+Say=Four things to carry away, each with its key. A key is named for a word of its command, so it can be guessed.
 Key=
 Hear=
 
 [step]
 
-Say=Start in a folder you use every day, tag what you want to move, and move it. The rest follows from that.
+Say=Jump to a file by its name.
+Key=
+Hear=Control plus J
+
+[step]
+
+Say=The semicolon tags, and every command then acts on all the tagged files at once. Copy them.
+Key=
+Hear=Shift plus C
+
+[step]
+
+Say=Keywords finds by what is inside a file, not by its name.
+Key=
+Hear=Control plus K
+
+[step]
+
+Say=And the Homer Player is the same in every Homer program; play everything a page or a folder holds.
+Key=
+Hear=Control plus Shift plus L
+
+[step]
+
+Say=One thing kept from each task walk. Walk four: a folder is a list; a letter, Jump, Initial Change and a filter get you down it.
+Key=
+Hear=Control plus F
+
+[step]
+
+Say=Walk five: tag, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
+Key=
+Hear=Shift plus M
+
+[step]
+
+Say=Walk six: a page of episodes is a play list; Extra Info tells you about any one; Keywords finds the one you want.
+Key=
+Hear=Alt plus X
+
+[step]
+
+Say=Three habits that make the rest easy. Arrow a menu once a week: each item says its key. The Apostrophe when you are not sure where you are, or whether a file is tagged. And Control plus F1, then press a key, to hear what it does without doing it.
+Key=
+Hear=Key Describer
+
+[step]
+
+Say=Where to begin. Start in the folder you use every day, tag what you want to move, and move it. Add that folder to the Quick folder with Shift plus Q, and tomorrow it is one key away.
+Key=
+Hear=
+
+[step]
+
+Say=When FileDir is yours, let it do the dull things: zip a project with Shift plus Z, rename a batch with Control plus R, ask what is inside an odd file with the question mark, and keep the podcasts you follow as pages in a folder of their own.
+Key=
+Hear=
+
+[step]
+
+Say=If something goes wrong, the session log under your local application data, with a line about what you were doing, is the fastest way to a fix; the project page on GitHub is where to send it.
 Key=
 Hear=

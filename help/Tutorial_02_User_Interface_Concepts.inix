@@ -48,6 +48,42 @@ Hear=
 
 [step]
 
+Say=Several folders can be open at once, each in a window of its own. Control plus O opens a folder in a new window; Control plus G goes to one in this window. Shift plus F4 says the titles of all the windows; Control plus Tab moves between them.
+Key=
+Hear=
+
+[step]
+
+Say=A zip archive opens like a folder: Enter goes in, the files are listed, and most commands work on them as on files. Only a zip can be created or changed; any archive can be read.
+Key=
+Hear=
+
+[step]
+
+Say=Marks on a line say its kind as you arrow: a backslash after a name means a folder; a greater-than sign before it means it is tagged. The Apostrophe says the current name and whether it is tagged; Shift plus Apostrophe says the folder you are in.
+Key=
+Hear=
+
+[step]
+
+Say=Text boxes that ask for a folder complete the path as you type, the way a browser completes an address, and remember your recent answers; Up and Down Arrows in the box bring them back.
+Key=
+Hear=
+
+[step]
+
+Say=Two settings dialogs. Configuration Options, Alt plus Shift plus C, is where the word processor, the editor and the player are named; Alt plus Shift plus R decides whether Delete recycles or removes.
+Key=
+Hear=
+
+[step]
+
+Say=Help from inside: F1 the guide, Shift plus F1 the history, Alt plus F1 the version, Alt plus Shift plus H the hotkey summary in a window; and the question mark says what is inside the current file -- its kind, its size, its dates.
+Key=
+Hear=
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=

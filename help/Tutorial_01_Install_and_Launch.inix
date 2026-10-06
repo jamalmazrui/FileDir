@@ -30,6 +30,42 @@ Hear=FileDir, List box
 
 [step]
 
+Say=What the boxes mean. The screen reader scripts give FileDir's own speech its polish; Install when they are not there, Update when a newer set is available, Reinstall when they are current -- the word is the state. mpv is the player behind the Homer Player; the same three words say its state.
+Key=
+Hear=
+
+[step]
+
+Say=The results box after Finish reports each item by name, one line each, and the same summary is saved in the logs folder under your local application data.
+Key=
+Hear=
+
+[step]
+
+Say=Where things went. FileDir is in Program Files; its settings, its Quick folder and its logs are under your local application data, in a folder named FileDir. An update never touches them.
+Key=
+Hear=
+
+[step]
+
+Say=F11 checks for a newer FileDir and offers to fetch and run it, so the installer is a one-time visit. Alt plus F1 says the version at any time.
+Key=F11
+Hear=Elevate Version dialog
+
+[step]
+
+Say=Escape. To remove FileDir later, Windows Settings, Apps; your Quick folder and settings stay unless you delete them.
+Key=Escape
+Hear=FileDir, List box
+
+[step]
+
+Say=FileDir is one instance: Alt plus Control plus F never opens a second copy, it brings the one forward. The window it brings forward is the last folder you were in, with its tags as you left them.
+Key=
+Hear=
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=

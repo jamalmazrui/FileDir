@@ -6,15 +6,45 @@ Homework=Pick three terms you did not know and find each one in FileDir.
 
 [step]
 
+Say=archive.
+Key=
+Hear=A zip or other packed file, opened like a folder with Enter. Shift plus Z makes one; Shift plus U unpacks one.
+
+[step]
+
 Say=extra info.
 Key=
 Hear=Everything known about the file or episode you are on, one field to a line. Alt plus X.
 
 [step]
 
+Say=filter.
+Key=
+Hear=The folder narrowed to the files matching a pattern, until cleared. Control plus F.
+
+[step]
+
 Say=folder.
 Key=
 Hear=A list of files and folders, said with its path and its count as you arrive. Enter goes in; Backspace comes up.
+
+[step]
+
+Say=Go To and Open.
+Key=
+Hear=Two ways to reach a folder: Go To, Control plus G, in this window; Open, Control plus O, in a new one.
+
+[step]
+
+Say=Homer Player.
+Key=
+Hear=The player shared by the Homer Tools: a queue of tracks, transport on Control plus the arrows, Scroll Lock to pause, and Alt plus Shift plus R to record.
+
+[step]
+
+Say=Initial Change.
+Key=
+Hear=The next name starting with a different letter. Shift plus I; Shift plus X for the next kind of file.
 
 [step]
 
@@ -30,15 +60,27 @@ Hear=A search across everything known about each file or episode: name, date, ad
 
 [step]
 
-Say=Homer Player.
-Key=
-Hear=The player shared by the Homer Tools: a queue of tracks, transport on Control plus the arrows, Scroll Lock to pause, and Alt plus Shift plus R to record.
-
-[step]
-
 Say=play list.
 Key=
 Hear=Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+
+[step]
+
+Say=Quick folder.
+Key=
+Hear=Your favorites: files, folders and web links. Shift plus Q adds one; Control plus Q opens the folder.
+
+[step]
+
+Say=recent folders.
+Key=
+Hear=Every folder opened this session, newest first. Alt plus R.
+
+[step]
+
+Say=rename.
+Key=
+Hear=A new name for the current file or folder. F2, or Shift plus R; Control plus R renames many with wildcards.
 
 [step]
 
@@ -60,6 +102,18 @@ Hear=Control with an arrow, in the player: sideways is time in the track, up and
 
 [step]
 
-Say=Nine terms. The guide, F1, has each of them in context.
+Say=What Content.
+Key=
+Hear=What is inside the current file: its kind, size and dates, read from the file itself. The question mark.
+
+[step]
+
+Say=word processor.
+Key=
+Hear=The program Control plus W opens the current file in, named in Configuration Options.
+
+[step]
+
+Say=Eighteen terms. The guide, F1, has each of them in context.
 Key=
 Hear=

@@ -669,7 +669,7 @@ dlg.close();
 btnQuick.Click += delegate(object o, EventArgs e) {
 List<string> lsDirs = new List<string>();
 try {
-string sQuickDir = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\FileDir\Quick");
+string sQuickDir = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\FileDir\Quick");
 foreach (string sLink in Directory.GetFiles(sQuickDir, "*.lnk")) {
 object oLink = CreateObject("WScript.Shell");
 oLink = CallMethod(oLink, "CreateShortcut", new object[] {sLink});

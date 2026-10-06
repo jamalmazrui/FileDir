@@ -35,6 +35,42 @@ Note=Nothing is moved unless you use Control plus M instead, which moves.
 
 [step]
 
+Say=Other ways to tag. Spacebar toggles the current item; the greater-than key tags and moves to the next, so a run of files is tagged as fast as you can press it; the less-than key untags the same way. Control plus A tags all, Control plus Shift plus A clears all.
+Key=
+Hear=
+
+[step]
+
+Say=Among the tagged, Shift plus N and Shift plus P go to the next and previous tagged item; Shift plus B and Shift plus E to the first and last. The Apostrophe says whether the item you are on is tagged.
+Key=
+Hear=
+
+[step]
+
+Say=What a tag feeds. Shift plus C copies the tagged files to a folder you choose; Shift plus M moves them; Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same tags, a different verb.
+Key=
+Hear=
+
+[step]
+
+Say=Control plus C, Control plus X and Control plus V copy, cut and paste tagged files through the clipboard, as in Windows Explorer -- so files from two folders can be gathered and pasted in a third. Alt plus C appends to the clipboard without clearing it.
+Key=
+Hear=
+
+[step]
+
+Say=A planned misstep. Moving to a folder that already holds a file of the same name: FileDir asks whether to overwrite, and says whether the one there is older or newer, so the answer is informed.
+Key=
+Hear=Overwrite report dot d o c x? The existing file is newer. Yes button
+
+[step]
+
+Say=Escape keeps both. Control plus S saves the tag states of this window; Control plus Shift plus S restores them -- for when a long selection must survive a detour.
+Key=Escape
+Hear=FileDir, List box
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=

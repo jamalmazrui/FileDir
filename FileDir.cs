@@ -1130,7 +1130,7 @@ return;
 sAppDir = Homer.Util.getShortPath(sAppDir);
 string sRoot = Path.GetFileNameWithoutExtension(sApp);
 string sName = sRoot + ".ini";
-sDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+sDataDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 sDataDir = Path.Combine(sDataDir, sRoot);
 if (!Directory.Exists(sDataDir)) Directory.CreateDirectory(sDataDir);
 sDataDir = Homer.Util.getShortPath(sDataDir);

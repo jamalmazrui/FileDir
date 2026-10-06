@@ -36,6 +36,42 @@ Note=Jump looks at names. Control plus K looks inside the files.
 
 [step]
 
+Say=Control plus G, Go To, takes a path, completing it as you type, or offers your recent folders from a list.
+Key=Control+G
+Hear=Go To dialog, Folder: edit combo
+
+[step]
+
+Say=Escape. Alt plus R lists the folders opened this session, newest first; one Enter returns to any of them.
+Key=Escape
+Hear=FileDir, List box
+
+[step]
+
+Say=Shift plus I, Initial Change, jumps to the next name starting with a different letter -- a fast way down a long folder; Shift plus X, Extension Change, jumps to the next kind of file.
+Key=
+Hear=
+
+[step]
+
+Say=Control plus F filters the folder to the files matching a pattern -- star dot m p 3, or two patterns with a bar between -- until it is cleared; the status says filtered.
+Key=Control+F
+Hear=Filter dialog, Pattern: edit combo
+
+[step]
+
+Say=Escape. Control plus K, Keywords, finds a word inside the body of files, not in their names; walk six uses it on a page of episodes.
+Key=Escape
+Hear=FileDir, List box
+
+[step]
+
+Say=Shift plus Q adds the current file or folder to the Quick folder, your list of favorites; Control plus Q opens that folder, from anywhere, and Enter there goes straight to the item.
+Key=
+Hear=
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=
