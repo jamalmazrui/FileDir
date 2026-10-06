@@ -112,7 +112,7 @@ rem than somewhere inside the compiler. 1.41.2 is the release that took in
 rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
-set "kitNeeded=1.43.29"
+set "kitNeeded=1.52.3"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -536,24 +536,6 @@ rem ---- screen reader scripts -----------------------------------------
 rem The JAWS scripts are shipped as <App>_JAWS.zip and the NVDA add-on as
 rem <App>.nvda-addon; the installer offers both, checked by default. Packing
 rem them here means the installer always carries the current ones.
-rem 2HTM GOES WITH FILEDIR (30 September 2026). Question Mark reads legacy Office
-rem files and PDFs through 2htm, and the installer ships exec\2htm.exe only when
-rem one is there -- this build never put one there, so Question Mark usually
-rem found none. The current 2htm is taken from the 2htm project beside this
-rem one (C:\2htm\exec), and the log says whether it was.
-if exist "%~dp0..\2htm\exec\2htm.exe" (
-  copy /y "%~dp0..\2htm\exec\2htm.exe" "exec\2htm.exe" >> "%log%" 2>&1
-  echo Copied 2htm.exe from %~dp0..\2htm\exec into exec, exit !errorlevel!>> "%log%"
-) else (
-  echo WARNING: no 2htm.exe in %~dp0..\2htm\exec; build 2htm first, or Question Mark will look for an installed 2htm.>> "%log%"
-)
-rem Old stand-alone JAWS script installers, which nothing builds now: removed.
-for %%F in ("scripts\FileDir_Scripts_setup.iss" "scripts\jaws\FileDir_Scripts_setup.iss") do (
-  if exist %%F (
-    del /q %%F >> "%log%" 2>&1
-    echo Removed %%~F, an old stand-alone JAWS script installer.>> "%log%"
-  )
-)
 if not defined useScreenReaderScripts goto :readersDone
 rem Old compiled scripts in scripts\jaws are removed: nothing ships a .jsb.
 if exist "scripts\jaws\*.jsb" (
@@ -648,9 +630,21 @@ rem no audio yet; delete an .mp3 to have it spoken again. The voices -- Kokoro
 rem through sherpa-onnx, Apache 2.0, or piper's kristin and john, public
 rem domain, when Kokoro cannot be fetched -- are fetched once by the tool.
 rem Skipped silently when the app has no tutorial scripts, which most do not.
+rem The walks took the Homer pattern on 5 October 2026; the earlier scripts go.
+for %%f in (help\Tutorial_00_Overview.inix help\Tutorial_01_Tagging.inix help\Tutorial_Tagging.inix) do if exist "%%f" del /q "%%f"
 if exist "help\Tutorial_*.inix" (
+  rem THE AUDIO IS NAMED LIKE A CHAPTER: Tutorial_04_X.inix speaks to 04_X.mp3.
+  rem A walk with no audio, or audio older than the walk, calls the tool, which
+  rem speaks only what is missing or stale; the old names, with the word
+  rem Tutorial, are retired with the audio that carried them.
+  if exist "help\tutorials\Tutorial_*.mp3" del /q "help\tutorials\Tutorial_*.mp3"
   set "tutorialsMissing="
-  for %%F in (help\Tutorial_*.inix) do if not exist "help\tutorials\%%~nF.mp3" set "tutorialsMissing=1"
+  for %%F in (help\Tutorial_*.inix) do (
+    set "sChapter=%%~nF"
+    set "sChapter=!sChapter:Tutorial_=!"
+    if not exist "help\tutorials\!sChapter!.mp3" set "tutorialsMissing=1"
+    if exist "help\tutorials\!sChapter!.mp3" for /f %%N in ('powershell -NoProfile -Command "if ((Get-Item -LiteralPath '%%F').LastWriteTimeUtc -gt (Get-Item -LiteralPath 'help\tutorials\!sChapter!.mp3').LastWriteTimeUtc) { 1 } else { 0 }"') do if "%%N"=="1" set "tutorialsMissing=1"
+  )
   if defined tutorialsMissing (
     echo Speaking the tutorials that have no audio yet, with the voices in C:\HomerDev\exec.
     rem The tool's own lines go to the screen: it names each tutorial as it starts
@@ -699,11 +693,6 @@ if not defined iscc (
 echo Inno Setup: !iscc!>> "%log%"
 rem The kit folder goes to Inno as HomerDev, so the installer's #include of
 rem HomerComponents.iss follows the kit wherever it is.
-rem WHICH INSTALLER SCRIPT IS COMPILED (1 October 2026): its size, date and
-rem fingerprint go to the log, so a log shows whether a delivered change is the
-rem one on disk.
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$f = Get-Item -LiteralPath '%app%_setup.iss'; 'Installer script: ' + $f.FullName + ' bytes=' + $f.Length + ' written=' + $f.LastWriteTime.ToString('s') + ' sha256=' + (Get-FileHash -LiteralPath $f.FullName -Algorithm SHA256).Hash" >> "%log%" 2>&1
 "!iscc!" /DHomerDev="!homerDev!" "%app%_setup.iss" >> "%log%" 2>&1
 if errorlevel 1 (
   echo ERROR: the installer build failed. See %log%.
@@ -812,14 +801,6 @@ del "!sTagFile!" >nul 2>&1
 git ls-remote --tags origin "v*" > "!sTagFile!" 2>> "%log%"
 if errorlevel 1 echo WARN: the released tags could not be read, so the next number is taken blindly.>> "%log%"
 if errorlevel 1 del "!sTagFile!" >nul 2>&1
-rem THE TAG LIST WITH WINDOWS LINE ENDS (1 October 2026). git writes it with
-rem LF alone, and findstr /e matches only before a CR LF, so no tag ever
-rem matched and no spent number was stepped over: EdSharp's old releases
-rem v5.0.32 to v5.0.36 were each chosen again, and each refused as already
-rem released. find /v "" rewrites every line with CR LF.
-if exist "!sTagFile!" type "!sTagFile!" | find /v "" > "!sTagFile!.crlf"
-if exist "!sTagFile!.crlf" move /y "!sTagFile!.crlf" "!sTagFile!" >nul
-if exist "!sTagFile!" for /f %%n in ('find /c "refs/tags/" ^< "!sTagFile!"') do echo Released tags on origin: %%n>> "%log%"
 
 :nextCandidate
 call :incrementVersion
