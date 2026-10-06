@@ -75,3 +75,22 @@ Hear=
 Say=If something goes wrong, the session log under your local application data, with a line about what you were doing, is the fastest way to a fix; the project page on GitHub is where to send it.
 Key=
 Hear=
+
+[step]
+
+Say=Three things people do with FileDir every day, each in one breath. Clean a Downloads folder: Alt plus Shift plus Period tags the duplicates, Delete recycles them. Gather a project: Control plus F filters to its files, Control plus A tags them, Shift plus Z zips them. Find a file whose name you forgot: Control plus K with a word that is inside it.
+Key=
+Hear=
+
+[step]
+
+Say=And three things the other Homer programs share with it, so the second program costs nothing to learn: the dialog that works one way, the Say keys that change nothing, and the player that opens the same whether a file or a radio station is behind it.
+Key=
+Hear=
+
+[step]
+
+Say=Where the walks stop and the guide begins: scheduled jobs, the clipboard commands, the web links in the Quick folder, printing, and the settings that change what is said. F1 has all of it, in the same order as the menus.
+Key=
+Hear=
+

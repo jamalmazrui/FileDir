@@ -72,6 +72,48 @@ Hear=
 
 [step]
 
+Say=Opening what you find. Enter opens the file in the program Windows has for it; Control plus E opens it in your editor, EdSharp when it is installed; Control plus W in your word processor; Shift plus Enter opens it as text whatever it is, which is how a strange file is looked into.
+Key=
+Hear=
+
+[step]
+
+Say=The question mark, What Content, says what is inside the current file without opening it: its kind, its size, its dates, the number of lines in a text file.
+Key=Shift+Slash
+Hear=Plain text, 12 kilobytes, 212 lines, changed 3 October 2026
+
+[step]
+
+Say=Alt plus X, Extra Info, says more: for a document, its title and author; for a sound file, its length and bit rate; for a web page, its title and address. Walk six uses it on an episode.
+Key=Alt+X
+Hear=Extra Info, read only edit
+
+[step]
+
+Say=Escape. Shift plus Apostrophe says the folder you are in with its path, and the Apostrophe alone the current line with its tag, for when you have been away.
+Key=Escape
+Hear=FileDir, List box
+
+[step]
+
+Say=A planned misstep. Type a letter meaning to jump and nothing moves, because no name starts with it; the reader says the same line again. Control plus J with a word inside the name finds it instead.
+Key=
+Hear=
+
+[step]
+
+Say=The way back: Alt plus Left Arrow returns to the folder you came from, as a browser's Back does; Alt plus Right Arrow goes forward again. Together with Recent Folders, Alt plus R, you are never lost.
+Key=
+Hear=
+
+[step]
+
+Say=A path can be typed anywhere a folder is asked for, with the drive, and FileDir completes it as you type; a network share works the same way, with its two backslashes.
+Key=
+Hear=
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=

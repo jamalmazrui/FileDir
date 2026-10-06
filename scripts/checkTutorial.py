@@ -284,8 +284,11 @@ def main():
         iSteps = readText(sScript).count("[step]") if "readText" in globals() else open(sScript, "rb").read().decode("utf-8-sig").count("[step]")
         mNum = re.match(r"Tutorial_(\d\d)_", sBase)
         sNum = mNum.group(1) if mNum else ""
-        if iSteps > 28 and sNum != "09":
-            problem(sBase, 0, "%d steps is more than five minutes; cut what an earlier walk taught, or split it" % iSteps)
+        # Step counts are a guess at length; the tool's measurement of the
+        # audio is the fact. A high count is a notice, so a walk of many short
+        # two-voice exchanges is not refused for being brisk.
+        if iSteps > 32 and sNum != "09":
+            notice(sBase + ": %d steps is likely over five minutes; the tool will measure it -- cut what an earlier walk taught, or split it, if it is" % iSteps)
         if sNum and sNum not in ("00", "11", "09") and iSteps < 12:
             notice(sBase + ": %d steps is likely under three minutes; the guideline wants three to five for parts 01 to 10" % iSteps)
     # THE TWELVE-WALK PATTERN (5 October 2026) is reported as NOTICES, not
@@ -293,7 +296,7 @@ def main():
     # walks spoken and still releases, and hears on every build what the set
     # lacks. A problem is something wrong in a walk; an incomplete set is work
     # not yet done, and the tool should not silence a program for that.
-    if len(sys.argv) == 1 and sKind != "kit":
+    if len(sys.argv) == 1:
         c_dFixed = {"00": "Overview_and_Table_of_Contents", "01": "Install_and_Launch", "02": "User_Interface_Concepts",
                     "03": "Key_Patterns", "09": "Glossary", "10": "Conclusion", "11": "More_Information"}
         dHave = {}

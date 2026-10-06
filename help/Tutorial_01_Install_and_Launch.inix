@@ -66,6 +66,48 @@ Hear=
 
 [step]
 
+Say=Before the installer, the download. The ReadMe on the project page has one link, FileDir underscore setup dot exe, and F11 inside an installed FileDir fetches the same file; a browser's download is the only time you touch a web page for FileDir.
+Key=
+Hear=
+
+[step]
+
+Say=A planned misstep. Run the installer while FileDir is open, and it asks you to close it first, by name; close it, press Retry, and the installer carries on. Nothing is half-installed.
+Key=
+Hear=
+
+[step]
+
+Say=The first run asks nothing. FileDir opens on the folder you were last in -- or on your Documents folder the first time -- and the reader says the folder's name and its count, then the first line.
+Key=
+Hear=
+
+[step]
+
+Say=What the scripts give. With the screen reader scripts installed, the reader's own commands know FileDir's list: the line is read with its marks said as words, tagged and folder, rather than as symbols.
+Key=
+Hear=
+
+[step]
+
+Say=What to try first. Arrow the list, press Enter on a folder, press Backspace to come up, press F1. Five minutes of that, and walk four's keys are half known already.
+Key=
+Hear=
+
+[step]
+
+Say=Updating later is F11 inside FileDir: it compares the installed version with the newest on the project page, says both, and offers to fetch and run the installer; the installer's finish page then shows the same boxes, each saying its state.
+Key=F11
+Hear=FileDir 5.0 is the newest version. OK button
+
+[step]
+
+Say=Escape. Settings and the Quick folder survive every update; the installer puts the program in Program Files and leaves your local application data alone.
+Key=Escape
+Hear=FileDir, List box
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=

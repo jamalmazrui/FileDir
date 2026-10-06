@@ -71,6 +71,42 @@ Hear=FileDir, List box
 
 [step]
 
+Say=Tagging by rule. Alt plus Period tags every file and leaves the folders; Alt plus Shift plus Period tags duplicate files -- any file with the same content as another in the folder, however named -- which is how a Downloads folder is cleaned.
+Key=
+Hear=
+
+[step]
+
+Say=Control plus I inverts the tags: tagged becomes untagged and untagged tagged, for when it is easier to say what you do not want. Alt plus Comma untags everything except the current item.
+Key=
+Hear=
+
+[step]
+
+Say=A filter and a tag together: Control plus F to show only star dot j p g, Control plus A to tag them all, Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+Key=
+Hear=
+
+[step]
+
+Say=Shift plus S says the size of the tagged files together, before a copy to a small drive; Alt plus S says the size of the folder you are in.
+Key=Shift+S
+Hear=3 files, 48 megabytes
+
+[step]
+
+Say=Renaming many: Control plus R takes a pattern with wildcards -- star dot j p e g to star dot j p g -- and renames every tagged file by it, saying the count. F2 renames the current one by name.
+Key=
+Hear=
+
+[step]
+
+Say=Shift plus Z zips the tagged files into one archive named for the folder, or for a name you give; Shift plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+Key=
+Hear=
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=

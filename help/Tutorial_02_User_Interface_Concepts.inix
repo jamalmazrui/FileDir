@@ -84,6 +84,48 @@ Hear=
 
 [step]
 
+Say=Sorting is a state of the window. Control plus S sorts by the field you choose -- name, extension, size, date -- and the status line says the order; the same list sorted by date is a different list to the ear, newest first.
+Key=
+Hear=
+
+[step]
+
+Say=Hidden and system files are off by default and a setting turns them on; the count the folder says as you arrive is the count of what is shown.
+Key=
+Hear=
+
+[step]
+
+Say=Dialogs that ask for a file offer three ways to answer: type a path, pick from the recent list with the arrows, or Browse to the Windows file dialog; whichever you use, the box remembers it next time.
+Key=
+Hear=
+
+[step]
+
+Say=Messages are spoken as they happen and shown on the status line: a count after a copy, a name after a rename, Zipped three files after Shift plus Z. If one is missed, Insert plus Page Down, the reader's own key, reads the status line.
+Key=
+Hear=
+
+[step]
+
+Say=A list can be very long -- a Downloads folder of a thousand files -- and FileDir does not read it to you unless asked; Alt plus Shift plus L, Say List, reads the whole list from the current line down, and any key stops it.
+Key=
+Hear=
+
+[step]
+
+Say=Two windows side by side are the file manager's oldest idea: Control plus O opens a second folder, and Shift plus C from one copies the tagged files to the other, with the other's folder offered as the default answer.
+Key=
+Hear=
+
+[step]
+
+Say=Everything in this walk is Windows underneath: a list box, an edit box, a dialog, a status line. FileDir adds what they say and when, which is why your reader's own commands -- Insert plus Up Arrow, Insert plus Tab, Insert plus Page Down -- work on all of it.
+Key=
+Hear=
+
+[step]
+
 Say=What this walk taught. I say the key; the reader says what it does.
 Key=
 Hear=
