@@ -1,6 +1,6 @@
 ﻿[about]
-Title=06 - Play a Page's Media in the Homer Player
-Intro=A saved podcast page's episodes found and queued in the Homer Player; the transport keys; the two searches, by name and by everything known; and Extra Info. This walk assumes walks four and five, and the player's own help, F1 inside it, has the rest.
+Title=5 - Play a Page's Media in the Homer Player
+Intro=A saved podcast page's episodes found and queued in the Homer Player; the transport keys; the two searches, by name and by everything known; and Extra Info. This walk assumes walks three and five, and the player's own help, F1 inside it, has the rest.
 Setup=FileDir is open on a folder of saved podcast directories, on Access On dot h t m.
 Homework=Open a podcast page of your own, play an episode, pause it, and search the queue for a word.
 

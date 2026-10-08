@@ -1,6 +1,6 @@
 ﻿[about]
-Title=05 - Tag Files and Copy Them
-Intro=Tagging two files with the semicolon and copying both at once: the one idea behind every FileDir command that acts on several files. This walk assumes walk four.
+Title=4 - Tag Files and Copy Them
+Intro=Tagging two files with the semicolon and copying both at once: the one idea behind every FileDir command that acts on several files. This walk assumes walk three.
 Setup=A folder of files is open.
 Homework=Tag three files and move them to a folder of your own.
 

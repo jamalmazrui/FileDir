@@ -38,7 +38,7 @@ Email=empowermentzone@gmail.com
 Base=
 
 [about]
-Title=00 - Overview and Table of Contents
+Title=0 - Overview
 Intro=What FileDir is, in a paragraph; the two reader keys every walk assumes; then the table of contents, one line per walk.
 Setup=Nothing is needed; this walk is listened to.
 Homework=Listen to the walks in order; each one assumes the ones before it.
@@ -67,63 +67,53 @@ Hear=(the current control, with its state and position)
 Say=Now the table of contents. I say the number and the title; the reader says what the walk covers.
 Key=
 Hear=
-
 [step]
 
-Say=One, Install and Launch.
+Say=One, User Interface.
+Key=
+Hear=FileDir's window, the list you hear, the dialogs that all work one way, and where help is, each named and then shown by the reader; then the rules every key follows, so a key can be guessed before it is learned.
+[step]
+
+Say=Two, Install and Launch.
 Key=
 Hear=The download, the installer's pages and boxes, and FileDir opening by itself.
-
 [step]
 
-Say=Two, User Interface Concepts.
-Key=
-Hear=A folder as a list, the line you hear and the file behind it, dialogs that all work one way, the status line, and where help is.
-
-[step]
-
-Say=Three, Key Patterns.
-Key=
-Hear=The rules every key follows, so a key can be guessed before it is learned, and the keys that explain the keys.
-
-[step]
-
-Say=Four, Open a Folder and Find a File.
+Say=Three, Open a Folder and Find a File.
 Key=
 Hear=Arrowing a folder, jumping to a file by name, and opening it.
-
 [step]
 
-Say=Five, Tag Files and Copy Them.
+Say=Four, Tag Files and Copy Them.
 Key=
 Hear=The semicolon tags; a command then acts on every tagged file at once.
-
 [step]
 
-Say=Six, Play a Page's Media in the Homer Player.
+Say=Five, Play a Page's Media in the Homer Player.
 Key=
 Hear=A podcast page's episodes found, queued and played; the two searches; extra info.
-
 [step]
 
-Say=Nine, Glossary.
+Say=Six, Rename Files to What Is Inside.
 Key=
-Hear=The words FileDir uses, in alphabetical order, one line each.
-
+Hear=One want: files named by a camera or a scanner, called by what they are instead.
 [step]
 
-Say=Ten, Conclusion.
+Say=Seven, Convert Between Formats.
 Key=
-Hear=Four sentences to carry away, and where to begin.
-
+Hear=One want: a Word document as a web page, or a PDF as plain text, without opening either.
 [step]
 
-Say=Eleven, More Information.
+Say=Eight, Ask About a File.
 Key=
-Hear=The guide and history from inside FileDir, the documents, the project page, updates, and the other Homer Tools.
-
+Hear=One want: what is in a long document, without reading it all.
 [step]
 
-Say=Nine walks, each under five minutes, well under an hour together. They are a course, not a reference: each one assumes those before it.
+Say=Nine, Conclusion.
+Key=
+Hear=What to carry away, the words FileDir uses, the help built in, and where to learn more.
+[step]
+
+Say=Ten walks, each under five minutes, under an hour together: the overview, the user interface, seven tasks, and the conclusion. They are a course, not a reference: each one assumes those before it.
 Key=
 Hear=

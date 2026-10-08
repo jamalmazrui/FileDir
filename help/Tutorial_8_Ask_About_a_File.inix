@@ -1,0 +1,87 @@
+﻿; Tutorial_8_Ask_About_a_File.inix -- a question about a file, answered on this computer.
+
+[about]
+Title=8 - Ask About a File
+Intro=One want: what is in a long document, without reading it all. Shift plus F12 asks a model on this computer a question with the file's text attached; F12 asks a question about nothing in particular. The same keys as EdSharp.
+Setup=A model is installed for FileDir's AI commands, and a folder holds a long document.
+Homework=Ask Shift plus F12 to list the dates in a document of your own.
+
+
+[step]
+
+Say=One want: to know what is in a long report before deciding to read it. FileDir can ask a language model running on this computer, so nothing leaves it.
+Key=
+Hear=
+
+[step]
+
+Say=Alt plus Control plus F opens FileDir on the folder it last showed.
+Key=Alt+Control+F
+Hear=FileDir
+
+[step]
+
+Say=I arrow to the report. Shift plus F12 is Chat about File: the question travels with the file's text, converted from whatever it is, so a Word file or a PDF works as well as text.
+Key=Shift+F12
+Hear=Chat about File dialog
+Hear=Question: edit
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=I type the question.
+Key=Summarize this in three sentences.
+Hear=(each word echoed as it is typed)
+
+[step]
+
+Say=Enter asks.
+Key=Enter
+Hear=Answer dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=The answer opens in a window, in a box I can arrow through line by line. Down Arrow reads the first line.
+Key=Down Arrow
+Hear=(the first line of the answer)
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Control plus C copies a selection, and Escape, Enter or the Spacebar leaves, whichever is nearest the hand.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=A planned misstep: F12 without Shift is Chat with AI, which attaches nothing. Asking it to summarize this gets an answer about nothing in particular. Shift is what brings the file along.
+Key=F12
+Hear=Chat with AI dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Escape closes it unasked.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=What this walk taught. I name the step; the reader gives the key.
+Key=
+Hear=
+
+[step]
+
+Say=Ask about the file I am on.
+Key=
+Hear=Shift plus F12
+
+[step]
+
+Say=Ask a question about nothing in particular.
+Key=
+Hear=F12

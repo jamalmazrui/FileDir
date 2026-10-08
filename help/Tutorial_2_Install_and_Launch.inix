@@ -1,5 +1,5 @@
 ﻿[about]
-Title=01 - Install and Launch
+Title=2 - Install and Launch
 Intro=The download, the installer's pages, the finish page and its boxes, and FileDir opening by itself.
 Setup=The installer is downloaded, and your reader is running.
 Homework=Install FileDir and open it from its desktop shortcut.
@@ -90,7 +90,7 @@ Hear=
 
 [step]
 
-Say=What to try first. Arrow the list, press Enter on a folder, press Backspace to come up, press F1. Five minutes of that, and walk four's keys are half known already.
+Say=What to try first. Arrow the list, press Enter on a folder, press Backspace to come up, press F1. Five minutes of that, and walk three's keys are half known already.
 Key=
 Hear=
 

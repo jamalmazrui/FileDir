@@ -5,99 +5,99 @@
     <link>Tutorials.htm</link>
     <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Oct 2026 08:59:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2026 17:04:30 +0000</lastBuildDate>
     <itunes:author>Jamal Mazrui</itunes:author>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Technology"/>
     <itunes:owner><itunes:name>Jamal Mazrui</itunes:name><itunes:email>empowermentzone@gmail.com</itunes:email></itunes:owner>
     <item>
-      <title>00 - Overview and Table of Contents</title>
-      <description>Nothing is needed; this walk is listened to. Full transcript: Tutorials.htm#0-00-overview-and-table-of-contents</description>
-      <link>Tutorials.htm#0-00-overview-and-table-of-contents</link>
-      <guid isPermaLink="false">homer-tutorial_00_overview_and_table_of_contents</guid>
-      <enclosure url="tutorials/00_Overview_and_Table_of_Contents.mp3" length="863999" type="audio/mpeg"/>
-      <itunes:duration>00:02:05</itunes:duration>
+      <title>0 - Overview</title>
+      <description>Nothing is needed; this walk is listened to. Full transcript: Tutorials.htm#0-0-overview</description>
+      <link>Tutorials.htm#0-0-overview</link>
+      <guid isPermaLink="false">homer-tutorial_0_overview</guid>
+      <enclosure url="tutorials/0_Overview.mp3" length="897155" type="audio/mpeg"/>
+      <itunes:duration>00:02:09</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>01 - Install and Launch</title>
-      <description>The installer is downloaded, and your reader is running. Full transcript: Tutorials.htm#0a-01-install-and-launch</description>
-      <link>Tutorials.htm#0a-01-install-and-launch</link>
-      <guid isPermaLink="false">homer-tutorial_01_install_and_launch</guid>
-      <enclosure url="tutorials/01_Install_and_Launch.mp3" length="1517507" type="audio/mpeg"/>
+      <title>1 - User Interface</title>
+      <description>FileDir is open on any folder. Nothing needs pressing in this walk; it is listened to. Full transcript: Tutorials.htm#0a-1-user-interface</description>
+      <link>Tutorials.htm#0a-1-user-interface</link>
+      <guid isPermaLink="false">homer-tutorial_1_user_interface</guid>
+      <enclosure url="tutorials/1_User_Interface.mp3" length="2142556" type="audio/mpeg"/>
+      <itunes:duration>00:04:45</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>2 - Install and Launch</title>
+      <description>The installer is downloaded, and your reader is running. Full transcript: Tutorials.htm#0b-2-install-and-launch</description>
+      <link>Tutorials.htm#0b-2-install-and-launch</link>
+      <guid isPermaLink="false">homer-tutorial_2_install_and_launch</guid>
+      <enclosure url="tutorials/2_Install_and_Launch.mp3" length="1516605" type="audio/mpeg"/>
       <itunes:duration>00:03:29</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>02 - User Interface Concepts</title>
-      <description>FileDir is open on any folder. Nothing needs pressing in this walk; it is listened to. Full transcript: Tutorials.htm#0b-02-user-interface-concepts</description>
-      <link>Tutorials.htm#0b-02-user-interface-concepts</link>
-      <guid isPermaLink="false">homer-tutorial_02_user_interface_concepts</guid>
-      <enclosure url="tutorials/02_User_Interface_Concepts.mp3" length="1759282" type="audio/mpeg"/>
-      <itunes:duration>00:03:51</itunes:duration>
-      <itunes:explicit>false</itunes:explicit>
-    </item>
-    <item>
-      <title>03 - Key Patterns</title>
-      <description>FileDir is open on any folder. Full transcript: Tutorials.htm#0c-03-key-patterns</description>
-      <link>Tutorials.htm#0c-03-key-patterns</link>
-      <guid isPermaLink="false">homer-tutorial_03_key_patterns</guid>
-      <enclosure url="tutorials/03_Key_Patterns.mp3" length="1514666" type="audio/mpeg"/>
-      <itunes:duration>00:03:36</itunes:duration>
-      <itunes:explicit>false</itunes:explicit>
-    </item>
-    <item>
-      <title>04 - Open a Folder and Find a File</title>
-      <description>FileDir is open on a folder of saved web pages. Full transcript: Tutorials.htm#0d-04-open-a-folder-and-find-a-file</description>
-      <link>Tutorials.htm#0d-04-open-a-folder-and-find-a-file</link>
-      <guid isPermaLink="false">homer-tutorial_04_open_a_folder_and_find_a_file</guid>
-      <enclosure url="tutorials/04_Open_a_Folder_and_Find_a_File.mp3" length="1437992" type="audio/mpeg"/>
+      <title>3 - Open a Folder and Find a File</title>
+      <description>FileDir is open on a folder of saved web pages. Full transcript: Tutorials.htm#0c-3-open-a-folder-and-find-a-file</description>
+      <link>Tutorials.htm#0c-3-open-a-folder-and-find-a-file</link>
+      <guid isPermaLink="false">homer-tutorial_3_open_a_folder_and_find_a_file</guid>
+      <enclosure url="tutorials/3_Open_a_Folder_and_Find_a_File.mp3" length="1444012" type="audio/mpeg"/>
       <itunes:duration>00:03:20</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>05 - Tag Files and Copy Them</title>
-      <description>A folder of files is open. Full transcript: Tutorials.htm#0e-05-tag-files-and-copy-them</description>
-      <link>Tutorials.htm#0e-05-tag-files-and-copy-them</link>
-      <guid isPermaLink="false">homer-tutorial_05_tag_files_and_copy_them</guid>
-      <enclosure url="tutorials/05_Tag_Files_and_Copy_Them.mp3" length="1385473" type="audio/mpeg"/>
-      <itunes:duration>00:03:12</itunes:duration>
+      <title>4 - Tag Files and Copy Them</title>
+      <description>A folder of files is open. Full transcript: Tutorials.htm#0d-4-tag-files-and-copy-them</description>
+      <link>Tutorials.htm#0d-4-tag-files-and-copy-them</link>
+      <guid isPermaLink="false">homer-tutorial_4_tag_files_and_copy_them</guid>
+      <enclosure url="tutorials/4_Tag_Files_and_Copy_Them.mp3" length="1384530" type="audio/mpeg"/>
+      <itunes:duration>00:03:11</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>06 - Play a Page's Media in the Homer Player</title>
-      <description>FileDir is open on a folder of saved podcast directories, on Access On dot h t m. Full transcript: Tutorials.htm#0f-06-play-a-pages-media-in-the-homer-player</description>
-      <link>Tutorials.htm#0f-06-play-a-pages-media-in-the-homer-player</link>
-      <guid isPermaLink="false">homer-tutorial_06_play_a_pages_media_in_the_homer_player</guid>
-      <enclosure url="tutorials/06_Play_a_Pages_Media_in_the_Homer_Player.mp3" length="1672341" type="audio/mpeg"/>
-      <itunes:duration>00:03:57</itunes:duration>
+      <title>5 - Play a Page's Media in the Homer Player</title>
+      <description>FileDir is open on a folder of saved podcast directories, on Access On dot h t m. Full transcript: Tutorials.htm#0e-5-play-a-pages-media-in-the-homer-player</description>
+      <link>Tutorials.htm#0e-5-play-a-pages-media-in-the-homer-player</link>
+      <guid isPermaLink="false">homer-tutorial_5_play_a_pages_media_in_the_homer_player</guid>
+      <enclosure url="tutorials/5_Play_a_Pages_Media_in_the_Homer_Player.mp3" length="1660055" type="audio/mpeg"/>
+      <itunes:duration>00:03:56</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>09 - Glossary</title>
-      <description>Nothing is needed. Full transcript: Tutorials.htm#0g-09-glossary</description>
-      <link>Tutorials.htm#0g-09-glossary</link>
-      <guid isPermaLink="false">homer-tutorial_09_glossary</guid>
-      <enclosure url="tutorials/09_Glossary.mp3" length="1264714" type="audio/mpeg"/>
-      <itunes:duration>00:03:07</itunes:duration>
+      <title>6 - Rename Files to What Is Inside</title>
+      <description>A folder holds downloaded files with names that say nothing. Full transcript: Tutorials.htm#0f-6-rename-files-to-what-is-inside</description>
+      <link>Tutorials.htm#0f-6-rename-files-to-what-is-inside</link>
+      <guid isPermaLink="false">homer-tutorial_6_rename_files_to_what_is_inside</guid>
+      <enclosure url="tutorials/6_Rename_Files_to_What_Is_Inside.mp3" length="784424" type="audio/mpeg"/>
+      <itunes:duration>00:01:54</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>10 - Conclusion</title>
-      <description>Nothing is needed. Full transcript: Tutorials.htm#0h-10-conclusion</description>
-      <link>Tutorials.htm#0h-10-conclusion</link>
-      <guid isPermaLink="false">homer-tutorial_10_conclusion</guid>
-      <enclosure url="tutorials/10_Conclusion.mp3" length="1075748" type="audio/mpeg"/>
-      <itunes:duration>00:02:28</itunes:duration>
+      <title>7 - Convert Between Formats</title>
+      <description>A folder holds a Word document and a PDF. Full transcript: Tutorials.htm#0g-7-convert-between-formats</description>
+      <link>Tutorials.htm#0g-7-convert-between-formats</link>
+      <guid isPermaLink="false">homer-tutorial_7_convert_between_formats</guid>
+      <enclosure url="tutorials/7_Convert_Between_Formats.mp3" length="632249" type="audio/mpeg"/>
+      <itunes:duration>00:01:35</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>11 - More Information</title>
-      <description>Nothing is needed. Full transcript: Tutorials.htm#0i-11-more-information</description>
-      <link>Tutorials.htm#0i-11-more-information</link>
-      <guid isPermaLink="false">homer-tutorial_11_more_information</guid>
-      <enclosure url="tutorials/11_More_Information.mp3" length="329233" type="audio/mpeg"/>
-      <itunes:duration>00:00:46</itunes:duration>
+      <title>8 - Ask About a File</title>
+      <description>A model is installed for FileDir's AI commands, and a folder holds a long document. Full transcript: Tutorials.htm#0h-8-ask-about-a-file</description>
+      <link>Tutorials.htm#0h-8-ask-about-a-file</link>
+      <guid isPermaLink="false">homer-tutorial_8_ask_about_a_file</guid>
+      <enclosure url="tutorials/8_Ask_About_a_File.mp3" length="641155" type="audio/mpeg"/>
+      <itunes:duration>00:01:36</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>9 - Conclusion</title>
+      <description>Nothing is needed. Full transcript: Tutorials.htm#0i-9-conclusion</description>
+      <link>Tutorials.htm#0i-9-conclusion</link>
+      <guid isPermaLink="false">homer-tutorial_9_conclusion</guid>
+      <enclosure url="tutorials/9_Conclusion.mp3" length="1470213" type="audio/mpeg"/>
+      <itunes:duration>00:03:31</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
   </channel>

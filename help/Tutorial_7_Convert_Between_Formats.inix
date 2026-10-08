@@ -1,0 +1,82 @@
+﻿; Tutorial_7_Convert_Between_Formats.inix -- one file made into another kind.
+
+[about]
+Title=7 - Convert Between Formats
+Intro=One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the tagged files, or the current one, keeping each name.
+Setup=A folder holds a Word document and a PDF.
+Homework=Convert a Markdown file of your own to a web page, then open the web page in your browser.
+
+
+[step]
+
+Say=One want: a document in another form -- a Word file as a web page, a PDF as plain text -- without opening it in anything.
+Key=
+Hear=
+
+[step]
+
+Say=Alt plus Control plus F opens FileDir on the folder it last showed.
+Key=Alt+Control+F
+Hear=FileDir
+
+[step]
+
+Say=I arrow to a Word document. Shift plus O is Output Type, O for Output.
+Key=Shift+O
+Hear=Output Type dialog
+Hear=Web page
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=FileDir looked at what the file is and offers only what it can become: for a document, Word, a web page, Markdown, plain text, EPUB and others. Down Arrow moves through them.
+Key=Down Arrow
+Hear=Markdown
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=I want the web page. Up Arrow back to it, then Enter.
+Key=Up Arrow
+Hear=Web page
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Enter converts.
+Key=Enter
+Hear=Converted to report dot h t m l
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Shift plus O.
+Key=Shift+O
+Hear=Output Type dialog
+Hear=Plain text
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Plain text or a web page, and no more: a PDF is a printed page, read back. Escape leaves it as it is.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Tagged files convert together: tag several, then Shift plus O once. What this walk taught. I name the step; the reader gives the key.
+Key=
+Hear=
+
+[step]
+
+Say=Choose what this file becomes.
+Key=
+Hear=Shift plus O
+
+[step]
+
+Say=Leave without converting.
+Key=
+Hear=Escape

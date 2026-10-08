@@ -1,0 +1,90 @@
+﻿; Tutorial_6_Rename_Files_to_What_Is_Inside.inix -- naming files after what they hold.
+
+[about]
+Title=6 - Rename Files to What Is Inside
+Intro=One want: files named by a camera or a scanner, called by what they are instead. FileDir reads each tagged file's own title -- a PDF's, a song's, a photograph's caption, a book's name -- and renames the file after it.
+Setup=A folder holds downloaded files with names that say nothing.
+Homework=Tag a few downloaded PDFs and rename them to what is inside; then check each new name with Down Arrow.
+
+
+[step]
+
+Say=One want: files with names that say nothing -- IMG underscore 4021, Scan 7 -- called by what they are. A file often carries its own title inside it; FileDir can read it and rename the file after it.
+Key=
+Hear=
+
+[step]
+
+Say=Alt plus Control plus F opens FileDir on the folder it last showed.
+Key=Alt+Control+F
+Hear=FileDir
+
+[step]
+
+Say=Walk four showed tagging. I tag the files to rename: the semicolon tags the current one.
+Key=Semicolon
+Hear=Tagged
+
+[step]
+
+Say=Down Arrow to the next, and the semicolon again.
+Key=Semicolon
+Hear=2 tagged files
+
+[step]
+
+Say=Control plus Shift plus I, I for Identify, renames each tagged file after what is inside it. FileDir asks first, showing each old name beside its new one.
+Key=Control+Shift+I
+Hear=Rename to Identify Content dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=It looked in the metadata first: a PDF's title, a song's name, a photograph's caption, choosing the longest title-like field, so Sunset over the Cascades wins over IMG underscore 4021. Enter accepts.
+Key=Enter
+Hear=2 files renamed
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=A planned misstep: a text file with no metadata. FileDir falls back on its first line, which may be a date or a byline rather than a title. I tag one and try.
+Key=Semicolon
+Hear=Tagged
+
+[step]
+
+Say=Control plus Shift plus I.
+Key=Control+Shift+I
+Hear=Rename to Identify Content dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=The proposed name is a date. Escape cancels, and nothing is renamed; F2 renames the file by hand instead.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=What this walk taught. I name the step; the reader gives the key.
+Key=
+Hear=
+
+[step]
+
+Say=Tag a file.
+Key=
+Hear=Semicolon
+
+[step]
+
+Say=Rename tagged files after what is inside them.
+Key=
+Hear=Control plus Shift plus I
+
+[step]
+
+Say=Rename one file by hand.
+Key=
+Hear=F2

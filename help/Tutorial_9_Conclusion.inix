@@ -1,0 +1,179 @@
+﻿[about]
+Title=9 - Conclusion
+Intro=The conclusion and summary of the walks; the words FileDir uses, in two voices; then more information: the help built into the program and where to learn more.
+Setup=Nothing is needed.
+Homework=Open the folder you use most, tag three files, and move them; then do one thing from each task walk.
+
+[step]
+
+Say=Four things to carry away, each with its key. A key is named for a word of its command, so it can be guessed.
+Key=
+Hear=
+
+[step]
+
+Say=Jump to a file by its name.
+Key=
+Hear=Control plus J
+
+[step]
+
+Say=The semicolon tags, and every command then acts on all the tagged files at once. Copy them.
+Key=
+Hear=Shift plus C
+
+[step]
+
+Say=Keywords finds by what is inside a file, not by its name.
+Key=
+Hear=Control plus K
+
+[step]
+
+Say=And the Homer Player is the same in every Homer program; play everything a page or a folder holds.
+Key=
+Hear=Control plus Shift plus L
+
+[step]
+
+Say=One thing kept from each task walk. Walk three: a folder is a list; a letter, Jump, Initial Change and a filter get you down it.
+Key=
+Hear=Control plus F
+
+[step]
+
+Say=Walk four: tag, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
+Key=
+Hear=Shift plus M
+
+[step]
+
+Say=Where the walks stop and the guide begins: scheduled jobs, the clipboard commands, the web links in the Quick folder, printing, and the settings that change what is said. F1 has all of it, in the same order as the menus.
+Key=
+Hear=
+
+
+; ---- the glossary: the host says the term, the reader its meaning ----
+
+[step]
+
+Say=Now the words FileDir uses, in alphabetical order. I say the term; the reader says what it means.
+Key=
+Hear=
+
+[step]
+
+Say=extra info.
+Key=
+Hear=Everything known about the file or episode you are on, one field to a line. Alt plus X.
+
+[step]
+
+Say=Extra Info.
+Key=
+Hear=More about the current file than its name: a document's title, a sound file's length, a web page's address. Alt plus X.
+
+[step]
+
+Say=filter.
+Key=
+Hear=The folder narrowed to the files matching a pattern, until cleared. Control plus F.
+
+[step]
+
+Say=folder.
+Key=
+Hear=A list of files and folders, said with its path and its count as you arrive. Enter goes in; Backspace comes up.
+
+[step]
+
+Say=Homer Player.
+Key=
+Hear=The player shared by the Homer Tools: a queue of tracks, transport on Control plus the arrows, Scroll Lock to pause, and Alt plus Shift plus R to record.
+
+[step]
+
+Say=hotkey summary.
+Key=
+Hear=Every command with its key, in a document to search. Alt plus Shift plus H.
+
+[step]
+
+Say=Initial Change.
+Key=
+Hear=The next name starting with a different letter. Shift plus I; Shift plus X for the next kind of file.
+
+[step]
+
+Say=jump.
+Key=
+Hear=Reaching a file by the line the list shows: type a few letters of its name. Control plus J.
+
+[step]
+
+Say=keywords.
+Key=
+Hear=A search across everything known about each file or episode: name, date, address, summary. Control plus K; F3 finds the next.
+
+[step]
+
+Say=play list.
+Key=
+Hear=Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+
+[step]
+
+Say=Quick folder.
+Key=
+Hear=Your favorites: files, folders and web links. Shift plus Q adds one; Control plus Q opens the folder.
+
+[step]
+
+Say=recent folders.
+Key=
+Hear=Every folder opened this session, newest first. Alt plus R.
+
+[step]
+
+Say=rename.
+Key=
+Hear=A new name for the current file or folder. F2, or Shift plus R; Control plus R renames many with wildcards.
+
+[step]
+
+Say=sort.
+Key=
+Hear=The order of the list, by name, extension, size or date; the status line says it. Control plus S.
+
+[step]
+
+Say=status line.
+Key=
+Hear=The folder, the line, and how many files are tagged; the bottom of the window. Shift plus Z says it.
+
+
+; ---- more information: help built in, and where to learn more ----
+
+[step]
+
+Say=F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+Key=
+Hear=
+
+[step]
+
+Say=The ReadMe is the short start; the guide is the reference; Hotkeys lists every key three ways. All three are in the help folder of the installation, and on the project's GitHub page.
+Key=
+Hear=
+
+[step]
+
+Say=F11 checks for a newer version and offers to install it. The project is at github dot com, slash JamalMazrui, slash FileDir.
+Key=
+Hear=
+
+[step]
+
+Say=FileDir is one of the Homer Tools, free programs for working by ear: EdSharp for text, FileDir for files, DbDo for data. They share their keys and their player, so learning one is most of learning the next.
+Key=
+Hear=

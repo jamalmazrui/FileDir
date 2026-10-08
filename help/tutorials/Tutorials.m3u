@@ -1,0 +1,21 @@
+#EXTM3U
+#EXTINF:129,Homer Tools Walkthroughs
+0_Overview.mp3
+#EXTINF:285,1 - User Interface
+1_User_Interface.mp3
+#EXTINF:209,2 - Install and Launch
+2_Install_and_Launch.mp3
+#EXTINF:200,3 - Open a Folder and Find a File
+3_Open_a_Folder_and_Find_a_File.mp3
+#EXTINF:191,4 - Tag Files and Copy Them
+4_Tag_Files_and_Copy_Them.mp3
+#EXTINF:236,5 - Play a Page's Media in the Homer Player
+5_Play_a_Pages_Media_in_the_Homer_Player.mp3
+#EXTINF:114,6 - Rename Files to What Is Inside
+6_Rename_Files_to_What_Is_Inside.mp3
+#EXTINF:95,7 - Convert Between Formats
+7_Convert_Between_Formats.mp3
+#EXTINF:96,8 - Ask About a File
+8_Ask_About_a_File.mp3
+#EXTINF:211,9 - Conclusion
+9_Conclusion.mp3

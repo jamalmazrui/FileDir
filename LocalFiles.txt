@@ -10,8 +10,7 @@ packages/
 version.txt
 Version.cs
 KeyText.cs
-help/tutorials/
-*.mp3
+# The spoken tutorials are in the repository and the installer (8 October 2026): users never wait for them.
 *.zip
 *.exe
 *.dll

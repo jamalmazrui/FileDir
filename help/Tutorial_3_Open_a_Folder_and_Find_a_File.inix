@@ -1,6 +1,6 @@
 ﻿[about]
-Title=04 - Open a Folder and Find a File
-Intro=A folder as a list: arrowing it, jumping to a file by name with Jump, and opening what you find. This walk assumes walks one to three.
+Title=3 - Open a Folder and Find a File
+Intro=A folder as a list: arrowing it, jumping to a file by name with Jump, and opening what you find. This walk assumes walks two to three.
 Setup=FileDir is open on a folder of saved web pages.
 Homework=Open a folder of your own, jump to a file by its first letters, and open it.
 
@@ -60,7 +60,7 @@ Hear=Filter dialog, Pattern: edit combo
 
 [step]
 
-Say=Escape. Control plus K, Keywords, finds a word inside the body of files, not in their names; walk six uses it on a page of episodes.
+Say=Escape. Control plus K, Keywords, finds a word inside the body of files, not in their names; walk five uses it on a page of episodes.
 Key=Escape
 Hear=FileDir, List box
 
@@ -84,7 +84,7 @@ Hear=Plain text, 12 kilobytes, 212 lines, changed 3 October 2026
 
 [step]
 
-Say=Alt plus X, Extra Info, says more: for a document, its title and author; for a sound file, its length and bit rate; for a web page, its title and address. Walk six uses it on an episode.
+Say=Alt plus X, Extra Info, says more: for a document, its title and author; for a sound file, its length and bit rate; for a web page, its title and address. Walk five uses it on an episode.
 Key=Alt+X
 Hear=Extra Info, read only edit
 
