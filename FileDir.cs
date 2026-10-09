@@ -8024,13 +8024,13 @@ return lsKept;
 Dictionary<string, Dictionary<string, string>> gDocumentFacts
 = new Dictionary<string, Dictionary<string, string>>();
 
-List<MediaTrack> tracksWithFacts_Helper(List<string> lsLines) {
+List<Homer.MediaTrack> tracksWithFacts_Helper(List<string> lsLines) {
 // Tracks from play list lines, each carrying whatever the document said about
 // it: the date, the duration, the summary, the people. The address is the key,
 // because that is the one thing both halves agree on.
-List<MediaTrack> lsTracks = MediaPlayer.fromPlaylistLines(lsLines);
+List<Homer.MediaTrack> lsTracks = Homer.MediaPlayer.fromPlaylistLines(lsLines);
 int iWithFacts = 0;
-foreach (MediaTrack track in lsTracks) {
+foreach (Homer.MediaTrack track in lsTracks) {
 Dictionary<string, string> dFacts;
 if (!gDocumentFacts.TryGetValue(track.sTarget, out dFacts)) continue;
 foreach (KeyValuePair<string, string> oPair in dFacts) track.addFact(oPair.Key, oPair.Value);
@@ -8275,7 +8275,7 @@ string[] aQueuePaths = list_Helper(out aQueueDirs, out aQueueFiles, 1);
 aQueuePaths = aQueueFiles;
 if (aQueuePaths.Length == 0) return;
 
-List<MediaTrack> lsTracks = null;
+List<Homer.MediaTrack> lsTracks = null;
 string sQueueTitle = "Player";
 // Where the queue came from, in a few words. It goes in the list's own label,
 // which a screen reader reads every time the cursor enters the list, rather
@@ -8288,7 +8288,7 @@ string sOneExt = Path.GetExtension(sOne).ToLower();
 string sLeaf = Path.GetFileName(sOne);
 if (sOneExt == ".m3u" || sOneExt == ".m3u8" || sOneExt == ".pls") {
 try {
-lsTracks = MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne));
+lsTracks = Homer.MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne));
 }
 catch (Exception ex) {
 Homer.Log.info("Homer Player: could not read " + sOne + ": " + ex.Message);
@@ -8297,7 +8297,7 @@ sQueueTitle = sLeaf;
 sQueueSource = sLeaf;
 }
 else if (isPlayable_Helper(sOne)) {
-lsTracks = MediaPlayer.fromFiles(new string[] { sOne });
+lsTracks = Homer.MediaPlayer.fromFiles(new string[] { sOne });
 sQueueTitle = sLeaf;
 sQueueSource = sLeaf;
 }
@@ -8318,7 +8318,7 @@ else {
 // left out rather than handed to the player to refuse.
 List<string> lsPlayable = new List<string>();
 foreach (string sPath in aQueuePaths) if (isPlayable_Helper(sPath)) lsPlayable.Add(sPath);
-lsTracks = MediaPlayer.fromFiles(lsPlayable);
+lsTracks = Homer.MediaPlayer.fromFiles(lsPlayable);
 sQueueSource = "the tagged files";
 }
 
@@ -8327,7 +8327,7 @@ App.say("0 tracks to play", true);
 return;
 }
 Homer.Log.info("Homer Player: " + lsTracks.Count + " tracks");
-MediaPlayer.run(App.frame, sQueueTitle, sQueueSource, lsTracks);
+Homer.MediaPlayer.run(App.frame, sQueueTitle, sQueueSource, lsTracks);
 } // menuMiscHomerPlayer_Click method
 
 void menuMiscPlayList_Click(object sender, EventArgs e) {
@@ -8383,9 +8383,9 @@ return;
 }
 // A play list or a media file goes straight to the player.
 if (bList || bMedia) {
-List<MediaTrack> lsOne = (bList && !bMedia)
-? MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne))
-: MediaPlayer.fromFiles(new string[] { sOne });
+List<Homer.MediaTrack> lsOne = (bList && !bMedia)
+? Homer.MediaPlayer.fromPlaylistLines(File.ReadAllLines(sOne))
+: Homer.MediaPlayer.fromFiles(new string[] { sOne });
 playQueue_Helper(lsOne, Path.GetFileName(sOne), Path.GetFileName(sOne));
 return;
 }
@@ -8425,7 +8425,7 @@ return;
 // Output Type, on Shift+O -- but it is a different job from playing, and asking
 // for a file name before anything can be heard was a form to fill in on the way
 // to pressing play.
-playQueue_Helper(MediaPlayer.fromFiles(aPaths), "Player", "the tagged files");
+playQueue_Helper(Homer.MediaPlayer.fromFiles(aPaths), "Player", "the tagged files");
 } // menuMiscPlayList_Click method
 
 void writePlaylist_Helper(string[] aPaths) {
@@ -8470,15 +8470,15 @@ refresh_Helper(sFile);
 goTo_Helper(sFile);
 } // writePlaylist_Helper method
 
-void playQueue_Helper(List<MediaTrack> lsTracks, string sTitle, string sSource) {
+void playQueue_Helper(List<Homer.MediaTrack> lsTracks, string sTitle, string sSource) {
 // Open the Homer Player on a queue, leaving out anything mpv cannot read.
 //
 // WHAT IS LEFT OUT IS SAID ONCE, AS A COUNT. mpv handed something it cannot
 // read draws an error on its own display, which is never spoken: silence and a
 // window that will not answer. Asking first turns that into one short sentence.
 if (lsTracks == null || lsTracks.Count == 0) { App.say("0 tracks", true); return; }
-List<MediaTrack> lsPlayable = new List<MediaTrack>();
-foreach (MediaTrack track in lsTracks) if (Homer.Mpv.canPlay(track.sTarget)) lsPlayable.Add(track);
+List<Homer.MediaTrack> lsPlayable = new List<Homer.MediaTrack>();
+foreach (Homer.MediaTrack track in lsTracks) if (Homer.Mpv.canPlay(track.sTarget)) lsPlayable.Add(track);
 int iSkipped = lsTracks.Count - lsPlayable.Count;
 if (lsPlayable.Count == 0) {
 // THE ANSWER IS THE COUNT, AND THE COUNT IS THE ANSWER. A document with links
@@ -8492,7 +8492,7 @@ if (iSkipped > 0) {
 App.say(Homer.Util.stringPlural("item", iSkipped) + " left out, not media");
 Homer.Log.info("Play List: left out " + iSkipped + " items mpv cannot read");
 }
-MediaPlayer.run(App.frame, sTitle, sSource, lsPlayable);
+Homer.MediaPlayer.run(App.frame, sTitle, sSource, lsPlayable);
 } // playQueue_Helper method
 
 void playMedia_Helper(string sPlayList) {

@@ -112,7 +112,8 @@ rem than somewhere inside the compiler. 1.41.2 is the release that took in
 rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
-set "kitNeeded=1.52.3"
+rem 1.65.3: the kit's MediaPlayer.cs, with the move of the player's settings.
+set "kitNeeded=1.65.3"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -183,6 +184,7 @@ set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Mdi.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Lbc.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Media.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Mpv.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\MediaPlayer.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Log.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Paths.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Ollama.cs""
@@ -195,7 +197,9 @@ rem compiled its own Media.cs and Mpv.cs, which had drifted from the kit's -- th
 rem lacked the kit's fix for a process whose output could hang, and its machine-
 rem wide mpv search and recording. The kit's are compiled now, and the old copies
 rem are removed, and logged, so a stale one can never be compiled again.
-for %%F in (Media.cs Mpv.cs) do if exist "%%F" (
+rem MediaPlayer.cs followed on 9 October 2026: FileDir's copy had drifted from the
+rem kit's, which is the same player made general, with Play Tutorials added.
+for %%F in (Media.cs MediaPlayer.cs Mpv.cs) do if exist "%%F" (
   del /q "%%F" && >> "%log%" echo Retired %%F: the kit's copy is compiled instead
 )
 
@@ -491,7 +495,7 @@ echo(>> "%log%"
   !manifest! ^
   /out:exec\%app%.exe ^
   Version.cs KeyText.cs ^
-  FileDir.cs Convert.cs Dialogs.cs MediaPlayer.cs Table.cs ^
+  FileDir.cs Convert.cs Dialogs.cs Table.cs ^
   !homerSources! >> "%log%" 2>&1
 
 set iBuildResult=%ERRORLEVEL%

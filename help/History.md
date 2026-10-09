@@ -1,5 +1,10 @@
 ﻿# FileDir — Change History
 
+
+## Unreleased -- 9 October 2026
+
+- **The kit's media player, not a copy of it.** FileDir compiled its own MediaPlayer.cs, which had drifted from the kit's: the kit's is the same player made general, with its output streams read side by side so a process cannot hang, and Play Tutorials added. FileDir now compiles the kit's, as it already did Media.cs and Mpv.cs, and its build retires the old copy and logs it. The player's settings, which FileDir's copy kept beside its data folder rather than in it, are moved into data the first time, so nothing chosen is lost. FileDir needs HomerDev 1.65.3.
+
 ## 8 October 2026 -- an audit by another AI, and the walks corrected
 
 ChatGPT audited FileDir and reported 30 findings. Checked against the code:
