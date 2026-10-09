@@ -98,6 +98,24 @@ command's name and what it does instead of running it.
 - [7 - Convert Between Formats](#7-convert-between-formats)
 - [8 - Ask About a File](#8-ask-about-a-file)
 - [9 - Conclusion](#9-conclusion)
+- [1 - User Interface](#1-user-interface)
+- [2 - Install and Launch](#2-install-and-launch)
+- [3 - Open a Folder and Find a File](#3-open-a-folder-and-find-a-file)
+- [4 - Tag Files and Copy Them](#4-tag-files-and-copy-them)
+- [5 - Play a Page's Media in the Homer Player](#5-play-a-pages-media-in-the-homer-player)
+- [6 - Rename Files to What Is Inside](#6-rename-files-to-what-is-inside)
+- [7 - Convert Between Formats](#7-convert-between-formats)
+- [8 - Ask About a File](#8-ask-about-a-file)
+- [9 - Conclusion](#9-conclusion)
+- [1 - User Interface](#1-user-interface)
+- [2 - Install and Launch](#2-install-and-launch)
+- [3 - Open a Folder and Find a File](#3-open-a-folder-and-find-a-file)
+- [4 - Tag Files and Copy Them](#4-tag-files-and-copy-them)
+- [5 - Play a Page's Media in the Homer Player](#5-play-a-pages-media-in-the-homer-player)
+- [6 - Rename Files to What Is Inside](#6-rename-files-to-what-is-inside)
+- [7 - Convert Between Formats](#7-convert-between-formats)
+- [8 - Ask About a File](#8-ask-about-a-file)
+- [9 - Conclusion](#9-conclusion)
 - [0 - Overview](#0-overview)
 - [1 - User Interface](#1-user-interface)
 - [2 - Install and Launch](#2-install-and-launch)
@@ -26560,6 +26578,3590 @@ Screen reader:
 - Shift plus F12
 
 ### Step 12
+
+Ask a question about nothing in particular.
+
+Screen reader:
+
+- F12
+
+**Something to try:** Ask Shift plus F12 to list the dates in a document of your own.
+
+## 9 - Conclusion
+
+The conclusion and summary of the walks; the words FileDir uses, in two voices; then more information: the help built into the program and where to learn more.
+
+**Before you start:** Nothing is needed.
+
+### Step 1
+
+Four things to carry away, each with its key. A key is named for a word of its command, so it can be guessed.
+
+### Step 2
+
+Jump to a file by its name.
+
+Screen reader:
+
+- Control plus J
+
+### Step 3
+
+The semicolon tags, and every command then acts on all the tagged files at once. Copy them.
+
+Screen reader:
+
+- Shift plus C
+
+### Step 4
+
+Keywords finds by what is inside a file, not by its name.
+
+Screen reader:
+
+- Control plus K
+
+### Step 5
+
+And the Homer Player is the same in every Homer program; play everything a page or a folder holds.
+
+Screen reader:
+
+- Control plus Shift plus L
+
+### Step 6
+
+One thing kept from each task walk. Walk three: a folder is a list; a letter, Jump, Initial Change and a filter get you down it.
+
+Screen reader:
+
+- Control plus F
+
+### Step 7
+
+Walk four: tag, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
+
+Screen reader:
+
+- Shift plus M
+
+### Step 8
+
+Where the walks stop and the guide begins: scheduled jobs, the clipboard commands, the web links in the Quick folder, printing, and the settings that change what is said. F1 has all of it, in the same order as the menus.
+
+### Step 9
+
+Now the words FileDir uses, in alphabetical order. I say the term; the reader says what it means.
+
+### Step 10
+
+extra info.
+
+Screen reader:
+
+- Everything known about the file or episode you are on, one field to a line. Alt plus X.
+
+### Step 11
+
+Extra Info.
+
+Screen reader:
+
+- More about the current file than its name: a document's title, a sound file's length, a web page's address. Alt plus X.
+
+### Step 12
+
+filter.
+
+Screen reader:
+
+- The folder narrowed to the files matching a pattern, until cleared. Control plus F.
+
+### Step 13
+
+folder.
+
+Screen reader:
+
+- A list of files and folders, said with its path and its count as you arrive. Enter goes in; Backspace comes up.
+
+### Step 14
+
+Homer Player.
+
+Screen reader:
+
+- The player shared by the Homer Tools: a queue of tracks, transport on Control plus the arrows, Scroll Lock to pause, and Alt plus Shift plus R to record.
+
+### Step 15
+
+hotkey summary.
+
+Screen reader:
+
+- Every command with its key, in a document to search. Alt plus Shift plus H.
+
+### Step 16
+
+Initial Change.
+
+Screen reader:
+
+- The next name starting with a different letter. Shift plus I; Shift plus X for the next kind of file.
+
+### Step 17
+
+jump.
+
+Screen reader:
+
+- Reaching a file by the line the list shows: type a few letters of its name. Control plus J.
+
+### Step 18
+
+keywords.
+
+Screen reader:
+
+- A search across everything known about each file or episode: name, date, address, summary. Control plus K; F3 finds the next.
+
+### Step 19
+
+play list.
+
+Screen reader:
+
+- Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+
+### Step 20
+
+Quick folder.
+
+Screen reader:
+
+- Your favorites: files, folders and web links. Shift plus Q adds one; Control plus Q opens the folder.
+
+### Step 21
+
+recent folders.
+
+Screen reader:
+
+- Every folder opened this session, newest first. Alt plus R.
+
+### Step 22
+
+rename.
+
+Screen reader:
+
+- A new name for the current file or folder. F2, or Shift plus R; Control plus R renames many with wildcards.
+
+### Step 23
+
+sort.
+
+Screen reader:
+
+- The order of the list, by name, extension, size or date; the status line says it. Control plus S.
+
+### Step 24
+
+status line.
+
+Screen reader:
+
+- The folder, the line, and how many files are tagged; the bottom of the window. Shift plus Z says it.
+
+### Step 25
+
+F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+
+### Step 26
+
+The ReadMe is the short start; the guide is the reference; Hotkeys lists every key three ways. All three are in the help folder of the installation, and on the project's GitHub page.
+
+### Step 27
+
+F11 checks for a newer version and offers to install it. The project is at github dot com, slash JamalMazrui, slash FileDir.
+
+### Step 28
+
+FileDir is one of the Homer Tools, free programs for working by ear: EdSharp for text, FileDir for files, DbDo for data. They share their keys and their player, so learning one is most of learning the next.
+
+**Something to try:** Open the folder you use most, tag three files, and move them; then do one thing from each task walk.
+
+<!-- walkthrough ends -->
+
+<!-- walkthrough: written by makeTutorials.py, do not edit between the markers -->
+
+## 0 - Overview
+
+What FileDir is, in a paragraph; the two reader keys every walk assumes; then the table of contents, one line per walk.
+
+**Before you start:** Nothing is needed; this walk is listened to.
+
+### Step 1
+
+FileDir is a file manager for working by ear. A folder is a list you arrow through; a file is a line you hear;
+
+### Step 2
+
+tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
+
+### Step 3: Insert+UpArrow
+
+Two keys before anything else, both the reader's own. If a line goes by too fast, Insert plus Up Arrow says it again.
+
+Screen reader:
+
+- (the last line, read a second time)
+
+### Step 4: Insert+Tab
+
+And if you lose your place, Insert plus Tab says where you are: the control, its state, its position, and any hint it carries. The walks are heard with those hints off, the way most people work.
+
+Screen reader:
+
+- (the current control, with its state and position)
+
+### Step 5
+
+Now the table of contents. I say the number and the title; the reader says what the walk covers.
+
+### Step 6
+
+One, User Interface.
+
+Screen reader:
+
+- FileDir's window, the list you hear, the dialogs that all work one way, and where help is, each named and then shown by the reader; then the rules every key follows, so a key can be guessed before it is learned.
+
+### Step 7
+
+Two, Install and Launch.
+
+Screen reader:
+
+- The download, the installer's pages and boxes, and FileDir opening by itself.
+
+### Step 8
+
+Three, Open a Folder and Find a File.
+
+Screen reader:
+
+- Arrowing a folder, jumping to a file by name, and opening it.
+
+### Step 9
+
+Four, Tag Files and Copy Them.
+
+Screen reader:
+
+- The semicolon tags; a command then acts on every tagged file at once.
+
+### Step 10
+
+Five, Play a Page's Media in the Homer Player.
+
+Screen reader:
+
+- A podcast page's episodes found, queued and played; the two searches; extra info.
+
+### Step 11
+
+Six, Rename Files to What Is Inside.
+
+Screen reader:
+
+- One want: files named by a camera or a scanner, called by what they are instead.
+
+### Step 12
+
+Seven, Convert Between Formats.
+
+Screen reader:
+
+- One want: a Word document as a web page, or a PDF as plain text, without opening either.
+
+### Step 13
+
+Eight, Ask About a File.
+
+Screen reader:
+
+- One want: what is in a long document, without reading it all.
+
+### Step 14
+
+Nine, Conclusion.
+
+Screen reader:
+
+- What to carry away, the words FileDir uses, the help built in, and where to learn more.
+
+### Step 15
+
+Ten walks, each under five minutes, under an hour together: the overview, the user interface, seven tasks, and the conclusion. They are a course, not a reference: each one assumes those before it.
+
+**Something to try:** Listen to the walks in order; each one assumes the ones before it.
+
+## 1 - User Interface
+
+FileDir's window, the list you hear, the dialogs that all work one way, and where help is, each named and then shown by the reader; then the rules every key follows, so a key can be guessed before it is learned.
+
+**Before you start:** FileDir is open on a folder of your own, such as Documents.
+
+### Step 1
+
+One want: to move around FileDir without hunting. Everything in it follows a few rules, and this walk shows each one as the screen reader hears it.
+
+### Step 2: Insert+Tab
+
+FileDir is one window, and its main view is a list box: one line for each file or folder in the folder you are in.
+
+Screen reader:
+
+- Documents, list box, Budget dot xlsx, 1 of 42
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 3: Down Arrow
+
+Marks on a line say its kind. A backslash after a name means a folder.
+
+Screen reader:
+
+- Letters backslash, 2 of 42
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 4: Comma
+
+Enter on a folder goes into it. Comma, or Shift plus Backspace, comes back up a level.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 5: Apostrophe
+
+The Apostrophe says the current item's name. Shift plus Apostrophe says the name of the folder it is in.
+
+Screen reader:
+
+- Budget dot xlsx
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Alt+Z
+
+Alt plus Z, Say Status, reads the status line: the item's date and size, the sort order, and any filter.
+
+Screen reader:
+
+- Budget dot xlsx, 14 kilobytes, modified 3 October 2026, sorted by name
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Semicolon
+
+Tagging marks the files a command will act on. The Semicolon tags the current item, and a greater-than sign before a name means it is tagged.
+
+Screen reader:
+
+- Tagged
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 8: Slash
+
+The Slash untags it again. Control plus A tags everything, and Control plus Shift plus A untags everything.
+
+Screen reader:
+
+- Untagged
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Control+O
+
+Several folders can be open at once, each in its own window. Control plus O opens a folder in a new window.
+
+Screen reader:
+
+- Open Folder dialog, Folder: edit combo
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Up Arrow
+
+Text boxes that ask for a folder complete the path as you type, and remember your recent answers: Up Arrow brings back the last one.
+
+Screen reader:
+
+- C colon backslash Users backslash Downloads
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Escape
+
+Every dialog works the same way: a label and its control, Tab between them, Alt with the underlined letter to jump to one, Control plus Enter for OK, and Escape to cancel.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Shift+F4
+
+Shift plus F4 says the titles of all the open windows, and Control plus Tab moves between them.
+
+Screen reader:
+
+- 2 windows: Documents, Downloads
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13
+
+A zip archive opens like a folder: Enter goes in, and its files are listed like any others.
+
+### Step 14: F1
+
+Help is in four places, the same in every Homer program. F1 opens the guide, the whole program in one document.
+
+Screen reader:
+
+- FileDir Guide
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 15: Alt+F1
+
+Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
+
+Screen reader:
+
+- About FileDir dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 16: Escape
+
+Escape closes it. The Help menu, F10 then H, holds all of these, and Play Tutorials, which plays these walks.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 17: Alt+Shift+H
+
+Alt plus Shift plus H, Hotkey Summary, lists every key with its command and what it does, in a window you can search.
+
+Screen reader:
+
+- Hotkey Summary
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 18: Escape
+
+Every key is named for a word in its command: Control plus J for Jump, Control plus O for Open, Shift plus C for Copy to Folder. A key never comes from the middle of a word.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 19: Control+F1
+
+Control plus F1 is the Key Describer. While it is on, every key says what it does instead of doing it: the safe way to explore.
+
+Screen reader:
+
+- Key Describer on
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 20: Shift+Z
+
+Now Shift plus Z only says what it would do.
+
+Screen reader:
+
+- Shift plus Z, Zip, add current or tagged files to zip archive
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 21: Control+F1
+
+Control plus F1 again turns the describer off.
+
+Screen reader:
+
+- Key Describer off
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 22: Alt+Shift+R
+
+Two settings are worth knowing now. Configuration Options, Alt plus Shift plus C, names your word processor, editor and player. Alt plus Shift plus R decides whether deleting sends to the Recycle Bin.
+
+Screen reader:
+
+- Recycle on
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 23
+
+Messages are spoken as they happen, and shown on the status line, so one that is missed can be read again with the reader's own key for that line.
+
+### Step 24
+
+A short review. I say a command; the reader says its key. Rename the current item.
+
+Screen reader:
+
+- F2, or Shift plus R
+
+### Step 25
+
+Copy the tagged items to another folder.
+
+Screen reader:
+
+- Shift plus C
+
+### Step 26
+
+Move them.
+
+Screen reader:
+
+- Shift plus M
+
+### Step 27
+
+Zip them.
+
+Screen reader:
+
+- Shift plus Z
+
+### Step 28
+
+Go to the parent folder.
+
+Screen reader:
+
+- Comma, or Shift plus Backspace
+
+### Step 29
+
+Jump to an item by part of its name.
+
+Screen reader:
+
+- Control plus J
+
+### Step 30
+
+Every one of these is in Hotkeys, in the Help menu, listed by key and by command.
+
+**Something to try:** Open a folder and name each thing as you reach it: the list, the line, the status line.
+
+## 2 - Install and Launch
+
+The download, the installer's pages, the finish page and its boxes, and FileDir opening by itself.
+
+**Before you start:** The installer is downloaded, and your reader is running.
+
+### Step 1: Enter
+
+The installer is downloaded; Enter opens it. Windows may first ask whether to run a file from the Internet; Alt plus R, Run, answers it.
+
+Screen reader:
+
+- FileDir Setup dialog
+
+### Step 2: Enter
+
+Each page of the installer is a dialog like any other: Tab through it, Enter for Next. The last page is the finish page, with boxes for what else to install -- the screen reader scripts, and mpv, which the Homer Player plays with.
+
+Screen reader:
+
+- Next button
+
+### Step 3
+
+A box that is ticked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
+
+### Step 4: Enter
+
+Enter on Finish, and FileDir opens by itself on a folder. The desktop shortcut's key, Alt plus Control plus F, opens it from anywhere after that, and brings it forward if it is open already.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 5
+
+What the boxes mean. The screen reader scripts give FileDir's own speech its polish; Install when they are not there, Update when a newer set is available, Reinstall when they are current -- the word is the state. mpv is the player behind the Homer Player; the same three words say its state.
+
+### Step 6
+
+The results box after Finish reports each item by name, one line each, and the same summary is saved in the logs folder under your local application data.
+
+### Step 7
+
+Where things went. FileDir is in Program Files; its settings, its Quick folder and its logs are under your local application data, in a folder named FileDir. An update never touches them.
+
+### Step 8: F11
+
+F11 checks for a newer FileDir and offers to fetch and run it, so the installer is a one-time visit. Alt plus F1 says the version at any time.
+
+Screen reader:
+
+- Elevate Version dialog
+
+### Step 9: Escape
+
+Escape. To remove FileDir later, Windows Settings, Apps; your Quick folder and settings stay unless you delete them.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 10
+
+FileDir is one instance: Alt plus Control plus F never opens a second copy, it brings the one forward. The window it brings forward is the last folder you were in, with its tags as you left them.
+
+### Step 11
+
+Before the installer, the download. The ReadMe on the project page has one link, FileDir underscore setup dot exe, and F11 inside an installed FileDir fetches the same file; a browser's download is the only time you touch a web page for FileDir.
+
+### Step 12
+
+A planned misstep. Run the installer while FileDir is open, and it asks you to close it first, by name; close it, press Retry, and the installer carries on. Nothing is half-installed.
+
+### Step 13
+
+The first run asks nothing. FileDir opens on the folder you were last in -- or on your Documents folder the first time -- and the reader says the folder's name and its count, then the first line.
+
+### Step 14
+
+What the scripts give. With the screen reader scripts installed, the reader's own commands know FileDir's list: the line is read with its marks said as words, tagged and folder, rather than as symbols.
+
+### Step 15
+
+What to try first. Arrow the list, press Enter on a folder, press Backspace to come up, press F1. Five minutes of that, and walk three's keys are half known already.
+
+### Step 16: F11
+
+Updating later is F11 inside FileDir: it compares the installed version with the newest on the project page, says both, and offers to fetch and run the installer; the installer's finish page then shows the same boxes, each saying its state.
+
+Screen reader:
+
+- FileDir 5.0 is the newest version. OK button
+
+### Step 17: Escape
+
+Escape. Settings and the Quick folder survive every update; the installer puts the program in Program Files and leaves your local application data alone.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 18
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 19
+
+Alt plus Control plus F.
+
+Screen reader:
+
+- Open FileDir
+
+**Something to try:** Install FileDir and open it from its desktop shortcut.
+
+## 3 - Open a Folder and Find a File
+
+A folder as a list: arrowing it, jumping to a file by name with Jump, and opening what you find. This walk assumes walks two to three.
+
+**Before you start:** FileDir is open on a folder of saved web pages.
+
+### Step 1
+
+Every folder opens as a list you arrow through. the reader says the folder and how many items are in it.
+
+Screen reader:
+
+- FileDir
+- List box C:\PodcastDirectories
+- 119 items
+
+The count comes once, when the folder opens.
+
+### Step 2: DownArrow
+
+Up and Down Arrows move through the list; a letter jumps to the first name starting with it. Enter on a folder goes in; Backspace comes back up.
+
+Screen reader:
+
+- Blind Movers dot h t m
+
+### Step 3: Control+J
+
+Control plus J jumps to a file by name. FileDir asks for the text and remembers your last ten answers.
+
+Screen reader:
+
+- Jump
+- Text edit combo
+
+The window is named Jump because the key is J.
+
+### Step 4: Enter
+
+Type access and press Enter.
+
+Screen reader:
+
+- Access On dot h t m
+
+Jump looks at names. Control plus K looks inside the files.
+
+### Step 5: Control+G
+
+Control plus G, Go To, takes a path, completing it as you type, or offers your recent folders from a list.
+
+Screen reader:
+
+- Go To dialog, Folder: edit combo
+
+### Step 6: Escape
+
+Escape. Alt plus R lists the folders opened this session, newest first; one Enter returns to any of them.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 7
+
+Shift plus I, Initial Change, jumps to the next name starting with a different letter -- a fast way down a long folder; Shift plus X, Extension Change, jumps to the next kind of file.
+
+### Step 8: Control+F
+
+Control plus F filters the folder to the files matching a pattern -- star dot m p 3, or two patterns with a bar between -- until it is cleared; the status says filtered.
+
+Screen reader:
+
+- Filter dialog, Pattern: edit combo
+
+### Step 9: Escape
+
+Escape. Control plus K, Keywords, finds a word inside the body of files, not in their names; walk five uses it on a page of episodes.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 10
+
+Shift plus Q adds the current file or folder to the Quick folder, your list of favorites; Control plus Q opens that folder, from anywhere, and Enter there goes straight to the item.
+
+### Step 11
+
+Opening what you find. Enter opens the file in the program Windows has for it; Control plus E opens it in your editor, EdSharp when it is installed; Control plus W in your word processor; Shift plus Enter opens it as text whatever it is, which is how a strange file is looked into.
+
+### Step 12: Shift+Slash
+
+The question mark, What Content, says what is inside the current file without opening it: its kind, its size, its dates, the number of lines in a text file.
+
+Screen reader:
+
+- Plain text, 12 kilobytes, 212 lines, changed 3 October 2026
+
+### Step 13: Control+Shift+T
+
+Control plus Shift plus T, Type Extended, says more: every property of the current item in one alphabetical list, such as a document's title and author, or a sound file's length. Walk five shows the Player's own Extra Info.
+
+Screen reader:
+
+- Type Extended, read only edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 14: Escape
+
+Escape. Shift plus Apostrophe says the folder you are in with its path, and the Apostrophe alone the current line with its tag, for when you have been away.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 15
+
+A planned misstep. Type a letter meaning to jump and nothing moves, because no name starts with it; the reader says the same line again. Control plus J with a word inside the name finds it instead.
+
+### Step 16
+
+The way back: Alt plus Left Arrow returns to the folder you came from, as a browser's Back does; Alt plus Right Arrow goes forward again. Together with Recent Folders, Alt plus R, you are never lost.
+
+### Step 17
+
+A path can be typed anywhere a folder is asked for, with the drive, and FileDir completes it as you type; a network share works the same way, with its two backslashes.
+
+### Step 18
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 19
+
+Control plus J.
+
+Screen reader:
+
+- Jump
+
+**Something to try:** Open a folder of your own, jump to a file by its first letters, and open it.
+
+## 4 - Tag Files and Copy Them
+
+Tagging two files with the semicolon and copying both at once: the one idea behind every FileDir command that acts on several files. This walk assumes walk three.
+
+**Before you start:** A folder of files is open.
+
+### Step 1: Semicolon
+
+Arrow to a file you want, and press the semicolon to tag it. Tagging marks a file for the next command without moving you.
+
+Screen reader:
+
+- Tagged
+
+The slash key untags. Shift plus Home tags everything from here to the top.
+
+### Step 2: Semicolon
+
+Arrow to another file and tag that one too. FileDir says how many are tagged as the number changes.
+
+Screen reader:
+
+- 2 tagged files
+
+Alt plus Y says the count at any time.
+
+### Step 3: Control+C
+
+Press Control plus C to copy the tagged files. FileDir asks where to.
+
+Screen reader:
+
+- Copy To
+- Folder edit
+
+The window is named for the command. The box remembers the last ten answers.
+
+### Step 4: Enter
+
+Type the folder, or press Alt plus B to browse for it, then Enter.
+
+Screen reader:
+
+- 2 files copied
+
+Nothing is moved unless you use Control plus M instead, which moves.
+
+### Step 5
+
+Other ways to tag. Spacebar toggles the current item; the greater-than key tags and moves to the next, so a run of files is tagged as fast as you can press it; the less-than key untags the same way. Control plus A tags all, Control plus Shift plus A clears all.
+
+### Step 6
+
+Among the tagged, Shift plus N and Shift plus P go to the next and previous tagged item; Shift plus B and Shift plus E to the first and last. The Apostrophe says whether the item you are on is tagged.
+
+### Step 7
+
+What a tag feeds. Shift plus C copies the tagged files to a folder you choose; Shift plus M moves them; Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same tags, a different verb.
+
+### Step 8
+
+Control plus C, Control plus X and Control plus V copy, cut and paste tagged files through the clipboard, as in Windows Explorer -- so files from two folders can be gathered and pasted in a third. Alt plus C appends to the clipboard without clearing it.
+
+### Step 9
+
+A planned misstep. Moving to a folder that already holds a file of the same name: FileDir asks whether to overwrite, and says whether the one there is older or newer, so the answer is informed.
+
+Screen reader:
+
+- Overwrite report dot d o c x? The existing file is newer. Yes button
+
+### Step 10: Escape
+
+Escape keeps both. Control plus S saves the tag states of this window; Control plus Shift plus S restores them -- for when a long selection must survive a detour.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 11
+
+Tagging by rule. Alt plus Period tags every file and leaves the folders; Alt plus Shift plus Period tags duplicate files -- any file with the same content as another in the folder, however named -- which is how a Downloads folder is cleaned.
+
+### Step 12
+
+Control plus I inverts the tags: tagged becomes untagged and untagged tagged, for when it is easier to say what you do not want. Alt plus Comma untags everything except the current item.
+
+### Step 13
+
+A filter and a tag together: Control plus F to show only star dot j p g, Control plus A to tag them all, Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+
+### Step 14: Shift+S
+
+Shift plus S says the size of the tagged files together, before a copy to a small drive; Alt plus S says the size of the folder you are in.
+
+Screen reader:
+
+- 3 files, 48 megabytes
+
+### Step 15
+
+Renaming many: Control plus R takes a pattern with wildcards -- star dot j p e g to star dot j p g -- and renames every tagged file by it, saying the count. F2 renames the current one by name.
+
+### Step 16
+
+Shift plus Z zips the tagged files into one archive named for the folder, or for a name you give; Shift plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+
+### Step 17
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 18
+
+Control plus C.
+
+Screen reader:
+
+- Copy
+
+**Something to try:** Tag three files and move them to a folder of your own.
+
+## 5 - Play a Page's Media in the Homer Player
+
+A saved podcast page's episodes found and queued in the Homer Player; the transport keys; the two searches, by name and by everything known; and Extra Info. This walk assumes walks three and five, and the player's own help, F1 inside it, has the rest.
+
+**Before you start:** FileDir is open on a folder of saved podcast directories, on Access On dot h t m.
+
+### Step 1: Control+Shift+L
+
+This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
+
+Screen reader:
+
+- Play list
+- Looking for media links in Access On dot h t m
+- Access On dot h t m
+- Track list, 92 tracks from links in Access On dot h t m: List box
+
+The window is named after the play list until something plays. Nothing plays yet.
+
+### Step 2: Tab
+
+The Player is a dialog, so Tab moves through it. In order: the track list, extra info, the sort order, next and previous track, forward and backward, the jump size, the two chapter buttons, where in track, rate, volume, then execute, stop, defaults, help and close.
+
+Screen reader:
+
+- Extra Info: edit read only
+
+Every control has its own Alt key: T for the track list, X for extra info, O for order, E for execute, S for stop, H for help.
+
+### Step 3: Shift+Tab
+
+Three keys do most of the work. Enter plays the track the cursor is on. Space plays and pauses from anywhere but a button. Escape closes the Player.
+
+Screen reader:
+
+- Track list, 92 tracks from links in Access On dot h t m: List box
+- Access On is coming soon
+
+Shift plus Tab goes back the way you came.
+
+### Step 4: DownArrow
+
+The track list holds one line for each episode: its name, and its length where the page gave one. There is no number in front, so pressing a letter jumps to the first episode beginning with it.
+
+Screen reader:
+
+- Welcome to Access on, and AI to help you use your technology, 1 colon 09 colon 23
+
+Arrowing through the list chooses nothing and plays nothing.
+
+### Step 5: Enter
+
+Press Enter to play the one you are on.
+
+Screen reader:
+
+- Playing
+
+Now the window title is the track, so your screen reader's title key says what is playing.
+
+### Step 6
+
+There are two modes, and Enter follows them. While something plays, Enter is stop. While nothing plays, Enter is execute playback. The status line says which: press your screen reader's key for it.
+
+Screen reader:
+
+- Playing track 2 of 92, 12 min 3 sec of 1 hr 9 min
+
+The status line is never announced. It waits until you ask.
+
+### Step 7: Control+RightArrow
+
+Control with an arrow is the transport. Sideways is time inside the track, up and down is tracks in the queue, the Page keys are chapters, and adding Shift means all the way.
+
+Screen reader:
+
+- 13 min 3 sec of 1 hr 9 min
+
+The jump is a minute to begin with. Alt plus I offers fifteen seconds up to an hour.
+
+### Step 8: Space
+
+Press Space to pause.
+
+Screen reader:
+
+- Paused
+
+Space plays and pauses from any control except a button, where Space presses the button.
+
+### Step 9: Control+J
+
+Now the two searches, which answer different questions. Control plus J jumps by the line the list shows. Type braillenote and press Enter.
+
+Screen reader:
+
+- Jump
+- Text edit combo
+- The BrailleNote Evolve from HumanWare
+
+That title has the word in it, so Jump finds it.
+
+### Step 10: Control+K
+
+Control plus K searches everything known about each episode: the presenter, the date, the address, and the summary the page gave. Type meta glasses and press Enter.
+
+Screen reader:
+
+- Keywords
+- Text edit combo
+- Workaround for the Braille Screen Input Uber bug, Android becomes more restrictive, and assigning a Braille keyboard command to Sound Curtin
+
+Those words are nowhere in that title. They are in the summary, which is why Keywords found it and Jump could not.
+
+### Step 11: F3
+
+Keywords takes more than one word. An ampersand means both, a bar means either, and a star stands for anything in the middle. F3 repeats whichever search you used last, and Shift plus F3 goes back.
+
+Screen reader:
+
+- 0 more matches for meta glasses
+
+Control plus F filters the list to what matches; Control plus Shift plus F clears it.
+
+### Step 12: Alt+X
+
+Alt plus X is extra info: everything known about the episode the cursor is on, one field to a line, sorted by field. The cursor starts at the top.
+
+Screen reader:
+
+- Extra Info: edit read only
+- Address https colon slash slash pinecast dot com slash listen
+
+The fields come from the page, from the play list, and from ExifTool for a file on this computer.
+
+### Step 13: Alt+H
+
+Alt plus H is help. It leads with the keys that have no button, because those are the hardest to find.
+
+Screen reader:
+
+- Player Help
+- PLAYER
+- Every control has its own Alt key, the letter underlined in its name.
+- These commands have no control, so they are listed first.
+- FINDING A TRACK
+- Control plus J jump to a track by name, as the list shows it
+- Control plus K keywords, search everything known about the tracks
+- F3, Shift plus F3 repeat the last jump or keyword search
+
+Read it by line, or copy it. OK closes it.
+
+### Step 14: Escape
+
+Escape leaves the help. Escape again closes the Player, remembering the settings for this play list and where each episode had reached.
+
+Screen reader:
+
+- FileDir
+- List box C:\PodcastDirectories
+
+Open the same page tomorrow and it starts where you stopped.
+
+### Step 15
+
+That is the whole of it. One key to find a file, one key to play what is in it, Control with the arrows to move about, and Escape to come back.
+
+Alt plus H inside the Player lists every key. F1 lists every control with what it does.
+
+### Step 16
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 17
+
+Control plus Shift plus L.
+
+Screen reader:
+
+- Play list
+
+### Step 18
+
+Control plus K.
+
+Screen reader:
+
+- Keywords
+
+### Step 19
+
+Alt plus X.
+
+Screen reader:
+
+- Extra Info
+
+**Something to try:** Open a podcast page of your own, play an episode, pause it, and search the queue for a word.
+
+## 6 - Rename Files to What Is Inside
+
+One want: files named by a camera or a scanner, called by what they are instead. FileDir reads each tagged file's own title -- a PDF's, a song's, a photograph's caption, a book's name -- and renames the file after it.
+
+**Before you start:** A folder holds downloaded files with names that say nothing.
+
+### Step 1
+
+One want: files with names that say nothing -- IMG underscore 4021, Scan 7 -- called by what they are. A file often carries its own title inside it; FileDir can read it and rename the file after it.
+
+### Step 2: Alt+Control+F
+
+Alt plus Control plus F opens FileDir on the folder it last showed.
+
+Screen reader:
+
+- FileDir
+
+### Step 3: Semicolon
+
+Walk four showed tagging. I tag the files to rename: the semicolon tags the current one.
+
+Screen reader:
+
+- Tagged
+
+### Step 4: Semicolon
+
+Down Arrow to the next, and the semicolon again.
+
+Screen reader:
+
+- 2 tagged files
+
+### Step 5: Control+Shift+I
+
+Control plus Shift plus I, I for Identify, renames each tagged file after what is inside it. FileDir asks first, showing each old name beside its new one.
+
+Screen reader:
+
+- Rename to Identify Content dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Enter
+
+It looked in the metadata first: a PDF's title, a song's name, a photograph's caption, choosing the longest title-like field, so Sunset over the Cascades wins over IMG underscore 4021. Enter accepts.
+
+Screen reader:
+
+- 2 files renamed
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Semicolon
+
+A planned misstep: a text file with no metadata. FileDir falls back on its first line, which may be a date or a byline rather than a title. I tag one and try.
+
+Screen reader:
+
+- Tagged
+
+### Step 8: Control+Shift+I
+
+Control plus Shift plus I.
+
+Screen reader:
+
+- Rename to Identify Content dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Escape
+
+The proposed name is a date. Escape cancels, and nothing is renamed; F2 renames the file by hand instead.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Control+R
+
+When names follow a pattern, wildcards rename them all at once. Control plus R, Rename with Wildcards, asks for the pattern to find and the pattern to make.
+
+Screen reader:
+
+- Rename with Wildcards dialog, From: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Escape
+
+Star dot jpeg, to star dot j p g, gives every JPEG the shorter extension in one step.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Control+Shift+R
+
+For anything a pattern can describe, Control plus Shift plus R, Rename with Regular Expression, renames the current or tagged items with a regular expression.
+
+Screen reader:
+
+- Rename with Regular Expression dialog, Find: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13: Escape
+
+Escape for now; regular expressions reward a careful first try on a few tagged files.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 14: Alt+Shift+K
+
+Numbered files often sort wrongly by ear: Chapter 10 before Chapter 2. Alt plus Shift plus K, Reorder Names, pads single leading digits, so the list reads in order.
+
+Screen reader:
+
+- Reorder Names dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 15: Enter
+
+It shows each old name beside its new one before changing anything. Enter accepts.
+
+Screen reader:
+
+- 12 files renamed
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 16
+
+Every rename, of whatever kind, can be checked by ear first: each dialog lists what will change before it changes.
+
+### Step 17: F2
+
+And one file at a time is always there. F2, or Shift plus R, renames the current item, with its name ready to edit.
+
+Screen reader:
+
+- Rename dialog, Name: edit, IMG underscore 4021 dot jpg
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 18: Harbor at dawn.jpg
+
+The name is selected, so typing replaces it. I type a name that says what the picture is.
+
+Screen reader:
+
+- (each character echoed as it is typed)
+
+### Step 19: Enter
+
+Enter, and the list says the new name at once, in its new place in the order.
+
+Screen reader:
+
+- Harbor at dawn dot jpg
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 20
+
+Keep the extension when renaming by hand, dot j p g here, so Windows still knows what kind of file it is.
+
+### Step 21
+
+What this walk taught. I name the step; the reader gives the key.
+
+### Step 22
+
+Tag a file.
+
+Screen reader:
+
+- Semicolon
+
+### Step 23
+
+Rename tagged files after what is inside them.
+
+Screen reader:
+
+- Control plus Shift plus I
+
+### Step 24
+
+Rename one file by hand.
+
+Screen reader:
+
+- F2
+
+**Something to try:** Tag a few downloaded PDFs and rename them to what is inside; then check each new name with Down Arrow.
+
+## 7 - Convert Between Formats
+
+One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the tagged files, or the current one, keeping each name.
+
+**Before you start:** A folder holds a Word document and a PDF.
+
+### Step 1
+
+One want: a document in another form -- a Word file as a web page, a PDF as plain text -- without opening it in anything.
+
+### Step 2: Alt+Control+F
+
+Alt plus Control plus F opens FileDir on the folder it last showed.
+
+Screen reader:
+
+- FileDir
+
+### Step 3: Shift+O
+
+I arrow to a Word document. Shift plus O is Output Type, O for Output.
+
+Screen reader:
+
+- Output Type dialog
+- Web page
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 4: Down Arrow
+
+FileDir looked at what the file is and offers only what it can become: for a document, Word, a web page, Markdown, plain text, EPUB and others. Down Arrow moves through them.
+
+Screen reader:
+
+- Markdown
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 5: Up Arrow
+
+I want the web page. Up Arrow back to it, then Enter.
+
+Screen reader:
+
+- Web page
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Enter
+
+Enter converts.
+
+Screen reader:
+
+- Converted to report dot h t m l
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Shift+O
+
+The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Shift plus O.
+
+Screen reader:
+
+- Output Type dialog
+- Plain text
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 8: Escape
+
+Plain text or a web page, and no more: a PDF is a printed page, read back. Escape leaves it as it is.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Semicolon
+
+Tagged files convert together. I tag three Word documents with the Semicolon.
+
+Screen reader:
+
+- 3 tagged files
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Enter
+
+Shift plus O, the web page, and Enter: all three convert, each beside its original.
+
+Screen reader:
+
+- Converted 3 files
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Control+2
+
+Some text files are in an old character encoding, and their accented letters come out wrong. Control plus 2, Convert Encoding, rewrites the tagged text files in the encoding you pick.
+
+Screen reader:
+
+- Convert Encoding dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Escape
+
+The original is kept beside each one, ending in dot b a k, so nothing is lost if the choice was wrong. Escape, for now.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13: Shift+A
+
+Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the tagged files to the clipboard, one after another, converting each from its own format.
+
+Screen reader:
+
+- Appended 3 files to clipboard
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 14
+
+Then one paste in any program puts it all there: three documents' text in one email, for example.
+
+### Step 15: Shift+O
+
+Output Type is not only for documents. On a sound file, Shift plus O offers other kinds of audio.
+
+Screen reader:
+
+- Output Type dialog
+- MP3 audio
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 16: Escape
+
+An MP3 plays almost anywhere, so it is the usual choice for sharing a recording. Escape, for now.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 17: Shift+O
+
+On a picture, it offers other kinds of picture, and on a video, other kinds of video.
+
+Screen reader:
+
+- Output Type dialog
+- PNG picture
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 18: Escape
+
+In every case, the list holds only what that file can truly become, so there is no wrong choice to make. Escape.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 19
+
+What this walk taught. I name the step; the reader gives the key.
+
+### Step 20
+
+Choose what this file becomes.
+
+Screen reader:
+
+- Shift plus O
+
+### Step 21
+
+Leave without converting.
+
+Screen reader:
+
+- Escape
+
+**Something to try:** Convert a Markdown file of your own to a web page, then open the web page in your browser.
+
+## 8 - Ask About a File
+
+One want: what is in a long document, without reading it all. Shift plus F12 asks a model on this computer a question with the file's text attached; F12 asks a question about nothing in particular. The same keys as EdSharp.
+
+**Before you start:** A model is installed for FileDir's AI commands, and a folder holds a long document.
+
+### Step 1
+
+One want: to know what is in a long report before deciding to read it. FileDir can ask a language model running on this computer, so nothing leaves it.
+
+### Step 2: Alt+Control+F
+
+Alt plus Control plus F opens FileDir on the folder it last showed.
+
+Screen reader:
+
+- FileDir
+
+### Step 3: Shift+F12
+
+I arrow to the report. Shift plus F12 is Chat about File: the question travels with the file's text, converted from whatever it is, so a Word file or a PDF works as well as text.
+
+Screen reader:
+
+- Chat about File dialog
+- Question: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 4: Summarize this in three sentences.
+
+I type the question.
+
+Screen reader:
+
+- (each word echoed as it is typed)
+
+### Step 5: Enter
+
+Enter asks.
+
+Screen reader:
+
+- Answer dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Down Arrow
+
+The answer opens in a window, in a box I can arrow through line by line. Down Arrow reads the first line.
+
+Screen reader:
+
+- (the first line of the answer)
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Escape
+
+Control plus C copies a selection, and Escape, Enter or the Spacebar leaves, whichever is nearest the hand.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 8: F12
+
+A planned misstep: F12 without Shift is Chat with AI, which attaches nothing. Asking it to summarize this gets an answer about nothing in particular. Shift is what brings the file along.
+
+Screen reader:
+
+- Chat with AI dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Escape
+
+Escape closes it unasked.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Control+Shift+T
+
+Not every question needs a model. Control plus Shift plus T, Type Extended, lists every property FileDir can find for the file, alphabetically: its dates, its size, its author and title.
+
+Screen reader:
+
+- Type Extended, read only edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Escape
+
+Escape returns to the list.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Question
+
+And the question mark, Say What Content, reads the file's own text aloud, or lists what is inside it if it is an archive.
+
+Screen reader:
+
+- Quarterly report. Summary. Revenue rose by 8 percent.
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13
+
+When reading is not enough, the model can do what reading cannot: compare, summarize, pick out the dates or the names.
+
+### Step 14: Shift+F12
+
+A good question is a specific one. Shift plus F12 again, this time asking for every deadline in the report.
+
+Screen reader:
+
+- Chat about File dialog
+- Question: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 15: List every deadline in this report, with its date.
+
+I type the question.
+
+Screen reader:
+
+- (each word echoed as it is typed)
+
+### Step 16: Enter
+
+Enter. The answer is a list, one deadline to a line, ready to copy into a calendar.
+
+Screen reader:
+
+- Answer dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 17
+
+The model runs on this computer, through Ollama, so the report never leaves it. The first answer can be slow while the model loads; later ones are quicker.
+
+### Step 18: F12
+
+F12 has its own uses, for questions about nothing on disk: what a word means, how to phrase a sentence, what a file extension is for.
+
+Screen reader:
+
+- Chat with AI dialog
+- Question: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 19: What is an EPUB file?
+
+I ask what an EPUB file is.
+
+Screen reader:
+
+- (each word echoed as it is typed)
+
+### Step 20: Enter
+
+Enter, and the answer opens in the same kind of window as before.
+
+Screen reader:
+
+- Answer dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 21: Control+A
+
+Control plus A selects the whole answer, and Control plus C copies it, to paste wherever it is needed.
+
+Screen reader:
+
+- selected
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 22
+
+What this walk taught. I name the step; the reader gives the key.
+
+### Step 23
+
+Ask about the file I am on.
+
+Screen reader:
+
+- Shift plus F12
+
+### Step 24
+
+Ask a question about nothing in particular.
+
+Screen reader:
+
+- F12
+
+**Something to try:** Ask Shift plus F12 to list the dates in a document of your own.
+
+## 9 - Conclusion
+
+The conclusion and summary of the walks; the words FileDir uses, in two voices; then more information: the help built into the program and where to learn more.
+
+**Before you start:** Nothing is needed.
+
+### Step 1
+
+Four things to carry away, each with its key. A key is named for a word of its command, so it can be guessed.
+
+### Step 2
+
+Jump to a file by its name.
+
+Screen reader:
+
+- Control plus J
+
+### Step 3
+
+The semicolon tags, and every command then acts on all the tagged files at once. Copy them.
+
+Screen reader:
+
+- Shift plus C
+
+### Step 4
+
+Keywords finds by what is inside a file, not by its name.
+
+Screen reader:
+
+- Control plus K
+
+### Step 5
+
+And the Homer Player is the same in every Homer program; play everything a page or a folder holds.
+
+Screen reader:
+
+- Control plus Shift plus L
+
+### Step 6
+
+One thing kept from each task walk. Walk three: a folder is a list; a letter, Jump, Initial Change and a filter get you down it.
+
+Screen reader:
+
+- Control plus F
+
+### Step 7
+
+Walk four: tag, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
+
+Screen reader:
+
+- Shift plus M
+
+### Step 8
+
+Where the walks stop and the guide begins: scheduled jobs, the clipboard commands, the web links in the Quick folder, printing, and the settings that change what is said. F1 has all of it, in the same order as the menus.
+
+### Step 9
+
+Now the words FileDir uses, in alphabetical order. I say the term; the reader says what it means.
+
+### Step 10
+
+extra info.
+
+Screen reader:
+
+- Everything known about the file or episode you are on, one field to a line. Alt plus X.
+
+### Step 11
+
+Extra Info.
+
+Screen reader:
+
+- More about the current file than its name: a document's title, a sound file's length, a web page's address. Alt plus X.
+
+### Step 12
+
+filter.
+
+Screen reader:
+
+- The folder narrowed to the files matching a pattern, until cleared. Control plus F.
+
+### Step 13
+
+folder.
+
+Screen reader:
+
+- A list of files and folders, said with its path and its count as you arrive. Enter goes in; Backspace comes up.
+
+### Step 14
+
+Homer Player.
+
+Screen reader:
+
+- The player shared by the Homer Tools: a queue of tracks, transport on Control plus the arrows, Scroll Lock to pause, and Alt plus Shift plus R to record.
+
+### Step 15
+
+hotkey summary.
+
+Screen reader:
+
+- Every command with its key, in a document to search. Alt plus Shift plus H.
+
+### Step 16
+
+Initial Change.
+
+Screen reader:
+
+- The next name starting with a different letter. Shift plus I; Shift plus X for the next kind of file.
+
+### Step 17
+
+jump.
+
+Screen reader:
+
+- Reaching a file by the line the list shows: type a few letters of its name. Control plus J.
+
+### Step 18
+
+keywords.
+
+Screen reader:
+
+- A search across everything known about each file or episode: name, date, address, summary. Control plus K; F3 finds the next.
+
+### Step 19
+
+play list.
+
+Screen reader:
+
+- Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+
+### Step 20
+
+Quick folder.
+
+Screen reader:
+
+- Your favorites: files, folders and web links. Shift plus Q adds one; Control plus Q opens the folder.
+
+### Step 21
+
+recent folders.
+
+Screen reader:
+
+- Every folder opened this session, newest first. Alt plus R.
+
+### Step 22
+
+rename.
+
+Screen reader:
+
+- A new name for the current file or folder. F2, or Shift plus R; Control plus R renames many with wildcards.
+
+### Step 23
+
+sort.
+
+Screen reader:
+
+- The order of the list, by name, extension, size or date; the status line says it. Control plus S.
+
+### Step 24
+
+status line.
+
+Screen reader:
+
+- The folder, the line, and how many files are tagged; the bottom of the window. Shift plus Z says it.
+
+### Step 25
+
+F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+
+### Step 26
+
+The ReadMe is the short start; the guide is the reference; Hotkeys lists every key three ways. All three are in the help folder of the installation, and on the project's GitHub page.
+
+### Step 27
+
+F11 checks for a newer version and offers to install it. The project is at github dot com, slash JamalMazrui, slash FileDir.
+
+### Step 28
+
+FileDir is one of the Homer Tools, free programs for working by ear: EdSharp for text, FileDir for files, DbDo for data. They share their keys and their player, so learning one is most of learning the next.
+
+**Something to try:** Open the folder you use most, tag three files, and move them; then do one thing from each task walk.
+
+<!-- walkthrough ends -->
+
+<!-- walkthrough: written by makeTutorials.py, do not edit between the markers -->
+
+## 0 - Overview
+
+What FileDir is, in a paragraph; the two reader keys every walk assumes; then the table of contents, one line per walk.
+
+**Before you start:** Nothing is needed; this walk is listened to.
+
+### Step 1
+
+FileDir is a file manager for working by ear. A folder is a list you arrow through; a file is a line you hear;
+
+### Step 2
+
+tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
+
+### Step 3: Insert+UpArrow
+
+Two keys before anything else, both the reader's own. If a line goes by too fast, Insert plus Up Arrow says it again.
+
+Screen reader:
+
+- (the last line, read a second time)
+
+### Step 4: Insert+Tab
+
+And if you lose your place, Insert plus Tab says where you are: the control, its state, its position, and any hint it carries. The walks are heard with those hints off, the way most people work.
+
+Screen reader:
+
+- (the current control, with its state and position)
+
+### Step 5
+
+Now the table of contents. I say the number and the title; the reader says what the walk covers.
+
+### Step 6
+
+One, User Interface.
+
+Screen reader:
+
+- FileDir's window, the list you hear, the dialogs that all work one way, and where help is, each named and then shown by the reader; then the rules every key follows, so a key can be guessed before it is learned.
+
+### Step 7
+
+Two, Install and Launch.
+
+Screen reader:
+
+- The download, the installer's pages and boxes, and FileDir opening by itself.
+
+### Step 8
+
+Three, Open a Folder and Find a File.
+
+Screen reader:
+
+- Arrowing a folder, jumping to a file by name, and opening it.
+
+### Step 9
+
+Four, Tag Files and Copy Them.
+
+Screen reader:
+
+- The semicolon tags; a command then acts on every tagged file at once.
+
+### Step 10
+
+Five, Play a Page's Media in the Homer Player.
+
+Screen reader:
+
+- A podcast page's episodes found, queued and played; the two searches; extra info.
+
+### Step 11
+
+Six, Rename Files to What Is Inside.
+
+Screen reader:
+
+- One want: files named by a camera or a scanner, called by what they are instead.
+
+### Step 12
+
+Seven, Convert Between Formats.
+
+Screen reader:
+
+- One want: a Word document as a web page, or a PDF as plain text, without opening either.
+
+### Step 13
+
+Eight, Ask About a File.
+
+Screen reader:
+
+- One want: what is in a long document, without reading it all.
+
+### Step 14
+
+Nine, Conclusion.
+
+Screen reader:
+
+- What to carry away, the words FileDir uses, the help built in, and where to learn more.
+
+### Step 15
+
+Ten walks, each under five minutes, under an hour together: the overview, the user interface, seven tasks, and the conclusion. They are a course, not a reference: each one assumes those before it.
+
+**Something to try:** Listen to the walks in order; each one assumes the ones before it.
+
+## 1 - User Interface
+
+FileDir's window, the list you hear, the dialogs that all work one way, and where help is, each named and then shown by the reader; then the rules every key follows, so a key can be guessed before it is learned.
+
+**Before you start:** FileDir is open on a folder of your own, such as Documents.
+
+### Step 1
+
+One want: to move around FileDir without hunting. Everything in it follows a few rules, and this walk shows each one as the screen reader hears it.
+
+### Step 2: Insert+Tab
+
+FileDir is one window, and its main view is a list box: one line for each file or folder in the folder you are in.
+
+Screen reader:
+
+- Documents, list box, Budget dot xlsx, 1 of 42
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 3: Down Arrow
+
+Marks on a line say its kind. A backslash after a name means a folder.
+
+Screen reader:
+
+- Letters backslash, 2 of 42
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 4: Comma
+
+Enter on a folder goes into it. Comma, or Shift plus Backspace, comes back up a level.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 5: Apostrophe
+
+The Apostrophe says the current item's name. Shift plus Apostrophe says the name of the folder it is in.
+
+Screen reader:
+
+- Budget dot xlsx
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Alt+Z
+
+Alt plus Z, Say Status, reads the status line: the item's date and size, the sort order, and any filter.
+
+Screen reader:
+
+- Budget dot xlsx, 14 kilobytes, modified 3 October 2026, sorted by name
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Semicolon
+
+Tagging marks the files a command will act on. The Semicolon tags the current item, and a greater-than sign before a name means it is tagged.
+
+Screen reader:
+
+- Tagged
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 8: Slash
+
+The Slash untags it again. Control plus A tags everything, and Control plus Shift plus A untags everything.
+
+Screen reader:
+
+- Untagged
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Control+O
+
+Several folders can be open at once, each in its own window. Control plus O opens a folder in a new window.
+
+Screen reader:
+
+- Open Folder dialog, Folder: edit combo
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Up Arrow
+
+Text boxes that ask for a folder complete the path as you type, and remember your recent answers: Up Arrow brings back the last one.
+
+Screen reader:
+
+- C colon backslash Users backslash Downloads
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Escape
+
+Every dialog works the same way: a label and its control, Tab between them, Alt with the underlined letter to jump to one, Control plus Enter for OK, and Escape to cancel.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Shift+F4
+
+Shift plus F4 says the titles of all the open windows, and Control plus Tab moves between them.
+
+Screen reader:
+
+- 2 windows: Documents, Downloads
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13
+
+A zip archive opens like a folder: Enter goes in, and its files are listed like any others.
+
+### Step 14: F1
+
+Help is in four places, the same in every Homer program. F1 opens the guide, the whole program in one document.
+
+Screen reader:
+
+- FileDir Guide
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 15: Alt+F1
+
+Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
+
+Screen reader:
+
+- About FileDir dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 16: Escape
+
+Escape closes it. The Help menu, F10 then H, holds all of these, and Play Tutorials, which plays these walks.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 17: Alt+Shift+H
+
+Alt plus Shift plus H, Hotkey Summary, lists every key with its command and what it does, in a window you can search.
+
+Screen reader:
+
+- Hotkey Summary
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 18: Escape
+
+Every key is named for a word in its command: Control plus J for Jump, Control plus O for Open, Shift plus C for Copy to Folder. A key never comes from the middle of a word.
+
+Screen reader:
+
+- Documents, list box
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 19: Control+F1
+
+Control plus F1 is the Key Describer. While it is on, every key says what it does instead of doing it: the safe way to explore.
+
+Screen reader:
+
+- Key Describer on
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 20: Shift+Z
+
+Now Shift plus Z only says what it would do.
+
+Screen reader:
+
+- Shift plus Z, Zip, add current or tagged files to zip archive
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 21: Control+F1
+
+Control plus F1 again turns the describer off.
+
+Screen reader:
+
+- Key Describer off
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 22: Alt+Shift+R
+
+Two settings are worth knowing now. Configuration Options, Alt plus Shift plus C, names your word processor, editor and player. Alt plus Shift plus R decides whether deleting sends to the Recycle Bin.
+
+Screen reader:
+
+- Recycle on
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 23
+
+Messages are spoken as they happen, and shown on the status line, so one that is missed can be read again with the reader's own key for that line.
+
+### Step 24
+
+A short review. I say a command; the reader says its key. Rename the current item.
+
+Screen reader:
+
+- F2, or Shift plus R
+
+### Step 25
+
+Copy the tagged items to another folder.
+
+Screen reader:
+
+- Shift plus C
+
+### Step 26
+
+Move them.
+
+Screen reader:
+
+- Shift plus M
+
+### Step 27
+
+Zip them.
+
+Screen reader:
+
+- Shift plus Z
+
+### Step 28
+
+Go to the parent folder.
+
+Screen reader:
+
+- Comma, or Shift plus Backspace
+
+### Step 29
+
+Jump to an item by part of its name.
+
+Screen reader:
+
+- Control plus J
+
+### Step 30
+
+Every one of these is in Hotkeys, in the Help menu, listed by key and by command.
+
+**Something to try:** Open a folder and name each thing as you reach it: the list, the line, the status line.
+
+## 2 - Install and Launch
+
+The download, the installer's pages, the finish page and its boxes, and FileDir opening by itself.
+
+**Before you start:** The installer is downloaded, and your reader is running.
+
+### Step 1: Enter
+
+The installer is downloaded; Enter opens it. Windows may first ask whether to run a file from the Internet; Alt plus R, Run, answers it.
+
+Screen reader:
+
+- FileDir Setup dialog
+
+### Step 2: Enter
+
+Each page of the installer is a dialog like any other: Tab through it, Enter for Next. The last page is the finish page, with boxes for what else to install -- the screen reader scripts, and mpv, which the Homer Player plays with.
+
+Screen reader:
+
+- Next button
+
+### Step 3
+
+A box that is ticked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
+
+### Step 4: Enter
+
+Enter on Finish, and FileDir opens by itself on a folder. The desktop shortcut's key, Alt plus Control plus F, opens it from anywhere after that, and brings it forward if it is open already.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 5
+
+What the boxes mean. The screen reader scripts give FileDir's own speech its polish; Install when they are not there, Update when a newer set is available, Reinstall when they are current -- the word is the state. mpv is the player behind the Homer Player; the same three words say its state.
+
+### Step 6
+
+The results box after Finish reports each item by name, one line each, and the same summary is saved in the logs folder under your local application data.
+
+### Step 7
+
+Where things went. FileDir is in Program Files; its settings, its Quick folder and its logs are under your local application data, in a folder named FileDir. An update never touches them.
+
+### Step 8: F11
+
+F11 checks for a newer FileDir and offers to fetch and run it, so the installer is a one-time visit. Alt plus F1 says the version at any time.
+
+Screen reader:
+
+- Elevate Version dialog
+
+### Step 9: Escape
+
+Escape. To remove FileDir later, Windows Settings, Apps; your Quick folder and settings stay unless you delete them.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 10
+
+FileDir is one instance: Alt plus Control plus F never opens a second copy, it brings the one forward. The window it brings forward is the last folder you were in, with its tags as you left them.
+
+### Step 11
+
+Before the installer, the download. The ReadMe on the project page has one link, FileDir underscore setup dot exe, and F11 inside an installed FileDir fetches the same file; a browser's download is the only time you touch a web page for FileDir.
+
+### Step 12
+
+A planned misstep. Run the installer while FileDir is open, and it asks you to close it first, by name; close it, press Retry, and the installer carries on. Nothing is half-installed.
+
+### Step 13
+
+The first run asks nothing. FileDir opens on the folder you were last in -- or on your Documents folder the first time -- and the reader says the folder's name and its count, then the first line.
+
+### Step 14
+
+What the scripts give. With the screen reader scripts installed, the reader's own commands know FileDir's list: the line is read with its marks said as words, tagged and folder, rather than as symbols.
+
+### Step 15
+
+What to try first. Arrow the list, press Enter on a folder, press Backspace to come up, press F1. Five minutes of that, and walk three's keys are half known already.
+
+### Step 16: F11
+
+Updating later is F11 inside FileDir: it compares the installed version with the newest on the project page, says both, and offers to fetch and run the installer; the installer's finish page then shows the same boxes, each saying its state.
+
+Screen reader:
+
+- FileDir 5.0 is the newest version. OK button
+
+### Step 17: Escape
+
+Escape. Settings and the Quick folder survive every update; the installer puts the program in Program Files and leaves your local application data alone.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 18
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 19
+
+Alt plus Control plus F.
+
+Screen reader:
+
+- Open FileDir
+
+**Something to try:** Install FileDir and open it from its desktop shortcut.
+
+## 3 - Open a Folder and Find a File
+
+A folder as a list: arrowing it, jumping to a file by name with Jump, and opening what you find. This walk assumes walks two to three.
+
+**Before you start:** FileDir is open on a folder of saved web pages.
+
+### Step 1
+
+Every folder opens as a list you arrow through. the reader says the folder and how many items are in it.
+
+Screen reader:
+
+- FileDir
+- List box C:\PodcastDirectories
+- 119 items
+
+The count comes once, when the folder opens.
+
+### Step 2: DownArrow
+
+Up and Down Arrows move through the list; a letter jumps to the first name starting with it. Enter on a folder goes in; Backspace comes back up.
+
+Screen reader:
+
+- Blind Movers dot h t m
+
+### Step 3: Control+J
+
+Control plus J jumps to a file by name. FileDir asks for the text and remembers your last ten answers.
+
+Screen reader:
+
+- Jump
+- Text edit combo
+
+The window is named Jump because the key is J.
+
+### Step 4: Enter
+
+Type access and press Enter.
+
+Screen reader:
+
+- Access On dot h t m
+
+Jump looks at names. Control plus K looks inside the files.
+
+### Step 5: Control+G
+
+Control plus G, Go To, takes a path, completing it as you type, or offers your recent folders from a list.
+
+Screen reader:
+
+- Go To dialog, Folder: edit combo
+
+### Step 6: Escape
+
+Escape. Alt plus R lists the folders opened this session, newest first; one Enter returns to any of them.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 7
+
+Shift plus I, Initial Change, jumps to the next name starting with a different letter -- a fast way down a long folder; Shift plus X, Extension Change, jumps to the next kind of file.
+
+### Step 8: Control+F
+
+Control plus F filters the folder to the files matching a pattern -- star dot m p 3, or two patterns with a bar between -- until it is cleared; the status says filtered.
+
+Screen reader:
+
+- Filter dialog, Pattern: edit combo
+
+### Step 9: Escape
+
+Escape. Control plus K, Keywords, finds a word inside the body of files, not in their names; walk five uses it on a page of episodes.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 10
+
+Shift plus Q adds the current file or folder to the Quick folder, your list of favorites; Control plus Q opens that folder, from anywhere, and Enter there goes straight to the item.
+
+### Step 11
+
+Opening what you find. Enter opens the file in the program Windows has for it; Control plus E opens it in your editor, EdSharp when it is installed; Control plus W in your word processor; Shift plus Enter opens it as text whatever it is, which is how a strange file is looked into.
+
+### Step 12: Shift+Slash
+
+The question mark, What Content, says what is inside the current file without opening it: its kind, its size, its dates, the number of lines in a text file.
+
+Screen reader:
+
+- Plain text, 12 kilobytes, 212 lines, changed 3 October 2026
+
+### Step 13: Control+Shift+T
+
+Control plus Shift plus T, Type Extended, says more: every property of the current item in one alphabetical list, such as a document's title and author, or a sound file's length. Walk five shows the Player's own Extra Info.
+
+Screen reader:
+
+- Type Extended, read only edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 14: Escape
+
+Escape. Shift plus Apostrophe says the folder you are in with its path, and the Apostrophe alone the current line with its tag, for when you have been away.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 15
+
+A planned misstep. Type a letter meaning to jump and nothing moves, because no name starts with it; the reader says the same line again. Control plus J with a word inside the name finds it instead.
+
+### Step 16
+
+The way back: Alt plus Left Arrow returns to the folder you came from, as a browser's Back does; Alt plus Right Arrow goes forward again. Together with Recent Folders, Alt plus R, you are never lost.
+
+### Step 17
+
+A path can be typed anywhere a folder is asked for, with the drive, and FileDir completes it as you type; a network share works the same way, with its two backslashes.
+
+### Step 18
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 19
+
+Control plus J.
+
+Screen reader:
+
+- Jump
+
+**Something to try:** Open a folder of your own, jump to a file by its first letters, and open it.
+
+## 4 - Tag Files and Copy Them
+
+Tagging two files with the semicolon and copying both at once: the one idea behind every FileDir command that acts on several files. This walk assumes walk three.
+
+**Before you start:** A folder of files is open.
+
+### Step 1: Semicolon
+
+Arrow to a file you want, and press the semicolon to tag it. Tagging marks a file for the next command without moving you.
+
+Screen reader:
+
+- Tagged
+
+The slash key untags. Shift plus Home tags everything from here to the top.
+
+### Step 2: Semicolon
+
+Arrow to another file and tag that one too. FileDir says how many are tagged as the number changes.
+
+Screen reader:
+
+- 2 tagged files
+
+Alt plus Y says the count at any time.
+
+### Step 3: Control+C
+
+Press Control plus C to copy the tagged files. FileDir asks where to.
+
+Screen reader:
+
+- Copy To
+- Folder edit
+
+The window is named for the command. The box remembers the last ten answers.
+
+### Step 4: Enter
+
+Type the folder, or press Alt plus B to browse for it, then Enter.
+
+Screen reader:
+
+- 2 files copied
+
+Nothing is moved unless you use Control plus M instead, which moves.
+
+### Step 5
+
+Other ways to tag. Spacebar toggles the current item; the greater-than key tags and moves to the next, so a run of files is tagged as fast as you can press it; the less-than key untags the same way. Control plus A tags all, Control plus Shift plus A clears all.
+
+### Step 6
+
+Among the tagged, Shift plus N and Shift plus P go to the next and previous tagged item; Shift plus B and Shift plus E to the first and last. The Apostrophe says whether the item you are on is tagged.
+
+### Step 7
+
+What a tag feeds. Shift plus C copies the tagged files to a folder you choose; Shift plus M moves them; Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same tags, a different verb.
+
+### Step 8
+
+Control plus C, Control plus X and Control plus V copy, cut and paste tagged files through the clipboard, as in Windows Explorer -- so files from two folders can be gathered and pasted in a third. Alt plus C appends to the clipboard without clearing it.
+
+### Step 9
+
+A planned misstep. Moving to a folder that already holds a file of the same name: FileDir asks whether to overwrite, and says whether the one there is older or newer, so the answer is informed.
+
+Screen reader:
+
+- Overwrite report dot d o c x? The existing file is newer. Yes button
+
+### Step 10: Escape
+
+Escape keeps both. Control plus S saves the tag states of this window; Control plus Shift plus S restores them -- for when a long selection must survive a detour.
+
+Screen reader:
+
+- FileDir, List box
+
+### Step 11
+
+Tagging by rule. Alt plus Period tags every file and leaves the folders; Alt plus Shift plus Period tags duplicate files -- any file with the same content as another in the folder, however named -- which is how a Downloads folder is cleaned.
+
+### Step 12
+
+Control plus I inverts the tags: tagged becomes untagged and untagged tagged, for when it is easier to say what you do not want. Alt plus Comma untags everything except the current item.
+
+### Step 13
+
+A filter and a tag together: Control plus F to show only star dot j p g, Control plus A to tag them all, Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+
+### Step 14: Shift+S
+
+Shift plus S says the size of the tagged files together, before a copy to a small drive; Alt plus S says the size of the folder you are in.
+
+Screen reader:
+
+- 3 files, 48 megabytes
+
+### Step 15
+
+Renaming many: Control plus R takes a pattern with wildcards -- star dot j p e g to star dot j p g -- and renames every tagged file by it, saying the count. F2 renames the current one by name.
+
+### Step 16
+
+Shift plus Z zips the tagged files into one archive named for the folder, or for a name you give; Shift plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+
+### Step 17
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 18
+
+Control plus C.
+
+Screen reader:
+
+- Copy
+
+**Something to try:** Tag three files and move them to a folder of your own.
+
+## 5 - Play a Page's Media in the Homer Player
+
+A saved podcast page's episodes found and queued in the Homer Player; the transport keys; the two searches, by name and by everything known; and Extra Info. This walk assumes walks three and five, and the player's own help, F1 inside it, has the rest.
+
+**Before you start:** FileDir is open on a folder of saved podcast directories, on Access On dot h t m.
+
+### Step 1: Control+Shift+L
+
+This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
+
+Screen reader:
+
+- Play list
+- Looking for media links in Access On dot h t m
+- Access On dot h t m
+- Track list, 92 tracks from links in Access On dot h t m: List box
+
+The window is named after the play list until something plays. Nothing plays yet.
+
+### Step 2: Tab
+
+The Player is a dialog, so Tab moves through it. In order: the track list, extra info, the sort order, next and previous track, forward and backward, the jump size, the two chapter buttons, where in track, rate, volume, then execute, stop, defaults, help and close.
+
+Screen reader:
+
+- Extra Info: edit read only
+
+Every control has its own Alt key: T for the track list, X for extra info, O for order, E for execute, S for stop, H for help.
+
+### Step 3: Shift+Tab
+
+Three keys do most of the work. Enter plays the track the cursor is on. Space plays and pauses from anywhere but a button. Escape closes the Player.
+
+Screen reader:
+
+- Track list, 92 tracks from links in Access On dot h t m: List box
+- Access On is coming soon
+
+Shift plus Tab goes back the way you came.
+
+### Step 4: DownArrow
+
+The track list holds one line for each episode: its name, and its length where the page gave one. There is no number in front, so pressing a letter jumps to the first episode beginning with it.
+
+Screen reader:
+
+- Welcome to Access on, and AI to help you use your technology, 1 colon 09 colon 23
+
+Arrowing through the list chooses nothing and plays nothing.
+
+### Step 5: Enter
+
+Press Enter to play the one you are on.
+
+Screen reader:
+
+- Playing
+
+Now the window title is the track, so your screen reader's title key says what is playing.
+
+### Step 6
+
+There are two modes, and Enter follows them. While something plays, Enter is stop. While nothing plays, Enter is execute playback. The status line says which: press your screen reader's key for it.
+
+Screen reader:
+
+- Playing track 2 of 92, 12 min 3 sec of 1 hr 9 min
+
+The status line is never announced. It waits until you ask.
+
+### Step 7: Control+RightArrow
+
+Control with an arrow is the transport. Sideways is time inside the track, up and down is tracks in the queue, the Page keys are chapters, and adding Shift means all the way.
+
+Screen reader:
+
+- 13 min 3 sec of 1 hr 9 min
+
+The jump is a minute to begin with. Alt plus I offers fifteen seconds up to an hour.
+
+### Step 8: Space
+
+Press Space to pause.
+
+Screen reader:
+
+- Paused
+
+Space plays and pauses from any control except a button, where Space presses the button.
+
+### Step 9: Control+J
+
+Now the two searches, which answer different questions. Control plus J jumps by the line the list shows. Type braillenote and press Enter.
+
+Screen reader:
+
+- Jump
+- Text edit combo
+- The BrailleNote Evolve from HumanWare
+
+That title has the word in it, so Jump finds it.
+
+### Step 10: Control+K
+
+Control plus K searches everything known about each episode: the presenter, the date, the address, and the summary the page gave. Type meta glasses and press Enter.
+
+Screen reader:
+
+- Keywords
+- Text edit combo
+- Workaround for the Braille Screen Input Uber bug, Android becomes more restrictive, and assigning a Braille keyboard command to Sound Curtin
+
+Those words are nowhere in that title. They are in the summary, which is why Keywords found it and Jump could not.
+
+### Step 11: F3
+
+Keywords takes more than one word. An ampersand means both, a bar means either, and a star stands for anything in the middle. F3 repeats whichever search you used last, and Shift plus F3 goes back.
+
+Screen reader:
+
+- 0 more matches for meta glasses
+
+Control plus F filters the list to what matches; Control plus Shift plus F clears it.
+
+### Step 12: Alt+X
+
+Alt plus X is extra info: everything known about the episode the cursor is on, one field to a line, sorted by field. The cursor starts at the top.
+
+Screen reader:
+
+- Extra Info: edit read only
+- Address https colon slash slash pinecast dot com slash listen
+
+The fields come from the page, from the play list, and from ExifTool for a file on this computer.
+
+### Step 13: Alt+H
+
+Alt plus H is help. It leads with the keys that have no button, because those are the hardest to find.
+
+Screen reader:
+
+- Player Help
+- PLAYER
+- Every control has its own Alt key, the letter underlined in its name.
+- These commands have no control, so they are listed first.
+- FINDING A TRACK
+- Control plus J jump to a track by name, as the list shows it
+- Control plus K keywords, search everything known about the tracks
+- F3, Shift plus F3 repeat the last jump or keyword search
+
+Read it by line, or copy it. OK closes it.
+
+### Step 14: Escape
+
+Escape leaves the help. Escape again closes the Player, remembering the settings for this play list and where each episode had reached.
+
+Screen reader:
+
+- FileDir
+- List box C:\PodcastDirectories
+
+Open the same page tomorrow and it starts where you stopped.
+
+### Step 15
+
+That is the whole of it. One key to find a file, one key to play what is in it, Control with the arrows to move about, and Escape to come back.
+
+Alt plus H inside the Player lists every key. F1 lists every control with what it does.
+
+### Step 16
+
+What this walk taught. I say the key; the reader says what it does.
+
+### Step 17
+
+Control plus Shift plus L.
+
+Screen reader:
+
+- Play list
+
+### Step 18
+
+Control plus K.
+
+Screen reader:
+
+- Keywords
+
+### Step 19
+
+Alt plus X.
+
+Screen reader:
+
+- Extra Info
+
+**Something to try:** Open a podcast page of your own, play an episode, pause it, and search the queue for a word.
+
+## 6 - Rename Files to What Is Inside
+
+One want: files named by a camera or a scanner, called by what they are instead. FileDir reads each tagged file's own title -- a PDF's, a song's, a photograph's caption, a book's name -- and renames the file after it.
+
+**Before you start:** A folder holds downloaded files with names that say nothing.
+
+### Step 1
+
+One want: files with names that say nothing -- IMG underscore 4021, Scan 7 -- called by what they are. A file often carries its own title inside it; FileDir can read it and rename the file after it.
+
+### Step 2: Alt+Control+F
+
+Alt plus Control plus F opens FileDir on the folder it last showed.
+
+Screen reader:
+
+- FileDir
+
+### Step 3: Semicolon
+
+Walk four showed tagging. I tag the files to rename: the semicolon tags the current one.
+
+Screen reader:
+
+- Tagged
+
+### Step 4: Semicolon
+
+Down Arrow to the next, and the semicolon again.
+
+Screen reader:
+
+- 2 tagged files
+
+### Step 5: Control+Shift+I
+
+Control plus Shift plus I, I for Identify, renames each tagged file after what is inside it. FileDir asks first, showing each old name beside its new one.
+
+Screen reader:
+
+- Rename to Identify Content dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Enter
+
+It looked in the metadata first: a PDF's title, a song's name, a photograph's caption, choosing the longest title-like field, so Sunset over the Cascades wins over IMG underscore 4021. Enter accepts.
+
+Screen reader:
+
+- 2 files renamed
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Semicolon
+
+A planned misstep: a text file with no metadata. FileDir falls back on its first line, which may be a date or a byline rather than a title. I tag one and try.
+
+Screen reader:
+
+- Tagged
+
+### Step 8: Control+Shift+I
+
+Control plus Shift plus I.
+
+Screen reader:
+
+- Rename to Identify Content dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Escape
+
+The proposed name is a date. Escape cancels, and nothing is renamed; F2 renames the file by hand instead.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Control+R
+
+When names follow a pattern, wildcards rename them all at once. Control plus R, Rename with Wildcards, asks for the pattern to find and the pattern to make.
+
+Screen reader:
+
+- Rename with Wildcards dialog, From: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Escape
+
+Star dot jpeg, to star dot j p g, gives every JPEG the shorter extension in one step.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Control+Shift+R
+
+For anything a pattern can describe, Control plus Shift plus R, Rename with Regular Expression, renames the current or tagged items with a regular expression.
+
+Screen reader:
+
+- Rename with Regular Expression dialog, Find: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13: Escape
+
+Escape for now; regular expressions reward a careful first try on a few tagged files.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 14: Alt+Shift+K
+
+Numbered files often sort wrongly by ear: Chapter 10 before Chapter 2. Alt plus Shift plus K, Reorder Names, pads single leading digits, so the list reads in order.
+
+Screen reader:
+
+- Reorder Names dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 15: Enter
+
+It shows each old name beside its new one before changing anything. Enter accepts.
+
+Screen reader:
+
+- 12 files renamed
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 16
+
+Every rename, of whatever kind, can be checked by ear first: each dialog lists what will change before it changes.
+
+### Step 17: F2
+
+And one file at a time is always there. F2, or Shift plus R, renames the current item, with its name ready to edit.
+
+Screen reader:
+
+- Rename dialog, Name: edit, IMG underscore 4021 dot jpg
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 18: Harbor at dawn.jpg
+
+The name is selected, so typing replaces it. I type a name that says what the picture is.
+
+Screen reader:
+
+- (each character echoed as it is typed)
+
+### Step 19: Enter
+
+Enter, and the list says the new name at once, in its new place in the order.
+
+Screen reader:
+
+- Harbor at dawn dot jpg
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 20
+
+Keep the extension when renaming by hand, dot j p g here, so Windows still knows what kind of file it is.
+
+### Step 21
+
+What this walk taught. I name the step; the reader gives the key.
+
+### Step 22
+
+Tag a file.
+
+Screen reader:
+
+- Semicolon
+
+### Step 23
+
+Rename tagged files after what is inside them.
+
+Screen reader:
+
+- Control plus Shift plus I
+
+### Step 24
+
+Rename one file by hand.
+
+Screen reader:
+
+- F2
+
+**Something to try:** Tag a few downloaded PDFs and rename them to what is inside; then check each new name with Down Arrow.
+
+## 7 - Convert Between Formats
+
+One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the tagged files, or the current one, keeping each name.
+
+**Before you start:** A folder holds a Word document and a PDF.
+
+### Step 1
+
+One want: a document in another form -- a Word file as a web page, a PDF as plain text -- without opening it in anything.
+
+### Step 2: Alt+Control+F
+
+Alt plus Control plus F opens FileDir on the folder it last showed.
+
+Screen reader:
+
+- FileDir
+
+### Step 3: Shift+O
+
+I arrow to a Word document. Shift plus O is Output Type, O for Output.
+
+Screen reader:
+
+- Output Type dialog
+- Web page
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 4: Down Arrow
+
+FileDir looked at what the file is and offers only what it can become: for a document, Word, a web page, Markdown, plain text, EPUB and others. Down Arrow moves through them.
+
+Screen reader:
+
+- Markdown
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 5: Up Arrow
+
+I want the web page. Up Arrow back to it, then Enter.
+
+Screen reader:
+
+- Web page
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Enter
+
+Enter converts.
+
+Screen reader:
+
+- Converted to report dot h t m l
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Shift+O
+
+The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Shift plus O.
+
+Screen reader:
+
+- Output Type dialog
+- Plain text
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 8: Escape
+
+Plain text or a web page, and no more: a PDF is a printed page, read back. Escape leaves it as it is.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Semicolon
+
+Tagged files convert together. I tag three Word documents with the Semicolon.
+
+Screen reader:
+
+- 3 tagged files
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Enter
+
+Shift plus O, the web page, and Enter: all three convert, each beside its original.
+
+Screen reader:
+
+- Converted 3 files
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Control+2
+
+Some text files are in an old character encoding, and their accented letters come out wrong. Control plus 2, Convert Encoding, rewrites the tagged text files in the encoding you pick.
+
+Screen reader:
+
+- Convert Encoding dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Escape
+
+The original is kept beside each one, ending in dot b a k, so nothing is lost if the choice was wrong. Escape, for now.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13: Shift+A
+
+Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the tagged files to the clipboard, one after another, converting each from its own format.
+
+Screen reader:
+
+- Appended 3 files to clipboard
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 14
+
+Then one paste in any program puts it all there: three documents' text in one email, for example.
+
+### Step 15: Shift+O
+
+Output Type is not only for documents. On a sound file, Shift plus O offers other kinds of audio.
+
+Screen reader:
+
+- Output Type dialog
+- MP3 audio
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 16: Escape
+
+An MP3 plays almost anywhere, so it is the usual choice for sharing a recording. Escape, for now.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 17: Shift+O
+
+On a picture, it offers other kinds of picture, and on a video, other kinds of video.
+
+Screen reader:
+
+- Output Type dialog
+- PNG picture
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 18: Escape
+
+In every case, the list holds only what that file can truly become, so there is no wrong choice to make. Escape.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 19
+
+What this walk taught. I name the step; the reader gives the key.
+
+### Step 20
+
+Choose what this file becomes.
+
+Screen reader:
+
+- Shift plus O
+
+### Step 21
+
+Leave without converting.
+
+Screen reader:
+
+- Escape
+
+**Something to try:** Convert a Markdown file of your own to a web page, then open the web page in your browser.
+
+## 8 - Ask About a File
+
+One want: what is in a long document, without reading it all. Shift plus F12 asks a model on this computer a question with the file's text attached; F12 asks a question about nothing in particular. The same keys as EdSharp.
+
+**Before you start:** A model is installed for FileDir's AI commands, and a folder holds a long document.
+
+### Step 1
+
+One want: to know what is in a long report before deciding to read it. FileDir can ask a language model running on this computer, so nothing leaves it.
+
+### Step 2: Alt+Control+F
+
+Alt plus Control plus F opens FileDir on the folder it last showed.
+
+Screen reader:
+
+- FileDir
+
+### Step 3: Shift+F12
+
+I arrow to the report. Shift plus F12 is Chat about File: the question travels with the file's text, converted from whatever it is, so a Word file or a PDF works as well as text.
+
+Screen reader:
+
+- Chat about File dialog
+- Question: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 4: Summarize this in three sentences.
+
+I type the question.
+
+Screen reader:
+
+- (each word echoed as it is typed)
+
+### Step 5: Enter
+
+Enter asks.
+
+Screen reader:
+
+- Answer dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 6: Down Arrow
+
+The answer opens in a window, in a box I can arrow through line by line. Down Arrow reads the first line.
+
+Screen reader:
+
+- (the first line of the answer)
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 7: Escape
+
+Control plus C copies a selection, and Escape, Enter or the Spacebar leaves, whichever is nearest the hand.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 8: F12
+
+A planned misstep: F12 without Shift is Chat with AI, which attaches nothing. Asking it to summarize this gets an answer about nothing in particular. Shift is what brings the file along.
+
+Screen reader:
+
+- Chat with AI dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 9: Escape
+
+Escape closes it unasked.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 10: Control+Shift+T
+
+Not every question needs a model. Control plus Shift plus T, Type Extended, lists every property FileDir can find for the file, alphabetically: its dates, its size, its author and title.
+
+Screen reader:
+
+- Type Extended, read only edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 11: Escape
+
+Escape returns to the list.
+
+Screen reader:
+
+- FileDir
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 12: Question
+
+And the question mark, Say What Content, reads the file's own text aloud, or lists what is inside it if it is an archive.
+
+Screen reader:
+
+- Quarterly report. Summary. Revenue rose by 8 percent.
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 13
+
+When reading is not enough, the model can do what reading cannot: compare, summarize, pick out the dates or the names.
+
+### Step 14: Shift+F12
+
+A good question is a specific one. Shift plus F12 again, this time asking for every deadline in the report.
+
+Screen reader:
+
+- Chat about File dialog
+- Question: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 15: List every deadline in this report, with its date.
+
+I type the question.
+
+Screen reader:
+
+- (each word echoed as it is typed)
+
+### Step 16: Enter
+
+Enter. The answer is a list, one deadline to a line, ready to copy into a calendar.
+
+Screen reader:
+
+- Answer dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 17
+
+The model runs on this computer, through Ollama, so the report never leaves it. The first answer can be slow while the model loads; later ones are quicker.
+
+### Step 18: F12
+
+F12 has its own uses, for questions about nothing on disk: what a word means, how to phrase a sentence, what a file extension is for.
+
+Screen reader:
+
+- Chat with AI dialog
+- Question: edit
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 19: What is an EPUB file?
+
+I ask what an EPUB file is.
+
+Screen reader:
+
+- (each word echoed as it is typed)
+
+### Step 20: Enter
+
+Enter, and the answer opens in the same kind of window as before.
+
+Screen reader:
+
+- Answer dialog
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 21: Control+A
+
+Control plus A selects the whole answer, and Control plus C copies it, to paste wherever it is needed.
+
+Screen reader:
+
+- selected
+
+Confirm the wording with a live run: buildTutorials -live.
+
+### Step 22
+
+What this walk taught. I name the step; the reader gives the key.
+
+### Step 23
+
+Ask about the file I am on.
+
+Screen reader:
+
+- Shift plus F12
+
+### Step 24
 
 Ask a question about nothing in particular.
 
