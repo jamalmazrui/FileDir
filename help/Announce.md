@@ -6,8 +6,6 @@ author: Jamal Mazrui
 
 # What's New in the FileDir Directory Manager for Windows
 
-### A file manager rebuilt for the way screen reader users actually work
-
 **Version 5.0.73**  
 September 2026  
 Copyright 2006-2026 by Jamal Mazrui  

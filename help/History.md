@@ -1,6 +1,12 @@
 ﻿# FileDir — Change History
 
 
+
+## 9 October 2026 -- from the build and release logs
+
+- **No unreachable code.** Unarchiving sends every archive through 7-Zip; a test that once chose a built-in ZIP loop had become if (true), so that loop could never run and the compiler said so on every build. The loop and the list it filled are gone; what runs is unchanged.
+- **The subtitle appears once.** Announce.md repeated its subtitle as a heading under the title, so the page said it twice, once as a heading that skipped a level.
+
 ## Unreleased -- 9 October 2026
 
 - **The kit's media player, not a copy of it.** FileDir compiled its own MediaPlayer.cs, which had drifted from the kit's: the kit's is the same player made general, with its output streams read side by side so a process cannot hang, and Play Tutorials added. FileDir now compiles the kit's, as it already did Media.cs and Mpv.cs, and its build retires the old copy and logs it. The player's settings, which FileDir's copy kept beside its data folder rather than in it, are moved into data the first time, so nothing chosen is lost. FileDir needs HomerDev 1.65.3.

@@ -7037,7 +7037,6 @@ App.sOpenText = sDir;
 string sZip = "";
 string sSubdir = "";
 if (mdiChild.InZip) sZip = mdiChild.Text;
-List<ZipEntry> zeList = null;
 
 for (int i = 0; i < aPaths.Length; i++) {
 string sPath = aPaths[i];
@@ -7054,8 +7053,9 @@ else sSubdir = sDir;
 string sTarget = zipEntry2Dir(sZip, sPath, sSubdir);
 }
 else {
-// if (!sPath.ToLower().EndsWith(".zip")) {
-if (true) {
+// EVERY ARCHIVE GOES THROUGH 7-ZIP (9 October 2026). A test for .zip once chose between 7-Zip and a built-in
+// ZIP loop; it had been replaced by if (true), so the loop that followed could never run, and the compiler
+// said so (CS0162). The loop, and the list it filled, are gone; what runs is unchanged.
 z7Entry2Dir(sPath, "*", sDir, true);
 if (i < aPaths.Length - 1) continue;
 App.say("Done!", true);
@@ -7064,29 +7064,6 @@ refresh_Helper(sDir);
 goTo_Helper(sDir);
 }
 return;
-}
-
-zeList = Frame.getZipEntries(sPath);
-foreach (ZipEntry ze in zeList) {
-sName = ze.Name;
-if (sName.EndsWith("/") || sName.EndsWith(@"\")) continue;
-sName = Path.GetFileName(sName);
-App.say(sName);
-try {
-if (bSubdirs) {
-sSubdir = Path.Combine(sDir, Path.GetDirectoryName(ze.Name.Replace("/", @"\")));
-//if (!Directory.Exists(sSubdir)) FileSystem.CreateDirectory(sSubdir);
-if (!Directory.Exists(sSubdir)) Directory.CreateDirectory(sSubdir);
-}
-else sSubdir = sDir;
-string sTarget = zipEntry2Dir(sPath, ze.Name, sSubdir);
-if (!File.Exists(sTarget) )return;
-}
-catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
-return;
-}
-}
 }
 }
 catch (Exception ex) {

@@ -168,6 +168,18 @@
 <h1 class="title">History</h1>
 </header>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
+<h2 id="october-2026-from-the-build-and-release-logs">9 October 2026 –
+from the build and release logs</h2>
+<ul>
+<li><strong>No unreachable code.</strong> Unarchiving sends every
+archive through 7-Zip; a test that once chose a built-in ZIP loop had
+become if (true), so that loop could never run and the compiler said so
+on every build. The loop and the list it filled are gone; what runs is
+unchanged.</li>
+<li><strong>The subtitle appears once.</strong> Announce.md repeated its
+subtitle as a heading under the title, so the page said it twice, once
+as a heading that skipped a level.</li>
+</ul>
 <h2 id="unreleased-9-october-2026">Unreleased – 9 October 2026</h2>
 <ul>
 <li><strong>The kit’s media player, not a copy of it.</strong> FileDir
