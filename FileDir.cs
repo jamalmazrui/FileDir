@@ -7159,17 +7159,6 @@ if (sExt.StartsWith(".")) sExt = sExt.Substring(1).ToLower();
 if ("|com|doc|docx|exe|msi|pdf|ppt|pptx|xls|xlsx|".IndexOf("|" + sExt + "|") >= 0) return false;
 
 return testZ7(sPath);
-bool bResult = false;
-try {
-using (ZipFile z = new ZipFile(sPath)) {
-if (App.sUnarchivePassword.Trim().Length > 0)  z.Password = App.sUnarchivePassword;
-bResult = z.TestArchive(true);
-}
-}
-catch {
-bResult = false;
-}
-return bResult;
 } // testZip method
 
 public string z7Entry2Dir(string sZip, string sPath, string sDir, bool bSubfolders) {
@@ -9884,38 +9873,7 @@ App.bKeyDescriber = false;
 } // checkKeyDescriber method
 
 public static void fillTableFromZip(DataTable tbl, string sZip) {
-fillTableFromZ7(tbl, sZip); 
-return;
-
-//if (tbl == null) Lbc.Show("null");
-char type, hidden, readOnly, system, tagged;
-DateTime time;
-FileAttributes attr;
-long size;
-string sPath, sName, sExt;
-
-List<ZipEntry> entryList = Frame.getZipEntries(sZip);
-foreach (ZipEntry entry in entryList) {
-sPath = entry.Name;
-sName = sPath;
-if (sName.EndsWith("/")) sName = sName.Substring(0, sName.Length - 1);
-if (entry.IsDirectory) {
-type = '\\';
-}
-else {
-type = ' ';
-}
-
-sExt = Path.GetExtension(sName);
-size = entry.Size;
-time = entry.DateTime;
-attr = 0;
-hidden = ((attr & FileAttributes.Hidden) == FileAttributes.Hidden) ? ')' : ' ';
-readOnly = ((attr & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) ? ']' : ' ';
-system = ((attr & FileAttributes.System) == FileAttributes.System) ? '}' : ' ';
-tagged = ' ';
-tbl.Rows.Add(sPath, sName.PadRight(50), sExt, size, time, attr, type, hidden, readOnly, system, tagged);
-}
+fillTableFromZ7(tbl, sZip);
 } // fillTableFromZip method
 
 public static string[] getZ7List(string sZip) {

@@ -4,6 +4,8 @@
 
 ## 9 October 2026 -- from the build and release logs
 
+- **Two more blocks of unreachable code removed (9 October 2026).** testZip and fillTableFromZip had moved to 7-Zip, but their old ZIP code stayed after the return, where it never ran and the compiler warned twice (CS0162). Behavior is unchanged.
+
 - **No unreachable code.** Unarchiving sends every archive through 7-Zip; a test that once chose a built-in ZIP loop had become if (true), so that loop could never run and the compiler said so on every build. The loop and the list it filled are gone; what runs is unchanged.
 - **The subtitle appears once.** Announce.md repeated its subtitle as a heading under the title, so the page said it twice, once as a heading that skipped a level.
 
