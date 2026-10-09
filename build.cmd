@@ -582,6 +582,14 @@ if not exist "scripts" mkdir "scripts"
 for %%F in (buildTutorials.cmd buildTutorials.ps1 check.cmd check.py checkTutorial.cmd checkTutorial.py finish.cmd fixEncoding.cmd fixEncoding.py installCommon.cmd installOllama.cmd installScreenReaderSupport.cmd kind.cmd kind.py makeTutorials.cmd makeTutorials.py push.cmd release.cmd release.ps1 tidy.cmd tidy.py unpushed.cmd unpushed.py) do (
   if exist "%homerDev%\scripts\%%F" copy /y "%homerDev%\scripts\%%F" scripts\ >nul
 )
+rem A RETIRED TOP-LEVEL FOLDER (9 October 2026): FileDir keeps its Quick folder
+rem under LOCALAPPDATA, so a Quick folder in the project is left from an older
+rem layout; nothing reads it, and the kit's layout check names it. Its files are
+rem moved into notes\retired\Quick, never deleted.
+if exist "Quick\" (
+  robocopy "Quick" "notes\retired\Quick" /E /MOVE /NFL /NDL /NJH /NJS /NP >nul
+  if exist "Quick\" (echo WARNING: the old Quick folder could not be fully moved into notes\retired\Quick>> "%log%") else (echo Retired: the top-level Quick folder, which nothing reads, is now notes\retired\Quick>> "%log%")
+)
 rem Retired kit scripts an app may still carry from an earlier refresh: gone.
 rem Since kit 1.42 the kit's scripts have plain names -- checkHomerApp is
 rem check, gitPush is push, gitUnpushed is unpushed, homerFinish is finish,

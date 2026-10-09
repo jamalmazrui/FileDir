@@ -171,6 +171,10 @@
 <h2 id="october-2026-from-the-build-and-release-logs">9 October 2026 –
 from the build and release logs</h2>
 <ul>
+<li><p><strong>An old Quick folder retired (9 October 2026).</strong>
+FileDir keeps its Quick folder under LOCALAPPDATA, so a top-level Quick
+folder in the project was left from an older layout; the build moves its
+files into notes\retired\Quick.</p></li>
 <li><p><strong>Two more blocks of unreachable code removed (9 October
 2026).</strong> testZip and fillTableFromZip had moved to 7-Zip, but
 their old ZIP code stayed after the return, where it never ran and the

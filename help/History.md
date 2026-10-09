@@ -4,6 +4,8 @@
 
 ## 9 October 2026 -- from the build and release logs
 
+- **An old Quick folder retired (9 October 2026).** FileDir keeps its Quick folder under LOCALAPPDATA, so a top-level Quick folder in the project was left from an older layout; the build moves its files into notes\\retired\\Quick.
+
 - **Two more blocks of unreachable code removed (9 October 2026).** testZip and fillTableFromZip had moved to 7-Zip, but their old ZIP code stayed after the return, where it never ran and the compiler warned twice (CS0162). Behavior is unchanged.
 
 - **No unreachable code.** Unarchiving sends every archive through 7-Zip; a test that once chose a built-in ZIP loop had become if (true), so that loop could never run and the compiler said so on every build. The loop and the list it filled are gone; what runs is unchanged.
