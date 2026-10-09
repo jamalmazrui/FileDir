@@ -388,6 +388,17 @@ StringBuilder sb = new StringBuilder();
 for (int i = 0; i < lsValues.Count; i++) {
 if (i > 0) sb.Append(cSeparator);
 string sValue = lsValues[i] == null ? "" : lsValues[i];
+// NO CELL BECOMES A FORMULA (8 October 2026, from an audit by another AI): a
+// value beginning = or @ -- or + or - when it is not a number -- became a live
+// formula when the file was opened in a spreadsheet, and file names and text
+// come from anywhere. Such a cell starts with an apostrophe, shown as plain
+// text; numbers such as -5 are left exactly as they are.
+if (sValue.Length > 0) {
+char cFirst = sValue[0];
+double nIgnored;
+bool bNumber = double.TryParse(sValue, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out nIgnored);
+if (cFirst == '=' || cFirst == '@' || cFirst == '\t' || cFirst == '\r' || ((cFirst == '+' || cFirst == '-') && !bNumber)) sValue = "'" + sValue;
+}
 // Quoted when it has to be, and not otherwise: a file full of needless
 // quotes is harder to read and no more correct.
 bool bNeed = sValue.IndexOf(cSeparator) >= 0 || sValue.IndexOf('"') >= 0

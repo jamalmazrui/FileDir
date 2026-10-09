@@ -65,9 +65,78 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Tagged files convert together: tag several, then Shift plus O once. What this walk taught. I name the step; the reader gives the key.
+Say=Tagged files convert together. I tag three Word documents with the Semicolon.
+Key=Semicolon
+Hear=3 tagged files
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Shift plus O, the web page, and Enter: all three convert, each beside its original.
+Key=Enter
+Hear=Converted 3 files
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Some text files are in an old character encoding, and their accented letters come out wrong. Control plus 2, Convert Encoding, rewrites the tagged text files in the encoding you pick.
+Key=Control+2
+Hear=Convert Encoding dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=The original is kept beside each one, ending in dot b a k, so nothing is lost if the choice was wrong. Escape, for now.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the tagged files to the clipboard, one after another, converting each from its own format.
+Key=Shift+A
+Hear=Appended 3 files to clipboard
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Then one paste in any program puts it all there: three documents' text in one email, for example.
 Key=
-Hear=
+
+[step]
+
+Say=Output Type is not only for documents. On a sound file, Shift plus O offers other kinds of audio.
+Key=Shift+O
+Hear=Output Type dialog
+Hear=MP3 audio
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=An MP3 plays almost anywhere, so it is the usual choice for sharing a recording. Escape, for now.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=On a picture, it offers other kinds of picture, and on a video, other kinds of video.
+Key=Shift+O
+Hear=Output Type dialog
+Hear=PNG picture
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=In every case, the list holds only what that file can truly become, so there is no wrong choice to make. Escape.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=What this walk taught. I name the step; the reader gives the key.
+Key=
 
 [step]
 

@@ -70,6 +70,86 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
+Say=Not every question needs a model. Control plus Shift plus T, Type Extended, lists every property FileDir can find for the file, alphabetically: its dates, its size, its author and title.
+Key=Control+Shift+T
+Hear=Type Extended, read only edit
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Escape returns to the list.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=And the question mark, Say What Content, reads the file's own text aloud, or lists what is inside it if it is an archive.
+Key=Question
+Hear=Quarterly report. Summary. Revenue rose by 8 percent.
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=When reading is not enough, the model can do what reading cannot: compare, summarize, pick out the dates or the names.
+Key=
+
+[step]
+
+Say=A good question is a specific one. Shift plus F12 again, this time asking for every deadline in the report.
+Key=Shift+F12
+Hear=Chat about File dialog
+Hear=Question: edit
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=I type the question.
+Key=List every deadline in this report, with its date.
+Hear=(each word echoed as it is typed)
+
+[step]
+
+Say=Enter. The answer is a list, one deadline to a line, ready to copy into a calendar.
+Key=Enter
+Hear=Answer dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=The model runs on this computer, through Ollama, so the report never leaves it. The first answer can be slow while the model loads; later ones are quicker.
+Key=
+
+[step]
+
+Say=F12 has its own uses, for questions about nothing on disk: what a word means, how to phrase a sentence, what a file extension is for.
+Key=F12
+Hear=Chat with AI dialog
+Hear=Question: edit
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=I ask what an EPUB file is.
+Key=What is an EPUB file?
+Hear=(each word echoed as it is typed)
+
+[step]
+
+Say=Enter, and the answer opens in the same kind of window as before.
+Key=Enter
+Hear=Answer dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Control plus A selects the whole answer, and Control plus C copies it, to paste wherever it is needed.
+Key=Control+A
+Hear=selected
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
 Say=What this walk taught. I name the step; the reader gives the key.
 Key=
 Hear=

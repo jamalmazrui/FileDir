@@ -190,9 +190,7 @@ Source: "help\tutorials\Tutorials.m3u"; DestDir: "{app}\help\tutorials"; Flags: 
 Source: "FileDir.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Convert.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Dialogs.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Media.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "MediaPlayer.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Mpv.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Table.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.js"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "build.cmd"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist

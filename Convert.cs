@@ -1068,11 +1068,14 @@ info.CreateNoWindow = true;
 info.RedirectStandardOutput = true;
 info.RedirectStandardError = true;
 using (Process process = Process.Start(info)) {
-// Both streams are read before waiting: a full pipe buffer would otherwise
-// deadlock the wait that follows.
+// Both streams drained at once: the error stream on its own task while the
+// output stream is read here, so a program that fills either pipe first cannot
+// block the other (8 October 2026, from an audit by another AI: reading one to
+// its end and then the other could hang both programs).
+System.Threading.Tasks.Task<string> taskErr = process.StandardError.ReadToEndAsync();
 sOut = process.StandardOutput.ReadToEnd();
-string sErr = process.StandardError.ReadToEnd();
 process.WaitForExit();
+string sErr = taskErr.Result;
 Homer.Log.command(sExe + " " + sArguments, process.ExitCode);
 if (!string.IsNullOrEmpty(sErr)) Homer.Log.info("  said: " + sErr.Trim());
 if (process.ExitCode != 0) {

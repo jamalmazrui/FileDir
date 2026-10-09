@@ -181,6 +181,8 @@ rem these, and needs them together. Uncomment the pair.
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\KeyMap.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Mdi.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Lbc.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Media.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Mpv.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Log.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Paths.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Ollama.cs""
@@ -188,6 +190,14 @@ set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Say.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Util.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Web.cs""
 echo Homer modules: !homerSources!>> "%log%"
+rem ONE COPY OF A SHARED MODULE (8 October 2026, don't repeat yourself): FileDir
+rem compiled its own Media.cs and Mpv.cs, which had drifted from the kit's -- they
+rem lacked the kit's fix for a process whose output could hang, and its machine-
+rem wide mpv search and recording. The kit's are compiled now, and the old copies
+rem are removed, and logged, so a stale one can never be compiled again.
+for %%F in (Media.cs Mpv.cs) do if exist "%%F" (
+  del /q "%%F" && >> "%log%" echo Retired %%F: the kit's copy is compiled instead
+)
 
 rem ---- component options ----------------------------------------------
 rem EVERY COMPONENT ANY HOMER APP HAS EVER NEEDED IS LISTED HERE. The ones
@@ -481,7 +491,7 @@ echo(>> "%log%"
   !manifest! ^
   /out:exec\%app%.exe ^
   Version.cs KeyText.cs ^
-  FileDir.cs Convert.cs Dialogs.cs Media.cs MediaPlayer.cs Mpv.cs Table.cs ^
+  FileDir.cs Convert.cs Dialogs.cs MediaPlayer.cs Table.cs ^
   !homerSources! >> "%log%" 2>&1
 
 set iBuildResult=%ERRORLEVEL%

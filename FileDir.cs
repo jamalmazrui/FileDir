@@ -841,32 +841,74 @@ if (bRecycle) FileSystem.DeleteFile(sPath, UIOption.OnlyErrorDialogs, RecycleOpt
 else FileSystem.DeleteFile(sPath, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently, UICancelOption.ThrowException);
 } // deleteFile method
 
+// REPLACE SAFELY (8 October 2026, from an audit by another AI): each of these
+// deleted the destination first and copied or moved second, so a copy that
+// failed -- a full disk, a locked file, a dropped share, or Cancel -- lost the
+// destination for nothing; and a destination that was the source itself was
+// deleted before anything was copied. Now the same path is refused, and an
+// existing destination is set aside, put back if the copy or move fails, and
+// removed (to the Recycle Bin when that is the setting) only after it succeeds.
+static string setAside(string sSource, string sTarget) {
+if (string.Equals(Path.GetFullPath(sSource).TrimEnd('\\'), Path.GetFullPath(sTarget).TrimEnd('\\'), StringComparison.OrdinalIgnoreCase))
+throw new IOException("The source and the destination are the same: " + sTarget);
+if (!Directory.Exists(sTarget) && !File.Exists(sTarget)) return "";
+string sAside = sTarget + ".FileDir-previous";
+if (Directory.Exists(sAside)) Directory.Delete(sAside, true);
+else if (File.Exists(sAside)) File.Delete(sAside);
+if (Directory.Exists(sTarget)) Directory.Move(sTarget, sAside);
+else File.Move(sTarget, sAside);
+return sAside;
+} // setAside method
+
+static void settleAside(string sAside, string sTarget, bool bDone, bool bRecycle) {
+if (sAside == "") return;
+if (bDone) {
+if (Directory.Exists(sAside)) App.deleteDirectory(sAside, bRecycle);
+else App.deleteFile(sAside, bRecycle);
+return;
+}
+try {
+if (Directory.Exists(sTarget)) Directory.Delete(sTarget, true);
+else if (File.Exists(sTarget)) File.Delete(sTarget);
+if (Directory.Exists(sAside)) Directory.Move(sAside, sTarget);
+else File.Move(sAside, sTarget);
+} catch (Exception) { }
+} // settleAside method
+
 public static void copyDirectory(string sSource, string sTarget, bool bRecycle) {
-if (Directory.Exists(sTarget)) App.deleteDirectory(sTarget, bRecycle);
-else if (File.Exists(sTarget)) App.deleteFile(sTarget, bRecycle);
-//FileSystem.CopyDirectory(sSource, sTarget, UIOption.OnlyErrorDialogs, UICancelOption.ThrowException);
+string sAside = setAside(sSource, sTarget);
+bool bDone = false;
+try {
 FileSystem.CopyDirectory(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowException);
+bDone = true;
+} finally { settleAside(sAside, sTarget, bDone, bRecycle); }
 } // copyDirectory method
 
 public static void moveDirectory(string sSource, string sTarget, bool bRecycle) {
-if (Directory.Exists(sTarget)) App.deleteDirectory(sTarget, bRecycle);
-else if (File.Exists(sTarget)) App.deleteFile(sTarget, bRecycle);
-//FileSystem.MoveDirectory(sSource, sTarget, UIOption.OnlyErrorDialogs, UICancelOption.ThrowException);
+string sAside = setAside(sSource, sTarget);
+bool bDone = false;
+try {
 FileSystem.MoveDirectory(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowException);
+bDone = true;
+} finally { settleAside(sAside, sTarget, bDone, bRecycle); }
 } // moveDirectory method
 
 public static void copyFile(string sSource, string sTarget, bool bRecycle) {
-if (Directory.Exists(sTarget)) App.deleteDirectory(sTarget, bRecycle);
-else if (File.Exists(sTarget)) App.deleteFile(sTarget, bRecycle);
-//FileSystem.CopyFile(sSource, sTarget, UIOption.OnlyErrorDialogs, UICancelOption.ThrowException);
+string sAside = setAside(sSource, sTarget);
+bool bDone = false;
+try {
 FileSystem.CopyFile(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowException);
+bDone = true;
+} finally { settleAside(sAside, sTarget, bDone, bRecycle); }
 } // copyFile method
 
 public static void moveFile(string sSource, string sTarget, bool bRecycle) {
-if (Directory.Exists(sTarget)) App.deleteDirectory(sTarget, bRecycle);
-else if (File.Exists(sTarget)) App.deleteFile(sTarget, bRecycle);
-//FileSystem.MoveFile(sSource, sTarget, UIOption.OnlyErrorDialogs, UICancelOption.ThrowException);
+string sAside = setAside(sSource, sTarget);
+bool bDone = false;
+try {
 FileSystem.MoveFile(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowException);
+bDone = true;
+} finally { settleAside(sAside, sTarget, bDone, bRecycle); }
 } // moveFile method
 
 // The find and filter prompts in every Lbc dialog keep a short history of what
@@ -7176,44 +7218,10 @@ return zipEntry2Dir(sZip, sPath, sDir, bSubfolders);
 } // zipEntry2Dir method
 
 public string zipEntry2Dir(string sZip, string sPath, string sDir, bool bSubfolders) {
-// if (!sZip.ToLower().EndsWith(".zip")) return z7Entry2Dir(sZip, sPath, sDir, bSubfolders);
+// Every archive is opened through 7-Zip. The older reading of ZIP files that
+// followed this line could never run, after the return, and drew the compiler's
+// unreachable-code warnings; it was removed on 8 October 2026.
 return z7Entry2Dir(sZip, sPath, sDir, bSubfolders);
-
-string sResult = "";
-try {
-ZipFile z = new ZipFile(sZip);
-if (App.sUnarchivePassword.Trim().Length > 0) {
-//App.say("With password");
-z.Password = App.sUnarchivePassword;
-}
-ZipEntry entry = z.GetEntry(sPath);
-if (entry == null) Lbc.Show("no entry", sPath);
-Stream inStream = z.GetInputStream(entry);
-string sFile = Path.GetFileName(sPath.Replace("/", @"\\"));
-sResult = Path.Combine(sDir, sFile);
-//if (File.Exists(sResult)) File.Delete(sResult);
-if (File.Exists(sResult)) App.deleteFile(sResult, App.Recycle);
-//StreamWriter outStream = new StreamWriter(sResult);
-//long l = inStream.Length;
-long l = entry.Size;
-//l = 4096;
-Byte[] data = new Byte[l];
-int size = inStream.Read(data, 0, (int) l);
-//Lbc.Show(size, l);
-//Homer.Util.string2File(new ASCIIEncoding().GetString(data, 0, size), sResult);
-//Homer.Util.string2File(new UnicodeEncoding().GetString(data, 0, size), sResult);
-FileSystem.WriteAllBytes(sResult, data, false);
-File.SetLastWriteTime(sResult, entry.DateTime);
-//outStream.Write(bytes);
-//outStream.Write(inStream.Read(bytes, 0, l));
-//outStream.Close();
-inStream.Close();
-}
-catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
-sResult = "";
-}
-return sResult;
 } // zipEntry2Dir method
 
 void menuMiscUnarchiveTest_Click(object sender, EventArgs e) {

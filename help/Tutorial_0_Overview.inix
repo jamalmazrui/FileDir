@@ -45,7 +45,13 @@ Homework=Listen to the walks in order; each one assumes the ones before it.
 
 [step]
 
-Say=FileDir is a file manager for working by ear. A folder is a list you arrow through; a file is a line you hear; tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
+Say=FileDir is a file manager for working by ear. A folder is a list you arrow through; a file is a line you hear;
+Key=
+Hear=
+
+[step]
+
+Say=tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
 Key=
 Hear=
 

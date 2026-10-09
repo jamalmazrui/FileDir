@@ -67,6 +67,78 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
+Say=When names follow a pattern, wildcards rename them all at once. Control plus R, Rename with Wildcards, asks for the pattern to find and the pattern to make.
+Key=Control+R
+Hear=Rename with Wildcards dialog, From: edit
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Star dot jpeg, to star dot j p g, gives every JPEG the shorter extension in one step.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=For anything a pattern can describe, Control plus Shift plus R, Rename with Regular Expression, renames the current or tagged items with a regular expression.
+Key=Control+Shift+R
+Hear=Rename with Regular Expression dialog, Find: edit
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Escape for now; regular expressions reward a careful first try on a few tagged files.
+Key=Escape
+Hear=FileDir
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Numbered files often sort wrongly by ear: Chapter 10 before Chapter 2. Alt plus Shift plus K, Reorder Names, pads single leading digits, so the list reads in order.
+Key=Alt+Shift+K
+Hear=Reorder Names dialog
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=It shows each old name beside its new one before changing anything. Enter accepts.
+Key=Enter
+Hear=12 files renamed
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Every rename, of whatever kind, can be checked by ear first: each dialog lists what will change before it changes.
+Key=
+
+[step]
+
+Say=And one file at a time is always there. F2, or Shift plus R, renames the current item, with its name ready to edit.
+Key=F2
+Hear=Rename dialog, Name: edit, IMG underscore 4021 dot jpg
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=The name is selected, so typing replaces it. I type a name that says what the picture is.
+Key=Harbor at dawn.jpg
+Hear=(each character echoed as it is typed)
+
+[step]
+
+Say=Enter, and the list says the new name at once, in its new place in the order.
+Key=Enter
+Hear=Harbor at dawn dot jpg
+Note=Confirm the wording with a live run: buildTutorials -live.
+
+[step]
+
+Say=Keep the extension when renaming by hand, dot j p g here, so Windows still knows what kind of file it is.
+Key=
+
+[step]
+
 Say=What this walk taught. I name the step; the reader gives the key.
 Key=
 Hear=

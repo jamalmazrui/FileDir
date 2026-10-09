@@ -84,9 +84,10 @@ Hear=Plain text, 12 kilobytes, 212 lines, changed 3 October 2026
 
 [step]
 
-Say=Alt plus X, Extra Info, says more: for a document, its title and author; for a sound file, its length and bit rate; for a web page, its title and address. Walk five uses it on an episode.
-Key=Alt+X
-Hear=Extra Info, read only edit
+Say=Control plus Shift plus T, Type Extended, says more: every property of the current item in one alphabetical list, such as a document's title and author, or a sound file's length. Walk five shows the Player's own Extra Info.
+Key=Control+Shift+T
+Hear=Type Extended, read only edit
+Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 

@@ -14,9 +14,7 @@
 FileDir.cs
 Convert.cs
 Dialogs.cs
-Media.cs
 MediaPlayer.cs
-Mpv.cs
 Table.cs
 FileDir.js
 AssocOff.bas

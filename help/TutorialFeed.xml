@@ -5,7 +5,7 @@
     <link>Tutorials.htm</link>
     <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Oct 2026 17:04:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2026 01:15:36 +0000</lastBuildDate>
     <itunes:author>Jamal Mazrui</itunes:author>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Technology"/>
@@ -15,17 +15,17 @@
       <description>Nothing is needed; this walk is listened to. Full transcript: Tutorials.htm#0-0-overview</description>
       <link>Tutorials.htm#0-0-overview</link>
       <guid isPermaLink="false">homer-tutorial_0_overview</guid>
-      <enclosure url="tutorials/0_Overview.mp3" length="897155" type="audio/mpeg"/>
+      <enclosure url="tutorials/0_Overview.mp3" length="904932" type="audio/mpeg"/>
       <itunes:duration>00:02:09</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
       <title>1 - User Interface</title>
-      <description>FileDir is open on any folder. Nothing needs pressing in this walk; it is listened to. Full transcript: Tutorials.htm#0a-1-user-interface</description>
+      <description>FileDir is open on a folder of your own, such as Documents. Full transcript: Tutorials.htm#0a-1-user-interface</description>
       <link>Tutorials.htm#0a-1-user-interface</link>
       <guid isPermaLink="false">homer-tutorial_1_user_interface</guid>
-      <enclosure url="tutorials/1_User_Interface.mp3" length="2142556" type="audio/mpeg"/>
-      <itunes:duration>00:04:45</itunes:duration>
+      <enclosure url="tutorials/1_User_Interface.mp3" length="1803193" type="audio/mpeg"/>
+      <itunes:duration>00:04:21</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -42,8 +42,8 @@
       <description>FileDir is open on a folder of saved web pages. Full transcript: Tutorials.htm#0c-3-open-a-folder-and-find-a-file</description>
       <link>Tutorials.htm#0c-3-open-a-folder-and-find-a-file</link>
       <guid isPermaLink="false">homer-tutorial_3_open_a_folder_and_find_a_file</guid>
-      <enclosure url="tutorials/3_Open_a_Folder_and_Find_a_File.mp3" length="1444012" type="audio/mpeg"/>
-      <itunes:duration>00:03:20</itunes:duration>
+      <enclosure url="tutorials/3_Open_a_Folder_and_Find_a_File.mp3" length="1452116" type="audio/mpeg"/>
+      <itunes:duration>00:03:22</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -69,8 +69,8 @@
       <description>A folder holds downloaded files with names that say nothing. Full transcript: Tutorials.htm#0f-6-rename-files-to-what-is-inside</description>
       <link>Tutorials.htm#0f-6-rename-files-to-what-is-inside</link>
       <guid isPermaLink="false">homer-tutorial_6_rename_files_to_what_is_inside</guid>
-      <enclosure url="tutorials/6_Rename_Files_to_What_Is_Inside.mp3" length="784424" type="audio/mpeg"/>
-      <itunes:duration>00:01:54</itunes:duration>
+      <enclosure url="tutorials/6_Rename_Files_to_What_Is_Inside.mp3" length="1517014" type="audio/mpeg"/>
+      <itunes:duration>00:03:39</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -78,8 +78,8 @@
       <description>A folder holds a Word document and a PDF. Full transcript: Tutorials.htm#0g-7-convert-between-formats</description>
       <link>Tutorials.htm#0g-7-convert-between-formats</link>
       <guid isPermaLink="false">homer-tutorial_7_convert_between_formats</guid>
-      <enclosure url="tutorials/7_Convert_Between_Formats.mp3" length="632249" type="audio/mpeg"/>
-      <itunes:duration>00:01:35</itunes:duration>
+      <enclosure url="tutorials/7_Convert_Between_Formats.mp3" length="1242421" type="audio/mpeg"/>
+      <itunes:duration>00:03:04</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -87,8 +87,8 @@
       <description>A model is installed for FileDir's AI commands, and a folder holds a long document. Full transcript: Tutorials.htm#0h-8-ask-about-a-file</description>
       <link>Tutorials.htm#0h-8-ask-about-a-file</link>
       <guid isPermaLink="false">homer-tutorial_8_ask_about_a_file</guid>
-      <enclosure url="tutorials/8_Ask_About_a_File.mp3" length="641155" type="audio/mpeg"/>
-      <itunes:duration>00:01:36</itunes:duration>
+      <enclosure url="tutorials/8_Ask_About_a_File.mp3" length="1336839" type="audio/mpeg"/>
+      <itunes:duration>00:03:17</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>

@@ -53,6 +53,17 @@ lsProblems = []
 oLog = None
 
 
+# HOW LONG A WALK RUNS (1.64.4), fitted to twenty walks whose audio the build
+# measured on 8 October 2026 (DbDo's and HomerView's): the host speaks at about
+# 225 words a minute, the reader voice at about 575, and each step adds about
+# 3.6 seconds of pauses and turn-taking. Average error 1%, worst 13%; the kit's
+# own walk 8, not used in the fit, measured 182 seconds and is predicted 188.
+# Words alone at 186 a minute had run 21% short on average, and up to 33%, on
+# walks of many short two-voice steps.
+c_nHostSecondsPerWord = 0.267
+c_nReaderSecondsPerWord = 0.104
+c_nSecondsPerStep = 3.63
+
 def logLine(sText):
     """One event in the Homer log format (1.43.21), as log.py and Log.cs write:
     an ISO 8601 time with milliseconds and UTC offset, a five-character level,
@@ -326,10 +337,23 @@ def main():
         # two-voice exchanges is not refused for being brisk. The conclusion,
         # 9, holds the glossary, whose steps are two short lines each, so its
         # count is no measure of its length.
-        if iSteps > 32 and sNum != "9":
-            notice(sBase + ": %d steps is likely over five minutes; the tool will measure it -- cut what an earlier walk taught, or split it, if it is" % iSteps)
-        if sNum and sNum not in ("0", "9") and iSteps < 12:
-            notice(sBase + ": %d steps is likely under three minutes; the guideline wants three to five for parts 1 to 8" % iSteps)
+        # WORDS, NOT STEPS (kit 1.63.1): DbDo's walks had 12 to 14 steps, passed
+        # the step rule, and ran 1:26 to 1:55, because their lines were short.
+        # The kit's own walks are spoken at about 186 words a minute (155 to 204,
+        # measured 8 October 2026), so the spoken words -- every Say and Hear
+        # line -- give the estimate: about 560 for three minutes, 930 for five.
+        sWalk = open(sScript, "rb").read().decode("utf-8-sig")
+        iHostWords = sum(len(sLine.split()) for sLine in re.findall(r"(?mi)^\s*Say\s*=\s*(.*)$", sWalk))
+        iReaderWords = sum(len(sLine.split()) for sLine in re.findall(r"(?mi)^\s*Hear\s*=\s*(.*)$", sWalk))
+        iWalkSteps = len(re.findall(r"(?mi)^\s*\[step\]\s*$", sWalk))
+        iWords = iHostWords + iReaderWords
+        dMinutes = (iHostWords * c_nHostSecondsPerWord + iReaderWords * c_nReaderSecondsPerWord + iWalkSteps * c_nSecondsPerStep) / 60
+        # A notice outside 2.75 to 5.25 predicted minutes: the prediction errs by up to about 13%, so a walk
+        # inside that band may land either side of three or five, and the tool's measurement after speaking settles it.
+        if sNum and sNum not in ("0", "9") and dMinutes < 2.75:
+            notice(sBase + ": predicted %.1f minutes (%d host words, %d reader words, %d steps), likely under three; the guideline wants three to five for parts 1 to 8" % (dMinutes, iHostWords, iReaderWords, iWalkSteps))
+        elif sNum and sNum != "9" and dMinutes > 5.25:
+            notice(sBase + ": predicted %.1f minutes; the tool will measure it -- cut what an earlier walk taught, or split it, if it is over five" % dMinutes)
     # THE PATTERN OF TEN (7 October 2026, replacing the twelve of 5 October):
     # one digit sorts the set. 0_Overview, 1_User_Interface (the concepts and
     # the key patterns together), seven task walks numbered 2 to 8 (usually

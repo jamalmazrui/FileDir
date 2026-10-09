@@ -1,5 +1,19 @@
 ﻿# FileDir — Change History
 
+## 8 October 2026 -- an audit by another AI, and the walks corrected
+
+ChatGPT audited FileDir and reported 30 findings. Checked against the code:
+
+- **Copy and move no longer destroy the destination first.** Each deleted an existing destination and copied or moved second, so a copy that failed -- a full disk, a locked file, a dropped share, or Cancel -- lost the destination for nothing; and a destination that was the source itself was deleted before anything was copied. Now the same path is refused, and an existing destination is set aside, put back if the operation fails, and removed only after it succeeds, to the Recycle Bin when that is the setting.
+- **No program's output can hang FileDir.** Pandoc's and ExifTool's two output streams were read one after the other, so a program that filled the second first could hang both; they are now read at once.
+- **No CSV cell becomes a formula.** A value beginning = or @, or + or - when it is not a number, starts with an apostrophe in a CSV written by FileDir; numbers such as -5 are untouched.
+- **One copy of each shared module.** FileDir compiled its own Media.cs and Mpv.cs, which had drifted from the kit's and lacked its fix for the hang above, its machine-wide mpv search and its recording; the kit's are compiled now, and the build removes the old copies.
+- **Dead code removed.** The ZIP reading the audit described could never run -- every archive goes through 7-Zip -- and drew unreachable-code warnings; it is gone.
+
+Not changed, with reasons: Shift+Delete already asks first, listing every name, with No the default; Delete File Now, Control+Shift+D, is immediate by design, and whether its permanent form should ask is for the author to decide. FileDir ships its own sources on purpose, so anyone can rebuild what they installed. A failed 7-Zip extraction still returns the file's path; its seven callers need a check first, which is a larger change.
+
+**The walks corrected.** Walk 1 was a single speech of nearly eight hundred words, and taught keys FileDir does not have: Alt plus X in the main list (the Player's key; the list's is Type Extended, Control+Shift+T), Alt plus Shift plus L as Say List (it is Play Media), Control plus S as sorting (it is Save Tags), Shift plus Z as Say Status (it is Zip; Say Status is Alt plus Z), and Backspace for the parent folder (it is Comma, or Shift plus Backspace). It is rewritten to show, then tell, and every key in every walk was checked against Hotkeys. Walk 3's Alt plus X is now Type Extended. Walks 6, 7 and 8, about a minute each, now teach the neighbouring commands too: renaming with wildcards, regular expressions and Reorder Names; converting a batch, encodings, sound and pictures, and Append to Clipboard; and Type Extended, Say What Content and plain questions with F12.
+
 ## 8 October 2026 -- tutorials in the pattern of ten
 
 The tutorials follow the Homer pattern of ten. The interface and key-pattern walks are now one, 1 User Interface; the three task walks are 3 to 5; three are new, 6 Rename Files to What Is Inside, 7 Convert Between Formats, 8 Ask About a File; and 9 Conclusion joins the conclusion, the glossary and more information. The tutorials' audio is no longer kept local: LocalFiles.txt no longer names help/tutorials or *.mp3, so the repository carries the audio as the installer does.

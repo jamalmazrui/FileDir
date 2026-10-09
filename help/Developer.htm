@@ -398,6 +398,11 @@ playing was rewritten twice a second, so the dialog talked over
 everything else and the keys appeared dead; and a status Label was given
 the accessible name “Status”, which replaced the text it carried and hid
 every message behind one word.</p>
+<p>Since 8 October 2026, <code>Mpv.cs</code> and <code>Media.cs</code>
+are compiled from the kit, <code>exec\CSharp</code> in HomerDev, like
+FileDir’s other shared modules; FileDir no longer keeps copies of its
+own, which had drifted from the kit’s. What follows still describes
+them.</p>
 <ul>
 <li><code>Mpv.cs</code> — drives the mpv media player over its
 documented JSON IPC pipe: mpv runs with no window, no keys and no focus
