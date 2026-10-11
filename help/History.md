@@ -4,6 +4,8 @@
 
 ## 9 October 2026 -- from the build and release logs
 
+- **The walks' reader speaks concrete words.** The Overview gently reminds of three reader keys, Insert plus Up Arrow, Insert plus Tab and Insert plus T, each with what FileDir would say, and that Caps Lock serves in place of Insert where set up; the reader says the text typed and the answer's first line, in place of descriptions of them.
+
 - **An old Quick folder retired (9 October 2026).** FileDir keeps its Quick folder under LOCALAPPDATA, so a top-level Quick folder in the project was left from an older layout; the build moves its files into notes\\retired\\Quick.
 
 - **Two more blocks of unreachable code removed (9 October 2026).** testZip and fillTableFromZip had moved to 7-Zip, but their old ZIP code stayed after the return, where it never ran and the compiler warned twice (CS0162). Behavior is unchanged.

@@ -31,7 +31,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 Say=I type the question.
 Key=Summarize this in three sentences.
-Hear=(each word echoed as it is typed)
+Hear=Summarize this in three sentences.
 
 [step]
 
@@ -44,7 +44,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 Say=The answer opens in a window, in a box I can arrow through line by line. Down Arrow reads the first line.
 Key=Down Arrow
-Hear=(the first line of the answer)
+Hear=This is a quarterly budget report for the Seattle office, dated June 2026.
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
@@ -106,7 +106,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 Say=I type the question.
 Key=List every deadline in this report, with its date.
-Hear=(each word echoed as it is typed)
+Hear=List every deadline in this report, with its date.
 
 [step]
 
@@ -132,7 +132,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 Say=I ask what an EPUB file is.
 Key=What is an EPUB file?
-Hear=(each word echoed as it is typed)
+Hear=What is an EPUB file?
 
 [step]
 

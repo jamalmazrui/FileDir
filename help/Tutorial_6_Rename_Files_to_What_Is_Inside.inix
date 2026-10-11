@@ -123,7 +123,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 Say=The name is selected, so typing replaces it. I type a name that says what the picture is.
 Key=Harbor at dawn.jpg
-Hear=(each character echoed as it is typed)
+Hear=Harbor at dawn.jpg
 
 [step]
 
