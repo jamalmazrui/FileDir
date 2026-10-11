@@ -2,9 +2,11 @@
 
 
 
-## 9 October 2026 -- from the build and release logs
+## 11 October 2026 -- from an audit and a report
 
-- **The walks' reader speaks concrete words.** The Overview gently reminds of three reader keys, Insert plus Up Arrow, Insert plus Tab and Insert plus T, each with what FileDir would say, and that Caps Lock serves in place of Insert where set up; the reader says the text typed and the answer's first line, in place of descriptions of them.
+- **Launch after setup works on a first install.** The installer's Launch box writes a marker file into %LOCALAPPDATA%\\<App>\\logs, but on a first install that folder did not exist yet -- it was made later, when setup kept its log -- so the marker could not be written, and the program did not start after setup. The marker line now makes the folder first. Found by an audit of bookFido by another AI, and fixed in every Homer installer.
+
+## 9 October 2026 -- from the build and release logs
 
 - **An old Quick folder retired (9 October 2026).** FileDir keeps its Quick folder under LOCALAPPDATA, so a top-level Quick folder in the project was left from an older layout; the build moves its files into notes\\retired\\Quick.
 
