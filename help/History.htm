@@ -168,6 +168,12 @@
 <h2 id="october-2026-from-an-audit-and-a-report">11 October 2026 – from
 an audit and a report</h2>
 <ul>
+<li><strong>The acceptance file runs.</strong> accept.inix stated what
+done means in prose, which the kit’s checker cannot run, so every
+release reported it as not checked. Sixteen statements a file can settle
+are now runnable checks; the rest remain, as comments, until tests for
+them are written. The kit now fails an acceptance file that holds
+nothing runnable.</li>
 <li><strong>Launch after setup works on a first install.</strong> The
 installer’s Launch box writes a marker file into
 %LOCALAPPDATA%\<App>\logs, but on a first install that folder did not

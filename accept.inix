@@ -1,34 +1,124 @@
-﻿# accept.inix -- what "done" means for FileDir.
-#
-# scripts\check reads this and scripts\release refuses to release when a check
-# fails. Each line is a statement that must be true of a finished build.
+﻿; accept.inix -- what "done" means for FileDir, as checks scripts\check runs (11 October 2026).
+;
+; RUNNABLE CHECKS. This file stated FileDir's acceptance in prose, which the kit's checker cannot run, so every
+; release reported it as not checked. The statements a file can settle are now [check] sections below; the others
+; stay, as comments, in the statement list at the end, to be made into checks as tests for them are written.
 
-[documents]
-ReadMe = ReadMe.md and ReadMe.htm exist at the top
-License = License.md and License.htm exist at the top
-Guide = help\FileDir.md and help\FileDir.htm exist
-Developer = help\Developer.md and help\Developer.htm exist
-History = help\History.md and help\History.htm exist
-Hotkeys = help\Hotkeys.md and help\Hotkeys.htm exist, generated from configs\Hotkeys.inix
-Tutorials = help\Tutorials.md exists, with one section per walk
+FileTask = accept
 
-[build]
-Script = build.cmd returns 0
-Program = exec\FileDir.exe is built and carries the version in version.txt
-Installer = FileDir_setup.exe is built, at the top of the project, and carries the same version
-Kit = the build compiles against C:\HomerDev\CSharp and carries no copy of a kit class
+[check]
 
-[repository]
-Lists = RepoFiles.txt and LocalFiles.txt are present and current
-Ignore = .gitignore is the whitelist scripts\tidy writes from RepoFiles.txt
-Binaries = no binary is named in RepoFiles.txt
+Name = the ReadMe is at the top, as Markdown
+Run = cmd /c if exist "ReadMe.md" (exit 0) else (exit 1)
 
-[encoding]
-Homer = every file RepoFiles.txt names is UTF-8 with a byte order mark and CRLF, except .cmd and .bat which take CRLF and no mark
+[check]
 
-[logging]
-Runs = every script writes one log per run in logs, named FileDir-<task>-yyyyMMdd-HHmmss.log
+Name = the ReadMe is at the top, as a web page
+Run = cmd /c if exist "ReadMe.htm" (exit 0) else (exit 1)
 
-[speech]
-Duplication = no control sets an accessible name that repeats its caption or its label
-Status = the status line carries status, and nothing announces it
+[check]
+
+Name = the License is at the top, as Markdown
+Run = cmd /c if exist "License.md" (exit 0) else (exit 1)
+
+[check]
+
+Name = the License is at the top, as a web page
+Run = cmd /c if exist "License.htm" (exit 0) else (exit 1)
+
+[check]
+
+Name = the guide is in help, as Markdown
+Run = cmd /c if exist "help\FileDir.md" (exit 0) else (exit 1)
+
+[check]
+
+Name = the guide is in help, as a web page
+Run = cmd /c if exist "help\FileDir.htm" (exit 0) else (exit 1)
+
+[check]
+
+Name = the developer notes are in help
+Run = cmd /c if exist "help\Developer.md" (exit 0) else (exit 1)
+
+[check]
+
+Name = the history is in help
+Run = cmd /c if exist "help\History.md" (exit 0) else (exit 1)
+
+[check]
+
+Name = the hotkeys are in help, as Markdown
+Run = cmd /c if exist "help\Hotkeys.md" (exit 0) else (exit 1)
+
+[check]
+
+Name = the hotkeys are in help, as a web page
+Run = cmd /c if exist "help\Hotkeys.htm" (exit 0) else (exit 1)
+
+[check]
+
+Name = the tutorials guide is in help
+Run = cmd /c if exist "help\Tutorials.md" (exit 0) else (exit 1)
+
+[check]
+
+Name = the program is built in exec
+Run = cmd /c if exist "exec\FileDir.exe" (exit 0) else (exit 1)
+
+[check]
+
+Name = the installer is built at the top
+Run = cmd /c if exist "FileDir_setup.exe" (exit 0) else (exit 1)
+
+[check]
+
+Name = RepoFiles.txt is present
+Run = cmd /c if exist "RepoFiles.txt" (exit 0) else (exit 1)
+
+[check]
+
+Name = LocalFiles.txt is present
+Run = cmd /c if exist "LocalFiles.txt" (exit 0) else (exit 1)
+
+[check]
+
+Name = .gitignore is the whitelist tidy writes
+Run = cmd /c findstr /c:"THIS IS A WHITELIST" .gitignore
+
+; ---- the statements as first written ----
+;
+; accept.inix -- what "done" means for FileDir.
+;
+; scripts\check reads this and scripts\release refuses to release when a check
+; fails. Each line is a statement that must be true of a finished build.
+
+; [documents]
+; ReadMe = ReadMe.md and ReadMe.htm exist at the top
+; License = License.md and License.htm exist at the top
+; Guide = help\FileDir.md and help\FileDir.htm exist
+; Developer = help\Developer.md and help\Developer.htm exist
+; History = help\History.md and help\History.htm exist
+; Hotkeys = help\Hotkeys.md and help\Hotkeys.htm exist, generated from configs\Hotkeys.inix
+; Tutorials = help\Tutorials.md exists, with one section per walk
+
+; [build]
+; Script = build.cmd returns 0
+; Program = exec\FileDir.exe is built and carries the version in version.txt
+; Installer = FileDir_setup.exe is built, at the top of the project, and carries the same version
+; Kit = the build compiles against C:\HomerDev\CSharp and carries no copy of a kit class
+
+; [repository]
+; Lists = RepoFiles.txt and LocalFiles.txt are present and current
+; Ignore = .gitignore is the whitelist scripts\tidy writes from RepoFiles.txt
+; Binaries = no binary is named in RepoFiles.txt
+
+; [encoding]
+; Homer = every file RepoFiles.txt names is UTF-8 with a byte order mark and CRLF, except .cmd and .bat which take CRLF and no mark
+
+; [logging]
+; Runs = every script writes one log per run in logs, named FileDir-<task>-yyyyMMdd-HHmmss.log
+
+; [speech]
+; Duplication = no control sets an accessible name that repeats its caption or its label
+; Status = the status line carries status, and nothing announces it
