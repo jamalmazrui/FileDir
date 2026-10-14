@@ -885,12 +885,15 @@ return false;
 string sMade = Path.Combine(sOutDir, Path.GetFileNameWithoutExtension(sSource) + "." + (sExt == "txt" ? "txt" : "htm"));
 if (File.Exists(sMade)) {
 if (String.Compare(sMade, sTarget, true) != 0) {
+// REPLACED, NEVER DELETED FIRST (14 October 2026, from an audit by another AI):
+// the earlier file was deleted before the new one was moved in, so a failed move
+// lost both. The swap is now atomic: on failure the earlier file is as it was and
+// the new conversion stays under the name 2htm gave it.
 try {
-if (File.Exists(sTarget)) File.Delete(sTarget);
-File.Move(sMade, sTarget);
+Homer.Util.replaceFileSafely(sMade, sTarget, "");
 }
 catch (Exception ex) {
-sError = ex.Message;
+sError = ex.Message + " The earlier file is unchanged; the new conversion is kept at " + sMade + ".";
 return false;
 }
 }

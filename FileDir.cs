@@ -852,9 +852,11 @@ static string setAside(string sSource, string sTarget) {
 if (string.Equals(Path.GetFullPath(sSource).TrimEnd('\\'), Path.GetFullPath(sTarget).TrimEnd('\\'), StringComparison.OrdinalIgnoreCase))
 throw new IOException("The source and the destination are the same: " + sTarget);
 if (!Directory.Exists(sTarget) && !File.Exists(sTarget)) return "";
-string sAside = sTarget + ".FileDir-previous";
-if (Directory.Exists(sAside)) Directory.Delete(sAside, true);
-else if (File.Exists(sAside)) File.Delete(sAside);
+// A RECOVERY NAME OF ITS OWN (14 October 2026, from an audit by another AI): the
+// copy kept aside was always "<target>.FileDir-previous", and an existing one was
+// deleted first, so a second failed replacement erased the first one's recovery
+// copy. Each replacement now gets a recovery name that does not exist yet.
+string sAside = Homer.Util.recoveryPath(sTarget);
 if (Directory.Exists(sTarget)) Directory.Move(sTarget, sAside);
 else File.Move(sTarget, sAside);
 return sAside;
@@ -867,12 +869,20 @@ if (Directory.Exists(sAside)) App.deleteDirectory(sAside, bRecycle);
 else App.deleteFile(sAside, bRecycle);
 return;
 }
+// A FAILED RESTORE IS SAID (14 October 2026, from an audit by another AI): putting
+// the earlier version back could fail silently, leaving the person unaware that it
+// sat under another name. Now the log names both paths, and the person is told
+// where the earlier version is kept.
 try {
 if (Directory.Exists(sTarget)) Directory.Delete(sTarget, true);
 else if (File.Exists(sTarget)) File.Delete(sTarget);
 if (Directory.Exists(sAside)) Directory.Move(sAside, sTarget);
 else File.Move(sAside, sTarget);
-} catch (Exception) { }
+Homer.Log.info("The operation did not finish, so the earlier version was put back: " + sTarget);
+} catch (Exception ex) {
+Homer.Log.warn("The operation did not finish, and the earlier version could not be put back at " + sTarget + ": " + ex.Message + ". It is kept at " + sAside);
+App.say("The earlier version could not be put back. It is kept at " + sAside);
+}
 } // settleAside method
 
 public static void copyDirectory(string sSource, string sTarget, bool bRecycle) {

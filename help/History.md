@@ -2,6 +2,13 @@
 
 
 
+## 14 October 2026 -- recovery copies kept, and failures said
+
+- **Each copy or move keeps its own recovery copy.** It was always `<target>.FileDir-previous`, and an existing one was deleted first, so a second failed operation erased the first one's recovery copy. Each now gets a dated name of its own (from an audit by another AI).
+- **A failed restore is said.** When putting the earlier version back failed, nothing was reported; now the log names both paths and FileDir tells you where the earlier version is kept.
+- **A conversion is swapped in whole.** The earlier file was deleted before the new one was moved in; on a failure now the earlier file is unchanged and the new conversion is kept under 2htm's name.
+- **Setup starts FileDir as you,** not with the installer's administrator rights.
+
 ## 11 October 2026 -- from an audit and a report
 
 - **The acceptance file runs.** accept.inix stated what done means in prose, which the kit's checker cannot run, so every release reported it as not checked. Sixteen statements a file can settle are now runnable checks; the rest remain, as comments, until tests for them are written. The kit now fails an acceptance file that holds nothing runnable.

@@ -166,6 +166,24 @@
 <body>
 <main>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
+<h2 id="october-2026-recovery-copies-kept-and-failures-said">14 October
+2026 – recovery copies kept, and failures said</h2>
+<ul>
+<li><strong>Each copy or move keeps its own recovery copy.</strong> It
+was always <code>&lt;target&gt;.FileDir-previous</code>, and an existing
+one was deleted first, so a second failed operation erased the first
+one’s recovery copy. Each now gets a dated name of its own (from an
+audit by another AI).</li>
+<li><strong>A failed restore is said.</strong> When putting the earlier
+version back failed, nothing was reported; now the log names both paths
+and FileDir tells you where the earlier version is kept.</li>
+<li><strong>A conversion is swapped in whole.</strong> The earlier file
+was deleted before the new one was moved in; on a failure now the
+earlier file is unchanged and the new conversion is kept under 2htm’s
+name.</li>
+<li><strong>Setup starts FileDir as you,</strong> not with the
+installer’s administrator rights.</li>
+</ul>
 <h2 id="october-2026-from-an-audit-and-a-report">11 October 2026 – from
 an audit and a report</h2>
 <ul>
