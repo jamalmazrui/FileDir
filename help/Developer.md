@@ -11,7 +11,7 @@ assumes familiarity with Windows, C#, and the command line.
 ## Built on the Homer Development Kit
 
 FileDir carries no copy of a shared class. It compiles against
-`C:\HomerDev\CSharp`, so there is one `Lbc.cs` on the machine and every app
+`C:\HomerDev\exec\CSharp`, so there is one `Lbc.cs` on the machine and every app
 gets a fix the moment the kit gets it. `build.cmd` finds the kit through
 the `HomerDev` environment variable, then `C:\HomerDev`, then this folder, and
 stops with a sentence if the kit is older than the version FileDir needs.

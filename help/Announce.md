@@ -48,33 +48,34 @@ an alphabetical list finally reads in order.
 
 ## Media
 
-Play the tagged files, or a whole folder, or a play list you copied from
-somewhere -- including a list of web addresses, which are fetched as they play.
-Download media from a page as video or as audio alone.
+Play the tagged files, a whole folder, or a play list you copied from
+somewhere. A play list can even be web addresses, which are fetched as they
+play. You can also download media from a page, as video or as audio alone.
 
 **And there is now a player inside FileDir.** Control+Shift+H opens the Homer
-Player on whatever you are on: the tagged files, a play list, or the media links
-inside a document -- a page of podcasts becomes a queue with the titles the page
-gave them.
+Player on whatever you are on: the tagged files, a play list, or the media
+links inside a document. A page of podcasts becomes a queue, with the titles
+the page gave them.
 
-It is a dialog rather than a window that takes over. The queue is a list showing
-each track's name, presenter and length; it can be ordered by any of those.
+It is a dialog, not a window that takes over. The queue is a list of each
+track's name, presenter and length, and it can be sorted by any of them.
 Buttons move by track and by chapter, jump by an amount you choose from fifteen
-seconds to an hour, and set speed and volume. Every control has its own Alt key,
-and the transport is on Shift with the arrows, the Page keys and Home and End,
-which works the same on the keypad and the six-pack. Scroll Lock plays and
+seconds to an hour, and set speed and volume. Every control has its own Alt
+key. Playback is on Shift with the arrows, the Page keys, Home and End, which
+work the same on the number pad and the keys beside it. Scroll Lock plays and
 pauses from anywhere in the dialog.
 
 Moving anywhere plays what you land on, because listening is how you tell
-whether you arrived where you meant to. Mark a piece of a track with F8 and
-Shift+F8 and Clip to file writes just that piece out and puts it on the
+whether you arrived where you meant to. Mark part of a track with F8 and
+Shift+F8, and Clip to file writes just that part to a file and puts it on the
 clipboard. Each play list remembers its own speed, volume, jump size and order,
-and where every track had reached, so playing it again starts where you stopped.
+and how far each track had played, so playing it again starts where you
+stopped.
 
 One command shows everything known about a file in a single alphabetical list:
-the Windows properties, what opens it, and the information stored inside it --
-the camera and exposure of a photograph, the artist and album of a song, the
-duration and codecs of a video.
+its Windows properties, the program that opens it, and the information stored
+inside it. That means the camera and exposure of a photograph, the artist and
+album of a song, or the length and codecs of a video.
 
 ## Working across languages, and asking questions
 
@@ -89,14 +90,15 @@ into a web page.
 ## For everyone
 
 FileDir leaves window titles and focus changes to your screen reader, which
-announces them anyway, and speaks only what it alone knows. Press any command
-key in describe mode to hear what it does without doing it; every command has a
-description. When something goes wrong, one command puts the session log on your
-clipboard, ready to attach to a message.
+announces them anyway. It speaks only what it alone knows. In describe mode,
+press any command key to hear what it does, without doing it; every command has
+a description. When something goes wrong, one command copies the session log to
+your clipboard, ready to attach to a message.
 
-Documentation comes with it and is meant to be read: a user guide, nine
-tutorials by the kind of work you do, a hotkey reference listing every command
-three ways, questions and answers, a history, and a developer guide.
+The documentation comes with FileDir and is meant to be read. There is a user
+guide, nine tutorials by the kind of work you do, a hotkey reference that lists
+every command three ways, questions and answers, a history, and a developer
+guide.
 
 ## Getting the pieces
 

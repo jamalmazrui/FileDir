@@ -2,6 +2,17 @@
 
 
 
+## 14 October 2026 -- 2htm's failures reported as they are today
+
+- **A failed conversion names the file, and asks for no hand repair.** FileDir read 2htm's printed words rather than its exit code, because an older 2htm reported failure only in words and returned zero; and when 2htm could not load an assembly it told you to copy System.Memory.dll into the FileDir folder by hand -- a DLL FileDir's own migration now retires, since the current 2htm needs no separate assemblies. Now 2htm's exit code is trusted first -- for one file, anything but 0 means it failed -- and its words still catch an older 2htm. The message says which file was being converted and what went wrong; an assembly that cannot load is explained as an older 2htm beside FileDir, put right by installing the current one; and 2htm's full output goes to the log (from an audit by another AI).
+## 14 October 2026 -- the developer guide's kit path
+
+- **The developer guide names the kit's classes where they are,** in C:\HomerDev\exec\CSharp; it still named C:\HomerDev\CSharp, a folder the kit no longer has (from an audit by another AI).
+
+## 14 October 2026 -- the announcement in plainer words
+
+- **Announce.md now reads at grade 8.3, down from 9.1,** inside the ninth-grade target for documents shared publicly. Long sentences were split and dense phrases put plainly; every fact, key and link is kept, and first-person passages keep their author's own words. The section about the companion tools reads the same in each announcement that carries it, with the tools' hotkeys in alphabetical order.
+
 ## 14 October 2026 -- the newest Pandoc for the help pages
 
 - **The help pages are made by the newest Pandoc, not the first on the PATH.** The build took the first pandoc on the PATH, which was Pandoc 2.19 in C:\bin, while Pandoc 3.12.1 was installed in Program Files. It now asks the kit's newest.ps1, as the kit's app template has done since kit 1.56.0, and the log names every copy found and its version.

@@ -856,26 +856,28 @@ sbArgs.Append(Homer.Util.stringQuote(sSource));
 string sOut, sErr;
 int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr, iConverterMinutes);
 
-// 2HTM REPORTS FAILURE IN ITS OUTPUT AND STILL RETURNS ZERO.
-//
-// This is what made the fault so hard to see. On a machine where 2htm cannot
-// load one of its assemblies it prints
-//
-//   <file>: Could not load file or assembly 'System.Memory, Version=4.0.2.0'
-//   Failed to convert 1 file:
-//
-// and exits with code 0. Every caller that trusted the exit code concluded all
-// was well, and the person got silence. So its words are read, not its code.
+// WHAT 2HTM SAYS, BY ITS EXIT CODE FIRST (14 October 2026, from an audit by another AI). An older 2htm reported
+// failure only in its output and still returned zero -- on a machine where it could not load an assembly it printed
+// "Could not load file or assembly 'System.Memory...'" and "Failed to convert 1 file:" and exited 0 -- so its words
+// were read rather than its code, and the message told the person to copy System.Memory.dll by hand. The current 2htm
+// returns a code that is not zero when it fails, and needs no separate assemblies: FileDir's migration retires
+// those DLLs. So the code is trusted first; the words still catch an older 2htm; the message names the file and
+// the task, says what the fault means, and asks for no hand repair; and 2htm's full output goes to the log.
 string sSaid = (sOut + "\n" + sErr).Trim();
+if (sSaid.Length > 0) Homer.Log.info("2htm converting " + Path.GetFileName(sSource) + " said: " + sSaid);
+string sTask = "Converting " + Path.GetFileName(sSource) + " with 2htm";
+if (iCode != 0) {
+sError = sTask + " failed, with exit code " + iCode + (sSaid.Length > 0 ? ": " + firstLine(sSaid) : ".") + " The log has 2htm's full words.";
+return false;
+}
 if (sSaid.Length > 0) {
 if (sSaid.IndexOf("Could not load file or assembly", StringComparison.OrdinalIgnoreCase) >= 0) {
-sError = "2htm is missing an assembly it needs, so it cannot convert anything. "
-+ "Copy System.Memory.dll into the FileDir folder, beside 2htm.exe. "
-+ "It reported: " + firstLine(sSaid);
+sError = sTask + " failed: the 2htm beside FileDir is an older build that cannot load a part it needs. "
++ "The current 2htm carries what it needs; install it, or rebuild FileDir, and convert again. The log has 2htm's full words.";
 return false;
 }
 if (sSaid.IndexOf("Failed to convert", StringComparison.OrdinalIgnoreCase) >= 0) {
-sError = "2htm reported: " + firstLine(sSaid);
+sError = sTask + " failed: " + firstLine(sSaid) + " The log has 2htm's full words.";
 return false;
 }
 }
