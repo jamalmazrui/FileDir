@@ -521,6 +521,14 @@ rem Every .md ships with a matching .htm. Pandoc writes them when it is
 rem on the PATH; without it the .md files travel alone and the installer
 rem lines that name .htm are skipped.
 if not defined useDocs goto :docsDone
+rem THE NEWEST PANDOC, NOT THE FIRST ON THE PATH (14 October 2026, as the kit's app template has done since
+rem 1.56.0): the first pandoc on the PATH was Pandoc 2.19 in C:\bin, while Pandoc 3.12.1 sat in Program Files,
+rem so the help pages were made by the old one. The kit's newest.ps1 finds the newest, logging every copy with its
+rem version, and its folder goes first on the PATH for this build, so every pandoc call below uses it.
+set "pandocNewest="
+if exist "!homerDev!\scripts\newest.ps1" for /f "usebackq delims=" %%p in (`powershell -NoProfile -ExecutionPolicy Bypass -File "!homerDev!\scripts\newest.ps1" pandoc -Log "%log%"`) do set "pandocNewest=%%p"
+if defined pandocNewest for %%d in ("!pandocNewest!") do set "PATH=%%~dpd;!PATH!"
+if defined pandocNewest >> "%log%" echo Pandoc: !pandocNewest!, the newest found
 where pandoc >nul 2>&1
 if errorlevel 1 (
   rem FETCH IT RATHER THAN ASK FOR IT. "Install pandoc and run me again" is a

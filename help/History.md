@@ -2,6 +2,10 @@
 
 
 
+## 14 October 2026 -- the newest Pandoc for the help pages
+
+- **The help pages are made by the newest Pandoc, not the first on the PATH.** The build took the first pandoc on the PATH, which was Pandoc 2.19 in C:\bin, while Pandoc 3.12.1 was installed in Program Files. It now asks the kit's newest.ps1, as the kit's app template has done since kit 1.56.0, and the log names every copy found and its version.
+
 ## 14 October 2026 -- conversions with a deadline
 
 - **A converter that hangs no longer holds FileDir.** FileDir waited for Pandoc, 2htm and its other converters with no limit. Each conversion now has 15 minutes; past that, the converter FileDir started, and the processes it started, are ended, and FileDir says the converter was stopped and why it might have been. Downloading media keeps no limit, since a long video can rightly take longer (from an audit by another AI).
