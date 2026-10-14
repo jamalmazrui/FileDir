@@ -508,7 +508,7 @@ private static extern int SHGetKnownFolderPath(
 // the order it will be shown. "Documents" and "Documents, Public" sort next to
 // each other and both begin with the word a person is looking for, which
 // matters when the list is being read aloud or navigated by first letter.
-private static readonly string[,] c_aKnownFolders = {
+private static readonly string[,] aKnownFolders = {
 {"3D Objects", "31C0DD25-9439-4F12-BF41-7FF4EDA38722"},
 {"Administrative Tools", "724EF170-A42D-4FEF-9F26-B60E846FBA4F"},
 {"Administrative Tools, Common", "D0384E7D-BAC3-4797-8F14-CBA229B392B5"},
@@ -566,8 +566,8 @@ List<string> lsNames = new List<string>();
 List<string> lsPaths = new List<string>();
 List<string> lsSeen = new List<string>();
 
-for (int i = 0; i < c_aKnownFolders.GetLength(0); i++) {
-string sPath = KnownFolderPath(c_aKnownFolders[i, 1]);
+for (int i = 0; i < aKnownFolders.GetLength(0); i++) {
+string sPath = KnownFolderPath(aKnownFolders[i, 1]);
 if (sPath.Length == 0) continue;
 if (!Directory.Exists(sPath)) continue;
 // Several identifiers can point at one folder on some installations, and the
@@ -575,7 +575,7 @@ if (!Directory.Exists(sPath)) continue;
 string sKey = sPath.ToLower().TrimEnd('\\');
 if (lsSeen.Contains(sKey)) continue;
 lsSeen.Add(sKey);
-lsNames.Add(c_aKnownFolders[i, 0]);
+lsNames.Add(aKnownFolders[i, 0]);
 lsPaths.Add(sPath);
 }
 

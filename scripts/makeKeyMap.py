@@ -45,20 +45,20 @@ import sys
 # the authored hotkeys are in configs, the reference goes to help, the generated
 # table to the root beside the other sources, and every run gets its own log in
 # logs, named so that an alphabetical sort is a chronological one.
-c_sHere = os.path.dirname(os.path.abspath(__file__))
-c_sRoot = os.path.dirname(c_sHere) if os.path.basename(c_sHere).lower() in ("scripts", "exec") else c_sHere
-c_sStamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-c_sLogName = os.path.join("logs", "FileDir-keymap-" + c_sStamp + ".log")
+sHere = os.path.dirname(os.path.abspath(__file__))
+sRoot = os.path.dirname(sHere) if os.path.basename(sHere).lower() in ("scripts", "exec") else sHere
+sStamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+sLogName = os.path.join("logs", "FileDir-keymap-" + sStamp + ".log")
 
 # The groups Hotkeys.md lists commands under, in the order they appear. A
 # command falls into the first group its key matches.
-c_lModifierGroups = ["Alt+Shift", "Alt+Control", "Control+Shift", "Alt",
+lModifierGroups = ["Alt+Shift", "Alt+Control", "Control+Shift", "Alt",
                      "Control", "Shift", "Function keys", "Unmodified"]
 
-pathRoot = c_sRoot
+pathRoot = sRoot
 if "-pathRoot" in sys.argv:
     pathRoot = sys.argv[sys.argv.index("-pathRoot") + 1]
-pathLog = os.path.join(c_sRoot, c_sLogName)
+pathLog = os.path.join(sRoot, sLogName)
 fileLog = None
 
 
@@ -270,7 +270,7 @@ def writeHotkeys(lEntries, pathMd, sVersion):
     lOut += ["", "## By First Modifier", "",
              "Grouped by the modifier key a command starts with, which is often the "
              "quickest way to see what a family of keys does.", ""]
-    for sGroup in c_lModifierGroups:
+    for sGroup in lModifierGroups:
         lInGroup = [o for o in sorted(lKeyed, key=lambda o: o["Command"].lower())
                     if inGroup(sGroup, o["Key"])]
         if not lInGroup:

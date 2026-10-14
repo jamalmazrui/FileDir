@@ -26,22 +26,22 @@ import shutil
 import sys
 import traceback
 
-c_sHere = os.path.dirname(os.path.abspath(__file__))
-c_sRoot = os.path.dirname(c_sHere) if os.path.basename(c_sHere).lower() in ("scripts", "exec") else c_sHere
-c_sIss = os.path.join(c_sRoot, "FileDir_setup.iss")
-c_sStamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-c_sLog = os.path.join(c_sRoot, "logs", "FileDir-sources-" + c_sStamp + ".log")
+sHere = os.path.dirname(os.path.abspath(__file__))
+sRoot = os.path.dirname(sHere) if os.path.basename(sHere).lower() in ("scripts", "exec") else sHere
+sIss = os.path.join(sRoot, "FileDir_setup.iss")
+sStamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+sLog = os.path.join(sRoot, "logs", "FileDir-sources-" + sStamp + ".log")
 
 # Where a misplaced file may be lying. The root first, because that is where
 # the flat layout kept everything; notes next, because the migration's tidy-up
 # filed anything it did not recognise there.
-c_lsLookIn = ["", "notes", "scripts", "exec", "help", "configs", "data", "Scripts"]
+lsLookIn = ["", "notes", "scripts", "exec", "help", "configs", "data", "Scripts"]
 
 
 def note(sText):
     try:
-        os.makedirs(os.path.dirname(c_sLog), exist_ok=True)
-        with open(c_sLog, "a", encoding="utf-8") as oFile:
+        os.makedirs(os.path.dirname(sLog), exist_ok=True)
+        with open(sLog, "a", encoding="utf-8") as oFile:
             oFile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S  ") + sText + "\n")
     except Exception:
         pass
@@ -59,7 +59,7 @@ def local(sRelative):
 
 def readIss():
     """Every Source line: (relative path, required?)."""
-    with open(c_sIss, "r", encoding="utf-8-sig", errors="replace") as oFile:
+    with open(sIss, "r", encoding="utf-8-sig", errors="replace") as oFile:
         sText = oFile.read()
     # The template writes the program's name as {#AppExeName}; every other
     # preprocessor value is resolved from its #define line the same way.
@@ -76,8 +76,8 @@ def readIss():
 
 def findElsewhere(sName):
     """The first place a file of this name turns up, or None."""
-    for sFolder in c_lsLookIn:
-        sTry = os.path.join(c_sRoot, sFolder, sName)
+    for sFolder in lsLookIn:
+        sTry = os.path.join(sRoot, sFolder, sName)
         if os.path.isfile(sTry):
             return sTry
     return None
@@ -85,7 +85,7 @@ def findElsewhere(sName):
 
 def wildcardPresent(sRelative):
     """A wildcard source is satisfied when any file matches it."""
-    sFolder = os.path.join(c_sRoot, os.path.dirname(local(sRelative)))
+    sFolder = os.path.join(sRoot, os.path.dirname(local(sRelative)))
     sPattern = os.path.basename(local(sRelative))
     if not os.path.isdir(sFolder):
         return False
@@ -94,12 +94,12 @@ def wildcardPresent(sRelative):
 
 
 def main():
-    note("placeSources " + c_sStamp)
+    note("placeSources " + sStamp)
     note("script: " + os.path.abspath(__file__))
     note("Python: " + sys.version.split()[0] + ", platform: " + sys.platform)
-    note("project: " + c_sRoot)
-    note("installer script: " + c_sIss)
-    if not os.path.isfile(c_sIss):
+    note("project: " + sRoot)
+    note("installer script: " + sIss)
+    if not os.path.isfile(sIss):
         say("FileDir_setup.iss is not here, so there is nothing to check against.")
         return 1
 
@@ -108,7 +108,7 @@ def main():
     iMoved = 0
     lsMissing = []
     for sRelative, bRequired in lsWanted:
-        sFull = os.path.join(c_sRoot, local(sRelative))
+        sFull = os.path.join(sRoot, local(sRelative))
         bWild = any(ch in sRelative for ch in "*?")
         if bWild:
             # A WILDCARD IS CHECKED, NEVER GATHERED. "help\*.md" would otherwise
@@ -124,7 +124,7 @@ def main():
         if sFound and os.path.normcase(sFound) != os.path.normcase(sFull):
             os.makedirs(os.path.dirname(sFull), exist_ok=True)
             shutil.move(sFound, sFull)
-            note("moved " + os.path.relpath(sFound, c_sRoot) + " to " + sRelative)
+            note("moved " + os.path.relpath(sFound, sRoot) + " to " + sRelative)
             iMoved += 1
             continue
         if bRequired:

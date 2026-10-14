@@ -42,7 +42,7 @@ public static class Convert {
 // Where Pandoc's own installer puts it, and where winget puts it with
 // --scope machine. Checked by path as well as by name, because a Pandoc
 // installed a minute ago is not on this process's PATH.
-public const string c_sMachinePath = @"C:\Program Files\Pandoc\pandoc.exe";
+public const string sMachinePath = @"C:\Program Files\Pandoc\pandoc.exe";
 
 private static string sPandocCache = null;
 
@@ -52,7 +52,7 @@ if (sPandocCache != null) return sPandocCache;
 sPandocCache = "";
 List<string> lsCandidates = new List<string>();
 lsCandidates.Add(Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\Pandoc\pandoc.exe"));
-lsCandidates.Add(c_sMachinePath);
+lsCandidates.Add(sMachinePath);
 lsCandidates.Add(Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\Pandoc\pandoc.exe"));
 foreach (string sCandidate in lsCandidates) {
 if (sCandidate.Length > 0 && File.Exists(sCandidate)) {
@@ -124,14 +124,14 @@ public static readonly string[,] c_aTargets = {
 // did not have them. The other list called .pptx and .xlsx Pandoc-readable,
 // which they are not -- Pandoc writes those, it does not read them.
 //
-// The lists are gone. c_aPandocReadable above is the only one, and every place
+// The lists are gone. aPandocReadable above is the only one, and every place
 // that asks "can Pandoc read this" asks it.
 
 public static bool canRead(string sPath) {
 // Whether PANDOC can read it. The name is kept because callers read well with
 // it, but there is now one list behind it rather than three.
 string sExt = Path.GetExtension(sPath).ToLower();
-return Array.IndexOf(c_aPandocReadable, sExt) >= 0;
+return Array.IndexOf(aPandocReadable, sExt) >= 0;
 } // canRead method
 
 public static string targetName(int iIndex) {
@@ -169,7 +169,7 @@ return aLabels;
 // What Pandoc actually READS. Checked against "pandoc --list-input-formats":
 // it reads docx, odt, epub, html, rtf, markdown, rst, latex, csv and more, and
 // it does NOT read pptx, xlsx or pdf, whatever its output list suggests.
-public static readonly string[] c_aPandocReadable = {
+public static readonly string[] aPandocReadable = {
 ".docx", ".odt", ".epub", ".html", ".htm", ".rtf", ".md", ".markdown",
 ".rst", ".tex", ".latex", ".csv", ".tsv", ".org", ".textile", ".mediawiki",
 ".ipynb", ".fb2", ".typ", ".jats", ".opml", ".bib"
@@ -179,7 +179,7 @@ public static readonly string[] c_aPandocReadable = {
 // Open XML formats FileDir reads itself. They are documents to a person even
 // though Pandoc cannot read them, and categoryOf must agree with that or a
 // .pptx would be offered no targets at all.
-private static readonly string[] c_aDocumentSources = {
+private static readonly string[] aDocumentSources = {
 ".docx", ".odt", ".epub", ".html", ".htm", ".rtf", ".md", ".markdown",
 ".rst", ".tex", ".latex", ".csv", ".tsv", ".org", ".textile", ".mediawiki",
 ".ipynb", ".fb2", ".typ", ".jats", ".opml", ".bib", ".txt",
@@ -188,18 +188,18 @@ private static readonly string[] c_aDocumentSources = {
 
 // Formats Pandoc cannot read at all. 2htm handles them, which is why FileDir
 // ships it: legacy Office and PDF are exactly the files people still have.
-private static readonly string[] c_aLegacySources = {".doc", ".ppt", ".xls", ".pdf"};
+private static readonly string[] aLegacySources = {".doc", ".ppt", ".xls", ".pdf"};
 
-private static readonly string[] c_aAudioSources = {
+private static readonly string[] aAudioSources = {
 ".mp3", ".wav", ".flac", ".m4a", ".aac", ".ogg", ".opus", ".wma", ".aiff", ".aif"
 };
 
-private static readonly string[] c_aVideoSources = {
+private static readonly string[] aVideoSources = {
 ".mp4", ".mkv", ".avi", ".mov", ".wmv", ".webm", ".flv", ".m4v", ".mpg",
 ".mpeg", ".ts", ".m2ts", ".3gp", ".ogv"
 };
 
-private static readonly string[] c_aImageSources = {
+private static readonly string[] aImageSources = {
 ".png", ".jpg", ".jpeg", ".bmp", ".gif", ".tif", ".tiff", ".webp"
 };
 
@@ -214,7 +214,7 @@ private static readonly string[] c_aImageSources = {
 // The rest are real but narrower: camera raw from every maker, SVG drawings
 // which need rasterising rather than decoding, Windows icons, and the long tail
 // of Photoshop, GIMP and game-texture formats.
-private static readonly string[] c_aMagickSources = {
+private static readonly string[] aMagickSources = {
 ".heic", ".heif", ".avif",
 ".cr2", ".cr3", ".nef", ".arw", ".dng", ".orf", ".rw2", ".raf", ".pef", ".srw",
 ".svg", ".ico", ".psd", ".xcf", ".tga", ".pcx", ".pnm", ".ppm", ".pgm", ".dds",
@@ -229,10 +229,10 @@ public static bool readableAsText(string sPath) {
 // JPEG and calling them a title is how a folder of photographs ends up named
 // after binary rubbish.
 string sExt = Path.GetExtension(sPath).ToLower();
-if (Array.IndexOf(c_aPlainSources, sExt) >= 0) return true;
-if (Array.IndexOf(c_aPandocReadable, sExt) >= 0) return true;
+if (Array.IndexOf(aPlainSources, sExt) >= 0) return true;
+if (Array.IndexOf(aPandocReadable, sExt) >= 0) return true;
 if (sExt == ".pptx" || sExt == ".xlsx" || sExt == ".pdf") return true;
-if (Array.IndexOf(c_aLegacySources, sExt) >= 0) return true;
+if (Array.IndexOf(aLegacySources, sExt) >= 0) return true;
 return false;
 } // readableAsText method
 
@@ -249,14 +249,14 @@ string sExt = Path.GetExtension(sPath).ToLower();
 if (Homer.Table.canRead(sPath) && sExt != ".md" && sExt != ".markdown") return "table";
 if (sExt == ".pptx") return "openxml";
 if (sExt == ".pdf") return "pdf";
-if (Array.IndexOf(c_aDocumentSources, sExt) >= 0) return "document";
-if (Array.IndexOf(c_aLegacySources, sExt) >= 0) return "legacy";
-if (Array.IndexOf(c_aAudioSources, sExt) >= 0) return "audio";
-if (Array.IndexOf(c_aVideoSources, sExt) >= 0) return "video";
-if (Array.IndexOf(c_aImageSources, sExt) >= 0) return "image";
+if (Array.IndexOf(aDocumentSources, sExt) >= 0) return "document";
+if (Array.IndexOf(aLegacySources, sExt) >= 0) return "legacy";
+if (Array.IndexOf(aAudioSources, sExt) >= 0) return "audio";
+if (Array.IndexOf(aVideoSources, sExt) >= 0) return "video";
+if (Array.IndexOf(aImageSources, sExt) >= 0) return "image";
 // A picture is a picture whichever tool reads it, so the same targets are
 // offered and convertMedia decides who does the work.
-if (Array.IndexOf(c_aMagickSources, sExt) >= 0) return "image";
+if (Array.IndexOf(aMagickSources, sExt) >= 0) return "image";
 return "";
 } // categoryOf method
 
@@ -360,7 +360,7 @@ return lsLabels.ToArray();
 } // targetLabelsFor method
 
 // Extensions that are already text and can simply be read.
-private static readonly string[] c_aPlainSources = {
+private static readonly string[] aPlainSources = {
 // Play lists and shortcuts are plain text and were missing, so Append to
 // Clipboard refused an .m3u -- the very file the player commands produce.
 ".m3u", ".m3u8", ".pls", ".url", ".cue", ".srt", ".vtt", ".sub", ".ass",
@@ -373,13 +373,13 @@ private static readonly string[] c_aPlainSources = {
 // Formats worth putting on the clipboard as HTML rather than flat text.
 // Anything Pandoc can turn into a web page, and the two Open XML formats that
 // go through it as Markdown first.
-private static readonly string[] c_aRichForms = {
+private static readonly string[] aRichForms = {
 ".docx", ".odt", ".rtf", ".html", ".htm", ".epub", ".md", ".markdown",
 ".rst", ".tex", ".csv", ".tsv", ".inix", ".xlsx", ".pdf"
 };
 
 public static bool hasRichForm(string sPath) {
-return Array.IndexOf(c_aRichForms, Path.GetExtension(sPath).ToLower()) >= 0;
+return Array.IndexOf(aRichForms, Path.GetExtension(sPath).ToLower()) >= 0;
 } // hasRichForm method
 
 public static string toHtmlFragment(string sPath, out string sError) {
@@ -475,7 +475,7 @@ return "";
 string sExt = Path.GetExtension(sPath).ToLower();
 
 // 1. Already text.
-if (Array.IndexOf(c_aPlainSources, sExt) >= 0) {
+if (Array.IndexOf(aPlainSources, sExt) >= 0) {
 try {
 return Homer.Util.file2String(sPath);
 }
@@ -486,7 +486,7 @@ return "";
 }
 
 // 2. Pandoc, for everything it reads.
-if (Array.IndexOf(c_aPandocReadable, sExt) >= 0) {
+if (Array.IndexOf(aPandocReadable, sExt) >= 0) {
 if (!havePandoc()) {
 sError = "Pandoc is not installed, and it is what reads " + sExt + " files. "
 + "Run installPandoc.cmd in the FileDir folder as an administrator, or install FileDir again and leave the Pandoc box ticked.";
@@ -976,8 +976,8 @@ string sWantExt = Path.GetExtension(sTarget).ToLower();
 // ffmpeg otherwise. ffmpeg stays the default for the ordinary picture formats
 // because it is already installed and already ticked; ImageMagick is asked for
 // only when it is the only one that can do the job.
-bool bNeedMagick = Array.IndexOf(c_aMagickSources, sSourceExt) >= 0
-|| Array.IndexOf(c_aMagickSources, sWantExt) >= 0;
+bool bNeedMagick = Array.IndexOf(aMagickSources, sSourceExt) >= 0
+|| Array.IndexOf(aMagickSources, sWantExt) >= 0;
 if (bNeedMagick) return convertWithMagick(sSource, sTarget, out sError);
 
 string sExe = Homer.Media.ffmpegProgram();
@@ -986,7 +986,7 @@ sError = "ffmpeg was not found, so audio, video and pictures cannot be converted
 return false;
 }
 string sTargetExt = Path.GetExtension(sTarget).ToLower();
-bool bAudioTarget = Array.IndexOf(c_aAudioSources, sTargetExt) >= 0;
+bool bAudioTarget = Array.IndexOf(aAudioSources, sTargetExt) >= 0;
 StringBuilder sbArgs = new StringBuilder();
 sbArgs.Append("-y -nostdin -loglevel error -i ");
 sbArgs.Append(Homer.Util.stringQuote(sSource));

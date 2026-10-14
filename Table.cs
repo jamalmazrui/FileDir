@@ -59,19 +59,19 @@ return lsRow[iField] == null ? "" : lsRow[iField];
 
 // ---- What can be read and written -----------------------------------------
 
-public static readonly string[] c_aReadable = {".inix", ".csv", ".tsv", ".xlsx", ".md", ".markdown"};
-public static readonly string[] c_aWritable = {".inix", ".csv", ".tsv", ".md", ".markdown"};
+public static readonly string[] aReadable = {".inix", ".csv", ".tsv", ".xlsx", ".md", ".markdown"};
+public static readonly string[] aWritable = {".inix", ".csv", ".tsv", ".md", ".markdown"};
 
 // Written by handing a Markdown pipe table to Pandoc.
-public static readonly string[] c_aViaPandoc = {".docx", ".html", ".htm", ".odt", ".rtf", ".epub", ".tex", ".rst"};
+public static readonly string[] aViaPandoc = {".docx", ".html", ".htm", ".odt", ".rtf", ".epub", ".tex", ".rst"};
 
 public static bool canRead(string sPath) {
-return Array.IndexOf(c_aReadable, Path.GetExtension(sPath).ToLower()) >= 0;
+return Array.IndexOf(aReadable, Path.GetExtension(sPath).ToLower()) >= 0;
 } // canRead method
 
 public static bool canWrite(string sPath) {
 string sExt = Path.GetExtension(sPath).ToLower();
-return Array.IndexOf(c_aWritable, sExt) >= 0 || Array.IndexOf(c_aViaPandoc, sExt) >= 0;
+return Array.IndexOf(aWritable, sExt) >= 0 || Array.IndexOf(aViaPandoc, sExt) >= 0;
 } // canWrite method
 
 // ---- Reading ---------------------------------------------------------------
@@ -344,7 +344,7 @@ if (sExt == ".inix") { toInix(sTarget); return true; }
 if (sExt == ".csv") { toSeparated(sTarget, ','); return true; }
 if (sExt == ".tsv") { toSeparated(sTarget, '\t'); return true; }
 if (sExt == ".md" || sExt == ".markdown") { toMarkdown(sTarget); return true; }
-if (Array.IndexOf(c_aViaPandoc, sExt) >= 0) return viaPandoc(sTarget, out sError);
+if (Array.IndexOf(aViaPandoc, sExt) >= 0) return viaPandoc(sTarget, out sError);
 }
 catch (Exception ex) {
 sError = ex.Message;
