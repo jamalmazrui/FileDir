@@ -2,6 +2,10 @@
 
 
 
+## 14 October 2026 -- conversions with a deadline
+
+- **A converter that hangs no longer holds FileDir.** FileDir waited for Pandoc, 2htm and its other converters with no limit. Each conversion now has 15 minutes; past that, the converter FileDir started, and the processes it started, are ended, and FileDir says the converter was stopped and why it might have been. Downloading media keeps no limit, since a long video can rightly take longer (from an audit by another AI).
+
 ## 14 October 2026 -- constants named like variables
 
 - **No `c_` prefix remains.** Convert.cs's table of document targets is now `aDocumentTargets`, a name that says what it holds; the plain `aTargets` was already a local variable, which is why the automatic rename had kept `c_`. installModels.cmd's `c_sModels` and `c_sModelNote` are now `sModels` and `sModelNote`. Constants follow the variable rules, declared on lines of their own.

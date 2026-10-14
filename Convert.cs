@@ -602,7 +602,7 @@ Path.GetFileNameWithoutExtension(sPath) + "_" + Guid.NewGuid().ToString("N").Sub
 string sOut, sErr;
 int iCode = Homer.Media.run(sPython,
 Homer.Util.stringQuote(sScript) + " " + Homer.Util.stringQuote(sPath) + " " + Homer.Util.stringQuote(sTemp),
-out sOut, out sErr);
+out sOut, out sErr, iConverterMinutes);
 // pdfRich writes its reasons beside the target, and removes that log when it
 // succeeds. So a log still there is the explanation, in its own words.
 string sLog = sTemp + ".log";
@@ -854,7 +854,7 @@ sbArgs.Append(Homer.Util.stringQuote(sOutDir));
 sbArgs.Append(" ");
 sbArgs.Append(Homer.Util.stringQuote(sSource));
 string sOut, sErr;
-int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
+int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr, iConverterMinutes);
 
 // 2HTM REPORTS FAILURE IN ITS OUTPUT AND STILL RETURNS ZERO.
 //
@@ -955,7 +955,7 @@ sbArgs.Append(" -background white -flatten");
 sbArgs.Append(" ");
 sbArgs.Append(Homer.Util.stringQuote(sTarget));
 string sOut, sErr;
-int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
+int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr, iConverterMinutes);
 if (iCode == 0 && File.Exists(sTarget)) return true;
 sError = firstLine((sErr + "\n" + sOut).Trim());
 if (sError.Length == 0) sError = "ImageMagick returned " + iCode + ".";
@@ -997,7 +997,7 @@ if (bAudioTarget && categoryOf(sSource) == "video") sbArgs.Append(" -vn");
 sbArgs.Append(" ");
 sbArgs.Append(Homer.Util.stringQuote(sTarget));
 string sOut, sErr;
-int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr);
+int iCode = Homer.Media.run(sExe, sbArgs.ToString(), out sOut, out sErr, iConverterMinutes);
 if (iCode == 0 && File.Exists(sTarget)) return true;
 sError = sErr.Trim();
 if (sError.Length == 0) sError = "ffmpeg returned " + iCode + ".";
@@ -1057,6 +1057,12 @@ return false;
 return true;
 } // convertFile method
 
+// A CONVERTER HAS A DEADLINE (14 October 2026, from an audit by another AI). FileDir
+// waited for the converter with no limit, so one that hung -- a document Word could not
+// open, a stalled Pandoc -- held FileDir with it. After this many minutes the converter
+// FileDir started, and the processes it started, are ended; nothing else is touched.
+private const int iConverterMinutes = 15;
+
 private static bool run(string sExe, string sArguments, out string sOut, out string sError) {
 // A process with NO WINDOW.  A console flashing up during a batch of twenty
 // files is the kind of thing that makes a program feel broken.
@@ -1076,8 +1082,15 @@ using (Process process = Process.Start(info)) {
 // block the other (8 October 2026, from an audit by another AI: reading one to
 // its end and then the other could hang both programs).
 System.Threading.Tasks.Task<string> taskErr = process.StandardError.ReadToEndAsync();
-sOut = process.StandardOutput.ReadToEnd();
+System.Threading.Tasks.Task<string> taskOut = process.StandardOutput.ReadToEndAsync();
+if (!process.WaitForExit(iConverterMinutes * 60 * 1000)) {
+Homer.Media.endProcessTree(process.Id);
+sError = Path.GetFileName(sExe) + " was still running after " + iConverterMinutes + " minutes, so it was stopped. The file may be too large, or the program it uses may be waiting for something.";
+Homer.Log.warn("Stopped after " + iConverterMinutes + " minutes: " + sExe + " " + sArguments);
+return false;
+}
 process.WaitForExit();
+sOut = taskOut.Result;
 string sErr = taskErr.Result;
 Homer.Log.command(sExe + " " + sArguments, process.ExitCode);
 if (!string.IsNullOrEmpty(sErr)) Homer.Log.info("  said: " + sErr.Trim());
