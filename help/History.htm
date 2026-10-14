@@ -166,6 +166,18 @@
 <body>
 <main>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
+<h2 id="october-2026-constants-named-like-variables">14 October 2026 –
+constants named like variables</h2>
+<ul>
+<li><strong>No <code>c_</code> prefix remains.</strong> Convert.cs’s
+table of document targets is now <code>aDocumentTargets</code>, a name
+that says what it holds; the plain <code>aTargets</code> was already a
+local variable, which is why the automatic rename had kept
+<code>c_</code>. installModels.cmd’s <code>c_sModels</code> and
+<code>c_sModelNote</code> are now <code>sModels</code> and
+<code>sModelNote</code>. Constants follow the variable rules, declared
+on lines of their own.</li>
+</ul>
 <h2 id="october-2026-recovery-copies-kept-and-failures-said">14 October
 2026 – recovery copies kept, and failures said</h2>
 <ul>

@@ -104,7 +104,7 @@ return "";
 // Both spellings are read, because the world writes both, and a .html file
 // already on disk is left with the name it has. Only what is written is
 // decided here.
-public static readonly string[,] c_aTargets = {
+public static readonly string[,] aDocumentTargets = {
 {"Word document", "docx"},
 {"Web page", "htm"},
 {"Markdown", "md"},
@@ -135,21 +135,21 @@ return Array.IndexOf(aPandocReadable, sExt) >= 0;
 } // canRead method
 
 public static string targetName(int iIndex) {
-if (iIndex < 0 || iIndex >= c_aTargets.GetLength(0)) return "";
-return c_aTargets[iIndex, 0];
+if (iIndex < 0 || iIndex >= aDocumentTargets.GetLength(0)) return "";
+return aDocumentTargets[iIndex, 0];
 } // targetName method
 
 public static string targetExtension(int iIndex) {
-if (iIndex < 0 || iIndex >= c_aTargets.GetLength(0)) return "";
-return c_aTargets[iIndex, 1];
+if (iIndex < 0 || iIndex >= aDocumentTargets.GetLength(0)) return "";
+return aDocumentTargets[iIndex, 1];
 } // targetExtension method
 
 public static string[] targetLabels() {
 // "Word document (docx)" and so on, for a Pick dialog.  Naming the extension
 // as well as the format means nobody has to guess what lands on disk.
-string[] aLabels = new string[c_aTargets.GetLength(0)];
+string[] aLabels = new string[aDocumentTargets.GetLength(0)];
 for (int i = 0; i < aLabels.Length; i++)
-aLabels[i] = c_aTargets[i, 0] + " (" + c_aTargets[i, 1] + ")";
+aLabels[i] = aDocumentTargets[i, 0] + " (" + aDocumentTargets[i, 1] + ")";
 return aLabels;
 } // targetLabels method
 
@@ -265,7 +265,7 @@ public static string[,] targetsFor(string sPath) {
 // left out further down, since converting a file to what it already is has no
 // meaning.
 string sCategory = categoryOf(sPath);
-if (sCategory == "document") return c_aTargets;
+if (sCategory == "document") return aDocumentTargets;
 if (sCategory == "table")
 // Everything that holds rows and columns. Markdown is included because a pipe
 // table is how this reaches Word, a web page and OpenDocument.

@@ -2,6 +2,10 @@
 
 
 
+## 14 October 2026 -- constants named like variables
+
+- **No `c_` prefix remains.** Convert.cs's table of document targets is now `aDocumentTargets`, a name that says what it holds; the plain `aTargets` was already a local variable, which is why the automatic rename had kept `c_`. installModels.cmd's `c_sModels` and `c_sModelNote` are now `sModels` and `sModelNote`. Constants follow the variable rules, declared on lines of their own.
+
 ## 14 October 2026 -- recovery copies kept, and failures said
 
 - **Each copy or move keeps its own recovery copy.** It was always `<target>.FileDir-previous`, and an existing one was deleted first, so a second failed operation erased the first one's recovery copy. Each now gets a dated name of its own (from an audit by another AI).
