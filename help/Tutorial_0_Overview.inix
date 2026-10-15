@@ -56,6 +56,11 @@ Key=
 Hear=
 
 [step]
+Say=Two voices take these walks. I am the host; the other voice plays the screen reader. It is a simulation, so your own reader's words may differ a little.
+Key=
+Hear=
+
+[step]
 
 Say=You know your screen reader's own keys already, and three of them are worth remembering whenever you feel lost or unsure. Insert plus Up Arrow says the line you are on again.
 Key=Insert+Up Arrow
@@ -75,7 +80,7 @@ Hear=FileDir
 
 [step]
 
-Say=If you set your screen reader to use Caps Lock in place of Insert, Caps Lock works the same way for all three.
+Say=On a laptop keyboard, Caps Lock usually stands in for Insert, though in some laptop layouts the line command moves to a letter, such as Caps Lock plus L. And if speech goes by before you catch it, your reader can replay it: Insert plus X in some readers, a speech history in others.
 Key=
 Hear=
 
@@ -84,51 +89,61 @@ Hear=
 Say=Now the table of contents. I say the number and the title; the reader says what the walk covers.
 Key=
 Hear=
+
 [step]
 
 Say=One, User Interface.
 Key=
 Hear=FileDir's window, the list you hear, the dialogs that all work one way, and where help is, each named and then shown by the reader; then the rules every key follows, so a key can be guessed before it is learned.
+
 [step]
 
 Say=Two, Install and Launch.
 Key=
 Hear=The download, the installer's pages and boxes, and FileDir opening by itself.
+
 [step]
 
 Say=Three, Open a Folder and Find a File.
 Key=
 Hear=Arrowing a folder, jumping to a file by name, and opening it.
+
 [step]
 
 Say=Four, Tag Files and Copy Them.
 Key=
 Hear=The semicolon tags; a command then acts on every tagged file at once.
+
 [step]
 
 Say=Five, Play a Page's Media in the Homer Player.
 Key=
 Hear=A podcast page's episodes found, queued and played; the two searches; extra info.
+
 [step]
 
 Say=Six, Rename Files to What Is Inside.
 Key=
 Hear=One want: files named by a camera or a scanner, called by what they are instead.
+
 [step]
 
 Say=Seven, Convert Between Formats.
 Key=
 Hear=One want: a Word document as a web page, or a PDF as plain text, without opening either.
+
 [step]
 
 Say=Eight, Ask About a File.
 Key=
 Hear=One want: what is in a long document, without reading it all.
+
 [step]
 
 Say=Nine, Conclusion.
 Key=
 Hear=What to carry away, the words FileDir uses, the help built in, and where to learn more.
+
 [step]
 
 Say=Ten walks, each under five minutes, under an hour together: the overview, the user interface, seven tasks, and the conclusion. They are a course, not a reference: each one assumes those before it.

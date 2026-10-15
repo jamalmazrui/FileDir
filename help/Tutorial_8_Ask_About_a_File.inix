@@ -9,7 +9,7 @@ Homework=Ask Shift plus F12 to list the dates in a document of your own.
 
 [step]
 
-Say=One want: to know what is in a long report before deciding to read it. FileDir can ask a language model running on this computer, so nothing leaves it.
+Say=One want: to know what is in a long report before deciding to read it. FileDir can ask a language model running on this computer through Ollama, so the report is not sent anywhere for the answer.
 Key=
 Hear=
 
@@ -117,7 +117,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=The model runs on this computer, through Ollama, so the report never leaves it. The first answer can be slow while the model loads; later ones are quicker.
+Say=The model runs on this computer, through Ollama, so the report is not sent anywhere; only the model itself was downloaded, once. An answer is a summary to check against the report, not a fact to rely on. The first answer can be slow while the model loads; later ones are quicker.
 Key=
 
 [step]

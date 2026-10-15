@@ -20,8 +20,8 @@ Note=Alt plus Y says the count at any time.
 
 [step]
 
-Say=Press Control plus C to copy the tagged files. FileDir asks where to.
-Key=Control+C
+Say=Press Shift plus C, C for Copy, to copy the tagged files to a folder. FileDir asks where to.
+Key=Shift+C
 Hear=Copy To
 Hear=Folder edit
 Note=The window is named for the command. The box remembers the last ten answers.
@@ -31,7 +31,7 @@ Note=The window is named for the command. The box remembers the last ten answers
 Say=Type the folder, or press Alt plus B to browse for it, then Enter.
 Key=Enter
 Hear=2 files copied
-Note=Nothing is moved unless you use Control plus M instead, which moves.
+Note=Nothing is moved; Shift plus M moves instead.
 
 [step]
 
@@ -65,7 +65,7 @@ Hear=Overwrite report dot d o c x? The existing file is newer. Yes button
 
 [step]
 
-Say=Escape keeps both. Control plus S saves the tag states of this window; Control plus Shift plus S restores them -- for when a long selection must survive a detour.
+Say=Escape answers No, so nothing is overwritten. Control plus S saves the tag states of this window; Control plus Shift plus S restores them -- for when a long selection must survive a detour.
 Key=Escape
 Hear=FileDir, List box
 
@@ -91,7 +91,7 @@ Hear=
 
 Say=Shift plus S says the size of the tagged files together, before a copy to a small drive; Alt plus S says the size of the folder you are in.
 Key=Shift+S
-Hear=3 files, 48 megabytes
+Hear=2 files, 48 megabytes
 
 [step]
 
@@ -113,6 +113,6 @@ Hear=
 
 [step]
 
-Say=Control plus C.
+Say=Shift plus C.
 Key=
-Hear=Copy
+Hear=Copy to Folder
