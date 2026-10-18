@@ -184,6 +184,21 @@
 <body>
 <main>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
+<h2 id="october-2026-zip-then-delete-no-longer-stops-responding">15
+October 2026 – Zip then Delete no longer stops responding</h2>
+<ul>
+<li><strong>FileDir keeps answering while it writes an archive.</strong>
+Zip and Zip then Delete compressed and tested the archive on the
+window’s own thread. Zipping about 200 MB of DbDo data into an existing
+temp.zip left FileDir marked “Not Responding,” and JAWS lost its place,
+so FileDir was closed by force while it was still working. The files are
+still named as they are queued. Then FileDir says how many it is
+compressing, does the compressing and testing in the background, and
+says every fifteen seconds how long it has been going. Commands wait
+until it finishes, and focus returns where it was. The archive is now
+tested once rather than twice. This uses the kit’s new
+Util.runResponsive, so FileDir needs HomerDev 1.72.58.</li>
+</ul>
 <h2 id="october-2026-2htms-failures-reported-as-they-are-today">14
 October 2026 – 2htm’s failures reported as they are today</h2>
 <ul>

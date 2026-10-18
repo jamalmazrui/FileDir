@@ -2,6 +2,10 @@
 
 
 
+## 15 October 2026 -- Zip then Delete no longer stops responding
+
+- **FileDir keeps answering while it writes an archive.** Zip and Zip then Delete compressed and tested the archive on the window's own thread. Zipping about 200 MB of DbDo data into an existing temp.zip left FileDir marked "Not Responding," and JAWS lost its place, so FileDir was closed by force while it was still working. The files are still named as they are queued. Then FileDir says how many it is compressing, does the compressing and testing in the background, and says every fifteen seconds how long it has been going. Commands wait until it finishes, and focus returns where it was. The archive is now tested once rather than twice. This uses the kit's new Util.runResponsive, so FileDir needs HomerDev 1.72.58.
+
 ## 14 October 2026 -- 2htm's failures reported as they are today
 
 - **A failed conversion names the file, and asks for no hand repair.** FileDir read 2htm's printed words rather than its exit code, because an older 2htm reported failure only in words and returned zero; and when 2htm could not load an assembly it told you to copy System.Memory.dll into the FileDir folder by hand -- a DLL FileDir's own migration now retires, since the current 2htm needs no separate assemblies. Now 2htm's exit code is trusted first -- for one file, anything but 0 means it failed -- and its words still catch an older 2htm. The message says which file was being converted and what went wrong; an assembly that cannot load is explained as an older 2htm beside FileDir, put right by installing the current one; and 2htm's full output goes to the log (from an audit by another AI).

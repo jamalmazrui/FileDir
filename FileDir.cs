@@ -6918,6 +6918,7 @@ App.say("With password");
 z.Password = App.sUnarchivePassword;
 }
 z.BeginUpdate();
+bool bZipPassed = false;
 int iFileCount = 0;
 try {
 for (int i = 0; i < aPaths.Length; i++) {
@@ -6971,15 +6972,27 @@ App.say(sName +" not found!");
 }
 }
 
+// THE WINDOW KEEPS ANSWERING WHILE THE ARCHIVE IS WRITTEN (15 October 2026). Writing and testing ran on the
+// window's own thread, and zipping about 200 MB of DbDo data into an existing temp.zip left FileDir "Not
+// Responding" until it was killed. The files are still listed above as they are queued; compressing, closing and
+// testing now run in the background, while FileDir says every fifteen seconds how long it has been going. The
+// archive is tested once, not twice as before.
+App.say("Compressing " + Homer.Util.stringPlural("file", iFileCount));
+Homer.Util.runResponsive(App.frame, delegate() {
 z.CommitUpdate();
 z.Close();
+bZipPassed = zipPasses(sZip);
+}, 15, delegate(int iSeconds) {
+App.say("Still zipping, " + Homer.Util.spokenLength(iSeconds));
+});
 }
 catch (Exception ex) {
+try { z.Close(); } catch (Exception) { }
 Lbc.Show(ex.Message, "Error");
 return;
 }
 
-if (testZip(sZip) && bDelete) {
+if (bZipPassed && bDelete) {
 App.say(App.Recycle ? "Recycling" : "Deleting");
 foreach (string sItem in aPaths) {
 if (Homer.Util.stringEquiv(sItem, sZip)) continue;
@@ -6987,7 +7000,7 @@ App.deleteItem(sItem, App.Recycle);
 delete_Helper(sItem);
 }
 }
-if (testZip(sZip)) App.say("Done!", true);
+if (bZipPassed) App.say("Done!", true);
 else App.say("Error!");
 App.SetDirectory(sOldDir);
 //Homer.Util.stringPlural("file", iFileCount);
@@ -7152,15 +7165,31 @@ foreach (ZipEntry ze in z) entryList.Add(ze);
 return entryList;
 } // getZipEntries method
 
-public bool testZ7(string sPath) {
+// z7Passes: whether 7-Zip's test of an archive says "Everything is Ok". It runs 7-Zip and reads its answer and
+// touches no window, so a background job can call it (15 October 2026); testZ7 adds bringing FileDir forward.
+public bool z7Passes(string sPath) {
 string sExe = Path.Combine(App.sAppDir, "7z.exe");
 string sParams = "t " + Homer.Util.stringQuote(sPath) + " -p" + App.sUnarchivePassword;
 string sText = Homer.Util.getProgramOutput(sExe, sParams);
-if (App.frame != null && App.frame.TopLevelControl.Handle != (IntPtr) Homer.Util.getForegroundWindow()) Homer.Util.forceWindow(App.frame.TopLevelControl.Handle);
 sText = sText.Replace("\r\n", "\n");
 string sMatch = "\nEverything is Ok\n";
 return sText.IndexOf(sMatch) >= 0;
+} // z7Passes method
+
+public bool testZ7(string sPath) {
+bool bPassed = z7Passes(sPath);
+if (App.frame != null && App.frame.TopLevelControl.Handle != (IntPtr) Homer.Util.getForegroundWindow()) Homer.Util.forceWindow(App.frame.TopLevelControl.Handle);
+return bPassed;
 } // testZ7 method
+
+// zipPasses: testZip without bringing any window forward, for a background job.
+public bool zipPasses(string sPath) {
+if (!File.Exists(sPath)) return false;
+string sExt = Path.GetExtension(sPath);
+if (sExt.StartsWith(".")) sExt = sExt.Substring(1).ToLower();
+if ("|com|doc|docx|exe|msi|pdf|ppt|pptx|xls|xlsx|".IndexOf("|" + sExt + "|") >= 0) return false;
+return z7Passes(sPath);
+} // zipPasses method
 
 public bool testZip(string sPath) {
 if (!File.Exists(sPath)) return false;
