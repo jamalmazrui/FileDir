@@ -1670,8 +1670,8 @@ menuMiscMailBody = menu_Helper("Mail Body", "Control+M", menuMiscMailBody_Click)
 menuMiscMailAttachTagged = menu_Helper("Mail Attachment", "Control+Shift+M", menuMiscMailAttachTagged_Click);
 menuMiscBatchMail = menu_Helper("Batch Mail", "Control+Shift+B", menuMiscBatchMail_Click);
 menuMiscZipTagged = menu_Helper("Zip ...", "Shift+Z", menuMiscZipTagged_Click);
-menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Z", menuMiscZipTaggedThenDelete_Click);
-menuMiscZipList = menu_Helper("Zip List ...", "Control+Shift+Z", menuMiscZipList_Click);
+menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "", menuMiscZipTaggedThenDelete_Click);
+menuMiscZipList = menu_Helper("Zip List ...", "", menuMiscZipList_Click);
 menuMiscUnarchiveTagged = menu_Helper("Unarchive", "Shift+U", menuMiscUnarchiveTagged_Click);
 menuMiscUnarchiveTaggedWithoutSubfolders = menu_Helper("Unarchive without Subfolders", "Control+U", menuMiscUnarchiveTaggedWithoutSubfolders_Click);
 menuMiscUnarchiveTaggedToSameName = menu_Helper("Unarchive to Same Name", "Control+Shift+U", menuMiscUnarchiveTaggedToSameName_Click);
@@ -1841,21 +1841,17 @@ menuItem.AccessibleName = (sText + "   " + sKeys).Replace("&", "");
 menuItem.ShortcutKeyDisplayString = sKeys;
 }
 
+// THE STATUS LINE FOR THE SELECTED ITEM (19 October 2026). Every item's Paint
+// handler used to scan every item of every menu on each repaint, so opening a
+// menu of forty items did forty times the whole menu bar's work. An item now
+// looks only at itself: when it is the selected one, it shows its own summary.
 menuItem.Paint += delegate(object oSender, PaintEventArgs e) {
-foreach (ToolStripMenuItem menu in App.frame.menuMain.Items) {
-foreach (object o in menu.DropDownItems) {
-HomerToolStripMenuItem item = o as HomerToolStripMenuItem;
-if (item == null) continue;
-if (!item.Selected) continue;
-string[] aSummary = item.getKeySummary();
-// string sSummary = aSummary[0] + " = " + aSummary[1] + ", " + aSummary[2];
+if (!menuItem.Selected) return;
+string[] aSummary = menuItem.getKeySummary();
 string sDescription = aSummary[2];
 if (sDescription != App.frame.LastDescription) {
 App.frame.statusLabel.Text = sDescription;
 App.frame.LastDescription = sDescription;
-}
-break;
-}
 }
 };
 
@@ -6918,7 +6914,6 @@ App.say("With password");
 z.Password = App.sUnarchivePassword;
 }
 z.BeginUpdate();
-bool bZipPassed = false;
 int iFileCount = 0;
 try {
 for (int i = 0; i < aPaths.Length; i++) {
@@ -6972,27 +6967,15 @@ App.say(sName +" not found!");
 }
 }
 
-// THE WINDOW KEEPS ANSWERING WHILE THE ARCHIVE IS WRITTEN (15 October 2026). Writing and testing ran on the
-// window's own thread, and zipping about 200 MB of DbDo data into an existing temp.zip left FileDir "Not
-// Responding" until it was killed. The files are still listed above as they are queued; compressing, closing and
-// testing now run in the background, while FileDir says every fifteen seconds how long it has been going. The
-// archive is tested once, not twice as before.
-App.say("Compressing " + Homer.Util.stringPlural("file", iFileCount));
-Homer.Util.runResponsive(App.frame, delegate() {
 z.CommitUpdate();
 z.Close();
-bZipPassed = zipPasses(sZip);
-}, 15, delegate(int iSeconds) {
-App.say("Still zipping, " + Homer.Util.spokenLength(iSeconds));
-});
 }
 catch (Exception ex) {
-try { z.Close(); } catch (Exception) { }
 Lbc.Show(ex.Message, "Error");
 return;
 }
 
-if (bZipPassed && bDelete) {
+if (testZip(sZip) && bDelete) {
 App.say(App.Recycle ? "Recycling" : "Deleting");
 foreach (string sItem in aPaths) {
 if (Homer.Util.stringEquiv(sItem, sZip)) continue;
@@ -7000,7 +6983,7 @@ App.deleteItem(sItem, App.Recycle);
 delete_Helper(sItem);
 }
 }
-if (bZipPassed) App.say("Done!", true);
+if (testZip(sZip)) App.say("Done!", true);
 else App.say("Error!");
 App.SetDirectory(sOldDir);
 //Homer.Util.stringPlural("file", iFileCount);
@@ -7165,31 +7148,15 @@ foreach (ZipEntry ze in z) entryList.Add(ze);
 return entryList;
 } // getZipEntries method
 
-// z7Passes: whether 7-Zip's test of an archive says "Everything is Ok". It runs 7-Zip and reads its answer and
-// touches no window, so a background job can call it (15 October 2026); testZ7 adds bringing FileDir forward.
-public bool z7Passes(string sPath) {
+public bool testZ7(string sPath) {
 string sExe = Path.Combine(App.sAppDir, "7z.exe");
 string sParams = "t " + Homer.Util.stringQuote(sPath) + " -p" + App.sUnarchivePassword;
 string sText = Homer.Util.getProgramOutput(sExe, sParams);
+if (App.frame != null && App.frame.TopLevelControl.Handle != (IntPtr) Homer.Util.getForegroundWindow()) Homer.Util.forceWindow(App.frame.TopLevelControl.Handle);
 sText = sText.Replace("\r\n", "\n");
 string sMatch = "\nEverything is Ok\n";
 return sText.IndexOf(sMatch) >= 0;
-} // z7Passes method
-
-public bool testZ7(string sPath) {
-bool bPassed = z7Passes(sPath);
-if (App.frame != null && App.frame.TopLevelControl.Handle != (IntPtr) Homer.Util.getForegroundWindow()) Homer.Util.forceWindow(App.frame.TopLevelControl.Handle);
-return bPassed;
 } // testZ7 method
-
-// zipPasses: testZip without bringing any window forward, for a background job.
-public bool zipPasses(string sPath) {
-if (!File.Exists(sPath)) return false;
-string sExt = Path.GetExtension(sPath);
-if (sExt.StartsWith(".")) sExt = sExt.Substring(1).ToLower();
-if ("|com|doc|docx|exe|msi|pdf|ppt|pptx|xls|xlsx|".IndexOf("|" + sExt + "|") >= 0) return false;
-return z7Passes(sPath);
-} // zipPasses method
 
 public bool testZip(string sPath) {
 if (!File.Exists(sPath)) return false;
@@ -9064,6 +9031,16 @@ return App.frame.processCmdKey_Helper(ref msg, keyData);
 } // ProcessCmdKey method
 
 public bool processCmdKey_Helper(ref Message msg, Keys keyData) {
+// THE HOMER KEY ROUTER (19 October 2026). FileDir's keys were a switch of
+// about two hundred cases, each clicking a menu item, beside a second place
+// that named the same keys for the menus. The cases that only click an item
+// are now one table, declareKeys below, declared to the kit's KeyMap, and every
+// key goes to Homer.KeyMap.route, the one router of every Homer app: it keeps typing
+// keys for a text box, keeps letters for the list's first-letter movement, says
+// why a command cannot run, and counts a quick second press. What stays here
+// are the keys whose meaning depends on the item under the cursor or on a
+// setting, which a table cannot hold.
+declareKeys();
 switch (keyData) {
 case Keys.Enter :
 case Keys.Shift | Keys.Enter :
@@ -9076,9 +9053,6 @@ else if (((char) Field_Helper("Type") == ' ') || (App.Recycle && (keyData == Key
 //if (((char) Field_Helper("Type") == ' ' && !testZip(Path_Helper())) || (App.Recycle && (keyData == Keys.Enter)) || (!App.Recycle && (keyData == (Keys.Shift | Keys.Enter)))) App.frame.menuFileOpenItem.clickOrDescribe();
 // else App.frame.menuFileGoToItem.clickOrDescribe();
 else item_Helper("Go to", true, bZip);
-return true;
-case Keys.Alt | Keys.Enter :
-App.frame.menuFileProperties.clickOrDescribe();
 return true;
 case Keys.Back :
 case Keys.Shift | Keys.Back :
@@ -9096,652 +9070,243 @@ if ((App.Recycle && (keyData == Keys.OemBackslash)) || (!App.Recycle && (keyData
 else if ((App.Recycle && (keyData == Keys.OemPipe)) || (!App.Recycle && (keyData == (Keys.Shift | Keys.OemPipe)))) App.frame.menuFileOpenRootFolder.clickOrDescribe();
 else App.frame.menuFileGoToRootFolder.clickOrDescribe();
 return true;
-case Keys.Space :
-App.frame.menuEditToggleTag.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Space :
-App.frame.menuQuerySelected.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Down :
-case Keys.Shift | Keys.OemPeriod :
-App.frame.menuEditTagAndNext.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Down :
-case Keys.Shift | Keys.Oemcomma :
-App.frame.menuEditUntagAndNext.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Up :
-App.frame.menuEditTagAndPrevious.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Up :
-App.frame.menuEditUntagAndPrevious.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.End :
-App.frame.menuEditTagToBottom.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.End :
-App.frame.menuEditUntagToBottom.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Home :
-App.frame.menuEditTagToTop.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Home :
-App.frame.menuEditUntagToTop.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.OemPeriod :
-App.frame.menuEditTagAllFiles.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.OemPeriod :
-App.frame.menuEditTagDuplicateFiles.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Oemcomma :
-App.frame.menuEditTagSimilarFiles.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.K :
-App.frame.menuEditReorderNames.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.J :
-App.frame.menuEditFindDuplicates.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.OemPeriod :
-App.frame.menuEditTagWithRegularExpression.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Oemcomma :
-App.frame.menuEditUntagAllButCurrent.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Clear :
-case Keys.OemSemicolon :
-App.frame.menuEditTag.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.OemSemicolon :
-App.frame.menuQueryNow.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Clear :
-case Keys.OemQuestion :
-App.frame.menuEditUntag.clickOrDescribe();
-return true;
-case Keys.Delete :
-App.frame.menuEditDeleteTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Delete :
-App.frame.menuEditDeleteTaggedWithoutRecycle.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.A :
-App.frame.menuMiscAlphaOrder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.A :
-App.frame.menuMiscReverseAlphaOrder.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.A :
-App.frame.menuMiscAppendTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.D2 :
-App.frame.menuMiscConvertEncodingTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.A :
-App.frame.menuEditTagAll.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.A :
-App.frame.menuEditUntagAll.clickOrDescribe();
-return true;
-case Keys.Control | Keys.C :
-App.frame.menuEditCopyToClipboardTagged.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.C :
-//App.frame.menuEditCopyPathTagged.clickOrDescribe();
-App.frame.menuEditCopyAppendToClipboardTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.C :
-App.frame.menuEditCopyNameTagged.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.C :
-App.frame.menuMiscConfigurationOptions.clickOrDescribe();
-return true;
-case Keys.F8 :
-App.frame.menuEditStartTagOrUntag.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.F8 :
-App.frame.menuEditCompleteTag.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.F8 :
-App.frame.menuEditCompleteUntag.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.C :
-App.frame.menuEditCopyTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.B :
-App.frame.menuMiscOpenRecycleBin.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.B :
-App.frame.menuMiscBatchMail.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Home :
-case Keys.Alt | Keys.B :
-App.frame.menuNavigateBeginningFile.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.B :
-App.frame.menuMiscBurnTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Home :
-case Keys.Shift | Keys.B :
-App.frame.menuNavigateBeginningTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.End :
-case Keys.Shift | Keys.E :
-App.frame.menuNavigateEndTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.E :
-App.frame.menuMiscEnvironmentVariables.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Oemplus :
-App.frame.menuMiscEvaluate.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.E :
-App.frame.menuEditExportClipboardToFile.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Down :
-case Keys.Shift | Keys.N :
-App.frame.menuNavigateNextTagged.clickOrDescribe();
-return true;
-case Keys.OemPeriod :
-case Keys.F5 :
-App.frame.menuFileRefreshFolder.clickOrDescribe();
-return true;
-case Keys.Control | Keys.M :
-App.frame.menuMiscMailBody.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.M :
-App.frame.menuMiscMailAttachTagged.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.M :
-App.frame.menuMiscManualOptions.clickOrDescribe();
-return true;
-case Keys.Control | Keys.N :
-App.frame.menuFileNewFolder.clickOrDescribe();
-return true;
-//case Keys.Control | Keys.Shift | Keys.N :
-//App.frame.menuFileNewViewCopy.clickOrDescribe();
-//return true;
-case Keys.Control | Keys.Shift | Keys.N :
-App.frame.menuFileNewItemCopy.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.N :
-App.frame.menuMiscNetworkConnections.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.O :
-App.frame.menuMiscOutputTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Up :
-case Keys.Shift | Keys.P :
-App.frame.menuNavigatePreviousTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D :
-App.frame.menuQueryDate.clickOrDescribe();
-return true;
-case Keys.Control | Keys.D :
-App.frame.menuEditDeleteFileNow.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.D :
-App.frame.menuEditDeleteFileNowWithoutRecycle.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D :
-App.frame.menuMiscDateOrder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.D :
-App.frame.menuMiscReverseDateOrder.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.F :
-App.frame.menuMiscFTPPut.clickOrDescribe();
-return true;
-case Keys.Control | Keys.F :
-App.frame.menuNavigateSetFilter.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.F :
-App.frame.menuNavigateClearFilter.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.F :
-App.frame.menuFileFind.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.G :
-App.frame.menuMiscGetFTP.clickOrDescribe();
-return true;
-case Keys.Control | Keys.G :
-App.frame.menuFileGoToFolder.clickOrDescribe();
-return true;
-case Keys.Control |Keys.Shift | Keys.G :
-App.frame.menuFileGoToSpecialFolder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.G :
-App.frame.menuFileGoToDrive.clickOrDescribe();
-return true;
-case Keys.Alt |Keys.Shift | Keys.G :
-App.frame.menuFileGoToVirtualFolder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.H :
-App.frame.menuHelpHotKeys.clickOrDescribe();
-return true;
-case Keys.Control | Keys.I :
-App.frame.menuEditInvertTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.I :
-App.frame.menuNavigateInitialChange.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.I :
-App.frame.menuEditRenameToTitle.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.E :
-App.frame.menuMiscExtractTagged.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.I :
-App.frame.menuMiscIterateProcesses.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.I :
-App.frame.menuMiscInquireDifferences.clickOrDescribe();
-return true;
-case Keys.Control | Keys.J :
-App.frame.menuNavigateJump.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.J :
-App.frame.menuNavigateJumpAgain.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.K :
-App.frame.menuNavigateKeywordsBack.clickOrDescribe();
-return true;
-case Keys.F3 :
-App.frame.menuNavigateSearchAgain.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.F3 :
-App.frame.menuNavigateSearchBack.clickOrDescribe();
-return true;
-case Keys.Control | Keys.K :
-App.frame.menuNavigateKeywords.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.K :
-App.frame.menuNavigateKeywordsAgain.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.L :
-App.frame.menuQueryListTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.L :
-App.frame.menuMiscPlayList.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.H :
-App.frame.menuMiscHomerPlayer.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.L :
-App.frame.menuMiscPlayFolder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.L :
-App.frame.menuQueryListFiles.clickOrDescribe();
-return true;
-case Keys.Control | Keys.L :
-App.frame.menuQueryList.clickOrDescribe();
-return true;
-//case Keys.F7 :
-case Keys.Shift | Keys.M :
-App.frame.menuEditMoveTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.O :
-App.frame.menuFileOpenFolder.clickOrDescribe();
-return true;
-case Keys.Control |Keys.Shift | Keys.O :
-App.frame.menuFileOpenSpecialFolder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.O :
-App.frame.menuFileOpenDrive.clickOrDescribe();
-return true;
-case Keys.Alt |Keys.Shift | Keys.O :
-App.frame.menuFileOpenVirtualFolder.clickOrDescribe();
-return true;
-case Keys.Control | Keys.P :
-App.frame.menuFilePrintTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.P :
-App.frame.menuEditPathList.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.P :
-App.frame.menuQueryPath.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.P :
-App.frame.menuEditPathToClipboard.clickOrDescribe();
-return true;
-//case Keys.Escape :
-case Keys.Oemtilde :
-App.frame.menuFileGoToQuickFolder.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Q :
-App.frame.menuFileOpenQuickFolder.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Q :
-App.frame.menuFileQuickShortcut.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Q :
-App.frame.menuFileQuickURL.clickOrDescribe();
-return true;
-case Keys.F2 :
-case Keys.Shift | Keys.R :
-App.frame.menuEditRename.clickOrDescribe();
-return true;
-case Keys.Control | Keys.R :
-App.frame.menuEditRenameWithWildcards.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.R :
-App.frame.menuEditRenameWithRegex.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.R :
-App.frame.menuFileRecentFolders.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.R :
-App.frame.menuMiscRecycleToggle.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.S :
-App.frame.menuQuerySize.clickOrDescribe();
-return true;
-case Keys.Control | Keys.S :
-App.frame.menuEditSaveTags.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.S :
-App.frame.menuEditRestoreTags.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.S :
-App.frame.menuMiscSizeOrder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.S :
-App.frame.menuMiscReverseSizeOrder.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.T :
-App.frame.menuQueryType.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.T :
-App.frame.menuQueryTypeExtended.clickOrDescribe();
-return true;
-case Keys.Control | Keys.T :
-App.frame.menuMiscSendToTextEditor.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.T :
-App.frame.menuMiscTypeOrder.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.T :
-App.frame.menuMiscReverseTypeOrder.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.U :
-App.frame.menuMiscUnarchiveTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.U :
-App.frame.menuMiscUnarchiveTaggedWithoutSubfolders.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.U :
-App.frame.menuMiscUnarchiveTaggedToSameName.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.U :
-App.frame.menuMiscUnarchiveTest.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.U :
-App.frame.menuMiscUnarchivePassword.clickOrDescribe();
-return true;
-case Keys.Control | Keys.V :
-App.frame.menuEditPasteFromClipboard.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.V :
-App.frame.menuMiscVolumeFormat.clickOrDescribe();
-return true;case Keys.Alt | Keys.V :
-App.frame.menuEditPasteCopy.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.V :
-App.frame.menuEditPasteMove.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Clear :
-case Keys.Shift | Keys.F4 :
-App.frame.menuQueryWindowsOpen.clickOrDescribe();
-return true;
-case Keys.Control | Keys.W :
-App.frame.menuMiscSendToWordProcessor.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.W :
-App.frame.menuFileWindowToggle.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.W :
-App.frame.menuMiscWindowsControlPanel.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.W :
-App.frame.menuMiscWebDownload.clickOrDescribe();
-return true;
-
-case Keys.Shift | Keys.X :
-App.frame.menuNavigateExtensionChange.clickOrDescribe();
-return true;
-case Keys.Control | Keys.X :
-App.frame.menuEditCutToClipboardTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.X :
-App.frame.menuMiscExtraSpeechToggle.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.X :
-App.frame.menuMiscExtraSpeechLog.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Delete :
-App.frame.menuEditDeleteAndRecycleTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Y :
-App.frame.menuQueryYieldTagged.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Y :
-App.frame.menuQueryYieldFiles.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Y :
-App.frame.menuQueryYield.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.Y :
-App.frame.menuQueryYieldOnDrive.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.Y :
-App.frame.menuQueryYieldInOperatingSystem.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Z :
-App.frame.menuMiscZipTagged.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Z :
-App.frame.menuMiscZipTaggedThenDelete.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.Z :
-App.frame.menuMiscZipList.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Z :
-App.frame.menuQueryStatus.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D5 :
-App.frame.menuQueryPercentThrough.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D2 :
-App.frame.menuQueryCharacterEncoding.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D3 :
-App.frame.menuMiscConvertUnits.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D8 :
-App.frame.menuQueryFilter.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D1 :
-App.frame.menuWindowDriveA.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D2 :
-App.frame.menuWindowDriveB.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D3 :
-App.frame.menuWindowDriveC.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D4 :
-App.frame.menuWindowDriveD.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D5 :
-App.frame.menuWindowDriveE.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D6 :
-App.frame.menuWindowDriveF.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D7 :
-App.frame.menuWindowDriveG.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D8 :
-App.frame.menuWindowDriveH.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.D9 :
-App.frame.menuWindowDriveI.clickOrDescribe();
-return true;
-case Keys.OemQuotes :
-App.frame.menuQueryName.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.OemQuotes :
-App.frame.menuQueryFolderName.clickOrDescribe();
-return true;
-case Keys.Control | Keys.OemQuotes :
-App.frame.menuQueryFullFolder.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.OemQuotes :
-App.frame.menuEditFullFolderToClipboard.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.OemQuotes :
-App.frame.menuQueryClipboard.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.OemQuotes :
-App.frame.menuEditClearClipboard.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.OemQuestion :
-App.frame.menuQueryWhat.clickOrDescribe();
-return true;
-case Keys.Control | Keys.OemQuestion :
-//case Keys.Control | Keys.OemBackslash :
-App.frame.menuMiscCommandPrompt.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.OemQuestion :
-App.frame.menuMiscExplorerDir.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D1 :
-App.frame.menuEditStampTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D0 :
-App.frame.menuEditHideTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.D9 :
-App.frame.menuEditShowTagged.clickOrDescribe();
-return true;
-case Keys.OemCloseBrackets :
-App.frame.menuEditReadOnlyTagged.clickOrDescribe();
-return true;
-case Keys.OemOpenBrackets :
-App.frame.menuEditReadWriteTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.OemCloseBrackets :
-App.frame.menuEditSystemTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.OemOpenBrackets :
-App.frame.menuEditGeneralTagged.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.Oemtilde :
-App.frame.menuEditShortPathToClipboard.clickOrDescribe();
-return true;
-case Keys.F1 :
-App.frame.menuHelpDocumentation.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.F1 :
-App.frame.menuHelpChangeHistory.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.F1 :
-App.frame.menuHelpAbout.clickOrDescribe();
-return true;
-case Keys.Control | Keys.F1 :
-App.frame.menuHelpKeyDescriber.clickOrDescribe();
-return true;
-case Keys.F4 :
-App.frame.menuFileCurrentWindows.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Tab :
-App.frame.menuFileNextWindow.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.Tab :
-App.frame.menuFilePreviousWindow.clickOrDescribe();
-return true;
-// Back and forward through the folders visited, which is what these two keys
-// mean in every program that has them.
-case Keys.Alt | Keys.Left :
-App.frame.menuFileGoBack.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Right :
-App.frame.menuFileGoForward.clickOrDescribe();
-return true;
-case Keys.Control | Keys.F4 :
-App.frame.menuFileClose.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.F4 :
-App.frame.menuFileCloseAllButCurrent.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.F4 :
-App.frame.menuFileExit.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.F4 :
-App.frame.menuFileRestartWindows.clickOrDescribe();
-return true;
-case Keys.Apps :
-case Keys.Shift | Keys.F10 :
-App.frame.menuHelpContextMenu.clickOrDescribe();
-return true;
-//case Keys.Alt | Keys.Shift | Keys.F10 :
-//App.frame.menuHelpExplorerMenu.clickOrDescribe();
-//return true;
-case Keys.Control | Keys.F10 :
-App.frame.menuHelpSendToMenu.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.F10 :
-App.frame.menuHelpAlternateMenu.clickOrDescribe();
-return true;
-case Keys.F11 :
-App.frame.menuHelpElevateVersion.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.F11 :
-App.frame.menuWindowArrangeIcons.clickOrDescribe();
-return true;
-case Keys.Control | Keys.F11 :
-App.frame.menuWindowCascade.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Shift | Keys.F11 :
-App.frame.menuWindowTileHorizontal.clickOrDescribe();
-return true;
-case Keys.Control | Keys.Shift | Keys.F11 :
-App.frame.menuWindowTileVertical.clickOrDescribe();
-return true;
-// The F12 column is the AI column, matching EdSharp: F12 asks a plain
-// question, Shift+F12 asks about the file you are on, and Control+F12 copies
-// this session's log path.  The Timer commands held these three keys here for
-// twenty years and moved to Alt+Control, below.
-case Keys.F12 :
-App.frame.menuMiscChatWithAI.clickOrDescribe();
-return true;
-case Keys.Shift | Keys.F12 :
-App.frame.menuMiscChatAboutFile.clickOrDescribe();
-return true;
-case Keys.Control | Keys.F12 :
-App.frame.menuHelpCopyLog.clickOrDescribe();
-return true;
-// The Timer, on a row nothing else used.
-case Keys.Alt | Keys.Control | Keys.T :
-App.frame.menuMiscStartTimer.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Control | Keys.S :
-App.frame.menuMiscStopTimer.clickOrDescribe();
-return true;
-case Keys.Alt | Keys.Control | Keys.Y :
-App.frame.menuQueryTimer.clickOrDescribe();
-return true;
-// Translate the tagged files with a model running on this computer.
-case Keys.Alt | Keys.Shift | Keys.F7 :
-App.frame.menuMiscTranslateTagged.clickOrDescribe();
-return true;
 }
-//Lbc.Show(keyData);
-//App.writeIni();
+if (Homer.KeyMap.route(this, ref msg, keyData)) return true;
 return base.ProcessCmdKey (ref msg, keyData);
-//return false;
 } // processCmdKey_Helper method
+
+// declareKeys: FileDir's key table, generated on 19 October 2026 from the
+// switch it replaces, so no key was lost -- each menu item with every key that
+// clicked it. Control+Z and Control+Shift+Z, which ran Zip then Delete and Zip
+// List, are left out: they are Undo and Redo in every Homer app, and a
+// destructive command must not sit on a key pressed by reflex. Run once, at the
+// first key.
+private bool bKeysDeclared = false;
+public bool declareKeys() {
+if (bKeysDeclared) return true;
+bKeysDeclared = true;
+declareKey("menuFileProperties", menuFileProperties, Keys.Alt | Keys.Enter);
+declareKey("menuEditToggleTag", menuEditToggleTag, Keys.Space);
+declareKey("menuQuerySelected", menuQuerySelected, Keys.Shift | Keys.Space);
+declareKey("menuEditTagAndNext", menuEditTagAndNext, Keys.Shift | Keys.Down, Keys.Shift | Keys.OemPeriod);
+declareKey("menuEditUntagAndNext", menuEditUntagAndNext, Keys.Alt | Keys.Shift | Keys.Down, Keys.Shift | Keys.Oemcomma);
+declareKey("menuEditTagAndPrevious", menuEditTagAndPrevious, Keys.Shift | Keys.Up);
+declareKey("menuEditUntagAndPrevious", menuEditUntagAndPrevious, Keys.Alt | Keys.Shift | Keys.Up);
+declareKey("menuEditTagToBottom", menuEditTagToBottom, Keys.Shift | Keys.End);
+declareKey("menuEditUntagToBottom", menuEditUntagToBottom, Keys.Alt | Keys.Shift | Keys.End);
+declareKey("menuEditTagToTop", menuEditTagToTop, Keys.Shift | Keys.Home);
+declareKey("menuEditUntagToTop", menuEditUntagToTop, Keys.Alt | Keys.Shift | Keys.Home);
+declareKey("menuEditTagAllFiles", menuEditTagAllFiles, Keys.Alt | Keys.OemPeriod);
+declareKey("menuEditTagDuplicateFiles", menuEditTagDuplicateFiles, Keys.Alt | Keys.Shift | Keys.OemPeriod);
+declareKey("menuEditTagSimilarFiles", menuEditTagSimilarFiles, Keys.Alt | Keys.Shift | Keys.Oemcomma);
+declareKey("menuEditReorderNames", menuEditReorderNames, Keys.Alt | Keys.Shift | Keys.K);
+declareKey("menuEditFindDuplicates", menuEditFindDuplicates, Keys.Alt | Keys.Shift | Keys.J);
+declareKey("menuEditTagWithRegularExpression", menuEditTagWithRegularExpression, Keys.Control | Keys.Shift | Keys.OemPeriod);
+declareKey("menuEditUntagAllButCurrent", menuEditUntagAllButCurrent, Keys.Alt | Keys.Oemcomma);
+declareKey("menuEditTag", menuEditTag, Keys.Shift | Keys.Clear, Keys.OemSemicolon);
+declareKey("menuQueryNow", menuQueryNow, Keys.Alt | Keys.OemSemicolon);
+declareKey("menuEditUntag", menuEditUntag, Keys.Alt | Keys.Shift | Keys.Clear, Keys.OemQuestion);
+declareKey("menuEditDeleteTagged", menuEditDeleteTagged, Keys.Delete);
+declareKey("menuEditDeleteTaggedWithoutRecycle", menuEditDeleteTaggedWithoutRecycle, Keys.Shift | Keys.Delete);
+declareKey("menuMiscAlphaOrder", menuMiscAlphaOrder, Keys.Alt | Keys.A);
+declareKey("menuMiscReverseAlphaOrder", menuMiscReverseAlphaOrder, Keys.Alt | Keys.Shift | Keys.A);
+declareKey("menuMiscAppendTagged", menuMiscAppendTagged, Keys.Shift | Keys.A);
+declareKey("menuMiscConvertEncodingTagged", menuMiscConvertEncodingTagged, Keys.Control | Keys.D2);
+declareKey("menuEditTagAll", menuEditTagAll, Keys.Control | Keys.A);
+declareKey("menuEditUntagAll", menuEditUntagAll, Keys.Control | Keys.Shift | Keys.A);
+declareKey("menuEditCopyToClipboardTagged", menuEditCopyToClipboardTagged, Keys.Control | Keys.C);
+declareKey("menuEditCopyAppendToClipboardTagged", menuEditCopyAppendToClipboardTagged, Keys.Alt | Keys.C);
+declareKey("menuEditCopyNameTagged", menuEditCopyNameTagged, Keys.Control | Keys.Shift | Keys.C);
+declareKey("menuMiscConfigurationOptions", menuMiscConfigurationOptions, Keys.Alt | Keys.Shift | Keys.C);
+declareKey("menuEditStartTagOrUntag", menuEditStartTagOrUntag, Keys.F8);
+declareKey("menuEditCompleteTag", menuEditCompleteTag, Keys.Shift | Keys.F8);
+declareKey("menuEditCompleteUntag", menuEditCompleteUntag, Keys.Alt | Keys.Shift | Keys.F8);
+declareKey("menuEditCopyTagged", menuEditCopyTagged, Keys.Shift | Keys.C);
+declareKey("menuMiscOpenRecycleBin", menuMiscOpenRecycleBin, Keys.Control | Keys.B);
+declareKey("menuMiscBatchMail", menuMiscBatchMail, Keys.Control | Keys.Shift | Keys.B);
+declareKey("menuNavigateBeginningFile", menuNavigateBeginningFile, Keys.Alt | Keys.Home, Keys.Alt | Keys.B);
+declareKey("menuMiscBurnTagged", menuMiscBurnTagged, Keys.Alt | Keys.Shift | Keys.B);
+declareKey("menuNavigateBeginningTagged", menuNavigateBeginningTagged, Keys.Control | Keys.Home, Keys.Shift | Keys.B);
+declareKey("menuNavigateEndTagged", menuNavigateEndTagged, Keys.Control | Keys.End, Keys.Shift | Keys.E);
+declareKey("menuMiscEnvironmentVariables", menuMiscEnvironmentVariables, Keys.Control | Keys.E);
+declareKey("menuMiscEvaluate", menuMiscEvaluate, Keys.Control | Keys.Oemplus);
+declareKey("menuEditExportClipboardToFile", menuEditExportClipboardToFile, Keys.Alt | Keys.Shift | Keys.E);
+declareKey("menuNavigateNextTagged", menuNavigateNextTagged, Keys.Control | Keys.Down, Keys.Shift | Keys.N);
+declareKey("menuFileRefreshFolder", menuFileRefreshFolder, Keys.OemPeriod, Keys.F5);
+declareKey("menuMiscMailBody", menuMiscMailBody, Keys.Control | Keys.M);
+declareKey("menuMiscMailAttachTagged", menuMiscMailAttachTagged, Keys.Control | Keys.Shift | Keys.M);
+declareKey("menuMiscManualOptions", menuMiscManualOptions, Keys.Alt | Keys.Shift | Keys.M);
+declareKey("menuFileNewFolder", menuFileNewFolder, Keys.Control | Keys.N);
+declareKey("menuFileNewItemCopy", menuFileNewItemCopy, Keys.Control | Keys.Shift | Keys.N);
+declareKey("menuMiscNetworkConnections", menuMiscNetworkConnections, Keys.Alt | Keys.Shift | Keys.N);
+declareKey("menuMiscOutputTagged", menuMiscOutputTagged, Keys.Shift | Keys.O);
+declareKey("menuNavigatePreviousTagged", menuNavigatePreviousTagged, Keys.Control | Keys.Up, Keys.Shift | Keys.P);
+declareKey("menuQueryDate", menuQueryDate, Keys.Shift | Keys.D);
+declareKey("menuEditDeleteFileNow", menuEditDeleteFileNow, Keys.Control | Keys.D);
+declareKey("menuEditDeleteFileNowWithoutRecycle", menuEditDeleteFileNowWithoutRecycle, Keys.Control | Keys.Shift | Keys.D);
+declareKey("menuMiscDateOrder", menuMiscDateOrder, Keys.Alt | Keys.D);
+declareKey("menuMiscReverseDateOrder", menuMiscReverseDateOrder, Keys.Alt | Keys.Shift | Keys.D);
+declareKey("menuMiscFTPPut", menuMiscFTPPut, Keys.Shift | Keys.F);
+declareKey("menuNavigateSetFilter", menuNavigateSetFilter, Keys.Control | Keys.F);
+declareKey("menuNavigateClearFilter", menuNavigateClearFilter, Keys.Control | Keys.Shift | Keys.F);
+declareKey("menuFileFind", menuFileFind, Keys.Alt | Keys.Shift | Keys.F);
+declareKey("menuMiscGetFTP", menuMiscGetFTP, Keys.Shift | Keys.G);
+declareKey("menuFileGoToFolder", menuFileGoToFolder, Keys.Control | Keys.G);
+declareKey("menuFileGoToSpecialFolder", menuFileGoToSpecialFolder, Keys.Control |Keys.Shift | Keys.G);
+declareKey("menuFileGoToDrive", menuFileGoToDrive, Keys.Alt | Keys.G);
+declareKey("menuFileGoToVirtualFolder", menuFileGoToVirtualFolder, Keys.Alt |Keys.Shift | Keys.G);
+declareKey("menuHelpHotKeys", menuHelpHotKeys, Keys.Alt | Keys.Shift | Keys.H);
+declareKey("menuEditInvertTagged", menuEditInvertTagged, Keys.Control | Keys.I);
+declareKey("menuNavigateInitialChange", menuNavigateInitialChange, Keys.Shift | Keys.I);
+declareKey("menuEditRenameToTitle", menuEditRenameToTitle, Keys.Control | Keys.Shift | Keys.I);
+declareKey("menuMiscExtractTagged", menuMiscExtractTagged, Keys.Control | Keys.Shift | Keys.E);
+declareKey("menuMiscIterateProcesses", menuMiscIterateProcesses, Keys.Alt | Keys.I);
+declareKey("menuMiscInquireDifferences", menuMiscInquireDifferences, Keys.Alt | Keys.Shift | Keys.I);
+declareKey("menuNavigateJump", menuNavigateJump, Keys.Control | Keys.J);
+declareKey("menuNavigateJumpAgain", menuNavigateJumpAgain, Keys.Alt | Keys.J);
+declareKey("menuNavigateKeywordsBack", menuNavigateKeywordsBack, Keys.Control | Keys.Shift | Keys.K);
+declareKey("menuNavigateSearchAgain", menuNavigateSearchAgain, Keys.F3);
+declareKey("menuNavigateSearchBack", menuNavigateSearchBack, Keys.Shift | Keys.F3);
+declareKey("menuNavigateKeywords", menuNavigateKeywords, Keys.Control | Keys.K);
+declareKey("menuNavigateKeywordsAgain", menuNavigateKeywordsAgain, Keys.Alt | Keys.K);
+declareKey("menuQueryListTagged", menuQueryListTagged, Keys.Shift | Keys.L);
+declareKey("menuMiscPlayList", menuMiscPlayList, Keys.Control | Keys.Shift | Keys.L);
+declareKey("menuMiscHomerPlayer", menuMiscHomerPlayer, Keys.Control | Keys.Shift | Keys.H);
+declareKey("menuMiscPlayFolder", menuMiscPlayFolder, Keys.Alt | Keys.Shift | Keys.L);
+declareKey("menuQueryListFiles", menuQueryListFiles, Keys.Alt | Keys.L);
+declareKey("menuQueryList", menuQueryList, Keys.Control | Keys.L);
+declareKey("menuEditMoveTagged", menuEditMoveTagged, Keys.Shift | Keys.M);
+declareKey("menuFileOpenFolder", menuFileOpenFolder, Keys.Control | Keys.O);
+declareKey("menuFileOpenSpecialFolder", menuFileOpenSpecialFolder, Keys.Control |Keys.Shift | Keys.O);
+declareKey("menuFileOpenDrive", menuFileOpenDrive, Keys.Alt | Keys.O);
+declareKey("menuFileOpenVirtualFolder", menuFileOpenVirtualFolder, Keys.Alt |Keys.Shift | Keys.O);
+declareKey("menuFilePrintTagged", menuFilePrintTagged, Keys.Control | Keys.P);
+declareKey("menuEditPathList", menuEditPathList, Keys.Control | Keys.Shift | Keys.P);
+declareKey("menuQueryPath", menuQueryPath, Keys.Alt | Keys.P);
+declareKey("menuEditPathToClipboard", menuEditPathToClipboard, Keys.Alt | Keys.Shift | Keys.P);
+declareKey("menuFileGoToQuickFolder", menuFileGoToQuickFolder, Keys.Oemtilde);
+declareKey("menuFileOpenQuickFolder", menuFileOpenQuickFolder, Keys.Control | Keys.Q);
+declareKey("menuFileQuickShortcut", menuFileQuickShortcut, Keys.Shift | Keys.Q);
+declareKey("menuFileQuickURL", menuFileQuickURL, Keys.Alt | Keys.Shift | Keys.Q);
+declareKey("menuEditRename", menuEditRename, Keys.F2, Keys.Shift | Keys.R);
+declareKey("menuEditRenameWithWildcards", menuEditRenameWithWildcards, Keys.Control | Keys.R);
+declareKey("menuEditRenameWithRegex", menuEditRenameWithRegex, Keys.Control | Keys.Shift | Keys.R);
+declareKey("menuFileRecentFolders", menuFileRecentFolders, Keys.Alt | Keys.R);
+declareKey("menuMiscRecycleToggle", menuMiscRecycleToggle, Keys.Alt | Keys.Shift | Keys.R);
+declareKey("menuQuerySize", menuQuerySize, Keys.Shift | Keys.S);
+declareKey("menuEditSaveTags", menuEditSaveTags, Keys.Control | Keys.S);
+declareKey("menuEditRestoreTags", menuEditRestoreTags, Keys.Control | Keys.Shift | Keys.S);
+declareKey("menuMiscSizeOrder", menuMiscSizeOrder, Keys.Alt | Keys.S);
+declareKey("menuMiscReverseSizeOrder", menuMiscReverseSizeOrder, Keys.Alt | Keys.Shift | Keys.S);
+declareKey("menuQueryType", menuQueryType, Keys.Shift | Keys.T);
+declareKey("menuQueryTypeExtended", menuQueryTypeExtended, Keys.Control | Keys.Shift | Keys.T);
+declareKey("menuMiscSendToTextEditor", menuMiscSendToTextEditor, Keys.Control | Keys.T);
+declareKey("menuMiscTypeOrder", menuMiscTypeOrder, Keys.Alt | Keys.T);
+declareKey("menuMiscReverseTypeOrder", menuMiscReverseTypeOrder, Keys.Alt | Keys.Shift | Keys.T);
+declareKey("menuMiscUnarchiveTagged", menuMiscUnarchiveTagged, Keys.Shift | Keys.U);
+declareKey("menuMiscUnarchiveTaggedWithoutSubfolders", menuMiscUnarchiveTaggedWithoutSubfolders, Keys.Control | Keys.U);
+declareKey("menuMiscUnarchiveTaggedToSameName", menuMiscUnarchiveTaggedToSameName, Keys.Control | Keys.Shift | Keys.U);
+declareKey("menuMiscUnarchiveTest", menuMiscUnarchiveTest, Keys.Alt | Keys.U);
+declareKey("menuMiscUnarchivePassword", menuMiscUnarchivePassword, Keys.Alt | Keys.Shift | Keys.U);
+declareKey("menuEditPasteFromClipboard", menuEditPasteFromClipboard, Keys.Control | Keys.V);
+declareKey("menuMiscVolumeFormat", menuMiscVolumeFormat, Keys.Control | Keys.Shift | Keys.V);
+declareKey("menuEditPasteCopy", menuEditPasteCopy, Keys.Alt | Keys.V);
+declareKey("menuEditPasteMove", menuEditPasteMove, Keys.Alt | Keys.Shift | Keys.V);
+declareKey("menuQueryWindowsOpen", menuQueryWindowsOpen, Keys.Alt | Keys.Clear, Keys.Shift | Keys.F4);
+declareKey("menuMiscSendToWordProcessor", menuMiscSendToWordProcessor, Keys.Control | Keys.W);
+declareKey("menuFileWindowToggle", menuFileWindowToggle, Keys.Shift | Keys.W);
+declareKey("menuMiscWindowsControlPanel", menuMiscWindowsControlPanel, Keys.Control | Keys.Shift | Keys.W);
+declareKey("menuMiscWebDownload", menuMiscWebDownload, Keys.Alt | Keys.Shift | Keys.W);
+declareKey("menuNavigateExtensionChange", menuNavigateExtensionChange, Keys.Shift | Keys.X);
+declareKey("menuEditCutToClipboardTagged", menuEditCutToClipboardTagged, Keys.Control | Keys.X);
+declareKey("menuMiscExtraSpeechToggle", menuMiscExtraSpeechToggle, Keys.Control | Keys.Shift | Keys.X);
+declareKey("menuMiscExtraSpeechLog", menuMiscExtraSpeechLog, Keys.Alt | Keys.Shift | Keys.X);
+declareKey("menuEditDeleteAndRecycleTagged", menuEditDeleteAndRecycleTagged, Keys.Control | Keys.Delete);
+declareKey("menuQueryYieldTagged", menuQueryYieldTagged, Keys.Shift | Keys.Y);
+declareKey("menuQueryYieldFiles", menuQueryYieldFiles, Keys.Alt | Keys.Y);
+declareKey("menuQueryYield", menuQueryYield, Keys.Control | Keys.Y);
+declareKey("menuQueryYieldOnDrive", menuQueryYieldOnDrive, Keys.Control | Keys.Shift | Keys.Y);
+declareKey("menuQueryYieldInOperatingSystem", menuQueryYieldInOperatingSystem, Keys.Alt | Keys.Shift | Keys.Y);
+declareKey("menuMiscZipTagged", menuMiscZipTagged, Keys.Shift | Keys.Z);
+declareKey("menuQueryStatus", menuQueryStatus, Keys.Alt | Keys.Z);
+declareKey("menuQueryPercentThrough", menuQueryPercentThrough, Keys.Shift | Keys.D5);
+declareKey("menuQueryCharacterEncoding", menuQueryCharacterEncoding, Keys.Shift | Keys.D2);
+declareKey("menuMiscConvertUnits", menuMiscConvertUnits, Keys.Shift | Keys.D3);
+declareKey("menuQueryFilter", menuQueryFilter, Keys.Shift | Keys.D8);
+declareKey("menuWindowDriveA", menuWindowDriveA, Keys.Alt | Keys.D1);
+declareKey("menuWindowDriveB", menuWindowDriveB, Keys.Alt | Keys.D2);
+declareKey("menuWindowDriveC", menuWindowDriveC, Keys.Alt | Keys.D3);
+declareKey("menuWindowDriveD", menuWindowDriveD, Keys.Alt | Keys.D4);
+declareKey("menuWindowDriveE", menuWindowDriveE, Keys.Alt | Keys.D5);
+declareKey("menuWindowDriveF", menuWindowDriveF, Keys.Alt | Keys.D6);
+declareKey("menuWindowDriveG", menuWindowDriveG, Keys.Alt | Keys.D7);
+declareKey("menuWindowDriveH", menuWindowDriveH, Keys.Alt | Keys.D8);
+declareKey("menuWindowDriveI", menuWindowDriveI, Keys.Alt | Keys.D9);
+declareKey("menuQueryName", menuQueryName, Keys.OemQuotes);
+declareKey("menuQueryFolderName", menuQueryFolderName, Keys.Shift | Keys.OemQuotes);
+declareKey("menuQueryFullFolder", menuQueryFullFolder, Keys.Control | Keys.OemQuotes);
+declareKey("menuEditFullFolderToClipboard", menuEditFullFolderToClipboard, Keys.Control | Keys.Shift | Keys.OemQuotes);
+declareKey("menuQueryClipboard", menuQueryClipboard, Keys.Alt | Keys.OemQuotes);
+declareKey("menuEditClearClipboard", menuEditClearClipboard, Keys.Alt | Keys.Shift | Keys.OemQuotes);
+declareKey("menuQueryWhat", menuQueryWhat, Keys.Shift | Keys.OemQuestion);
+declareKey("menuMiscCommandPrompt", menuMiscCommandPrompt, Keys.Control | Keys.OemQuestion);
+declareKey("menuMiscExplorerDir", menuMiscExplorerDir, Keys.Alt | Keys.OemQuestion);
+declareKey("menuEditStampTagged", menuEditStampTagged, Keys.Shift | Keys.D1);
+declareKey("menuEditHideTagged", menuEditHideTagged, Keys.Shift | Keys.D0);
+declareKey("menuEditShowTagged", menuEditShowTagged, Keys.Shift | Keys.D9);
+declareKey("menuEditReadOnlyTagged", menuEditReadOnlyTagged, Keys.OemCloseBrackets);
+declareKey("menuEditReadWriteTagged", menuEditReadWriteTagged, Keys.OemOpenBrackets);
+declareKey("menuEditSystemTagged", menuEditSystemTagged, Keys.Shift | Keys.OemCloseBrackets);
+declareKey("menuEditGeneralTagged", menuEditGeneralTagged, Keys.Shift | Keys.OemOpenBrackets);
+declareKey("menuEditShortPathToClipboard", menuEditShortPathToClipboard, Keys.Shift | Keys.Oemtilde);
+declareKey("menuHelpDocumentation", menuHelpDocumentation, Keys.F1);
+declareKey("menuHelpChangeHistory", menuHelpChangeHistory, Keys.Shift | Keys.F1);
+declareKey("menuHelpAbout", menuHelpAbout, Keys.Alt | Keys.F1);
+declareKey("menuHelpKeyDescriber", menuHelpKeyDescriber, Keys.Control | Keys.F1);
+declareKey("menuFileCurrentWindows", menuFileCurrentWindows, Keys.F4);
+declareKey("menuFileNextWindow", menuFileNextWindow, Keys.Control | Keys.Tab);
+declareKey("menuFilePreviousWindow", menuFilePreviousWindow, Keys.Control | Keys.Shift | Keys.Tab);
+declareKey("menuFileGoBack", menuFileGoBack, Keys.Alt | Keys.Left);
+declareKey("menuFileGoForward", menuFileGoForward, Keys.Alt | Keys.Right);
+declareKey("menuFileClose", menuFileClose, Keys.Control | Keys.F4);
+declareKey("menuFileCloseAllButCurrent", menuFileCloseAllButCurrent, Keys.Control | Keys.Shift | Keys.F4);
+declareKey("menuFileExit", menuFileExit, Keys.Alt | Keys.F4);
+declareKey("menuFileRestartWindows", menuFileRestartWindows, Keys.Alt | Keys.Shift | Keys.F4);
+declareKey("menuHelpContextMenu", menuHelpContextMenu, Keys.Apps, Keys.Shift | Keys.F10);
+declareKey("menuHelpSendToMenu", menuHelpSendToMenu, Keys.Control | Keys.F10);
+declareKey("menuHelpAlternateMenu", menuHelpAlternateMenu, Keys.Alt | Keys.F10);
+declareKey("menuHelpElevateVersion", menuHelpElevateVersion, Keys.F11);
+declareKey("menuWindowArrangeIcons", menuWindowArrangeIcons, Keys.Alt | Keys.F11);
+declareKey("menuWindowCascade", menuWindowCascade, Keys.Control | Keys.F11);
+declareKey("menuWindowTileHorizontal", menuWindowTileHorizontal, Keys.Alt | Keys.Shift | Keys.F11);
+declareKey("menuWindowTileVertical", menuWindowTileVertical, Keys.Control | Keys.Shift | Keys.F11);
+declareKey("menuMiscChatWithAI", menuMiscChatWithAI, Keys.F12);
+declareKey("menuMiscChatAboutFile", menuMiscChatAboutFile, Keys.Shift | Keys.F12);
+declareKey("menuHelpCopyLog", menuHelpCopyLog, Keys.Control | Keys.F12);
+declareKey("menuMiscStartTimer", menuMiscStartTimer, Keys.Alt | Keys.Control | Keys.T);
+declareKey("menuMiscStopTimer", menuMiscStopTimer, Keys.Alt | Keys.Control | Keys.S);
+declareKey("menuQueryTimer", menuQueryTimer, Keys.Alt | Keys.Control | Keys.Y);
+declareKey("menuMiscTranslateTagged", menuMiscTranslateTagged, Keys.Alt | Keys.Shift | Keys.F7);
+foreach (string sProblem in Homer.KeyMap.lsProblems) Homer.Log.warn("Key map: " + sProblem);
+return true;
+} // declareKeys method
+
+// declareKey: one menu item's keys, as a command of the kit's Homer.KeyMap. The
+// command runs the item as a key always did, describing it instead when the
+// Key Describer is on.
+private bool declareKey(string sVar, HomerToolStripMenuItem item, params Keys[] aKeys) {
+if (item == null) return false;
+string sName = item.Text.Replace("&", "").Replace("...", "").Trim();
+Homer.KeyMap.Command oCommand = new Homer.KeyMap.Command();
+oCommand.sName = sName;
+oCommand.sId = Homer.KeyMap.toId(sName);
+if (oCommand.sId.Length == 0 || Homer.KeyMap.dCommands.ContainsKey(oCommand.sId)) oCommand.sId = sVar;
+oCommand.oItem = item;
+foreach (Keys k in aKeys) oCommand.lsKeys.Add(k);
+oCommand.fRun = delegate() { item.clickOrDescribe(); return true; };
+Homer.KeyMap.addCommand(oCommand);
+return true;
+} // declareKey method
 
 public MdiChild getActiveChild() {
 MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;

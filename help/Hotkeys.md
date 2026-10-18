@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.162**  
+**Version 5.0.163**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -222,8 +222,8 @@ Commands in alphabetical order.
 - **Yield on Drive**, Control+Shift+Y -- Say total size and bytes free on current drive
 - **Yield Tagged**, Shift+Y -- Say count and size of tagged items in current folder
 - **Zip**, Shift+Z -- Add current or tagged files to zip archive
-- **Zip List**, Control+Shift+Z -- Create or update a zip archive based on a list of files or folders
-- **Zip then Delete**, Control+Z -- Add current or tagged files to zip archive, then delete originals
+- **Zip List**, no key -- Create or update a zip archive based on a list of files or folders (on the Misc menu)
+- **Zip then Delete**, no key -- Add current or tagged files to zip archive, then delete originals (on the Misc menu)
 
 ## By Key
 
@@ -358,7 +358,6 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+W** -- Windows Control Panel: Launch Control Panel to configure Windows
 - **Control+Shift+X** -- Extra Speech Toggle: Toggle extra speech messages on or off, redirecting them to a log file
 - **Control+Shift+Y** -- Yield on Drive: Say total size and bytes free on current drive
-- **Control+Shift+Z** -- Zip List: Create or update a zip archive based on a list of files or folders
 - **Control+Slash** -- Command Prompt: or Control+Backslash, Open command window in current folder
 - **Control+T** -- Send to Text Editor: Send current file to text editor (default is EdSharp)
 - **Control+Tab** -- Next Window: Activate the next open window
@@ -367,7 +366,6 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+W** -- Send to Word Processor: Send current file item to word processor (default is Microsoft Word)
 - **Control+X** -- Cut: Cut current or tagged items to clipboard (listing paths in both binary and text formats)
 - **Control+Y** -- Yield: Say count and size of items in current folder
-- **Control+Z** -- Zip then Delete: Add current or tagged files to zip archive, then delete originals
 - **Delete** -- Delete: Delete current or tagged items and recycle according to setting
 - **Enter** -- Open Item: Open subfolder in new window, view zip archive, or launch file
 - **Exclamation** -- Stamp with Date and Time: Point, Stamp date and time of current or tagged items
@@ -508,7 +506,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+V** -- Volume Format
 - **Control+Shift+W** -- Windows Control Panel
 - **Control+Shift+Y** -- Yield on Drive
-- **Control+Shift+Z** -- Zip List
 
 ### Alt
 
@@ -581,7 +578,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+A** -- Tag All
 - **Control+U** -- Unarchive without Subfolders
 - **Control+Y** -- Yield
-- **Control+Z** -- Zip then Delete
 
 ### Shift
 
