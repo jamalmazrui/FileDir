@@ -2,6 +2,25 @@
 
 
 
+## 19 October 2026 -- Mark, and the suite's names and keys
+
+- **Tag is now Mark,** as in DbDo and EdSharp: Mark (SemiColon), Unmark (Slash), Toggle Mark, Mark All, Mark and Next, Next Marked, Save Marks and the rest. The keys are the same unless noted here.
+- **Regular Expression is Regex** in command names, such as Mark with Regex and Rename with Regex. **Search Again** is Search Next (F3), and **Reverse Search Again** is Search Previous (Shift+F3).
+- **Keys that moved:**
+  - Edit Settings (was Configuration Options) is Alt+Shift+E, and Edit Settings File (was Manual Options) is Alt+Shift+F2.
+  - Extra Speech Log is Alt+Shift+F12, and Tile Vertical is Shift+F11.
+  - Beginning Marked and End Marked are Control+Shift+Home and Control+Shift+End, since Control+Home and Control+End go to the first and last item.
+  - Folder to Clipboard is Alt+Shift+C.
+  - Unmark and Previous is Control+Shift+UpArrow, and Unmark and Next also answers Control+Shift+DownArrow. The Alt+Shift arrows belong to JAWS's mouse keys.
+  - Mark no longer answers Shift+NumPad5, which JAWS uses.
+  - Toggle Mark also answers Control+Space; Open Command Prompt and Open in Explorer also answer Backslash with Control or Alt.
+  - Say Position (was Percent Through) also answers Alt+Delete.
+- **The suite's clipboard family:** Save Clipboard (Control+Apostrophe, was Export Clipboard to File) and the new Append Clipboard (Control+Shift+Apostrophe), the Homer kit's shared code.
+- **Folder Name (Shift+Apostrophe) says the folder's name, then its full path,** taking in the Folder command, whose key Save Clipboard now has. Press it twice to spell, three times to see it in a window.
+- **New in Help:** ReadMe (Alt+Shift+F1) and Hotkeys (Control+Shift+F1), as in every Homer app.
+- **Commands no longer announce their own names.** FileDir now follows the suite's rule: a command's name is said only when nothing else would tell you it is under way.
+- **The build needs HomerDev 1.77.6 or later.**
+
 ## 19 October 2026 -- Control+Z zips and deletes again
 
 - **Control+Z is Zip then Delete again,** as it long was. FileDir's list has no Undo for it to mean, and it asks before deleting anything, so a stray press costs only Escape. Control+Shift+Delete still works too.
