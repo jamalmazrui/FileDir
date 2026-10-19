@@ -1670,7 +1670,7 @@ menuMiscMailBody = menu_Helper("Mail Body", "Control+M", menuMiscMailBody_Click)
 menuMiscMailAttachTagged = menu_Helper("Mail Attachment", "Control+Shift+M", menuMiscMailAttachTagged_Click);
 menuMiscBatchMail = menu_Helper("Batch Mail", "Control+Shift+B", menuMiscBatchMail_Click);
 menuMiscZipTagged = menu_Helper("Zip ...", "Shift+Z", menuMiscZipTagged_Click);
-menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Shift+Delete", menuMiscZipTaggedThenDelete_Click);
+menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Z", menuMiscZipTaggedThenDelete_Click);
 menuMiscZipList = menu_Helper("Zip List ...", "Control+Shift+Z", menuMiscZipList_Click);
 menuMiscUnarchiveTagged = menu_Helper("Unarchive", "Shift+U", menuMiscUnarchiveTagged_Click);
 menuMiscUnarchiveTaggedWithoutSubfolders = menu_Helper("Unarchive without Subfolders", "Control+U", menuMiscUnarchiveTaggedWithoutSubfolders_Click);
@@ -9042,10 +9042,8 @@ return base.ProcessCmdKey (ref msg, keyData);
 
 // declareKeys: FileDir's key table, generated on 19 October 2026 from the
 // switch it replaces, so no key was lost -- each menu item with every key that
-// clicked it. Control+Z and Control+Shift+Z, which ran Zip then Delete and Zip
-// List, are left out: they are Undo and Redo in every Homer app, and a
-// destructive command must not sit on a key pressed by reflex. Run once, at the
-// first key.
+// clicked it. Zip then Delete and Zip List keep Control+Z and Control+Shift+Z, as
+// recorded exceptions below. Run once, at the first key.
 private bool bKeysDeclared = false;
 public bool declareKeys() {
 if (bKeysDeclared) return true;
@@ -9252,12 +9250,12 @@ declareKey("menuMiscStartTimer", menuMiscStartTimer, Keys.Alt | Keys.Control | K
 declareKey("menuMiscStopTimer", menuMiscStopTimer, Keys.Alt | Keys.Control | Keys.S);
 declareKey("menuQueryTimer", menuQueryTimer, Keys.Alt | Keys.Control | Keys.Y);
 declareKey("menuMiscTranslateTagged", menuMiscTranslateTagged, Keys.Alt | Keys.Shift | Keys.F7);
-// KEYS KEPT, NOT LOST (19 October 2026, Jamal's ruling: a key may move, but a
-// command must not become menu-only). Zip then Delete moved from Control+Z,
-// which is Undo, to Control+Shift+Delete, beside the other delete keys. Zip
-// List keeps Control+Shift+Z as a recorded exception: FileDir has no Undo or
-// Redo for it to meet, and it only makes or updates an archive.
-declareKey("menuMiscZipTaggedThenDelete", menuMiscZipTaggedThenDelete, Keys.Control | Keys.Shift | Keys.Delete);
+// CONTROL+Z IS ZIP THEN DELETE AGAIN (19 October 2026, Jamal's ruling). FileDir's
+// list has no Undo for Control+Z to mean, and he missed it. It is a recorded
+// exception: the command asks before deleting anything, so a reflex press costs
+// only an Escape. Control+Shift+Delete stays as its second key, beside the other
+// delete keys. Zip List keeps Control+Shift+Z, likewise recorded.
+declareKey("menuMiscZipTaggedThenDelete", menuMiscZipTaggedThenDelete, Keys.Control | Keys.Z, Keys.Control | Keys.Shift | Keys.Delete);
 declareKey("menuMiscZipList", menuMiscZipList, Keys.Control | Keys.Shift | Keys.Z);
 foreach (string sProblem in Homer.KeyMap.lsProblems) Homer.Log.warn("Key map: " + sProblem);
 return true;

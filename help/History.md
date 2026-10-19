@@ -2,6 +2,10 @@
 
 
 
+## 19 October 2026 -- Control+Z zips and deletes again
+
+- **Control+Z is Zip then Delete again,** as it long was. FileDir's list has no Undo for it to mean, and it asks before deleting anything, so a stray press costs only Escape. Control+Shift+Delete still works too.
+
 ## 19 October 2026 -- Conversions through the kit
 
 - **FileDir converts files through the kit's shared code,** the same code every Homer app is moving to. Its own Convert.cs and Table.cs went into the kit, and the build removes the old copies.
