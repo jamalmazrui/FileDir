@@ -9937,7 +9937,10 @@ return new string[] {sCommand, sKey, sDescription};
 
 public void clickOrDescribe() {
 string sCommand = this.Text.Replace("&", "").Replace(" ...", "");
-if (App.bKeyDescriber && sCommand != "Key Describer") {
+// THE TOGGLE ITSELF IS NEVER DESCRIBED, found by the item, not its name (19 October 2026): renaming
+// it Key Describer Toggle broke a comparison with "Key Describer", so Control+F1 was described
+// instead of switching the mode off, and there was no way out but the menu.
+if (App.bKeyDescriber && this != App.frame.menuHelpKeyDescriber) {
 string[] aSummary = getKeySummary();
 string sKey = aSummary[1];
 string sDescription = aSummary[2];

@@ -2,6 +2,10 @@
 
 
 
+## 19 October 2026 -- Key Describer turns off again
+
+- **Control+F1 turns Key Describer off again.** When the command was renamed Key Describer Toggle, the check that lets it through while the mode is on still looked for its old name, so Control+F1 was described instead of obeyed. The check now finds the command itself, so no rename can break it.
+
 ## 19 October 2026 -- Open in DbDo
 
 - **Open in DbDo (Control+Shift+Backslash)** opens the current database or data file in DbDo, starting it or handing the file to the DbDo already running.
