@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.163**  
+**Version 5.0.164**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -67,7 +67,7 @@ Commands in alphabetical order.
 - **Export Clipboard to File**, Alt+Shift+E -- Export clipboard text to disk file
 - **Extension Change**, Shift+X -- Go to next item with different extension
 - **Extra Speech Log**, Alt+Shift+X -- Open speech log file in configured text editor
-- **Extra Speech Toggle**, Control+Shift+X -- Toggle extra speech messages on or off, redirecting them to a log file
+- **Extra Speech Toggle**, Alt+Shift+Z -- Toggle extra speech messages on or off, redirecting them to a log file
 - **Extract with Regular Expression**, Control+Shift+E -- Extract text from tagged files with regular expression and copy to the clipboard
 - **File Find**, Alt+Shift+F -- Find file in current folder or subfolders based on match of textual content and name filter
 - **Find Duplicates in Tree**, Alt+Shift+J -- Find every duplicate in this folder and everything under it, and open them as a virtual folder you can inspect and delete from
@@ -222,8 +222,8 @@ Commands in alphabetical order.
 - **Yield on Drive**, Control+Shift+Y -- Say total size and bytes free on current drive
 - **Yield Tagged**, Shift+Y -- Say count and size of tagged items in current folder
 - **Zip**, Shift+Z -- Add current or tagged files to zip archive
-- **Zip List**, no key -- Create or update a zip archive based on a list of files or folders (on the Misc menu)
-- **Zip then Delete**, no key -- Add current or tagged files to zip archive, then delete originals (on the Misc menu)
+- **Zip List**, Control+Shift+Z -- Create or update a zip archive based on a list of files or folders
+- **Zip then Delete**, Control+Shift+Delete -- Add current or tagged files to zip archive, then delete originals
 
 ## By Key
 
@@ -291,6 +291,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+W** -- Web Download: Download from a web page: either the media on it, fetched with yt-dlp, or files you pick from the links it holds
 - **Alt+Shift+X** -- Extra Speech Log: Open speech log file in configured text editor
 - **Alt+Shift+Y** -- Yield in Operating System: Say Windows version, physical memory, and virtual memory
+- **Alt+Shift+Z** -- Extra Speech Toggle: Toggle extra speech messages on or off, redirecting them to a log file
 - **Alt+Slash** -- Explorer Directory: or Alt+Backslash, Open Windows Explorer in current folder
 - **Alt+T** -- Type Order: Sort items in type/extension order
 - **Alt+U** -- Unarchive Test: Check if current file item can be unzipped successfully
@@ -335,6 +336,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+B** -- Batch Mail: Send a message individually to multiple recipients
 - **Control+Shift+C** -- Copy Name: Copy name of current or tagged items to clipboard
 - **Control+Shift+D** -- Delete File Now: Delete current file item permanently without confirmation
+- **Control+Shift+Delete** -- Zip then Delete: Add current or tagged files to zip archive, then delete originals
 - **Control+Shift+E** -- Extract with Regular Expression: Extract text from tagged files with regular expression and copy to the clipboard
 - **Control+Shift+F** -- Clear Filter: View all items
 - **Control+Shift+F11** -- Tile Vertical: Tile open windows vertically
@@ -356,8 +358,8 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+U** -- Unarchive to Same Name: Unzip current or tagged files to a directory named like the archive
 - **Control+Shift+V** -- Volume Format: Format a disk or storage card
 - **Control+Shift+W** -- Windows Control Panel: Launch Control Panel to configure Windows
-- **Control+Shift+X** -- Extra Speech Toggle: Toggle extra speech messages on or off, redirecting them to a log file
 - **Control+Shift+Y** -- Yield on Drive: Say total size and bytes free on current drive
+- **Control+Shift+Z** -- Zip List: Create or update a zip archive based on a list of files or folders
 - **Control+Slash** -- Command Prompt: or Control+Backslash, Open command window in current folder
 - **Control+T** -- Send to Text Editor: Send current file to text editor (default is EdSharp)
 - **Control+Tab** -- Next Window: Activate the next open window
@@ -442,6 +444,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+C** -- Configuration Options
 - **Alt+Shift+E** -- Export Clipboard to File
 - **Alt+Shift+X** -- Extra Speech Log
+- **Alt+Shift+Z** -- Extra Speech Toggle
 - **Alt+Shift+F** -- File Find
 - **Alt+Shift+J** -- Find Duplicates in Tree
 - **Alt+Shift+G** -- Go to Virtual Folder
@@ -483,7 +486,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+F4** -- Close All But Current Window
 - **Control+Shift+C** -- Copy Name
 - **Control+Shift+D** -- Delete File Now
-- **Control+Shift+X** -- Extra Speech Toggle
 - **Control+Shift+E** -- Extract with Regular Expression
 - **Control+Shift+Apostrophe** -- Folder to Clipboard
 - **Control+Shift+G** -- Go to Special Folder
@@ -506,6 +508,8 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+V** -- Volume Format
 - **Control+Shift+W** -- Windows Control Panel
 - **Control+Shift+Y** -- Yield on Drive
+- **Control+Shift+Z** -- Zip List
+- **Control+Shift+Delete** -- Zip then Delete
 
 ### Alt
 

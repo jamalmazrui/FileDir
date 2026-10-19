@@ -9,7 +9,10 @@
   - **Now:** the cases that only click an item are one table, generated from that switch so no key was lost (202 commands and 215 keys), declared to the kit's KeyMap. Every key goes to KeyMap.route, as in every app on the Homer framework.
   - **What stays special:** the keys whose meaning depends on the item or on a setting -- Enter, Backspace, Comma and BackSlash -- keep their own code.
   - **What the router adds:** a text box keeps its typing keys, the list keeps letters for first-letter movement, and a quick second press is counted the same way in every Homer app.
-- **Control+Z no longer zips and deletes.** Zip then Delete and Zip List are on the Misc menu without keys, because Control+Z and Control+Shift+Z are Undo and Redo in every Homer app, and a destructive command must not sit on a key pressed by reflex.
+- **Control+Z no longer zips and deletes.** Control+Z is Undo in every Homer app, and a destructive command must not sit on a key pressed by reflex.
+  - **Zip then Delete** is on Control+Shift+Delete, beside FileDir's other delete keys.
+  - **Zip List** keeps Control+Shift+Z: FileDir has no Undo or Redo for it to meet, and it only makes or updates an archive.
+- **Extra Speech Toggle is on Alt+Shift+Z,** as in DbDo and EdSharp, where Z keys are toggles. Extra Speech Log keeps Alt+Shift+X.
 - **Menus are quicker to open.** Each menu item's status-line handler used to scan every item of every menu each time it was drawn. An item now looks only at itself.
 
 ## 14 October 2026 -- 2htm's failures reported as they are today

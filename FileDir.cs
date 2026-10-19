@@ -1645,7 +1645,7 @@ menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryLi
 menuMisc = menu_Helper("&Misc");
 menuMiscConfigurationOptions = menu_Helper("Configuration Options", "Alt+Shift+C", menuMiscOptions_Click);
 menuMiscManualOptions = menu_Helper("Manual Options", "Alt+Shift+M", menuMiscManualOptions_Click);
-menuMiscExtraSpeechToggle = menu_Helper("Extra Speech Toggle", "Control+Shift+X", menuMiscExtraSpeechToggle_Click);
+menuMiscExtraSpeechToggle = menu_Helper("Extra Speech Toggle", "Alt+Shift+Z", menuMiscExtraSpeechToggle_Click);
 menuMiscExtraSpeechLog = menu_Helper("Extra Speech Log", "Alt+Shift+X", menuMiscExtraSpeechLog_Click);
 menuMiscEnvironmentVariables = menu_Helper("&Environment Variables ...", "Control+E", menuMiscEnvironmentVariables_Click);
 menuMiscRecycleToggle = menu_Helper("Recycle Toggle", "Alt+Shift+R", menuMiscRecycleToggle_Click);
@@ -1670,8 +1670,8 @@ menuMiscMailBody = menu_Helper("Mail Body", "Control+M", menuMiscMailBody_Click)
 menuMiscMailAttachTagged = menu_Helper("Mail Attachment", "Control+Shift+M", menuMiscMailAttachTagged_Click);
 menuMiscBatchMail = menu_Helper("Batch Mail", "Control+Shift+B", menuMiscBatchMail_Click);
 menuMiscZipTagged = menu_Helper("Zip ...", "Shift+Z", menuMiscZipTagged_Click);
-menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "", menuMiscZipTaggedThenDelete_Click);
-menuMiscZipList = menu_Helper("Zip List ...", "", menuMiscZipList_Click);
+menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Shift+Delete", menuMiscZipTaggedThenDelete_Click);
+menuMiscZipList = menu_Helper("Zip List ...", "Control+Shift+Z", menuMiscZipList_Click);
 menuMiscUnarchiveTagged = menu_Helper("Unarchive", "Shift+U", menuMiscUnarchiveTagged_Click);
 menuMiscUnarchiveTaggedWithoutSubfolders = menu_Helper("Unarchive without Subfolders", "Control+U", menuMiscUnarchiveTaggedWithoutSubfolders_Click);
 menuMiscUnarchiveTaggedToSameName = menu_Helper("Unarchive to Same Name", "Control+Shift+U", menuMiscUnarchiveTaggedToSameName_Click);
@@ -9219,7 +9219,7 @@ declareKey("menuMiscWindowsControlPanel", menuMiscWindowsControlPanel, Keys.Cont
 declareKey("menuMiscWebDownload", menuMiscWebDownload, Keys.Alt | Keys.Shift | Keys.W);
 declareKey("menuNavigateExtensionChange", menuNavigateExtensionChange, Keys.Shift | Keys.X);
 declareKey("menuEditCutToClipboardTagged", menuEditCutToClipboardTagged, Keys.Control | Keys.X);
-declareKey("menuMiscExtraSpeechToggle", menuMiscExtraSpeechToggle, Keys.Control | Keys.Shift | Keys.X);
+declareKey("menuMiscExtraSpeechToggle", menuMiscExtraSpeechToggle, Keys.Alt | Keys.Shift | Keys.Z);
 declareKey("menuMiscExtraSpeechLog", menuMiscExtraSpeechLog, Keys.Alt | Keys.Shift | Keys.X);
 declareKey("menuEditDeleteAndRecycleTagged", menuEditDeleteAndRecycleTagged, Keys.Control | Keys.Delete);
 declareKey("menuQueryYieldTagged", menuQueryYieldTagged, Keys.Shift | Keys.Y);
@@ -9287,6 +9287,13 @@ declareKey("menuMiscStartTimer", menuMiscStartTimer, Keys.Alt | Keys.Control | K
 declareKey("menuMiscStopTimer", menuMiscStopTimer, Keys.Alt | Keys.Control | Keys.S);
 declareKey("menuQueryTimer", menuQueryTimer, Keys.Alt | Keys.Control | Keys.Y);
 declareKey("menuMiscTranslateTagged", menuMiscTranslateTagged, Keys.Alt | Keys.Shift | Keys.F7);
+// KEYS KEPT, NOT LOST (19 October 2026, Jamal's ruling: a key may move, but a
+// command must not become menu-only). Zip then Delete moved from Control+Z,
+// which is Undo, to Control+Shift+Delete, beside the other delete keys. Zip
+// List keeps Control+Shift+Z as a recorded exception: FileDir has no Undo or
+// Redo for it to meet, and it only makes or updates an archive.
+declareKey("menuMiscZipTaggedThenDelete", menuMiscZipTaggedThenDelete, Keys.Control | Keys.Shift | Keys.Delete);
+declareKey("menuMiscZipList", menuMiscZipList, Keys.Control | Keys.Shift | Keys.Z);
 foreach (string sProblem in Homer.KeyMap.lsProblems) Homer.Log.warn("Key map: " + sProblem);
 return true;
 } // declareKeys method

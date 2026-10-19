@@ -204,10 +204,18 @@ keep their own code.</li>
 keys, the list keeps letters for first-letter movement, and a quick
 second press is counted the same way in every Homer app.</li>
 </ul></li>
-<li><strong>Control+Z no longer zips and deletes.</strong> Zip then
-Delete and Zip List are on the Misc menu without keys, because Control+Z
-and Control+Shift+Z are Undo and Redo in every Homer app, and a
-destructive command must not sit on a key pressed by reflex.</li>
+<li><strong>Control+Z no longer zips and deletes.</strong> Control+Z is
+Undo in every Homer app, and a destructive command must not sit on a key
+pressed by reflex.
+<ul>
+<li><strong>Zip then Delete</strong> is on Control+Shift+Delete, beside
+FileDir’s other delete keys.</li>
+<li><strong>Zip List</strong> keeps Control+Shift+Z: FileDir has no Undo
+or Redo for it to meet, and it only makes or updates an archive.</li>
+</ul></li>
+<li><strong>Extra Speech Toggle is on Alt+Shift+Z,</strong> as in DbDo
+and EdSharp, where Z keys are toggles. Extra Speech Log keeps
+Alt+Shift+X.</li>
 <li><strong>Menus are quicker to open.</strong> Each menu item’s
 status-line handler used to scan every item of every menu each time it
 was drawn. An item now looks only at itself.</li>
