@@ -2,6 +2,13 @@
 
 
 
+## 19 October 2026 -- The F6 family
+
+- **F6 jumps between the folders and the files** in the list, landing on the first of the other kind. Shift+F6 does the same.
+- **Control+F6 opens the next folder beside this one,** by name, and Control+Shift+F6 the previous one; at the end of the list it wraps around.
+- **Alt+F6 walks back through the folders you have visited,** newest first, and Alt+Shift+F6 goes the other way. Walking the list does not reorder it, so pressing again keeps moving through it.
+- These follow the Homer suite's levels of next and previous: Control+Tab between windows, Control+F6 and Alt+F6 between the things in a window, and F6 between the parts of one thing.
+
 ## 19 October 2026 -- Play Tutorials
 
 - **Play Tutorials (Alt+F12)** plays FileDir's ten spoken tutorials in the Homer Player, as in every Homer app: Enter plays the first walk, and Down Arrow moves to the next.

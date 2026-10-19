@@ -1359,6 +1359,12 @@ public HomerToolStripMenuItem menuNavigateKeywords;
 public HomerToolStripMenuItem menuNavigateKeywordsAgain;
 public HomerToolStripMenuItem menuNavigateKeywordsBack;
 public HomerToolStripMenuItem menuNavigateSearchAgain;
+public HomerToolStripMenuItem menuNavigateNextPart;
+public HomerToolStripMenuItem menuNavigatePreviousPart;
+public HomerToolStripMenuItem menuNavigateNextSiblingFolder;
+public HomerToolStripMenuItem menuNavigatePreviousSiblingFolder;
+public HomerToolStripMenuItem menuNavigateNextVisitedFolder;
+public HomerToolStripMenuItem menuNavigatePreviousVisitedFolder;
 public HomerToolStripMenuItem menuNavigateSearchBack;
 public HomerToolStripMenuItem menuNavigateSetFilter;
 public HomerToolStripMenuItem menuNavigateClearFilter;
@@ -1605,6 +1611,12 @@ menuNavigateKeywords = menu_Helper("&Keywords ...", "Control+K", menuNavigateKey
 menuNavigateKeywordsAgain = menu_Helper("Keywords Again", "Alt+K", menuNavigateKeywordsAgain_Click);
 menuNavigateKeywordsBack = menu_Helper("Reverse Keywords", "Control+Shift+K", menuNavigateKeywordsBack_Click);
 menuNavigateSearchAgain = menu_Helper("Search Next", "F3", menuNavigateSearchAgain_Click);
+menuNavigateNextPart = menu_Helper("Next Part", "F6", menuNavigateNextPart_Click);
+menuNavigatePreviousPart = menu_Helper("Previous Part", "Shift+F6", menuNavigatePreviousPart_Click);
+menuNavigateNextSiblingFolder = menu_Helper("Next Sibling Folder", "Control+F6", menuNavigateNextSiblingFolder_Click);
+menuNavigatePreviousSiblingFolder = menu_Helper("Previous Sibling Folder", "Control+Shift+F6", menuNavigatePreviousSiblingFolder_Click);
+menuNavigateNextVisitedFolder = menu_Helper("Next Visited Folder", "Alt+F6", menuNavigateNextVisitedFolder_Click);
+menuNavigatePreviousVisitedFolder = menu_Helper("Previous Visited Folder", "Alt+Shift+F6", menuNavigatePreviousVisitedFolder_Click);
 menuNavigateSearchBack = menu_Helper("Search Previous", "Shift+F3", menuNavigateSearchBack_Click);
 menuNavigateSetFilter = menu_Helper("Set &Filter ...", "Control+F", menuNavigateSetFilter_Click);
 menuNavigateClearFilter = menu_Helper("Clear Filter", "Control+Shift+F", menuNavigateClearFilter_Click);
@@ -1615,7 +1627,7 @@ menuNavigateNextTagged = menu_Helper("Next Marked", "Shift+N or Control+DownArro
 menuNavigatePreviousTagged = menu_Helper("Previous Marked", "Shift+P or Control+UpArrow", menuNavigatePreviousTagged_Click);
 menuNavigateInitialChange = menu_Helper("Initial Change", "Shift+I", menuNavigateInitialChange_Click);
 menuNavigateExtensionChange = menu_Helper("Extension Change", "Shift+X", menuNavigateExtensionChange_Click);
-menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateJumpAgain, menuNavigateKeywords, menuNavigateKeywordsAgain, menuNavigateKeywordsBack, menuNavigateSearchAgain, menuNavigateSearchBack, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange});
+menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateJumpAgain, menuNavigateKeywords, menuNavigateKeywordsAgain, menuNavigateKeywordsBack, menuNavigateSearchAgain, menuNavigateSearchBack, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange, menuNavigateNextPart, menuNavigatePreviousPart, menuNavigateNextSiblingFolder, menuNavigatePreviousSiblingFolder, menuNavigateNextVisitedFolder, menuNavigatePreviousVisitedFolder});
 
 menuQuery = menu_Helper("&Query");
 menuQueryDate = menu_Helper("Date", "Shift+D", menuQueryDate_Click);
@@ -2620,6 +2632,90 @@ else App.say(sName + " not found!");
 }
 App.say("Done!", true);
 } // menuFilePrintTagged_Click method
+
+// ------- THE F6 FAMILY (19 October 2026) -------
+// The suite's levels of next and previous (help\HomerSuite.md): Control+Tab moves between
+// windows; Control+F6 between the things inside a window in a fixed order -- here the folders
+// beside this one, by name; Alt+F6 between them in the order last visited; F6 between the parts
+// of the current thing -- here the folders and the files in the list. Each says where it landed.
+void menuNavigateNextPart_Click(object sender, EventArgs e) { navigatePart_Helper(); }
+void menuNavigatePreviousPart_Click(object sender, EventArgs e) { navigatePart_Helper(); }
+void menuNavigateNextSiblingFolder_Click(object sender, EventArgs e) { siblingFolder_Helper(1); }
+void menuNavigatePreviousSiblingFolder_Click(object sender, EventArgs e) { siblingFolder_Helper(-1); }
+void menuNavigateNextVisitedFolder_Click(object sender, EventArgs e) { visitedFolder_Helper(1); }
+void menuNavigatePreviousVisitedFolder_Click(object sender, EventArgs e) { visitedFolder_Helper(-1); }
+
+// navigatePart_Helper: from a folder to the first file, or from a file to the first folder. With
+// two parts, Next Part and Previous Part arrive at the same place.
+void navigatePart_Helper() {
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+DataView view = mdiChild.tbl.DefaultView;
+if (view.Count == 0) return;
+int iAt = mdiChild.bs.Position;
+if (iAt < 0 || iAt >= view.Count) iAt = 0;
+bool bFolderNow = (char) view[iAt]["Type"] == '\\';
+for (int i = 0; i < view.Count; i++) {
+if (((char) view[i]["Type"] == '\\') != bFolderNow) {
+App.say(bFolderNow ? "Files" : "Folders");
+mdiChild.bs.Position = i;
+return;
+}
+}
+App.say(bFolderNow ? "No files here" : "No folders here", true);
+} // navigatePart_Helper method
+
+// siblingFolder_Helper: the next or previous folder beside this one in its parent, by name,
+// wrapping at the ends. A folder both hidden and system is passed over, as Explorer does.
+void siblingFolder_Helper(int iStep) {
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+string sDir = mdiChild.Text.TrimEnd(Path.DirectorySeparatorChar);
+string sParent = "";
+try { sParent = Path.GetDirectoryName(sDir) ?? ""; } catch (Exception) { }
+if (sParent.Length == 0 || !Directory.Exists(sParent)) { App.say("No folder beside this one.", true); return; }
+List<string> lsDirs = new List<string>();
+try {
+foreach (string sOne in Directory.GetDirectories(sParent)) {
+FileAttributes iAttr;
+try { iAttr = File.GetAttributes(sOne); } catch (Exception) { continue; }
+if ((iAttr & FileAttributes.Hidden) != 0 && (iAttr & FileAttributes.System) != 0) continue;
+lsDirs.Add(sOne);
+}
+}
+catch (Exception oError) { App.say("Its folder cannot be read: " + oError.Message, true); return; }
+lsDirs.Sort(StringComparer.OrdinalIgnoreCase);
+int iAt = -1;
+for (int i = 0; i < lsDirs.Count; i++) if (Homer.Util.stringEquiv(lsDirs[i].TrimEnd(Path.DirectorySeparatorChar), sDir)) iAt = i;
+if (iAt < 0 || lsDirs.Count < 2) { App.say("No folder beside this one.", true); return; }
+string sWant = lsDirs[(iAt + iStep + lsDirs.Count) % lsDirs.Count];
+App.say(Path.GetFileName(sWant));
+activate_Helper(sWant);
+} // siblingFolder_Helper method
+
+// visitedFolder_Helper: the folders visited, newest first, walked one at a time and wrapping.
+// The arrival is marked as a replay, as Go Back's is, so the order does not change under you and
+// pressing again keeps moving through the same list.
+void visitedFolder_Helper(int iStep) {
+string[] aDirs = App.recentDistinct();
+int iCount = aDirs.Length;
+if (iCount < 2) { App.say("No other visited folder.", true); return; }
+MdiChild mdiChild = App.frame.getActiveChild();
+string sNow = mdiChild == null ? "" : mdiChild.Text;
+int iAt = -1;
+for (int i = 0; i < iCount; i++) if (Homer.Util.stringEquiv(aDirs[i].TrimEnd(Path.DirectorySeparatorChar), sNow.TrimEnd(Path.DirectorySeparatorChar))) iAt = i;
+int iWant = iAt < 0 ? (iStep > 0 ? 0 : iCount - 1) : iAt;
+for (int iTry = 0; iTry < iCount; iTry++) {
+if (iAt >= 0 || iTry > 0) iWant = ((iWant + iStep) % iCount + iCount) % iCount;
+if (iWant != iAt && App.itemExists(aDirs[iWant])) break;
+}
+if (iWant == iAt || !App.itemExists(aDirs[iWant])) { App.say("No other visited folder that still exists.", true); return; }
+string sPath = aDirs[iWant];
+App.say(sPath.EndsWith(@":\") ? sPath : Path.GetFileName(sPath.TrimEnd(Path.DirectorySeparatorChar)));
+App.bReplaying = true;
+try { activate_Helper(sPath); }
+finally { App.bReplaying = false; }
+} // visitedFolder_Helper method
 
 void MenuFileGoBack_Click(object sender, EventArgs e) {
 // The folder visited before this one.
@@ -9067,6 +9163,12 @@ declareKey("menuNavigateJump", menuNavigateJump, Keys.Control | Keys.J);
 declareKey("menuNavigateJumpAgain", menuNavigateJumpAgain, Keys.Alt | Keys.J);
 declareKey("menuNavigateKeywordsBack", menuNavigateKeywordsBack, Keys.Control | Keys.Shift | Keys.K);
 declareKey("menuNavigateSearchAgain", menuNavigateSearchAgain, Keys.F3);
+declareKey("menuNavigateNextPart", menuNavigateNextPart, Keys.F6);
+declareKey("menuNavigatePreviousPart", menuNavigatePreviousPart, Keys.Shift | Keys.F6);
+declareKey("menuNavigateNextSiblingFolder", menuNavigateNextSiblingFolder, Keys.Control | Keys.F6);
+declareKey("menuNavigatePreviousSiblingFolder", menuNavigatePreviousSiblingFolder, Keys.Control | Keys.Shift | Keys.F6);
+declareKey("menuNavigateNextVisitedFolder", menuNavigateNextVisitedFolder, Keys.Alt | Keys.F6);
+declareKey("menuNavigatePreviousVisitedFolder", menuNavigatePreviousVisitedFolder, Keys.Alt | Keys.Shift | Keys.F6);
 declareKey("menuNavigateSearchBack", menuNavigateSearchBack, Keys.Shift | Keys.F3);
 declareKey("menuNavigateKeywords", menuNavigateKeywords, Keys.Control | Keys.K);
 declareKey("menuNavigateKeywordsAgain", menuNavigateKeywordsAgain, Keys.Alt | Keys.K);

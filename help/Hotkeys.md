@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.172**  
+**Version 5.0.173**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -119,6 +119,9 @@ Commands in alphabetical order.
 - **New Folder**, Control+N -- Create new folder on disk
 - **New Item Copy**, Control+Shift+N -- Create copy of current file or folder item with similar name and numeric suffix
 - **Next Marked**, Shift+N or Control+DownArrow -- Go to next marked item
+- **Next Part**, F6 -- Go from the folders to the first file, or from the files to the first folder
+- **Next Sibling Folder**, Control+F6 -- Open the next folder beside this one, by name
+- **Next Visited Folder**, Alt+F6 -- Open the next folder in the order you visited them, newest first
 - **Next Window**, Control+Tab -- Activate the next open window
 - **Open Command Prompt**, Control+Backslash or Control+Slash -- Open command window in current folder
 - **Open Drive**, Alt+O -- Pick drive to open in new window
@@ -141,6 +144,9 @@ Commands in alphabetical order.
 - **Play Media**, Alt+Shift+L -- Play the clipboard when it holds a play list or web addresses, otherwise the tagged files, otherwise everything playable in this folder
 - **Play Tutorials**, Alt+F12 -- Play the ten spoken tutorials in the Homer Player
 - **Previous Marked**, Shift+P or Control+UpArrow -- Go to previous marked item
+- **Previous Part**, Shift+F6 -- The same as Next Part, since the list has two parts
+- **Previous Sibling Folder**, Control+Shift+F6 -- Open the previous folder beside this one, by name
+- **Previous Visited Folder**, Alt+Shift+F6 -- Go the other way through the folders you visited
 - **Previous Window**, Control+Shift+Tab -- Activate the previous open window
 - **Print**, Control+P -- Print current or tagged files
 - **Properties**, Alt+Enter -- Invoke Windows properties dialog for current item
@@ -249,6 +255,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+F11** -- Arrange Icons: Arrange open windows
 - **Alt+F12** -- Play Tutorials: Play the ten spoken tutorials in the Homer Player
 - **Alt+F4** -- Exit FileDir: Close the FileDir application
+- **Alt+F6** -- Next Visited Folder: Open the next folder in the order you visited them, newest first
 - **Alt+G** -- Go to Drive: Pick drive to open in same window
 - **Alt+I** -- Iterate Processes: List running processes and activate or terminate
 - **Alt+J** -- Jump Again: Repeat Jump command with same string
@@ -276,6 +283,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+F12** -- Extra Speech Log: Open speech log file in configured text editor
 - **Alt+Shift+F2** -- Edit Settings File: Adjust FileDir configuration options in text editor
 - **Alt+Shift+F4** -- Restart Windows: Restart Windows after confirming
+- **Alt+Shift+F6** -- Previous Visited Folder: Go the other way through the folders you visited
 - **Alt+Shift+F7** -- Translate File: Translate the tagged files, or the current one, into a language you name, using a language model running on this computer
 - **Alt+Shift+F8** -- Complete Unmark: Complete unmarking
 - **Alt+Shift+G** -- Go to Virtual Folder: Open a virtual folder definition in same window
@@ -325,6 +333,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+F11** -- Cascade: Cascade open windows
 - **Control+F12** -- Copy Log: Copy this session's log path to the clipboard, as a file for pasting into a mail message and as text
 - **Control+F4** -- Close Window: Close current window
+- **Control+F6** -- Next Sibling Folder: Open the next folder beside this one, by name
 - **Control+G** -- Go to Folder: Go to folder in same window
 - **Control+I** -- Invert Marked: Invert marked and unmarked state of items
 - **Control+J** -- Jump: Jump to item based on a string within its name
@@ -346,6 +355,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+F** -- Clear Filter: View all items
 - **Control+Shift+F1** -- Hotkeys: Open the Hotkeys page, every command and key sorted several ways, in your web browser
 - **Control+Shift+F4** -- Close All But Current Window: Close all windows except the current one
+- **Control+Shift+F6** -- Previous Sibling Folder: Open the previous folder beside this one, by name
 - **Control+Shift+G** -- Go to Special Folder: Pick one of the Windows special folders, such as Downloads or Documents, and open it in this window
 - **Control+Shift+H** -- Homer Player: Play the same items as Play List, but inside a FileDir dialog: the tracks stay in a list you can move through, each with the name it came with, and the player has no window of its own. H for Homer, beside Control+Shift+L for Play List
 - **Control+Shift+I** -- Rename to Identify Content: Rename the tagged files to what identifies them inside: the title, caption or name in the file metadata, read by ExifTool
@@ -382,6 +392,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **F12** -- Chat with AI: Ask a language model running on this computer a plain question; the answer opens in a window you can read and copy from
 - **F3** -- Search Next: Repeat the last Jump or Keywords search, whichever it was
 - **F4** -- Current Windows: Pick window to open from list of current ones
+- **F6** -- Next Part: Go from the folders to the first file, or from the files to the first folder
 - **F8** -- Start Mark or Unmark: Mark start of sequence to be marked or unmarked
 - **LeftBrace** -- General: Remove System attribute of current or tagged items
 - **LeftBracket** -- ReadWrite: Remove ReadOnly attribute of current or tagged items
@@ -413,6 +424,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+F12** -- Chat about File: Ask a question about the current file, answered by a language model running on this computer
 - **Shift+F3** -- Search Previous: Repeat the last Jump or Keywords search backwards
 - **Shift+F4** -- Say Windows Open: or Alt+NumPad5, Say titles of open windows
+- **Shift+F6** -- Previous Part: The same as Next Part, since the list has two parts
 - **Shift+F8** -- Complete Mark: Complete marking
 - **Shift+G** -- Get FTP: Download files from FTP directory
 - **Shift+Home** -- Mark to Top: Mark to top of list
@@ -464,6 +476,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+V** -- Paste Move
 - **Alt+Shift+P** -- Path to Clipboard
 - **Alt+Shift+L** -- Play Media
+- **Alt+Shift+F6** -- Previous Visited Folder
 - **Alt+Shift+Q** -- Quick url
 - **Alt+Shift+F1** -- ReadMe
 - **Alt+Shift+R** -- Recycle Toggle
@@ -503,6 +516,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+O** -- Open Special Folder
 - **Control+Shift+P** -- Path List to Clipboard
 - **Control+Shift+L** -- Play List
+- **Control+Shift+F6** -- Previous Sibling Folder
 - **Control+Shift+Tab** -- Previous Window
 - **Control+Shift+I** -- Rename to Identify Content
 - **Control+Shift+R** -- Rename with Regex
@@ -536,6 +550,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+K** -- Keywords Again
 - **Alt+L** -- List Files
 - **Alt+Period** -- Mark All Files
+- **Alt+F6** -- Next Visited Folder
 - **Alt+O** -- Open Drive
 - **Alt+Backslash or Alt+Slash** -- Open in Explorer
 - **Alt+V** -- Paste Copy
@@ -574,6 +589,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+M** -- Mail Body
 - **Control+A** -- Mark All
 - **Control+N** -- New Folder
+- **Control+F6** -- Next Sibling Folder
 - **Control+Tab** -- Next Window
 - **Control+Backslash or Control+Slash** -- Open Command Prompt
 - **Control+O** -- Open Folder
@@ -620,6 +636,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Shift+N or Control+DownArrow** -- Next Marked
 - **Shift+O** -- Output Type
 - **Shift+P or Control+UpArrow** -- Previous Marked
+- **Shift+F6** -- Previous Part
 - **Shift+Q** -- Quick Shortcut
 - **Shift+R** -- Rename
 - **Shift+D** -- Say Date
@@ -643,6 +660,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **F4** -- Current Windows
 - **F1** -- Documentation
 - **F11** -- Elevate Version
+- **F6** -- Next Part
 - **F3** -- Search Next
 - **F8** -- Start Mark or Unmark
 
