@@ -5869,10 +5869,15 @@ App.say(Homer.Util.stringPlural("Archive item", iCount));
 foreach (string s in lEntries) App.say(s);
 }
 else {
-App.say("What");
-//Lbc.SayLines(App.frame.convert2Text(sPath));
-//Lbc.Show(Homer.Util.stringConvertQuotes(App.frame.convert2Text(sPath)));
-App.say(Homer.Util.stringConvertQuotes(App.frame.convert2Text(sPath)));
+// WHAT IT IS, THEN WHAT IT SAYS (kit 1.74.0). The kit recognizes the file by its
+// extension and its bytes -- a .inix or .m3u is text, a file with an unknown
+// extension is text when its bytes are -- and says so first, as its own
+// utterance. You asked, so it speaks even with Extra Speech off.
+Homer.Say.sayForced(Homer.Conversion.describe(sPath));
+string sWhy;
+string sContent = Homer.Conversion.toText(sPath, out sWhy);
+if (sContent.Length > 0) Homer.Say.sayForced(Homer.Util.stringConvertQuotes(sContent));
+else if (sWhy.Length > 0) Homer.Say.sayForced(sWhy);
 }
 }
 } // menuQueryWhat_Click method

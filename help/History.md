@@ -5,6 +5,7 @@
 ## 19 October 2026 -- Conversions through the kit
 
 - **FileDir converts files through the kit's shared code,** the same code every Homer app is moving to. Its own Convert.cs and Table.cs went into the kit, and the build removes the old copies.
+- **The ? key says what a file is first,** then reads it, such as "M3U play list, text in UTF-8, 12 lines". A .inix, a .m3u, or any file whose bytes are text is recognized and read as text, whatever its extension. It speaks even with Extra Speech off, because you asked.
 - **The ? key is quicker on a PDF.** It now reads only the text layer, as plain text needs, instead of working out headings, lists and tables only to throw them away. A scanned PDF with no text layer says so plainly; HomerScribe reads scanned pages.
 - **A Word file's text is read straight from the file,** with no program started.
 - **Old Office files say what they need.** A .doc, .xls or .ppt still needs Microsoft Office. When Office is missing, an Alert box says so once, and says that saving the file as .docx, .xlsx or .pptx avoids it. FileDir no longer goes through 2htm for these.
