@@ -2,6 +2,11 @@
 
 
 
+## 19 October 2026 -- Says what it means once
+
+- **The Query commands say their answer once.** Shift+Y said "Yield Marked" and then "Yield tagged": the name of the command, then its old label. Query commands speak their own answers, so they are no longer announced first.
+- **Mark, not tag, everywhere you hear it:** counts such as "22 marked files", the Mark with Regex dialog, Complete mark, and the play list messages.
+
 ## 19 October 2026 -- Mark, and the suite's names and keys
 
 - **Tag is now Mark,** as in DbDo and EdSharp: Mark (SemiColon), Unmark (Slash), Toggle Mark, Mark All, Mark and Next, Next Marked, Save Marks and the rest. The keys are the same unless noted here.

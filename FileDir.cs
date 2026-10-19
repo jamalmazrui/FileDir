@@ -3114,7 +3114,6 @@ void MenuEditTagSimilarFiles_Click(object sender, EventArgs e) {
 // than the whole, so the biggest is the likeliest to be complete.  Nothing is
 // deleted here; Delete Tagged does that, and asks first.
 if (abortInZip()) return;
-App.say("Tag similar files");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
@@ -3163,7 +3162,7 @@ iSimilar++;
 }
 mdiChild.bs.EndEdit();
 if (iSimilar == 0) App.say("No similar files.", true);
-else App.say(Homer.Util.stringPlural("similar file", iSimilar) + " tagged, keeping the largest of each. Nothing was deleted.", true);
+else App.say(Homer.Util.stringPlural("similar file", iSimilar) + " marked, keeping the largest of each. Nothing was deleted.", true);
 } // MenuEditTagSimilarFiles_Click method
 
 void MenuEditReorderNames_Click(object sender, EventArgs e) {
@@ -3265,7 +3264,6 @@ void MenuEditTagDuplicateFiles_Click(object sender, EventArgs e) {
 // deleted.  Files are the same when their BYTES are the same, which is what
 // KeyLine's delDupes has always said.
 if (abortInZip()) return;
-App.say("Tag duplicate files");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
@@ -3307,7 +3305,7 @@ iDuplicate++;
 }
 }
 mdiChild.bs.EndEdit();
-App.say(Homer.Util.stringPlural("duplicate", iDuplicate) + " tagged. Nothing was deleted.", true);
+App.say(Homer.Util.stringPlural("duplicate", iDuplicate) + " marked. Nothing was deleted.", true);
 } // menuEditTagDuplicateFiles method
 
 string fileHash_Helper(string sPath) {
@@ -3352,8 +3350,7 @@ if (abortInZip()) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
-App.say("Tag with regular expression");
-string sText = Lbc.InputDialog("Tag with Regular Expression", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Lbc.InputDialog("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -3403,7 +3400,7 @@ mdiChild.StartTagOrUntag = mdiChild.bs.Position;
 } // menuEditStartTagOrUntag method
 
 void MenuEditCompleteTag_Click(object sender, EventArgs e) {
-completeTag_Helper("Complete tag", true);
+completeTag_Helper("Complete mark", true);
 } // menuEditCompleteTag method
 
 void MenuEditCompleteUntag_Click(object sender, EventArgs e) {
@@ -3451,7 +3448,7 @@ if (mdiChild == null) return;
 App.say("Save");
 App.aTags = getTagged();
 int iCount = App.aTags.Length;
-App.say(Homer.Util.stringPlural("tag", iCount));
+App.say(Homer.Util.stringPlural("mark", iCount));
 } // saveTags_Click method
 
 void MenuEditRestoreTags_Click(object sender, EventArgs e) {
@@ -3460,7 +3457,7 @@ MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 App.say("Restore");
 int iCount = applyTagged(App.aTags);
-App.say(Homer.Util.stringPlural("tag", iCount));
+App.say(Homer.Util.stringPlural("mark", iCount));
 } // restoreTags_Click method
 
 void menuEditCopyToClipboardTagged_Click(object sender, EventArgs e) {
@@ -3960,7 +3957,7 @@ if (abortInZip()) return;
 App.say("Rename with wildcards");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
-if (Lbc.ConfirmDialog("Confirm", "This may affect all items in the current directory, not just tagged ones.  Sure?", "Y") != "Y") return;
+if (Lbc.ConfirmDialog("Confirm", "This may affect all items in the current directory, not just marked ones.  Sure?", "Y") != "Y") return;
 string[] aFields = {"&Source", "&Target"};
 string[] aValues = {"*.*", "*.*"};
 ArrayList sResultList = Lbc.FieldDialog("Fields", aFields, aValues);
@@ -4229,7 +4226,7 @@ MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 App.say("Extract with regular expression");
-string sText = Lbc.InputDialog("Tag with Regular Expression", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Lbc.InputDialog("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -5292,17 +5289,17 @@ int iDirCount = aDirs.Length;
 if (sDirList.Length == 0) iDirCount = 0;
 int iFileCount = aFiles.Length;
 if (sFileList.Length == 0) iFileCount = 0;
-string sYield = iDirCount.ToString() + " tagged folder";
-if (iTagged == -1) sYield = sYield.Replace("tagged", "untagged");
-if (iTagged == 0) sYield = sYield.Replace("tagged", "");
+string sYield = iDirCount.ToString() + " marked folder";
+if (iTagged == -1) sYield = sYield.Replace("marked", "unmarked");
+if (iTagged == 0) sYield = sYield.Replace("marked", "");
 if (iDirCount != 1) sYield += "s";
 if (iDirCount > 0) App.say(sYield);
 
 //revert
-if (iDirCount >=0 ) sYield = iFileCount.ToString() + " tagged file";
+if (iDirCount >=0 ) sYield = iFileCount.ToString() + " marked file";
 else sYield = "and " + iFileCount.ToString() + " file";
-if (iTagged == -1) sYield = sYield.Replace("tagged", "untagged");
-if (iTagged == 0) sYield = sYield.Replace("tagged", "");
+if (iTagged == -1) sYield = sYield.Replace("marked", "unmarked");
+if (iTagged == 0) sYield = sYield.Replace("marked", "");
 if (iFileCount != 1) sYield += "s";
 if (iFileCount > 0) App.say(sYield);
 
@@ -5344,7 +5341,7 @@ foreach (string sPath in aPaths) App.say(getName(sPath));
 // querySelected_Click method
 
 void menuQueryListTagged_Click(object sender, EventArgs e) {
-App.say("List tagged");
+App.say("List marked");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iItemCount = 0;
@@ -5433,7 +5430,7 @@ App.say(Path_Helper());
 void menuQueryName_Click(object sender, EventArgs e) {
 //App.say("File");
 App.say(Path.GetFileName(Path_Helper()));
-if ((char) Field_Helper("Tagged") == '>') App.say("Tagged");
+if ((char) Field_Helper("Tagged") == '>') App.say("Marked");
 } // menuQueryName_Click method
 
 // FOLDER NAME SAYS THE PATH TOO (19 October 2026, key decision for FileDir). The
@@ -5606,7 +5603,7 @@ if (iDirs == 0 && iFiles == 0) App.say("No items!");
 } // menuQueryYield_Click method
 
 void menuQueryYieldTagged_Click(object sender, EventArgs e) {
-App.say("Yield tagged");
+App.say("Yield marked");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iDirs = 0;
@@ -7797,7 +7794,7 @@ string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length > 1) {
 foreach (string sPath in aPaths)
 if (File.Exists(sPath) && isPlayable_Helper(sPath)) lsPlay.Add(sPath);
-if (lsPlay.Count > 0) sWhere = "tagged";
+if (lsPlay.Count > 0) sWhere = "marked";
 }
 }
 
@@ -8218,7 +8215,7 @@ else {
 List<string> lsPlayable = new List<string>();
 foreach (string sPath in aQueuePaths) if (isPlayable_Helper(sPath)) lsPlayable.Add(sPath);
 lsTracks = Homer.MediaPlayer.fromFiles(lsPlayable);
-sQueueSource = "the tagged files";
+sQueueSource = "the marked files";
 }
 
 if (lsTracks == null || lsTracks.Count == 0) {
@@ -8277,7 +8274,7 @@ if (bList || bMedia || bReadable) {
 if (Homer.Media.mpvProgram().Length == 0) {
 Lbc.Show("mpv is not installed, so there is nothing to play with.\r\n\r\n"
 + "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box.\r\n\r\n"
-+ "Tag two or more files and press this key again to write a play list without playing it.", "Play List");
++ "Mark two or more files and press this key again to write a play list without playing it.", "Play List");
 return;
 }
 // A play list or a media file goes straight to the player.
@@ -8324,7 +8321,7 @@ return;
 // Output Type, on Shift+O -- but it is a different job from playing, and asking
 // for a file name before anything can be heard was a form to fill in on the way
 // to pressing play.
-playQueue_Helper(Homer.MediaPlayer.fromFiles(aPaths), "Player", "the tagged files");
+playQueue_Helper(Homer.MediaPlayer.fromFiles(aPaths), "Player", "the marked files");
 } // menuMiscPlayList_Click method
 
 void writePlaylist_Helper(string[] aPaths) {
@@ -9201,6 +9198,10 @@ if (oCommand.sId.Length == 0 || Homer.KeyMap.dCommands.ContainsKey(oCommand.sId)
 oCommand.oItem = item;
 foreach (Keys k in aKeys) oCommand.lsKeys.Add(k);
 oCommand.fRun = delegate() { item.clickOrDescribe(); return true; };
+// THE QUERY MENU IS FILEDIR'S SAY FAMILY (19 October 2026). Its captions lack the word "Say" (Yield
+// Marked is the manifest's Say Yield Marked), so the echo rule took them for actions and said
+// "Yield Marked" before the answer. Each speaks its own answer, so none is echoed.
+if (item.OwnerItem == menuQuery) oCommand.bNoEcho = true;
 Homer.KeyMap.addCommand(oCommand);
 return true;
 } // declareKey method
