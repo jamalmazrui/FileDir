@@ -208,3 +208,4 @@ Say Timer=, Say elapsed time since start of timer, not counting any paused perio
 Append Clipboard=Control+Shift+Apostrophe, Add the clipboard text to the end of a file you name
 Hotkeys=Control+Shift+F1, Open the Hotkeys page, every command and key sorted several ways, in your web browser
 ReadMe=Alt+Shift+F1, Open the ReadMe, the quick start, in your web browser
+Play Tutorials=Alt+F12, Play the ten spoken tutorials in the Homer Player

@@ -1480,6 +1480,7 @@ public HomerToolStripMenuItem menuHelpSendToMenu;
 public HomerToolStripMenuItem menuHelpAlternateMenu;
 public HomerToolStripMenuItem menuHelpElevateVersion;
 public HomerToolStripMenuItem menuHelpCopyLog;
+public HomerToolStripMenuItem menuHelpPlayTutorials;
 public HomerToolStripMenuItem menuHelpReadMe;
 public HomerToolStripMenuItem menuHelpHotkeysPage;
 
@@ -1725,6 +1726,7 @@ menuHelp = menu_Helper("&Help");
 menuHelpAbout = menu_Helper("&About", "Alt+F1", MenuHelpAbout_Click);
 menuHelpDocumentation = menu_Helper("Documentation", "F1", MenuHelpDocumentation_Click);
 menuHelpChangeHistory = menu_Helper("History of Changes", "Shift+F1", MenuHelpChangeHistory_Click);
+menuHelpPlayTutorials = menu_Helper("Play Tutorials", "Alt+F12", menuHelpPlayTutorials_Click);
 menuHelpReadMe = menu_Helper("ReadMe", "Alt+Shift+F1", menuHelpReadMe_Click);
 menuHelpHotkeysPage = menu_Helper("Hotkeys", "Control+Shift+F1", menuHelpHotkeysPage_Click);
 menuHelpKeyDescriber = menu_Helper("Key Describer Toggle", "Control+F1", MenuHelpKeyDescriber_Click);
@@ -1735,7 +1737,7 @@ menuHelpSendToMenu = menu_Helper("SendTo Menu ...", "Control+F10", MenuHelpSendT
 menuHelpAlternateMenu = menu_Helper("Alternate Menu ...", "Alt+F10", MenuHelpAlternateMenu_Click);
 menuHelpElevateVersion = menu_Helper("Elevate Version", "F11", menuHelpElevateVersion_Click);
 menuHelpCopyLog = menu_Helper("Copy Log", "Control+F12", MenuHelpCopyLog_Click);
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpReadMe, menuHelpHotkeysPage, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpPlayTutorials, menuHelpReadMe, menuHelpHotkeysPage, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
 //menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpHotKeys, menuHelpContextMenu, menuHelpExplorerMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion});
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuQuery, menuNavigate, menuMisc, menuWindow, menuHelp});
@@ -5448,6 +5450,16 @@ Homer.KeyMap.answer("Folder", Path.GetFileName(sDir.TrimEnd('\\')), sDir);
 // The suite's shared commands, each the kit's one copy (19 October 2026).
 void menuEditAppendClipboard_Click(object sender, EventArgs e) { Homer.SuiteCommands.appendClipboard(this); }
 void menuHelpReadMe_Click(object sender, EventArgs e) { Homer.SuiteCommands.openReadMe(); }
+
+// PLAY TUTORIALS (19 October 2026), Alt+F12 as in every Homer app: the ten walks in the Homer
+// Player, paused on the first, so Enter plays it and Down Arrow moves to the next. The installed
+// help folder first, then the one beside a development build -- the same code DbDo uses.
+void menuHelpPlayTutorials_Click(object sender, EventArgs e) {
+foreach (string sHelp in new string[] { Homer.Paths.shippedHelp(), Path.Combine(Path.GetDirectoryName(Application.StartupPath) ?? "", "help") }) {
+if (Homer.MediaPlayer.playTutorials(this, "FileDir", sHelp)) return;
+}
+MessageBox.Show(this, "The tutorials are not here.\r\n\r\nThey ship with FileDir in the help folder of the installation. In a source folder, the build speaks them.", "Play Tutorials", MessageBoxButtons.OK, MessageBoxIcon.Information);
+} // menuHelpPlayTutorials_Click method
 void menuHelpHotkeysPage_Click(object sender, EventArgs e) { Homer.SuiteCommands.openHotkeys(this); }
 
 void menuQueryType_Click(object sender, EventArgs e) {
@@ -9017,6 +9029,7 @@ declareKey("menuMiscEnvironmentVariables", menuMiscEnvironmentVariables, Keys.Co
 declareKey("menuMiscEvaluate", menuMiscEvaluate, Keys.Control | Keys.Oemplus);
 declareKey("menuEditExportClipboardToFile", menuEditExportClipboardToFile, Keys.Control | Keys.OemQuotes);
 declareKey("menuEditAppendClipboard", menuEditAppendClipboard, Keys.Control | Keys.Shift | Keys.OemQuotes);
+declareKey("menuHelpPlayTutorials", menuHelpPlayTutorials, Keys.Alt | Keys.F12);
 declareKey("menuHelpReadMe", menuHelpReadMe, Keys.Alt | Keys.Shift | Keys.F1);
 declareKey("menuHelpHotkeysPage", menuHelpHotkeysPage, Keys.Control | Keys.Shift | Keys.F1);
 declareKey("menuNavigateNextTagged", menuNavigateNextTagged, Keys.Control | Keys.Down, Keys.Shift | Keys.N);

@@ -2,6 +2,10 @@
 
 
 
+## 19 October 2026 -- Play Tutorials
+
+- **Play Tutorials (Alt+F12)** plays FileDir's ten spoken tutorials in the Homer Player, as in every Homer app: Enter plays the first walk, and Down Arrow moves to the next.
+
 ## 19 October 2026 -- Says what it means once
 
 - **The Query commands say their answer once.** Shift+Y said "Yield Marked" and then "Yield tagged": the name of the command, then its old label. Query commands speak their own answers, so they are no longer announced first.

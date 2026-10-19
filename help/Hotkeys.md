@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.171**  
+**Version 5.0.172**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -139,6 +139,7 @@ Commands in alphabetical order.
 - **Path to Clipboard**, Alt+Shift+P -- Copy full path of current item to clipboard
 - **Play List**, Control+Shift+L -- With files tagged, write a play list of them; with nothing tagged, play the current item, whether it is a play list, a media file, or a document holding media links
 - **Play Media**, Alt+Shift+L -- Play the clipboard when it holds a play list or web addresses, otherwise the tagged files, otherwise everything playable in this folder
+- **Play Tutorials**, Alt+F12 -- Play the ten spoken tutorials in the Homer Player
 - **Previous Marked**, Shift+P or Control+UpArrow -- Go to previous marked item
 - **Previous Window**, Control+Shift+Tab -- Activate the previous open window
 - **Print**, Control+P -- Print current or tagged files
@@ -246,6 +247,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+F1** -- About: Display FileDir version number and release date
 - **Alt+F10** -- Alternate Menu: Pick command to execute from complete, alphabetized list
 - **Alt+F11** -- Arrange Icons: Arrange open windows
+- **Alt+F12** -- Play Tutorials: Play the ten spoken tutorials in the Homer Player
 - **Alt+F4** -- Exit FileDir: Close the FileDir application
 - **Alt+G** -- Go to Drive: Pick drive to open in same window
 - **Alt+I** -- Iterate Processes: List running processes and activate or terminate
@@ -537,6 +539,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+O** -- Open Drive
 - **Alt+Backslash or Alt+Slash** -- Open in Explorer
 - **Alt+V** -- Paste Copy
+- **Alt+F12** -- Play Tutorials
 - **Alt+Enter** -- Properties
 - **Alt+R** -- Recent Folders
 - **Alt+Apostrophe** -- Say Clipboard
