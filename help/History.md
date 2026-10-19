@@ -2,6 +2,18 @@
 
 
 
+## 19 October 2026 -- The suite's shared commands and NVDA speech
+
+- **Six commands now run the same code as every Homer app,** the kit's SuiteCommands:
+  - **Say Clipboard** (Alt+Apostrophe) says the text, or how many files are copied and their names. One press speaks, a quick second press spells, and a third shows the answer in a window you can review and copy.
+  - **Say Time** (Alt+SemiColon) says the time, then the date, as two separate utterances.
+  - **Clear Clipboard** (Alt+Shift+Apostrophe) empties the clipboard and says so.
+  - **Copy Log** (Control+F12) puts the log on the clipboard as a file and as its path, as before.
+  - **History of Changes** (Shift+F1) and **Hotkey Summary** (Alt+Shift+H) open their documents as before, without first saying their own names, which the screen reader already says.
+- **The build supplies NVDA's controller client.** FileDir's direct speech to NVDA needs nvdaControllerClient.dll beside the program. Its notes said the build fetched it, but the build never did. The build now copies the kit's one 64-bit copy into exec, and the installer ships it, so a fresh build always has it.
+- **These commands now speak even when Extra Speech is off,** because you asked for the answer.
+- **FileDir needs HomerDev 1.74.0 or later to build.**
+
 ## 19 October 2026 -- FileDir on the Homer framework's key router
 
 - **Every key goes through the Homer suite's one router.**

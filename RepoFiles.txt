@@ -6,9 +6,10 @@
 # push, so "git add -A" means "add what the project has named" and never
 # "everything in the folder".
 #
-# NO BINARY IS NAMED HERE. 7-Zip, Ude, Tektosyne, SharpZipLib and the NVDA
-# controller client are fetched by the build; FileDir.exe, FileDirScript.dll
-# and the installers are built. They live in exec, which LocalFiles.txt names.
+# NO BINARY IS NAMED HERE. 7-Zip, Ude, Tektosyne and SharpZipLib are fetched
+# by the build, and the NVDA controller client is copied from the kit (kit
+# 1.74.0); FileDir.exe, FileDirScript.dll and the installers are built. They
+# live in exec, which LocalFiles.txt names.
 
 # Sources
 FileDir.cs

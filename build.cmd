@@ -113,7 +113,7 @@ rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
 rem 1.65.3: the kit's MediaPlayer.cs, with the move of the player's settings.
-set "kitNeeded=1.72.58"
+set "kitNeeded=1.74.0"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -466,6 +466,26 @@ if errorlevel 1 (
   goto :failed
 )
 echo exec\%app%.exe is not running.>> "%log%"
+
+rem ---- the NVDA controller client, from the kit (kit 1.74.0) ---------
+rem The kit's Say speaks to NVDA through nvdaControllerClient.dll beside the
+rem program. FileDir's build never fetched it, though its notes said so, and
+rem its migrate step retired the old copy, so NVDA users heard none of
+rem FileDir's own speech. The kit carries the one 64-bit copy; it is copied
+rem into exec here, where the installer's exec\*.dll line ships it.
+if exist "!homerDev!\exec\nvdaControllerClient.dll" (
+  copy /y "!homerDev!\exec\nvdaControllerClient.dll" "exec\nvdaControllerClient.dll" >nul
+  if errorlevel 1 (
+    echo ERROR: could not copy nvdaControllerClient.dll from the kit.
+    echo ERROR: copy of !homerDev!\exec\nvdaControllerClient.dll to exec failed.>> "%log%"
+    goto :failed
+  )
+  echo NVDA controller client copied from the kit into exec.>> "%log%"
+) else (
+  echo ERROR: the kit at !homerDev! has no exec\nvdaControllerClient.dll. Unzip the latest HomerDev.zip, then build again.
+  echo ERROR: !homerDev!\exec\nvdaControllerClient.dll is missing.>> "%log%"
+  goto :failed
+)
 
 rem ---- compile ------------------------------------------------------
 rem One assembly, so the result is a single self-contained executable:

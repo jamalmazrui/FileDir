@@ -4790,9 +4790,7 @@ App.say(sDir);
 } // menuEditFullFolderToClipboard_Click method
 
 void menuEditClearClipboard_Click(object sender, EventArgs e) {
-App.say("Clear clipboard");
-//Clipboard.SetText("\n");
-Clipboard.Clear();
+Homer.SuiteCommands.clearClipboard();
 } // menuEditClearClipboard_Click method
 
 void menuEditExportClipboardToFile_Click(object sender, EventArgs e) {
@@ -5823,19 +5821,14 @@ App.say(mdiChild.sFilterText);
 } // menuQueryFilter_Click method
 
 void menuQueryClipboard_Click(object sender, EventArgs e) {
-bool bCut = false;
-string[] aPaths = Homer.Util.clipboard2Path(out bCut);
-if (aPaths.Length > 0) {
-App.say("Path drop list");
-foreach (string sPath in aPaths) App.say(sPath);
-}
-else App.say(Clipboard.GetText());
+// THE SUITE'S SHARED COMMANDS (kit 1.74.0): Say Clipboard, Say Time, Clear
+// Clipboard, Copy Log, History of Changes and Hotkeys run the kit's
+// Homer.SuiteCommands, the same code as in every Homer app.
+Homer.SuiteCommands.sayClipboard();
 } // menuQueryClipboard_Click method
 
 void menuQueryNow_Click(object sender, EventArgs e) {
-DateTime dt = DateTime.Now;
-//App.say(dt.ToLongTimeString() + " on " + dt.ToLongDateString());
-App.say(dt.ToShortTimeString() + " on " + dt.ToLongDateString());
+Homer.SuiteCommands.sayTime();
 } // menuQueryNow_Click method
 
 void menuQueryWhat_Click(object sender, EventArgs e) {
@@ -8836,11 +8829,7 @@ Process.Start(sFile);
 } // menuHelpDocumentation_Click method
 
 void MenuHelpChangeHistory_Click(object sender, EventArgs e) {
-App.say("Change history");
-// History.htm, generated from History.md by the build.  This opened History.txt,
-// which the documentation set replaced and the installer now deletes on upgrade.
-string sFile = Path.Combine(App.sShippedHelp, "History.htm");
-Process.Start(sFile);
+Homer.SuiteCommands.openHistory();
 } // menuHelpChangeHistory_Click method
 
 void MenuHelpKeyDescriber_Click(object sender, EventArgs e) {
@@ -8855,12 +8844,7 @@ App.bKeyDescriber = true;
 } // menuHelpKeyDescriber_Click method
 
 void MenuHelpHotKeys_Click(object sender, EventArgs e) {
-App.say("Hot keys");
-// Hotkeys.htm, generated from Hotkeys.md, which makeKeyMap.ps1 generates from
-// Hotkeys.inix.  This opened HotKeys.txt, a hand-kept file that fell out of step
-// with the program and is no longer shipped.
-string sFile = Path.Combine(App.sShippedHelp, "Hotkeys.htm");
-Process.Start(sFile);
+Homer.SuiteCommands.openHotkeys(this);
 } // menuHelpHotKeys_Click method
 
 
@@ -8906,31 +8890,7 @@ items[iChoice].clickOrDescribe();
 } // menuHelpAlternateMenu_Click method
 
 void MenuHelpCopyLog_Click(object sender, EventArgs e) {
-// This session's log path to the clipboard, in two formats at once, the way
-// EdSharp's Copy Log does and on the same key: a file drop list, so Control+V
-// in a new mail message attaches the log file itself, and plain text, so any
-// program that only reads clipboard text gets the path. Both matter, and a
-// DataObject carries the two together.
-//
-// This exists so that "send me the log" is one keystroke rather than a hunt
-// through a profile folder nobody should have to know the shape of.
-string sTitle = "Copy Log";
-if (Homer.Log.path.Length == 0 || !File.Exists(Homer.Log.path)) {
-App.say("No log for this session!");
-return;
-}
-try {
-DataObject dataLog = new DataObject();
-System.Collections.Specialized.StringCollection colFiles = new System.Collections.Specialized.StringCollection();
-colFiles.Add(Homer.Log.path);
-dataLog.SetFileDropList(colFiles);
-dataLog.SetText(Homer.Log.path);
-Clipboard.SetDataObject(dataLog, true);
-App.say("Log path copied");
-}
-catch (Exception ex) {
-Lbc.Show(ex.Message, sTitle);
-}
+Homer.SuiteCommands.copyLog();
 } // MenuHelpCopyLog_Click method
 
 void menuHelpElevateVersion_Click(object sender, EventArgs e) {
