@@ -215,3 +215,4 @@ Next Sibling Folder=Control+F6, Open the next folder beside this one, by name
 Previous Sibling Folder=Control+Shift+F6, Open the previous folder beside this one, by name
 Next Visited Folder=Alt+F6, Open the next folder in the order you visited them, newest first
 Previous Visited Folder=Alt+Shift+F6, Go the other way through the folders you visited
+Open in DbDo=Control+Shift+Backslash, Open the current database or data file in DbDo

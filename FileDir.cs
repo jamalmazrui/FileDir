@@ -129,6 +129,10 @@ int iCount = e.CommandLine.Count;
 if (iCount == 0) return;
 string sPath = e.CommandLine[0];
 if (sPath == null) return;
+// A FILE HANDED OVER IS SHOWN IN ITS FOLDER (19 October 2026): DbDo's Show in FileDir passes the
+// database it has open. An archive still opens as before; any other file opens its folder with the
+// file selected.
+else if (iCount == 1 && File.Exists(sPath) && !App.frame.testZip(sPath)) App.frame.showFileInFolder(sPath);
 else if (iCount == 1 && App.itemExists(sPath)) App.frame.activate_Helper(sPath);
 else Process.Start("Explorer.exe", Microsoft.VisualBasic.Interaction.Command());
 } // onStartUpNextInstance method
@@ -1440,6 +1444,7 @@ public HomerToolStripMenuItem menuMiscUnarchiveTest;
 public HomerToolStripMenuItem menuMiscUnarchivePassword;
 public HomerToolStripMenuItem menuMiscCommandPrompt;
 public HomerToolStripMenuItem menuMiscExplorerDir;
+public HomerToolStripMenuItem menuMiscOpenInDbDo;
 public HomerToolStripMenuItem menuMiscFTPPut;
 public HomerToolStripMenuItem menuMiscGetFTP;
 public HomerToolStripMenuItem menuMiscWebDownload;
@@ -1694,6 +1699,7 @@ menuMiscUnarchiveTest = menu_Helper("Unarchive Test", "Alt+U", menuMiscUnarchive
 menuMiscUnarchivePassword = menu_Helper("Unarchive Password", "Alt+Shift+U", menuMiscUnarchivePassword_Click);
 menuMiscCommandPrompt = menu_Helper("Open Command Prompt", "Control+Backslash or Control+Slash", menuMiscCommandPrompt_Click);
 menuMiscExplorerDir = menu_Helper("Open in Explorer", "Alt+Backslash or Alt+Slash", menuMiscExplorerDir_Click);
+menuMiscOpenInDbDo = menu_Helper("Open in DbDo", "Control+Shift+Backslash", menuMiscOpenInDbDo_Click);
 menuMiscFTPPut = menu_Helper("FTP Put ...", "Shift+F", menuMiscFTPPut_Click);
 menuMiscGetFTP = menu_Helper("Get FTP ...", "Shift+G", menuMiscGetFTP_Click);
 menuMiscWebDownload = menu_Helper("Web Download ...", "Alt+Shift+W", menuMiscWebDownload_Click);
@@ -1716,7 +1722,7 @@ menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -2237,6 +2243,19 @@ Lbc.Show(ex.Message, "Error");
 }
 }
 } // activateLink method
+
+// showFileInFolder: open a file's folder and select the file, or say why not.
+public void showFileInFolder(string sPath) {
+string sDir = Path.GetDirectoryName(Path.GetFullPath(sPath));
+activate_Helper(sDir);
+MdiChild mdiChild = getActiveChild();
+if (mdiChild == null) return;
+DataView view = mdiChild.tbl.DefaultView;
+for (int i = 0; i < view.Count; i++) {
+if (Homer.Util.stringEquiv((string) view[i]["Path"], Path.GetFullPath(sPath))) { mdiChild.bs.Position = i; return; }
+}
+App.say(Path.GetFileName(sPath) + " is not shown in this folder's list.", true);
+} // showFileInFolder method
 
 public void activate_Helper(string sPath) {
 string sDir = "";
@@ -7261,6 +7280,17 @@ return;
 }
 } // menuMiscCommandPrompt_Click method
 
+// OPEN IN DbDo (19 October 2026), Control+Shift+Backslash: the Backslash keys open the current
+// thing somewhere else -- Explorer with Alt, a command prompt with Control -- and this hands a
+// database or data file to DbDo, the same key as DbDo's Show in FileDir going the other way.
+void menuMiscOpenInDbDo_Click(object sender, EventArgs e) {
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null || mdiChild.bs.Position < 0 || mdiChild.bs.Position >= mdiChild.tbl.DefaultView.Count) return;
+string sPath = (string) mdiChild.tbl.DefaultView[mdiChild.bs.Position]["Path"];
+if (!File.Exists(sPath)) { App.say("Open in DbDo takes a database or data file, not a folder.", true); return; }
+Homer.SuiteCommands.openInHomerApp(this, "DbDo", sPath);
+} // menuMiscOpenInDbDo_Click method
+
 void menuMiscExplorerDir_Click(object sender, EventArgs e) {
 string sCommand = "Explorer.exe";
 string sParams = Directory.GetCurrentDirectory();
@@ -9253,6 +9283,7 @@ declareKey("menuEditClearClipboard", menuEditClearClipboard, Keys.Alt | Keys.Shi
 declareKey("menuQueryWhat", menuQueryWhat, Keys.Shift | Keys.OemQuestion);
 declareKey("menuMiscCommandPrompt", menuMiscCommandPrompt, Keys.Control | Keys.Oem5, Keys.Control | Keys.OemQuestion);
 declareKey("menuMiscExplorerDir", menuMiscExplorerDir, Keys.Alt | Keys.Oem5, Keys.Alt | Keys.OemQuestion);
+declareKey("menuMiscOpenInDbDo", menuMiscOpenInDbDo, Keys.Control | Keys.Shift | Keys.Oem5);
 declareKey("menuEditStampTagged", menuEditStampTagged, Keys.Shift | Keys.D1);
 declareKey("menuEditHideTagged", menuEditHideTagged, Keys.Shift | Keys.D0);
 declareKey("menuEditShowTagged", menuEditShowTagged, Keys.Shift | Keys.D9);

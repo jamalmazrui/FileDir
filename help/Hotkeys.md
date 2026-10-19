@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.173**  
+**Version 5.0.174**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -126,6 +126,7 @@ Commands in alphabetical order.
 - **Open Command Prompt**, Control+Backslash or Control+Slash -- Open command window in current folder
 - **Open Drive**, Alt+O -- Pick drive to open in new window
 - **Open Folder**, Control+O -- Open folder in new window
+- **Open in DbDo**, Control+Shift+Backslash -- Open the current database or data file in DbDo
 - **Open in Explorer**, Alt+Backslash or Alt+Slash -- Open Windows Explorer in current folder
 - **Open Item**, Enter -- Open subfolder in new window, view zip archive, or launch file
 - **Open Parent Folder**, Backspace -- Open parent folder in new window and jump to folder item that was previously open
@@ -349,6 +350,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+A** -- Unmark All: Unmark all items
 - **Control+Shift+Apostrophe** -- Append Clipboard: Add the clipboard text to the end of a file you name
 - **Control+Shift+B** -- Batch Mail: Send a message individually to multiple recipients
+- **Control+Shift+Backslash** -- Open in DbDo: Open the current database or data file in DbDo
 - **Control+Shift+C** -- Copy Name: Copy name of current or tagged items to clipboard
 - **Control+Shift+D** -- Delete File Now: Delete current file item permanently without confirmation
 - **Control+Shift+E** -- Extract with Regex: Extract text from tagged files with regular expression and copy to the clipboard
@@ -513,6 +515,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+M** -- Mail Attachment
 - **Control+Shift+Period** -- Mark with Regex
 - **Control+Shift+N** -- New Item Copy
+- **Control+Shift+Backslash** -- Open in DbDo
 - **Control+Shift+O** -- Open Special Folder
 - **Control+Shift+P** -- Path List to Clipboard
 - **Control+Shift+L** -- Play List

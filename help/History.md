@@ -2,6 +2,12 @@
 
 
 
+## 19 October 2026 -- Open in DbDo
+
+- **Open in DbDo (Control+Shift+Backslash)** opens the current database or data file in DbDo, starting it or handing the file to the DbDo already running.
+- **A file handed to FileDir opens its folder with the file selected,** so DbDo's Show in FileDir lands on the database. An archive still opens as before.
+- **The build needs HomerDev 1.79.0 or later.**
+
 ## 19 October 2026 -- The F6 family
 
 - **F6 jumps between the folders and the files** in the list, landing on the first of the other kind. Shift+F6 does the same.
