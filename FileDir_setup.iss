@@ -165,6 +165,8 @@ Source: "FileDir.ico"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourced
 Source: "FileDir.manifest"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "exec\FileDirScript.dll"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "exec\*.dll"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+; The conversion routes the kit's Conversion reads beside the program (kit 1.74.0).
+Source: "exec\conversions.inix"; DestDir: "{app}\exec"; Flags: ignoreversion
 Source: "exec\7z.*"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "exec\2htm.exe"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "exec\AssocOn.exe"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
@@ -188,10 +190,8 @@ Source: "help\tutorials\Tutorials.m3u"; DestDir: "{app}\help\tutorials"; Flags: 
 ; THE SOURCES, because FileDir has always shipped them: anyone can rebuild what
 ; they installed. The shared classes are not here; they are the kit's.
 Source: "FileDir.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Convert.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Dialogs.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "MediaPlayer.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Table.cs"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.js"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "build.cmd"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir_setup.iss"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist

@@ -4077,7 +4077,7 @@ continue;
 App.say(sName + ", " + (i + 1) + " of " + aPaths.Length);
 string sField, sError;
 string sFound = Homer.Media.bestTitle(sPath, out sField, out sError);
-if (sFound.Length == 0 && Homer.Convert.readableAsText(sPath)) {
+if (sFound.Length == 0 && Homer.Conversion.readableAsText(sPath)) {
 // A LAST RESORT, and only for a file FileDir can read as text.
 //
 // The metadata is the better answer and is always tried first. A first line is
@@ -4172,7 +4172,7 @@ string firstLineTitle_Helper(string sPath) {
 // bounds apply as to a metadata field: too short is not a name, too long is a
 // paragraph.
 string sError;
-string sBody = Homer.Convert.toPlainText(sPath, out sError);
+string sBody = Homer.Conversion.toPlainText(sPath, out sError);
 if (sBody.Length == 0) return "";
 foreach (string sLine in sBody.Replace("\r\n", "\n").Split('\n')) {
 string sTrimmed = sLine.Trim();
@@ -4948,9 +4948,9 @@ string keywordText_Helper(string sPath) {
 // makes the difference between searching a document and searching its
 // compression.
 try {
-if (Homer.Convert.readableAsText(sPath)) return Homer.Util.file2String(sPath).ToLower();
+if (Homer.Conversion.readableAsText(sPath)) return Homer.Util.file2String(sPath).ToLower();
 string sError;
-string sText = Homer.Convert.toPlainText(sPath, out sError);
+string sText = Homer.Conversion.toPlainText(sPath, out sError);
 if (sText.Length > 0) return sText.ToLower();
 // The converter had nothing to offer, so the bytes are all there is. A match
 // in them is still a match.
@@ -5264,7 +5264,7 @@ return convert2Text(sFile, bBlankDefault);
 
 public string convert2Text(string sFile, bool bBlankDefault) {
 // The text of a file, for Say Contents, Append to Clipboard, Translate File
-// and Chat about File alike.  One chain for all of them, in Homer.Convert.
+// and Chat about File alike.  One chain for all of them, in Homer.Conversion.
 //
 // It used to send five extensions straight to 2htm and read the raw bytes of
 // anything else.  Two things were wrong with that.  2htm reaches Office through
@@ -5282,7 +5282,7 @@ App.say(sName + " not found!");
 return "";
 }
 string sError;
-string sText = Homer.Convert.toPlainText(sFile, out sError);
+string sText = Homer.Conversion.toPlainText(sFile, out sError);
 if (sText.Length > 0) return sText;
 Homer.Log.info("No text from " + sName + ": " + sError);
 if (bBlankDefault) return "";
@@ -6299,7 +6299,7 @@ App.say("No file to convert.");
 return;
 }
 string[] aExtensions;
-string[] aLabels = Homer.Convert.targetLabelsFor(sDriver, out aExtensions);
+string[] aLabels = Homer.Conversion.targetLabelsFor(sDriver, out aExtensions);
 if (aLabels.Length == 0) {
 Lbc.Show("FileDir does not know what " + Path.GetExtension(sDriver).ToLower()
 + " files can become.\n\nDocuments, legacy Office files, PDF, audio, video and pictures are all understood.", sTitle);
@@ -6308,7 +6308,7 @@ return;
 
 // The remembered choice is kept per category, so picking mp3 for audio does not
 // become the default the next time a Word document is tagged.
-string sCategory = Homer.Convert.categoryOf(sDriver);
+string sCategory = Homer.Conversion.categoryOf(sDriver);
 string sKey = "OutputType" + sCategory;
 int iIndex = 0;
 string sRemembered = App.readValue(App.sIniFile, "Data", sKey, "");
@@ -6349,7 +6349,7 @@ App.say("Skipping " + sName + ", already " + sExt);
 iSkipped++;
 continue;
 }
-if (Homer.Convert.categoryOf(sPath).Length == 0) {
+if (Homer.Conversion.categoryOf(sPath).Length == 0) {
 App.say("Skipping " + sName + ", which FileDir cannot convert");
 iSkipped++;
 continue;
@@ -6359,7 +6359,7 @@ App.say(sName + ", " + (i + 1) + " of " + aPaths.Length);
 string sTarget = Path.Combine(Path.GetDirectoryName(sPath), Path.GetFileNameWithoutExtension(sPath) + "." + sExt);
 sTarget = Homer.Web.uniquePath(sTarget);
 string sError;
-if (Homer.Convert.convertAny(sPath, sTarget, out sError)) {
+if (Homer.Conversion.convertAny(sPath, sTarget, out sError)) {
 iDone++;
 sLastMade = sTarget;
 }
@@ -6432,13 +6432,13 @@ continue;
 }
 App.say(sName);
 string sError;
-string sBody = Homer.Convert.toPlainText(sPath, out sError);
+string sBody = Homer.Conversion.toPlainText(sPath, out sError);
 if (sBody.Trim().Length == 0) {
 App.say("Skipping " + sName + ": " + (sError.Length > 0 ? sError : "no text"));
 iSkipped++;
 continue;
 }
-if (Homer.Convert.hasRichForm(sPath)) sRichSource = sPath;
+if (Homer.Conversion.hasRichForm(sPath)) sRichSource = sPath;
 if (sbText.Length > 0) sbText.Append(Homer.Util.sSectionBreak);
 // Each piece is headed by its file name, because three sources run together
 // with no seam is one document nobody can take apart again.
@@ -6453,12 +6453,12 @@ sbText.Append(Homer.Util.sEndOfDocument);
 bool bRich = false;
 if (bFirst && iDone == 1 && sRichSource.Length > 0) {
 string sHtmlError;
-string sHtml = Homer.Convert.toHtmlFragment(sRichSource, out sHtmlError);
+string sHtml = Homer.Conversion.toHtmlFragment(sRichSource, out sHtmlError);
 if (sHtml.Length > 0) {
 try {
 DataObject data = new DataObject();
 data.SetData(DataFormats.UnicodeText, sbText.ToString());
-data.SetData(DataFormats.Html, Homer.Convert.htmlClipboardFormat(sHtml));
+data.SetData(DataFormats.Html, Homer.Conversion.htmlClipboardFormat(sHtml));
 Clipboard.SetDataObject(data, true);
 bRich = true;
 }
@@ -6592,7 +6592,7 @@ return;
 }
 
 string sError;
-string sText = Homer.Convert.toPlainText(sPath, out sError);
+string sText = Homer.Conversion.toPlainText(sPath, out sError);
 if (sText.Trim().Length == 0) {
 Lbc.Show("There is no text in " + Path.GetFileName(sPath) + " to ask about"
 + (sError.Length > 0 ? ":\n\n" + sError : ".") , sTitle);
@@ -8083,10 +8083,10 @@ Homer.Log.info("Could not read " + sPath + ": " + ex.Message);
 // A format that is not text at all -- a Word document, a PDF -- has no markup
 // to scan, so it goes through the extractor after all. Its links are gone, but
 // an address written out in the body of the text still survives.
-if (sText.Length == 0 || !Homer.Convert.readableAsText(sPath)
+if (sText.Length == 0 || !Homer.Conversion.readableAsText(sPath)
 || sText.IndexOf("://", StringComparison.Ordinal) < 0) {
 string sReadError;
-string sExtracted = Homer.Convert.toPlainText(sPath, out sReadError);
+string sExtracted = Homer.Conversion.toPlainText(sPath, out sReadError);
 if (sExtracted.Length > 0) sText = sExtracted;
 }
 // The document's own account of each episode, kept for the tracks that are
@@ -8208,10 +8208,10 @@ catch (Exception) { return ""; }
 
 
 bool isPlayable_Helper(string sPath) {
-// Sound or moving pictures. Asked of Homer.Convert, which already keeps the
+// Sound or moving pictures. Asked of Homer.Conversion, which already keeps the
 // lists that Output Type uses, so a format added there is playable here too
 // without a second list to keep in step.
-string sCategory = Homer.Convert.categoryOf(sPath);
+string sCategory = Homer.Conversion.categoryOf(sPath);
 return sCategory == "audio" || sCategory == "video";
 } // isPlayable_Helper method
 
@@ -8338,7 +8338,7 @@ string sOne = aPaths[0];
 string sOneExt = Path.GetExtension(sOne).ToLower();
 bool bList = sOneExt == ".m3u" || sOneExt == ".m3u8" || sOneExt == ".pls";
 bool bMedia = isPlayable_Helper(sOne);
-bool bReadable = Homer.Convert.readableAsText(sOne);
+bool bReadable = Homer.Conversion.readableAsText(sOne);
 if (bList || bMedia || bReadable) {
 if (Homer.Media.mpvProgram().Length == 0) {
 Lbc.Show("mpv is not installed, so there is nothing to play with.\r\n\r\n"

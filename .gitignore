@@ -18,7 +18,6 @@
 !/AssocOn.bas
 !/build.cmd
 !/configs/
-!/Convert.cs
 !/data/
 !/Dialogs.cs
 !/FileDir.cs
@@ -36,7 +35,6 @@
 !/ReadMe.md
 !/RepoFiles.txt
 !/scripts/
-!/Table.cs
 !/templates/
 !/.gitignore
 !/.gitattributes

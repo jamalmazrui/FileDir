@@ -191,6 +191,12 @@ set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Ollama.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Say.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Util.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Web.cs""
+rem THE SHARED CONVERSION CODE (kit 1.74.0): every file conversion goes through
+rem the kit's Conversion, its media half, and the Table class it uses. FileDir's
+rem own Convert.cs and Table.cs were the starting point and are retired below.
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Conversion.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\ConversionMedia.cs""
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Table.cs""
 echo Homer modules: !homerSources!>> "%log%"
 rem ONE COPY OF A SHARED MODULE (8 October 2026, don't repeat yourself): FileDir
 rem compiled its own Media.cs and Mpv.cs, which had drifted from the kit's -- they
@@ -467,6 +473,32 @@ if errorlevel 1 (
 )
 echo exec\%app%.exe is not running.>> "%log%"
 
+rem ---- FileDir's own conversion copies, retired (kit 1.74.0) ----------
+rem Convert.cs and Table.cs moved into the kit as Conversion.cs and Table.cs,
+rem so the copies here would only drift. The build removes them; push records it.
+for %%F in (Convert.cs Table.cs) do (
+  if exist "%%F" (
+    del /q "%%F"
+    if exist "%%F" (
+      echo ERROR: could not delete %%F, which the kit now replaces.
+      echo ERROR: could not delete %%F.>> "%log%"
+      goto :failed
+    )
+    echo Retired %%F: the kit's copy is used now.>> "%log%"
+  )
+)
+
+rem ---- the conversion routes, from the kit (kit 1.74.0) ---------------
+rem conversions.inix names the way for each conversion, pdf2txt and the rest;
+rem the program reads it from beside itself, and the installer ships it.
+copy /y "!homerDev!\exec\conversions.inix" "exec\conversions.inix" >nul
+if errorlevel 1 (
+  echo ERROR: could not copy conversions.inix from the kit at !homerDev!.
+  echo ERROR: copy of !homerDev!\exec\conversions.inix failed.>> "%log%"
+  goto :failed
+)
+echo Conversion routes copied from the kit into exec.>> "%log%"
+
 rem ---- the NVDA controller client, from the kit (kit 1.74.0) ---------
 rem The kit's Say speaks to NVDA through nvdaControllerClient.dll beside the
 rem program. FileDir's build never fetched it, though its notes said so, and
@@ -515,7 +547,7 @@ echo(>> "%log%"
   !manifest! ^
   /out:exec\%app%.exe ^
   Version.cs KeyText.cs ^
-  FileDir.cs Convert.cs Dialogs.cs Table.cs ^
+  FileDir.cs Dialogs.cs ^
   !homerSources! >> "%log%" 2>&1
 
 set iBuildResult=%ERRORLEVEL%

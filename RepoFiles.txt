@@ -13,9 +13,7 @@
 
 # Sources
 FileDir.cs
-Convert.cs
 Dialogs.cs
-Table.cs
 FileDir.js
 AssocOff.bas
 AssocOn.bas
