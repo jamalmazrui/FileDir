@@ -4,6 +4,7 @@
 
 ## 20 October 2026 -- Transcripts and speech through the Homer kit
 
+- **Web pages in the Homer page form,** as every Homer app makes them: one heading for the title, the page's parts marked for a screen reader, and pictures carried inside the page. The build needs HomerDev 1.87.1 or later.
 - **A recording converts to a transcript, and a document to speech,** through the Homer kit's conversion, which FileDir shares with every Homer app: Whisper transcribes on your computer, and Windows' own voice speaks.
 - **The build needs HomerDev 1.84.0 or later.**
 

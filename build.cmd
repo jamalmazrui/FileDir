@@ -113,7 +113,7 @@ rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
 rem 1.65.3: the kit's MediaPlayer.cs, with the move of the player's settings.
-set "kitNeeded=1.84.0"
+set "kitNeeded=1.87.1"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -196,6 +196,8 @@ rem the kit's Conversion, its media half, and the Table class it uses. FileDir's
 rem own Convert.cs and Table.cs were the starting point and are retired below.
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Conversion.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\ConversionMedia.cs""
+rem ConversionPage.cs too (kit 1.87.1): every web page in the Homer page form, as in every app.
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\ConversionPage.cs""
 rem Voice.cs too (kit 1.84.0): ConversionMedia transcribes speech through Voice.transcribe.
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Voice.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Table.cs""
