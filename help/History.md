@@ -2,6 +2,11 @@
 
 
 
+## 20 October 2026 -- Transcripts and speech through the Homer kit
+
+- **A recording converts to a transcript, and a document to speech,** through the Homer kit's conversion, which FileDir shares with every Homer app: Whisper transcribes on your computer, and Windows' own voice speaks.
+- **The build needs HomerDev 1.84.0 or later.**
+
 ## 19 October 2026 -- Key Describer turns off again
 
 - **Control+F1 turns Key Describer off again.** When the command was renamed Key Describer Toggle, the check that lets it through while the mode is on still looked for its old name, so Control+F1 was described instead of obeyed. The check now finds the command itself, so no rename can break it.
