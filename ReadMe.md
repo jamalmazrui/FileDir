@@ -22,9 +22,9 @@ blind developer for people who work by keyboard and screen reader.
 
 - **A folder is a list.** Up and down arrows move through it, folders first,
   then files. Home and End go to the ends. Typing letters jumps to a name.
-- **Tags.** You mark any set of items and then act on all of them at once.
+- **Marks.** You mark any set of items and then act on all of them at once.
   Copy, move, delete, zip, print, mail, convert to text: each works on the
-  tagged items, or on the current item when nothing is tagged.
+  marked items, or on the current item when nothing is marked.
 - **Questions you can ask.** One key each for the name, the size, the date, the
   type, the full path, how far through the list you are, what the clipboard
   holds, and what is inside the current file.
@@ -35,14 +35,14 @@ blind developer for people who work by keyboard and screen reader.
 - **Speech that adds rather than repeats.** FileDir speaks through JAWS, then
   NVDA, then a Windows notification that Narrator reads. It says only what your
   screen reader does not already say.
-- **Conversion between formats, in batches.** Tag files, press Shift+O, pick
+- **Conversion between formats, in batches.** Mark files, press Shift+O, pick
   what they should become. Documents, audio, video and pictures all convert,
   and PDFs keep their headings, lists and tables. No Microsoft Office needed.
 - **Naming files by what is inside them.** Control+Shift+I renames to the title,
   caption or song name held in the file itself.
 - **Finding duplicates anywhere below a folder**, compared byte for byte and
   gathered into a window you can inspect and delete from.
-- **Playing media**, from the folder, the tagged files, or a play list you
+- **Playing media**, from the folder, the marked files, or a play list you
   copied — including lists of web addresses.
 - **A player of its own.** Control+Shift+H opens the Homer Player: the queue in
   a list with each track's name, presenter and length, ordering by title,
@@ -116,9 +116,9 @@ Try these in order. Each is one keystroke.
    instead of opening another.
 5. Press **Question Mark** to hear what is inside the current file. This works
    for Word, PDF, and other document formats, not only plain text.
-6. Press **Space** on two or three files to tag them, then **Shift+L** to hear
-   what you have tagged and **Shift+Y** for how many they are and how big.
-7. With those files still tagged, press **Shift+Z** to zip them, or **Shift+C**
+6. Press **Space** on two or three files to mark them, then **Shift+L** to hear
+   what you have marked and **Shift+Y** for how many they are and how big.
+7. With those files still marked, press **Shift+Z** to zip them, or **Shift+C**
    to copy them to another folder.
 8. Press **Alt+Shift+F7** to translate them into a language you name, if you
    installed Ollama. FileDir writes a translation beside each file.

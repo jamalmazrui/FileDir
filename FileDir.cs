@@ -4094,7 +4094,6 @@ refreshFolder_Helper(mdiChild);
 
 void menuEditRenameWithRegex_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-App.say("Rename with regular expression");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string[] aDirs, aFiles;
@@ -4102,7 +4101,8 @@ string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 
 string[] aFields = {"&Source", "&Target"};
 string[] aValues = {"", ""};
-ArrayList sResultList = Lbc.FieldDialog("Fields", aFields, aValues);
+// Titled with the command's name, which the screen reader announces as the dialog opens (20 October 2026).
+ArrayList sResultList = Lbc.FieldDialog("Rename with Regex", aFields, aValues);
 if (sResultList.Count == 0) return;
 string sSource = (string) sResultList[0];
 string sTarget = (string) sResultList[1];
@@ -4342,8 +4342,8 @@ if (abortInZip()) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
-App.say("Extract with regular expression");
-string sText = Lbc.InputDialog("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+// Its own title, not Mark with Regex's, which the screen reader announces as it opens (20 October 2026).
+string sText = Lbc.InputDialog("Extract with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;

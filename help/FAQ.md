@@ -47,17 +47,17 @@ which lists every command in one alphabetical list you can filter and search.
 
 ## Working With Files
 
-**What is a tag?**
+**What is a mark?**
 
-A mark you put on an item so a command acts on it. Press Space to tag or untag
+A mark you put on an item so a command acts on it. Press Space to mark or unmark
 the item you are on. Then a command like Copy, Zip, or Translate works on
-everything you tagged. With nothing tagged, a command works on the item you are
-on, so tagging is never something you have to do first.
+everything you marked. With nothing marked, a command works on the item you are
+on, so marking is never something you have to do first.
 
-**How do I tag a run of files?**
+**How do I mark a run of files?**
 
 Press F8 where the run starts, move to where it ends, and press Shift+F8. Use
-Alt+Shift+F8 to untag a range the same way.
+Alt+Shift+F8 to unmark a range the same way.
 
 **How do I see everything about a file?**
 
@@ -76,7 +76,7 @@ find, so typing a backslash finds the next folder.
 
 **What is the difference between Open and Go to?**
 
-Open makes a new window and leaves the current one alone, with its tags intact.
+Open makes a new window and leaves the current one alone, with its marks intact.
 Go to reuses the window you are in and discards it. Enter opens; hold Shift to
 go instead.
 
@@ -116,7 +116,7 @@ direct route is a little quicker; nothing is lost without it.
 
 **How do I convert a Word document to Markdown, or the other way round?**
 
-Tag the files, press Alt+Shift+K, and pick the format you want. FileDir writes
+Mark the files, press Alt+Shift+K, and pick the format you want. FileDir writes
 the converted copy beside each original and never overwrites anything.
 
 **Which formats can it read?**
@@ -198,7 +198,7 @@ Play list, Control+Shift+L, hands everything to mpv and steps out of the way:
 mpv's own window comes to the front and its keys work. The Homer Player,
 Control+Shift+H, keeps the list inside FileDir in the Homer Player, where every
 control has an Alt key and the player itself has no window at all. The sources
-are the same either way -- tagged files, a play list, or the media links in the
+are the same either way -- marked files, a play list, or the media links in the
 document you are on.
 
 **Does the Homer Player remember anything?**
@@ -225,7 +225,7 @@ come back to FileDir and press Alt+Shift+L again.
 
 **How does FileDir translate a file?**
 
-Press Alt+Shift+F7, name the language, and FileDir reads the text of every tagged
+Press Alt+Shift+F7, name the language, and FileDir reads the text of every marked
 file, translates it, and writes the result beside the original as
 `<name>.<language>.txt`. Nothing is overwritten.
 
@@ -278,7 +278,7 @@ rather than stuck.
 
 **Can I translate a whole folder at once?**
 
-That is what it is for. Tag as many files as you like and answer the language
+That is what it is for. Mark as many files as you like and answer the language
 question once.
 
 ## Updates and Problems

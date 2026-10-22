@@ -2,7 +2,7 @@
 
 [about]
 Title=7 - Convert Between Formats
-Intro=One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the tagged files, or the current one, keeping each name.
+Intro=One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the marked files, or the current one, keeping each name.
 Setup=A folder holds a Word document and a PDF.
 Homework=Convert a Markdown file of your own to a web page, then open the web page in your browser.
 
@@ -65,9 +65,9 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Tagged files convert together. I tag three Word documents with the Semicolon.
+Say=Marked files convert together. I mark three Word documents with the Semicolon.
 Key=Semicolon
-Hear=3 tagged files
+Hear=3 marked files
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
@@ -79,7 +79,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Some text files are in an old character encoding, and their accented letters come out wrong. Control plus 2, Convert Encoding, rewrites the tagged text files in the encoding you pick.
+Say=Some text files are in an old character encoding, and their accented letters come out wrong. Control plus 2, Convert Encoding, rewrites the marked text files in the encoding you pick.
 Key=Control+2
 Hear=Convert Encoding dialog
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -93,7 +93,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the tagged files to the clipboard, one after another, converting each from its own format.
+Say=Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
 Key=Shift+A
 Hear=Appended 3 files to clipboard
 Note=Confirm the wording with a live run: buildTutorials -live.

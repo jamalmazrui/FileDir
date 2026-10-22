@@ -160,11 +160,13 @@ Name: "{app}\templates"
 ; in or read beside it. Only the executable is required; every other line says
 ; skipifsourcedoesntexist so a missing optional piece does not abort the build.
 Source: "exec\{#AppExeName}"; DestDir: "{app}\exec"; Flags: ignoreversion
-Source: "FileDir.exe.config"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+; FileDir.exe.config ships from exec, where the build writes it from the authored one with PdfPig's redirects (1.88.0).
 Source: "FileDir.ico"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FileDir.manifest"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "exec\FileDirScript.dll"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "exec\*.dll"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
+; The binding redirects PdfPig's companions need, for the kit's PdfReader (1.88.0).
+Source: "exec\{#AppExeName}.config"; DestDir: "{app}\exec"; Flags: ignoreversion
 ; The conversion routes the kit's Conversion reads beside the program (kit 1.74.0).
 Source: "exec\conversions.inix"; DestDir: "{app}\exec"; Flags: ignoreversion
 Source: "exec\7z.*"; DestDir: "{app}\exec"; Flags: ignoreversion skipifsourcedoesntexist
@@ -214,6 +216,8 @@ Source: "scripts\installCommon.cmd"; DestDir: "{app}\scripts"; Flags: ignorevers
 ; [Run] -- install, update, reinstall -- and only one is ever shown.
 Source: "scripts\installExifTool.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "scripts\installFfmpeg.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
+; Whisper (20 October 2026): transcripts of recordings, through the Homer kit's conversion.
+Source: "scripts\installWhisper.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "scripts\installImageMagick.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "scripts\installModels.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "scripts\installMpv.cmd"; DestDir: "{app}\scripts"; Flags: ignoreversion skipifsourcedoesntexist
@@ -277,6 +281,13 @@ FileName: "{app}\scripts\installFfmpeg.cmd"; \
   Description: "{code:labelffmpeg}"; \
   Check: isInstallffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
+
+FileName: "{app}\scripts\installWhisper.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelWhisper}"; \
+  Check: homerFinishRuns and isInstallWhisper; \
+  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installImageMagick.cmd"; \
   Parameters: "noPause"; \
@@ -356,6 +367,13 @@ FileName: "{app}\scripts\installFfmpeg.cmd"; \
   Check: isUpdateffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
+FileName: "{app}\scripts\installWhisper.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelWhisper}"; \
+  Check: homerFinishRuns and isUpdateWhisper; \
+  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist
+
 FileName: "{app}\scripts\installImageMagick.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -426,6 +444,13 @@ FileName: "{app}\scripts\installFfmpeg.cmd"; \
   Description: "{code:labelffmpeg}"; \
   Check: isReinstallffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installWhisper.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelWhisper}"; \
+  Check: homerFinishRuns and isReinstallWhisper; \
+  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist unchecked
 
 FileName: "{app}\scripts\installImageMagick.cmd"; \
   Parameters: "noPause"; \
@@ -594,7 +619,7 @@ Type: filesandordirs; Name: "{localappdata}\FileDir\logs"
 #include HomerDev + "\Templates\HomerComponents.iss"
 
 var
-  iExifTool, iFfmpeg, iImageMagick, iMpv, iOllama, iPandoc, iPdfTools, iYtDlp: Integer;
+  iExifTool, iFfmpeg, iImageMagick, iMpv, iOllama, iPandoc, iPdfTools, iWhisper, iYtDlp: Integer;
   sActions: String;
   sPriorVersion: String;
 
@@ -612,6 +637,8 @@ begin
     '', 'reads what a recording or photo knows about itself', 'ExifTool');
   iFfmpeg := homerAdd('ffmpeg', 'Gyan.FFmpeg', 'ffmpeg',
     '', 'converts audio and video, with ffprobe', '');
+  iWhisper := homerAdd('Whisper', '', '"{pf}\Whisper\whisper-cli.exe"',
+    '{pf}\Whisper\whisper-cli.exe', 'transcribes speech', '');
   iImageMagick := homerAdd('ImageMagick', 'ImageMagick.ImageMagick', 'magick',
     '', 'converts and resizes images', 'ImageMagick');
   iMpv := homerAdd('mpv', 'shinchiro.mpv', 'mpv',
@@ -707,6 +734,10 @@ function labelffmpeg(sParam: String): String;  begin Result := homerLabel(iffmpe
 function isInstallffmpeg(): Boolean;           begin Result := homerIs(iffmpeg, 0); end;
 function isUpdateffmpeg(): Boolean;            begin Result := homerIs(iffmpeg, 1); end;
 function isReinstallffmpeg(): Boolean;         begin Result := homerIs(iffmpeg, 2); end;
+function labelWhisper(sParam: String): String;  begin Result := homerLabel(iWhisper); end;
+function isInstallWhisper(): Boolean;           begin Result := homerIs(iWhisper, 0); end;
+function isUpdateWhisper(): Boolean;            begin Result := homerIs(iWhisper, 1); end;
+function isReinstallWhisper(): Boolean;         begin Result := homerIs(iWhisper, 2); end;
 function labelImageMagick(sParam: String): String;  begin Result := homerLabel(iImageMagick); end;
 function isInstallImageMagick(): Boolean;           begin Result := homerIs(iImageMagick, 0); end;
 function isUpdateImageMagick(): Boolean;            begin Result := homerIs(iImageMagick, 1); end;
@@ -781,6 +812,7 @@ begin
   addAction(homerOutcomeLine(impv));
   addAction(homerOutcomeLine(iOllama));
   addAction(homerOutcomeLine(iPandoc));
+  addAction(homerOutcomeLine(iWhisper));
   addAction(homerOutcomeLine(iPdfTools));
   addAction(homerOutcomeLine(iYtDlp));
   addAction(homerModelOutcomeLine('qwen2.5:7b', 'translates text', 'about 4.7 GB'));

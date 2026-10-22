@@ -60,7 +60,7 @@ Hear=FileDir, List box
 
 [step]
 
-Say=FileDir is one instance: Alt plus Control plus F never opens a second copy, it brings the one forward. The window it brings forward is the last folder you were in, with its tags as you left them.
+Say=FileDir is one instance: Alt plus Control plus F never opens a second copy, it brings the one forward. The window it brings forward is the last folder you were in, with its marks as you left them.
 Key=
 Hear=
 
@@ -84,7 +84,7 @@ Hear=
 
 [step]
 
-Say=What the scripts give. With the screen reader scripts installed, the reader's own commands know FileDir's list: the line is read with its marks said as words, tagged and folder, rather than as symbols.
+Say=What the scripts give. With the screen reader scripts installed, the reader's own commands know FileDir's list: the line is read with its marks said as words, marked and folder, rather than as symbols.
 Key=
 Hear=
 

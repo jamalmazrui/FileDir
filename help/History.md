@@ -4,6 +4,13 @@
 
 ## 20 October 2026 -- Transcripts and speech through the Homer kit
 
+- **The build finds the Visual Studio Build Tools' compiler.** Its paths said Buildscripts for BuildTools, so it fell back to the older .NET Framework compiler; it now uses Roslyn, as every Homer app does.
+- **PDFs are read with the Homer kit's own PDF reader,** as in every Homer app, keeping a tagged PDF's structure and reading an untagged one by its layout. The build fetches PdfPig by itself. It needs HomerDev 1.88.0 or later.
+- **The guide's Converting Between Formats says what conversion does now:** transcripts of audio and video, documents spoken aloud, described video with HomerScribe, Excel workbooks written with every value kept, and web pages laid out for a screen reader, all through the Homer kit, the same in every Homer app. It no longer says a spreadsheet cannot be written, or that 2htm converts Office files and PDF.
+- **The installer offers Whisper,** which writes the transcripts, beside ffmpeg.
+- **Mark is Semicolon in the guide too,** no longer Shift+NumPad5, a JAWS key.
+- **Settings and regex commands named as they are now:** the guide and walk 1 named Configuration Options on Alt+Shift+C, which is Folder to Clipboard now; they name Edit Settings, Alt+Shift+E, and Edit Settings File, Alt+Shift+F2, in place of Manual Options. Rename with Regex and Extract with Regex no longer announce their old names, and their dialogs carry their own titles, where Rename's said Fields and Extract's said Mark with Regex.
+- **Mark, everywhere:** the guide, Hotkeys, FAQ, ReadMe, announcement, every command description and every spoken tutorial now say mark, marked and unmark, the suite's words, where some still said tag. Walk 4 is now Mark Files and Copy Them; the build retires the old walk file. The release tags in the developer guide keep their own meaning.
 - **Web pages in the Homer page form,** as every Homer app makes them: one heading for the title, the page's parts marked for a screen reader, and pictures carried inside the page. The build needs HomerDev 1.87.1 or later.
 - **A recording converts to a transcript, and a document to speech,** through the Homer kit's conversion, which FileDir shares with every Homer app: Whisper transcribes on your computer, and Windows' own voice speaks.
 - **The build needs HomerDev 1.84.0 or later.**

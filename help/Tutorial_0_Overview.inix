@@ -51,7 +51,7 @@ Hear=
 
 [step]
 
-Say=tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
+Say=marking marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
 Key=
 Hear=
 
@@ -110,9 +110,9 @@ Hear=Arrowing a folder, jumping to a file by name, and opening it.
 
 [step]
 
-Say=Four, Tag Files and Copy Them.
+Say=Four, Mark Files and Copy Them.
 Key=
-Hear=The semicolon tags; a command then acts on every tagged file at once.
+Hear=The semicolon marks; a command then acts on every marked file at once.
 
 [step]
 

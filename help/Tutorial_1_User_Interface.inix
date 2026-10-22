@@ -46,16 +46,16 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Tagging marks the files a command will act on. The Semicolon tags the current item, and a greater-than sign before a name means it is tagged.
+Say=Marking marks the files a command will act on. The Semicolon marks the current item, and a greater-than sign before a name means it is marked.
 Key=Semicolon
-Hear=Tagged
+Hear=Marked
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=The Slash untags it again. Control plus A tags everything, and Control plus Shift plus A untags everything.
+Say=The Slash untags it again. Control plus A marks everything, and Control plus Shift plus A untags everything.
 Key=Slash
-Hear=Untagged
+Hear=Unmarked
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
@@ -137,7 +137,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 Say=Now Shift plus Z only says what it would do.
 Key=Shift+Z
-Hear=Shift plus Z, Zip, add current or tagged files to zip archive
+Hear=Shift plus Z, Zip, add current or marked files to zip archive
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
@@ -149,7 +149,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Two settings are worth knowing now. Configuration Options, Alt plus Shift plus C, names your word processor, editor and player. Alt plus Shift plus R decides whether deleting sends to the Recycle Bin.
+Say=Two settings are worth knowing now. Edit Settings, Alt plus Shift plus E, names your word processor, editor and player. Alt plus Shift plus R decides whether deleting sends to the Recycle Bin.
 Key=Alt+Shift+R
 Hear=Recycle on
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -167,7 +167,7 @@ Hear=F2, or Shift plus R
 
 [step]
 
-Say=Copy the tagged items to another folder.
+Say=Copy the marked items to another folder.
 Key=
 Hear=Shift plus C
 

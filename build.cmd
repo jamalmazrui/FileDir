@@ -113,7 +113,7 @@ rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
 rem 1.65.3: the kit's MediaPlayer.cs, with the move of the player's settings.
-set "kitNeeded=1.87.1"
+set "kitNeeded=1.88.2"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -198,6 +198,8 @@ set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Conversion.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\ConversionMedia.cs""
 rem ConversionPage.cs too (kit 1.87.1): every web page in the Homer page form, as in every app.
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\ConversionPage.cs""
+rem ConversionPdf.cs and PdfReader.cs (kit 1.88.0): PDFs read with the kit's own reader, as in every app.
+set "homerSources=!homerSources! "!homerDev!\exec\CSharp\ConversionPdf.cs" "!homerDev!\exec\CSharp\PdfReader.cs""
 rem Voice.cs too (kit 1.84.0): ConversionMedia transcribes speech through Voice.transcribe.
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Voice.cs""
 set "homerSources=!homerSources! "!homerDev!\exec\CSharp\Table.cs""
@@ -312,13 +314,13 @@ if defined jsc if exist "FileDir.js" (
 
 rem ---- locate the compiler ------------------------------------------
 set "csc="
-if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\Buildscripts\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files (x86)\Microsoft Visual Studio\2022\Buildscripts\MSBuild\Current\Bin\Roslyn\csc.exe"
-if not defined csc if exist "C:\Program Files\Microsoft Visual Studio\2022\Buildscripts\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files\Microsoft Visual Studio\2022\Buildscripts\MSBuild\Current\Bin\Roslyn\csc.exe"
+if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
+if not defined csc if exist "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
 if not defined csc if exist "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe"
 if not defined csc if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe"
 if not defined csc if exist "C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\Roslyn\csc.exe"
 if not defined csc if exist "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\Roslyn\csc.exe"
-if not defined csc if exist "C:\Program Files (x86)\Microsoft Visual Studio\2019\Buildscripts\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files (x86)\Microsoft Visual Studio\2019\Buildscripts\MSBuild\Current\Bin\Roslyn\csc.exe"
+if not defined csc if exist "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe" set "csc=C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
 if not defined csc if exist "%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\csc.exe" set "csc=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
 if not defined csc (
   echo ERROR: no C# compiler was found. Install the Visual Studio Build Tools:
@@ -435,6 +437,45 @@ for %%L in (Ude.dll ICSharpCode.SharpZipLib.dll Tektosyne.dll FileAssociation.dl
     goto :failed
   )
 )
+
+rem ---- PdfPig, for the kit's own PdfReader (kit 1.88.0) -------------------
+rem Every converting Homer app reads a PDF with the kit's PdfReader, the one technique;
+rem PdfPig (Apache 2.0) is what it reads with. The kit's getPdfPig fetches it, pinned, with
+rem every assembly it needs, into exec, and writes the program's .exe.config with the binding
+rem redirects they need -- HomerScribe's proven way. nuget.exe is used when present, and
+rem nuget.org directly when not.
+where nuget >nul 2>&1
+if not errorlevel 1 (
+  >> "%log%" echo Asking nuget for PdfPig and its dependencies
+  nuget install PdfPig -Version 0.1.16 -OutputDirectory work\packages -ExcludeVersion -NonInteractive -DependencyVersion Highest >> "%log%" 2>&1
+)
+rem The kit's own copy is run, not the one refreshed into scripts: some builds refresh their
+rem kit scripts after compiling, when this step has already run (2htm, FileDir, 22 October 2026).
+if not exist "!homerDev!\scripts\getPdfPig.ps1" (
+  echo The kit has no scripts\getPdfPig.ps1. Update HomerDev to !kitNeeded! or later.
+  >> "%log%" echo ERROR: !homerDev!\scripts\getPdfPig.ps1 missing
+  goto :failed
+)
+rem FileDir authors its own FileDir.exe.config; getPdfPig starts from it and adds the redirects.
+powershell -NoProfile -ExecutionPolicy Bypass -File "!homerDev!\scripts\getPdfPig.ps1" -App "%app%" -Base "%app%.exe.config" >> "%log%" 2>&1
+>> "%log%" echo Ran: getPdfPig, exit code !errorlevel!
+set "pdfDll="
+if exist "exec\pdfpig.name" set /p pdfDll=<exec\pdfpig.name
+if not defined pdfDll (
+  echo PdfPig could not be found or fetched, so PDFs could not be read. The log says what was tried.
+  >> "%log%" echo ERROR: PdfPig could not be found or fetched
+  goto :failed
+)
+if not exist "exec\%app%.exe.config" (
+  echo %app%.exe.config was not written, so PDFs would fail at run time. The log says why.
+  >> "%log%" echo ERROR: exec\%app%.exe.config missing
+  goto :failed
+)
+for %%F in (exec\*PdfPig*.dll) do set "extraRefs=!extraRefs! /reference:"%%~fF""
+rem The companions are named bare, so each is found in exec by its full path there; %%~fF
+rem would resolve a bare name against the project folder (BatCon's first build, 22 October 2026).
+for %%F in (Microsoft.Bcl.HashCode.dll System.Buffers.dll System.Memory.dll System.Numerics.Vectors.dll System.Runtime.CompilerServices.Unsafe.dll System.ValueTuple.dll) do if exist "exec\%%F" set "extraRefs=!extraRefs! /reference:"%CD%\exec\%%F""
+>> "%log%" echo PdfPig: !pdfDll! and its companions referenced from exec
 :noUde
 
 rem The tools below are PROGRAMS rather than assemblies, so they are not
@@ -570,7 +611,9 @@ rem source, not output, and the installer ships it. It is where a runtime
 rem version or an assembly binding redirect goes.
 if defined useConfigFile if not exist "%app%.exe.config" echo NOTE: no %app%.exe.config here; the program will take the runtime defaults.>> "%log%"
 rem The config is read from beside the program, and the program is in exec.
-if exist "%app%.exe.config" copy /y "%app%.exe.config" "exec\%app%.exe.config" >nul && echo Copied %app%.exe.config beside the program.>> "%log%"
+rem Since 1.88.0 getPdfPig writes exec\%app%.exe.config from the authored one, with PdfPig's
+rem redirects added, so the copy runs only if that did not happen; copying over it would drop them.
+if exist "%app%.exe.config" if not exist "exec\%app%.exe.config" copy /y "%app%.exe.config" "exec\%app%.exe.config" >nul && echo Copied %app%.exe.config beside the program.>> "%log%"
 
 rem ---- documentation -------------------------------------------------
 rem Every .md ships with a matching .htm. Pandoc writes them when it is
@@ -643,7 +686,7 @@ rem installScreenReaderSupport, the tutorial tools, tidy, check, push,
 rem release, unpushed and finish. installModels.cmd is the app's own, since it
 rem names the app's models.
 if not exist "scripts" mkdir "scripts"
-for %%F in (buildTutorials.cmd buildTutorials.ps1 check.cmd check.py checkTutorial.cmd checkTutorial.py finish.cmd fixEncoding.cmd fixEncoding.py installCommon.cmd installOllama.cmd installScreenReaderSupport.cmd kind.cmd kind.py makeTutorials.cmd makeTutorials.py push.cmd release.cmd release.ps1 tidy.cmd tidy.py unpushed.cmd unpushed.py) do (
+for %%F in (buildTutorials.cmd buildTutorials.ps1 check.cmd check.py checkTutorial.cmd checkTutorial.py finish.cmd fixEncoding.cmd fixEncoding.py getPdfPig.cmd getPdfPig.ps1 installCommon.cmd installOllama.cmd installScreenReaderSupport.cmd installWhisper.cmd kind.cmd kind.py makeTutorials.cmd makeTutorials.py push.cmd release.cmd release.ps1 tidy.cmd tidy.py unpushed.cmd unpushed.py) do (
   if exist "%homerDev%\scripts\%%F" copy /y "%homerDev%\scripts\%%F" scripts\ >nul
 )
 rem A RETIRED TOP-LEVEL FOLDER (9 October 2026): FileDir keeps its Quick folder
@@ -680,6 +723,13 @@ rem is its home now.
 rem Hotkeys.inix lives in configs; a copy left at the top from the layout before
 rem the kit still named the old Alt+Control timer keys, and the kit's check read it.
 if exist "Hotkeys.inix" if exist "configs\Hotkeys.inix" del /q "Hotkeys.inix" && echo Removed the old top-level Hotkeys.inix; configs\Hotkeys.inix is the one the build reads>> "%log%"
+rem Walk 4 was renamed from Tag to Mark (20 October 2026), with the suite's word; the old file,
+rem which unzipping a new copy does not delete, is retired so it is neither spoken nor shipped.
+if exist "help\Tutorial_4_Tag_Files_and_Copy_Them.inix" (
+  if not exist "notes\retired" mkdir "notes\retired"
+  move /y "help\Tutorial_4_Tag_Files_and_Copy_Them.inix" "notes\retired\" >nul 2>&1
+  >> "%log%" echo Retired: help\Tutorial_4_Tag_Files_and_Copy_Them.inix, renamed Tutorial_4_Mark_Files_and_Copy_Them.inix
+)
 for %%F in (tagRelease.cmd tagRelease.ps1 tagRelease_README.md) do if exist "%%F" if exist "scripts\release.ps1" del /q "%%F" && echo Removed the old top-level %%F>> "%log%"
 rem GIT STILL SPELLS THREE NAMES THE OLD WAY -- Build.cmd,
 rem Build.ps1 and FileDir_Setup.iss -- because Windows' git treats a

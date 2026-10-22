@@ -14,7 +14,7 @@ MIT License
 - [Go to Commands](#go-to-commands)
 - [Navigate Commands](#navigate-commands)
 - [Query Commands](#query-commands)
-- [Tag Commands](#tag-commands)
+- [Mark Commands](#mark-commands)
 - [Transfer Commands](#transfer-commands)
 - [Miscellaneous Commands](#miscellaneous-commands)
 - [What Is Inside a File](#what-is-inside-a-file)
@@ -86,7 +86,7 @@ Since the number of possible FileDir commands is large, involving nearly every l
 
 The standard environment of FileDir is a view of items in a particular folder of the computer's file system. The title of the window says "FileDir" followed by the path and name of the folder being viewed. Below the title bar is a list of items contained in the folder, one item per line, folder items first, then file items after. The date and time of the current item, its size, the sort order, and filter specification (if any) are displayed on the status line. This may be reviewed with Alt+Z or a screen reader-specific command such as Insert+PageDown in JAWS. Note that the size of a folder item will be -1 until a Size or Yield query causes it to be calculated (by recursively summing the sizes of all contained files and subfolders). On the status line, the size is expressed in an abbreviated manner using K for kilobytes, M for megabytes, or G for gigabytes.
 
-At any time, a single file or folder item has keyboard focus, which may be called the current item -- the location of the PC cursor in Jaws terminology. At any time, zero or more items may be tagged, that is, marked in a way that makes them available for further action by commands that can act on multiple items at once. Note that the focused or current item may not be tagged: focus and tagged state are independent. To remind you that a command may affect multiple, tagged files, the word "tagged" is included as part of its menu name. Conversely, command names without this word apply regardless of tagged state, e.g., to the focused item only, or independent of focus and tagged state.
+At any time, a single file or folder item has keyboard focus, which may be called the current item -- the location of the PC cursor in Jaws terminology. At any time, zero or more items may be marked, that is, marked in a way that makes them available for further action by commands that can act on multiple items at once. Note that the focused or current item may not be marked: focus and marked state are independent. To remind you that a command may affect multiple, marked files, the word "marked" is included as part of its menu name. Conversely, command names without this word apply regardless of marked state, e.g., to the focused item only, or independent of focus and marked state.
 
 FileDir implements the list of items as a standard Windows ListBox control. This means, for example, that the up and down arrow keys navigate through the list, and the Home and End keys move focus to the top and bottom of the list, respectively.
 
@@ -96,17 +96,17 @@ Since initial letter navigation works the same whether lower or upper case lette
 
 This command needs more information to complete the copy operation, so it prompts for a target folder. It remembers the previous input, if any, which can be accepted by simply pressing Enter. To provide another value instead, type it, replacing other text, and press Enter to activate the default, OK button. You can also pick a folder from a standard tree control by activating the Browse button. Other buttons let you pick a folder from one of three listboxes: directories open in current windows, those opened during this FileDir session, or those with shortcuts in the Quick folder.
 
-If no items are tagged, the command assumes you want to process the current, focused item. With one ore more tagged items, the command performs a batch operation. If you want to verify what files are tagged before copying, use the Shift+L hot key to list tagged items. Use Shift+Space instead to say either the tagged items, or the current item if there are no tags.
+If no items are marked, the command assumes you want to process the current, focused item. With one ore more marked items, the command performs a batch operation. If you want to verify what files are marked before copying, use the Shift+L hot key to list marked items. Use Shift+Space instead to say either the marked items, or the current item if there are no marks.
 
-A > symbol following an item indicates that it is tagged (putting this symbol after rather than before preserves initial letter navigation in the ListBox. The > symbol is also the key (Shift+Period) to tag an item and automatically move to the next one in the list. The < symbol untags and also moves ahead, thereby allowing you to efficiently go through a directory list and selectively tag items. This tagging approach has benefits over selection in Windows Explorer, e.g., tags are not lost by an accidental key press that moves focus.
+A > symbol following an item indicates that it is marked (putting this symbol after rather than before preserves initial letter navigation in the ListBox. The > symbol is also the key (Shift+Period) to mark an item and automatically move to the next one in the list. The < symbol untags and also moves ahead, thereby allowing you to efficiently go through a directory list and selectively mark items. This marking approach has benefits over selection in Windows Explorer, e.g., marks are not lost by an accidental key press that moves focus.
 
 FileDir uses a "Multiple Document Interface" (MDI), so any number of directory views may be opened, cycled among with Control+Tab, or closed with Control+F4. It is also a "single instance" application, so the desktop shortcut key, Alt+Control+F, activates the same program when FileDir is found in memory, rather than opening a new copy.
 
 Some commands differ in whether they open a new window ore re-use the existing one. Commands with "Go to" in the name re-use the existing window, whereas "Open" commands start a new one.
 
-Extra speech is provided through a UIA notification that JAWS, NVDA, and Narrator announce. These are intended to be comprehensible chunks of targeted information. For example, pressing Shift+Y gives the "yield" or count and combined size of tagged folder and file items in the current directory view. Speech of this nature can be efficient for screen reader users as opposed to, say, a message box that generates additional screen reader speech describing the dialog, and then has to be dismissed with another key, triggering more screen reader speech.
+Extra speech is provided through a UIA notification that JAWS, NVDA, and Narrator announce. These are intended to be comprehensible chunks of targeted information. For example, pressing Shift+Y gives the "yield" or count and combined size of marked folder and file items in the current directory view. Speech of this nature can be efficient for screen reader users as opposed to, say, a message box that generates additional screen reader speech describing the dialog, and then has to be dismissed with another key, triggering more screen reader speech.
 
-Typically, a key combination using Alt or Control rather than Shift performs another variation of the command. For example, Shift+L lists all tagged items, Control+L lists all items regardless of tagged state, and Alt+L lists all files, but not folders.
+Typically, a key combination using Alt or Control rather than Shift performs another variation of the command. For example, Shift+L lists all marked items, Control+L lists all items regardless of marked state, and Alt+L lists all files, but not folders.
 
 FileDir commands often include verbal confirmation during execution, e.g., announcing the name of each file before a copy attempt and the message "Done!" after batch processing is complete.
 
@@ -116,21 +116,21 @@ The default sort order is reverse date/time, meaning that most recently modified
 
 Since there are numerous FileDir commands beyond those in Windows Explorer, learning the software may seem daunting at first. Getting started is not hard, however, since FileDir works similarly to Windows Explorer. You can then learn additional commands according to your time and needs. Remember that you can review this documentation at any time by pressing F1. You can also get a list of commands by pressing Alt+Shift+H for a hotkey summary. If you have trouble remembering the key or menu associated with a command, try the Alternate Menu command, Alt+F10, which lets you pick a command from a complete, alphabetized list. Use the Key Describer command, Control+F1, to toggle a mode in which pressing a key describes its action. If you switch to another application window, the mode is automatically turned off.
 
-FileDir commands can be subdivided into several categories, related to the following conceptual labels: edit, find, go to, navigate, query, select, transfer, and miscellaneous. You can edit file attributes, find items by textual match, go to different folders, navigate among items in a folder, tag files for further action, transfer them to various places, and do other, miscellaneous tasks. The sections below explain these categories.
+FileDir commands can be subdivided into several categories, related to the following conceptual labels: edit, find, go to, navigate, query, select, transfer, and miscellaneous. You can edit file attributes, find items by textual match, go to different folders, navigate among items in a folder, mark files for further action, transfer them to various places, and do other, miscellaneous tasks. The sections below explain these categories.
 
 ## Edit Commands
 
 Edit commands change the content, name, or other attribute of an item. Press Alt+Enter for the standard Properties dialog, like in Windows Explorer.
 
-Press Control+W to load the current file into a word processor. Microsoft Word is the default, but a different one may be configured with the Configuration Options command, Alt+Shift+C. Press Control+T to open it in a text editor instead, the configurable default being EdSharp, available at [EdSharp on GitHub](https://github.com/JamalMazrui/EdSharp)
+Press Control+W to load the current file into a word processor. Microsoft Word is the default, but a different one may be configured with the Edit Settings command, Alt+Shift+E. Press Control+T to open it in a text editor instead, the configurable default being EdSharp, available at [EdSharp on GitHub](https://github.com/JamalMazrui/EdSharp)
 
 If another word processor or text editor is to be used, its full path may need to be specified if the executable is not located on the Windows search path. Such configuration options may also be manually edited, since they are stored in a standard .ini file, FileDir.ini, with an optional FileDir.inix overlay, located in the FileDir folder under your Windows Application Data directory.
 
-The Rename command, Shift+R or F2, lets you edit the name of the current file or folder item. Control+R lets you rename multiple items using the * and ? wildcard characters. A DOS command is used behind the scenes to accomplish this, so all items in the current directory are processed -- regardless of their tagged state within FileDir. You can use Control+Shift+R to rename tagged items based on a "regular expression" -- a powerful but complex syntax that is beyond the scope of this guide (Google will find many tutorials). Control+Shift+I renames files to the initial line of text inside them (if found), which is often a convenient way of making the name of a file the same as the title of the document inside.
+The Rename command, Shift+R or F2, lets you edit the name of the current file or folder item. Control+R lets you rename multiple items using the * and ? wildcard characters. A DOS command is used behind the scenes to accomplish this, so all items in the current directory are processed -- regardless of their marked state within FileDir. You can use Control+Shift+R to rename marked items based on a "regular expression" -- a powerful but complex syntax that is beyond the scope of this guide (Google will find many tutorials). Control+Shift+I renames files to the initial line of text inside them (if found), which is often a convenient way of making the name of a file the same as the title of the document inside.
 
-Like the greater than symbol meaning tag, special symbols are associated with folder and file attributes. A backslash symbol after an item indicates that it is a folder rather than a file. A right parenthesis after a list item means that the Hidden attribute is set. As a memory aid, you may think of parenthesis hiding something from full view. The RightParen key, Shift+0, sets the Hidden attribute of the current or tagged items. The LeftParen key does the reverse, removing the Hidden attribute. Similarly, the right bracket symbol means that an item has the ReadOnly attribute set. You may think of a bracket protecting something from being modified. The LeftBracket key removes the ReadOnly attribute. Finally, the right brace symbol means the System attribute is set. You may think of a brace as a character used in programming systems. The LeftBrace key removes the System attribute.
+Like the greater than symbol meaning mark, special symbols are associated with folder and file attributes. A backslash symbol after an item indicates that it is a folder rather than a file. A right parenthesis after a list item means that the Hidden attribute is set. As a memory aid, you may think of parenthesis hiding something from full view. The RightParen key, Shift+0, sets the Hidden attribute of the current or marked items. The LeftParen key does the reverse, removing the Hidden attribute. Similarly, the right bracket symbol means that an item has the ReadOnly attribute set. You may think of a bracket protecting something from being modified. The LeftBracket key removes the ReadOnly attribute. Finally, the right brace symbol means the System attribute is set. You may think of a brace as a character used in programming systems. The LeftBrace key removes the System attribute.
 
-Press Exclamation Point (! or Shift+1) to stamp the current or tagged items with a different modification date and time. FileDir prompts for numeric values for the year, month, day, hour, minute, and second, defaulting to those of the current file or folder item.
+Press Exclamation Point (! or Shift+1) to stamp the current or marked items with a different modification date and time. FileDir prompts for numeric values for the year, month, day, hour, minute, and second, defaulting to those of the current file or folder item.
 
 ## Find Commands
 
@@ -150,7 +150,7 @@ Substitute the O key for similar commands where a new window is opened rather th
 
 Press Alt plus a digit between 1 and 9 to quickly open the drive whose letter is in that numeric position of the alphabet. For example, Alt+1 opens Drive A, and Alt+3 opens Drive C.
 
-There are a few pairs of Open and Go To commands. Open commands preserve the current directory view, including its tagged states, and activate a different directory view in another window. Go To commands reuse the current window, instead, for another directory view. In the following pairs of commands, the shifted version is a Go To command, requiring more conscious effort due to a more destructive nature, since it discards the current directory view. This difference is similar to how Shift+Delete is more destructive then Delete, since the shifted version does not permit recovery from the recycle bin. Enter opens a subfolder whereas Shift+Enter goes to it. Backspace opens the parent folder whereas Shift+Backspace goes to it. Backslash opens the root folder of the current drive whereas Shift+Backslash goes to it. As before, FileDir checks if a view of the target directory already exists, and if so, activates that window rather than creating another for the same directory.
+There are a few pairs of Open and Go To commands. Open commands preserve the current directory view, including its marked states, and activate a different directory view in another window. Go To commands reuse the current window, instead, for another directory view. In the following pairs of commands, the shifted version is a Go To command, requiring more conscious effort due to a more destructive nature, since it discards the current directory view. This difference is similar to how Shift+Delete is more destructive then Delete, since the shifted version does not permit recovery from the recycle bin. Enter opens a subfolder whereas Shift+Enter goes to it. Backspace opens the parent folder whereas Shift+Backspace goes to it. Backslash opens the root folder of the current drive whereas Shift+Backslash goes to it. As before, FileDir checks if a view of the target directory already exists, and if so, activates that window rather than creating another for the same directory.
 
 If you would prefer Go To behavior without having to press Shift, then toggle the Recycle with Delete setting with Alt+Shift+R. The more destructive setting is also more convenient (no delay in waiting for items to be copied to the recycle bin). It requires a deliberate change from the default to make sure that is how you want to operate. In that case, the Shift version of a command is for Open rather than Go To.
 
@@ -178,7 +178,7 @@ FileDir supports the concept of a "virtual folder" that does not exist as a phys
 
 Navigate commands change the focus within a folder, based on a fixed increment or boundary. Press Home to navigate to the beginning or first item, or End for the end or last one. If the current folder contains subfolders, then the beginning item will be a folder since they always appear before files. Press Alt+B to go to the beginning file, skipping over folder items before it.
 
-A group of shifted letter keys navigate similarly within the set of tagged items: Shift+B for Beginning tagged, Shift+E for End tagged, Shift+N for Next tagged, and Shift+P for Previous tagged (if any). These commands let you review or inspect the subset of tagged items. Shift+L also may be useful to list all tagged items.
+A group of shifted letter keys navigate similarly within the set of marked items: Shift+B for Beginning marked, Shift+E for End marked, Shift+N for Next marked, and Shift+P for Previous marked (if any). These commands let you review or inspect the subset of marked items. Shift+L also may be useful to list all marked items.
 
 Press Shift+I for Initial Change, which jumps to the next item that starts with a different letter. Similarly, press Shift+X for Extension Change, which jumps to the next file with a different extension. These commands are most useful when the sort order is by alpha/name or extension.
 
@@ -186,7 +186,7 @@ Press Shift+I for Initial Change, which jumps to the next item that starts with 
 
 Query commands announce aspects of the current environment via speech output. Press Shift+F4 (or Alt+NumPad5) to hear the titles of all FileDir windows currently open.
 
-Press Apostrophe for the name of the current file or folder item, as well as its tagged state if set. Press Shift+Apostrophe for the name of the parent folder containing the current item. Press Control+Apostrophe for the path of the parent folder.
+Press Apostrophe for the name of the current file or folder item, as well as its marked state if set. Press Shift+Apostrophe for the name of the parent folder containing the current item. Press Control+Apostrophe for the path of the parent folder.
 
 For example, if the current item is the file whose path is
 
@@ -282,25 +282,25 @@ Audio sample rate
 
 Channels
 
-Press Control+L to list all items in the current folder, or Shift+L for those tagged. Press Alt+L to list files but not folders.
+Press Control+L to list all items in the current folder, or Shift+L for those marked. Press Alt+L to list files but not folders.
 
-Press Y for the yield, or count and combined size, of items in the current folder. Press Shift+Y for those tagged or Alt+Y for files only. Press Control+Shift+Y for the total size and free space on the current drive. Press Alt+Shift+Y for operating system information, including the Windows version, physical memory, and virtual memory.
+Press Y for the yield, or count and combined size, of items in the current folder. Press Shift+Y for those marked or Alt+Y for files only. Press Control+Shift+Y for the total size and free space on the current drive. Press Alt+Shift+Y for operating system information, including the Windows version, physical memory, and virtual memory.
 
 Press % (Shift+5) for the Percent Through command, which indicates the relative position of the current item in the list, e.g., "6 of 20 items, 30% through." If you are sequentially examining the files in a folder or ZIP archive, this gives you a sense of how much is done and what remains. Use the Filter Query command, Star (Shift+8), to quickly check the current sort order and filter specification.
 
-## Tag Commands
+## Mark Commands
 
-Tag commands increase or decrease the subset of items that are marked for further action by actions that can operate on multiple items at once. Press Control+A to tag all file and folder items, or Control+Shift+A to clear all tags. Press Alt+Period (associated with the grater than symbol) to select all files but not folders. Alt+Shift+Period tags duplicate files -- any file with the same content as a prior one in the directory list. This may be useful for deleting after downloading files, where some are the same except for their name or date. Control+Shift+Period tags files that match a regular expression you specify.
+Mark commands increase or decrease the subset of items that are marked for further action by actions that can operate on multiple items at once. Press Control+A to mark all file and folder items, or Control+Shift+A to clear all marks. Press Alt+Period (associated with the grater than symbol) to select all files but not folders. Alt+Shift+Period marks duplicate files -- any file with the same content as a prior one in the directory list. This may be useful for deleting after downloading files, where some are the same except for their name or date. Control+Shift+Period marks files that match a regular expression you specify.
 
-Press Alt+Comma to untag all items except the current one. Control+I inverts all tagged states, untagging items that were tagged and vice versa. Spacebar toggles the tagged state of the current item. Press semicolon (;) to tag the current item regardless of its previous state, or ForwardSlash (/) to untag it.
+Press Alt+Comma to unmark all items except the current one. Control+I inverts all marked states, untagging items that were marked and vice versa. Spacebar toggles the marked state of the current item. Press semicolon (;) to mark the current item regardless of its previous state, or ForwardSlash (/) to unmark it.
 
-To navigate and make tag decisions together, use the GreaterThan key (Shift+.) to tag and go to the next item, or the LessThan key (Shift+,) to untag instead. Alternatively, use arrow keypad commands similar to Windows Explorer. For example, press Shift+DownArrow for Tag and Next, or Shift+UpArrow for Tag and Previous. Press Shift+End for Tag to Bottom, or Shift+Home for Tag to Top. Shift+NumPad5 tags the current item.
+To navigate and make mark decisions together, use the GreaterThan key (Shift+.) to mark and go to the next item, or the LessThan key (Shift+,) to unmark instead. Alternatively, use arrow keypad commands similar to Windows Explorer. For example, press Shift+DownArrow for Mark and Next, or Shift+UpArrow for Mark and Previous. Press Shift+End for Mark to Bottom, or Shift+Home for Mark to Top. Semicolon marks the current item.
 
-Adding the Alt modifier key performs the same actions except for untagging rather than tagging. Thus, Alt+Shift+NumPad5 untags the current item, Alt+Shift+Home untags to the top of the list, Alt+Shift+End untags to the bottom, Alt+Shift+DownArrow untags en route to the next, and Alt+Shift+UpArrow untags en route to the previous.
+Adding the Alt modifier key performs the same actions except for untagging rather than marking. Thus, Alt+Shift+NumPad5 untags the current item, Alt+Shift+Home untags to the top of the list, Alt+Shift+End untags to the bottom, Alt+Shift+DownArrow untags en route to the next, and Alt+Shift+UpArrow untags en route to the previous.
 
-Other arrow keypad actions duplicate home row commands for navigating among tagged items. Control+Home goes to the Beginning Tagged item, like Shift+B, and Control+End goes to the End one, like Shift+E. Control+DownArrow goes to the Next Tagged item, like Shift+N, and Control+UpArrow goes to the previous one, like Shift+P.
+Other arrow keypad actions duplicate home row commands for navigating among marked items. Control+Home goes to the Beginning Marked item, like Shift+B, and Control+End goes to the End one, like Shift+E. Control+DownArrow goes to the Next Marked item, like Shift+N, and Control+UpArrow goes to the previous one, like Shift+P.
 
-Press Control+S to save tags in the current directory view, and Control+Shift+S to restore them. This could be useful if you need to temporarily change which items are tagged.
+Press Control+S to save marks in the current directory view, and Control+Shift+S to restore them. This could be useful if you need to temporarily change which items are marked.
 
 ## Transfer Commands
 
@@ -320,17 +320,17 @@ Although any archive may be viewed or extracted, it is still the case that only 
 
 Some commands work with a copy of a zipped item that is unarchived to a temporary folder as needed. This lets you use the What Content command, Question Mark, to identify the content of a file without unzipping the archive that contains it. The Run command, Entor, and Send to Word Processor or Text Editor commands, Control+W or Control+T, also work in this way.
 
-The Copy or Move Tagged commands, Shift+C or Shift+M, prompt whether to overwrite existing folders and files. You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal. You can choose to keep all targets with the same names, replace them, replace them only with updated source items, or increment source names to eliminate conflicts (e.g., ReadMe_01.txt).
+The Copy or Move Marked commands, Shift+C or Shift+M, prompt whether to overwrite existing folders and files. You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal. You can choose to keep all targets with the same names, replace them, replace them only with updated source items, or increment source names to eliminate conflicts (e.g., ReadMe_01.txt).
 
 Like Windows Explorer, Control+C, Control+X, and Control+V copy, cut, and paste file or folder items between the current directory and clipboard. FileDir enhances these commands with a plain text format in addition to the binary "drop list" that Windows Explorer uses to facilitate drag and drop transfers with a mouse. Since the clipboard can actually hold multiple formats at the same time, FileDir creates both a binary and a text format when copying with Control+C or cutting with Control+X. The text format is simply a list of file or folder paths, one per line. Thus, paths on the clipboard are simultaneously available both to applications like Windows Explorer that look for the binary format, and applications like Notepad that look for plain text.
 
 When pasting, Control+V recognizes the text format as well as the binary one. Since the text format does not indicate whether files had been copied or cut to the clipboard, this command copies, rather than moves, the originals when only text format is found. With either format, you may ensure that the originals are copied with Alt+V, or that they are moved with Alt+Shift+V.
 
-Use the Copy Append command, Alt+C, to add items to the clipboard in both binary and text formats. This lets you build a list on the clipboard from files in different directories. It also lets you build a list by pressing Alt+C when focused on each item of interest, rather than first creating a set of tagged items and then copying them as a batch.
+Use the Copy Append command, Alt+C, to add items to the clipboard in both binary and text formats. This lets you build a list on the clipboard from files in different directories. It also lets you build a list by pressing Alt+C when focused on each item of interest, rather than first creating a set of marked items and then copying them as a batch.
 
 To put a list of file names on the clipboard without preceding paths, press Control+Shift+C. To hear what files are on the clipboard, use the Quote Clipboard command, Alt+Apostrophe. Before saying each path, FileDir says "Path drop list" if it finds this binary format. Otherwise, FileDir only speaks text format -- other binary formats on the clipboard are not interpreted.
 
-Control+P sends current or tagged items to the default printer. Control+M starts a mail message with its body being the textual content of the current item. For example, pressing Control+M when a Microsoft Word document is the current item will extract its text for the message body and use its name (without extension) as the default subject. Control+Shift+M starts a message with the current or tagged items as attached files. If no items are tagged, FileDir both attaches the file and includes its text in the message body.
+Control+P sends current or marked items to the default printer. Control+M starts a mail message with its body being the textual content of the current item. For example, pressing Control+M when a Microsoft Word document is the current item will extract its text for the message body and use its name (without extension) as the default subject. Control+Shift+M starts a message with the current or marked items as attached files. If no items are marked, FileDir both attaches the file and includes its text in the message body.
 
 Use the Batch Mail command, Control+Shift+B, to individually send a message to multiple recipients (please do not use this for spam). FileDir prompts for a text file that defines a batch mail operation. The first nonblank line is assumed to be the subject of the message. The next nonblank line is the full path of a text file that contains the body. Each subsequent line that contains an @ symbol is the address of a recipient. Here is an example definition:
 
@@ -350,9 +350,9 @@ C:\My Documents\Body.txt
 
 Before sending a batch email, configure FileDir options for LogInUserName, Password (stored in an encrypted form), SenderAddress, and OutGoingServer (e.g., outgoing.verizon.net). Test the command by sending yourself mail first. This command only works with common SMTP protocol settings.
 
-Press Shift+O to output tagged files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
+Press Shift+O to output marked files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
 
-The same conversion mechanism may be used to place text on the Windows clipboard instead of creating new files. Press Shift+A to append the textual body of currently tagged files to the clipboard. They will be separated by a sequence of characters indicating a divider between sections of a composite document: a line of 10 dashes followed by a form feed (hard page break). A termination sequence says "End of Document." This command is useful for combining multiple, related files, e.g., downloaded web pages, into a single document. You can use the Clear Clipboard command, Alt+Shift+', to clear the clipboard before appending to it. The Extract with Regular Expression command, Control+Shift+E, works similarly except that you are prompted for a regular expression, and only matching text is copied.
+The same conversion mechanism may be used to place text on the Windows clipboard instead of creating new files. Press Shift+A to append the textual body of currently marked files to the clipboard. They will be separated by a sequence of characters indicating a divider between sections of a composite document: a line of 10 dashes followed by a form feed (hard page break). A termination sequence says "End of Document." This command is useful for combining multiple, related files, e.g., downloaded web pages, into a single document. You can use the Clear Clipboard command, Alt+Shift+', to clear the clipboard before appending to it. The Extract with Regex command, Control+Shift+E, works similarly except that you are prompted for a regular expression, and only matching text is copied.
 
 Alt+P queries the full path of the current item, whereas Alt+Shift+P copies it to the clipboard, e.g.,
 
@@ -360,13 +360,13 @@ C:\Documents and Settings\Owner\My Documents\My Music\MySong.mp3
 
 This may be useful so that the string is available by pressing Control+V to paste it into the open file dialog of another application. To get the short path instead, press the Tilde key (Shift plus the Grave Accent at the top left of the main keyboard). A short path contains no spaces and uses a suffix of a tilde symbol (~) and a number to abbreviate file or folder names. This may be useful when pasting into a command line, since more characters and surrounding quotes are usually needed otherwise to specify a file.
 
-Control+C copies the full path of tagged items to the clipboard, whereas Control+Shift+C copies their names only -- no preceding directories.
+Control+C copies the full path of marked items to the clipboard, whereas Control+Shift+C copies their names only -- no preceding directories.
 
 Control+Shift+P copies the full paths of all items below a subfolder item in the directory hierarchy. For example, if the My Documents directory is being viewed, and focus is on the My Music subfolder item, pressing Control+Shift+P would copy the paths of all files and subfolders under My Music. After determining what file extensions are present, FileDir prompts for which ones to include in the resulting list. Edit the choices, or just press Enter to accept them all. You can save the path list to disk with the Export Clipboard command, Alt+Shift+E, which prompts for a file name and then saves clipboard text to it.
 
 Press Control+N to create a new folder. Press Control+Shift+N to make a new copy of the current file or folder item. It will have the same name except for a unique numeric suffix after the root, e.g., plan_01.doc would be a copy of plan.doc, and plan_02.doc would be the next copy. Such a file is sometimes useful when you want to preserve the original unaltered and then make changes to a copy in the same folder.
 
-FileDir includes the capability to "put" or upload files to a directory on an FTP server, and to "get" or download from there. For private directories, a user name and password may be set either in the specific dialogs for these commands or in the Configuration Options dialog, Alt+Shift+C. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
+FileDir includes the capability to "put" or upload files to a directory on an FTP server, and to "get" or download from there. For private directories, a user name and password may be set either in the specific dialogs for these commands or in the Edit Settings dialog, Alt+Shift+E. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
 
 Use the FTP Put command, Shift+F, to upload files. FileDir prompts for an FTP directory. If the value entered does not contain the :// sequence of characters, FileDir adds an FTP:// prefix and a / suffix for more convenient typing. For example, a value of
 
@@ -396,7 +396,7 @@ Shift+Space tells you what items are currently checked. Alt+A says the address o
 
 ## Miscellaneous Commands
 
-Miscellaneous commands do not fit neatly into previous categories. Use the Configuration Options command, Alt+Shift+C, to configure FileDir options such as the word processor invoked with Control+W or the text editor invoked with Control+T. Alternatively, use the Manual Options command, Alt+Shift+M, to adjust configuration options in the designated text editor.
+Miscellaneous commands do not fit neatly into previous categories. Use the Edit Settings command, Alt+Shift+E, to configure FileDir options such as the word processor invoked with Control+W or the text editor invoked with Control+T. Alternatively, use the Edit Settings File command, Alt+Shift+F2, to adjust configuration options in the designated text editor.
 
 Extra speech messages may be toggled off -- or reactivated -- with Control+Shift+X. When off, such messages are redirected to a text file called Speech.log, which may be examined in an editing window with Alt+Shift+X. This file is initialized when FileDir starts, and the Extra Speech setting is remembered from the previous session.
 
@@ -404,9 +404,9 @@ With the optional JAWS scripts, you can toggle a speech setting of reading all o
 
 The main interface of FileDir is a ListBox containing items that are either folders or files, with folders listed first. The default order is by most recent date and time, so that a file most recently modified will appear before others and be convenient to locate. Subsequent sort order can be controlled by pressing Alt+A for alphabetic/name order, Alt+S for size order, Alt+D for date/time order, or Alt+T for type/extension order. Add the Shift key to reverse the order, e.g., Alt+Shift+S puts the largest file first (to query its precise size, press Shift+S). If you would prefer files to be listed before subfolders, change the DirsBeforeFiles configuration option to N for No.
 
-Press Alt+Shift+B to burn tagged files to a CD. An external utility is invoked that lets you pick a drive and check estimates of space before and after on the CD.
+Press Alt+Shift+B to burn marked files to a CD. An external utility is invoked that lets you pick a drive and check estimates of space before and after on the CD.
 
-The Context Menu command, Shift+F10, lets you choose an action to perform on the current file based on those available for its type/extension (in the Windows registry). Also included is the OpenWith action, by which a default program may be associated with files of this type. The Send To Menu, Control+F10, lets you choose among SendTo shortcuts (installed by various applications) to perform on the current or tagged files.
+The Context Menu command, Shift+F10, lets you choose an action to perform on the current file based on those available for its type/extension (in the Windows registry). Also included is the OpenWith action, by which a default program may be associated with files of this type. The Send To Menu, Control+F10, lets you choose among SendTo shortcuts (installed by various applications) to perform on the current or marked files.
 
 Press Control+Slash (or Control+Backslash with the JAWS scripts) to go to a command prompt in a console mode window. Its current directory will be the same as in FileDir. You can enter DOS-style commands there. Press Alt+Slash (or Alt+Backslash with JAWS) to open the current directory in Windows Explorer.
 
@@ -610,7 +610,7 @@ In the dialog that prompts for the announcement interval, another field is the s
 
 When the stop time is reached, FileDir plays some chimes and ends the timer. Such an alarm may be used either with or without intervening announcements of time intervals. A timer runs independently of other FileDir operations, so you can continue working in FileDir while using this capability.
 
-Use the Play List command, Control+Shift+L, to create a .m3u file with references of tagged items to play sequentially. Types may include .mp3, .wav, or .cda (the extension of a track on a standard audio CD). FileDir prompts for the name of the play list to create, defaulting to PlayList.m3u in the current directory. Focus is then placed on that file (if in the same directory), so you can simply press Enter to execute the play list. Note that if you want to play tracks on an audio CD, however, you need to save the play list in another directory that permits the creation of new files.
+Use the Play List command, Control+Shift+L, to create a .m3u file with references of marked items to play sequentially. Types may include .mp3, .wav, or .cda (the extension of a track on a standard audio CD). FileDir prompts for the name of the play list to create, defaulting to PlayList.m3u in the current directory. Focus is then placed on that file (if in the same directory), so you can simply press Enter to execute the play list. Note that if you want to play tracks on an audio CD, however, you need to save the play list in another directory that permits the creation of new files.
 
 Use the Environment Variables command, Control+E, to review or change such settings of Windows. Choose those of the current process, user, or system as a whole. Jump quickly to a particular variable based on its initial letter, e.g., Alt+P for the PATH setting that determines where Windows searches for an executable file that is not found in the current directory. Changes to process settings affect the current session of FileDir, but not the next time it is run. User settings take effect when you log in again. System settings take affect when you restart the computer.
 
@@ -647,7 +647,7 @@ ffmpeg and yt-dlp.
 
 ## Renaming to What Is Inside
 
-Press **Control+Shift+I** for Rename to Identify Content. It names each tagged file after
+Press **Control+Shift+I** for Rename to Identify Content. It names each marked file after
 what is inside it, looking in two places.
 
 **First, the metadata.** The title of a PDF, the song and album of an MP3, the
@@ -713,10 +713,10 @@ Window cycling is **Control+Tab** and **Control+Shift+Tab**.
 ## Tidying a Folder
 
 Three commands help with a folder that has collected copies and oddly sorted
-names. None of them deletes anything: they tag, and Delete Tagged removes what
-you tagged after asking.
+names. None of them deletes anything: they mark, and Delete Marked removes what
+you marked after asking.
 
-Press **Alt+Shift+Period** for Tag Duplicate Files. It tags every file whose
+Press **Alt+Shift+Period** for Mark Duplicate Files. It marks every file whose
 content is identical to one already in the list, keeping the first. Identical
 means byte for byte, so two files with different names but the same content are
 caught, and two files that merely look alike are not.
@@ -725,13 +725,13 @@ Press **Alt+Shift+J** for Find Duplicates in Tree. This one looks at the current
 folder *and everything under it*, and opens every duplicate it finds as a
 virtual folder. That is an ordinary FileDir window, so you can move through it,
 hear sizes and dates, read what is inside a file with Question Mark, open one to
-check, tag a range with F8, and then Delete Tagged. Only the duplicates are
-listed, never the first copy of anything, so tagging everything and deleting
+check, mark a range with F8, and then Delete Marked. Only the duplicates are
+listed, never the first copy of anything, so marking everything and deleting
 leaves exactly one of each file on disk.
 
-Press **Alt+Shift+Comma** for Tag Similar Files. It finds files that look like
+Press **Alt+Shift+Comma** for Mark Similar Files. It finds files that look like
 other versions of the same one -- content.pdf beside content-1.pdf,
-content_2.pdf and content (3).pdf -- and tags all but the largest, since a
+content_2.pdf and content (3).pdf -- and marks all but the largest, since a
 partial download is smaller than the whole. A different extension is a different
 file. Names like chapter1 and chapter2 are left alone: those are a book's
 chapters, not copies.
@@ -746,7 +746,7 @@ overwritten.
 ## Converting Between Formats
 
 Press **Shift+O** for Output Type. FileDir looks at what the file is, offers a
-short list of what it can become, and converts the tagged files, or the current
+short list of what it can become, and converts the marked files, or the current
 one, keeping each root name. The result lands beside the original and nothing is
 ever overwritten.
 
@@ -758,31 +758,47 @@ What you are offered depends on what you are on:
 - **Documents** — Word, OpenDocument, EPUB, HTML, Markdown, reStructuredText,
   LaTeX, rich text, CSV, PowerPoint, Excel — can become Word, a web page,
   Markdown, plain text, OpenDocument, rich text, EPUB, LaTeX, reStructuredText
-  or MediaWiki.
+  or MediaWiki. A document can also be **spoken**: MP3 or another audio format
+  in Windows' own voice, or a video with the speech over a plain black picture.
 - **Legacy Office files and PDF** — .doc, .ppt, .xls, .pdf — can become plain
-  text or a web page.
-- **Audio** can become MP3, M4A, WAV, FLAC, Ogg Vorbis or Opus.
+  text or a web page. A tagged PDF keeps its headings and lists; an untagged one
+  is read by its layout.
+- **Audio** can become MP3, M4A, WAV, FLAC, Ogg Vorbis or Opus, or a
+  **transcript** of what is said: plain text, Markdown, a web page, Word or PDF,
+  among others.
 - **Video** can become MP4, Matroska, WebM, QuickTime or AVI, or MP3, M4A or WAV
-  for the sound alone.
+  for the sound alone, or a transcript. With HomerScribe installed, the
+  transcript comes with a **description** of what can be seen, in the same
+  document, under its own heading.
 - **Pictures** can become PNG, JPEG, WebP, BMP, GIF, TIFF, a Windows icon or
   AVIF. With the image tools installed, iPhone photos (HEIC), camera raw files,
   SVG drawings and icons can be converted too — ffmpeg cannot read any of those.
 
 **Tables** — .inix records, .csv, .tsv, .xlsx and Markdown tables — convert
 between each other keeping their rows and columns, and become Word documents,
-web pages or OpenDocument files with the table intact. A spreadsheet can be read
-but not written; save it as .csv, which every spreadsheet opens.
+web pages or OpenDocument files with the table intact. An Excel workbook keeps
+every value exactly as it was, so a code such as 007 keeps its zeros and nothing
+turns into a formula.
 
-So converting a folder of MP4 files to MP3, or MKV to MP4, or PNG to JPEG, is
-the same three keystrokes as converting Word to Markdown. The format you last
-chose is remembered separately for each kind of file, so picking MP3 for audio
-does not become the default the next time you tag a Word document.
+So converting a folder of MP4 files to MP3, or MKV to MP4, or PNG to JPEG, or a
+recorded meeting to a Word transcript, is the same three keystrokes as
+converting Word to Markdown. The format you last chose is remembered separately
+for each kind of file, so picking MP3 for audio does not become the default the
+next time you mark a Word document.
 
-Three programs do the work and you do not have to know which: **Pandoc** for
-documents, **2htm** for the legacy Office formats and PDF that Pandoc cannot
-read, and **ffmpeg** for audio, video and pictures. A file FileDir cannot
-convert is skipped with a word saying so, and the closing count says how many
-were written, skipped and failed.
+**Every web page FileDir makes is laid out for a screen reader:** one heading for
+the title, the page's main part marked as such, its other headings beneath, and
+its pictures carried inside the page, so it reads the same wherever you open it.
+
+The Homer kit's conversion does the work, the same in every Homer app, so a file
+becomes the same thing in FileDir as in BatCon, EdSharp or DbDo. You do not have
+to know which program it uses: Pandoc for documents, Office when Pandoc cannot
+read a file, ffmpeg for audio, video and pictures, Whisper for transcripts,
+Windows' own voice for speech, and HomerScribe for described video. Transcripts
+need Whisper and ffmpeg, and speech needs ffmpeg; the FileDir installer offers
+them. Everything runs on your own computer; nothing is sent anywhere. A file
+FileDir cannot convert is skipped with a word saying so, and the closing count
+says how many were written, skipped and failed.
 
 
 ## Playing Media
@@ -794,7 +810,7 @@ list. It looks in three places, in this order:
    YouTube addresses from a mail message and press Alt+Shift+L, and they play in
    order with their titles. Anything mpv can reach works, because yt-dlp is
    handed the addresses.
-2. **The tagged files**, if any are tagged.
+2. **The marked files**, if any are marked.
 3. **Everything playable in the folder**, in the order the window is sorted.
    Sort by date and it plays in date order, which is usually what a recording
    session or a downloaded series wants.
@@ -815,10 +831,10 @@ seek, angle brackets for the previous and next item, and q to stop.
 Press **Control+Shift+L** for Play List. What it does depends on what is
 selected, in the way you would want:
 
-- **Files tagged** — it writes a play list of them and plays it.
-- **Nothing tagged, and you are on a play list** — it plays that.
-- **Nothing tagged, and you are on a sound or video file** — it plays that.
-- **Nothing tagged, and you are on any readable document** — it looks inside for
+- **Files marked** — it writes a play list of them and plays it.
+- **Nothing marked, and you are on a play list** — it plays that.
+- **Nothing marked, and you are on a sound or video file** — it plays that.
+- **Nothing marked, and you are on any readable document** — it looks inside for
   media links and plays those. Put the cursor on a directory of podcasts and
   press the key; no copying needed.
 
@@ -974,8 +990,8 @@ increment, 1, 2, 3 for whole tracks, 0 to stop, Control with any of them to go
 all the way, minus and plus for volume, slash and star for speed.
 
 Control rather than Shift, because Shift already means something in these
-programs: in FileDir, Shift+Up and Shift+Down tag and move, and Shift+Home and
-Shift+End tag to the top and bottom. Control is the movement modifier in
+programs: in FileDir, Shift+Up and Shift+Down mark and move, and Shift+Home and
+Shift+End mark to the top and bottom. Control is the movement modifier in
 FileDir, DbDo and EdSharp alike, and moving among things is what a transport
 does.
 
@@ -1076,7 +1092,7 @@ any file is sent anywhere, so this is safe for a document you would not paste
 into a web page.
 
 Press **Alt+Shift+F7** for Translate File. Name the language you want, and
-FileDir works through the tagged files, or the current one if nothing is tagged.
+FileDir works through the marked files, or the current one if nothing is marked.
 For each file it reads the text, translates it, and writes the result beside the
 original as `<name>.<language>.txt`. Nothing is overwritten: if that name is
 taken, FileDir picks another.

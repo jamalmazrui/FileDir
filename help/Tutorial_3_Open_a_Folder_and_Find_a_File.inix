@@ -91,7 +91,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Escape. Shift plus Apostrophe says the folder you are in with its path, and the Apostrophe alone the current line with its tag, for when you have been away.
+Say=Escape. Shift plus Apostrophe says the folder you are in with its path, and the Apostrophe alone the current line with its mark, for when you have been away.
 Key=Escape
 Hear=FileDir, List box
 

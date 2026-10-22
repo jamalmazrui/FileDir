@@ -2,7 +2,7 @@
 Title=9 - Conclusion
 Intro=The conclusion and summary of the walks; the words FileDir uses, in two voices; then more information: the help built into the program and where to learn more.
 Setup=Nothing is needed.
-Homework=Open the folder you use most, tag three files, and move them; then do one thing from each task walk.
+Homework=Open the folder you use most, mark three files, and move them; then do one thing from each task walk.
 
 [step]
 
@@ -18,7 +18,7 @@ Hear=Control plus J
 
 [step]
 
-Say=The semicolon tags, and every command then acts on all the tagged files at once. Copy them.
+Say=The semicolon marks, and every command then acts on all the marked files at once. Copy them.
 Key=
 Hear=Shift plus C
 
@@ -42,7 +42,7 @@ Hear=Control plus F
 
 [step]
 
-Say=Walk four: tag, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
+Say=Walk four: mark, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
 Key=
 Hear=Shift plus M
 
@@ -149,7 +149,7 @@ Hear=The order of the list, by name, extension, size or date; the status line sa
 
 Say=status line.
 Key=
-Hear=The folder, the line, and how many files are tagged; the bottom of the window. Shift plus Z says it.
+Hear=The folder, the line, and how many files are marked; the bottom of the window. Shift plus Z says it.
 
 
 ; ---- more information: help built in, and where to learn more ----

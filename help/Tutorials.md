@@ -19,7 +19,7 @@ command's name and what it does instead of running it.
 - [1 - User Interface](#1-user-interface)
 - [2 - Install and Launch](#2-install-and-launch)
 - [3 - Open a Folder and Find a File](#3-open-a-folder-and-find-a-file)
-- [4 - Tag Files and Copy Them](#4-tag-files-and-copy-them)
+- [4 - Mark Files and Copy Them](#4-mark-files-and-copy-them)
 - [5 - Play a Page's Media in the Homer Player](#5-play-a-pages-media-in-the-homer-player)
 - [6 - Rename Files to What Is Inside](#6-rename-files-to-what-is-inside)
 - [7 - Convert Between Formats](#7-convert-between-formats)
@@ -306,7 +306,7 @@ FileDir is a file manager for working by ear. A folder is a list you arrow throu
 
 ### Step 2
 
-tagging marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
+marking marks files for the next command; two searches find a file by its name or by everything known about it; and the Homer Player plays what a folder or a page holds. Every key is named for a word of its command, and every dialog works one way.
 
 ### Step 3
 
@@ -370,11 +370,11 @@ Screen reader:
 
 ### Step 12
 
-Four, Tag Files and Copy Them.
+Four, Mark Files and Copy Them.
 
 Screen reader:
 
-- The semicolon tags; a command then acts on every tagged file at once.
+- The semicolon marks; a command then acts on every marked file at once.
 
 ### Step 13
 
@@ -484,21 +484,21 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 7: Semicolon
 
-Tagging marks the files a command will act on. The Semicolon tags the current item, and a greater-than sign before a name means it is tagged.
+Marking marks the files a command will act on. The Semicolon marks the current item, and a greater-than sign before a name means it is marked.
 
 Screen reader:
 
-- Tagged
+- Marked
 
 Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 8: Slash
 
-The Slash untags it again. Control plus A tags everything, and Control plus Shift plus A untags everything.
+The Slash untags it again. Control plus A marks everything, and Control plus Shift plus A untags everything.
 
 Screen reader:
 
-- Untagged
+- Unmarked
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -612,7 +612,7 @@ Now Shift plus Z only says what it would do.
 
 Screen reader:
 
-- Shift plus Z, Zip, add current or tagged files to zip archive
+- Shift plus Z, Zip, add current or marked files to zip archive
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -628,7 +628,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 22: Alt+Shift+R
 
-Two settings are worth knowing now. Configuration Options, Alt plus Shift plus C, names your word processor, editor and player. Alt plus Shift plus R decides whether deleting sends to the Recycle Bin.
+Two settings are worth knowing now. Edit Settings, Alt plus Shift plus E, names your word processor, editor and player. Alt plus Shift plus R decides whether deleting sends to the Recycle Bin.
 
 Screen reader:
 
@@ -650,7 +650,7 @@ Screen reader:
 
 ### Step 25
 
-Copy the tagged items to another folder.
+Copy the marked items to another folder.
 
 Screen reader:
 
@@ -758,7 +758,7 @@ Screen reader:
 
 ### Step 10
 
-FileDir is one instance: Alt plus Control plus F never opens a second copy, it brings the one forward. The window it brings forward is the last folder you were in, with its tags as you left them.
+FileDir is one instance: Alt plus Control plus F never opens a second copy, it brings the one forward. The window it brings forward is the last folder you were in, with its marks as you left them.
 
 ### Step 11
 
@@ -774,7 +774,7 @@ The first run asks nothing. FileDir opens on the folder you were last in -- or o
 
 ### Step 14
 
-What the scripts give. With the screen reader scripts installed, the reader's own commands know FileDir's list: the line is read with its marks said as words, tagged and folder, rather than as symbols.
+What the scripts give. With the screen reader scripts installed, the reader's own commands know FileDir's list: the line is read with its marks said as words, marked and folder, rather than as symbols.
 
 ### Step 15
 
@@ -921,7 +921,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 14: Escape
 
-Escape. Shift plus Apostrophe says the folder you are in with its path, and the Apostrophe alone the current line with its tag, for when you have been away.
+Escape. Shift plus Apostrophe says the folder you are in with its path, and the Apostrophe alone the current line with its mark, for when you have been away.
 
 Screen reader:
 
@@ -953,35 +953,35 @@ Screen reader:
 
 **Something to try:** Open a folder of your own, jump to a file by its first letters, and open it.
 
-## 4 - Tag Files and Copy Them
+## 4 - Mark Files and Copy Them
 
-Tagging two files with the semicolon and copying both at once: the one idea behind every FileDir command that acts on several files. This walk assumes walk three.
+Marking two files with the semicolon and copying both at once: the one idea behind every FileDir command that acts on several files. This walk assumes walk three.
 
 **Before you start:** A folder of files is open.
 
 ### Step 1: Semicolon
 
-Arrow to a file you want, and press the semicolon to tag it. Tagging marks a file for the next command without moving you.
+Arrow to a file you want, and press the semicolon to mark it. Marking marks a file for the next command without moving you.
 
 Screen reader:
 
-- Tagged
+- Marked
 
-The slash key untags. Shift plus Home tags everything from here to the top.
+The slash key untags. Shift plus Home marks everything from here to the top.
 
 ### Step 2: Semicolon
 
-Arrow to another file and tag that one too. FileDir says how many are tagged as the number changes.
+Arrow to another file and mark that one too. FileDir says how many are marked as the number changes.
 
 Screen reader:
 
-- 2 tagged files
+- 2 marked files
 
 Alt plus Y says the count at any time.
 
 ### Step 3: Shift+C
 
-Press Shift plus C, C for Copy, to copy the tagged files to a folder. FileDir asks where to.
+Press Shift plus C, C for Copy, to copy the marked files to a folder. FileDir asks where to.
 
 Screen reader:
 
@@ -1002,19 +1002,19 @@ Nothing is moved; Shift plus M moves instead.
 
 ### Step 5
 
-Other ways to tag. Spacebar toggles the current item; the greater-than key tags and moves to the next, so a run of files is tagged as fast as you can press it; the less-than key untags the same way. Control plus A tags all, Control plus Shift plus A clears all.
+Other ways to mark. Spacebar toggles the current item; the greater-than key marks and moves to the next, so a run of files is marked as fast as you can press it; the less-than key untags the same way. Control plus A marks all, Control plus Shift plus A clears all.
 
 ### Step 6
 
-Among the tagged, Shift plus N and Shift plus P go to the next and previous tagged item; Shift plus B and Shift plus E to the first and last. The Apostrophe says whether the item you are on is tagged.
+Among the marked, Shift plus N and Shift plus P go to the next and previous marked item; Shift plus B and Shift plus E to the first and last. The Apostrophe says whether the item you are on is marked.
 
 ### Step 7
 
-What a tag feeds. Shift plus C copies the tagged files to a folder you choose; Shift plus M moves them; Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same tags, a different verb.
+What a mark feeds. Shift plus C copies the marked files to a folder you choose; Shift plus M moves them; Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
 
 ### Step 8
 
-Control plus C, Control plus X and Control plus V copy, cut and paste tagged files through the clipboard, as in Windows Explorer -- so files from two folders can be gathered and pasted in a third. Alt plus C appends to the clipboard without clearing it.
+Control plus C, Control plus X and Control plus V copy, cut and paste marked files through the clipboard, as in Windows Explorer -- so files from two folders can be gathered and pasted in a third. Alt plus C appends to the clipboard without clearing it.
 
 ### Step 9
 
@@ -1026,7 +1026,7 @@ Screen reader:
 
 ### Step 10: Escape
 
-Escape answers No, so nothing is overwritten. Control plus S saves the tag states of this window; Control plus Shift plus S restores them -- for when a long selection must survive a detour.
+Escape answers No, so nothing is overwritten. Control plus S saves the mark states of this window; Control plus Shift plus S restores them -- for when a long selection must survive a detour.
 
 Screen reader:
 
@@ -1034,19 +1034,19 @@ Screen reader:
 
 ### Step 11
 
-Tagging by rule. Alt plus Period tags every file and leaves the folders; Alt plus Shift plus Period tags duplicate files -- any file with the same content as another in the folder, however named -- which is how a Downloads folder is cleaned.
+Marking by rule. Alt plus Period marks every file and leaves the folders; Alt plus Shift plus Period marks duplicate files -- any file with the same content as another in the folder, however named -- which is how a Downloads folder is cleaned.
 
 ### Step 12
 
-Control plus I inverts the tags: tagged becomes untagged and untagged tagged, for when it is easier to say what you do not want. Alt plus Comma untags everything except the current item.
+Control plus I inverts the marks: marked becomes unmarked and unmarked marked, for when it is easier to say what you do not want. Alt plus Comma untags everything except the current item.
 
 ### Step 13
 
-A filter and a tag together: Control plus F to show only star dot j p g, Control plus A to tag them all, Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
 
 ### Step 14: Shift+S
 
-Shift plus S says the size of the tagged files together, before a copy to a small drive; Alt plus S says the size of the folder you are in.
+Shift plus S says the size of the marked files together, before a copy to a small drive; Alt plus S says the size of the folder you are in.
 
 Screen reader:
 
@@ -1054,11 +1054,11 @@ Screen reader:
 
 ### Step 15
 
-Renaming many: Control plus R takes a pattern with wildcards -- star dot j p e g to star dot j p g -- and renames every tagged file by it, saying the count. F2 renames the current one by name.
+Renaming many: Control plus R takes a pattern with wildcards -- star dot j p e g to star dot j p g -- and renames every marked file by it, saying the count. F2 renames the current one by name.
 
 ### Step 16
 
-Shift plus Z zips the tagged files into one archive named for the folder, or for a name you give; Shift plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+Shift plus Z zips the marked files into one archive named for the folder, or for a name you give; Shift plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
 
 ### Step 17
 
@@ -1072,7 +1072,7 @@ Screen reader:
 
 - Copy to Folder
 
-**Something to try:** Tag three files and move them to a folder of your own.
+**Something to try:** Mark three files and move them to a folder of your own.
 
 ## 5 - Play a Page's Media in the Homer Player
 
@@ -1275,7 +1275,7 @@ Screen reader:
 
 ## 6 - Rename Files to What Is Inside
 
-One want: files named by a camera or a scanner, called by what they are instead. FileDir reads each tagged file's own title -- a PDF's, a song's, a photograph's caption, a book's name -- and renames the file after it.
+One want: files named by a camera or a scanner, called by what they are instead. FileDir reads each marked file's own title -- a PDF's, a song's, a photograph's caption, a book's name -- and renames the file after it.
 
 **Before you start:** A folder holds downloaded files with names that say nothing.
 
@@ -1293,11 +1293,11 @@ Screen reader:
 
 ### Step 3: Semicolon
 
-Walk four showed tagging. I tag the files to rename: the semicolon tags the current one.
+Walk four showed marking. I mark the files to rename: the semicolon marks the current one.
 
 Screen reader:
 
-- Tagged
+- Marked
 
 ### Step 4: Semicolon
 
@@ -1305,11 +1305,11 @@ Down Arrow to the next, and the semicolon again.
 
 Screen reader:
 
-- 2 tagged files
+- 2 marked files
 
 ### Step 5: Control+Shift+I
 
-Control plus Shift plus I, I for Identify, renames each tagged file after what is inside it. FileDir asks first, showing each old name beside its new one.
+Control plus Shift plus I, I for Identify, renames each marked file after what is inside it. FileDir asks first, showing each old name beside its new one.
 
 Screen reader:
 
@@ -1329,11 +1329,11 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 7: Semicolon
 
-A planned misstep: a text file with no metadata. FileDir falls back on its first line, which may be a date or a byline rather than a title. I tag one and try.
+A planned misstep: a text file with no metadata. FileDir falls back on its first line, which may be a date or a byline rather than a title. I mark one and try.
 
 Screen reader:
 
-- Tagged
+- Marked
 
 ### Step 8: Control+Shift+I
 
@@ -1377,17 +1377,17 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 12: Control+Shift+R
 
-For anything a pattern can describe, Control plus Shift plus R, Rename with Regular Expression, renames the current or tagged items with a regular expression.
+For anything a pattern can describe, Control plus Shift plus R, Rename with Regex, renames the current or marked items with a regular expression.
 
 Screen reader:
 
-- Rename with Regular Expression dialog, Find: edit
+- Rename with Regex dialog, Source: edit
 
 Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 13: Escape
 
-Escape for now; regular expressions reward a careful first try on a few tagged files.
+Escape for now; regular expressions reward a careful first try on a few marked files.
 
 Screen reader:
 
@@ -1457,7 +1457,7 @@ What this walk taught. I name the step; the reader gives the key.
 
 ### Step 22
 
-Tag a file.
+Mark a file.
 
 Screen reader:
 
@@ -1465,7 +1465,7 @@ Screen reader:
 
 ### Step 23
 
-Rename tagged files after what is inside them.
+Rename marked files after what is inside them.
 
 Screen reader:
 
@@ -1479,11 +1479,11 @@ Screen reader:
 
 - F2
 
-**Something to try:** Tag a few downloaded PDFs and rename them to what is inside; then check each new name with Down Arrow.
+**Something to try:** Mark a few downloaded PDFs and rename them to what is inside; then check each new name with Down Arrow.
 
 ## 7 - Convert Between Formats
 
-One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the tagged files, or the current one, keeping each name.
+One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the marked files, or the current one, keeping each name.
 
 **Before you start:** A folder holds a Word document and a PDF.
 
@@ -1563,11 +1563,11 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 9: Semicolon
 
-Tagged files convert together. I tag three Word documents with the Semicolon.
+Marked files convert together. I mark three Word documents with the Semicolon.
 
 Screen reader:
 
-- 3 tagged files
+- 3 marked files
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -1583,7 +1583,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 11: Control+2
 
-Some text files are in an old character encoding, and their accented letters come out wrong. Control plus 2, Convert Encoding, rewrites the tagged text files in the encoding you pick.
+Some text files are in an old character encoding, and their accented letters come out wrong. Control plus 2, Convert Encoding, rewrites the marked text files in the encoding you pick.
 
 Screen reader:
 
@@ -1603,7 +1603,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 13: Shift+A
 
-Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the tagged files to the clipboard, one after another, converting each from its own format.
+Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
 
 Screen reader:
 
@@ -1914,7 +1914,7 @@ Screen reader:
 
 ### Step 3
 
-The semicolon tags, and every command then acts on all the tagged files at once. Copy them.
+The semicolon marks, and every command then acts on all the marked files at once. Copy them.
 
 Screen reader:
 
@@ -1946,7 +1946,7 @@ Screen reader:
 
 ### Step 7
 
-Walk four: tag, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
+Walk four: mark, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
 
 Screen reader:
 
@@ -2078,7 +2078,7 @@ status line.
 
 Screen reader:
 
-- The folder, the line, and how many files are tagged; the bottom of the window. Shift plus Z says it.
+- The folder, the line, and how many files are marked; the bottom of the window. Shift plus Z says it.
 
 ### Step 25
 
@@ -2096,7 +2096,7 @@ F11 checks for a newer version and offers to install it. The project is at githu
 
 FileDir is one of the Homer Tools, free programs for working by ear: EdSharp for text, FileDir for files, DbDo for data. They share their keys and their player, so learning one is most of learning the next.
 
-**Something to try:** Open the folder you use most, tag three files, and move them; then do one thing from each task walk.
+**Something to try:** Open the folder you use most, mark three files, and move them; then do one thing from each task walk.
 
 <!-- walkthrough ends -->
 

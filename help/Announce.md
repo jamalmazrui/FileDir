@@ -20,8 +20,8 @@ is a reborn FileDir, more capable than any version before it. Expert AI has been
 used throughout -- to review twenty years of code, modernize it, and build
 features that were not practical to write before.
 
-FileDir works by tagging. Mark any set of items, and one command acts on all of
-them. With nothing tagged, a command acts on the item you are on, so tagging is
+FileDir works by marking. Mark any set of items, and one command acts on all of
+them. With nothing marked, a command acts on the item you are on, so marking is
 never something you have to do first. Nearly everything below works on a whole
 folder at once for that reason.
 
@@ -42,18 +42,18 @@ stay tables. No Microsoft Office is needed for any of this.
 One command renames files to what identifies them inside: the title of a
 document, the caption of a photograph, the song title, the book name. Another
 finds duplicate files anywhere beneath a folder, compares them byte for byte,
-and gathers them into a window you can inspect and delete from. A third tags
+and gathers them into a window you can inspect and delete from. A third marks
 files that are versions of one another, keeping the largest. A fourth renames so
 an alphabetical list finally reads in order.
 
 ## Media
 
-Play the tagged files, a whole folder, or a play list you copied from
+Play the marked files, a whole folder, or a play list you copied from
 somewhere. A play list can even be web addresses, which are fetched as they
 play. You can also download media from a page, as video or as audio alone.
 
 **And there is now a player inside FileDir.** Control+Shift+H opens the Homer
-Player on whatever you are on: the tagged files, a play list, or the media
+Player on whatever you are on: the marked files, a play list, or the media
 links inside a document. A page of podcasts becomes a queue, with the titles
 the page gave them.
 

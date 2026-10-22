@@ -2,9 +2,9 @@
 
 [about]
 Title=6 - Rename Files to What Is Inside
-Intro=One want: files named by a camera or a scanner, called by what they are instead. FileDir reads each tagged file's own title -- a PDF's, a song's, a photograph's caption, a book's name -- and renames the file after it.
+Intro=One want: files named by a camera or a scanner, called by what they are instead. FileDir reads each marked file's own title -- a PDF's, a song's, a photograph's caption, a book's name -- and renames the file after it.
 Setup=A folder holds downloaded files with names that say nothing.
-Homework=Tag a few downloaded PDFs and rename them to what is inside; then check each new name with Down Arrow.
+Homework=Mark a few downloaded PDFs and rename them to what is inside; then check each new name with Down Arrow.
 
 
 [step]
@@ -21,19 +21,19 @@ Hear=FileDir
 
 [step]
 
-Say=Walk four showed tagging. I tag the files to rename: the semicolon tags the current one.
+Say=Walk four showed marking. I mark the files to rename: the semicolon marks the current one.
 Key=Semicolon
-Hear=Tagged
+Hear=Marked
 
 [step]
 
 Say=Down Arrow to the next, and the semicolon again.
 Key=Semicolon
-Hear=2 tagged files
+Hear=2 marked files
 
 [step]
 
-Say=Control plus Shift plus I, I for Identify, renames each tagged file after what is inside it. FileDir asks first, showing each old name beside its new one.
+Say=Control plus Shift plus I, I for Identify, renames each marked file after what is inside it. FileDir asks first, showing each old name beside its new one.
 Key=Control+Shift+I
 Hear=Rename to Identify Content dialog
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -47,9 +47,9 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=A planned misstep: a text file with no metadata. FileDir falls back on its first line, which may be a date or a byline rather than a title. I tag one and try.
+Say=A planned misstep: a text file with no metadata. FileDir falls back on its first line, which may be a date or a byline rather than a title. I mark one and try.
 Key=Semicolon
-Hear=Tagged
+Hear=Marked
 
 [step]
 
@@ -81,14 +81,14 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=For anything a pattern can describe, Control plus Shift plus R, Rename with Regular Expression, renames the current or tagged items with a regular expression.
+Say=For anything a pattern can describe, Control plus Shift plus R, Rename with Regex, renames the current or marked items with a regular expression.
 Key=Control+Shift+R
-Hear=Rename with Regular Expression dialog, Find: edit
+Hear=Rename with Regex dialog, Source: edit
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Escape for now; regular expressions reward a careful first try on a few tagged files.
+Say=Escape for now; regular expressions reward a careful first try on a few marked files.
 Key=Escape
 Hear=FileDir
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -145,13 +145,13 @@ Hear=
 
 [step]
 
-Say=Tag a file.
+Say=Mark a file.
 Key=
 Hear=Semicolon
 
 [step]
 
-Say=Rename tagged files after what is inside them.
+Say=Rename marked files after what is inside them.
 Key=
 Hear=Control plus Shift plus I
 
