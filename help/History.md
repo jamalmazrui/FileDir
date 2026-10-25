@@ -2,6 +2,11 @@
 
 
 
+## 25 October 2026 -- the newest kit, and extCheck's rules
+
+- **The build uses the newest Homer kit it finds,** and logs each one: your HomerDev variable and C:\HomerDev. The variable named an older installed kit in Program Files (1.77.6), which a build took first.
+- **Files it makes are judged by extCheck's rules,** from the kit's Quality.cs, now compiled in (HomerDev 1.92.5). A route table the build puts in exec is no longer removed by tidy, so conversions use the kit's current ways.
+
 ## 20 October 2026 -- Transcripts and speech through the Homer kit
 
 - **The build finds the Visual Studio Build Tools' compiler.** Its paths said Buildscripts for BuildTools, so it fell back to the older .NET Framework compiler; it now uses Roslyn, as every Homer app does.
