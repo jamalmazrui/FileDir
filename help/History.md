@@ -2,6 +2,10 @@
 
 
 
+## 30 October 2026 -- fixes from an audit by another AI
+
+- **A failed move keeps what it already moved.** A move to another drive goes file by file, so when it failed part way, the files already moved were gone from the source; putting back an earlier copy at the destination deleted them. They are now kept under a recovery name, and FileDir says where.
+
 ## 25 October 2026 -- the newest kit, and extCheck's rules
 
 - **The build uses the newest Homer kit it finds,** and logs each one: your HomerDev variable and C:\HomerDev. The variable named an older installed kit in Program Files (1.77.6), which a build took first.

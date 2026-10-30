@@ -867,6 +867,17 @@ return sAside;
 } // setAside method
 
 static void settleAside(string sAside, string sTarget, bool bDone, bool bRecycle) {
+settleAside(sAside, sTarget, bDone, bRecycle, false);
+} // settleAside method
+
+// A FAILED MOVE KEEPS WHAT IT MOVED (30 October 2026, from an audit by another AI).
+// A move to another drive copies and deletes file by file, so when it fails part
+// way the files already at the destination are gone from the source. Putting the
+// earlier destination back used to delete what was there first, and those files
+// with it. For a move, bKeepPartial is true: what the move left is set aside under
+// a recovery name of its own and said, and nothing is deleted. A failed copy still
+// clears its partial copy, since the source is whole.
+static void settleAside(string sAside, string sTarget, bool bDone, bool bRecycle, bool bKeepPartial) {
 if (sAside == "") return;
 if (bDone) {
 if (Directory.Exists(sAside)) App.deleteDirectory(sAside, bRecycle);
@@ -877,8 +888,16 @@ return;
 // the earlier version back could fail silently, leaving the person unaware that it
 // sat under another name. Now the log names both paths, and the person is told
 // where the earlier version is kept.
+string sPartial = "";
 try {
-if (Directory.Exists(sTarget)) Directory.Delete(sTarget, true);
+if (bKeepPartial && (Directory.Exists(sTarget) || File.Exists(sTarget))) {
+sPartial = Homer.Util.recoveryPath(sTarget);
+if (Directory.Exists(sTarget)) Directory.Move(sTarget, sPartial);
+else File.Move(sTarget, sPartial);
+Homer.Log.warn("The move did not finish; what it had already moved is kept at " + sPartial);
+App.say("The move did not finish. What it had already moved is kept at " + sPartial);
+}
+else if (Directory.Exists(sTarget)) Directory.Delete(sTarget, true);
 else if (File.Exists(sTarget)) File.Delete(sTarget);
 if (Directory.Exists(sAside)) Directory.Move(sAside, sTarget);
 else File.Move(sAside, sTarget);
@@ -904,7 +923,7 @@ bool bDone = false;
 try {
 FileSystem.MoveDirectory(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowException);
 bDone = true;
-} finally { settleAside(sAside, sTarget, bDone, bRecycle); }
+} finally { settleAside(sAside, sTarget, bDone, bRecycle, true); }
 } // moveDirectory method
 
 public static void copyFile(string sSource, string sTarget, bool bRecycle) {
@@ -922,7 +941,7 @@ bool bDone = false;
 try {
 FileSystem.MoveFile(sSource, sTarget, UIOption.AllDialogs, UICancelOption.ThrowException);
 bDone = true;
-} finally { settleAside(sAside, sTarget, bDone, bRecycle); }
+} finally { settleAside(sAside, sTarget, bDone, bRecycle, true); }
 } // moveFile method
 
 // The find and filter prompts in every Lbc dialog keep a short history of what
