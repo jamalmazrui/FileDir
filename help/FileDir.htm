@@ -440,35 +440,63 @@ defaulting to those of the current file or folder item.</p>
 <h2 id="find-commands">Find Commands</h2>
 <p>Find commands search for an item by a string of characters in the
 name or body. Press Alt+Shift+F to find a file anywhere in the current
-folder or subfolders based on text it contains and/or a wild card
-pattern. For example, you could search for the term “strategic plan” in
-each file with a name matching the minutes*.doc specification (meaning a
-name that has minuttes at the beginning and .doc at the end). FileDir
-will present a list of files that match the wild card pattern. Use arrow
-key or initial letter navigation to focus on the item of interest.
-Pressing Enter will then go to the folder containing that item and place
-focus on it.</p>
+folder or subfolders based on text it contains and/or a name pattern,
+both in the search syntax described below. For example, you could search
+for the term “strategic plan” in each file with a name matching
+minutes*.doc (meaning a name that has minutes at the beginning and .doc
+at the end). FileDir will present a list of files that match the wild
+card pattern. Use arrow key or initial letter navigation to focus on the
+item of interest. Pressing Enter will then go to the folder containing
+that item and place focus on it.</p>
 <p>Press Control+J to jump to an item within the current folder, based
-on a sequence of characters (no wildcards) appearing somewhere within
-its name. The command also recognizes symbols associated with file
-attributes. Thus, you can jump to a ReadOnly file by entering a single ]
-character as the search string. A [ would find the next item without the
-ReadOnly attribute set. Using the Jump Again command, Alt+J, you can
-efficiently hop from one match to the next.</p>
-<p>The Control+K command searches for a keyword inside the body of a
-file. The command supports multiple conditions. Use the vertical bar
-character (|) to separate words or phrases where any one of those terms
-can produce a match. Use the ampersand character (&amp;) as a separater
-where all terms must match. For example, entering “C#|Visual Basic”
-would match files containing either language, whereas “C#&amp;Visual
-Basic” would require both to match. Press Alt+K to hop to the next
-matching file.</p>
-<p>Press Control+F to filter files in the current folder to a restricted
-view of those matching a wild card pattern. You can separate multiple
-patterns with the vertical bar (|) character, meaning the pattern can
-match alternate conditions, e.g., “<em>.doc|</em>.rtf” for files in
-either Word or Rich Text Format. Press Control+Shift+F to remove any
-filter and make all items available in the view.</p>
+on text in its name, in the search syntax described below; plain letters
+are found anywhere in the name. The command also recognizes symbols
+associated with file attributes. Thus, you can jump to a ReadOnly file
+by entering a single ] character as the search string. A [ would find
+the next item without the ReadOnly attribute set. Using the Jump Again
+command, Alt+J, or F3, you can efficiently hop from one match to the
+next; Shift+F3 goes back.</p>
+<p>The Control+K command searches for keywords inside the body of a
+file, in the search syntax described below. For example, entering C# |
+Visual Basic would match files containing either language, whereas C#
+&amp; Visual Basic would require both. Press Alt+K or F3 to hop to the
+next matching file, and Shift+F3 to go back.</p>
+<p>Press Control+F to filter the current folder to the items whose names
+match a pattern, in the search syntax below: for example, <em>.doc |
+</em>.rtf for files in either Word or Rich Text Format, or !*.bak for
+everything but backups. Press Control+Shift+F to remove any filter and
+make all items available in the view.</p>
+<h3 id="search-syntax">Search syntax</h3>
+<p>Every Homer search that is not a regular expression reads what you
+type the same way. A plain word is enough most of the time; the symbols
+are there when you need more.</p>
+<ul>
+<li><strong>A word</strong> is found anywhere, whatever its case:
+<code>river</code> finds “Riverside”.</li>
+<li><strong><code>*</code></strong> stands for any run of characters,
+and <strong><code>?</code></strong> for any one character:
+<code>chap*</code>, <code>c?t</code>.</li>
+<li><strong><code>&amp;</code></strong> means all of them:
+<code>red &amp; blue</code>.</li>
+<li><strong><code>|</code></strong> means any of them:
+<code>red | blue</code>. <code>&amp;</code> is read first, so
+<code>red &amp; blue | green</code> means red and blue, or else
+green.</li>
+<li><strong><code>!</code></strong> before a word means not:
+<code>!draft</code>.</li>
+<li><strong>Quotes</strong> find exactly what is inside, symbols and
+all: <code>"C#"</code>, <code>"a &amp; b"</code>.</li>
+</ul>
+<p>Where a wildcard counts depends on what is searched. When the search
+reads a <strong>name</strong> – a file name, a line of a list, one field
+– a word with <code>*</code> or <code>?</code> must match the whole
+name, so <code>*.md</code> means a name ending in .md, and
+<code>chap*</code> one starting with chap. When it reads
+<strong>text</strong> – a file’s contents, a whole record – every word
+may match anywhere. A word with no wildcard is found anywhere in
+both.</p>
+<p>F3 repeats the last search, in the same way and over the same things,
+going forward; Shift+F3 repeats it going back.</p>
 <h2 id="go-to-commands">Go to Commands</h2>
 <p>Go to commands change the FileDir view to another folder. Press
 Control+G for a dialog in which you can accept a previous path, enter a
@@ -909,15 +937,15 @@ prompting for a value. The item with focus when the dialog is closed –
 but not canceled – becomes the current item the next time that the same
 list dialog is invoked (you are notified when it is not the first item).
 The Jump value of that dialog is also remembered.</p>
-<p>Control+F sets a filter to restrict what items are shown via
-wildcards (* to match any sequence of characters or ? to match a single
-one). For example, you could browse replace-related commands in the
-Alternate Menu, Alt+F10, by pressing Control+F after invoking that list
-and then entering <em>replace</em> as the filter expression.
-Control+Shift+F clears the filter so all items are shown again. The
-order of items may also be changed: Alt+A for alpha order, Alt+Shift+A
-for reverse alpha order, Alt+D for default order, or Alt+Shift+D for
-reverse default order.</p>
+<p>Control+F sets a filter to restrict what items are shown, in the
+search syntax (* matches any run of characters, ? a single one, and
+&amp; | ! and quotes work as everywhere in Homer). For example, you
+could browse replace-related commands in the Alternate Menu, Alt+F10, by
+pressing Control+F after invoking that list and then entering
+<em>replace</em> as the filter expression. Control+Shift+F clears the
+filter so all items are shown again. The order of items may also be
+changed: Alt+A for alpha order, Alt+Shift+A for reverse alpha order,
+Alt+D for default order, or Alt+Shift+D for reverse default order.</p>
 <p>Multiple commands support flexible checking or unchecking in a
 checked listbox such as the Web Download dialog. Press Space to toggle
 the checked state of the current item, Control+A to check all items, or
@@ -1457,13 +1485,11 @@ jump or keyword search, whichever it was</li>
 <li><strong>Control+F</strong> filter the list,
 <strong>Control+Shift+F</strong> clear the filter</li>
 </ul>
-<p><strong>Keywords and Filter share one syntax</strong>, the simple one
-FileDir has always used, not regular expressions:
+<p><strong>Keywords, Filter and Jump share the Homer search
+syntax</strong>, described under Find commands:
 <code>red &amp; blue</code> means both words, <code>red | blue</code>
-means either, and <code>chap*</code> means anything starting that way.
-Case never matters. Jump is the exception on purpose: it is the plain
-substring jump it is in the file list, where the point is typing a few
-letters fast.</p>
+either, <code>!red</code> not, and <code>chap*</code> anything starting
+that way. Case never matters.</p>
 <p>Each remembers its own last ten answers, and all of them ignore case.
 All act on the Track list from wherever you are, leave the keyboard
 where it was, and say the track they land on when the cursor is

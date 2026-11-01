@@ -509,14 +509,34 @@ return bResult;
 // system summary.
 static System.Media.SoundPlayer soundPlayer = null;
 
+// THE HOMER SEARCH SYNTAX (31 October 2026, kit 1.95.0). A name pattern -- File
+// Find's filter, and the folder filter when Path List or Zip reads a tree -- is
+// read by Homer.Search as a name: *.doc|*.rtf, !*.bak, report & 2026. Windows'
+// own patterns took * and ? but not |, so the folder filter's own syntax made
+// these commands fail. Empty, * and *.* mean every file, as they always have.
+static bool allFiles(string sSpec) {
+string s = (sSpec ?? "").Trim();
+return s.Length == 0 || s == "*" || s == "*.*";
+} // allFiles method
+
 public static System.Collections.ObjectModel.ReadOnlyCollection<string> getFiles(string sDir, string sSpec) {
-return new System.Collections.ObjectModel.ReadOnlyCollection<string>(new List<string>(Directory.GetFiles(sDir, sSpec, System.IO.SearchOption.AllDirectories)));
+List<string> lsMatch = new List<string>();
+List<List<Homer.Search.Term>> llPattern = Homer.Search.parse(sSpec);
+bool bAll = allFiles(sSpec);
+foreach (string sFile in Directory.GetFiles(sDir, "*", System.IO.SearchOption.AllDirectories)) {
+if (bAll || Homer.Search.isMatch(Path.GetFileName(sFile), llPattern, true, false)) lsMatch.Add(sFile);
+}
+return new System.Collections.ObjectModel.ReadOnlyCollection<string>(lsMatch);
 } // getFiles method
 
+// findInFiles: the files whose names match sSpec and whose text matches sText,
+// both in the Homer search syntax -- the text read as text, so red & blue finds
+// a file holding both words anywhere.
 public static System.Collections.ObjectModel.ReadOnlyCollection<string> findInFiles(string sDir, string sText, string sSpec) {
 List<string> lsMatch = new List<string>();
-foreach (string sFile in Directory.GetFiles(sDir, sSpec, System.IO.SearchOption.AllDirectories)) {
-try { if (File.ReadAllText(sFile).IndexOf(sText, StringComparison.OrdinalIgnoreCase) >= 0) lsMatch.Add(sFile); }
+List<List<Homer.Search.Term>> llText = Homer.Search.parse(sText);
+foreach (string sFile in getFiles(sDir, sSpec)) {
+try { if (Homer.Search.isMatch(File.ReadAllText(sFile), llText, false, false)) lsMatch.Add(sFile); }
 catch {}
 }
 return new System.Collections.ObjectModel.ReadOnlyCollection<string>(lsMatch);
@@ -4909,51 +4929,52 @@ void menuEditExportClipboardToFile_Click(object sender, EventArgs e) {
 Homer.SuiteCommands.saveClipboard(this);
 } // menuEditExportClipboardToFile_Click method
 
-void jump_Helper(int iStart) {
-MdiChild mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-DataView view = mdiChild.tbl.DefaultView;
-int iCount = view.Count;
-bool bFound = false;
-for (int i = iStart; i < iCount; i++) {
-DataRowView row = view[i];
-string sName = (string) row["Name"];
-sName = sName.ToLower();
+// jumpMatch: whether a row answers the Jump text. A lone > < ) ( ] [ } or { asks
+// for a mark or an attribute, as it always has; anything else is the Homer search
+// syntax read against the name (31 October 2026, kit 1.95.0): a plain word is
+// found anywhere in it, *.md is a name ending in .md, red & blue holds both.
+bool jumpMatch(DataRowView row, string s) {
 char tagged = (char) row["Tagged"];
 char hidden = (char) row["Hidden"];
 char readOnly = (char) row["ReadOnly"];
 char system = (char) row["System"];
-string s = App.sJumpText;
-if ((s == ">" && tagged == '>')
-|| (s == "<" && tagged == ' ')
-|| (s == ")" && hidden == ')')
-|| (s == "(" && hidden == ' ')
-|| (s == "]" && readOnly == ']')
-|| (s == "[" && readOnly == ' ')
-|| (s == "}" && system == '}')
-|| (s == "{" && system == ' ')
-|| (sName.Contains(App.sJumpText.ToLower()))) {
-bFound = true;
-mdiChild.bs.Position = i;
-break;
-}
-}
-if (!bFound) App.say("Not found!");
-} // jump_Helper method
+if (s == ">") return tagged == '>';
+if (s == "<") return tagged == ' ';
+if (s == ")") return hidden == ')';
+if (s == "(") return hidden == ' ';
+if (s == "]") return readOnly == ']';
+if (s == "[") return readOnly == ' ';
+if (s == "}") return system == '}';
+if (s == "{") return system == ' ';
+return Homer.Search.isMatch(((string) row["Name"]).Trim(), s, true);
+} // jumpMatch method
 
-void jumpBack_Helper(MdiChild mdiChild) {
-// The same match as jump_Helper, looked for upwards. Only the name is read
-// here: the tag and attribute shorthands belong to the forward jump, where
-// they have always been.
+void jump_Helper(int iStart) {
+// Forward from iStart, round to the top, as Jump Back goes round from the top:
+// F3 and Shift+F3 are the same search in two directions, so they find the same
+// things and say the same thing when there is nothing.
+MdiChild mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iCount = view.Count;
 if (iCount == 0) { App.say("No items!", true); return; }
-string sWanted = App.sJumpText.ToLower();
+for (int iStep = 0; iStep < iCount; iStep++) {
+int i = ((iStart + iStep) % iCount + iCount) % iCount;
+if (jumpMatch(view[i], App.sJumpText)) { mdiChild.bs.Position = i; return; }
+}
+App.say("0 matches", true);
+} // jump_Helper method
+
+void jumpBack_Helper(MdiChild mdiChild) {
+// The same match as jump_Helper, looked for upwards -- marks and attributes
+// included now, so Shift+F3 repeats exactly what Control+J asked for.
+DataView view = mdiChild.tbl.DefaultView;
+int iCount = view.Count;
+if (iCount == 0) { App.say("No items!", true); return; }
 int iFrom = mdiChild.bs.Position - 1;
 for (int iStep = 0; iStep < iCount; iStep++) {
 int i = ((iFrom - iStep) % iCount + iCount) % iCount;
-string sName = ((string) view[i]["Name"]).ToLower();
-if (sName.Contains(sWanted)) { mdiChild.bs.Position = i; return; }
+if (jumpMatch(view[i], App.sJumpText)) { mdiChild.bs.Position = i; return; }
 }
 App.say("0 matches", true);
 } // jumpBack_Helper method
@@ -5121,65 +5142,41 @@ keywords_Helper(iStart);
 } // menuNavigateKeywordsAgain_Click method
 
 public void filter_Helper(Frame frame, MdiChild mdiChild, string sText) {
+// THE HOMER SEARCH SYNTAX (31 October 2026, kit 1.95.0). The filter was a
+// DataView LIKE expression built from the pattern: it took * and | but not &, ?
+// or !, and an apostrophe or a bracket in the pattern made it say "Invalid
+// expression". Each name is now tested by Homer.Search, read as a name, and the
+// view shows the rows marked Shown. *.doc|*.rtf, report, !*.bak and chap?? all
+// mean what the help says; * alone, or nothing, shows every item.
 string sOldText = sText;
 string sOldFilter = mdiChild.bs.Filter;
 int iOldPosition = mdiChild.bs.Position;
 int iOldCount = mdiChild.bs.Count;
-if (sText == "*") mdiChild.bs.Filter = "";
+sText = (sText ?? "").Trim();
+if (sText == "*" || sText.Length == 0) mdiChild.bs.Filter = "";
 else {
-//mdiChild.bs.Filter = "Name LIKE '" + App.sFilterText + "'";
-sText = sText.Trim();
-string[] aFilters = sText.Split('|');
-string s = "";
-for (int i =0; i < aFilters.Length; i++) {
-if (i == 0) s += "(";
-string[] a = aFilters[i].Split('*');
-for (int j = 0; j < a.Length; j++) {
-string sPrefix = "";
-string sSuffix = "";
-if (j == 0) s += " (";
-if (a[j].Length > 0) {
-//if ((j > 0) && (a[j - 1].Length == 0)) sPrefix = "*";
-if (j > 0) sPrefix = "*";
-//if ((j < a.Length - 1) && (a[j + 1].Length == 0)) sSuffix = "*";
-if (j < a.Length - 1) sSuffix = "*";
-s += "Name like '" + sPrefix + a[j] + sSuffix + "'";
-//s += "DisplayFields like '" + sPrefix + a[j] + sSuffix + "'";
+DataTable tbl = mdiChild.tbl;
+if (!tbl.Columns.Contains("Shown")) {
+DataColumn colShown = tbl.Columns.Add("Shown", typeof(bool));
+colShown.DefaultValue = true;
 }
-
-if (j == a.Length - 1) s += ") ";
-else s += " and ";
+List<List<Homer.Search.Term>> llPattern = Homer.Search.parse(sText);
+foreach (DataRow row in tbl.Rows) {
+string sName = (row["Name"] as string ?? "").Trim();
+row["Shown"] = Homer.Search.isMatch(sName, llPattern, true, false);
 }
-if (i == aFilters.Length - 1) s+=")";
-else s += " or ";
-}
-
-s = s.Replace("( and ", "(");
-s = s.Replace(" and )", ")");
-s = s.Replace("**", "*");
-s = s.Replace("  ", " ");
-s = s.Replace("( ", "(");
-s = s.Replace(" )", ")");
-s = s.Trim();
-//Lbc.Show(s);
-try {
-mdiChild.bs.Filter = s;
-}
-catch {
-App.say("Invalid expression!");
-sText = sOldText;
-mdiChild.bs.Filter = sOldFilter;
-mdiChild.bs.Position = iOldPosition;
-return;
-}
+mdiChild.bs.Filter = "Shown = true";
 }
 mdiChild.bs.EndEdit();
 if (sText != "*" && sText != "" && mdiChild.bs.Count == 0) {
 //App.say("No items!");
 string sChoice = Lbc.ConfirmDialog("Confirm", "No items match the filter.  Clear it?", "Y");
 if (sChoice == "Y") {
-sText = sOldFilter;
-mdiChild.bs.Filter = sOldFilter;
+// The view now shows every item: the Shown marks hold this filter's answer,
+// which is none, so the earlier filter cannot simply be restored by its
+// expression.
+sText = "*";
+mdiChild.bs.Filter = "";
 mdiChild.bs.Position = iOldPosition;
 mdiChild.sFilterText = sText;
 App.sFilterText = sText;
@@ -7138,7 +7135,38 @@ else {
 // EVERY ARCHIVE GOES THROUGH 7-ZIP (9 October 2026). A test for .zip once chose between 7-Zip and a built-in
 // ZIP loop; it had been replaced by if (true), so the loop that followed could never run, and the compiler
 // said so (CS0162). The loop, and the list it filled, are gone; what runs is unchanged.
-z7Entry2Dir(sPath, "*", sDir, true);
+//
+// EACH ARCHIVE TO ITS OWN FOLDER, FOR SAME NAME (1 November 2026). Unarchive to Same Name named the folder
+// after the current item, so every marked archive went into that one folder.
+string sArchiveDir = sDir;
+if (bSameName && aPaths.Length > 1) sArchiveDir = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(sDir)), Path.GetFileNameWithoutExtension(sPath));
+//
+// NOTHING REPLACED WITHOUT ASKING (1 November 2026, from Jamal's speech history). 7-Zip ran with -aoa, which
+// overwrites every file of the same name without a word: two marked archives unarchived into one folder left
+// the second one's copies of their two shared files in place of the first one's, and nobody was told. Now the
+// archive's entries are compared with the folder first; if any would replace a file, the person chooses:
+// Yes replaces them, No keeps the files already there, and Cancel stops.
+string sOverwrite = "-aoa";
+List<string> lsClash = new List<string>();
+try {
+foreach (string sEntry in GetZ7Entries(sPath)) {
+if (sEntry.Length == 0 || Path.IsPathRooted(sEntry)) continue;
+string sWhere = Path.Combine(sArchiveDir, sEntry);
+if (File.Exists(sWhere)) lsClash.Add(sEntry);
+}
+}
+catch (Exception exList) { Homer.Log.warn("Unarchive: could not list " + sName + ": " + exList.Message); }
+if (lsClash.Count > 0) {
+string sSome = String.Join(", ", lsClash.GetRange(0, Math.Min(3, lsClash.Count)).ToArray()) + (lsClash.Count > 3 ? ", and more" : "");
+string sAsk = lsClash.Count + (lsClash.Count == 1 ? " file" : " files") + " in " + sName + " already " + (lsClash.Count == 1 ? "exists" : "exist") + " in " + sArchiveDir + ": " + sSome + ". Replace " + (lsClash.Count == 1 ? "it" : "them") + "? No keeps the files already there.";
+string sChoice = Lbc.ConfirmDialog("Unarchive", sAsk, "N");
+Homer.Log.info("Unarchive: " + sName + " into " + sArchiveDir + ", " + lsClash.Count + " existing; choice " + (sChoice == "" ? "cancel" : sChoice));
+if (sChoice == "Y") sOverwrite = "-aoa";
+else if (sChoice == "N") sOverwrite = "-aos";
+else { App.say("Stopped", true); return; }
+}
+if (!Directory.Exists(sArchiveDir)) Directory.CreateDirectory(sArchiveDir);
+z7Entry2Dir(sPath, "*", sArchiveDir, true, sOverwrite);
 if (i < aPaths.Length - 1) continue;
 App.say("Done!", true);
 if (Homer.Util.stringEquiv(Path.GetDirectoryName(sDir), Directory.GetCurrentDirectory())) {
@@ -7244,11 +7272,16 @@ return testZ7(sPath);
 } // testZip method
 
 public string z7Entry2Dir(string sZip, string sPath, string sDir, bool bSubfolders) {
+return z7Entry2Dir(sZip, sPath, sDir, bSubfolders, "-aoa");
+} // z7Entry2Dir method
+
+// z7Entry2Dir with 7-Zip's overwrite switch: -aoa replaces files of the same name, -aos keeps them.
+public string z7Entry2Dir(string sZip, string sPath, string sDir, bool bSubfolders, string sOverwrite) {
 string sExe = Path.Combine(App.sAppDir, "7z.exe");
 string s = " e ";
 if (bSubfolders) s = " x ";
 // string sCommand = Homer.Util.stringQuote(sExe) + s+ Homer.Util.stringQuote(sZip) + " " + Homer.Util.stringQuote(sPath) + " " + Homer.Util.stringQuote("-o" + sDir) + " -aoa -p" + App.sUnarchivePassword;
-string sParams = s + Homer.Util.stringQuote(sZip) + " " + Homer.Util.stringQuote(sPath) + " " + Homer.Util.stringQuote("-o" + sDir) + " -aoa -p" + App.sUnarchivePassword;
+string sParams = s + Homer.Util.stringQuote(sZip) + " " + Homer.Util.stringQuote(sPath) + " " + Homer.Util.stringQuote("-o" + sDir) + " " + sOverwrite + " -p" + App.sUnarchivePassword;
 // Homer.Util.runHideWait(sCommand);
 string sText = Homer.Util.getProgramOutput(sExe, sParams);
 if (App.frame != null && App.frame.TopLevelControl.Handle != (IntPtr) Homer.Util.getForegroundWindow()) Homer.Util.forceWindow(App.frame.TopLevelControl.Handle);

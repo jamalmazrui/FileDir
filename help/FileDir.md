@@ -134,13 +134,29 @@ Press Exclamation Point (! or Shift+1) to stamp the current or marked items with
 
 ## Find Commands
 
-Find commands search for an item by a string of characters in the name or body. Press Alt+Shift+F to find a file anywhere in the current folder or subfolders based on text it contains and/or a wild card pattern. For example, you could search for the term "strategic plan" in each file with a name matching the minutes*.doc specification (meaning a name that has minuttes at the beginning and .doc at the end). FileDir will present a list of files that match the wild card pattern. Use arrow key or initial letter navigation to focus on the item of interest. Pressing Enter will then go to the folder containing that item and place focus on it.
+Find commands search for an item by a string of characters in the name or body. Press Alt+Shift+F to find a file anywhere in the current folder or subfolders based on text it contains and/or a name pattern, both in the search syntax described below. For example, you could search for the term "strategic plan" in each file with a name matching minutes*.doc (meaning a name that has minutes at the beginning and .doc at the end). FileDir will present a list of files that match the wild card pattern. Use arrow key or initial letter navigation to focus on the item of interest. Pressing Enter will then go to the folder containing that item and place focus on it.
 
-Press Control+J to jump to an item within the current folder, based on a sequence of characters (no wildcards) appearing somewhere within its name. The command also recognizes symbols associated with file attributes. Thus, you can jump to a ReadOnly file by entering a single ] character as the search string. A [ would find the next item without the ReadOnly attribute set. Using the Jump Again command, Alt+J, you can efficiently hop from one match to the next.
+Press Control+J to jump to an item within the current folder, based on text in its name, in the search syntax described below; plain letters are found anywhere in the name. The command also recognizes symbols associated with file attributes. Thus, you can jump to a ReadOnly file by entering a single ] character as the search string. A [ would find the next item without the ReadOnly attribute set. Using the Jump Again command, Alt+J, or F3, you can efficiently hop from one match to the next; Shift+F3 goes back.
 
-The Control+K command searches for a keyword inside the body of a file. The command supports multiple conditions. Use the vertical bar character (|) to separate words or phrases where any one of those terms can produce a match. Use the ampersand character (&) as a separater where all terms must match. For example, entering "C#|Visual Basic" would match files containing either language, whereas "C#&Visual Basic" would require both to match. Press Alt+K to hop to the next matching file.
+The Control+K command searches for keywords inside the body of a file, in the search syntax described below. For example, entering C# | Visual Basic would match files containing either language, whereas C# & Visual Basic would require both. Press Alt+K or F3 to hop to the next matching file, and Shift+F3 to go back.
 
-Press Control+F to filter files in the current folder to a restricted view of those matching a wild card pattern. You can separate multiple patterns with the vertical bar (|) character, meaning the pattern can match alternate conditions, e.g., "*.doc|*.rtf" for files in either Word or Rich Text Format. Press Control+Shift+F to remove any filter and make all items available in the view.
+Press Control+F to filter the current folder to the items whose names match a pattern, in the search syntax below: for example, *.doc | *.rtf for files in either Word or Rich Text Format, or !*.bak for everything but backups. Press Control+Shift+F to remove any filter and make all items available in the view.
+
+### Search syntax
+
+Every Homer search that is not a regular expression reads what you type the same way. A plain word is enough most of the time; the symbols are there when you need more.
+
+- **A word** is found anywhere, whatever its case: `river` finds "Riverside".
+- **`*`** stands for any run of characters, and **`?`** for any one character: `chap*`, `c?t`.
+- **`&`** means all of them: `red & blue`.
+- **`|`** means any of them: `red | blue`. `&` is read first, so `red & blue | green` means red and blue, or else green.
+- **`!`** before a word means not: `!draft`.
+- **Quotes** find exactly what is inside, symbols and all: `"C#"`, `"a & b"`.
+
+Where a wildcard counts depends on what is searched. When the search reads a **name** -- a file name, a line of a list, one field -- a word with `*` or `?` must match the whole name, so `*.md` means a name ending in .md, and `chap*` one starting with chap. When it reads **text** -- a file's contents, a whole record -- every word may match anywhere. A word with no wildcard is found anywhere in both.
+
+F3 repeats the last search, in the same way and over the same things, going forward; Shift+F3 repeats it going back.
+
 
 ## Go to Commands
 
@@ -384,7 +400,7 @@ The Web Download command, Alt+Shift+W, lets you pick one or more files to downlo
 
 A listbox control of the .NET Framework does not support multiple letter navigation, so each letter typed jumps to the next item starting with that letter. To make navigation more flexible and efficient, particularly in a listbox with many items, FileDir adds the following features to a list based dialog. Control+J prompts for text within an item, going to the first match if a new search, or the next match if the previous value is accepted. Alt+J goes to the next match without prompting for a value. The item with focus when the dialog is closed -- but not canceled -- becomes the current item the next time that the same list dialog is invoked (you are notified when it is not the first item). The Jump value of that dialog is also remembered.
 
-Control+F sets a filter to restrict what items are shown via wildcards (* to match any sequence of characters or ? to match a single one). For example, you could browse replace-related commands in the Alternate Menu, Alt+F10, by pressing Control+F after invoking that list and then entering *replace* as the filter expression. Control+Shift+F clears the filter so all items are shown again. The order of items may also be changed: Alt+A for alpha order, Alt+Shift+A for reverse alpha order, Alt+D for default order, or Alt+Shift+D for reverse default order.
+Control+F sets a filter to restrict what items are shown, in the search syntax (* matches any run of characters, ? a single one, and & | ! and quotes work as everywhere in Homer). For example, you could browse replace-related commands in the Alternate Menu, Alt+F10, by pressing Control+F after invoking that list and then entering *replace* as the filter expression. Control+Shift+F clears the filter so all items are shown again. The order of items may also be changed: Alt+A for alpha order, Alt+Shift+A for reverse alpha order, Alt+D for default order, or Alt+Shift+D for reverse default order.
 
 Multiple commands support flexible checking or unchecking in a checked listbox such as the Web Download dialog. Press Space to toggle the checked state of the current item, Control+A to check all items, or Control+Shift+A to uncheck all. Press Shift+DownArrow for check and Next, or Shift+UpArrow for check and Previous. Press Shift+End for check to Bottom, or Shift+Home for check to Top. Shift+NumPad5 checks the current item. F8 marks the start of a checking operation, completed with Shift+F8.
 
@@ -900,11 +916,7 @@ track, which is where a presenter's name or a word from a summary lives.
   was
 - **Control+F** filter the list, **Control+Shift+F** clear the filter
 
-**Keywords and Filter share one syntax**, the simple one FileDir has always
-used, not regular expressions: `red & blue` means both words, `red | blue` means
-either, and `chap*` means anything starting that way. Case never matters. Jump
-is the exception on purpose: it is the plain substring jump it is in the file
-list, where the point is typing a few letters fast.
+**Keywords, Filter and Jump share the Homer search syntax**, described under Find commands: `red & blue` means both words, `red | blue` either, `!red` not, and `chap*` anything starting that way. Case never matters.
 
 Each remembers its own last ten answers, and all of them ignore case. All act on
 the Track list from wherever you are, leave the keyboard where it was, and say

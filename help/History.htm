@@ -184,6 +184,40 @@
 <body>
 <main>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
+<h2 id="november-2026-unarchive-asks-before-it-replaces">1 November 2026
+– Unarchive asks before it replaces</h2>
+<ul>
+<li><strong>Unarchive asks before replacing a file.</strong> It ran
+7-Zip in a mode that overwrites every file of the same name without a
+word, so two archives unarchived into one folder left the second one’s
+copies of their shared files in place of the first one’s. Now, when an
+archive holds files the folder already has, FileDir names them and asks:
+Yes replaces them, No keeps the files already there (the default), and
+Cancel stops.</li>
+<li><strong>Unarchive to Same Name gives each marked archive its own
+folder,</strong> named after that archive; it put them all in one folder
+named after the current item.</li>
+</ul>
+<h2 id="october-2026-one-search-syntax">31 October 2026 – One search
+syntax</h2>
+<ul>
+<li><strong>Filter, Jump, Keywords and File Find share the Homer search
+syntax:</strong> a word anywhere, <code>*</code> and <code>?</code>,
+<code>&amp;</code> all, <code>|</code> any, <code>!</code> not, quotes
+for exact text. The filter reads names, so <code>*.doc | *.rtf</code>
+and <code>!*.bak</code> work; <code>&amp;</code>, <code>?</code> and
+<code>!</code> are new to it, and an apostrophe or bracket in the
+pattern no longer makes it fail.</li>
+<li><strong>F3 and Shift+F3 repeat a jump exactly, both ways.</strong>
+Jump back now honors the mark and attribute symbols (<code>&gt;</code>
+<code>]</code> and the rest) as Jump forward does, and both go round the
+folder and say “0 matches”.</li>
+<li><strong>File Find’s Filter takes <code>|</code>, and Path List and
+Zip read the folder filter</strong> with the same syntax, where
+<code>*.doc|*.rtf</code> used to stop them.</li>
+<li>The help no longer promises <code>?</code> where it did not
+work.</li>
+</ul>
 <h2 id="october-2026-fixes-from-an-audit-by-another-ai">30 October 2026
 – fixes from an audit by another AI</h2>
 <ul>

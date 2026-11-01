@@ -2,6 +2,18 @@
 
 
 
+## 1 November 2026 -- Unarchive asks before it replaces
+
+- **Unarchive asks before replacing a file.** It ran 7-Zip in a mode that overwrites every file of the same name without a word, so two archives unarchived into one folder left the second one's copies of their shared files in place of the first one's. Now, when an archive holds files the folder already has, FileDir names them and asks: Yes replaces them, No keeps the files already there (the default), and Cancel stops.
+- **Unarchive to Same Name gives each marked archive its own folder,** named after that archive; it put them all in one folder named after the current item.
+
+## 31 October 2026 -- One search syntax
+
+- **Filter, Jump, Keywords and File Find share the Homer search syntax:** a word anywhere, `*` and `?`, `&` all, `|` any, `!` not, quotes for exact text. The filter reads names, so `*.doc | *.rtf` and `!*.bak` work; `&`, `?` and `!` are new to it, and an apostrophe or bracket in the pattern no longer makes it fail.
+- **F3 and Shift+F3 repeat a jump exactly, both ways.** Jump back now honors the mark and attribute symbols (`>` `]` and the rest) as Jump forward does, and both go round the folder and say "0 matches".
+- **File Find's Filter takes `|`, and Path List and Zip read the folder filter** with the same syntax, where `*.doc|*.rtf` used to stop them.
+- The help no longer promises `?` where it did not work.
+
 ## 30 October 2026 -- fixes from an audit by another AI
 
 - **A failed move keeps what it already moved.** A move to another drive goes file by file, so when it failed part way, the files already moved were gone from the source; putting back an earlier copy at the destination deleted them. They are now kept under a recovery name, and FileDir says where.
