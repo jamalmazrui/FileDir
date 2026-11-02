@@ -704,6 +704,16 @@ if exist "Quick\" (
   robocopy "Quick" "notes\retired\Quick" /E /MOVE /NFL /NDL /NJH /NJS /NP >nul
   if exist "Quick\" (echo WARNING: the old Quick folder could not be fully moved into notes\retired\Quick>> "%log%") else (echo Retired: the top-level Quick folder, which nothing reads, is now notes\retired\Quick>> "%log%")
 )
+rem A RETIRED TOP-LEVEL ANNOUNCE.MD (1 November 2026): the announcement lives in
+rem help\Announce.md, which the repository carries. A copy at the top of the
+rem project is left from an older layout; nothing publishes it, and the docs
+rem check graded it, finding two faults the real one does not have. It is
+rem moved into notes\retired, never deleted.
+if exist "Announce.md" if exist "help\Announce.md" (
+  if not exist "notes\retired\" mkdir "notes\retired"
+  move /y "Announce.md" "notes\retired\Announce.md" >nul
+  if exist "Announce.md" (echo WARNING: the old top-level Announce.md could not be moved into notes\retired>> "%log%") else (echo Retired: the top-level Announce.md, which nothing publishes, is now notes\retired\Announce.md>> "%log%")
+)
 rem Retired kit scripts an app may still carry from an earlier refresh: gone.
 rem Since kit 1.42 the kit's scripts have plain names -- checkHomerApp is
 rem check, gitPush is push, gitUnpushed is unpushed, homerFinish is finish,

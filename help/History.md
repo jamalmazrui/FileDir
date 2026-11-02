@@ -2,6 +2,10 @@
 
 
 
+## 1 November 2026 -- A stray announcement retired
+
+- **The build moves a top-level Announce.md into notes\retired.** The announcement lives in help\Announce.md; a copy left at the top of the project from an older layout was graded by the docs check, which found two faults in it that the real one does not have.
+
 ## 1 November 2026 -- Unarchive asks before it replaces
 
 - **Unarchive asks before replacing a file.** It ran 7-Zip in a mode that overwrites every file of the same name without a word, so two archives unarchived into one folder left the second one's copies of their shared files in place of the first one's. Now, when an archive holds files the folder already has, FileDir names them and asks: Yes replaces them, No keeps the files already there (the default), and Cancel stops.
