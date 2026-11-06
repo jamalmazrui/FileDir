@@ -453,15 +453,31 @@ if (sValueList == null || sValueList.Length == 0) return "";
 List<string> lsItems = new List<string>(sValueList);
 if (bSorted) lsItems = Homer.LbcDialog.sortedIgnoringCase(lsItems);
 string sSelected = (iDefaultIndex >= 0 && iDefaultIndex < lsItems.Count) ? lsItems[iDefaultIndex] : lsItems[0];
+// THE LAST CHOICE REMEMBERED (6 November 2026, a regression Jamal reported). A list a caller opens on its first item
+// starts instead on the item chosen last time in the list of that title, kept across sessions in FileDir's .inix by
+// the kit's history; a caller that names an item still gets that item.
+string sChoiceKey = choiceKey(sTitle, sLabel);
+if (iDefaultIndex <= 0) {
+string sLast = Homer.LbcDialog.lastChoice(sChoiceKey);
+if (sLast.Length > 0 && lsItems.Contains(sLast)) sSelected = sLast;
+}
 using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
 ListBox lb = string.IsNullOrEmpty(sLabel)
 ? dlg.addListBox(lsItems, sSelected, null)
 : dlg.addPickBox(fieldLabel(sLabel), lsItems, sSelected, null);
 dlg.primaryList = lb;
 if (!dlg.runOkCancel()) return "";
-return (lb.SelectedItem == null) ? "" : lb.SelectedItem.ToString();
+string sPicked = (lb.SelectedItem == null) ? "" : lb.SelectedItem.ToString();
+if (sPicked.Length > 0) Homer.LbcDialog.noteChoice(sChoiceKey, sPicked);
+return sPicked;
 }
 } // ListDialog method
+// choiceKey: a list's key for its remembered choice, from its title and label, letters and digits only.
+private static string choiceKey(string sTitle, string sLabel) {
+System.Text.StringBuilder sb = new System.Text.StringBuilder();
+foreach (char c in (sTitle ?? "") + (sLabel ?? "")) if (char.IsLetterOrDigit(c)) sb.Append(c);
+return sb.ToString();
+} // choiceKey method
 
 public static string[] MultiCheckDialog(string sTitle, string[] aValues, int[] aSelect, bool bSort, int iIndex) {
 // Check several items; the answer is the checked items themselves. Built on
@@ -592,7 +608,8 @@ string[] aNames = lsNames.ToArray();
 string[] aPaths = lsPaths.ToArray();
 // Sorted by the dialog, which does it case insensitively.
 bool bSorted = true;
-string sName = ListDialog("Pick", "", aNames, bSorted, 0);
+// Its own title, so its remembered choice is not the window list's ("Pick" serves that too).
+string sName = ListDialog("Special Folder", "", aNames, bSorted, 0);
 if (sName.Length == 0) return "";
 int iName = Array.IndexOf(aNames, sName);
 if (iName < 0) return "";

@@ -2,6 +2,11 @@
 
 
 
+## 6 November 2026 -- Lists remember your choice, and no console after installing
+
+- **Every pick list starts on your last choice,** remembered across sessions: Go to Special Folder (Control+Shift+G) opens on the folder chosen last time, such as AppData Local, and so does every other list that opens on its first item. The special folders' list is titled Special Folder now, so its choice is its own.
+- **Installing leaves no console window.** With Launch ticked, the installer started FileDir through cmd.exe with its window shown; it starts FileDir directly now.
+
 ## 6 November 2026 -- Folders typed again, and archives always unpacked whole
 
 - **A folder can be typed again.** In Unarchive To and every other folder prompt, typing C or C: was lost: folder-name autocomplete made the box act like a combo box. It is a plain edit box again; Browse, Current, Recent, Quick and Special still pick a folder.
