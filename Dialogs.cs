@@ -106,7 +106,9 @@ Homer.LbcMessage.show(oText.ToString(), oTitle.ToString());
 } // Show method
 
 public static string ConfirmDialog(string sTitle, string sText, string sDefault) {
-switch (Homer.LbcMessage.show(sText, sTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, (sDefault == "N" ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1))) {
+// THE STANDARD WINDOWS CONFIRMATION AGAIN (6 November 2026, Jamal's request): Y and N answer at once, Alt or not,
+// through the kit's LbcMessage.native, which wraps the Windows message box.
+switch (Homer.LbcMessage.native(ownerForm(), sText, sTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, (sDefault == "N" ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1))) {
 case DialogResult.Yes :
 return "Y";
 case DialogResult.No :
