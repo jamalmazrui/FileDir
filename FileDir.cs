@@ -7101,30 +7101,10 @@ else {
 string sArchiveDir = sDir;
 if (bSameName && aPaths.Length > 1) sArchiveDir = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(sDir)), Path.GetFileNameWithoutExtension(sPath));
 //
-// NOTHING REPLACED WITHOUT ASKING (1 November 2026, from Jamal's speech history). 7-Zip ran with -aoa, which
-// overwrites every file of the same name without a word: two marked archives unarchived into one folder left
-// the second one's copies of their two shared files in place of the first one's, and nobody was told. Now the
-// archive's entries are compared with the folder first; if any would replace a file, the person chooses:
-// Yes replaces them, No keeps the files already there, and Cancel stops.
+// ALWAYS REPLACED (6 November 2026, Jamal's instruction). Unarchive puts every file of the archive on disk,
+// replacing a file of the same name and path without asking: 7-Zip's -aoa. The comparison and question of
+// 1 November are gone.
 string sOverwrite = "-aoa";
-List<string> lsClash = new List<string>();
-try {
-foreach (string sEntry in GetZ7Entries(sPath)) {
-if (sEntry.Length == 0 || Path.IsPathRooted(sEntry)) continue;
-string sWhere = Path.Combine(sArchiveDir, sEntry);
-if (File.Exists(sWhere)) lsClash.Add(sEntry);
-}
-}
-catch (Exception exList) { Homer.Log.warn("Unarchive: could not list " + sName + ": " + exList.Message); }
-if (lsClash.Count > 0) {
-string sSome = String.Join(", ", lsClash.GetRange(0, Math.Min(3, lsClash.Count)).ToArray()) + (lsClash.Count > 3 ? ", and more" : "");
-string sAsk = lsClash.Count + (lsClash.Count == 1 ? " file" : " files") + " in " + sName + " already " + (lsClash.Count == 1 ? "exists" : "exist") + " in " + sArchiveDir + ": " + sSome + ". Replace " + (lsClash.Count == 1 ? "it" : "them") + "? No keeps the files already there.";
-string sChoice = Lbc.ConfirmDialog("Unarchive", sAsk, "N");
-Homer.Log.info("Unarchive: " + sName + " into " + sArchiveDir + ", " + lsClash.Count + " existing; choice " + (sChoice == "" ? "cancel" : sChoice));
-if (sChoice == "Y") sOverwrite = "-aoa";
-else if (sChoice == "N") sOverwrite = "-aos";
-else { App.say("Stopped", true); return; }
-}
 if (!Directory.Exists(sArchiveDir)) Directory.CreateDirectory(sArchiveDir);
 z7Entry2Dir(sPath, "*", sArchiveDir, true, sOverwrite);
 if (i < aPaths.Length - 1) continue;

@@ -631,8 +631,9 @@ public static string DirectoryDialog(string sTitle, string sLabel, string sValue
 string sResult = "";
 using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, ownerForm())) {
 TextBox txt = dlg.addInputBox(fieldLabel(sLabel), sValue ?? "", null);
-txt.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-txt.AutoCompleteSource = AutoCompleteSource.FileSystemDirectories;
+// A PLAIN EDIT BOX (6 November 2026). Folder-name autocomplete made the box behave like a combo box with JAWS, and
+// typing C or C: in Unarchive To was lost; every other Lbc text box types normally. Browse, Current, Recent, Quick
+// and Special still pick a folder.
 
 dlg.addBand();
 Button btnBrowse = dlg.addButton("&Browse", "Browse for the folder in the Windows folder picker");

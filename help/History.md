@@ -2,6 +2,11 @@
 
 
 
+## 6 November 2026 -- Folders typed again, and archives always unpacked whole
+
+- **A folder can be typed again.** In Unarchive To and every other folder prompt, typing C or C: was lost: folder-name autocomplete made the box act like a combo box. It is a plain edit box again; Browse, Current, Recent, Quick and Special still pick a folder.
+- **Unarchive (Shift+U) replaces files without asking.** Every file in the archive is put on disk, replacing a file of the same name and path, as before 1 November; the comparison and question added then are gone.
+
 ## 5 November 2026 -- The Homer window family
 
 - **Next Window, Previous Window, Close, Close All but Current and Windows Open run the kit's code,** Homer.MdiWindows, shared by every Homer app: the same keys, now the same behavior across the suite. Close All but Current counts only the windows that really closed.
