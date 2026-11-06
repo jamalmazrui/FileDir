@@ -183,7 +183,6 @@ Previous Window=Control+Shift+Tab, Activate the previous open window
 Documentation=F1, Display FileDir documentation
 History of Changes=Shift+F1, Display history of FileDir fixes and enhancements
 About=Alt+F1, Display FileDir version number and release date
-Window Toggle=Shift+W, Toggle between most recently used windows
 Current Windows=F4, Pick window to open from list of current ones
 Close Window=Control+F4, Close current window
 Close All But Current Window=Control+Shift+F4, Close all windows except the current one

@@ -1207,7 +1207,7 @@ if (sLine.Trim().Length > 0) Homer.Log.info("  " + sLine.Trim());
 // lines is a report to nobody: it interrupts an installation to say that the
 // thing the person ticked has happened, which the Results box says at the end
 // anyway, in one line, along with everything else.
-if (!bQuietJaws && sMessage.Length > 0) MessageBox.Show(sMessage, "FileDir - JAWS Settings");
+if (!bQuietJaws && sMessage.Length > 0) Homer.LbcMessage.show(sMessage, "FileDir - JAWS Settings");
 return;
 }
 
@@ -1575,7 +1575,8 @@ menuFilePrintTagged = menu_Helper("&Print", "Control+P", menuFilePrintTagged_Cli
 menuFileRecentFolders = menu_Helper("Recent Folders ...", "Alt+R", menuFileRecentFolders_Click);
 menuFileGoBack = menu_Helper("Go Back", "Alt+LeftArrow", MenuFileGoBack_Click);
 menuFileGoForward = menu_Helper("Go Forward", "Alt+RightArrow", MenuFileGoForward_Click);
-menuFileWindowToggle = menu_Helper("Window Toggle", "Shift+W", menuFileWindowToggle_Click);
+// Window Toggle (Shift+W) retired 5 November 2026: Control+Tab and Control+Shift+Tab already move between windows,
+// and Shift+W is Say Whole Record across the suite. Its handler is kept, unbound.
 menuFileCurrentWindows = menu_Helper("Current Windows ...", "F4", menuFileCurrentWindows_Click);
 menuFileNextWindow = menu_Helper("Next Window", "Control+Tab", MenuFileNextWindow_Click);
 menuFilePreviousWindow = menu_Helper("Previous Window", "Control+Shift+Tab", MenuFilePreviousWindow_Click);
@@ -1584,7 +1585,7 @@ menuFileCloseAllButCurrent = menu_Helper("Close All But Current Window", "Contro
 menuFileExit = menu_Helper("E&xit FileDir", "Alt+F4", MenuFileExit_Click);
 menuFileRestartWindows = menu_Helper("Restart Windows", "Alt+Shift+F4", MenuFileRestartWindows_Click);
 //menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewViewCopy,
-menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewItemCopy, menuFileNewFolder, menuFileOpenFolder, menuFileGoToFolder, menuFileOpenSpecialFolder, menuFileGoToSpecialFolder, menuFileOpenDrive, menuFileGoToDrive, menuFileOpenVirtualFolder, menuFileGoToVirtualFolder, menuFileOpenParentFolder, menuFileGoToParentFolder, menuFileOpenRootFolder, menuFileGoToRootFolder, menuFileOpenQuickFolder, menuFileGoToQuickFolder, menuFileQuickShortcut, menuFileQuickURL, menuFileFind, menuFileProperties, menuFileOpenItem, menuFileGoToItem, menuFilePrintTagged, menuFileRecentFolders, menuFileGoBack, menuFileGoForward, menuFileWindowToggle, menuFileCurrentWindows, menuFileNextWindow, menuFilePreviousWindow, menuFileClose, menuFileCloseAllButCurrent, menuFileExit, menuFileRestartWindows});
+menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewItemCopy, menuFileNewFolder, menuFileOpenFolder, menuFileGoToFolder, menuFileOpenSpecialFolder, menuFileGoToSpecialFolder, menuFileOpenDrive, menuFileGoToDrive, menuFileOpenVirtualFolder, menuFileGoToVirtualFolder, menuFileOpenParentFolder, menuFileGoToParentFolder, menuFileOpenRootFolder, menuFileGoToRootFolder, menuFileOpenQuickFolder, menuFileGoToQuickFolder, menuFileQuickShortcut, menuFileQuickURL, menuFileFind, menuFileProperties, menuFileOpenItem, menuFileGoToItem, menuFilePrintTagged, menuFileRecentFolders, menuFileGoBack, menuFileGoForward, menuFileCurrentWindows, menuFileNextWindow, menuFilePreviousWindow, menuFileClose, menuFileCloseAllButCurrent, menuFileExit, menuFileRestartWindows});
 
 menuEdit = menu_Helper("&Edit");
 menuEditTagAndNext = menu_Helper("Mark and Next", "> or Shift+DownArrow", MenuEditTagAndNext_Click);
@@ -5589,7 +5590,7 @@ void menuHelpPlayTutorials_Click(object sender, EventArgs e) {
 foreach (string sHelp in new string[] { Homer.Paths.shippedHelp(), Path.Combine(Path.GetDirectoryName(Application.StartupPath) ?? "", "help") }) {
 if (Homer.MediaPlayer.playTutorials(this, "FileDir", sHelp)) return;
 }
-MessageBox.Show(this, "The tutorials are not here.\r\n\r\nThey ship with FileDir in the help folder of the installation. In a source folder, the build speaks them.", "Play Tutorials", MessageBoxButtons.OK, MessageBoxIcon.Information);
+Homer.LbcMessage.show(this, "The tutorials are not here.\r\n\r\nThey ship with FileDir in the help folder of the installation. In a source folder, the build speaks them.", "Play Tutorials", MessageBoxButtons.OK, MessageBoxIcon.Information);
 } // menuHelpPlayTutorials_Click method
 void menuHelpHotkeysPage_Click(object sender, EventArgs e) { Homer.SuiteCommands.openHotkeys(this); }
 
@@ -8933,7 +8934,7 @@ sText += File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToStrin
 sText += "Copyright 2006 - 2026 by Jamal Mazrui\nMIT License\n\n";
 sText += ".NET Framework " + RuntimeEnvironment.GetSystemVersion() + "\n\n";
 sText += App.getPortableExecutableKind();
-MessageBox.Show(sText, "About");
+Homer.LbcMessage.show(sText, "About");
 } // menuHelpAbout_Click method
 
 void MenuHelpDocumentation_Click(object sender, EventArgs e) {
@@ -9299,7 +9300,6 @@ declareKey("menuEditPasteCopy", menuEditPasteCopy, Keys.Alt | Keys.V);
 declareKey("menuEditPasteMove", menuEditPasteMove, Keys.Alt | Keys.Shift | Keys.V);
 declareKey("menuQueryWindowsOpen", menuQueryWindowsOpen, Keys.Alt | Keys.Clear, Keys.Shift | Keys.F4);
 declareKey("menuMiscSendToWordProcessor", menuMiscSendToWordProcessor, Keys.Control | Keys.W);
-declareKey("menuFileWindowToggle", menuFileWindowToggle, Keys.Shift | Keys.W);
 declareKey("menuMiscWindowsControlPanel", menuMiscWindowsControlPanel, Keys.Control | Keys.Shift | Keys.W);
 declareKey("menuMiscWebDownload", menuMiscWebDownload, Keys.Alt | Keys.Shift | Keys.W);
 declareKey("menuNavigateExtensionChange", menuNavigateExtensionChange, Keys.Shift | Keys.X);

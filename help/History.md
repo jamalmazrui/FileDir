@@ -2,6 +2,11 @@
 
 
 
+## 5 November 2026 -- Messages the Homer way, and Window Toggle retired
+
+- **Every message box is the kit's LbcMessage,** 6 of them, like the rest of FileDir's dialogs -- written Homer.LbcMessage in full, as FileDir writes every kit class, which the 18:27 build needed.
+- **Window Toggle (Shift+W) is retired.** Control+Tab and Control+Shift+Tab already move between windows, and across the Homer suite Shift+W is now Say Whole Record.
+
 ## 1 November 2026 -- A stray announcement retired
 
 - **The build moves a top-level Announce.md into notes\retired.** The announcement lives in help\Announce.md; a copy left at the top of the project from an older layout was graded by the docs check, which found two faults in it that the real one does not have.

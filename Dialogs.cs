@@ -102,11 +102,11 @@ Show(oText, "Show");
 } // Show method
 
 public static void Show(object oText, object oTitle) {
-MessageBox.Show(oText.ToString(), oTitle.ToString());
+Homer.LbcMessage.show(oText.ToString(), oTitle.ToString());
 } // Show method
 
 public static string ConfirmDialog(string sTitle, string sText, string sDefault) {
-switch (MessageBox.Show(sText, sTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, (sDefault == "N" ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1))) {
+switch (Homer.LbcMessage.show(sText, sTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, (sDefault == "N" ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1))) {
 case DialogResult.Yes :
 return "Y";
 case DialogResult.No :
@@ -755,7 +755,7 @@ Show("Show", oText);
 } // Show method
 
 public static void Show(object oTitle, object oText) {
-MessageBox.Show(oText.ToString(), oTitle.ToString());
+Homer.LbcMessage.show(oText.ToString(), oTitle.ToString());
 } // Show method
 
 
