@@ -2,6 +2,10 @@
 
 
 
+## 5 November 2026 -- The Homer window family
+
+- **Next Window, Previous Window, Close, Close All but Current and Windows Open run the kit's code,** Homer.MdiWindows, shared by every Homer app: the same keys, now the same behavior across the suite. Close All but Current counts only the windows that really closed.
+
 ## 5 November 2026 -- Messages the Homer way, and Window Toggle retired
 
 - **Every message box is the kit's LbcMessage,** 6 of them, like the rest of FileDir's dialogs -- written Homer.LbcMessage in full, as FileDir writes every kit class, which the 18:27 build needed.

@@ -2924,54 +2924,23 @@ activate_Helper(sTitle);
 } // menuFileCurrentWindows_Click method
 
 void MenuFileNextWindow_Click(object sender, EventArgs e) {
-object[] mdiChildren = App.frame.MdiChildren;
-if (mdiChildren.Length == 0) App.say("No windows!");
-else if (mdiChildren.Length == 1) App.say("Only this window!");
-else {
-App.say("Next window");
-MdiChild mdiChild = getActiveChild();
-int iPosition = Array.IndexOf(mdiChildren, mdiChild);
-iPosition++;
-if (iPosition == mdiChildren.Length) iPosition = 0;
-((MdiChild) mdiChildren[iPosition]).Activate();
-}
+// THE KIT'S WINDOW FAMILY (5 November 2026): Homer.MdiWindows, the same code for every Homer app's windows.
+Homer.MdiWindows.step(App.frame, 1);
 } // menuNextWindowOpen_Click method
 
 void MenuFilePreviousWindow_Click(object sender, EventArgs e) {
-object[] mdiChildren = App.frame.MdiChildren;
-if (mdiChildren.Length == 0) App.say("No windows!");
-else if (mdiChildren.Length == 1) App.say("Only this window!");
-else {
-App.say("Previous window");
-MdiChild mdiChild = getActiveChild();
-int iPosition = Array.IndexOf(mdiChildren, mdiChild);
-iPosition--;
-if (iPosition == -1) iPosition = mdiChildren.Length - 1;
-((MdiChild) mdiChildren[iPosition]).Activate();
-}
+// THE KIT'S WINDOW FAMILY (5 November 2026): Homer.MdiWindows, the same code for every Homer app's windows.
+Homer.MdiWindows.step(App.frame, -1);
 } // menuPreviousWindowOpen_Click method
 
 void MenuFileClose_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-mdiChild.Close();
+// THE KIT'S WINDOW FAMILY (5 November 2026): Homer.MdiWindows, the same code for every Homer app's windows.
+Homer.MdiWindows.closeCurrent(App.frame);
 } // menuFileClose method
 
 void menuFileCloseAllButCurrent_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-
-object[] mdiChildren = App.frame.MdiChildren;
-int iCount = 0;
-foreach (MdiChild o in mdiChildren) {
-if (o != mdiChild) {
-o.Close();
-iCount++;
-}
-}
-//App.say(iCount.ToString() + " closed");
-//App.say(iCount);
-;App.say(mdiChild.Text);
+// THE KIT'S WINDOW FAMILY (5 November 2026): Homer.MdiWindows, the same code for every Homer app's windows.
+Homer.MdiWindows.closeOthers(App.frame);
 } // menuFileCloseAllButCurrent_Click method
 
 void MenuFileExit_Click(object sender, EventArgs e) {
@@ -5691,18 +5660,8 @@ status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
 } // menuQueryTypeExtended_Click method
 
 void MenuQueryWindowsOpen_Click(object sender, EventArgs e) {
-object[] mdiChildren = App.frame.MdiChildren;
-int iCount = mdiChildren.Length;
-if (iCount == 0) App.say("No windows!");
-else {
-string s = Homer.Util.stringPlural("window", iCount);
-App.say(s + " open");
-foreach (MdiChild mdiChild in mdiChildren) {
-string sTitle = mdiChild.Text;
-if (!sTitle.EndsWith(@":\")) sTitle = Path.GetFileName(sTitle);
-App.say(sTitle);
-}
-}
+// THE KIT'S WINDOW FAMILY (5 November 2026): Homer.MdiWindows, the same code for every Homer app's windows.
+Homer.MdiWindows.sayOpen(App.frame);
 } // menuQueryWindowsOpen_Click method
 
 void menuQueryYield_Click(object sender, EventArgs e) {
