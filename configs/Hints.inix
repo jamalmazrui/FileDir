@@ -1,0 +1,87 @@
+﻿; Hints.inix -- what each control in a FileDir dialog does, in one sentence, spoken by Shift+F1.
+; A section is a dialog's title as its window shows it; a key is a control's name, without its
+; underline letter or trailing colon. [All dialogs] holds names that mean the same everywhere.
+; A control with no hint here says the first sentence of its own description instead.
+; Your own copy, in %LOCALAPPDATA%\FileDir\configs, wins over this one, so you can change a hint.
+
+[All dialogs]
+OK = Carries out the command with what you have entered and closes the dialog; Control+Enter does this from any control.
+Cancel = Closes the dialog and changes nothing; Escape does this from any control.
+Help = Opens this dialog's help, which F1 also does from any control.
+Close = Closes this window.
+Folder = The folder to use; type its path, or pick one with the buttons below. If it does not exist, FileDir offers to create it.
+Browse = Opens the Windows folder picker, to find the folder by looking through the drives.
+Current = Lists the folders open in FileDir now; Enter picks one.
+Recent = Lists the folders you have visited recently; Enter picks one.
+Quick = Lists your Quick folders, the ones you keep shortcuts to; Enter picks one.
+Special = Lists the special folders of Windows, such as Documents, Downloads and AppData Local; Enter picks one.
+
+[Copy To]
+Folder = The folder the marked items are copied into.
+
+[Move To]
+Folder = The folder the marked items are moved into; they leave the folder they are in now.
+
+[Open Folder]
+Folder = The folder to open in a new FileDir window.
+
+[Target Folder]
+Folder = The folder the command puts its results in.
+
+[Unarchive To]
+Folder = The folder the archive's files are put into; files with the same names there are replaced.
+
+[Unarchive Password]
+UnarchivePassword = The password of the archive, used for every archive you unpack until FileDir closes.
+
+[Rename]
+Name = The item's new name, with its extension.
+
+[New Folder]
+Folder = The name of the new folder, made in the folder you are in.
+
+[Input]
+Name = The name to give the new item.
+Value = The value to use.
+
+[Jump]
+Text = The start of an item's name; FileDir moves to the first item that begins with it.
+
+[Keywords]
+Text = Words to find in the items' names; FileDir moves to the next item holding them.
+
+[Keywords back]
+Text = Words to find in the items' names; FileDir moves back to the previous item holding them.
+
+[Filter]
+Expression = Which items to show, such as *.txt or *2026*; the others are hidden until the filter is cleared.
+
+[Mark with Regex]
+Text = A regular expression; every item whose name matches it is marked.
+
+[Extract with Regex]
+Text = A regular expression; the text it matches in the current file is copied out.
+
+[Evaluate]
+Expression = A calculation, such as 3 * (4 + 5); FileDir says the answer.
+
+[Web Address]
+Address = The web address to download or open, starting with http or https.
+
+[FTP Address]
+Address = The FTP address to connect to, starting with ftp.
+
+[Download Extensions]
+Extensions = The kinds of file to download from a page, by extension, separated by spaces, such as pdf docx.
+
+[Path List Extensions]
+Extensions = The kinds of file to list, by extension, separated by spaces, such as txt md.
+
+[Translate File]
+Language to translate into = The language to translate the current file into, such as Spanish or French.
+
+[Chat with AI]
+Question = Your question for the AI; its answer is spoken and shown.
+
+[Chat about File]
+Question = Your question about the current file; the AI answers from the file's contents.

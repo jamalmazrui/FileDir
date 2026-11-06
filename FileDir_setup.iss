@@ -206,6 +206,7 @@ Source: "accept.inix"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesnt
 Source: "configs\FileDir.ini"; DestDir: "{app}\configs"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "configs\Convert.txt"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "configs\Quick.txt"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "configs\Hints.inix"; DestDir: "{app}\configs"; Flags: ignoreversion
 Source: "configs\Hotkeys.inix"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "data\*"; DestDir: "{app}\data"; Flags: ignoreversion skipifsourcedoesntexist
 

@@ -2,6 +2,10 @@
 
 
 
+## 6 November 2026 -- Shift+F1 explains FileDir's dialogs
+
+- **configs\\Hints.inix gives Shift+F1 one plain sentence for each control,** in 24 dialog sections: the folder dialog's Browse, Current, Recent, Quick and Special, the same in all five folder prompts; and the field of each other dialog -- Copy To, Move To, Unarchive To, Rename, Filter, Jump, Keywords, Mark with Regex, Evaluate, Web Address and the rest. The installer ships it, and your own copy in %LOCALAPPDATA%\\FileDir\\configs wins, so a hint can be changed.
+
 ## 6 November 2026 -- The standard confirmation again
 
 - **FileDir's confirmations are the standard Windows message box again,** through the kit's LbcMessage.native: Y and N answer at once, with Alt or without, in all twelve of them -- Unarchive's "Create it?" among them, where Alt+Y had run Yield Files instead of pressing Yes.
