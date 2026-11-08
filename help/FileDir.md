@@ -424,7 +424,7 @@ Press Alt+Shift+B to burn marked files to a CD. An external utility is invoked t
 
 The Context Menu command, Shift+F10, lets you choose an action to perform on the current file based on those available for its type/extension (in the Windows registry). Also included is the OpenWith action, by which a default program may be associated with files of this type. The Send To Menu, Control+F10, lets you choose among SendTo shortcuts (installed by various applications) to perform on the current or marked files.
 
-Press Control+Slash (or Control+Backslash with the JAWS scripts) to go to a command prompt in a console mode window. Its current directory will be the same as in FileDir. You can enter DOS-style commands there. Press Alt+Slash (or Alt+Backslash with JAWS) to open the current directory in Windows Explorer.
+Press Control+Backslash to go to a command prompt in a console mode window. Its current directory will be the same as in FileDir. You can enter DOS-style commands there. Press Alt+Slash (or Alt+Backslash with JAWS) to open the current directory in Windows Explorer.
 
 Use the Iterate Processes command, Alt+I, to list all processes currently running on your computer. Each item displays the executable name without extension, followed by the title of its main window if available. Buttons let you choose whether to activate a process (only possible if it has a window) or terminate it. If Terminate is chosen, FileDir first sends a request for the process to close, and if that fails, asks whether to try to force it. You are then returned to the list of processes in case you wish to examine the next one. End this dialog either by activating a process or choosing Cancel (same as pressing Escape).
 

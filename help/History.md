@@ -2,6 +2,11 @@
 
 
 
+## 8 November 2026 -- Control+Slash lists the keys
+
+- **Control+Slash shows Hotkey Summary,** as well as Alt+Shift+H, the key Google Docs, Slack and ChatGPT use to list their shortcuts.
+- **Open Command Prompt keeps Control+Backslash;** Control+Slash had been a second key for it.
+
 ## 7 November 2026 -- The same help keys as every Homer app
 
 - **Shift+F1 says what the control with focus does,** as it does in every dialog.

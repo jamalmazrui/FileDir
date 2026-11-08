@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.205**  
+**Version 5.0.206**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -87,7 +87,7 @@ Commands in alphabetical order.
 - **Hide**, RightParen -- Set Hidden attribute of current or marked items
 - **History of Changes**, Control+Shift+F1 -- Open the history of FileDir's changes, newest first
 - **Homer Player**, Control+Shift+H -- Play the same items as Play List, but inside a FileDir dialog: the tracks stay in a list you can move through, each with the name it came with, and the player has no window of its own. H for Homer, beside Control+Shift+L for Play List
-- **Hotkey Summary**, Alt+Shift+H -- Show every command, key and description in a window
+- **Hotkey Summary**, Alt+Shift+H or Control+Slash -- Show every command, key and description in a window
 - **Hotkeys**, no key -- Open the document of every command and key, sorted several ways
 - **Initial Change**, Shift+I -- Go to next item with different initial letter
 - **Inquire Differences**, Alt+Shift+I -- Generate a report that compares files in two folders
@@ -123,7 +123,7 @@ Commands in alphabetical order.
 - **Next Sibling Folder**, Control+F6 -- Open the next folder beside this one, by name
 - **Next Visited Folder**, Alt+F6 -- Open the next folder in the order you visited them, newest first
 - **Next Window**, Control+Tab -- Activate the next open window
-- **Open Command Prompt**, Control+Backslash or Control+Slash -- Open command window in current folder
+- **Open Command Prompt**, Control+Backslash -- Open a command prompt in the current folder
 - **Open Drive**, Alt+O -- Pick drive to open in new window
 - **Open Folder**, Control+O -- Open folder in new window
 - **Open in DbDo**, Control+Shift+Backslash -- Open the current database or data file in DbDo
@@ -289,7 +289,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+F7** -- Translate File: Translate the marked files, or the current one, into a language you name, using a language model running on this computer
 - **Alt+Shift+F8** -- Complete Unmark: Complete unmarking
 - **Alt+Shift+G** -- Go to Virtual Folder: Open a virtual folder definition in same window
-- **Alt+Shift+H** -- Hotkey Summary: Show every command, key and description in a window
+- **Alt+Shift+H or Control+Slash** -- Hotkey Summary: Show every command, key and description in a window
 - **Alt+Shift+Home** -- Unmark to Top: Unmark to top of list
 - **Alt+Shift+I** -- Inquire Differences: Generate a report that compares files in two folders
 - **Alt+Shift+J** -- Find Duplicates in Tree: Find every duplicate in this folder and everything under it, and open them as a virtual folder you can inspect and delete from
@@ -324,7 +324,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+A** -- Mark All: Mark all items
 - **Control+Apostrophe** -- Save Clipboard: Export clipboard text to disk file
 - **Control+B** -- Recycle Bin: Open Windows Recycle Bin to recover deleted items
-- **Control+Backslash or Control+Slash** -- Open Command Prompt: Open command window in current folder
+- **Control+Backslash** -- Open Command Prompt: Open a command prompt in the current folder
 - **Control+C** -- Copy: Copy current or marked items to clipboard (listing paths in both binary and text formats)
 - **Control+D** -- Delete and Recycle File Now: Delete current file item and recycle without confirmation
 - **Control+Delete** -- Delete and Recycle: Delete and recycle current or marked items
@@ -470,7 +470,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+J** -- Find Duplicates in Tree
 - **Alt+Shift+C** -- Folder to Clipboard
 - **Alt+Shift+G** -- Go to Virtual Folder
-- **Alt+Shift+H** -- Hotkey Summary
+- **Alt+Shift+H or Control+Slash** -- Hotkey Summary
 - **Alt+Shift+I** -- Inquire Differences
 - **Alt+Shift+Period** -- Mark Duplicate Files
 - **Alt+Shift+Comma** -- Mark Similar Files
@@ -596,7 +596,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+N** -- New Folder
 - **Control+F6** -- Next Sibling Folder
 - **Control+Tab** -- Next Window
-- **Control+Backslash or Control+Slash** -- Open Command Prompt
+- **Control+Backslash** -- Open Command Prompt
 - **Control+O** -- Open Folder
 - **Control+Q** -- Open Quick Folder
 - **Control+V** -- Paste

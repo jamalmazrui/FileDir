@@ -1741,7 +1741,7 @@ menuMiscUnarchiveTaggedWithoutSubfolders = menu_Helper("Unarchive without Subfol
 menuMiscUnarchiveTaggedToSameName = menu_Helper("Unarchive to Same Name", "Control+Shift+U", menuMiscUnarchiveTaggedToSameName_Click);
 menuMiscUnarchiveTest = menu_Helper("Unarchive Test", "Alt+U", menuMiscUnarchiveTest_Click);
 menuMiscUnarchivePassword = menu_Helper("Unarchive Password", "Alt+Shift+U", menuMiscUnarchivePassword_Click);
-menuMiscCommandPrompt = menu_Helper("Open Command Prompt", "Control+Backslash or Control+Slash", menuMiscCommandPrompt_Click);
+menuMiscCommandPrompt = menu_Helper("Open Command Prompt", "Control+Backslash", menuMiscCommandPrompt_Click);
 menuMiscExplorerDir = menu_Helper("Open in Explorer", "Alt+Backslash or Alt+Slash", menuMiscExplorerDir_Click);
 menuMiscOpenInDbDo = menu_Helper("Open in DbDo", "Control+Shift+Backslash", menuMiscOpenInDbDo_Click);
 menuMiscFTPPut = menu_Helper("FTP Put ...", "Shift+F", menuMiscFTPPut_Click);
@@ -1797,7 +1797,7 @@ menuHelpPlayTutorials = menu_Helper("Play Tutorials", "Alt+F12", menuHelpPlayTut
 menuHelpReadMe = menu_Helper("ReadMe", "Alt+Shift+F1", menuHelpReadMe_Click);
 menuHelpHotkeysPage = menu_Helper("Hotkeys", "", menuHelpHotkeysPage_Click);
 menuHelpKeyDescriber = menu_Helper("Key Describer Toggle", "Control+F1", MenuHelpKeyDescriber_Click);
-menuHelpHotKeys = menu_Helper("Hotkey Summary", "Alt+Shift+H", MenuHelpHotKeys_Click);
+menuHelpHotKeys = menu_Helper("Hotkey Summary", "Alt+Shift+H or Control+Slash", MenuHelpHotKeys_Click);
 menuHelpContextMenu = menu_Helper("Context Menu ...", "Shift+F10", MenuHelpContextMenu_Click);
 //menuHelpExplorerMenu = menu_Helper("Explorer Menu ...", "Alt+Shift+F10", MenuHelpExplorerMenu_Click);
 menuHelpSendToMenu = menu_Helper("SendTo Menu ...", "Control+F10", MenuHelpSendToMenu_Click);
@@ -9207,7 +9207,8 @@ declareKey("menuFileGoToFolder", menuFileGoToFolder, Keys.Control | Keys.G);
 declareKey("menuFileGoToSpecialFolder", menuFileGoToSpecialFolder, Keys.Control |Keys.Shift | Keys.G);
 declareKey("menuFileGoToDrive", menuFileGoToDrive, Keys.Alt | Keys.G);
 declareKey("menuFileGoToVirtualFolder", menuFileGoToVirtualFolder, Keys.Alt |Keys.Shift | Keys.G);
-declareKey("menuHelpHotKeys", menuHelpHotKeys, Keys.Alt | Keys.Shift | Keys.H);
+// Control+Slash too (8 November 2026, help\KeyDecisions.md in the kit): the key web apps use to list their shortcuts.
+declareKey("menuHelpHotKeys", menuHelpHotKeys, Keys.Alt | Keys.Shift | Keys.H, Keys.Control | Keys.OemQuestion);
 declareKey("menuEditInvertTagged", menuEditInvertTagged, Keys.Control | Keys.I);
 declareKey("menuNavigateInitialChange", menuNavigateInitialChange, Keys.Shift | Keys.I);
 declareKey("menuEditRenameToTitle", menuEditRenameToTitle, Keys.Control | Keys.Shift | Keys.I);
@@ -9305,7 +9306,7 @@ declareKey("menuEditFullFolderToClipboard", menuEditFullFolderToClipboard, Keys.
 declareKey("menuQueryClipboard", menuQueryClipboard, Keys.Alt | Keys.OemQuotes);
 declareKey("menuEditClearClipboard", menuEditClearClipboard, Keys.Alt | Keys.Shift | Keys.OemQuotes);
 declareKey("menuQueryWhat", menuQueryWhat, Keys.Shift | Keys.OemQuestion);
-declareKey("menuMiscCommandPrompt", menuMiscCommandPrompt, Keys.Control | Keys.Oem5, Keys.Control | Keys.OemQuestion);
+declareKey("menuMiscCommandPrompt", menuMiscCommandPrompt, Keys.Control | Keys.Oem5);
 declareKey("menuMiscExplorerDir", menuMiscExplorerDir, Keys.Alt | Keys.Oem5, Keys.Alt | Keys.OemQuestion);
 declareKey("menuMiscOpenInDbDo", menuMiscOpenInDbDo, Keys.Control | Keys.Shift | Keys.Oem5);
 declareKey("menuEditStampTagged", menuEditStampTagged, Keys.Shift | Keys.D1);
