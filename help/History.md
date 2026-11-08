@@ -2,6 +2,12 @@
 
 
 
+## 7 November 2026 -- The same help keys as every Homer app
+
+- **Shift+F1 says what the control with focus does,** as it does in every dialog.
+- **Alt+Shift+Slash, Where Am I,** says the folder and where you are in it.
+- **Control+Shift+F1 opens the History of Changes.** The Hotkeys document stays on the Help menu, since Alt+Shift+H lists every key. Hotkey Summary shows every key in a window, as in DbDo and EdSharp; it had opened the Hotkeys document.
+
 ## 7 November 2026 -- Exploring keys is safe
 
 - **Enter, Shift+Enter and Comma are described in the Key Describer,** instead of opening an item or changing folder.

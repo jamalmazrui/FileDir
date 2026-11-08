@@ -100,7 +100,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
+Say=Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
 Key=Alt+F1
 Hear=About FileDir dialog
 Note=Confirm the wording with a live run: buildTutorials -live.

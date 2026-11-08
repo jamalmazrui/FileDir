@@ -1524,6 +1524,8 @@ public HomerToolStripMenuItem menuHelp;
 public HomerToolStripMenuItem menuHelpAbout;
 public HomerToolStripMenuItem menuHelpDocumentation;
 public HomerToolStripMenuItem menuHelpChangeHistory;
+public HomerToolStripMenuItem menuHelpWhatThisDoes;
+public HomerToolStripMenuItem menuHelpWhereAmI;
 public HomerToolStripMenuItem menuHelpKeyDescriber;
 public HomerToolStripMenuItem menuHelpHotKeys;
 public HomerToolStripMenuItem menuHelpContextMenu;
@@ -1785,10 +1787,15 @@ menuWindow.DropDownItems.AddRange(new ToolStripItem[] {menuWindowArrangeIcons, m
 menuHelp = menu_Helper("&Help");
 menuHelpAbout = menu_Helper("&About", "Alt+F1", MenuHelpAbout_Click);
 menuHelpDocumentation = menu_Helper("Documentation", "F1", MenuHelpDocumentation_Click);
-menuHelpChangeHistory = menu_Helper("History of Changes", "Shift+F1", MenuHelpChangeHistory_Click);
+// THE HELP KEYS OF EVERY HOMER WINDOW (7 November 2026, help\KeyDecisions.md in the kit): Shift+F1 says what the
+// focused control does and Alt+Shift+Slash says where you are, as in every dialog; History of Changes takes
+// Control+Shift+F1 (was Shift+F1), which the Hotkeys document gives up, since Alt+Shift+H lists every key.
+menuHelpWhatThisDoes = menu_Helper("What This Does", "Shift+F1", menuHelpWhatThisDoes_Click);
+menuHelpWhereAmI = menu_Helper("Where Am I", "Alt+Shift+Slash", menuHelpWhereAmI_Click);
+menuHelpChangeHistory = menu_Helper("History of Changes", "Control+Shift+F1", MenuHelpChangeHistory_Click);
 menuHelpPlayTutorials = menu_Helper("Play Tutorials", "Alt+F12", menuHelpPlayTutorials_Click);
 menuHelpReadMe = menu_Helper("ReadMe", "Alt+Shift+F1", menuHelpReadMe_Click);
-menuHelpHotkeysPage = menu_Helper("Hotkeys", "Control+Shift+F1", menuHelpHotkeysPage_Click);
+menuHelpHotkeysPage = menu_Helper("Hotkeys", "", menuHelpHotkeysPage_Click);
 menuHelpKeyDescriber = menu_Helper("Key Describer Toggle", "Control+F1", MenuHelpKeyDescriber_Click);
 menuHelpHotKeys = menu_Helper("Hotkey Summary", "Alt+Shift+H", MenuHelpHotKeys_Click);
 menuHelpContextMenu = menu_Helper("Context Menu ...", "Shift+F10", MenuHelpContextMenu_Click);
@@ -1797,7 +1804,7 @@ menuHelpSendToMenu = menu_Helper("SendTo Menu ...", "Control+F10", MenuHelpSendT
 menuHelpAlternateMenu = menu_Helper("Alternate Menu ...", "Alt+F10", MenuHelpAlternateMenu_Click);
 menuHelpElevateVersion = menu_Helper("Elevate Version", "F11", menuHelpElevateVersion_Click);
 menuHelpCopyLog = menu_Helper("Copy Log", "Control+F12", MenuHelpCopyLog_Click);
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpPlayTutorials, menuHelpReadMe, menuHelpHotkeysPage, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpWhatThisDoes, menuHelpWhereAmI, menuHelpChangeHistory, menuHelpPlayTutorials, menuHelpReadMe, menuHelpHotkeysPage, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
 //menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpHotKeys, menuHelpContextMenu, menuHelpExplorerMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion});
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuQuery, menuNavigate, menuMisc, menuWindow, menuHelp});
@@ -8899,8 +8906,25 @@ App.bKeyDescriber = true;
 } // menuHelpKeyDescriber_Click method
 
 void MenuHelpHotKeys_Click(object sender, EventArgs e) {
-Homer.SuiteCommands.openHotkeys(this);
+// THE LIVE LIST, AS IN EVERY HOMER APP (7 November 2026): this opened the Hotkeys document, the same as the
+// Hotkeys command; it now shows every command, key and summary in a window, as DbDo's and EdSharp's do.
+Homer.HelpDialog.show(this, "Hotkey Summary", Homer.KeyMap.hotkeySummary());
 } // menuHelpHotKeys_Click method
+
+// What This Does (Shift+F1): the focused control's one-sentence hint, from Hints.inix or its own description.
+void menuHelpWhatThisDoes_Click(object sender, EventArgs e) {
+Homer.Say.sayForced(Homer.LbcHints.sentenceForFocused(this));
+} // menuHelpWhatThisDoes_Click method
+
+// Where Am I (Alt+Shift+Slash): the folder, then the item's place in it, each as its own utterance.
+void menuHelpWhereAmI_Click(object sender, EventArgs e) {
+MdiChild mdiChild = (MdiChild) ActiveMdiChild;
+if (mdiChild == null) { Homer.Say.sayForced("No folder window is open."); return; }
+int iCount = mdiChild.bs.Count;
+string sPlace = "No items";
+if (iCount > 0) sPlace = String.Format("{0} of {1}, {2} percent through", mdiChild.bs.Position + 1, iCount, Math.Round(100.0 * (mdiChild.bs.Position + 1) / iCount, 1));
+Homer.Say.sayForcedParts(mdiChild.Text, sPlace);
+} // menuHelpWhereAmI_Click method
 
 
 void MenuHelpAlternateMenu_Click(object sender, EventArgs e) {
@@ -9159,7 +9183,6 @@ declareKey("menuEditExportClipboardToFile", menuEditExportClipboardToFile, Keys.
 declareKey("menuEditAppendClipboard", menuEditAppendClipboard, Keys.Control | Keys.Shift | Keys.OemQuotes);
 declareKey("menuHelpPlayTutorials", menuHelpPlayTutorials, Keys.Alt | Keys.F12);
 declareKey("menuHelpReadMe", menuHelpReadMe, Keys.Alt | Keys.Shift | Keys.F1);
-declareKey("menuHelpHotkeysPage", menuHelpHotkeysPage, Keys.Control | Keys.Shift | Keys.F1);
 declareKey("menuNavigateNextTagged", menuNavigateNextTagged, Keys.Control | Keys.Down, Keys.Shift | Keys.N);
 declareKey("menuFileRefreshFolder", menuFileRefreshFolder, Keys.OemPeriod, Keys.F5);
 declareKey("menuMiscMailBody", menuMiscMailBody, Keys.Control | Keys.M);
@@ -9294,7 +9317,9 @@ declareKey("menuEditSystemTagged", menuEditSystemTagged, Keys.Shift | Keys.OemCl
 declareKey("menuEditGeneralTagged", menuEditGeneralTagged, Keys.Shift | Keys.OemOpenBrackets);
 declareKey("menuEditShortPathToClipboard", menuEditShortPathToClipboard, Keys.Shift | Keys.Oemtilde);
 declareKey("menuHelpDocumentation", menuHelpDocumentation, Keys.F1);
-declareKey("menuHelpChangeHistory", menuHelpChangeHistory, Keys.Shift | Keys.F1);
+declareKey("menuHelpChangeHistory", menuHelpChangeHistory, Keys.Control | Keys.Shift | Keys.F1);
+declareKey("menuHelpWhatThisDoes", menuHelpWhatThisDoes, Keys.Shift | Keys.F1);
+declareKey("menuHelpWhereAmI", menuHelpWhereAmI, Keys.Alt | Keys.Shift | Keys.OemQuestion);
 declareKey("menuHelpAbout", menuHelpAbout, Keys.Alt | Keys.F1);
 declareKey("menuHelpKeyDescriber", menuHelpKeyDescriber, Keys.Control | Keys.F1);
 declareKey("menuFileCurrentWindows", menuFileCurrentWindows, Keys.F4);

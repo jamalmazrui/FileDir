@@ -156,7 +156,7 @@ Hear=The folder, the line, and how many files are marked; the bottom of the wind
 
 [step]
 
-Say=F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+Say=F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes. Alt plus F1 says the version.
 Key=
 Hear=
 

@@ -558,7 +558,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 15: Alt+F1
 
-Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
+Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
 
 Screen reader:
 
@@ -2082,7 +2082,7 @@ Screen reader:
 
 ### Step 25
 
-F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes. Alt plus F1 says the version.
 
 ### Step 26
 
