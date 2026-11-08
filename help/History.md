@@ -2,6 +2,11 @@
 
 
 
+## 7 November 2026 -- Exploring keys is safe
+
+- **Enter, Shift+Enter and Comma are described in the Key Describer,** instead of opening an item or changing folder.
+- **One Key Describer for every Homer app.** FileDir now uses the kit's, so every key FileDir handles is described the same way as in DbDo.
+
 ## 6 November 2026 -- Shift+F1 explains FileDir's dialogs
 
 - **configs\\Hints.inix gives Shift+F1 one plain sentence for each control,** in 24 dialog sections: the folder dialog's Browse, Current, Recent, Quick and Special, the same in all five folder prompts; and the field of each other dialog -- Copy To, Move To, Unarchive To, Rename, Filter, Jump, Keywords, Mark with Regex, Evaluate, Web Address and the rest. The installer ships it, and your own copy in %LOCALAPPDATA%\\FileDir\\configs wins, so a hint can be changed.

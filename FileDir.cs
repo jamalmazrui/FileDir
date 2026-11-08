@@ -193,7 +193,9 @@ else { int iCmp = string.CompareOrdinal(sPartA, sPartB); if (iCmp != 0) return i
 return 0;
 } // compareVersions method
 
-public static bool bKeyDescriber = false;
+// ONE KEY DESCRIBER, THE KIT'S (7 November 2026, both audits): FileDir kept a flag of its own, so the kit's router
+// did not know the describer was on and keys it handles could act. The name stays so FileDir's code reads as before.
+public static bool bKeyDescriber { get { return Homer.KeyMap.bKeyDescriber; } set { Homer.KeyMap.bKeyDescriber = value; } }
 public static Dictionary<string, string> dDirectory = new Dictionary<string, string>();
 public static Frame frame = null;
 public static string sAppDir;
@@ -9053,6 +9055,14 @@ public bool processCmdKey_Helper(ref Message msg, Keys keyData) {
 // are the keys whose meaning depends on the item under the cursor or on a
 // setting, which a table cannot hold.
 declareKeys();
+// DESCRIBED, NOT DONE (7 November 2026, both audits): Enter, Shift+Enter and Comma ran item_Helper and
+// parentFolder_Helper directly, so in the Key Describer they opened an item or changed folder. They now
+// describe the menu command they stand for, as the other keys of this switch already do.
+if (App.bKeyDescriber) {
+if (keyData == Keys.Enter) { menuFileOpenItem.clickOrDescribe(); return true; }
+if (keyData == (Keys.Shift | Keys.Enter)) { menuFileGoToItem.clickOrDescribe(); return true; }
+if (keyData == Keys.Oemcomma) { menuFileGoToParentFolder.clickOrDescribe(); return true; }
+}
 switch (keyData) {
 case Keys.Enter :
 case Keys.Shift | Keys.Enter :
@@ -9335,6 +9345,13 @@ if (oCommand.sId.Length == 0 || Homer.KeyMap.dCommands.ContainsKey(oCommand.sId)
 oCommand.oItem = item;
 foreach (Keys k in aKeys) oCommand.lsKeys.Add(k);
 oCommand.fRun = delegate() { item.clickOrDescribe(); return true; };
+// ITS DESCRIPTION TOO (7 November 2026): with one describer, the kit's, a command's sentence must be on the
+// command itself, or the kit would say only its name and key. Taken from Hotkeys.inix, then the built-in table.
+try {
+string sSummary = item.getKeySummary()[2].Trim();
+if (sSummary != "No description available") oCommand.sSummary = sSummary;
+}
+catch (Exception oError) { Homer.Log.exception(oError); }
 // THE QUERY MENU IS FILEDIR'S SAY FAMILY (19 October 2026). Its captions lack the word "Say" (Yield
 // Marked is the manifest's Say Yield Marked), so the echo rule took them for actions and said
 // "Yield Marked" before the answer. Each speaks its own answer, so none is echoed.
