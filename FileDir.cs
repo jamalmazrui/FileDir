@@ -8930,44 +8930,19 @@ Homer.SuiteCommands.whereAmI(this, new string[] { mdiChild.Text, sPlace });
 } // menuHelpWhereAmI_Click method
 
 
+// THE KIT'S ALTERNATE MENU (9 November 2026): the same dialog in every Homer app -- the list alone, the suite's
+// search keys, and Menu, Name and Key order buttons. FileDir supplies each command's sentence, and a chosen command
+// is run, or described when the Key Describer is on, as its menu item would be.
 void MenuHelpAlternateMenu_Click(object sender, EventArgs e) {
-int iChoice = -1;
-List<HomerToolStripMenuItem> items = new List<HomerToolStripMenuItem>();
-string sItemList = "";
-StringBuilder sb = new StringBuilder();
-foreach (HomerToolStripMenuItem menu in menuMain.Items) {
-//if (menu == menuWindow) continue;
-//foreach (HomerToolStripMenuItem item in menu.DropDownItems) {
-foreach (object o in menu.DropDownItems) {
-HomerToolStripMenuItem item = o as HomerToolStripMenuItem;
-if (item == null) continue;
-if (item == menuHelpAlternateMenu) continue;
-if (item.IsMdiWindowListEntry) continue;
-// string sText = item.Text.Replace("&", "") + "\t" + item.ShortcutKeyDisplayString;
-// if ("1234567890".Contains(sText.Substring(0, 1))) continue;
-//sItemList += sText + "\n";
-string[] aSummary = item.getKeySummary();
-string sText = aSummary[0] + " = " + aSummary[1] + ", " + aSummary[2];
-sb.Append(sText + "\n");
-items.Add(item);
-//sItemList += item.Text.Replace("&", "") + "\n";
-}
-}
-sItemList = sb.ToString();
-string[] aItems = sItemList.Trim().Split('\n');
-string sItem = Lbc.ListDialog("Pick", "", aItems, true, 0);
-if (sItem == "") return;
-foreach (HomerToolStripMenuItem item in items) {
-//if (sItem == item.Text.Replace("&", "")) {
-// if (sItem == item.Text.Replace("&", "") + "\t" + item.ShortcutKeyDisplayString) {
-string[] aSummary = item.getKeySummary();
-string sText = aSummary[0] + " = " + aSummary[1] + ", " + aSummary[2];
-if (sItem == sText) {
-iChoice = items.IndexOf(item);
-break;
-}
-}
-items[iChoice].clickOrDescribe();
+List<Homer.AlternateEntry> lEntries = Homer.SuiteCommands.alternateEntries(menuMain, delegate(ToolStripMenuItem mi) {
+HomerToolStripMenuItem hmi = mi as HomerToolStripMenuItem;
+return hmi == null ? "" : hmi.getKeySummary()[2].Trim();
+}, menuHelpAlternateMenu);
+Homer.AlternateEntry oChosen = Homer.SuiteCommands.showAlternateMenu(this, lEntries);
+if (oChosen == null) return;
+HomerToolStripMenuItem miChosen = oChosen.oItem as HomerToolStripMenuItem;
+if (miChosen != null) miChosen.clickOrDescribe();
+else Homer.SuiteCommands.runAlternateEntry(oChosen);
 } // menuHelpAlternateMenu_Click method
 
 void MenuHelpCopyLog_Click(object sender, EventArgs e) {

@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.210**  
+**Version 5.0.211**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -20,7 +20,7 @@ Commands in alphabetical order.
 
 - **About**, Alt+F1 -- Display FileDir version number and release date
 - **Alpha Order**, Alt+A -- Sort items in alphabetic/name order
-- **Alternate Menu**, Alt+F10 -- Pick command to execute from complete, alphabetized list
+- **Alternate Menu**, Alt+F10 -- Pick any command from one list, in menu, name or key order
 - **Append Clipboard**, Control+Shift+Apostrophe -- Add the clipboard text to the end of a file you name
 - **Append to Clipboard**, Shift+A -- Append the text of the marked files to the clipboard, one after another, converting each from its own format as needed
 - **Arrange Icons**, Alt+F11 -- Arrange open windows
@@ -253,7 +253,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Delete or Shift+5** -- Say Position: Say current position, item count, and percent through
 - **Alt+Enter** -- Properties: Invoke Windows properties dialog for current item
 - **Alt+F1** -- About: Display FileDir version number and release date
-- **Alt+F10** -- Alternate Menu: Pick command to execute from complete, alphabetized list
+- **Alt+F10** -- Alternate Menu: Pick any command from one list, in menu, name or key order
 - **Alt+F11** -- Arrange Icons: Arrange open windows
 - **Alt+F12** -- Play Tutorials: Play the ten spoken tutorials in the Homer Player
 - **Alt+F4** -- Exit FileDir: Close the FileDir application
