@@ -2,6 +2,14 @@
 
 
 
+## 8 November 2026 -- Control+Backslash opens a command prompt again
+
+- **Control+Backslash opens a command prompt again with JAWS.** FileDir's JAWS scripts answered Control+Backslash by typing Control+Slash, which now shows Hotkey Summary. The scripts now pass Control+Backslash and Alt+Backslash straight to FileDir, which binds them itself.
+
+## 8 November 2026 -- PDF reading guarded against a version mismatch
+
+- **PDF libraries load whatever version they ask for.** The same fault that stopped EdSharp's HTML Format could stop FileDir's PDF reading: each library now loads the copy FileDir ships, whatever version it asks for.
+
 ## 8 November 2026 -- Control+Slash lists the keys
 
 - **Control+Slash shows Hotkey Summary,** as well as Alt+Shift+H, the key Google Docs, Slack and ChatGPT use to list their shortcuts.

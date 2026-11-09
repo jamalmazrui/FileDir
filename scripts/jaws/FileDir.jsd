@@ -50,8 +50,6 @@
 
 :script JAWSBackspace
 
-:script CommandLineDirectory
-
 :script BottomOfFile
 
 :script PreviousParagraph
@@ -69,8 +67,6 @@
 
 :script TogglePunctuation
 :Synopsis Insert+Accent = Toggle between all and no punctuation
-
-:script ExplorerDirectory
 
 :script CutToClipboard
 

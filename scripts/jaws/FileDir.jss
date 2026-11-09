@@ -186,10 +186,6 @@ PerformScript CloseDocumentWindow()
 EndIf
 EndScript
 
-Script CommandLineDirectory()
-TypeKey("Control+Slash")
-EndScript
-
 Script ControlDownArrow()
 Var
 String sKey, String sClass
@@ -275,10 +271,6 @@ SayString(s)
 Else
 PerformScript ControlBackspace()
 EndIf
-EndScript
-
-Script ExplorerDirectory()
-TypeKey("Alt+Slash")
 EndScript
 
 Script JAWSBackspace()

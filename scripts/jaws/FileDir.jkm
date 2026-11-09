@@ -288,8 +288,8 @@ Control+`=SpeedFaster
 Control+Shift+`=SpeedSlower
 Alt+`=VolumeLouder
 Alt+Shift+`=VolumeSofter
-Control+Backslash=CommandLineDirectory
-Alt+Backslash=ExplorerDirectory
+Control+Backslash=TypeCurrentScriptKey
+Alt+Backslash=TypeCurrentScriptKey
 Control+Equals=UIEvaluateExpression
 [Desktop Keys]
 Control+JAWSKey+Space=UIWebClientUtilities
