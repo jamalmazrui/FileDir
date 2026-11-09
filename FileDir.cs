@@ -1743,7 +1743,7 @@ menuMiscUnarchiveTaggedToSameName = menu_Helper("Unarchive to Same Name", "Contr
 menuMiscUnarchiveTest = menu_Helper("Unarchive Test", "Alt+U", menuMiscUnarchiveTest_Click);
 menuMiscUnarchivePassword = menu_Helper("Unarchive Password", "Alt+Shift+U", menuMiscUnarchivePassword_Click);
 menuMiscCommandPrompt = menu_Helper("Open Command Prompt", "Control+Backslash", menuMiscCommandPrompt_Click);
-menuMiscExplorerDir = menu_Helper("Open in Explorer", "Alt+Backslash or Alt+Slash", menuMiscExplorerDir_Click);
+menuMiscExplorerDir = menu_Helper("Open in Explorer", "Alt+Backslash", menuMiscExplorerDir_Click);
 menuMiscOpenInDbDo = menu_Helper("Open in DbDo", "Control+Shift+Backslash", menuMiscOpenInDbDo_Click);
 menuMiscFTPPut = menu_Helper("FTP Put ...", "Shift+F", menuMiscFTPPut_Click);
 menuMiscGetFTP = menu_Helper("Get FTP ...", "Shift+G", menuMiscGetFTP_Click);
@@ -9307,7 +9307,7 @@ declareKey("menuQueryClipboard", menuQueryClipboard, Keys.Alt | Keys.OemQuotes);
 declareKey("menuEditClearClipboard", menuEditClearClipboard, Keys.Alt | Keys.Shift | Keys.OemQuotes);
 declareKey("menuQueryWhat", menuQueryWhat, Keys.Shift | Keys.OemQuestion);
 declareKey("menuMiscCommandPrompt", menuMiscCommandPrompt, Keys.Control | Keys.Oem5);
-declareKey("menuMiscExplorerDir", menuMiscExplorerDir, Keys.Alt | Keys.Oem5, Keys.Alt | Keys.OemQuestion);
+declareKey("menuMiscExplorerDir", menuMiscExplorerDir, Keys.Alt | Keys.Oem5);
 declareKey("menuMiscOpenInDbDo", menuMiscOpenInDbDo, Keys.Control | Keys.Shift | Keys.Oem5);
 declareKey("menuEditStampTagged", menuEditStampTagged, Keys.Shift | Keys.D1);
 declareKey("menuEditHideTagged", menuEditHideTagged, Keys.Shift | Keys.D0);

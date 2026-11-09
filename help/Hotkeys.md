@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.209**  
+**Version 5.0.210**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -127,7 +127,7 @@ Commands in alphabetical order.
 - **Open Drive**, Alt+O -- Pick drive to open in new window
 - **Open Folder**, Control+O -- Open folder in new window
 - **Open in DbDo**, Control+Shift+Backslash -- Open the current database or data file in DbDo
-- **Open in Explorer**, Alt+Backslash or Alt+Slash -- Open Windows Explorer in current folder
+- **Open in Explorer**, Alt+Backslash -- Open Windows Explorer in current folder
 - **Open Item**, Enter -- Open subfolder in new window, view zip archive, or launch file
 - **Open Parent Folder**, Backspace -- Open parent folder in new window and jump to folder item that was previously open
 - **Open Quick Folder**, Control+Q -- Open your Quick folder of shortcuts and links in a new window
@@ -245,7 +245,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+A** -- Alpha Order: Sort items in alphabetic/name order
 - **Alt+Apostrophe** -- Say Clipboard: Say clipboard text
 - **Alt+B** -- Beginning File: Go to beginning file item, skipping over folder items
-- **Alt+Backslash or Alt+Slash** -- Open in Explorer: Open Windows Explorer in current folder
+- **Alt+Backslash** -- Open in Explorer: Open Windows Explorer in current folder
 - **Alt+C** -- Copy Append: Copy and append current or marked items to clipboard (listing paths in both binary and text formats)
 - **Alt+Comma** -- Unmark All But Current: Unmark all but current item
 - **Alt+Control+F** -- Launch FileDir: Launch or activate the FileDir application from a Windows desktop shortcut
@@ -552,7 +552,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Period** -- Mark All Files
 - **Alt+F6** -- Next Visited Folder
 - **Alt+O** -- Open Drive
-- **Alt+Backslash or Alt+Slash** -- Open in Explorer
+- **Alt+Backslash** -- Open in Explorer
 - **Alt+V** -- Paste Copy
 - **Alt+F12** -- Play Tutorials
 - **Alt+Enter** -- Properties
