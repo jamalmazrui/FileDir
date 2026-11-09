@@ -1,7 +1,7 @@
-﻿#EXTM3U
+#EXTM3U
 #EXTINF:160,Homer Tools Walkthroughs
 0_Overview.mp3
-#EXTINF:268,1 - User Interface
+#EXTINF:269,1 - User Interface
 1_User_Interface.mp3
 #EXTINF:209,2 - Install and Launch
 2_Install_and_Launch.mp3
@@ -17,5 +17,5 @@
 7_Convert_Between_Formats.mp3
 #EXTINF:211,8 - Ask About a File
 8_Ask_About_a_File.mp3
-#EXTINF:221,9 - Conclusion
+#EXTINF:222,9 - Conclusion
 9_Conclusion.mp3

@@ -5,7 +5,7 @@
     <link>Tutorials.htm</link>
     <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Nov 2026 20:09:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 16:53:08 +0000</lastBuildDate>
     <itunes:author>Jamal Mazrui</itunes:author>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Technology"/>
@@ -24,8 +24,8 @@
       <description>FileDir is open on a folder of your own, such as Documents. Full transcript: Tutorials.htm#0a-1-user-interface</description>
       <link>Tutorials.htm#0a-1-user-interface</link>
       <guid isPermaLink="false">homer-tutorial_1_user_interface</guid>
-      <enclosure url="tutorials/1_User_Interface.mp3" length="1861977" type="audio/mpeg"/>
-      <itunes:duration>00:04:28</itunes:duration>
+      <enclosure url="tutorials/1_User_Interface.mp3" length="1870188" type="audio/mpeg"/>
+      <itunes:duration>00:04:29</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -96,8 +96,8 @@
       <description>Nothing is needed. Full transcript: Tutorials.htm#0i-9-conclusion</description>
       <link>Tutorials.htm#0i-9-conclusion</link>
       <guid isPermaLink="false">homer-tutorial_9_conclusion</guid>
-      <enclosure url="tutorials/9_Conclusion.mp3" length="1533145" type="audio/mpeg"/>
-      <itunes:duration>00:03:41</itunes:duration>
+      <enclosure url="tutorials/9_Conclusion.mp3" length="1549316" type="audio/mpeg"/>
+      <itunes:duration>00:03:42</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
   </channel>

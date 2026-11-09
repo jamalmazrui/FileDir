@@ -576,13 +576,13 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 17: Alt+Shift+H
+### Step 17: Control+Slash
 
-Alt plus Shift plus H, Hotkey Summary, lists every key with its command and what it does, in a window you can search.
+Control plus slash, Where Am I, says the folder and where you are in it; pressed twice, it shows that with every key and command, in a window you can search.
 
 Screen reader:
 
-- Hotkey Summary
+- Where Am I
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -2006,7 +2006,7 @@ hotkey summary.
 
 Screen reader:
 
-- Every command with its key, in a document to search. Alt plus Shift plus H.
+- Every command with its key, in a window to search. Control plus slash, pressed twice.
 
 ### Step 16
 
@@ -2336,7 +2336,7 @@ on the clipboard.
    fastest way to find out what is there.
 2. Press **Alt+F10** for the Alternate Menu and read the whole command list
    alphabetically. Filter it with Control+F.
-3. Press **Alt+Shift+H** to open the hotkey document, which lists every command
+3. Press **Control+Slash** twice to open Where Am I, which lists every command
    three ways: by name, by key, and grouped by the modifier a key starts with.
 4. Press **Alt+Shift+C** for Configuration Options and set what you want changed
    for good.

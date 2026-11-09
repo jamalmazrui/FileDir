@@ -95,7 +95,7 @@ Hear=The player shared by the Homer Tools: a queue of tracks, transport on Contr
 
 Say=hotkey summary.
 Key=
-Hear=Every command with its key, in a document to search. Alt plus Shift plus H.
+Hear=Every command with its key, in a window to search. Control plus slash, pressed twice.
 
 [step]
 

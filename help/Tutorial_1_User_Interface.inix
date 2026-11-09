@@ -114,9 +114,9 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Alt plus Shift plus H, Hotkey Summary, lists every key with its command and what it does, in a window you can search.
-Key=Alt+Shift+H
-Hear=Hotkey Summary
+Say=Control plus slash, Where Am I, says the folder and where you are in it; pressed twice, it shows that with every key and command, in a window you can search.
+Key=Control+Slash
+Hear=Where Am I
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]

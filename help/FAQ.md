@@ -176,7 +176,7 @@ the version, rather than Install.
 
 **Can I play a list of YouTube addresses?**
 
-Yes. Copy the list, press Alt+Shift+L, and it plays in order with the track
+Yes. Copy the list, press Control+P, and it plays in order with the track
 titles. Anything mpv can reach works, because the addresses are handed to
 yt-dlp. An address that has been taken down is skipped rather than stopping the
 rest.
@@ -190,7 +190,7 @@ recognise. FileDir now warns you before starting in that case.
 
 What plays immediately is an address ending in .mp3 or .m4a. A podcast's RSS
 feed holds those; its web pages do not. If you can get the feed's audio
-addresses onto the clipboard, Alt+Shift+L plays them at once.
+addresses onto the clipboard, Control+P plays them at once.
 
 **What is the difference between Play list and the Homer Player?**
 
@@ -219,7 +219,7 @@ folder or a message.
 
 Yes. Copy an address and press Control+V in the player window. That is mpv's own
 key: it appends one file or address to what is already queued. For a whole list,
-come back to FileDir and press Alt+Shift+L again.
+come back to FileDir and press Control+P again.
 
 ## Translating Files
 

@@ -1575,7 +1575,8 @@ menuFileFind = menu_Helper("File Find ...", "Alt+Shift+F", menuFileFind_Click);
 menuFileProperties = menu_Helper("Properties ...", "Alt+Enter", menuFileProperties_Click);
 menuFileOpenItem = menu_Helper("Open Item", "Enter", MenuFileOpenItem_Click);
 menuFileGoToItem = menu_Helper("Go to Item", "Shift+Enter", MenuFileGoToItem_Click);
-menuFilePrintTagged = menu_Helper("&Print", "Control+P", menuFilePrintTagged_Click);
+// NO KEY, ON THE MISC MENU (9 November 2026): Control+P plays media in every Homer app.
+menuFilePrintTagged = menu_Helper("&Print", "", menuFilePrintTagged_Click);
 menuFileRecentFolders = menu_Helper("Recent Folders ...", "Alt+R", menuFileRecentFolders_Click);
 menuFileGoBack = menu_Helper("Go Back", "Alt+LeftArrow", MenuFileGoBack_Click);
 menuFileGoForward = menu_Helper("Go Forward", "Alt+RightArrow", MenuFileGoForward_Click);
@@ -1589,7 +1590,7 @@ menuFileCloseAllButCurrent = menu_Helper("Close All But Current Window", "Contro
 menuFileExit = menu_Helper("E&xit FileDir", "Alt+F4", MenuFileExit_Click);
 menuFileRestartWindows = menu_Helper("Restart Windows", "Alt+Shift+F4", MenuFileRestartWindows_Click);
 //menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewViewCopy,
-menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewItemCopy, menuFileNewFolder, menuFileOpenFolder, menuFileGoToFolder, menuFileOpenSpecialFolder, menuFileGoToSpecialFolder, menuFileOpenDrive, menuFileGoToDrive, menuFileOpenVirtualFolder, menuFileGoToVirtualFolder, menuFileOpenParentFolder, menuFileGoToParentFolder, menuFileOpenRootFolder, menuFileGoToRootFolder, menuFileOpenQuickFolder, menuFileGoToQuickFolder, menuFileQuickShortcut, menuFileQuickURL, menuFileFind, menuFileProperties, menuFileOpenItem, menuFileGoToItem, menuFilePrintTagged, menuFileRecentFolders, menuFileGoBack, menuFileGoForward, menuFileCurrentWindows, menuFileNextWindow, menuFilePreviousWindow, menuFileClose, menuFileCloseAllButCurrent, menuFileExit, menuFileRestartWindows});
+menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewItemCopy, menuFileNewFolder, menuFileOpenFolder, menuFileGoToFolder, menuFileOpenSpecialFolder, menuFileGoToSpecialFolder, menuFileOpenDrive, menuFileGoToDrive, menuFileOpenVirtualFolder, menuFileGoToVirtualFolder, menuFileOpenParentFolder, menuFileGoToParentFolder, menuFileOpenRootFolder, menuFileGoToRootFolder, menuFileOpenQuickFolder, menuFileGoToQuickFolder, menuFileQuickShortcut, menuFileQuickURL, menuFileFind, menuFileProperties, menuFileOpenItem, menuFileGoToItem, menuFileRecentFolders, menuFileGoBack, menuFileGoForward, menuFileCurrentWindows, menuFileNextWindow, menuFilePreviousWindow, menuFileClose, menuFileCloseAllButCurrent, menuFileExit, menuFileRestartWindows});
 
 menuEdit = menu_Helper("&Edit");
 menuEditTagAndNext = menu_Helper("Mark and Next", "> or Shift+DownArrow", MenuEditTagAndNext_Click);
@@ -1755,7 +1756,8 @@ menuMiscChatWithAI = menu_Helper("Chat with AI", "F12", MenuMiscChatWithAI_Click
 menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChatAboutFile_Click);
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
 menuMiscPlayList = menu_Helper("Play List", "Control+Shift+L", menuMiscPlayList_Click);
-menuMiscPlayFolder = menu_Helper("Play Media", "Alt+Shift+L", MenuMiscPlayFolder_Click);
+// CONTROL+P PLAYS (9 November 2026), as in Windows Media Player; it was Alt+Shift+L, not a letter of its name.
+menuMiscPlayFolder = menu_Helper("Play Media", "Control+P", MenuMiscPlayFolder_Click);
 // H FOR HOMER, beside Control+Shift+L for Play List. Q meant nothing here: in
 // FileDir, Q is the Quick family -- Control+Q opens a quick folder, Shift+Q
 // makes a quick shortcut, Alt+Shift+Q a quick URL -- so a playback command
@@ -1766,7 +1768,7 @@ menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -1791,13 +1793,13 @@ menuHelpDocumentation = menu_Helper("Documentation", "F1", MenuHelpDocumentation
 // focused control does and Alt+Shift+Slash says where you are, as in every dialog; History of Changes takes
 // Control+Shift+F1 (was Shift+F1), which the Hotkeys document gives up, since Alt+Shift+H lists every key.
 menuHelpWhatThisDoes = menu_Helper("What This Does", "Shift+F1", menuHelpWhatThisDoes_Click);
-menuHelpWhereAmI = menu_Helper("Where Am I", "Alt+Shift+Slash", menuHelpWhereAmI_Click);
+menuHelpWhereAmI = menu_Helper("Where Am I", "Control+Slash", menuHelpWhereAmI_Click);
 menuHelpChangeHistory = menu_Helper("History of Changes", "Control+Shift+F1", MenuHelpChangeHistory_Click);
 menuHelpPlayTutorials = menu_Helper("Play Tutorials", "Alt+F12", menuHelpPlayTutorials_Click);
 menuHelpReadMe = menu_Helper("ReadMe", "Alt+Shift+F1", menuHelpReadMe_Click);
 menuHelpHotkeysPage = menu_Helper("Hotkeys", "", menuHelpHotkeysPage_Click);
 menuHelpKeyDescriber = menu_Helper("Key Describer Toggle", "Control+F1", MenuHelpKeyDescriber_Click);
-menuHelpHotKeys = menu_Helper("Hotkey Summary", "Alt+Shift+H or Control+Slash", MenuHelpHotKeys_Click);
+menuHelpHotKeys = menu_Helper("Hotkey Summary", "", MenuHelpHotKeys_Click);
 menuHelpContextMenu = menu_Helper("Context Menu ...", "Shift+F10", MenuHelpContextMenu_Click);
 //menuHelpExplorerMenu = menu_Helper("Explorer Menu ...", "Alt+Shift+F10", MenuHelpExplorerMenu_Click);
 menuHelpSendToMenu = menu_Helper("SendTo Menu ...", "Control+F10", MenuHelpSendToMenu_Click);
@@ -8919,11 +8921,12 @@ Homer.Say.sayForced(Homer.LbcHints.sentenceForFocused(this));
 // Where Am I (Alt+Shift+Slash): the folder, then the item's place in it, each as its own utterance.
 void menuHelpWhereAmI_Click(object sender, EventArgs e) {
 MdiChild mdiChild = (MdiChild) ActiveMdiChild;
-if (mdiChild == null) { Homer.Say.sayForced("No folder window is open."); return; }
+if (mdiChild == null) { Homer.SuiteCommands.whereAmI(this, new string[] { "No folder window is open." }); return; }
 int iCount = mdiChild.bs.Count;
 string sPlace = "No items";
 if (iCount > 0) sPlace = String.Format("{0} of {1}, {2} percent through", mdiChild.bs.Position + 1, iCount, Math.Round(100.0 * (mdiChild.bs.Position + 1) / iCount, 1));
-Homer.Say.sayForcedParts(mdiChild.Text, sPlace);
+// Control+Slash (9 November 2026): everything at once; twice, the same in a window with every command and key.
+Homer.SuiteCommands.whereAmI(this, new string[] { mdiChild.Text, sPlace });
 } // menuHelpWhereAmI_Click method
 
 
@@ -9207,8 +9210,6 @@ declareKey("menuFileGoToFolder", menuFileGoToFolder, Keys.Control | Keys.G);
 declareKey("menuFileGoToSpecialFolder", menuFileGoToSpecialFolder, Keys.Control |Keys.Shift | Keys.G);
 declareKey("menuFileGoToDrive", menuFileGoToDrive, Keys.Alt | Keys.G);
 declareKey("menuFileGoToVirtualFolder", menuFileGoToVirtualFolder, Keys.Alt |Keys.Shift | Keys.G);
-// Control+Slash too (8 November 2026, help\KeyDecisions.md in the kit): the key web apps use to list their shortcuts.
-declareKey("menuHelpHotKeys", menuHelpHotKeys, Keys.Alt | Keys.Shift | Keys.H, Keys.Control | Keys.OemQuestion);
 declareKey("menuEditInvertTagged", menuEditInvertTagged, Keys.Control | Keys.I);
 declareKey("menuNavigateInitialChange", menuNavigateInitialChange, Keys.Shift | Keys.I);
 declareKey("menuEditRenameToTitle", menuEditRenameToTitle, Keys.Control | Keys.Shift | Keys.I);
@@ -9231,7 +9232,7 @@ declareKey("menuNavigateKeywordsAgain", menuNavigateKeywordsAgain, Keys.Alt | Ke
 declareKey("menuQueryListTagged", menuQueryListTagged, Keys.Shift | Keys.L);
 declareKey("menuMiscPlayList", menuMiscPlayList, Keys.Control | Keys.Shift | Keys.L);
 declareKey("menuMiscHomerPlayer", menuMiscHomerPlayer, Keys.Control | Keys.Shift | Keys.H);
-declareKey("menuMiscPlayFolder", menuMiscPlayFolder, Keys.Alt | Keys.Shift | Keys.L);
+declareKey("menuMiscPlayFolder", menuMiscPlayFolder, Keys.Control | Keys.P);
 declareKey("menuQueryListFiles", menuQueryListFiles, Keys.Alt | Keys.L);
 declareKey("menuQueryList", menuQueryList, Keys.Control | Keys.L);
 declareKey("menuEditMoveTagged", menuEditMoveTagged, Keys.Shift | Keys.M);
@@ -9239,7 +9240,6 @@ declareKey("menuFileOpenFolder", menuFileOpenFolder, Keys.Control | Keys.O);
 declareKey("menuFileOpenSpecialFolder", menuFileOpenSpecialFolder, Keys.Control |Keys.Shift | Keys.O);
 declareKey("menuFileOpenDrive", menuFileOpenDrive, Keys.Alt | Keys.O);
 declareKey("menuFileOpenVirtualFolder", menuFileOpenVirtualFolder, Keys.Alt |Keys.Shift | Keys.O);
-declareKey("menuFilePrintTagged", menuFilePrintTagged, Keys.Control | Keys.P);
 declareKey("menuEditPathList", menuEditPathList, Keys.Control | Keys.Shift | Keys.P);
 declareKey("menuQueryPath", menuQueryPath, Keys.Alt | Keys.P);
 declareKey("menuEditPathToClipboard", menuEditPathToClipboard, Keys.Alt | Keys.Shift | Keys.P);
@@ -9320,7 +9320,7 @@ declareKey("menuEditShortPathToClipboard", menuEditShortPathToClipboard, Keys.Sh
 declareKey("menuHelpDocumentation", menuHelpDocumentation, Keys.F1);
 declareKey("menuHelpChangeHistory", menuHelpChangeHistory, Keys.Control | Keys.Shift | Keys.F1);
 declareKey("menuHelpWhatThisDoes", menuHelpWhatThisDoes, Keys.Shift | Keys.F1);
-declareKey("menuHelpWhereAmI", menuHelpWhereAmI, Keys.Alt | Keys.Shift | Keys.OemQuestion);
+declareKey("menuHelpWhereAmI", menuHelpWhereAmI, Keys.Control | Keys.OemQuestion);
 declareKey("menuHelpAbout", menuHelpAbout, Keys.Alt | Keys.F1);
 declareKey("menuHelpKeyDescriber", menuHelpKeyDescriber, Keys.Control | Keys.F1);
 declareKey("menuFileCurrentWindows", menuFileCurrentWindows, Keys.F4);

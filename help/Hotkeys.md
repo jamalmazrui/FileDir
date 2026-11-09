@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.208**  
+**Version 5.0.209**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -87,7 +87,7 @@ Commands in alphabetical order.
 - **Hide**, RightParen -- Set Hidden attribute of current or marked items
 - **History of Changes**, Control+Shift+F1 -- Open the history of FileDir's changes, newest first
 - **Homer Player**, Control+Shift+H -- Play the same items as Play List, but inside a FileDir dialog: the tracks stay in a list you can move through, each with the name it came with, and the player has no window of its own. H for Homer, beside Control+Shift+L for Play List
-- **Hotkey Summary**, Alt+Shift+H or Control+Slash -- Show every command, key and description in a window
+- **Hotkey Summary**, no key -- Show every command, key and description in a window
 - **Hotkeys**, no key -- Open the document of every command and key, sorted several ways
 - **Initial Change**, Shift+I -- Go to next item with different initial letter
 - **Inquire Differences**, Alt+Shift+I -- Generate a report that compares files in two folders
@@ -142,14 +142,14 @@ Commands in alphabetical order.
 - **Path List to Clipboard**, Control+Shift+P -- Copy to clipboard file paths below current folder item
 - **Path to Clipboard**, Alt+Shift+P -- Copy full path of current item to clipboard
 - **Play List**, Control+Shift+L -- With files marked, write a play list of them; with nothing marked, play the current item, whether it is a play list, a media file, or a document holding media links
-- **Play Media**, Alt+Shift+L -- Play the clipboard when it holds a play list or web addresses, otherwise the marked files, otherwise everything playable in this folder
+- **Play Media**, Control+P -- Play the clipboard when it holds a play list or web addresses, otherwise the marked files, otherwise everything playable in this folder
 - **Play Tutorials**, Alt+F12 -- Play the ten spoken tutorials in the Homer Player
 - **Previous Marked**, Shift+P or Control+UpArrow -- Go to previous marked item
 - **Previous Part**, Shift+F6 -- The same as Next Part, since the list has two parts
 - **Previous Sibling Folder**, Control+Shift+F6 -- Open the previous folder beside this one, by name
 - **Previous Visited Folder**, Alt+Shift+F6 -- Go the other way through the folders you visited
 - **Previous Window**, Control+Shift+Tab -- Activate the previous open window
-- **Print**, Control+P -- Print current or marked files
+- **Print**, no key -- Print current or marked files
 - **Properties**, Alt+Enter -- Invoke Windows properties dialog for current item
 - **Quick Shortcut**, Shift+Q -- Add a shortcut to the current file or folder to your Quick folder
 - **Quick url**, Alt+Shift+Q -- Add a web link to your Quick folder, taking the address from the clipboard when there is one there
@@ -225,7 +225,7 @@ Commands in alphabetical order.
 - **Volume Format**, Control+Shift+V -- Format a disk or storage card
 - **Web Download**, Alt+Shift+W -- Download from a web page: either the media on it, fetched with yt-dlp, or files you pick from the links it holds
 - **What This Does**, Shift+F1 -- Say what the control with focus does
-- **Where Am I**, Alt+Shift+Slash -- Say the folder and where you are in it
+- **Where Am I**, Control+Slash -- Say the folder and where you are in it; twice, show it with every key
 - **Windows Control Panel**, Control+Shift+W -- Launch Control Panel to configure Windows
 - **Yield**, Control+Y -- Say count and size of items in current folder
 - **Yield Files**, Alt+Y -- Say count and size of file items (but not folder items) in current folder
@@ -289,12 +289,10 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+F7** -- Translate File: Translate the marked files, or the current one, into a language you name, using a language model running on this computer
 - **Alt+Shift+F8** -- Complete Unmark: Complete unmarking
 - **Alt+Shift+G** -- Go to Virtual Folder: Open a virtual folder definition in same window
-- **Alt+Shift+H or Control+Slash** -- Hotkey Summary: Show every command, key and description in a window
 - **Alt+Shift+Home** -- Unmark to Top: Unmark to top of list
 - **Alt+Shift+I** -- Inquire Differences: Generate a report that compares files in two folders
 - **Alt+Shift+J** -- Find Duplicates in Tree: Find every duplicate in this folder and everything under it, and open them as a virtual folder you can inspect and delete from
 - **Alt+Shift+K** -- Reorder Names: Rename files so an alphabetical list reads in order: single leading digits padded, front matter first, licence and change log last
-- **Alt+Shift+L** -- Play Media: Play the clipboard when it holds a play list or web addresses, otherwise the marked files, otherwise everything playable in this folder
 - **Alt+Shift+N** -- Network Connections: Connect, disconnect, or restore mappings between physical storage and logical drives
 - **Alt+Shift+O** -- Open Virtual Folder: Open a virtual folder definition in new window
 - **Alt+Shift+P** -- Path to Clipboard: Copy full path of current item to clipboard
@@ -302,7 +300,6 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+Q** -- Quick url: Add a web link to your Quick folder, taking the address from the clipboard when there is one there
 - **Alt+Shift+R** -- Recycle Toggle: Toggle On/Off setting for whether deleted or replaced items are moved to the recycle bin
 - **Alt+Shift+S** -- Reverse Size Order: Sort items in reverse size order
-- **Alt+Shift+Slash** -- Where Am I: Say the folder and where you are in it
 - **Alt+Shift+T** -- Reverse Type Order: Sort items in reverse type/extension order
 - **Alt+Shift+U** -- Unarchive Password: Set password to be used when creating, extracting, or viewing zip archives
 - **Alt+Shift+V** -- Paste Move: Move items listed on clipboard to current folder
@@ -345,7 +342,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+M** -- Mail Body: Mail textual content of current file as the body of an email message
 - **Control+N** -- New Folder: Create new folder on disk
 - **Control+O** -- Open Folder: Open folder in new window
-- **Control+P** -- Print: Print current or marked files
+- **Control+P** -- Play Media: Play the clipboard when it holds a play list or web addresses, otherwise the marked files, otherwise everything playable in this folder
 - **Control+Q** -- Open Quick Folder: Open your Quick folder of shortcuts and links in a new window
 - **Control+R** -- Rename with Wildcards: Rename all items in current folder with wildcards
 - **Control+S** -- Save Marks: Save which items are marked in current directory view
@@ -380,6 +377,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+W** -- Windows Control Panel: Launch Control Panel to configure Windows
 - **Control+Shift+Y** -- Yield on Drive: Say total size and bytes free on current drive
 - **Control+Shift+Z** -- Zip List: Create or update a zip archive based on a list of files or folders
+- **Control+Slash** -- Where Am I: Say the folder and where you are in it; twice, show it with every key
 - **Control+T** -- Send to Text Editor: Send current file to text editor (default is EdSharp)
 - **Control+Tab** -- Next Window: Activate the next open window
 - **Control+U** -- Unarchive without Subfolders: Unzip current or marked files without subfolder paths
@@ -470,7 +468,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+J** -- Find Duplicates in Tree
 - **Alt+Shift+C** -- Folder to Clipboard
 - **Alt+Shift+G** -- Go to Virtual Folder
-- **Alt+Shift+H or Control+Slash** -- Hotkey Summary
 - **Alt+Shift+I** -- Inquire Differences
 - **Alt+Shift+Period** -- Mark Duplicate Files
 - **Alt+Shift+Comma** -- Mark Similar Files
@@ -478,7 +475,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+O** -- Open Virtual Folder
 - **Alt+Shift+V** -- Paste Move
 - **Alt+Shift+P** -- Path to Clipboard
-- **Alt+Shift+L** -- Play Media
 - **Alt+Shift+F6** -- Previous Visited Folder
 - **Alt+Shift+Q** -- Quick url
 - **Alt+Shift+F1** -- ReadMe
@@ -495,7 +491,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+End** -- Unmark to Bottom
 - **Alt+Shift+Home** -- Unmark to Top
 - **Alt+Shift+W** -- Web Download
-- **Alt+Shift+Slash** -- Where Am I
 - **Alt+Shift+Y** -- Yield in Operating System
 
 ### Alt+Control
@@ -600,7 +595,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+O** -- Open Folder
 - **Control+Q** -- Open Quick Folder
 - **Control+V** -- Paste
-- **Control+P** -- Print
+- **Control+P** -- Play Media
 - **Control+B** -- Recycle Bin
 - **Control+R** -- Rename with Wildcards
 - **Control+Apostrophe** -- Save Clipboard
@@ -610,6 +605,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+F10** -- SendTo Menu
 - **Control+F** -- Set Filter
 - **Control+U** -- Unarchive without Subfolders
+- **Control+Slash** -- Where Am I
 - **Control+Y** -- Yield
 - **Control+Z or Control+Shift+Delete** -- Zip then Delete
 

@@ -114,7 +114,7 @@ FileDir initially opens the Personal/My Documents folder when launched with no c
 
 The default sort order is reverse date/time, meaning that most recently modified items appear first. All folder items, however, appear before any file items. FileDir applies the current sort order and filter specification when creating a new directory view.
 
-Since there are numerous FileDir commands beyond those in Windows Explorer, learning the software may seem daunting at first. Getting started is not hard, however, since FileDir works similarly to Windows Explorer. You can then learn additional commands according to your time and needs. Remember that you can review this documentation at any time by pressing F1. You can also get a list of commands by pressing Alt+Shift+H for a hotkey summary. If you have trouble remembering the key or menu associated with a command, try the Alternate Menu command, Alt+F10, which lets you pick a command from a complete, alphabetized list. Use the Key Describer command, Control+F1, to toggle a mode in which pressing a key describes its action. If you switch to another application window, the mode is automatically turned off.
+Since there are numerous FileDir commands beyond those in Windows Explorer, learning the software may seem daunting at first. Getting started is not hard, however, since FileDir works similarly to Windows Explorer. You can then learn additional commands according to your time and needs. Remember that you can review this documentation at any time by pressing F1. You can also hear where you are with Control+Slash, and press it twice for a window listing every command and key. If you have trouble remembering the key or menu associated with a command, try the Alternate Menu command, Alt+F10, which lets you pick a command from a complete, alphabetized list. Use the Key Describer command, Control+F1, to toggle a mode in which pressing a key describes its action. If you switch to another application window, the mode is automatically turned off.
 
 FileDir commands can be subdivided into several categories, related to the following conceptual labels: edit, find, go to, navigate, query, select, transfer, and miscellaneous. You can edit file attributes, find items by textual match, go to different folders, navigate among items in a folder, mark files for further action, transfer them to various places, and do other, miscellaneous tasks. The sections below explain these categories.
 
@@ -819,11 +819,11 @@ says how many were written, skipped and failed.
 
 ## Playing Media
 
-Press **Alt+Shift+L** for Play Media to hear something now without keeping a
+Press **Control+P** for Play Media to hear something now without keeping a
 list. It looks in three places, in this order:
 
 1. **The clipboard**, when it holds a play list or web addresses. Copy a list of
-   YouTube addresses from a mail message and press Alt+Shift+L, and they play in
+   YouTube addresses from a mail message and press Control+P, and they play in
    order with their titles. Anything mpv can reach works, because yt-dlp is
    handed the addresses.
 2. **The marked files**, if any are marked.
@@ -839,7 +839,7 @@ surprises you with whatever you copied last.
 itself, so copy another address, press Control+V in the player window, and it
 joins the end of the list. If nothing is playing it starts at once. That is
 mpv's own key, not FileDir's, and it takes one address at a time; a whole list
-is what Alt+Shift+L is for.
+is what Control+P is for.
 
 Other useful keys in the player window: space to pause, left and right arrows to
 seek, angle brackets for the previous and next item, and q to stop.
@@ -1159,7 +1159,7 @@ command name, in order of key, and grouped by the modifier a key starts with.
 
 Three commands help while you are learning:
 
-- **Hotkey Summary**, Alt+Shift+H, opens that same document from inside FileDir.
+- **Where Am I**, Control+Slash pressed twice, lists every command and key from inside FileDir.
 - **Key Describer**, Control+F1, turns on a mode where pressing a command key
   says the command's name, its key, and what it does, instead of running it.
   Press Control+F1 again to turn it off. This is the fastest way to explore.
