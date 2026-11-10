@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.226**  
+**Version 5.0.228**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -18,7 +18,7 @@ This is the complete list of FileDir commands, given three ways so you can find 
 
 Commands in alphabetical order.
 
-- **About**, Alt+F1 -- Display FileDir version number and release date
+- **About**, Alt+F1 -- Say FileDir's version and release date
 - **Alpha Order**, Alt+A -- Sort items in alphabetic/name order
 - **Alternate Menu**, Alt+F10 -- Pick any command from one list, in menu, name or key order
 - **Append Clipboard**, Control+Shift+Apostrophe -- Add the clipboard text to the end of a file you name
@@ -32,10 +32,10 @@ Commands in alphabetical order.
 - **Character Encoding**, Shift+2 -- Say the current file's character encoding
 - **Chat about File**, Shift+F12 -- Ask the AI model on this computer about the current file
 - **Chat with AI**, F12 -- Ask the AI model on this computer a question
-- **Clear Clipboard**, Alt+Shift+Apostrophe -- Clear clipboard text
+- **Clear Clipboard**, Alt+Shift+Apostrophe -- Empty the clipboard
 - **Clear Filter**, Control+Shift+F -- View all items
 - **Close All But Current Window**, Control+Shift+F4 -- Close all windows except the current one
-- **Close Window**, Control+F4 -- Close current window
+- **Close Window**, Control+F4 -- Close the current window
 - **Come up Level**, Comma -- or Backspace, Go to the parent folder in this window, on the folder you left
 - **Complete Mark**, Shift+F8 -- Complete marking
 - **Complete Unmark**, Alt+Shift+F8 -- Complete unmarking
@@ -44,10 +44,10 @@ Commands in alphabetical order.
 - **Convert Units**, Shift+3 -- Convert between different units of measure and copy result to clipboard
 - **Copy**, Control+C -- Copy the current or marked items to the clipboard
 - **Copy Append**, Alt+C -- Append the current or marked items to the clipboard
-- **Copy Log**, Control+F12 -- Copy this session's log to the clipboard
+- **Copy Log**, Control+F12 -- Copy the session log to the clipboard as a file
 - **Copy Name**, Control+Shift+C -- Copy name of current or marked items to clipboard
 - **Copy to Folder**, Shift+C -- Copy current or marked items to another folder
-- **Current Windows**, F4 -- Pick window to open from list of current ones
+- **Current Windows**, F4 -- Switch to a window you pick from the list
 - **Cut**, Control+X -- Cut the current or marked items to the clipboard
 - **Date Order**, Alt+D -- Sort items in date/time order
 - **Delete**, Delete -- Delete current or marked items and recycle according to setting
@@ -55,18 +55,18 @@ Commands in alphabetical order.
 - **Delete and Recycle File Now**, Control+D -- Delete current file item and recycle without confirmation
 - **Delete File Now**, Control+Shift+D -- Delete current file item permanently without confirmation
 - **Delete without Recycle**, Shift+Delete -- Delete current or marked items permanently
-- **Documentation**, F1 -- Display FileDir documentation
+- **Documentation**, F1 -- Open the FileDir guide
 - **Drive Letter**, Alt+1 -- through Alt+9, Open new window on drive letter corresponding to digit
-- **Edit Settings**, Alt+Shift+E -- Configure FileDir options
+- **Edit Settings**, Alt+Shift+E -- Edit FileDir's settings file
 - **Edit Settings File**, Alt+Shift+F2 -- Adjust FileDir configuration options in text editor
-- **Elevate Version**, F11 -- Download and install the latest FileDir, after confirming
+- **Elevate Version**, F11 -- Download and install the latest FileDir
 - **End Marked**, Shift+E or Control+Shift+End -- Go to end marked item
 - **Environment Variables**, Control+E -- Change Windows environment variables for the current process, user, or system
 - **Evaluate Expression**, Control+Equals -- Evaluate mathematical expression and copy result to clipboard
 - **Exit FileDir**, Alt+F4 -- Close the FileDir application
 - **Extension Change**, Shift+X -- Go to next item with different extension
 - **Extra Speech Log**, Alt+Shift+F12 -- Open speech log file in configured text editor
-- **Extra Speech Toggle**, Alt+Shift+Z -- Toggle extra speech messages on or off, redirecting them to a log file
+- **Extra Speech Toggle**, Alt+Shift+Z -- Turn extra speech on or off
 - **Extract with Regex**, Control+Shift+E -- Extract text from marked files with regular expression and copy to the clipboard
 - **File Find**, Alt+Shift+F -- Find files in this folder and below by content and name
 - **Find Duplicates in Tree**, Alt+Shift+J -- Find duplicate files in this folder and below
@@ -87,15 +87,15 @@ Commands in alphabetical order.
 - **Hide**, RightParen -- Set Hidden attribute of current or marked items
 - **History of Changes**, Control+Shift+F1 -- Open the history of FileDir's changes, newest first
 - **Homer Player**, Control+Shift+H -- Play the items in a track list inside FileDir
-- **Hotkey Summary**, no key -- Show every command, key and description in a window
-- **Hotkeys**, no key -- Open the document of every command and key, sorted several ways
+- **Hotkey Summary**, no key -- List every command with its key and description
+- **Hotkeys**, no key -- Open the list of every command and key
 - **Initial Change**, Shift+I -- Go to next item with different initial letter
 - **Inquire Differences**, Alt+Shift+I -- Generate a report that compares files in two folders
 - **Invert Marked**, Control+I -- Invert marked and unmarked state of items
 - **Iterate Processes**, Alt+I -- List running processes and activate or terminate
 - **Jump**, Control+J -- Jump to item based on a string within its name
 - **Jump Again**, Alt+J -- Repeat Jump command with same string
-- **Key Describer Toggle**, Control+F1 -- Toggle the Key Describer, which describes keys instead of running them
+- **Key Describer Toggle**, Control+F1 -- Turn key describing on or off: a key says its command instead of running it
 - **Keywords**, Control+K -- Go to the next item whose content holds the keywords
 - **Keywords Again**, Alt+K -- Repeat Keywords command with same string
 - **Launch FileDir**, Alt+Control+F -- Launch or activate the FileDir application from a Windows desktop shortcut
@@ -122,12 +122,12 @@ Commands in alphabetical order.
 - **Next Part**, F6 -- Go between the folders and the files
 - **Next Sibling Folder**, Control+F6 -- Open the next folder beside this one, by name
 - **Next Visited Folder**, Alt+F6 -- Open the next folder in the order you visited them, newest first
-- **Next Window**, Control+Tab -- Activate the next open window
+- **Next Window**, Control+Tab -- Switch to the next window
 - **Open Command Prompt**, Control+Backslash -- Open a command prompt in the current folder
 - **Open Drive**, Alt+O -- Pick drive to open in new window
 - **Open Folder**, Control+O -- Open folder in new window
 - **Open in DbDo**, Control+Shift+Backslash -- Open the current database or data file in DbDo
-- **Open in Explorer**, Alt+Backslash -- Open Windows Explorer in current folder
+- **Open in Explorer**, Alt+Backslash -- Open the current folder in Windows Explorer
 - **Open Item**, Enter -- Open subfolder in new window, view zip archive, or launch file
 - **Open Parent Folder**, Backspace -- Open the parent folder in a new window
 - **Open Quick Folder**, Control+Q -- Open your Quick folder of shortcuts and links in a new window
@@ -143,17 +143,17 @@ Commands in alphabetical order.
 - **Path to Clipboard**, Alt+Shift+P -- Copy full path of current item to clipboard
 - **Play List**, Control+Shift+L -- Write a play list of the marked files, or play the current item
 - **Play Media**, Control+P -- Play the clipboard's play list, the marked files, or the folder
-- **Play Tutorials**, Alt+F12 -- Play the ten spoken tutorials in the Homer Player
+- **Play Tutorials**, Alt+F12 -- Play the spoken tutorials
 - **Previous Marked**, Shift+P or Control+UpArrow -- Go to previous marked item
 - **Previous Part**, Shift+F6 -- The same as Next Part, since the list has two parts
 - **Previous Sibling Folder**, Control+Shift+F6 -- Open the previous folder beside this one, by name
 - **Previous Visited Folder**, Alt+Shift+F6 -- Go the other way through the folders you visited
-- **Previous Window**, Control+Shift+Tab -- Activate the previous open window
+- **Previous Window**, Control+Shift+Tab -- Switch to the previous window
 - **Print**, no key -- Print current or marked files
 - **Properties**, Alt+Enter -- Invoke Windows properties dialog for current item
 - **Quick Shortcut**, Shift+Q -- Add a shortcut to the current file or folder to your Quick folder
 - **Quick url**, Alt+Shift+Q -- Add a web link from the clipboard to your Quick folder
-- **ReadMe**, Alt+Shift+F1 -- Open the ReadMe, the quick start, in your web browser
+- **ReadMe**, Alt+Shift+F1 -- Open the quick start
 - **ReadOnly**, RightBracket -- Set ReadOnly attribute of current or marked items
 - **ReadWrite**, LeftBracket -- Remove ReadOnly attribute of current or marked items
 - **Recent Folders**, Alt+R -- Pick a recent folder or shortcut to open
@@ -172,9 +172,9 @@ Commands in alphabetical order.
 - **Reverse Keywords**, Control+Shift+K -- Search backwards for the previous item whose content matches the keywords
 - **Reverse Size Order**, Alt+Shift+S -- Sort items in reverse size order
 - **Reverse Type Order**, Alt+Shift+T -- Sort items in reverse type/extension order
-- **Save Clipboard**, Control+Apostrophe -- Export clipboard text to disk file
+- **Save Clipboard**, Control+Apostrophe -- Save the clipboard text to a file you name
 - **Save Marks**, Control+S -- Save which items are marked in the current folder view
-- **Say Clipboard**, Alt+Apostrophe -- Say clipboard text
+- **Say Clipboard**, Alt+Apostrophe -- Say the clipboard text
 - **Say Date**, Shift+D -- Say date and time of current item
 - **Say Filter and Order**, Shift+8 -- Say current sort order and filter specification
 - **Say Folder Name**, Shift+Apostrophe -- Say the current folder's name, then its full path
@@ -184,11 +184,11 @@ Commands in alphabetical order.
 - **Say Selected**, Shift+Space -- or JAWSKey+Shift+DownArrow, Say marked items or current one if no marks
 - **Say Size**, Shift+S -- Say the current item's size
 - **Say Status**, Alt+Z -- Say the current item's date and size, then the order and filter
-- **Say Time**, Alt+Semicolon -- Say current time and date
+- **Say Time**, Alt+Semicolon -- Say the date and time
 - **Say Timer**, no key -- Say the timer's time, not counting pauses
 - **Say Type**, Shift+T -- Say type/extension of current item
 - **Say What Content**, Question -- Say the current file's text, or list what the folder holds
-- **Say Windows Open**, Shift+F4 -- or Alt+NumPad5, Say titles of open windows
+- **Say Windows Open**, Shift+F4 -- or Alt+NumPad5, Say how many windows are open, and their titles
 - **Search Next**, F3 -- Repeat the last Jump or Keywords search, whichever it was
 - **Search Previous**, Shift+F3 -- Repeat the last Jump or Keywords search backwards
 - **Send to Text Editor**, Control+T -- Send the current file to your text editor
@@ -225,7 +225,7 @@ Commands in alphabetical order.
 - **Volume Format**, Control+Shift+V -- Format a disk or storage card
 - **Web Download**, Alt+Shift+W -- Download media or linked files from a web page
 - **What This Does**, Shift+F1 -- Say what the control with focus does
-- **Where Am I**, Control+Slash -- Say the folder and where you are in it
+- **Where Am I**, Control+Slash -- Say where you are, what has focus and its keys
 - **Windows Control Panel**, Control+Shift+W -- Launch Control Panel to configure Windows
 - **Yield**, Control+Y -- Say count and size of items in current folder
 - **Yield Files**, Alt+Y -- Say the count and size of the files in this folder
@@ -243,19 +243,19 @@ The same commands, in alphabetical order of the key that runs them.
 - **Accent** -- Go to Quick Folder: Go to your Quick folder of shortcuts and links in this window
 - **Alt+1** -- Drive Letter: through Alt+9, Open new window on drive letter corresponding to digit
 - **Alt+A** -- Alpha Order: Sort items in alphabetic/name order
-- **Alt+Apostrophe** -- Say Clipboard: Say clipboard text
+- **Alt+Apostrophe** -- Say Clipboard: Say the clipboard text
 - **Alt+B** -- Beginning File: Go to beginning file item, skipping over folder items
-- **Alt+Backslash** -- Open in Explorer: Open Windows Explorer in current folder
+- **Alt+Backslash** -- Open in Explorer: Open the current folder in Windows Explorer
 - **Alt+C** -- Copy Append: Append the current or marked items to the clipboard
 - **Alt+Comma** -- Unmark All But Current: Unmark all but current item
 - **Alt+Control+F** -- Launch FileDir: Launch or activate the FileDir application from a Windows desktop shortcut
 - **Alt+D** -- Date Order: Sort items in date/time order
 - **Alt+Delete or Shift+5** -- Say Position: Say current position, item count, and percent through
 - **Alt+Enter** -- Properties: Invoke Windows properties dialog for current item
-- **Alt+F1** -- About: Display FileDir version number and release date
+- **Alt+F1** -- About: Say FileDir's version and release date
 - **Alt+F10** -- Alternate Menu: Pick any command from one list, in menu, name or key order
 - **Alt+F11** -- Arrange Icons: Arrange open windows
-- **Alt+F12** -- Play Tutorials: Play the ten spoken tutorials in the Homer Player
+- **Alt+F12** -- Play Tutorials: Play the spoken tutorials
 - **Alt+F4** -- Exit FileDir: Close the FileDir application
 - **Alt+F6** -- Next Visited Folder: Open the next folder in the order you visited them, newest first
 - **Alt+G** -- Go to Drive: Pick drive to open in same window
@@ -270,17 +270,17 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+R** -- Recent Folders: Pick a recent folder or shortcut to open
 - **Alt+RightArrow** -- Go Forward: Go forward again after going back
 - **Alt+S** -- Size Order: Sort items in size order
-- **Alt+Semicolon** -- Say Time: Say current time and date
+- **Alt+Semicolon** -- Say Time: Say the date and time
 - **Alt+Shift+A** -- Reverse Alpha Order: Sort items in reverse alphabetic/name order
-- **Alt+Shift+Apostrophe** -- Clear Clipboard: Clear clipboard text
+- **Alt+Shift+Apostrophe** -- Clear Clipboard: Empty the clipboard
 - **Alt+Shift+B** -- Burn to CD: Add current or marked items to CD
 - **Alt+Shift+C** -- Folder to Clipboard: Copy folder or archive being viewed to clipboard
 - **Alt+Shift+Comma** -- Mark Similar Files: Mark files that look like versions of another
 - **Alt+Shift+D** -- Reverse Date Order: Sort items in reverse date/time order
-- **Alt+Shift+E** -- Edit Settings: Configure FileDir options
+- **Alt+Shift+E** -- Edit Settings: Edit FileDir's settings file
 - **Alt+Shift+End** -- Unmark to Bottom: Unmark to bottom of list
 - **Alt+Shift+F** -- File Find: Find files in this folder and below by content and name
-- **Alt+Shift+F1** -- ReadMe: Open the ReadMe, the quick start, in your web browser
+- **Alt+Shift+F1** -- ReadMe: Open the quick start
 - **Alt+Shift+F11** -- Tile Horizontal: Tile open windows horizontally
 - **Alt+Shift+F12** -- Extra Speech Log: Open speech log file in configured text editor
 - **Alt+Shift+F2** -- Edit Settings File: Adjust FileDir configuration options in text editor
@@ -305,7 +305,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+V** -- Paste Move: Move items listed on clipboard to current folder
 - **Alt+Shift+W** -- Web Download: Download media or linked files from a web page
 - **Alt+Shift+Y** -- Yield in Operating System: Say Windows version, physical memory, and virtual memory
-- **Alt+Shift+Z** -- Extra Speech Toggle: Toggle extra speech messages on or off, redirecting them to a log file
+- **Alt+Shift+Z** -- Extra Speech Toggle: Turn extra speech on or off
 - **Alt+T** -- Type Order: Sort items in type/extension order
 - **Alt+U** -- Unarchive Test: Check if current file item can be unzipped successfully
 - **Alt+V** -- Paste Copy: Copy items listed on clipboard to current folder
@@ -319,7 +319,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Comma** -- Come up Level: or Backspace, Go to the parent folder in this window, on the folder you left
 - **Control+2** -- Convert Encoding: Rewrite the marked text files in an encoding you pick
 - **Control+A** -- Mark All: Mark all items
-- **Control+Apostrophe** -- Save Clipboard: Export clipboard text to disk file
+- **Control+Apostrophe** -- Save Clipboard: Save the clipboard text to a file you name
 - **Control+B** -- Recycle Bin: Open Windows Recycle Bin to recover deleted items
 - **Control+Backslash** -- Open Command Prompt: Open a command prompt in the current folder
 - **Control+C** -- Copy: Copy the current or marked items to the clipboard
@@ -328,11 +328,11 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+E** -- Environment Variables: Change Windows environment variables for the current process, user, or system
 - **Control+Equals** -- Evaluate Expression: Evaluate mathematical expression and copy result to clipboard
 - **Control+F** -- Set Filter: Show only the items whose names match
-- **Control+F1** -- Key Describer Toggle: Toggle the Key Describer, which describes keys instead of running them
+- **Control+F1** -- Key Describer Toggle: Turn key describing on or off: a key says its command instead of running it
 - **Control+F10** -- SendTo Menu: Pick Send To shortcut and pass current or marked items to it
 - **Control+F11** -- Cascade: Cascade open windows
-- **Control+F12** -- Copy Log: Copy this session's log to the clipboard
-- **Control+F4** -- Close Window: Close current window
+- **Control+F12** -- Copy Log: Copy the session log to the clipboard as a file
+- **Control+F4** -- Close Window: Close the current window
 - **Control+F6** -- Next Sibling Folder: Open the next folder beside this one, by name
 - **Control+G** -- Go to Folder: Go to folder in same window
 - **Control+I** -- Invert Marked: Invert marked and unmarked state of items
@@ -370,16 +370,16 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+R** -- Rename with Regex: Rename current or marked items with regular expressions
 - **Control+Shift+S** -- Restore Marks: Apply previously saved marks
 - **Control+Shift+T** -- Type Extended: Show every property of the current item
-- **Control+Shift+Tab** -- Previous Window: Activate the previous open window
+- **Control+Shift+Tab** -- Previous Window: Switch to the previous window
 - **Control+Shift+U** -- Unarchive to Same Name: Unzip current or marked files to a folder named like the archive
 - **Control+Shift+UpArrow** -- Unmark and Previous: Unmark the current item and go to the previous one
 - **Control+Shift+V** -- Volume Format: Format a disk or storage card
 - **Control+Shift+W** -- Windows Control Panel: Launch Control Panel to configure Windows
 - **Control+Shift+Y** -- Yield on Drive: Say total size and bytes free on current drive
 - **Control+Shift+Z** -- Zip List: Create or update a zip archive based on a list of files or folders
-- **Control+Slash** -- Where Am I: Say the folder and where you are in it
+- **Control+Slash** -- Where Am I: Say where you are, what has focus and its keys
 - **Control+T** -- Send to Text Editor: Send the current file to your text editor
-- **Control+Tab** -- Next Window: Activate the next open window
+- **Control+Tab** -- Next Window: Switch to the next window
 - **Control+U** -- Unarchive without Subfolders: Unzip current or marked files without subfolder paths
 - **Control+V** -- Paste: Paste items from clipboard to current folder
 - **Control+W** -- Send to Word Processor: Send the current file to your word processor
@@ -389,11 +389,11 @@ The same commands, in alphabetical order of the key that runs them.
 - **Delete** -- Delete: Delete current or marked items and recycle according to setting
 - **Enter** -- Open Item: Open subfolder in new window, view zip archive, or launch file
 - **Exclamation** -- Stamp with Date and Time: Point, Stamp date and time of current or marked items
-- **F1** -- Documentation: Display FileDir documentation
-- **F11** -- Elevate Version: Download and install the latest FileDir, after confirming
+- **F1** -- Documentation: Open the FileDir guide
+- **F11** -- Elevate Version: Download and install the latest FileDir
 - **F12** -- Chat with AI: Ask the AI model on this computer a question
 - **F3** -- Search Next: Repeat the last Jump or Keywords search, whichever it was
-- **F4** -- Current Windows: Pick window to open from list of current ones
+- **F4** -- Current Windows: Switch to a window you pick from the list
 - **F6** -- Next Part: Go between the folders and the files
 - **F8** -- Start Mark or Unmark: Mark start of sequence to be marked or unmarked
 - **LeftBrace** -- General: Remove System attribute of current or marked items
@@ -425,7 +425,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+F11** -- Tile Vertical: Tile open windows vertically
 - **Shift+F12** -- Chat about File: Ask the AI model on this computer about the current file
 - **Shift+F3** -- Search Previous: Repeat the last Jump or Keywords search backwards
-- **Shift+F4** -- Say Windows Open: or Alt+NumPad5, Say titles of open windows
+- **Shift+F4** -- Say Windows Open: or Alt+NumPad5, Say how many windows are open, and their titles
 - **Shift+F6** -- Previous Part: The same as Next Part, since the list has two parts
 - **Shift+F8** -- Complete Mark: Complete marking
 - **Shift+G** -- Get FTP: Download files from an FTP folder

@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- One wording across Homer
+
+- **Commands the Homer apps share are described alike in each,** such as About, Where Am I and the window commands.
+
 ## 10 November 2026 -- Named menu bars
 
 - **The menu bar is named for FileDir,** as Axe.Windows asked, and every description says folder, where four said directory.
