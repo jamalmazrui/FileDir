@@ -1617,9 +1617,9 @@ menuFileGoForward = menu_Helper("Go Forward", "Alt+RightArrow", MenuFileGoForwar
 menuFileCurrentWindows = menu_Helper("Current Windows ...", "F4", menuFileCurrentWindows_Click);
 menuFileNextWindow = menu_Helper("Next Window", "Control+Tab", MenuFileNextWindow_Click);
 menuFilePreviousWindow = menu_Helper("Previous Window", "Control+Shift+Tab", MenuFilePreviousWindow_Click);
-menuFileClose = menu_Helper("&Close Window", "Control+F4", MenuFileClose_Click);
+menuFileClose = menu_Helper("Close Window", "Control+F4", MenuFileClose_Click);
 menuFileCloseAllButCurrent = menu_Helper("Close All But Current Window", "Control+Shift+F4", menuFileCloseAllButCurrent_Click);
-menuFileExit = menu_Helper("E&xit FileDir", "Alt+F4", MenuFileExit_Click);
+menuFileExit = menu_Helper("Exit FileDir", "Alt+F4", MenuFileExit_Click);
 menuFileRestartWindows = menu_Helper("Restart Windows", "Alt+Shift+F4", MenuFileRestartWindows_Click);
 //menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewViewCopy,
 menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewItemCopy, menuFileNewFolder, menuFileOpenFolder, menuFileGoToFolder, menuFileOpenSpecialFolder, menuFileGoToSpecialFolder, menuFileOpenDrive, menuFileGoToDrive, menuFileOpenVirtualFolder, menuFileGoToVirtualFolder, menuFileOpenParentFolder, menuFileGoToParentFolder, menuFileOpenRootFolder, menuFileGoToRootFolder, menuFileOpenQuickFolder, menuFileGoToQuickFolder, menuFileQuickShortcut, menuFileQuickURL, menuFileFind, menuFileProperties, menuFileOpenItem, menuFileGoToItem, menuFileRecentFolders, menuFileGoBack, menuFileGoForward, menuFileCurrentWindows, menuFileNextWindow, menuFilePreviousWindow, menuFileClose, menuFileCloseAllButCurrent, menuFileExit, menuFileRestartWindows});
@@ -1819,7 +1819,7 @@ menuWindowDriveI = menu_Helper("Drive &I", "Alt+9", menuWindowDrive_Click);
 menuWindow.DropDownItems.AddRange(new ToolStripItem[] {menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical, menuWindowDriveA, menuWindowDriveB, menuWindowDriveC, menuWindowDriveD, menuWindowDriveE, menuWindowDriveF, menuWindowDriveG, menuWindowDriveH, menuWindowDriveI});
 
 menuHelp = menu_Helper("&Help");
-menuHelpAbout = menu_Helper("&About", "Alt+F1", MenuHelpAbout_Click);
+menuHelpAbout = menu_Helper("About", "Alt+F1", MenuHelpAbout_Click);
 menuHelpDocumentation = menu_Helper("Documentation", "F1", MenuHelpDocumentation_Click);
 // THE HELP KEYS OF EVERY HOMER WINDOW (7 November 2026, help\KeyDecisions.md in the kit): Shift+F1 says what the
 // focused control does and Alt+Shift+Slash says where you are, as in every dialog; History of Changes takes

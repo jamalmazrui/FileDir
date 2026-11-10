@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- Access letters only where the key is a letter
+
+- **Menu items on function keys have no access letter:** Close Window, Exit FileDir and About.
+
 ## 10 November 2026 -- What you see is what you hear
 
 - **The Say menu says Say.** Its items read Say Date, Say Size, Say Status and so on, as their keys' descriptions and DbDo's Say menu do; they had read Date, Size, Status.
