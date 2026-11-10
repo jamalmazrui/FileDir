@@ -85,3 +85,8 @@ Question = Your question for the AI; its answer is spoken and shown.
 
 [Chat about File]
 Question = Your question about the current file; the AI answers from the file's contents.
+
+; [Main window] (10 November 2026): the folder window, whose title changes with the folder; keyed by the control's role.
+[Main window]
+role List=The files and folders in this folder, one per line.
+role Table=The files and folders in this folder, one per line.

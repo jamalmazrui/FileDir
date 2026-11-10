@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- Shift+F1 in the main window
+
+- **Shift+F1 in a folder window** says what the list is: the files and folders in this folder, one per line.
+
 ## 9 November 2026 -- One short sentence per command
 
 - **Descriptions rewritten** as single short sentences, in the same words across Homer: no asides in parentheses, no other keys named. The describer had taken a second key, such as Backspace for Come up Level, as the start of the description. Every key on a line now stays with the keys.
