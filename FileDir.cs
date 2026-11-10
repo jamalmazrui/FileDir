@@ -9932,14 +9932,18 @@ else if (sValue.Length == 0) sValue = App.readValue(sHotkeyIni, "Hotkeys", "Say 
 if (sValue.Length == 0) sValue = FileDir.KeyText.lookUp(sCommand);
 
 if (sValue.Length == 0) sValue = "No description available";
+// EVERY KEY BEFORE THE DESCRIPTION (9 November 2026). A line may give a command two keys -- "Comma, or Backspace,
+// Go to ..." -- and the first comma had been taken as the end of the keys, so the description began "or Backspace".
+// Parts after the first that begin "or " or "through " are keys too.
 string sKey = "";
-string sDescription = "";
-int iComma = sValue.IndexOf(",");
-if (iComma >=0) {
-sKey = sValue.Substring(0, iComma);
-sDescription = sValue.Substring(iComma + 1);
+string sDescription = sValue;
+string[] aParts = sValue.Split(',');
+if (aParts.Length > 1) {
+int iKeys = 1;
+while (iKeys < aParts.Length && (aParts[iKeys].TrimStart().StartsWith("or ") || aParts[iKeys].TrimStart().StartsWith("through "))) iKeys++;
+sKey = string.Join(",", aParts, 0, iKeys);
+sDescription = iKeys < aParts.Length ? string.Join(",", aParts, iKeys, aParts.Length - iKeys) : "";
 }
-else sDescription = sValue;
 
 return new string[] {sCommand, sKey, sDescription};
 } // getKeySummary method
