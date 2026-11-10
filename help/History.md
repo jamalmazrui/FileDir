@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- What you see is what you hear
+
+- **The Say menu says Say.** Its items read Say Date, Say Size, Say Status and so on, as their keys' descriptions and DbDo's Say menu do; they had read Date, Size, Status.
+
 ## 10 November 2026 -- Settings in FileDir.inix
 
 - **FileDir.ini is retired.** Anything it held that FileDir.inix did not is added to the .inix, never over a value already there, and the old file is renamed FileDir.ini.migrated. FileDir reads and writes only FileDir.inix now, and Manual Options opens it. The installer no longer ships the FileDir.ini that seeded nothing.
