@@ -489,13 +489,6 @@ foreach (Homer.InixCodec.Pair pair in sec.Pairs) if (string.Equals(pair.Key, sKe
 return false;
 } // inixTryGet method
 
-static void inixSyncWrite(string sFile, string sSection, string sKey, string sValue) {
-if (string.IsNullOrEmpty(sFile) || !string.Equals(sFile, App.sIniFile, StringComparison.OrdinalIgnoreCase)) return;
-string sPath = getInixPath();
-if (sPath == null || !File.Exists(sPath)) return;
-try { Homer.InixCodec.writeValue(sPath, sSection, sKey, sValue); bInixLoaded = false; lsInixSections = null; }
-catch {}
-} // inixSyncWrite method
 
 public static string readValue(string sFile, string sSection, string sKey, string sDefault) {
 string sValue;
@@ -504,8 +497,14 @@ return Homer.Util.readValue(sFile, sSection, sKey, sDefault);
 } // readValue method
 
 public static bool writeValue(string sFile, string sSection, string sKey, string sValue) {
-bool bResult = Homer.Util.writeValue(sFile, sSection, sKey, sValue);
-inixSyncWrite(sFile, sSection, sKey, sValue);
+// FileDir's own settings go to FileDir.inix alone (10 November 2026); any other file, such as a hotkey map, is
+// written as before.
+string sInix = (!string.IsNullOrEmpty(sFile) && string.Equals(sFile, App.sIniFile, StringComparison.OrdinalIgnoreCase)) ? getInixPath() : null;
+if (sInix == null) return Homer.Util.writeValue(sFile, sSection, sKey, sValue);
+bool bResult = false;
+try { bResult = Homer.InixCodec.writeValue(sInix, sSection, sKey, sValue); }
+catch (Exception ex) { Homer.Log.info("settings: " + sSection + " " + sKey + " not written to " + sInix + ": " + ex.Message); }
+bInixLoaded = false; lsInixSections = null;
 return bResult;
 } // writeValue method
 
@@ -1241,6 +1240,19 @@ sDataDir = Homer.Util.getShortPath(sDataDir);
 string sQuickDir = Path.Combine(sDataDir, "Quick");
 if (!Directory.Exists(sQuickDir)) Directory.CreateDirectory(sQuickDir);
 sIniFile = Path.Combine(sDataDir, sName);
+// .INIX, NOT .INI (10 November 2026). Homer apps keep settings in .inix. FileDir read its FileDir.inix first, but
+// wrote FileDir.ini and copied into the .inix only when one already existed, so most people never had one. Now, the
+// first time, the .ini is copied to FileDir.inix -- read as Windows wrote it, in the system's code page or by its
+// byte order mark, and written as UTF-8 -- and from then on FileDir writes its settings to the .inix alone. Reading
+// still falls back to the .ini, so a setting never goes missing.
+try {
+string sInix = getInixPath();
+if (sInix != null && !File.Exists(sInix) && File.Exists(sIniFile)) {
+File.WriteAllText(sInix, File.ReadAllText(sIniFile, System.Text.Encoding.Default), new System.Text.UTF8Encoding(true));
+Homer.Log.info("settings: " + sIniFile + " copied to " + sInix + "; FileDir writes the .inix from now on");
+}
+}
+catch (Exception ex) { Homer.Log.info("settings: the .ini could not be copied to .inix: " + ex.Message); }
 App.readIni();
 App.wireListHistory();
 // sTempFile = Path.Combine(sDataDir, "FileDir.tmp");

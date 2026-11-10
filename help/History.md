@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- Settings in FileDir.inix
+
+- **Your settings are kept in FileDir.inix,** Homer's settings format, in FileDir's data folder. The first time this version runs, your FileDir.ini is copied there, accented letters and all, and from then on FileDir writes only the .inix. It still reads the .ini for anything the .inix lacks, so no setting goes missing.
+
 ## 10 November 2026 -- One list for picking
 
 - **FileDir's list of strings is the kit's HomerList,** shared with the other Homer apps.
