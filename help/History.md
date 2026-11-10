@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- Named menu bars
+
+- **The menu bar is named for FileDir,** as Axe.Windows asked, and every description says folder, where four said directory.
+
 ## 10 November 2026 -- Access letters only where the key is a letter
 
 - **Menu items on function keys have no access letter:** Close Window, Exit FileDir and About.

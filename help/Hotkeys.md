@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.225**  
+**Version 5.0.226**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -71,9 +71,9 @@ Commands in alphabetical order.
 - **File Find**, Alt+Shift+F -- Find files in this folder and below by content and name
 - **Find Duplicates in Tree**, Alt+Shift+J -- Find duplicate files in this folder and below
 - **Folder to Clipboard**, Alt+Shift+C -- Copy folder or archive being viewed to clipboard
-- **FTP Put**, Shift+F -- Upload current or marked files to FTP directory
+- **FTP Put**, Shift+F -- Upload current or marked files to an FTP folder
 - **General**, LeftBrace -- Remove System attribute of current or marked items
-- **Get FTP**, Shift+G -- Download files from FTP directory
+- **Get FTP**, Shift+G -- Download files from an FTP folder
 - **Go Back**, Alt+LeftArrow -- Go to the folder visited before this one
 - **Go Forward**, Alt+RightArrow -- Go forward again after going back
 - **Go to Drive**, Alt+G -- Pick drive to open in same window
@@ -173,7 +173,7 @@ Commands in alphabetical order.
 - **Reverse Size Order**, Alt+Shift+S -- Sort items in reverse size order
 - **Reverse Type Order**, Alt+Shift+T -- Sort items in reverse type/extension order
 - **Save Clipboard**, Control+Apostrophe -- Export clipboard text to disk file
-- **Save Marks**, Control+S -- Save which items are marked in current directory view
+- **Save Marks**, Control+S -- Save which items are marked in the current folder view
 - **Say Clipboard**, Alt+Apostrophe -- Say clipboard text
 - **Say Date**, Shift+D -- Say date and time of current item
 - **Say Filter and Order**, Shift+8 -- Say current sort order and filter specification
@@ -213,7 +213,7 @@ Commands in alphabetical order.
 - **Unarchive**, Shift+U -- Unzip current or marked files
 - **Unarchive Password**, Alt+Shift+U -- Set password to be used when creating, extracting, or viewing zip archives
 - **Unarchive Test**, Alt+U -- Check if current file item can be unzipped successfully
-- **Unarchive to Same Name**, Control+Shift+U -- Unzip current or marked files to a directory named like the archive
+- **Unarchive to Same Name**, Control+Shift+U -- Unzip current or marked files to a folder named like the archive
 - **Unarchive without Subfolders**, Control+U -- Unzip current or marked files without subfolder paths
 - **Unmark**, Slash or Alt+Shift+NumPad5 -- Unmark current item
 - **Unmark All**, Control+Shift+A -- Unmark all items
@@ -345,7 +345,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+P** -- Play Media: Play the clipboard's play list, the marked files, or the folder
 - **Control+Q** -- Open Quick Folder: Open your Quick folder of shortcuts and links in a new window
 - **Control+R** -- Rename with Wildcards: Rename all items in current folder with wildcards
-- **Control+S** -- Save Marks: Save which items are marked in current directory view
+- **Control+S** -- Save Marks: Save which items are marked in the current folder view
 - **Control+Shift+A** -- Unmark All: Unmark all items
 - **Control+Shift+Apostrophe** -- Append Clipboard: Add the clipboard text to the end of a file you name
 - **Control+Shift+B** -- Batch Mail: Send a message individually to multiple recipients
@@ -371,7 +371,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+S** -- Restore Marks: Apply previously saved marks
 - **Control+Shift+T** -- Type Extended: Show every property of the current item
 - **Control+Shift+Tab** -- Previous Window: Activate the previous open window
-- **Control+Shift+U** -- Unarchive to Same Name: Unzip current or marked files to a directory named like the archive
+- **Control+Shift+U** -- Unarchive to Same Name: Unzip current or marked files to a folder named like the archive
 - **Control+Shift+UpArrow** -- Unmark and Previous: Unmark the current item and go to the previous one
 - **Control+Shift+V** -- Volume Format: Format a disk or storage card
 - **Control+Shift+W** -- Windows Control Panel: Launch Control Panel to configure Windows
@@ -419,7 +419,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+E or Control+Shift+End** -- End Marked: Go to end marked item
 - **Shift+End** -- Mark to Bottom: Mark to bottom of list
 - **Shift+Enter** -- Go to Item: Go to subfolder in same window, view zip archive, or launch file
-- **Shift+F** -- FTP Put: Upload current or marked files to FTP directory
+- **Shift+F** -- FTP Put: Upload current or marked files to an FTP folder
 - **Shift+F1** -- What This Does: Say what the control with focus does
 - **Shift+F10** -- Context Menu: Pick action to perform on current or marked items based on file extension/type
 - **Shift+F11** -- Tile Vertical: Tile open windows vertically
@@ -428,7 +428,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+F4** -- Say Windows Open: or Alt+NumPad5, Say titles of open windows
 - **Shift+F6** -- Previous Part: The same as Next Part, since the list has two parts
 - **Shift+F8** -- Complete Mark: Complete marking
-- **Shift+G** -- Get FTP: Download files from FTP directory
+- **Shift+G** -- Get FTP: Download files from an FTP folder
 - **Shift+Home** -- Mark to Top: Mark to top of list
 - **Shift+I** -- Initial Change: Go to next item with different initial letter
 - **Shift+L** -- List Marked: Say marked items in current folder

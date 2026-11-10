@@ -1576,6 +1576,8 @@ this.SuspendLayout();
 hashOrder_Helper();
 
 menuMain = new MenuStrip();
+// NAMED FOR THE PROGRAM (10 November 2026): Axe.Windows found the menu bar with no name; nothing else names a menu bar for the reader, so it takes the program's name, read as "<program> menu bar".
+menuMain.AccessibleName = Application.ProductName;
 /*
 menuMain.AutoSize = true;
 menuMain.CanOverflow = false;
