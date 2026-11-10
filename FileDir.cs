@@ -1950,7 +1950,7 @@ else return false;
 } // abortInZip method
 
 void menuFileNewFolder_Click(object sender, EventArgs e) {
-string sDir = Homer.LbcAsk.inputDialog("New Folder", "Folder", "", "NewFolder").Trim();
+string sDir = Homer.LbcAsk.input("New Folder", "Folder", "", "NewFolder").Trim();
 if (sDir == "") return;
 if (Directory.Exists(sDir)) App.say(sDir + " already exists!");
 else {
@@ -2017,7 +2017,7 @@ string sSource = Path_Helper();
 string sDir = Path.GetDirectoryName(sSource);
 string sTarget = Homer.Util.getUniqueName(sSource);
 string sName = Path.GetFileName(sTarget);
-//string sNewName = Homer.LbcAsk.inputDialog("Input", "&Name", sName);
+//string sNewName = Homer.LbcAsk.input("Input", "&Name", sName);
 //if (sNewName == "") return;
 //string sTarget = Path.Combine(sDir, sNewName);
 if (Directory.Exists(sSource)) {
@@ -2440,7 +2440,7 @@ App.say("Quick shortcut");
 string sDir = Path.Combine(App.sDataDir, "Quick");
 string sPath = Path_Helper();
 string sName = Path.GetFileName(sPath);
-//sName = Homer.LbcAsk.inputDialog("Input", "&Name", sName).Trim();
+//sName = Homer.LbcAsk.input("Input", "&Name", sName).Trim();
 //if (sName == "") return;
 string[] aFields = {"&Name", "&Path"};
 string[] aValues = {sName, sPath};
@@ -2493,7 +2493,7 @@ catch { sTitle = ""; }
 }
 string sDir = Path.Combine(App.sDataDir, "Quick");
 string sName = sTitle;
-//sName = Homer.LbcAsk.inputDialog("Input", "&Name", sName).Trim();
+//sName = Homer.LbcAsk.input("Input", "&Name", sName).Trim();
 //if (sName == "") return;
 string[] aFields = {"&Name", "&Address"};
 string[] aValues = {sName, sAddress};
@@ -3494,7 +3494,7 @@ if (abortInZip()) return;
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
-string sText = Homer.LbcAsk.inputDialog("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Homer.LbcAsk.input("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -3679,7 +3679,7 @@ ReadOnlyCollection<string> pathList = App.getFiles(sDir, mdiChild.sFilterText);
 string[] aFiles = new string[pathList.Count];
 for (int i = 0; i < pathList.Count; i++) aFiles[i] = pathList[i];
 string sExts = Homer.Util.getExtensions(aFiles);
-string sResult = Homer.LbcAsk.inputDialog("Path List Extensions", "Extensions", sExts, "PathListExtensions").Trim();
+string sResult = Homer.LbcAsk.input("Path List Extensions", "Extensions", sExts, "PathListExtensions").Trim();
 if (sResult.Length == 0) return;
 
 string[] aResults = Homer.Util.getFilesWithExtensions(aFiles, sResult);
@@ -4069,7 +4069,7 @@ int i = mdiChild.bs.Position;
 string sSource = (string) mdiChild.tbl.DefaultView[i]["Path"];
 string sName = Path.GetFileName(sSource);
 string sDir = Path.GetDirectoryName(sSource);
-string sNewName = Homer.LbcAsk.inputDialog("Rename", "Name", sName, "Rename").Trim();
+string sNewName = Homer.LbcAsk.input("Rename", "Name", sName, "Rename").Trim();
 if (sNewName.Length == 0) return;
 string sTarget = Path.Combine(sDir, sNewName);
 try {
@@ -4370,7 +4370,7 @@ FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 // Its own title, not Mark with Regex's, which the screen reader announces as it opens (20 October 2026).
-string sText = Homer.LbcAsk.inputDialog("Extract with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Homer.LbcAsk.input("Extract with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -4972,7 +4972,7 @@ bLastSearchWasKeywords = false;
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sJumpText == null) mdiChild.sJumpText = App.sJumpText;
-string sText = Homer.LbcAsk.inputDialog("Jump", "Text", mdiChild.sJumpText, "Jump");
+string sText = Homer.LbcAsk.input("Jump", "Text", mdiChild.sJumpText, "Jump");
 if (sText.Length == 0) return;
 int iStart = 0;
 if (sText == mdiChild.sJumpText) iStart = mdiChild.bs.Position + 1;
@@ -5071,7 +5071,7 @@ bLastSearchWasKeywords = true;
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
-string sText = Homer.LbcAsk.inputDialog("Keywords", "Text", mdiChild.sKeywordsText, "Keywords");
+string sText = Homer.LbcAsk.input("Keywords", "Text", mdiChild.sKeywordsText, "Keywords");
 if (sText.Length == 0) return;
 int iStart = 0;
 if (sText == mdiChild.sKeywordsText) iStart = mdiChild.bs.Position + 1;
@@ -5093,7 +5093,7 @@ App.say("Reverse keywords");
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
-string sText = Homer.LbcAsk.inputDialog("Keywords back", "Text", mdiChild.sKeywordsText, "Keywords");
+string sText = Homer.LbcAsk.input("Keywords back", "Text", mdiChild.sKeywordsText, "Keywords");
 if (sText.Length == 0) return;
 mdiChild.sKeywordsText = sText;
 App.sKeywordsText = sText;
@@ -5181,7 +5181,7 @@ void menuNavigateSetFilter_Click(object sender, EventArgs e) {
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sFilterText == null) mdiChild.sFilterText = App.sFilterText;
-string sText = Homer.LbcAsk.inputDialog("Filter", "Expression", mdiChild.sFilterText, "Filter");
+string sText = Homer.LbcAsk.input("Filter", "Expression", mdiChild.sFilterText, "Filter");
 if (sText.Length == 0) return;
 
 filter_Helper(App.frame, mdiChild, sText);
@@ -6606,7 +6606,7 @@ if (sModel.Length == 0) {
 Homer.LbcAsk.show("Ollama is running, but no model is installed.\n\nRun installOllama.cmd in the FileDir folder to fetch llama3.2.", sTitle);
 return;
 }
-string sQuestion = Homer.LbcAsk.inputDialog("Chat with AI", "&Question", "", "ChatWithAI").Trim();
+string sQuestion = Homer.LbcAsk.input("Chat with AI", "&Question", "", "ChatWithAI").Trim();
 if (sQuestion.Length == 0) return;
 App.say("Asking " + sModel + ". This can take a while.");
 string sError;
@@ -6659,7 +6659,7 @@ return;
 }
 
 string sQuestion = App.readValue(App.sIniFile, "Data", "ChatQuestion", "Summarize this file.");
-sQuestion = Homer.LbcAsk.inputDialog("Chat about File", "&Question", sQuestion, "ChatQuestion").Trim();
+sQuestion = Homer.LbcAsk.input("Chat about File", "&Question", sQuestion, "ChatQuestion").Trim();
 if (sQuestion.Length == 0) return;
 App.writeValue(App.sIniFile, "Data", "ChatQuestion", sQuestion);
 
@@ -6714,7 +6714,7 @@ return;
 }
 
 string sLanguage = App.readValue(App.sIniFile, "Data", "TranslateLanguage", "Spanish");
-sLanguage = Homer.LbcAsk.inputDialog("Translate File", "&Language to translate into", sLanguage, "TranslateLanguage").Trim();
+sLanguage = Homer.LbcAsk.input("Translate File", "&Language to translate into", sLanguage, "TranslateLanguage").Trim();
 if (sLanguage.Length == 0) return;
 App.writeValue(App.sIniFile, "Data", "TranslateLanguage", sLanguage);
 
@@ -7160,7 +7160,7 @@ unarchive_Helper("Unarchive to same name", true, true);
 
 void menuMiscUnarchivePassword_Click(object sender, EventArgs e) {
 //App.say("Unarchive password");
-string sUnarchivePassword = Homer.LbcAsk.inputDialog("Unarchive Password", "&UnarchivePassword", App.sUnarchivePassword);
+string sUnarchivePassword = Homer.LbcAsk.input("Unarchive Password", "&UnarchivePassword", App.sUnarchivePassword);
 if (sUnarchivePassword == "") return;
 App.sUnarchivePassword = sUnarchivePassword;
 } // menuMiscUnarchivePassword_Click method
@@ -7338,7 +7338,7 @@ sPassword = (string) sResultList[2];
 else {
 sUserName = App.sUserName;
 sPassword = App.sPassword;
-sURL = Homer.LbcAsk.inputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
+sURL = Homer.LbcAsk.input("FTP Address", "&Address", App.sFTPText, "FtpAddress");
 if (sURL == "") return;
 }
 
@@ -7403,7 +7403,7 @@ sPassword = (string) sResultList[2];
 else {
 sUserName = App.sUserName;
 sPassword = App.sPassword;
-sURL = Homer.LbcAsk.inputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
+sURL = Homer.LbcAsk.input("FTP Address", "&Address", App.sFTPText, "FtpAddress");
 if (sURL == "") return;
 }
 
@@ -7526,7 +7526,7 @@ string sUrl = Homer.Util.getUrl();
 if (sUrl.Length == 0) sUrl = App.sWebText;
 else App.sWebText = sUrl;
 
-sUrl = Homer.LbcAsk.inputDialog("Web Address", "Address", sUrl, "WebAddress");
+sUrl = Homer.LbcAsk.input("Web Address", "Address", sUrl, "WebAddress");
 if (sUrl.Length == 0) return;
 
 // A page of links and a page holding a video want opposite treatment, and no
@@ -7571,7 +7571,7 @@ listFiles.Add(sFile);
 
 string[] aFiles = listFiles.ToArray();
 string sText = Homer.Util.getExtensions(aFiles);
-string sResult = Homer.LbcAsk.inputDialog("Download Extensions", "Extensions", sText, "DownloadExtensions").Replace(".", "").Trim().ToLower();
+string sResult = Homer.LbcAsk.input("Download Extensions", "Extensions", sText, "DownloadExtensions").Replace(".", "").Trim().ToLower();
 if (sResult.Length == 0) return;
 
 string[] aResults = Homer.Util.getFilesWithExtensions(aFiles, sResult);
@@ -7635,7 +7635,7 @@ string sTmp = Path.Combine(App.sAppDir, "WebGet.tmp");
 string s = Homer.Util.getUrl();
 if (s != "") App.sWebText = s;
 
-string sURL = Homer.LbcAsk.inputDialog("Web Address", "&Address", App.sWebText, "WebAddress");
+string sURL = Homer.LbcAsk.input("Web Address", "&Address", App.sWebText, "WebAddress");
 if (sURL.Length > 0) App.sWebText = sURL;
 if (sURL.Trim() == "") return;
 
@@ -7710,7 +7710,7 @@ App.say("Done!", true);
 
 void menuMiscEvaluate_Click(object sender, EventArgs e) {
 string sExp = App.sEvaluateText;
-sExp = Homer.LbcAsk.inputDialog("Evaluate", "Expression", sExp, "Evaluate");
+sExp = Homer.LbcAsk.input("Evaluate", "Expression", sExp, "Evaluate");
 if (sExp == "") return;
 App.sEvaluateText = sExp;
 FolderWindow mdiChild = App.frame.getActiveChild();
@@ -7741,7 +7741,7 @@ string sTitle = "Pick (" + aItems.Length + ") and Input";
 List<string> list = Homer.LbcAsk.listInputDialog(sTitle, "&Units", aItems, "&Value", App.sCalculateText, false, iItem);
 //if (sItem == "") return;
 if (list.Count == 0) return;
-//string sValue = Homer.LbcAsk.inputDialog("Input", "&Value", App.sCalculateText).Trim();
+//string sValue = Homer.LbcAsk.input("Input", "&Value", App.sCalculateText).Trim();
 string sItem = list[0];
 iItem = Array.IndexOf(aItems, sItem);
 App.iCalculateItem = iItem;
