@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.217**  
+**Version 5.0.218**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 

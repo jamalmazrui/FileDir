@@ -4,6 +4,7 @@
 
 ## 10 November 2026 -- One list for picking
 
+- **FileDir's own Dialog class is gone;** its questions, lists and messages are the kit's, shared with EdSharp.
 - **Picking from a list uses the kit's dialog,** shared with EdSharp, with the list labelled Choices, as Homer's lists are.
 
 ## 10 November 2026 -- Script, the one word

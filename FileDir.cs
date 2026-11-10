@@ -84,7 +84,7 @@ Exception ex = (Exception) e.Exception;
 string sMessage = ex.Message;
 sMessage += "\n\nStack trace:\n" + ex.StackTrace;
 string[] aButtons = {"&Report a Problem", "Copy to Clipboard", "Exit FileDir"};
-string sButton = Dialog.Choose("Unexpected Event", sMessage, aButtons, 0);
+string sButton = Homer.LbcAsk.choose("Unexpected Event", sMessage, aButtons, 0);
   switch (sButton) {
 case "&Report a Problem" :
 // The message is put on the clipboard first, then the issues page opens, so
@@ -2843,7 +2843,7 @@ App.bReplaying = false;
 } // goHistory_Helper method
 
 void menuFileRecentFolders_Click(object sender, EventArgs e) {
-string sButton = Dialog.Choose("Choose", "", new string[] {"&Folders", "&Shortcuts"}, 0);
+string sButton = Homer.LbcAsk.choose("Choose", "", new string[] {"&Folders", "&Shortcuts"}, 0);
 if (sButton.Length == 0) return;
 
 sButton = sButton.Replace("&", "");
@@ -3351,7 +3351,7 @@ StringBuilder sbPlan = new StringBuilder();
 foreach (string[] aPair in lsPlan)
 sbPlan.Append(Path.GetFileName(aPair[0]) + "  becomes  " + Path.GetFileName(aPair[1]) + "\r\n");
 string[] aButtons = {"&Rename", "Cancel"};
-if (Dialog.Choose(sTitle, Homer.Util.stringPlural("name", lsPlan.Count) + " will change:\r\n\r\n" + sbPlan.ToString(), aButtons, 0) != "&Rename") return;
+if (Homer.LbcAsk.choose(sTitle, Homer.Util.stringPlural("name", lsPlan.Count) + " will change:\r\n\r\n" + sbPlan.ToString(), aButtons, 0) != "&Rename") return;
 
 int iDone = 0;
 int iFailed = 0;
@@ -7998,7 +7998,7 @@ string sWarn = Homer.Util.stringPlural("address", iAddresses)
 + "this could be a long wait with nothing to hear.\r\n\r\n"
 + "Addresses that end in .mp3 or .m4a play at once. A podcast's own feed usually holds "
 + "those, where its web pages do not.";
-if (Dialog.Choose(sTitle, sWarn, aButtons, 1) != "&Try anyway") return;
+if (Homer.LbcAsk.choose(sTitle, sWarn, aButtons, 1) != "&Try anyway") return;
 }
 App.say(Homer.Util.stringPlural("item", lsPlay.Count) + " " + sWhere);
 playMedia_Helper(sTemp);

@@ -34,56 +34,7 @@ namespace FileDir {
 // Dialog - filtered/sorted/jumpable list and input helpers (from lbc.cs)
 // ===========================================================================
 
-public class Dialog {
-public static string Jump = "";
-public static Dictionary<string, string> hashItem = new Dictionary<string, string>();
-public static Dictionary<string, string> hashFilter = new Dictionary<string, string>();
-public static Dictionary<string, string> hashSort = new Dictionary<string, string>();
-public static Dictionary<string, string> hashJump = new Dictionary<string, string>();
-
-public static void Show(object oText) {
-Show("Show", oText);
-} // Show method
-
-public static void Show(object oTitle, object oText) {
-Homer.LbcMessage.show(oText.ToString(), oTitle.ToString());
-} // Show method
-
-
-
-
-
-
-
-
-public static string Choose(string sTitle, string sText, string[] aButtons, int iDefault) {
-// A question with a row of answers, as ButtonDialog but for callers that list
-// their own Cancel. Built on the kit's LbcDialog. The answer comes back as the
-// caller wrote it ("&Try anyway"); Escape gives the caller's own "Cancel" when
-// it listed one, and "" otherwise. The answer chosen is spoken, as before.
-if (aButtons == null || aButtons.Length == 0) return "";
-List<string> lsButtons = new List<string>(aButtons);
-bool bOwnCancel = false;
-foreach (string sOne in aButtons) if (sOne.Replace("&", "") == "Cancel") bOwnCancel = true;
-if (!bOwnCancel) lsButtons.Add("Cancel");
-int iAt = (iDefault >= 0 && iDefault < aButtons.Length) ? iDefault : 0;
-string sPressed;
-using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, Homer.LbcAsk.ownerForm())) {
-if (!string.IsNullOrEmpty(sText)) dlg.addLabel(sText);
-sPressed = dlg.runWithButtons(lsButtons.ToArray(), false, aButtons[iAt].Replace("&", ""));
-}
-if (string.IsNullOrEmpty(sPressed)) sPressed = "Cancel";
-if (sPressed == "Cancel" && !bOwnCancel) return "";
-foreach (string sOne in aButtons) {
-if (sOne.Replace("&", "") == sPressed) {
-Homer.LbcAsk.say(sPressed);
-return sOne;
-}
-}
-return "";
-} // Choose method
-
-} // Dialog class
+// class Dialog: its Pick, Choose and Show are the kit's LbcAsk.pick, choose and message now (10 November 2026).
 
 // ===========================================================================
 // NetworkDrive - map/unmap UNC shares (aejw.com, CC BY-SA 2.5); used by
