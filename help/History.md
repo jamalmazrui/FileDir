@@ -2,6 +2,14 @@
 
 
 
+## 10 November 2026 -- Script, the one word
+
+- **Script, not snippet,** in the words FileDir's code uses for what its scripting runs, as across Homer.
+
+## 10 November 2026 -- Classes named for what they are
+
+- **FileDir's folder window is named FolderWindow,** not MdiChild, the name of a different kit class.
+
 ## 10 November 2026 -- FileDir's dialogs come from the kit
 
 - **Every FileDir dialog that asks for text, a choice, a folder or a file is the kit's LbcAsk now,** shared with the other Homer apps; FileDir's own copy is gone. Nothing changes in how they look or what they say.

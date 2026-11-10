@@ -230,7 +230,7 @@ public static List<string> lsRecentDirs = new List<string>();
 
 // WHERE THE HISTORY IS KEPT, and why it needed rebuilding.
 //
-// A visit used to be recorded in ONE place: the MdiChild constructor. So a
+// A visit used to be recorded in ONE place: the FolderWindow constructor. So a
 // folder was remembered only when a new window was made for it. Going to a
 // folder that already had a window -- which activate_Helper does, returning
 // early after activating it -- recorded nothing at all, and neither did
@@ -749,7 +749,7 @@ return sReturn;
 // assembly (FileDirScript.dll, built from FileDir.js by jsc.exe) loaded by
 // reflection, so FileDir.cs keeps no compile-time JScript dependency --
 // the EdSharp / DbDo model. The active directory window (frm) and its data
-// table (tbl) are exposed to snippets. Returns the script's last value as
+// table (tbl) are exposed to scripts. Returns the script's last value as
 // a string, "ERROR: ..." on fault, or an empty string when unavailable.
 public static string runScript(string sCode, object frm, object tbl) {
 try {
@@ -1853,10 +1853,10 @@ if (!testZip(sZip)) aPaths = Homer.Util.file2String(sZip).Replace("\r\n", "\n").
 }
 this.KeyPreview = true;
 //Homer.LbcAsk.show(sZip, "here");
-//MdiChild mdiChild = null;
-//mdiChild = new MdiChild(this, sDir, sOrder, sFilter, sZip);
-//this.Load += delegate(object sender, EventArgs e) {MdiChild form = new MdiChild(this, sDir, sOrder, sFilter, sZip);};
-this.Load += delegate(object sender, EventArgs e) {MdiChild mdiChild = new MdiChild(this, sDir, sOrder, sFilter, sZip, aPaths);};
+//FolderWindow mdiChild = null;
+//mdiChild = new FolderWindow(this, sDir, sOrder, sFilter, sZip);
+//this.Load += delegate(object sender, EventArgs e) {FolderWindow form = new FolderWindow(this, sDir, sOrder, sFilter, sZip);};
+this.Load += delegate(object sender, EventArgs e) {FolderWindow mdiChild = new FolderWindow(this, sDir, sOrder, sFilter, sZip, aPaths);};
 this.MainMenuStrip = menuMain;
 //this.Size = new Size(440, 600);
 this.Size = new Size(600, 600);
@@ -1893,7 +1893,7 @@ hashOrder.Add("Type asc, Size desc", "Reverse Size");
 hashOrder.Add("Type asc, Ext", "Type");
 hashOrder.Add("Type asc, Ext desc", "Reverse Type");
 }
-foreach (MdiChild mdiChild in this.MdiChildren) {
+foreach (FolderWindow mdiChild in this.MdiChildren) {
 if (App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type asc", "Type desc");
 else mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 BindingSource bs = mdiChild.bs;
@@ -1941,7 +1941,7 @@ return menuItem;
 } // menu_Helper method
 
 public bool abortInZip() {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild.InZip) {
 App.say("Command unavailable in archive view!");
 return true;
@@ -1969,7 +1969,7 @@ sDir = Path.GetFullPath(sDir);
 App.sGoToText = sDir;
 App.sOpenText = sDir;
 if (Homer.Util.stringEquiv(Directory.GetCurrentDirectory(), Path.GetDirectoryName(sDir))) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sGoToText = sDir;
 refresh_Helper(sDir);
@@ -1977,11 +1977,11 @@ goTo_Helper(sDir);
 }
 } // menuFileNewFolder_Click method
 
-void refreshFolder_Helper(MdiChild mdiChild) {
+void refreshFolder_Helper(FolderWindow mdiChild) {
 //Homer.LbcAsk.show(mdiChild.Text);
 string[] aTagged = getTagged();
 string sPath = Path_Helper();
-MdiChild form = new MdiChild(App.frame, "", mdiChild.sOrderText, mdiChild.sFilterText);
+FolderWindow form = new FolderWindow(App.frame, "", mdiChild.sOrderText, mdiChild.sFilterText);
 mdiChild.Dispose();
 applyTagged(aTagged);
 goTo_Helper(sPath);
@@ -1990,7 +1990,7 @@ goTo_Helper(sPath);
 void MenuFileRefreshFolder_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Refresh folder");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 refreshFolder_Helper(mdiChild);
 } // menuFileRefreshFolder_Click method
@@ -1998,11 +1998,11 @@ refreshFolder_Helper(mdiChild);
 void MenuFileNewViewCopy_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("New view copy");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataTable tbl = mdiChild.tbl.Copy();
 int i = mdiChild.bs.Position;
-MdiChild form = new MdiChild(App.frame, "", mdiChild.sOrderText, mdiChild.sFilterText);
+FolderWindow form = new FolderWindow(App.frame, "", mdiChild.sOrderText, mdiChild.sFilterText);
 form.tbl = tbl;
 //if (form.bs == null) Homer.LbcAsk.show("null");
 //form.bs.Position = i;
@@ -2010,7 +2010,7 @@ form.tbl = tbl;
 
 void MenuFileNewItemCopy_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string sSource = Path_Helper();
@@ -2063,7 +2063,7 @@ return;
 if (bOpen) App.sOpenText = sDir;
 else {
 App.sGoToText = sDir;
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild != null) mdiChild.Dispose();
 }
 
@@ -2092,7 +2092,7 @@ return;
 if (bOpen) App.sOpenText = sDir;
 else {
 App.sGoToText = sDir;
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild != null) mdiChild.Dispose();
 }
 
@@ -2138,7 +2138,7 @@ sDir = Directory.GetCurrentDirectory();
 if (bOpen) App.sOpenText = sDir;
 else {
 App.sGoToText = sDir;
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild != null) mdiChild.Dispose();
 }
 
@@ -2169,7 +2169,7 @@ string sPaths = Homer.Util.file2String(sFile);
 string[] aPaths = sPaths.Replace("\r\n", "\n").Trim().Split('\n');
 
 if (!bOpen) {
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild != null) mdiChild.Dispose();
 }
 
@@ -2178,7 +2178,7 @@ string sDir = "";
 string sOrder = "";
 sFilter = "";
 string sZip = sFile;
-new MdiChild(frame, sDir, sOrder, sFilter, sZip, aPaths);
+new FolderWindow(frame, sDir, sOrder, sFilter, sZip, aPaths);
 } // openVirtualFolder_Helper method
 
 void MenuFileParentFolder_Click(object sender, EventArgs e) {
@@ -2189,16 +2189,16 @@ string sDir = Path.GetDirectoryName(sDefaultDir);
 //if (sDir.Length == 0) return;
 if (Directory.Exists(sDir)) {
 App.sGoToText = sDefaultDir;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild != null) mdiChild.Dispose();
-MdiChild form = new MdiChild(App.frame, sDir, App.sOrderText, App.sFilterText);
+FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, App.sFilterText);
 }
 else App.say("No parent folder!");
 } // menuFileOpenParentFolder_Click method
 
 void goTo_Helper(string sPath) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 for (int i = 0; i < view.Count; i++) {
@@ -2212,7 +2212,7 @@ return;
 
 void parentFolder_Helper(string sLabel, bool bCloseWindow) {
 App.say(sLabel);
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int i = mdiChild.bs.Position;
@@ -2235,7 +2235,7 @@ if (mdiChild != null && bCloseWindow) {
 //App.say("Closing");
 mdiChild.Dispose();
 }
-//MdiChild form = new MdiChild(App.frame, sDir, App.sOrderText, App.sFilterText);
+//FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, App.sFilterText);
 activate_Helper(sDir);
 goTo_Helper(sPath);
 }
@@ -2262,12 +2262,12 @@ string sDir = sDefaultDir.Substring(0, 3);
 //if (sDir.Length == 0) return;
 if (Directory.Exists(sDir)) {
 App.sGoToText = sDir;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild != null && bCloseWindow) {
 //App.say("Closing");
 mdiChild.Dispose();
 }
-//MdiChild form = new MdiChild(App.frame, sDir, App.sOrderText, App.sFilterText);
+//FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, App.sFilterText);
 activate_Helper(sDir);
 }
 else App.say("No root folder!");
@@ -2306,7 +2306,7 @@ Homer.LbcAsk.show(ex.Message, "Error");
 public void showFileInFolder(string sPath) {
 string sDir = Path.GetDirectoryName(Path.GetFullPath(sPath));
 activate_Helper(sDir);
-MdiChild mdiChild = getActiveChild();
+FolderWindow mdiChild = getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 for (int i = 0; i < view.Count; i++) {
@@ -2347,22 +2347,22 @@ aPaths = Homer.Util.file2String(sZip).Replace("\r\n", "\n").Trim().Split('\n');
 }
 
 object[] mdiChildren = App.frame.MdiChildren;
-foreach (MdiChild mdiChild in mdiChildren) {
+foreach (FolderWindow mdiChild in mdiChildren) {
 //if (mdiChild.Text == sTitle) {
 if (Homer.Util.stringEquiv(mdiChild.Text, sTitle)) {
 App.say("returning");
 mdiChild.Activate();
 refreshFolder_Helper(mdiChild);
 // THE VISIT THAT WAS BEING LOST. Returning to a folder that already has a
-// window never reached the MdiChild constructor, so nothing was recorded --
+// window never reached the FolderWindow constructor, so nothing was recorded --
 // which is why the Quick folder, reached twice, appeared in the history once.
 App.recordVisit(sZip == "" ? sDir : sZip);
 return;
 }
 }
-//MdiChild form = new MdiChild(App.frame, sDir, App.sOrderText, App.sFilterText, sZip);
+//FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, App.sFilterText, sZip);
 string sFilter = "";
-MdiChild form = new MdiChild(App.frame, sDir, App.sOrderText, sFilter, sZip, aPaths);
+FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, sFilter, sZip, aPaths);
 } // activate_Helper method
 
 void openQuickFolder_Helper(string sLabel) {
@@ -2371,7 +2371,7 @@ bool bOpen = sLabel.StartsWith("Open") ? true : false;
 
 string sDir = Path.Combine(App.sDataDir, "Quick");
 if (!bOpen) {
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild != null) mdiChild.Dispose();
 }
 
@@ -2591,7 +2591,7 @@ sDir = Path.GetDirectoryName(sPath);
 if (sDir.Length == 0) return;
 if (Directory.Exists(sDir)) {
 App.sOpenText = sDir;
-//MdiChild form = new MdiChild(App.frame, sDir, App.sOrderText, App.sFilterText);
+//FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, App.sFilterText);
 activate_Helper(sDir);
 //Homer.LbcAsk.show(App.iFileFind, sPath);
 goTo_Helper(sPath);
@@ -2613,7 +2613,7 @@ item_Helper(sLabel, bCloseWindow, bZip);
 
 void item_Helper(string sLabel, bool bCloseWindow, bool bZip) {
 //App.say("Run");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 // App.say(sLabel);
 int i = mdiChild.bs.Position;
@@ -2633,7 +2633,7 @@ Homer.Util.shellDefault(sTarget);
 }
 else if (Directory.Exists(sPath)) {
 //mdiChild.Text = path;
-//MdiChild.fillTable(mdiChild.bs, mdiChild.tbl, path);
+//FolderWindow.fillTable(mdiChild.bs, mdiChild.tbl, path);
 if (bCloseWindow) mdiChild.Dispose();
 string sDir = sPath;
 App.say(sLabel);
@@ -2725,7 +2725,7 @@ void menuNavigatePreviousVisitedFolder_Click(object sender, EventArgs e) { visit
 // navigatePart_Helper: from a folder to the first file, or from a file to the first folder. With
 // two parts, Next Part and Previous Part arrive at the same place.
 void navigatePart_Helper() {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 if (view.Count == 0) return;
@@ -2745,7 +2745,7 @@ App.say(bFolderNow ? "No files here" : "No folders here", true);
 // siblingFolder_Helper: the next or previous folder beside this one in its parent, by name,
 // wrapping at the ends. A folder both hidden and system is passed over, as Explorer does.
 void siblingFolder_Helper(int iStep) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string sDir = mdiChild.Text.TrimEnd(Path.DirectorySeparatorChar);
 string sParent = "";
@@ -2777,7 +2777,7 @@ void visitedFolder_Helper(int iStep) {
 string[] aDirs = App.recentDistinct();
 int iCount = aDirs.Length;
 if (iCount < 2) { App.say("No other visited folder.", true); return; }
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 string sNow = mdiChild == null ? "" : mdiChild.Text;
 int iAt = -1;
 for (int i = 0; i < iCount; i++) if (Homer.Util.stringEquiv(aDirs[i].TrimEnd(Path.DirectorySeparatorChar), sNow.TrimEnd(Path.DirectorySeparatorChar))) iAt = i;
@@ -2903,7 +2903,7 @@ activateLink(sPath);
 } // menuFileRecentFolders_Click method
 
 void menuFileWindowToggle_Click(object sender, EventArgs e) {
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 string sDir = "";
 string sPrevDir = "";
 if (mdiChild != null) sDir = mdiChild.Text;
@@ -2926,7 +2926,7 @@ activate_Helper(sPrevDir);
 void menuFileCurrentWindows_Click(object sender, EventArgs e) {
 object[] mdiChildren = App.frame.MdiChildren;
 string sTitleList = "";
-foreach (MdiChild mdiChild in mdiChildren) {
+foreach (FolderWindow mdiChild in mdiChildren) {
 sTitleList += mdiChild.Text + "\n";
 }
 string[] aTitles = sTitleList.Trim().Split('\n');
@@ -2971,7 +2971,7 @@ Homer.Util.run("shutdown.exe -r -f -t 1");
 } // MenuFileRestartWindows_Clickmethod
 
 void MenuEditTagAndNext_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 mdiChild.tbl.DefaultView[i]["Tagged"] = '>';
@@ -2980,7 +2980,7 @@ mdiChild.bs.EndEdit();
 } // menuEditTagAndNext method
 
 void MenuEditUntagAndNext_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 mdiChild.tbl.DefaultView[i]["Tagged"] = ' ';
@@ -2989,7 +2989,7 @@ mdiChild.bs.EndEdit();
 } // menuEditUntagAndNext method
 
 void MenuEditTagAndPrevious_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 mdiChild.tbl.DefaultView[i]["Tagged"] = '>';
@@ -2998,7 +2998,7 @@ mdiChild.bs.EndEdit();
 } // menuEditTagAndPrevious method
 
 void MenuEditUntagAndPrevious_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 mdiChild.tbl.DefaultView[i]["Tagged"] = ' ';
@@ -3007,7 +3007,7 @@ mdiChild.bs.EndEdit();
 } // menuEditUntagAndPrevious method
 
 void MenuEditTagToBottom_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iStart = mdiChild.bs.Position;
 int iEnd = mdiChild.bs.Count - 1;
@@ -3017,7 +3017,7 @@ mdiChild.bs.Position = iEnd;
 } // menuEditTagToBottom method
 
 void MenuEditUntagToBottom_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iStart = mdiChild.bs.Position;
 int iEnd = mdiChild.bs.Count - 1;
@@ -3027,7 +3027,7 @@ mdiChild.bs.Position = iEnd;
 } // menuEditUntagToBottom method
 
 void MenuEditTagToTop_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iStart = mdiChild.bs.Position;
 int iEnd = 0;
@@ -3037,7 +3037,7 @@ mdiChild.bs.Position = iEnd;
 } // menuEditTagToTop method
 
 void MenuEditUntagToTop_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iStart = mdiChild.bs.Position;
 int iEnd = 0;
@@ -3047,7 +3047,7 @@ mdiChild.bs.Position = iEnd;
 } // menuEditUntagToTop method
 
 void MenuEditTag_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 mdiChild.tbl.DefaultView[i]["Tagged"] = '>';
@@ -3055,7 +3055,7 @@ mdiChild.bs.EndEdit();
 } // menuEditTag method
 
 void MenuEditUntag_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 mdiChild.tbl.DefaultView[i]["Tagged"] = ' ';
@@ -3064,7 +3064,7 @@ mdiChild.bs.EndEdit();
 
 void MenuEditToggleTag_Click(object sender, EventArgs e) {
 //App.say("Toggle tag");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 if ((char) mdiChild.tbl.DefaultView[i]["Tagged"] == '>') mdiChild.tbl.DefaultView[i]["Tagged"] = ' ';
@@ -3073,7 +3073,7 @@ mdiChild.bs.EndEdit();
 } // menuEditToggleTag method
 
 void MenuEditTagAll_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 //Homer.LbcAsk.show(mdiChild.tbl.DefaultView.Count);
 foreach (DataRowView row in mdiChild.tbl.DefaultView) {
@@ -3083,7 +3083,7 @@ mdiChild.bs.EndEdit();
 } // menuEditTagAll method
 
 void MenuEditUntagAll_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 foreach (DataRowView row in mdiChild.tbl.DefaultView) {
 row["Tagged"] = ' ';
@@ -3092,7 +3092,7 @@ mdiChild.bs.EndEdit();
 } // menuEditUntagAll method
 
 void MenuEditTagAllFiles_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 foreach (DataRowView row in mdiChild.tbl.DefaultView) {
 if (!Directory.Exists((string) row["Path"])) row["Tagged"] = '>';
@@ -3121,7 +3121,7 @@ if (abortInZip()) return;
 string sTitle = "Find Duplicates in Tree";
 App.say(sTitle);
 string sRoot = Directory.GetCurrentDirectory();
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild != null) {
 string sHere = Path_Helper();
 if (Directory.Exists(sHere)) sRoot = sHere;
@@ -3202,7 +3202,7 @@ App.say(Homer.Util.stringPlural("duplicate", lsDuplicates.Count) + " found. Open
 string sDir = "";
 string sOrder = "";
 string sFilter = "";
-new MdiChild(this, sDir, sOrder, sFilter, sListFile, lsDuplicates.ToArray());
+new FolderWindow(this, sDir, sOrder, sFilter, sListFile, lsDuplicates.ToArray());
 } // MenuEditFindDuplicates_Click method
 
 void gatherFiles_Helper(string sFolder, List<string> lsInto) {
@@ -3258,7 +3258,7 @@ void MenuEditTagSimilarFiles_Click(object sender, EventArgs e) {
 // than the whole, so the biggest is the likeliest to be complete.  Nothing is
 // deleted here; Delete Tagged does that, and asks first.
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iCount = view.Count;
@@ -3329,7 +3329,7 @@ App.say(sTitle);
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 List<string[]> lsPlan = new List<string[]>();
@@ -3408,7 +3408,7 @@ void MenuEditTagDuplicateFiles_Click(object sender, EventArgs e) {
 // deleted.  Files are the same when their BYTES are the same, which is what
 // KeyLine's delDupes has always said.
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iCount = view.Count;
@@ -3491,7 +3491,7 @@ return false;
 
 void MenuEditTagWithRegularExpression_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string sText = Homer.LbcAsk.inputDialog("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
@@ -3526,7 +3526,7 @@ App.say(iMatch.ToString() + (iMatch == 1 ? " match" : " matches"));
 } // menuEditTagWithRegularExpression method
 
 void MenuEditUntagAllButCurrent_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 for (int i = 0; i < view.Count; i++) {
@@ -3537,7 +3537,7 @@ mdiChild.bs.EndEdit();
 } // menuEditUnTagAllButCurrent method
 
 void MenuEditStartTagOrUntag_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 mdiChild.StartTagOrUntag = mdiChild.bs.Position;
@@ -3553,7 +3553,7 @@ completeTag_Helper("Complete untag", false);
 
 void completeTag_Helper(string sLabel, bool bTag) {
 App.say(sLabel);
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iStart = mdiChild.StartTagOrUntag;
@@ -3576,7 +3576,7 @@ mdiChild.bs.EndEdit();
 } // completeTag_Helper method
 
 void MenuEditInvertTagged_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 foreach (DataRow row in mdiChild.tbl.Rows) {
 if ((char) row["Tagged"] == '>') row["Tagged"] = ' ';
@@ -3587,7 +3587,7 @@ mdiChild.bs.EndEdit();
 
 void MenuEditSaveTags_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 App.say("Save");
 App.aTags = getTagged();
@@ -3597,7 +3597,7 @@ App.say(Homer.Util.stringPlural("mark", iCount));
 
 void MenuEditRestoreTags_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 App.say("Restore");
 int iCount = applyTagged(App.aTags);
@@ -3665,7 +3665,7 @@ App.say("Done!", true);
 
 void menuEditPathList_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string sDir = Path_Helper();
@@ -3737,7 +3737,7 @@ string sCompare = "";
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sCopyText == null) mdiChild.sCopyText = App.sCopyText;
 string sDir = Homer.LbcAsk.directoryDialog("Copy To", "Folder", mdiChild.sCopyText).Trim();
@@ -3838,7 +3838,7 @@ string sCompare = "";
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sMoveText == null) mdiChild.sMoveText = App.sMoveText;
 string sDir = Homer.LbcAsk.directoryDialog("Move To", "Folder", mdiChild.sMoveText).Trim();
@@ -3928,7 +3928,7 @@ App.say("Done!", true);
 } // menuEditMoveTagged_Click method
 
 void delete_Helper(string sPath) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 //foreach (DataRowView row in view) {
@@ -3952,7 +3952,7 @@ deleteFileNow_Helper(false);
 
 public void deleteFileNow_Helper(bool bRecycle) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string sPath = Path_Helper();
@@ -3987,7 +3987,7 @@ string sNames = String.Join("\n", aNames);
 //if (Homer.LbcAsk.confirmDialog("Confirm", "Sure?", "N") != "Y") return;
 if (Homer.LbcAsk.confirmDialog("Confirm", "Sure?\n" + sNames, "N") != "Y") return;
 
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 ZipFile z = null;
 if (mdiChild.InZip) {
@@ -4063,7 +4063,7 @@ Delete_Recycle(sLabel);
 void menuEditRename_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Rename");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string sSource = (string) mdiChild.tbl.DefaultView[i]["Path"];
@@ -4099,7 +4099,7 @@ App.say("Done!", true);
 void menuEditRenameWithWildcards_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Rename with wildcards");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (Homer.LbcAsk.confirmDialog("Confirm", "This may affect all items in the current directory, not just marked ones.  Sure?", "Y") != "Y") return;
 string[] aFields = {"&Source", "&Target"};
@@ -4121,7 +4121,7 @@ refreshFolder_Helper(mdiChild);
 
 void menuEditRenameWithRegex_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
@@ -4181,7 +4181,7 @@ Homer.Log.info("Rename to Title without ExifTool. " + Homer.Media.exifToolLog())
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 List<string[]> lsPlan = new List<string[]>();
@@ -4366,7 +4366,7 @@ return Homer.Web.uniquePath(sTarget);
 
 void MenuMiscExtractTagged_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 // Its own title, not Mark with Regex's, which the screen reader announces as it opens (20 October 2026).
@@ -4439,7 +4439,7 @@ App.say("No items!");
 return;
 }
 
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sCopyText == null) mdiChild.sCopyText = App.sCopyText;
 string sDir = Directory.GetCurrentDirectory();
@@ -4570,7 +4570,7 @@ App.say("No items!");
 return;
 }
 
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sMoveText == null) mdiChild.sMoveText = App.sMoveText;
 string sDir = Directory.GetCurrentDirectory();
@@ -4709,7 +4709,7 @@ bool bFound = false;
 char hidden, readOnly, system;
 DateTime time;
 FileAttributes attr;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 
@@ -4877,7 +4877,7 @@ attribute_Helper(FileAttributes.System, false);
 void menuEditPathToClipboard_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Path to Clipboard");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string path = (string) mdiChild.tbl.DefaultView[i]["Path"];
@@ -4889,7 +4889,7 @@ App.say(path);
 void menuEditShortPathToClipboard_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Short path to Clipboard");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string Path = (string) mdiChild.tbl.DefaultView[i]["Path"];
@@ -4900,7 +4900,7 @@ App.say(Path);
 } // menuEditShortPathToClipboard_Click method
 
 void menuEditFullFolderToClipboard_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string sDir = mdiChild.Text;
 Clipboard.SetText(sDir);
@@ -4941,7 +4941,7 @@ void jump_Helper(int iStart) {
 // Forward from iStart, round to the top, as Jump Back goes round from the top:
 // F3 and Shift+F3 are the same search in two directions, so they find the same
 // things and say the same thing when there is nothing.
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iCount = view.Count;
@@ -4953,7 +4953,7 @@ if (jumpMatch(view[i], App.sJumpText)) { mdiChild.bs.Position = i; return; }
 App.say("0 matches", true);
 } // jump_Helper method
 
-void jumpBack_Helper(MdiChild mdiChild) {
+void jumpBack_Helper(FolderWindow mdiChild) {
 // The same match as jump_Helper, looked for upwards -- marks and attributes
 // included now, so Shift+F3 repeats exactly what Control+J asked for.
 DataView view = mdiChild.tbl.DefaultView;
@@ -4969,7 +4969,7 @@ App.say("0 matches", true);
 
 void menuNavigateJump_Click(object sender, EventArgs e) {
 bLastSearchWasKeywords = false;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sJumpText == null) mdiChild.sJumpText = App.sJumpText;
 string sText = Homer.LbcAsk.inputDialog("Jump", "Text", mdiChild.sJumpText, "Jump");
@@ -4984,7 +4984,7 @@ jump_Helper(iStart);
 } // menuNavigateJump_Click method
 
 void menuNavigateJumpAgain_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iStart = mdiChild.bs.Position + 1;
 jump_Helper(iStart);
@@ -5009,7 +5009,7 @@ void keywords_Helper(int iStart, bool bForward) {
 // And it matched with a plain Contains, so the star in a keyword was matched
 // as a star. The syntax is now the one the command has always claimed: & for
 // all of them, | for any of them, and * for anything in the middle.
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iCount = view.Count;
@@ -5068,7 +5068,7 @@ void menuNavigateKeywords_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Keywords");
 bLastSearchWasKeywords = true;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
 string sText = Homer.LbcAsk.inputDialog("Keywords", "Text", mdiChild.sKeywordsText, "Keywords");
@@ -5090,7 +5090,7 @@ bool bLastSearchWasKeywords = false;
 void menuNavigateKeywordsBack_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Reverse keywords");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
 string sText = Homer.LbcAsk.inputDialog("Keywords back", "Text", mdiChild.sKeywordsText, "Keywords");
@@ -5109,7 +5109,7 @@ else menuNavigateJumpAgain_Click(sender, e);
 
 void menuNavigateSearchBack_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (bLastSearchWasKeywords) {
 App.say("Keywords back");
@@ -5123,13 +5123,13 @@ jumpBack_Helper(mdiChild);
 void menuNavigateKeywordsAgain_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
 App.say("Keywords again");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iStart = mdiChild.bs.Position + 1;
 keywords_Helper(iStart);
 } // menuNavigateKeywordsAgain_Click method
 
-public void filter_Helper(Frame frame, MdiChild mdiChild, string sText) {
+public void filter_Helper(Frame frame, FolderWindow mdiChild, string sText) {
 // THE HOMER SEARCH SYNTAX (31 October 2026, kit 1.95.0). The filter was a
 // DataView LIKE expression built from the pattern: it took * and | but not &, ?
 // or !, and an apostrophe or a bracket in the pattern made it say "Invalid
@@ -5178,18 +5178,18 @@ App.sFilterText = sText;
 } // filter_Helper method
 
 void menuNavigateSetFilter_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sFilterText == null) mdiChild.sFilterText = App.sFilterText;
 string sText = Homer.LbcAsk.inputDialog("Filter", "Expression", mdiChild.sFilterText, "Filter");
 if (sText.Length == 0) return;
 
 filter_Helper(App.frame, mdiChild, sText);
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuNavigateSetFilter_Click method
 
 void menuNavigateClearFilter_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sFilterText == null) mdiChild.sFilterText = App.sFilterText;
 string sText = "*";
@@ -5197,13 +5197,13 @@ mdiChild.sFilterText = sText;
 App.sFilterText = sText;
 if (sText.Length == 0) return;
 filter_Helper(App.frame, mdiChild, sText);
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuNavigateClearFilter_Click method
 
 void menuNavigateBeginningFile_Click(object sender, EventArgs e) {
 if (App.DirsBeforeFiles) App.say("Beginning file");
 else App.say("Beginning subfolder");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
@@ -5219,7 +5219,7 @@ if (!bFound) App.say("Not found!");
 } // menuNavigateBeginningFile_Click method
 
 void menuNavigateBeginningTagged_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
@@ -5234,7 +5234,7 @@ if (!bFound) App.say("Not found!");
 } // menuNavigateBeginningTagged_Click method
 
 void menuNavigateEndTagged_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
@@ -5249,7 +5249,7 @@ if (!bFound) App.say("Not found!");
 } // menuNavigateEndTagged_Click method
 
 void menuNavigateNextTagged_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
@@ -5264,7 +5264,7 @@ if (!bFound) App.say("Not found!");
 } // menuNavigateNextTagged_Click method
 
 void menuNavigatePreviousTagged_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
@@ -5279,7 +5279,7 @@ if (!bFound) App.say("Not found!");
 } // menuNavigatePreviousTagged_Click method
 
 void menuNavigateInitialChange_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
@@ -5299,7 +5299,7 @@ if (!bFound) App.say("Not found!");
 } // menuNavigateInitialChange_Click method
 
 void menuNavigateExtensionChange_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
@@ -5319,12 +5319,12 @@ if (!bFound) App.say("Not found!");
 
 void menuQueryDate_Click(object sender, EventArgs e) {
 App.say("Date");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 DateTime dt = (DateTime) mdiChild.tbl.DefaultView[i]["Time"];
 App.say(dt.ToLongDateString() + " at " + dt.ToLongTimeString());
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQueryDate_Click method
 
 public string convert2Text(string sFile) {
@@ -5363,7 +5363,7 @@ return "";
 } // convert2Text method
 
 public string[] getTagged() {
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild == null) return new string[] {};
 StringBuilder sb = new StringBuilder();
 foreach (DataRow row in mdiChild.tbl.Rows) if ((Char) row["Tagged"] == '>') sb.Append((string) row["Path"] + "\n");
@@ -5373,7 +5373,7 @@ return aPaths;
 } // getTagged method
 
 public int applyTagged(string[] aPaths) {
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild == null) return 0;
 int iCount = 0;
 foreach (DataRow row in mdiChild.tbl.Rows) if (Array.IndexOf(aPaths, (string) row["Path"]) >= 0) {
@@ -5393,7 +5393,7 @@ public string[] list_Helper(out string[] aDirs, out string[] aFiles, int iTagged
 string sPathList = "";
 string sDirList = "";
 string sFileList = "";
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 DataView view = mdiChild.tbl.DefaultView;
 foreach (DataRowView row in view) {
 char c = (char) row["Tagged"];
@@ -5443,7 +5443,7 @@ return sPathList.Trim().Split('\n');
 
 void menuQueryList_Click(object sender, EventArgs e) {
 App.say("List");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iItemCount = 0;
 foreach (DataRowView row in mdiChild.tbl.DefaultView) {
@@ -5463,7 +5463,7 @@ foreach (string sPath in aPaths) App.say(getName(sPath));
 
 void menuQueryListTagged_Click(object sender, EventArgs e) {
 App.say("List marked");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iItemCount = 0;
 foreach (DataRowView row in mdiChild.tbl.DefaultView) {
@@ -5477,7 +5477,7 @@ if (iItemCount == 0) App.say("No items!");
 
 void menuQueryListFiles_Click(object sender, EventArgs e) {
 App.say("List files");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iItemCount = 0;
 foreach (DataRowView row in mdiChild.tbl.DefaultView) {
@@ -5491,7 +5491,7 @@ if (iItemCount == 0) App.say("No items!");
 
 void menuQuerySize_Click(object sender, EventArgs e) {
 App.say("Size");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 long lSize = (long) mdiChild.tbl.DefaultView[i]["Size"];
@@ -5508,24 +5508,24 @@ mdiChild.tbl.DefaultView[i]["Size"] = lSize;
 // nine-digit number is not an answer anybody keeps in their head. The exact
 // count is still in the list itself and in the status line for when it matters.
 App.say(App.sizeFriendly(lSize));
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQuerySize_Click method
 
 public string Path_Helper() {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 int i = mdiChild.bs.Position;
 if (i >=0 ) return (string) mdiChild.tbl.DefaultView[i]["Path"];
 else return "";
 } // Path_Helper Method
 
 public object Field_Helper(string sField) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 int i = mdiChild.bs.Position;
 if (i >=0) return mdiChild.tbl.DefaultView[i][sField];
 else return null;
 } // Field_Helper Method
 
-public static void status_Helper(Frame frame, MdiChild mdiChild) {
+public static void status_Helper(Frame frame, FolderWindow mdiChild) {
 int i = mdiChild.bs.Position;
 if (i < 0) return;
 //Homer.LbcAsk.show(i, "position");
@@ -5541,7 +5541,7 @@ else frame.statusLabel.Text = String.Format("Date: {0}   Size: {1}   Order: {2} 
 } // status_Helper method
 
 void menuQueryPath_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.InZip) App.say("Path in archive");
 else App.say("Path");
@@ -5560,7 +5560,7 @@ if ((char) Field_Helper("Tagged") == '>') App.say("Marked");
 // folder's name, then its full path, as DbDo's Say Database gives a name and where
 // it is: one press speaks both, two spell them, three show them in a window to copy.
 void menuQueryFolderName_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string sDir = mdiChild.Text;
 Homer.KeyMap.answer("Folder", Path.GetFileName(sDir.TrimEnd('\\')), sDir);
@@ -5583,7 +5583,7 @@ void menuHelpHotkeysPage_Click(object sender, EventArgs e) { Homer.SuiteCommands
 
 void menuQueryType_Click(object sender, EventArgs e) {
 App.say("Type");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string ext = (string) mdiChild.tbl.DefaultView[i]["Ext"];
@@ -5604,7 +5604,7 @@ char readOnly = (char) mdiChild.tbl.DefaultView[i]["ReadOnly"];
 if (readOnly == ']') App.say("ReadOnly");
 char system = (char) mdiChild.tbl.DefaultView[i]["System"];
 if (system == '}') App.say("System");
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQueryType_Click method
 
 void menuQueryTypeExtended_Click(object sender, EventArgs e) {
@@ -5616,7 +5616,7 @@ void menuQueryTypeExtended_Click(object sender, EventArgs e) {
 // ExifTool is the one that knows it, nor read three lists to find out.  With a
 // screen reader, first-letter navigation through one alphabetical list beats
 // arrowing through three groupings every time.
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string sPath = Path_Helper();
 System.Collections.Generic.List<string[]> lsPairs = new System.Collections.Generic.List<string[]>();
@@ -5674,7 +5674,7 @@ if (Homer.Media.exifToolProgram().Length == 0) sbResult.Append(Homer.Media.exifT
 string sFieldNoun = lsPairs.Count == 1 ? "field" : "fields";
 App.say(lsPairs.Count + " " + sFieldNoun);
 Homer.LbcAsk.infoDialog("Type Extended", sbResult.ToString(), true);
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQueryTypeExtended_Click method
 
 void MenuQueryWindowsOpen_Click(object sender, EventArgs e) {
@@ -5684,7 +5684,7 @@ Homer.MdiWindows.sayOpen(App.frame);
 
 void menuQueryYield_Click(object sender, EventArgs e) {
 App.say("Yield");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iDirs = 0;
 int iFiles = 0;
@@ -5725,7 +5725,7 @@ if (iDirs == 0 && iFiles == 0) App.say("No items!");
 
 void menuQueryYieldTagged_Click(object sender, EventArgs e) {
 App.say("Yield marked");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iDirs = 0;
 int iFiles = 0;
@@ -5767,7 +5767,7 @@ if (iDirs == 0 && iFiles == 0) App.say("No items!");
 
 void menuQueryYieldFiles_Click(object sender, EventArgs e) {
 App.say("Yield files");
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int iDirs = 0;
 int iFiles = 0;
@@ -5837,7 +5837,7 @@ App.say(sText);
 
 void MenuQueryCharacterEncoding_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string sFile = Path_Helper();
@@ -5869,7 +5869,7 @@ App.say(Homer.Util.getFileEncodingName(sFile).ToUpper());
 } // menuQueryCharacterEncoding method
 
 void menuQueryPercentThrough_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 int iCount = mdiChild.bs.Count;
@@ -5884,7 +5884,7 @@ App.say(String.Format("{0} of {1}, {2} percent through", i, iCount, f));
 } // menuQueryPercentThrough_Click method
 
 void menuQueryFilter_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 //App.say("Filter");
 App.say(App.frame.hashOrder[mdiChild.sOrderText]);
@@ -5903,7 +5903,7 @@ Homer.SuiteCommands.sayTime();
 } // menuQueryNow_Click method
 
 void menuQueryWhat_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string sPath = (string) mdiChild.tbl.DefaultView[i]["Path"];
@@ -6085,96 +6085,96 @@ App.Recycle = true;
 } // menuMiscRecycleToggle_Click method
 
 void menuMiscAlphaOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Name";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscAlphaOrder_Click method
 
 void menuMiscReverseAlphaOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Name desc";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscReverseAlphaOrder_Click method
 
 void menuMiscDateOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Time";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscDateOrder_Click method
 
 void menuMiscReverseDateOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Time desc";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscReverseDateOrder_Click method
 
 void menuMiscSizeOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Size";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscSizeOrder_Click method
 
 void menuMiscReverseSizeOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Size desc";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscReverseSizeOrder_Click method
 
 void menuMiscTypeOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Ext";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscTypeOrder_Click method
 
 void menuMiscReverseTypeOrder_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 mdiChild.sOrderText = "Type desc, Ext desc";
 if (!App.DirsBeforeFiles) mdiChild.sOrderText = mdiChild.sOrderText.Replace("Type desc", "Type asc");
 mdiChild.bs.Sort = mdiChild.sOrderText;
 mdiChild.bs.Position = 0;
 App.sOrderText = mdiChild.sOrderText;
-status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
+status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuMiscReverseTypeOrder_Click method
 
 void MenuMiscSendToWordProcessor_Click(object sender, EventArgs e) {
 if (App.sWordProcessor .Trim().Length == 0) App.sWordProcessor = "WinWord.exe";
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string sPath = (string) mdiChild.tbl.DefaultView[i]["Path"];
@@ -6199,7 +6199,7 @@ App.say(sName + " not found!");
 
 void MenuMiscSendToTextEditor_Click(object sender, EventArgs e) {
 if (App.sTextEditor.Trim().Length == 0) App.sTextEditor = "EdSharp.exe";
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string sPath = (string) mdiChild.tbl.DefaultView[i]["Path"];
@@ -6222,7 +6222,7 @@ App.say(sName + " not found!");
 
 //void MenuHelpExplorerMenu_Click(object sender, EventArgs e) {
 void MenuHelpContextMenu_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string[] aDirs, aFiles;
@@ -6281,7 +6281,7 @@ App.say("Done!", true);
 } // menuHelpExplorerMenu_Click method
 
 void MenuHelpSendToMenu_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string[] aDirs, aFiles;
@@ -6344,7 +6344,7 @@ App.say(sTitle);
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 // The first real file decides what is offered.  A batch is nearly always one
@@ -6454,7 +6454,7 @@ App.say("Append to clipboard");
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 // THE FIRST FILE ONTO AN EMPTY CLIPBOARD KEEPS ITS FORMATTING.
@@ -6541,7 +6541,7 @@ App.say(sTitle);
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 // The same list Encoding.exe offered: every encoding this computer has, plus
@@ -6763,7 +6763,7 @@ if (iFailed == 0) App.say(iDone + " " + sFileNoun + " translated into " + sLangu
 else App.say(iDone + " " + sFileNoun + " translated, " + iFailed + " not done.", true);
 // The translations are new files in this folder, so show them without making
 // anyone press Refresh to find out the command worked.
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild != null) refreshFolder_Helper(mdiChild);
 } // MenuMiscTranslateTagged_Click method
 
@@ -6839,7 +6839,7 @@ if (aPaths.Length == 0) return;
 
 string sSubject = "";
 string sBody = "";
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 string sPath = Path_Helper();
 bool bTags = false;
 if (File.Exists(sPath)) {
@@ -7072,7 +7072,7 @@ App.say(sLabel);
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 aPaths = aFiles;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (App.sUnarchivePassword.Trim().Length > 0) {
 App.say("With password");
@@ -7183,7 +7183,7 @@ return entryList;
 
 // public static string[] GetZ7Entries(string sZip) {
 public static List<string> GetZ7Entries(string sZip) {
-string[] aLines = MdiChild.getZ7List(sZip);
+string[] aLines = FolderWindow.getZ7List(sZip);
 List<string> lEntries = new List<string>();
 for (int i = 0; i < aLines.Length; i++) {
 string sLine = aLines[i];
@@ -7294,7 +7294,7 @@ return;
 // thing somewhere else -- Explorer with Alt, a command prompt with Control -- and this hands a
 // database or data file to DbDo, the same key as DbDo's Show in FileDir going the other way.
 void menuMiscOpenInDbDo_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null || mdiChild.bs.Position < 0 || mdiChild.bs.Position >= mdiChild.tbl.DefaultView.Count) return;
 string sPath = (string) mdiChild.tbl.DefaultView[mdiChild.bs.Position]["Path"];
 if (!File.Exists(sPath)) { App.say("Open in DbDo takes a database or data file, not a folder.", true); return; }
@@ -7315,7 +7315,7 @@ return;
 
 void menuMiscFTPPut_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 App.say("FTP put");
@@ -7383,7 +7383,7 @@ App.say("Done!", true);
 
 void menuMiscGetFTP_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 App.say("Get FTP");
@@ -7470,7 +7470,7 @@ if (sExe.Length == 0) {
 Homer.LbcAsk.show("yt-dlp was not found, so media cannot be fetched from a page.\n\nInstall the media tools from the FileDir installer, or put yt-dlp.exe in the FileDir folder.", sTitle);
 return;
 }
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 string sDir = Path_Helper();
 if (File.Exists(sDir)) sDir = Path.GetDirectoryName(sDir);
@@ -7518,7 +7518,7 @@ Homer.LbcAsk.show("Nothing was downloaded.\n\n" + sMessage, sTitle);
 
 void menuMiscWebDownload_Click(object sender, EventArgs e) {
 if (abortInZip()) return;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 App.say("Web download");
@@ -7713,7 +7713,7 @@ string sExp = App.sEvaluateText;
 sExp = Homer.LbcAsk.inputDialog("Evaluate", "Expression", sExp, "Evaluate");
 if (sExp == "") return;
 App.sEvaluateText = sExp;
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 string sResult = App.runScript(sExp, mdiChild, (mdiChild != null ? mdiChild.tbl : null));
 if (string.IsNullOrEmpty(sResult)) return;
 Clipboard.SetText(sResult);
@@ -7925,7 +7925,7 @@ Homer.LbcAsk.show("mpv was not found, so there is nothing to play with.\r\n\r\n"
 + Homer.Media.searchLog(), sTitle);
 return;
 }
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 List<string> lsPlay = new List<string>();
@@ -8927,7 +8927,7 @@ Homer.Say.sayForced(Homer.LbcHints.sentenceForFocused(this));
 
 // Where Am I (Alt+Shift+Slash): the folder, then the item's place in it, each as its own utterance.
 void menuHelpWhereAmI_Click(object sender, EventArgs e) {
-MdiChild mdiChild = (MdiChild) ActiveMdiChild;
+FolderWindow mdiChild = (FolderWindow) ActiveMdiChild;
 if (mdiChild == null) { Homer.SuiteCommands.whereAmI(this, new string[] { "No folder window is open." }); return; }
 int iCount = mdiChild.bs.Count;
 string sPlace = "No items";
@@ -9005,7 +9005,7 @@ Homer.LbcAsk.show("The installer downloaded but could not be started.\n" + ex.Me
 } // menuHelpElevateVersion_Click method
 
 void OldMenuHelpContextMenu_Click(object sender, EventArgs e) {
-MdiChild mdiChild = App.frame.getActiveChild();
+FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 string sPath = Path_Helper();
@@ -9368,15 +9368,16 @@ Homer.KeyMap.addCommand(oCommand);
 return true;
 } // declareKey method
 
-public MdiChild getActiveChild() {
-MdiChild mdiChild = (MdiChild) App.frame.ActiveMdiChild;
+public FolderWindow getActiveChild() {
+FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
 if (mdiChild == null) App.say("Command unavailable outside view window!");
 return mdiChild;
 } // getActiveChild method
 
 } // Frame class
 
-public class MdiChild : Form {
+// NAMED FOR WHAT IT IS (10 November 2026): a folder window; it was MdiChild, the name of the kit's own, different class.
+public class FolderWindow : Form {
 public int StartTagOrUntag = -1;
 public bool InZip = false;
 public bool InVirtual = false;
@@ -9393,7 +9394,7 @@ public ListBox lst;
 public DataTable tbl;
 public BindingSource bs;
 
-public MdiChild(Frame frame, string sDir, string sOrder, string sFilter, string sZip, string[] aPaths) {
+public FolderWindow(Frame frame, string sDir, string sOrder, string sFilter, string sZip, string[] aPaths) {
 string sVirtualFolder = "";
 if (aPaths != null) {
 sVirtualFolder = sZip;
@@ -9514,20 +9515,20 @@ this.StartPosition = FormStartPosition.CenterParent;
 this.AutoSize = true;
 this.ResumeLayout();
 this.Show();
-} // MdiChild method
+} // FolderWindow method
 
-public MdiChild(Frame frame, string sDir, string sOrder, string sFilter, string sZip) {
+public FolderWindow(Frame frame, string sDir, string sOrder, string sFilter, string sZip) {
 string[] aPaths = null;
-//return new MdiChild(frame, sDir, sOrder, sFilter, sZip, aPaths);
-new MdiChild(frame, sDir, sOrder, sFilter, sZip, aPaths);
-} // MdiChild method
+//return new FolderWindow(frame, sDir, sOrder, sFilter, sZip, aPaths);
+new FolderWindow(frame, sDir, sOrder, sFilter, sZip, aPaths);
+} // FolderWindow method
 
-public MdiChild(Frame frame, string sDir, string sOrder, string sFilter) {
+public FolderWindow(Frame frame, string sDir, string sOrder, string sFilter) {
 string sZip = "";
 string[] aPaths = null;
-//return new MdiChild(frame, sDir, sOrder, sFilter, sZip, aPaths);
-new MdiChild(frame, sDir, sOrder, sFilter, sZip, aPaths);
-} // MdiChild method
+//return new FolderWindow(frame, sDir, sOrder, sFilter, sZip, aPaths);
+new FolderWindow(frame, sDir, sOrder, sFilter, sZip, aPaths);
+} // FolderWindow method
 
 public void checkKeyDescriber(object sender, EventArgs e) {
 if (App.bKeyDescriber) {
@@ -9897,7 +9898,7 @@ skipKey = false;
 //base.OnKeyDown(e);
 }
 } // listBox_KeyUp method
-} // MdiChild class
+} // FolderWindow class
 
 class CompareFileSystemInfo: IComparer {
 public int Compare(object fs1, object fs2) {
