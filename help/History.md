@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- FileDir's dialogs come from the kit
+
+- **Every FileDir dialog that asks for text, a choice, a folder or a file is the kit's LbcAsk now,** shared with the other Homer apps; FileDir's own copy is gone. Nothing changes in how they look or what they say.
+
 ## 10 November 2026 -- Shift+F1 in the main window
 
 - **Shift+F1 in a folder window** says what the list is: the files and folders in this folder, one per line.

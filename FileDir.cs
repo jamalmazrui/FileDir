@@ -65,14 +65,14 @@ this.IsSingleInstance = true;
 this.UnhandledException += UnhandledExceptionMethod;
 
 Homer.Util.initJfw();
-//Lbc.Show("Path", Environment.GetEnvironmentVariable("PATH").Split('\n'));
+//Homer.LbcAsk.show("Path", Environment.GetEnvironmentVariable("PATH").Split('\n'));
 */
 } // singleInstanceApplication method
 
 void UnhandledExceptionMethod(object sender, Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs e) {
 /*
 Exception ex = (Exception) e.Exception;
-if (Lbc.ConfirmDialog("Confirm", "Unexpected event!\n" + ex.Message + ".\nExit FileDir?", "N") == "Y") {
+if (Homer.LbcAsk.confirmDialog("Confirm", "Unexpected event!\n" + ex.Message + ".\nExit FileDir?", "N") == "Y") {
 e.ExitApplication = true;
 }
 else {
@@ -111,6 +111,13 @@ e.ExitApplication = false;
 
 protected override void OnCreateMainForm() {
 App.frame = new Frame();
+// The kit's standard dialogs (10 November 2026): FileDir's main window, speech, settings and recent folders.
+Homer.LbcAsk.oMainForm = App.frame;
+Homer.LbcAsk.fSay = delegate(object oText, bool bGlobal) { return App.say(oText, bGlobal); };
+Homer.LbcAsk.fReadSetting = delegate(string sSection, string sKey) { return App.readValue(App.sIniFile, sSection, sKey, ""); };
+Homer.LbcAsk.fWriteSetting = delegate(string sSection, string sKey, string sValue) { App.writeValue(App.sIniFile, sSection, sKey, sValue); };
+Homer.LbcAsk.fRecentFolders = delegate() { return App.lsRecentDirs; };
+Homer.LbcAsk.fMapDrive = NetworkDrive.mapDrive2Share;
 this.MainForm = App.frame;
 Homer.Util.setForegroundWindow((int) App.frame.Handle);
 } // OnCreateMainForm method
@@ -1262,13 +1269,13 @@ try {
 File.Delete(sPath);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 }
 }
 }
 } // try
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 } // catch
 //GC.KeepAlive(timer);
 } // Main method
@@ -1845,7 +1852,7 @@ sDir = "";
 if (!testZip(sZip)) aPaths = Homer.Util.file2String(sZip).Replace("\r\n", "\n").Trim().Split('\n');
 }
 this.KeyPreview = true;
-//Lbc.Show(sZip, "here");
+//Homer.LbcAsk.show(sZip, "here");
 //MdiChild mdiChild = null;
 //mdiChild = new MdiChild(this, sDir, sOrder, sFilter, sZip);
 //this.Load += delegate(object sender, EventArgs e) {MdiChild form = new MdiChild(this, sDir, sOrder, sFilter, sZip);};
@@ -1943,7 +1950,7 @@ else return false;
 } // abortInZip method
 
 void menuFileNewFolder_Click(object sender, EventArgs e) {
-string sDir = Lbc.InputDialog("New Folder", "Folder", "", "NewFolder").Trim();
+string sDir = Homer.LbcAsk.inputDialog("New Folder", "Folder", "", "NewFolder").Trim();
 if (sDir == "") return;
 if (Directory.Exists(sDir)) App.say(sDir + " already exists!");
 else {
@@ -1951,7 +1958,7 @@ try {
 Directory.CreateDirectory(sDir);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 //App.say("Cannot create " + sDir);
 return;
 }
@@ -1971,7 +1978,7 @@ goTo_Helper(sDir);
 } // menuFileNewFolder_Click method
 
 void refreshFolder_Helper(MdiChild mdiChild) {
-//Lbc.Show(mdiChild.Text);
+//Homer.LbcAsk.show(mdiChild.Text);
 string[] aTagged = getTagged();
 string sPath = Path_Helper();
 MdiChild form = new MdiChild(App.frame, "", mdiChild.sOrderText, mdiChild.sFilterText);
@@ -1997,7 +2004,7 @@ DataTable tbl = mdiChild.tbl.Copy();
 int i = mdiChild.bs.Position;
 MdiChild form = new MdiChild(App.frame, "", mdiChild.sOrderText, mdiChild.sFilterText);
 form.tbl = tbl;
-//if (form.bs == null) Lbc.Show("null");
+//if (form.bs == null) Homer.LbcAsk.show("null");
 //form.bs.Position = i;
 } // menuFileNewViewCopy_Click method
 
@@ -2010,7 +2017,7 @@ string sSource = Path_Helper();
 string sDir = Path.GetDirectoryName(sSource);
 string sTarget = Homer.Util.getUniqueName(sSource);
 string sName = Path.GetFileName(sTarget);
-//string sNewName = Lbc.InputDialog("Input", "&Name", sName);
+//string sNewName = Homer.LbcAsk.inputDialog("Input", "&Name", sName);
 //if (sNewName == "") return;
 //string sTarget = Path.Combine(sDir, sNewName);
 if (Directory.Exists(sSource)) {
@@ -2046,7 +2053,7 @@ void openSpecialFolder_Helper(string sLabel) {
 App.say(sLabel);
 bool bOpen = sLabel.StartsWith("Open") ? true : false;
 
-string sDir = Lbc.PickSpecialFolder();
+string sDir = Homer.LbcAsk.pickSpecialFolder();
 if (sDir.Length == 0) return;
 if (!Directory.Exists(sDir)) {
 App.say("Folder " + sDir + " not found!");
@@ -2075,7 +2082,7 @@ string sDefaultDir;
 if (bOpen)sDefaultDir = App.sOpenText;
 else sDefaultDir = App.sGoToText;
 
-string sDir = Lbc.DirectoryDialog("Open Folder", "Folder", sDefaultDir).Trim();
+string sDir = Homer.LbcAsk.directoryDialog("Open Folder", "Folder", sDefaultDir).Trim();
 if (sDir.Length == 0) return;
 if (!Directory.Exists(sDir)) {
 App.say("Folder " + sDir + " not found!");
@@ -2115,7 +2122,7 @@ if (d.IsReady && d.VolumeLabel != "") sName += "\t" + d.VolumeLabel;
 sNameList += sName + "\n";
 }
 string[] aNames = sNameList.Trim().Split('\n');
-sName = Lbc.ListDialog("Pick", "", aNames, true, 0);
+sName = Homer.LbcAsk.listDialog("Pick", "", aNames, true, 0);
 if (sName.Length == 0) return;
 
 string sDir = sName.Substring(0, 1) + ":";
@@ -2154,7 +2161,7 @@ if (bOpen)sDefaultDir = App.sOpenText;
 else sDefaultDir = App.sGoToText;
 
 string sFilter = "";
-string sFile = Lbc.OpenFileDialog("", App.sVirtualFolder, sFilter, 0);
+string sFile = Homer.LbcAsk.openFileDialog("", App.sVirtualFolder, sFilter, 0);
 if (sFile.Length == 0) return;
 
 App.sVirtualFolder = sFile;
@@ -2290,7 +2297,7 @@ App.say("Run");
 Homer.Util.shellDefault(sLink);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 }
 }
 } // activateLink method
@@ -2433,11 +2440,11 @@ App.say("Quick shortcut");
 string sDir = Path.Combine(App.sDataDir, "Quick");
 string sPath = Path_Helper();
 string sName = Path.GetFileName(sPath);
-//sName = Lbc.InputDialog("Input", "&Name", sName).Trim();
+//sName = Homer.LbcAsk.inputDialog("Input", "&Name", sName).Trim();
 //if (sName == "") return;
 string[] aFields = {"&Name", "&Path"};
 string[] aValues = {sName, sPath};
-ArrayList list = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList list = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (list.Count == 0) return;
 
 sName = ((string) list[0]).Trim();
@@ -2445,13 +2452,13 @@ sPath = ((string) list[1]).Trim();
 if (!App.itemExists(sPath)) {
 // A shortcut to something that is not there is a shortcut to nothing, and the
 // mistake is far easier to see now than the next time the link is followed.
-Lbc.Show(sPath + "\r\n\r\nis not a file or folder, so there is nothing to make a shortcut to.", "Quick Shortcut");
+Homer.LbcAsk.show(sPath + "\r\n\r\nis not a file or folder, so there is nothing to make a shortcut to.", "Quick Shortcut");
 return;
 }
 string sError;
 string sLeaf = quickName_Helper(sName, ".lnk", out sError);
 if (sLeaf.Length == 0) {
-Lbc.Show("The shortcut could not be named: " + sError + ".", "Quick Shortcut");
+Homer.LbcAsk.show("The shortcut could not be named: " + sError + ".", "Quick Shortcut");
 return;
 }
 if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
@@ -2462,11 +2469,11 @@ try {
 Homer.Util.path2Link(sPath, sLink);
 }
 catch (Exception ex) {
-Lbc.Show("The shortcut could not be created.\r\n\r\n" + ex.Message, "Quick Shortcut");
+Homer.LbcAsk.show("The shortcut could not be created.\r\n\r\n" + ex.Message, "Quick Shortcut");
 return;
 }
 if (File.Exists(sLink)) App.say(sLeaf + " added to the Quick folder.", true);
-else Lbc.Show("The shortcut could not be created.", "Quick Shortcut");
+else Homer.LbcAsk.show("The shortcut could not be created.", "Quick Shortcut");
 } // menuFileQuickShortcut_Click method
 
 void menuFileQuickURL_Click(object sender, EventArgs e) {
@@ -2486,11 +2493,11 @@ catch { sTitle = ""; }
 }
 string sDir = Path.Combine(App.sDataDir, "Quick");
 string sName = sTitle;
-//sName = Lbc.InputDialog("Input", "&Name", sName).Trim();
+//sName = Homer.LbcAsk.inputDialog("Input", "&Name", sName).Trim();
 //if (sName == "") return;
 string[] aFields = {"&Name", "&Address"};
 string[] aValues = {sName, sAddress};
-ArrayList list = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList list = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (list.Count == 0) return;
 
 sName = ((string) list[0]).Trim();
@@ -2498,7 +2505,7 @@ sAddress = ((string) list[1]).Trim();
 if (sAddress.Length == 0) {
 // A .url file with no address in it opens nothing, and the file would sit in
 // the Quick folder looking like a link for ever.
-Lbc.Show("No address was given, so there is nothing to link to.\r\n\r\n"
+Homer.LbcAsk.show("No address was given, so there is nothing to link to.\r\n\r\n"
 + "Copy a link in your browser and run this command again, and the address fills itself in.", "Quick URL");
 return;
 }
@@ -2509,7 +2516,7 @@ sAddress = "https://" + sAddress;
 string sError;
 string sLeaf = quickName_Helper(sName, ".url", out sError);
 if (sLeaf.Length == 0) {
-Lbc.Show("The link could not be named: " + sError + ".", "Quick URL");
+Homer.LbcAsk.show("The link could not be named: " + sError + ".", "Quick URL");
 return;
 }
 if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
@@ -2517,7 +2524,7 @@ string sURL = Path.Combine(sDir, sLeaf);
 if (File.Exists(sURL)) File.Delete(sURL);
 App.writeValue(sURL, "InternetShortcut", "URL", sAddress);
 if (File.Exists(sURL)) App.say(sLeaf + " added to the Quick folder.", true);
-else Lbc.Show("The link could not be created in " + sDir + ".", "Quick URL");
+else Homer.LbcAsk.show("The link could not be created in " + sDir + ".", "Quick URL");
 } // menuFileQuickURL_Click method
 
 void menuFileFind_Click(object sender, EventArgs e) {
@@ -2538,7 +2545,7 @@ string sFieldList = "&Text\t&Filter";
 string sValueList = sText + "\t" + sFilter;
 string[] aFields = sFieldList.Split('\t');
 string[] aValues = sValueList.Split('\t');
-ArrayList sResultList = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (sResultList.Count == 0) return;
 
 sText = (string) sResultList[0];
@@ -2570,8 +2577,8 @@ iIndex = 0;
 
 App.sFileFindText = sText;
 App.sFileFindFilterText = sFilter;
-//Lbc.Show(App.sFileFindText, App.sFileFindFilterText);
-sName = Lbc.ListDialog("Pick", "", aNames, true, iIndex);
+//Homer.LbcAsk.show(App.sFileFindText, App.sFileFindFilterText);
+sName = Homer.LbcAsk.listDialog("Pick", "", aNames, true, iIndex);
 if (sName.Length == 0) return;
 
 int iName = Array.IndexOf(aNames, sName);
@@ -2586,7 +2593,7 @@ if (Directory.Exists(sDir)) {
 App.sOpenText = sDir;
 //MdiChild form = new MdiChild(App.frame, sDir, App.sOrderText, App.sFilterText);
 activate_Helper(sDir);
-//Lbc.Show(App.iFileFind, sPath);
+//Homer.LbcAsk.show(App.iFileFind, sPath);
 goTo_Helper(sPath);
 }
 else App.say("Folder " + sDir + " not found!");
@@ -2636,7 +2643,7 @@ else if (File.Exists(sPath)) {
 // if (App.bZipOpener && Homer.Util.stringEquiv(".zip", Path.GetExtension(sPath)) && App.frame.testZip(sPath)) {
 // if (!bCloseWindow && App.bZipOpener && App.frame.testZip(sPath)) {
 if (bZip && App.bZipOpener && !Homer.Util.stringEquiv(sLabel, "Run")) {
-// Lbc.Show("here");
+// Homer.LbcAsk.show("here");
 // if (App.bZipOpener && !Homer.Util.stringEquiv(".txt", Path.GetExtension(sPath))){
 string sDir = "";
 string sZip = sPath;
@@ -2652,7 +2659,7 @@ activateLink(sPath);
 else { 
 App.say("Run");
 Homer.Util.shellDefault(sPath);
-//else Lbc.Show(Homer.Util.shellDefault(sPath));
+//else Homer.LbcAsk.show(Homer.Util.shellDefault(sPath));
 //else Homer.Util.run("cmd.exe /c " + Homer.Util.stringQuote(sPath));
 }
 }
@@ -2675,7 +2682,7 @@ if (abortInZip()) return;
 App.say("Print");
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
-if (Lbc.ConfirmDialog("Confirm", "Sure?", "Y") != "Y") return;
+if (Homer.LbcAsk.confirmDialog("Confirm", "Sure?", "Y") != "Y") return;
 Process process = new Process();
 process.StartInfo.Verb = "Print";
 process.StartInfo.CreateNoWindow = true;
@@ -2694,7 +2701,7 @@ process.Start();
 //Lbc.ShellExecute("Print", sPath);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 }
@@ -2850,7 +2857,7 @@ Array.Reverse(aDirs);
 aNames = new string[aDirs.Length];
 for (int i = 0; i < aNames.Length; i++) aNames[i] = (aDirs[i].EndsWith(@":\") ? aDirs[i] : Path.GetFileName(aDirs[i]));
 //Array.Sort(aDirs, aNames);
-sName = Lbc.ListDialog("Pick", "", aNames, true, 0);
+sName = Homer.LbcAsk.listDialog("Pick", "", aNames, true, 0);
 if (sName.Length == 0) return;
 
 int iName = Array.IndexOf(aNames, sName);
@@ -2887,7 +2894,7 @@ j++;
 }
 string[]aPaths = sPathList.Trim().Split('\n');
 aNames = sNameList.Trim().Split('\n');
-sName = Lbc.ListDialog("Pick", "", aNames, false, 0);
+sName = Homer.LbcAsk.listDialog("Pick", "", aNames, false, 0);
 if (sName == "") return;
 
 int iIndex = Array.IndexOf(aNames, sName);
@@ -2926,7 +2933,7 @@ string[] aTitles = sTitleList.Trim().Split('\n');
 string[] aNames = new string[aTitles.Length];
 for (int i = 0; i < aNames.Length; i++) aNames[i] = (aTitles[i].EndsWith(@":\") ? aTitles[i] : Path.GetFileName(aTitles[i]));
 Array.Sort(aTitles, aNames);
-string sName = Lbc.ListDialog("Pick", "", aNames, true, 0);
+string sName = Homer.LbcAsk.listDialog("Pick", "", aNames, true, 0);
 //string sName = Lbc.Pick("Pick", aNames, true, 0);
 if (sName == "") return;
 int iName = Array.IndexOf(aNames, sName);
@@ -2959,7 +2966,7 @@ this.Close();
 } // MenuFileExit method
 
 void MenuFileRestartWindows_Click(object sender, EventArgs e) {
-if (Lbc.ConfirmDialog("Confirm", "Restart Windows?", "N") != "Y") return;
+if (Homer.LbcAsk.confirmDialog("Confirm", "Restart Windows?", "N") != "Y") return;
 Homer.Util.run("shutdown.exe -r -f -t 1");
 } // MenuFileRestartWindows_Clickmethod
 
@@ -3068,7 +3075,7 @@ mdiChild.bs.EndEdit();
 void MenuEditTagAll_Click(object sender, EventArgs e) {
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
-//Lbc.Show(mdiChild.tbl.DefaultView.Count);
+//Homer.LbcAsk.show(mdiChild.tbl.DefaultView.Count);
 foreach (DataRowView row in mdiChild.tbl.DefaultView) {
 row["Tagged"] = '>';
 }
@@ -3125,7 +3132,7 @@ App.say("Reading " + Path.GetFileName(sRoot) + " and everything under it");
 List<string> lsAll = new List<string>();
 gatherFiles_Helper(sRoot, lsAll);
 if (lsAll.Count == 0) {
-Lbc.Show("No files were found under " + sRoot + ".", sTitle);
+Homer.LbcAsk.show("No files were found under " + sRoot + ".", sTitle);
 return;
 }
 App.say(Homer.Util.stringPlural("file", lsAll.Count) + " to examine");
@@ -3170,7 +3177,7 @@ iGroups++;
 
 if (lsDuplicates.Count == 0) {
 App.say("No duplicates.", true);
-Lbc.Show("No duplicate files were found under " + sRoot + ".\n\n"
+Homer.LbcAsk.show("No duplicate files were found under " + sRoot + ".\n\n"
 + Homer.Util.stringPlural("file", lsAll.Count) + " examined, of which "
 + iRead + " had to be read in full because another file was exactly the same size.", sTitle);
 return;
@@ -3487,7 +3494,7 @@ if (abortInZip()) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
-string sText = Lbc.InputDialog("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Homer.LbcAsk.inputDialog("Mark with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -3496,7 +3503,7 @@ try {
 rx = new Regex(sText, RegexOptions.Multiline);
 }
 catch (Exception ex) {
-Lbc.Show("Error", ex.Message);
+Homer.LbcAsk.show("Error", ex.Message);
 return;
 }
 
@@ -3672,7 +3679,7 @@ ReadOnlyCollection<string> pathList = App.getFiles(sDir, mdiChild.sFilterText);
 string[] aFiles = new string[pathList.Count];
 for (int i = 0; i < pathList.Count; i++) aFiles[i] = pathList[i];
 string sExts = Homer.Util.getExtensions(aFiles);
-string sResult = Lbc.InputDialog("Path List Extensions", "Extensions", sExts, "PathListExtensions").Trim();
+string sResult = Homer.LbcAsk.inputDialog("Path List Extensions", "Extensions", sExts, "PathListExtensions").Trim();
 if (sResult.Length == 0) return;
 
 string[] aResults = Homer.Util.getFilesWithExtensions(aFiles, sResult);
@@ -3733,7 +3740,7 @@ if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sCopyText == null) mdiChild.sCopyText = App.sCopyText;
-string sDir = Lbc.DirectoryDialog("Copy To", "Folder", mdiChild.sCopyText).Trim();
+string sDir = Homer.LbcAsk.directoryDialog("Copy To", "Folder", mdiChild.sCopyText).Trim();
 if (sDir.Length == 0) return;
 mdiChild.sCopyText = sDir;
 App.sCopyText = sDir;
@@ -3774,7 +3781,7 @@ dTargetDate = File.GetLastWriteTime(sTarget);
 
 if (lTargetSize >=0) {
 sCompare = compare_Helper(dSourceDate, lSourceSize, dTargetDate, lTargetSize);
-if (!sChoice.Contains("All")) sChoice = Lbc.ButtonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
+if (!sChoice.Contains("All")) sChoice = Homer.LbcAsk.buttonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
 switch (sChoice) {
 case "Cancel" :
 return;
@@ -3795,7 +3802,7 @@ try {
 App.copyDirectory(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iDirCount++;
@@ -3805,7 +3812,7 @@ try {
 App.copyFile(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iFileCount++;
@@ -3834,7 +3841,7 @@ if (aPaths.Length == 0) return;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sMoveText == null) mdiChild.sMoveText = App.sMoveText;
-string sDir = Lbc.DirectoryDialog("Move To", "Folder", mdiChild.sMoveText).Trim();
+string sDir = Homer.LbcAsk.directoryDialog("Move To", "Folder", mdiChild.sMoveText).Trim();
 if (sDir.Length == 0) return;
 mdiChild.sMoveText = sDir;
 App.sMoveText = sDir;
@@ -3875,7 +3882,7 @@ dTargetDate = File.GetLastWriteTime(sTarget);
 
 if (lTargetSize >=0) {
 sCompare = compare_Helper(dSourceDate, lSourceSize, dTargetDate, lTargetSize);
-if (!sChoice.Contains("All")) sChoice = Lbc.ButtonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
+if (!sChoice.Contains("All")) sChoice = Homer.LbcAsk.buttonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
 switch (sChoice) {
 case "Cancel" :
 return;
@@ -3896,7 +3903,7 @@ try {
 App.moveDirectory(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iDirCount++;
@@ -3907,7 +3914,7 @@ try {
 App.moveFile(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iFileCount++;
@@ -3977,8 +3984,8 @@ string[] aNames = new string[aPaths.Length];
 for (int i = 0; i < aNames.Length; i++) aNames[i] = (aPaths[i].EndsWith(@":\") ? aPaths[i] : Path.GetFileName(aPaths[i]));
 
 string sNames = String.Join("\n", aNames);
-//if (Lbc.ConfirmDialog("Confirm", "Sure?", "N") != "Y") return;
-if (Lbc.ConfirmDialog("Confirm", "Sure?\n" + sNames, "N") != "Y") return;
+//if (Homer.LbcAsk.confirmDialog("Confirm", "Sure?", "N") != "Y") return;
+if (Homer.LbcAsk.confirmDialog("Confirm", "Sure?\n" + sNames, "N") != "Y") return;
 
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
@@ -4002,7 +4009,7 @@ try {
 z.Delete(sPath);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 z.Close();
 return;
 }
@@ -4014,7 +4021,7 @@ try {
 App.deleteDirectory(sPath, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 delete_Helper(sPath);
@@ -4024,7 +4031,7 @@ try {
 App.deleteFile(sPath, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 delete_Helper(sPath);
@@ -4062,7 +4069,7 @@ int i = mdiChild.bs.Position;
 string sSource = (string) mdiChild.tbl.DefaultView[i]["Path"];
 string sName = Path.GetFileName(sSource);
 string sDir = Path.GetDirectoryName(sSource);
-string sNewName = Lbc.InputDialog("Rename", "Name", sName, "Rename").Trim();
+string sNewName = Homer.LbcAsk.inputDialog("Rename", "Name", sName, "Rename").Trim();
 if (sNewName.Length == 0) return;
 string sTarget = Path.Combine(sDir, sNewName);
 try {
@@ -4078,7 +4085,7 @@ return;
 }
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 
@@ -4094,10 +4101,10 @@ if (abortInZip()) return;
 App.say("Rename with wildcards");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
-if (Lbc.ConfirmDialog("Confirm", "This may affect all items in the current directory, not just marked ones.  Sure?", "Y") != "Y") return;
+if (Homer.LbcAsk.confirmDialog("Confirm", "This may affect all items in the current directory, not just marked ones.  Sure?", "Y") != "Y") return;
 string[] aFields = {"&Source", "&Target"};
 string[] aValues = {"*.*", "*.*"};
-ArrayList sResultList = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (sResultList.Count == 0) return;
 //string sCommand = "ren " + sResultList[0] + " " + sResultList[1];
 string sCommand = "cmd.exe /c ren " + sResultList[0] + " " + sResultList[1];
@@ -4105,7 +4112,7 @@ try {
 Homer.Util.runHideWait(sCommand);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 App.say("Done!", true);
@@ -4122,7 +4129,7 @@ string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 string[] aFields = {"&Source", "&Target"};
 string[] aValues = {"", ""};
 // Titled with the command's name, which the screen reader announces as the dialog opens (20 October 2026).
-ArrayList sResultList = Lbc.FieldDialog("Rename with Regex", aFields, aValues);
+ArrayList sResultList = Homer.LbcAsk.fieldDialog("Rename with Regex", aFields, aValues);
 if (sResultList.Count == 0) return;
 string sSource = (string) sResultList[0];
 string sTarget = (string) sResultList[1];
@@ -4140,7 +4147,7 @@ else if (File.Exists(sPath)) FileSystem.RenameFile(sPath, sNewName);
 else App.say(sName + " not found!");
  }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 delete_Helper(sPath);
@@ -4228,7 +4235,7 @@ return;
 }
 StringBuilder sbNone = new StringBuilder("No file could be renamed.\r\n\r\n");
 foreach (string sLine in lsSkipped) sbNone.Append("  " + sLine + "\r\n");
-Lbc.AnswerDialog(sTitle, "&Why not", sbNone.ToString());
+Homer.LbcAsk.answerDialog(sTitle, "&Why not", sbNone.ToString());
 return;
 }
 
@@ -4363,7 +4370,7 @@ MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 // Its own title, not Mark with Regex's, which the screen reader announces as it opens (20 October 2026).
-string sText = Lbc.InputDialog("Extract with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
+string sText = Homer.LbcAsk.inputDialog("Extract with Regex", "Text", mdiChild.sTagWithRegExpText, "TagRegExp");
 if (sText.Length == 0) return;
 
 mdiChild.sTagWithRegExpText = sText;
@@ -4372,7 +4379,7 @@ try {
 rx = new Regex(sText, RegexOptions.Multiline | RegexOptions.IgnoreCase);
 }
 catch (Exception ex) {
-Lbc.Show("Error", ex.Message);
+Homer.LbcAsk.show("Error", ex.Message);
 return;
 }
 
@@ -4404,7 +4411,7 @@ sText = String.Join(Homer.Util.sSectionBreak, l.ToArray());
 sText += Homer.Util.sEndOfDocument;
 Clipboard.SetText(sText);
 // App.say("Total of " + iMatch.ToString() + (iMatch == 1 ? " match" : " matches"));
-Lbc.Show(iMatch.ToString() + (iMatch == 1 ? " match" : " matches") + " copied to the clipboard", "Result");
+Homer.LbcAsk.show(iMatch.ToString() + (iMatch == 1 ? " match" : " matches") + " copied to the clipboard", "Result");
 } // menuMiscExtractTagged method
 
 void MenuEditDeleteAndRecycleTagged_Click(object sender, EventArgs e) {
@@ -4476,7 +4483,7 @@ dTargetDate = File.GetLastWriteTime(sTarget);
 
 if (lTargetSize >=0) {
 sCompare = compare_Helper(dSourceDate, lSourceSize, dTargetDate, lTargetSize);
-if (!sChoice.Contains("All")) sChoice = Lbc.ButtonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
+if (!sChoice.Contains("All")) sChoice = Homer.LbcAsk.buttonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
 switch (sChoice) {
 case "Cancel" :
 return;
@@ -4497,7 +4504,7 @@ try {
 App.copyDirectory(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iDirCount++;
@@ -4508,7 +4515,7 @@ try {
 App.copyFile(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iFileCount++;
@@ -4607,7 +4614,7 @@ dTargetDate = File.GetLastWriteTime(sTarget);
 
 if (lTargetSize >=0) {
 sCompare = compare_Helper(dSourceDate, lSourceSize, dTargetDate, lTargetSize);
-if (!sChoice.Contains("All")) sChoice = Lbc.ButtonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
+if (!sChoice.Contains("All")) sChoice = Homer.LbcAsk.buttonDialog("Confirm", sCompare + "\n" + sName + "\nalready exists.  Sure?", new string[] {"&No", "&Yes", "&Keep All", "&Replace All", "&Update All", "&Increment All"}, 0);
 switch (sChoice) {
 case "Cancel" :
 return;
@@ -4628,7 +4635,7 @@ try {
 App.moveDirectory(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iDirCount++;
@@ -4639,7 +4646,7 @@ try {
 App.moveFile(sSource, sTarget, App.Recycle);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 iFileCount++;
@@ -4748,7 +4755,7 @@ string sMinute = dDate.Minute.ToString();
 string sSecond = dDate.Second.ToString();
 string[] aFields = {"Year", "Month", "Day", "Hour", "Minute", "Second"};
 string[] aValues = {sYear, sMonth, sDay, sHour, sMinute, sSecond};
-ArrayList list = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList list = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (list.Count == 0) return;
 
 try {
@@ -4761,7 +4768,7 @@ int iSecond = Int32.Parse((string) list[5]);
 dDate = new DateTime(iYear, iMonth, iDay, iHour, iMinute, iSecond);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 
@@ -4774,7 +4781,7 @@ try {
 File.SetLastWriteTime(sPath, dDate);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 refresh_Helper(sPath);
@@ -4784,7 +4791,7 @@ try {
 File.SetLastWriteTime(sPath, dDate);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 refresh_Helper(sPath);
@@ -4810,7 +4817,7 @@ if (on) File.SetAttributes(sPath, attr | flag);
 else File.SetAttributes(sPath, (attr | flag) ^ flag);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 refresh_Helper(sPath);
@@ -4821,7 +4828,7 @@ if (on) File.SetAttributes(sPath, attr | flag);
 else File.SetAttributes(sPath, (attr | flag) ^ flag);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 refresh_Helper(sPath);
@@ -4965,7 +4972,7 @@ bLastSearchWasKeywords = false;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sJumpText == null) mdiChild.sJumpText = App.sJumpText;
-string sText = Lbc.InputDialog("Jump", "Text", mdiChild.sJumpText, "Jump");
+string sText = Homer.LbcAsk.inputDialog("Jump", "Text", mdiChild.sJumpText, "Jump");
 if (sText.Length == 0) return;
 int iStart = 0;
 if (sText == mdiChild.sJumpText) iStart = mdiChild.bs.Position + 1;
@@ -5064,7 +5071,7 @@ bLastSearchWasKeywords = true;
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
-string sText = Lbc.InputDialog("Keywords", "Text", mdiChild.sKeywordsText, "Keywords");
+string sText = Homer.LbcAsk.inputDialog("Keywords", "Text", mdiChild.sKeywordsText, "Keywords");
 if (sText.Length == 0) return;
 int iStart = 0;
 if (sText == mdiChild.sKeywordsText) iStart = mdiChild.bs.Position + 1;
@@ -5086,7 +5093,7 @@ App.say("Reverse keywords");
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sKeywordsText == null) mdiChild.sKeywordsText = App.sKeywordsText;
-string sText = Lbc.InputDialog("Keywords back", "Text", mdiChild.sKeywordsText, "Keywords");
+string sText = Homer.LbcAsk.inputDialog("Keywords back", "Text", mdiChild.sKeywordsText, "Keywords");
 if (sText.Length == 0) return;
 mdiChild.sKeywordsText = sText;
 App.sKeywordsText = sText;
@@ -5151,7 +5158,7 @@ mdiChild.bs.Filter = "Shown = true";
 mdiChild.bs.EndEdit();
 if (sText != "*" && sText != "" && mdiChild.bs.Count == 0) {
 //App.say("No items!");
-string sChoice = Lbc.ConfirmDialog("Confirm", "No items match the filter.  Clear it?", "Y");
+string sChoice = Homer.LbcAsk.confirmDialog("Confirm", "No items match the filter.  Clear it?", "Y");
 if (sChoice == "Y") {
 // The view now shows every item: the Shown marks hold this filter's answer,
 // which is none, so the earlier filter cannot simply be restored by its
@@ -5174,7 +5181,7 @@ void menuNavigateSetFilter_Click(object sender, EventArgs e) {
 MdiChild mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 if (mdiChild.sFilterText == null) mdiChild.sFilterText = App.sFilterText;
-string sText = Lbc.InputDialog("Filter", "Expression", mdiChild.sFilterText, "Filter");
+string sText = Homer.LbcAsk.inputDialog("Filter", "Expression", mdiChild.sFilterText, "Filter");
 if (sText.Length == 0) return;
 
 filter_Helper(App.frame, mdiChild, sText);
@@ -5278,7 +5285,7 @@ DataView view = mdiChild.tbl.DefaultView;
 bool bFound = false;
 string s1 = (string) view[mdiChild.bs.Position]["Name"];
 s1 = s1.Substring(0, 1).ToLower();
-//Lbc.Show(s1);
+//Homer.LbcAsk.show(s1);
 for (int i = mdiChild.bs.Position + 1; i < view.Count; i++) {
 string s2 = (string) view[i]["Name"];
 s2 = s2.Substring(0, 1).ToLower();
@@ -5521,7 +5528,7 @@ else return null;
 public static void status_Helper(Frame frame, MdiChild mdiChild) {
 int i = mdiChild.bs.Position;
 if (i < 0) return;
-//Lbc.Show(i, "position");
+//Homer.LbcAsk.show(i, "position");
 DataView view = mdiChild.tbl.DefaultView;
 DateTime dDate = (DateTime) view[i]["Time"];
 long lSize = (long) view[i]["Size"];
@@ -5666,7 +5673,7 @@ if (Homer.Media.exifToolProgram().Length == 0) sbResult.Append(Homer.Media.exifT
 // other clue how much there is to read.
 string sFieldNoun = lsPairs.Count == 1 ? "field" : "fields";
 App.say(lsPairs.Count + " " + sFieldNoun);
-Lbc.InfoDialog("Type Extended", sbResult.ToString(), true);
+Homer.LbcAsk.infoDialog("Type Extended", sbResult.ToString(), true);
 status_Helper(App.frame, (MdiChild) App.frame.ActiveMdiChild);
 } // menuQueryTypeExtended_Click method
 
@@ -5818,8 +5825,8 @@ App.say(Homer.Util.formatBytes(d.AvailableFreeSpace) + " free");
 
 void MenuQueryYieldInOperatingSystem_Click(object sender, EventArgs e) {
 String sText = App.yieldInOperatingSystem();
-//Lbc.Show(sText, "Yield in Operating System");
-Lbc.InfoDialog("Yield in Operating System", sText, true);
+//Homer.LbcAsk.show(sText, "Yield in Operating System");
+Homer.LbcAsk.infoDialog("Yield in Operating System", sText, true);
 } // yieldInOperatingSystem method
 
 void menuQueryStatus_Click(object sender, EventArgs e) {
@@ -5968,8 +5975,8 @@ void menuMiscOptions_Click(object sender, EventArgs e) {
 //App.readIni();
 string[] aFields = {"&Text Editor", "&Word Processor", "&LogInUserName", "&Password", "&SenderAddress", "&OutgoingServer", "&UnarchivePassword", "&RecycleWithDelete", "&DirsBeforeFiles", "E&xtraSpeech", "&ZipOpener"};
 string[] aValues = {App.sTextEditor, App.sWordProcessor, App.sUserName, App.sPassword, App.sSenderAddress, App.sOutgoingServer, App.sUnarchivePassword, (App.Recycle ? "y" : "n"), (App.DirsBeforeFiles ? "y" : "n"), (App.bExtraSpeech ? "y" : "n"), (App.bZipOpener ? "y" : "n")};
-//Lbc.Show(aFields.Length, aValues.Length);
-ArrayList sResultList = Lbc.FieldDialog("Fields", aFields, aValues);
+//Homer.LbcAsk.show(aFields.Length, aValues.Length);
+ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (sResultList.Count == 0) return;
 
 App.sTextEditor = (string) sResultList[0];
@@ -6007,7 +6014,7 @@ Process.Start(App.sSpeechLog);
 } // menuMiscExtraSpeechLog_Click method
 
 void menuMiscEnvironmentVariables_Click(object sender, EventArgs e) {
-string sChoice = Lbc.ButtonDialog("Target", "", new string[] {"&Process", "&User", "&Machine"}, 0);
+string sChoice = Homer.LbcAsk.buttonDialog("Target", "", new string[] {"&Process", "&User", "&Machine"}, 0);
 if (sChoice.Length == 0) return;
 
 EnvironmentVariableTarget target = EnvironmentVariableTarget.Process;
@@ -6040,7 +6047,7 @@ string sTitle = "Variables for ";
 if (sChoice == "&Process") sTitle += "Process " + Process.GetCurrentProcess().ProcessName;
 else if (sChoice == "&User") sTitle += "User " + Environment.UserName;
 else if (sChoice == "&Machine") sTitle += "Machine " + Environment.MachineName;
-ArrayList listResults = Lbc.FieldDialog(sTitle, aLabels, aValues);
+ArrayList listResults = Homer.LbcAsk.fieldDialog(sTitle, aLabels, aValues);
 if (listResults.Count == 0) return;
 
 string[] aResults = new string[listResults.Count];
@@ -6049,12 +6056,12 @@ for (int i = 0; i < aResults.Length; i++) aResults[i] = listResults[i].ToString(
 try {
 for (int i = 0; i < iCount; i++) {
 if (aResults[i] == aValues[i]) continue;
-if (Lbc.ConfirmDialog("Confirm", "Change " + aKeys[i] + "?", "Y") != "Y") continue;
+if (Homer.LbcAsk.confirmDialog("Confirm", "Change " + aKeys[i] + "?", "Y") != "Y") continue;
 Environment.SetEnvironmentVariable(aKeys[i], aResults[i], target);
 }
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 App.say("Done!", true);
@@ -6234,7 +6241,7 @@ aVerbs[aVerbs.Length - 1] = "Open With...";
 
 string[] aNames = new string[aVerbs.Length];
 for (int iVerb = 0; iVerb < aVerbs.Length; iVerb++) aNames[iVerb] = aVerbs[iVerb].Replace("&", "");
-string sName = Lbc.ListDialog("Pick", "", aNames, true, 0);
+string sName = Homer.LbcAsk.listDialog("Pick", "", aNames, true, 0);
 if (sName == "") return;
 
 int i = Array.IndexOf(aNames, sName);
@@ -6285,7 +6292,7 @@ string[]aLinks = Directory.GetFiles(sDir);
 string sNameList = "";
 foreach (string s in aLinks) sNameList += Path.GetFileNameWithoutExtension(s) + "\n";
 string[]aNames = sNameList.Trim().Split('\n');
-string sName = Lbc.ListDialog("Pick", "", aNames, true, 0);
+string sName = Homer.LbcAsk.listDialog("Pick", "", aNames, true, 0);
 if (sName == "") return;
 
 int i = Array.IndexOf(aNames, sName);
@@ -6353,7 +6360,7 @@ return;
 string[] aExtensions;
 string[] aLabels = Homer.Conversion.targetLabelsFor(sDriver, out aExtensions);
 if (aLabels.Length == 0) {
-Lbc.Show("FileDir does not know what " + Path.GetExtension(sDriver).ToLower()
+Homer.LbcAsk.show("FileDir does not know what " + Path.GetExtension(sDriver).ToLower()
 + " files can become.\n\nDocuments, legacy Office files, PDF, audio, video and pictures are all understood.", sTitle);
 return;
 }
@@ -6591,28 +6598,28 @@ string sTitle = "Chat with AI";
 // is nothing to ask -- and the screen reader reads a window's title when it
 // opens. Saying it first only makes the reader say it twice.
 if (!Homer.Ollama.isRunning()) {
-Lbc.Show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+Homer.LbcAsk.show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
 return;
 }
 string sModel = Homer.Ollama.bestTranslateModel();
 if (sModel.Length == 0) {
-Lbc.Show("Ollama is running, but no model is installed.\n\nRun installOllama.cmd in the FileDir folder to fetch llama3.2.", sTitle);
+Homer.LbcAsk.show("Ollama is running, but no model is installed.\n\nRun installOllama.cmd in the FileDir folder to fetch llama3.2.", sTitle);
 return;
 }
-string sQuestion = Lbc.InputDialog("Chat with AI", "&Question", "", "ChatWithAI").Trim();
+string sQuestion = Homer.LbcAsk.inputDialog("Chat with AI", "&Question", "", "ChatWithAI").Trim();
 if (sQuestion.Length == 0) return;
 App.say("Asking " + sModel + ". This can take a while.");
 string sError;
 string sAnswer = Homer.Ollama.generate(sModel, sQuestion, 600000, out sError);
 if (sError.Length > 0) {
-Lbc.Show("The question could not be answered.\n\n" + sError, sTitle);
+Homer.LbcAsk.show("The question could not be answered.\n\n" + sError, sTitle);
 return;
 }
 if (sAnswer.Trim().Length == 0) {
-Lbc.Show("The model returned nothing. Try asking in fewer words.", sTitle);
+Homer.LbcAsk.show("The model returned nothing. Try asking in fewer words.", sTitle);
 return;
 }
-Lbc.AnswerDialog(sTitle, "&Answer", sAnswer.Trim());
+Homer.LbcAsk.answerDialog(sTitle, "&Answer", sAnswer.Trim());
 } // MenuMiscChatWithAI_Click method
 
 void MenuMiscChatAboutFile_Click(object sender, EventArgs e) {
@@ -6630,29 +6637,29 @@ string sTitle = "Chat about File";
 // that opens next carries this same title.
 string sPath = Path_Helper();
 if (!File.Exists(sPath)) {
-Lbc.Show("Move to a file first. This command asks about one file, not a folder.", sTitle);
+Homer.LbcAsk.show("Move to a file first. This command asks about one file, not a folder.", sTitle);
 return;
 }
 if (!Homer.Ollama.isRunning()) {
-Lbc.Show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+Homer.LbcAsk.show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
 return;
 }
 string sModel = Homer.Ollama.bestTranslateModel();
 if (sModel.Length == 0) {
-Lbc.Show("Ollama is running, but no model is installed.\n\nRun installOllama.cmd in the FileDir folder to fetch llama3.2.", sTitle);
+Homer.LbcAsk.show("Ollama is running, but no model is installed.\n\nRun installOllama.cmd in the FileDir folder to fetch llama3.2.", sTitle);
 return;
 }
 
 string sError;
 string sText = Homer.Conversion.toPlainText(sPath, out sError);
 if (sText.Trim().Length == 0) {
-Lbc.Show("There is no text in " + Path.GetFileName(sPath) + " to ask about"
+Homer.LbcAsk.show("There is no text in " + Path.GetFileName(sPath) + " to ask about"
 + (sError.Length > 0 ? ":\n\n" + sError : ".") , sTitle);
 return;
 }
 
 string sQuestion = App.readValue(App.sIniFile, "Data", "ChatQuestion", "Summarize this file.");
-sQuestion = Lbc.InputDialog("Chat about File", "&Question", sQuestion, "ChatQuestion").Trim();
+sQuestion = Homer.LbcAsk.inputDialog("Chat about File", "&Question", sQuestion, "ChatQuestion").Trim();
 if (sQuestion.Length == 0) return;
 App.writeValue(App.sIniFile, "Data", "ChatQuestion", sQuestion);
 
@@ -6667,16 +6674,16 @@ App.say("Asking " + sModel + ". This can take a while.");
 string sPrompt = sQuestion + "\r\n\r\nHere is the file, " + Path.GetFileName(sPath) + ":\r\n\r\n" + sSent;
 string sAnswer = Homer.Ollama.generate(sModel, sPrompt, 600000, out sError);
 if (sError.Length > 0) {
-Lbc.Show("The question could not be answered.\n\n" + sError, sTitle);
+Homer.LbcAsk.show("The question could not be answered.\n\n" + sError, sTitle);
 return;
 }
 if (sAnswer.Trim().Length == 0) {
-Lbc.Show("The model returned nothing. Try a shorter question, or a smaller file.", sTitle);
+Homer.LbcAsk.show("The model returned nothing. Try a shorter question, or a smaller file.", sTitle);
 return;
 }
 if (lsParts.Count > 1)
 sAnswer = "(Answered from the first part of the file only; it was too long to send whole.)\r\n\r\n" + sAnswer;
-Lbc.AnswerDialog(sTitle, "&Answer", sAnswer.Trim());
+Homer.LbcAsk.answerDialog(sTitle, "&Answer", sAnswer.Trim());
 } // MenuMiscChatAboutFile_Click method
 
 void MenuMiscTranslateTagged_Click(object sender, EventArgs e) {
@@ -6697,17 +6704,17 @@ if (aPaths.Length == 0) return;
 // feature needs a download is better than typing a language first and being
 // told afterwards.
 if (!Homer.Ollama.isRunning()) {
-Lbc.Show("Ollama is not running on this computer, so nothing can be translated.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+Homer.LbcAsk.show("Ollama is not running on this computer, so nothing can be translated.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
 return;
 }
 string sModel = Homer.Ollama.bestTranslateModel();
 if (sModel.Length == 0) {
-Lbc.Show("Ollama is running, but neither translation model is installed.\n\nRun installOllama.cmd in the FileDir folder for llama3.2, or installTranslateModel.cmd for qwen2.5:7b, which translates better.", sTitle);
+Homer.LbcAsk.show("Ollama is running, but neither translation model is installed.\n\nRun installOllama.cmd in the FileDir folder for llama3.2, or installTranslateModel.cmd for qwen2.5:7b, which translates better.", sTitle);
 return;
 }
 
 string sLanguage = App.readValue(App.sIniFile, "Data", "TranslateLanguage", "Spanish");
-sLanguage = Lbc.InputDialog("Translate File", "&Language to translate into", sLanguage, "TranslateLanguage").Trim();
+sLanguage = Homer.LbcAsk.inputDialog("Translate File", "&Language to translate into", sLanguage, "TranslateLanguage").Trim();
 if (sLanguage.Length == 0) return;
 App.writeValue(App.sIniFile, "Data", "TranslateLanguage", sLanguage);
 
@@ -6777,7 +6784,7 @@ string sError;
 // broken, and giving up early on it would be the wrong answer.
 string sPiece = Homer.Ollama.generate(sModel, sPrompt, 600000, out sError);
 if (sError.Length > 0) {
-Lbc.Show(sName + " could not be translated.\n\n" + sError, "Translate File");
+Homer.LbcAsk.show(sName + " could not be translated.\n\n" + sError, "Translate File");
 return "";
 }
 if (sbResult.Length > 0) sbResult.Append("\r\n\r\n");
@@ -6796,7 +6803,7 @@ string sPathList = String.Join("\r\n", aPaths).Trim() + "\r\n";
 App.killFile(App.sTempFile);
 Homer.Util.string2File(sPathList, App.sTempFile);
 string sExe = Path.Combine(App.sAppDir, "Burn2CD.exe");
-//Lbc.Show(Homer.Util.file2String(App.sTempFile), App.sTempFile);
+//Homer.LbcAsk.show(Homer.Util.file2String(App.sTempFile), App.sTempFile);
 //Process.Start(sExe, App.sTempFile);
 Homer.Util.run(sExe + " " + App.sTempFile);
 } // menuMiscBurnTagged_Click method
@@ -6869,14 +6876,14 @@ return;
 
 void menuMiscBatchMail_Click(object sender, EventArgs e) {
 string sFilter = "All Files (*.*)|*.*";
-string sMail = Lbc.OpenFileDialog("", App.sBatchMail, sFilter, 0);
+string sMail = Homer.LbcAsk.openFileDialog("", App.sBatchMail, sFilter, 0);
 if (sMail.Length == 0) return;
 
 App.sBatchMail = sMail;
 string[] aMail = Homer.Util.file2String(sMail).Trim().Replace("\r\n", "\n").Split('\n');
 int iLength = aMail.Length;
 if (iLength == 0) {
-Lbc.Show("Cannot find message subject", "Error");
+Homer.LbcAsk.show("Cannot find message subject", "Error");
 return;
 }
 
@@ -6891,7 +6898,7 @@ break;
 }
 }
 if (!File.Exists(sBody)) {
-Lbc.Show("Cannot find message body file", "Error");
+Homer.LbcAsk.show("Cannot find message body file", "Error");
 return;
 }
 
@@ -6902,7 +6909,7 @@ string sRecipient = aMail[i].Trim();
 if (sRecipient.Contains("@")) list.Add(sRecipient);
 }
 if (list.Count == 0) {
-Lbc.Show("Cannot find any recipients", "Error");
+Homer.LbcAsk.show("Cannot find any recipients", "Error");
 return;
 }
 
@@ -6928,7 +6935,7 @@ string sZipDir = "";
 
 if (bZipList) {
 string sFilter = "All Files (*.*)|*.*";
-string sLst = Lbc.OpenFileDialog("", App.sZipList, sFilter, 0);
+string sLst = Homer.LbcAsk.openFileDialog("", App.sZipList, sFilter, 0);
 if (sLst.Length == 0) return;
 
 App.sZipList = sLst;
@@ -6942,7 +6949,7 @@ string[] aDirs, aFiles;
 aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return;
 string sFilter = "Zip archives (*.zip)|*.zip";
-sZip = Lbc.SaveFileDialog("", App.sZipText, sFilter, 0, false);
+sZip = Homer.LbcAsk.saveFileDialog("", App.sZipText, sFilter, 0, false);
 if (sZip == "") return;
 App.sZipText = sZip;
 }
@@ -6969,7 +6976,7 @@ sDir = Path.GetDirectoryName(sPath);
 //if (bZipList && Directory.Exists(sDir)) App.SetDirectory(sDir);
 string sName = Path.GetFileName(sPath);
 App.say(sName);
-//Lbc.Show(sDir, sPath);
+//Homer.LbcAsk.show(sDir, sPath);
 if (Directory.Exists(sPath)) {
 sDir = Path.GetDirectoryName(sPath);
 //z.AddDirectory(sName);
@@ -7015,7 +7022,7 @@ z.CommitUpdate();
 z.Close();
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 
@@ -7031,7 +7038,7 @@ if (testZip(sZip)) App.say("Done!", true);
 else App.say("Error!");
 App.SetDirectory(sOldDir);
 //Homer.Util.stringPlural("file", iFileCount);
-//Lbc.Show(Homer.Util.stringEquiv(Directory.GetCurrentDirectory(), Path.GetDirectoryName(sZip)));
+//Homer.LbcAsk.show(Homer.Util.stringEquiv(Directory.GetCurrentDirectory(), Path.GetDirectoryName(sZip)));
 sDir = Path.GetDirectoryName(sZip);
 if (Homer.Util.stringEquiv(Directory.GetCurrentDirectory(), sDir)) {
 refresh_Helper(sZip);
@@ -7078,7 +7085,7 @@ sUnarchiveDir = Path.Combine(sUnarchiveDir, Path.GetFileNameWithoutExtension(Pat
 }
 else if (!Directory.Exists(sUnarchiveDir)) sUnarchiveDir = Directory.GetCurrentDirectory();
 
-string sDir = Lbc.DirectoryDialog("Unarchive To", "Folder", sUnarchiveDir).Trim();
+string sDir = Homer.LbcAsk.directoryDialog("Unarchive To", "Folder", sUnarchiveDir).Trim();
 if (sDir == "") return;
 if (!bSameName) App.sUnarchiveText = sDir;
 App.sGoToText = sDir;
@@ -7128,7 +7135,7 @@ return;
 }
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 }
@@ -7153,7 +7160,7 @@ unarchive_Helper("Unarchive to same name", true, true);
 
 void menuMiscUnarchivePassword_Click(object sender, EventArgs e) {
 //App.say("Unarchive password");
-string sUnarchivePassword = Lbc.InputDialog("Unarchive Password", "&UnarchivePassword", App.sUnarchivePassword);
+string sUnarchivePassword = Homer.LbcAsk.inputDialog("Unarchive Password", "&UnarchivePassword", App.sUnarchivePassword);
 if (sUnarchivePassword == "") return;
 App.sUnarchivePassword = sUnarchivePassword;
 } // menuMiscUnarchivePassword_Click method
@@ -7278,7 +7285,7 @@ try {
 Process.Start(sCommand, sParams);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 } // menuMiscCommandPrompt_Click method
@@ -7301,7 +7308,7 @@ try {
 Process.Start(sCommand, sParams);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 } // menuMiscExplorerDir_Click method
@@ -7322,7 +7329,7 @@ string sURL = "";
 if (App.sUserName != null) {
 string[] aFields = {"&Address", "&LogInUserName", "&Password"};
 string[] aValues = {App.sFTPText, App.sUserName, App.sPassword};
-ArrayList sResultList = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (sResultList.Count == 0) return;
 sURL = (string) sResultList[0];
 sUserName = (string) sResultList[1];
@@ -7331,7 +7338,7 @@ sPassword = (string) sResultList[2];
 else {
 sUserName = App.sUserName;
 sPassword = App.sPassword;
-sURL = Lbc.InputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
+sURL = Homer.LbcAsk.inputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
 if (sURL == "") return;
 }
 
@@ -7356,12 +7363,12 @@ if (sBaseURL.EndsWith("/")) sURL = sBaseURL + Path.GetFileName(sPath);
 else sURL = sBaseURL + "/" + Path.GetFileName(sPath);
 
 try {
-//Lbc.Show(sFile, sURL);
-//Lbc.Show(sUserName, sPassword);
+//Homer.LbcAsk.show(sFile, sURL);
+//Homer.LbcAsk.show(sUserName, sPassword);
 App.uploadFile(sPath, sURL, sUserName, sPassword);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 }
@@ -7387,7 +7394,7 @@ string sURL = "";
 if (App.sUserName != null) {
 string[] aFields = {"&Address", "&LogInUserName", "&Password"};
 string[] aValues = {App.sFTPText, App.sUserName, App.sPassword};
-ArrayList sResultList = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (sResultList.Count == 0) return;
 sURL = (string) sResultList[0];
 sUserName = (string) sResultList[1];
@@ -7396,7 +7403,7 @@ sPassword = (string) sResultList[2];
 else {
 sUserName = App.sUserName;
 sPassword = App.sPassword;
-sURL = Lbc.InputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
+sURL = Homer.LbcAsk.inputDialog("FTP Address", "&Address", App.sFTPText, "FtpAddress");
 if (sURL == "") return;
 }
 
@@ -7415,7 +7422,7 @@ try {
 aFiles = Homer.Util.getFtpDir(sUserName, sPassword, sBaseURL);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 if (aFiles.Length == 0) {
@@ -7423,7 +7430,7 @@ App.say("No files!");
 return;
 }
 
-ArrayList listFiles = Lbc.MultiListDialog("Multi Pick", "", aFiles, true, 0, new int[] {});
+ArrayList listFiles = Homer.LbcAsk.multiListDialog("Multi Pick", "", aFiles, true, 0, new int[] {});
 if (listFiles.Count == 0) return;
 
 foreach (string sName in listFiles) {
@@ -7433,11 +7440,11 @@ else sURL = sBaseURL + "/" + sName;
 string sFile = sName;
 try {
 App.deleteFile(sFile, App.Recycle);
-//Lbc.Show(sURL, sFile);
+//Homer.LbcAsk.show(sURL, sFile);
 App.downloadFile(sURL, sFile, sUserName, sPassword);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 string s = Path.Combine(mdiChild.Text, sName);
@@ -7460,7 +7467,7 @@ void mediaDownload_Helper(string sUrl) {
 string sTitle = "Web Download";
 string sExe = Homer.Media.findInstalled("yt-dlp");
 if (sExe.Length == 0) {
-Lbc.Show("yt-dlp was not found, so media cannot be fetched from a page.\n\nInstall the media tools from the FileDir installer, or put yt-dlp.exe in the FileDir folder.", sTitle);
+Homer.LbcAsk.show("yt-dlp was not found, so media cannot be fetched from a page.\n\nInstall the media tools from the FileDir installer, or put yt-dlp.exe in the FileDir folder.", sTitle);
 return;
 }
 MdiChild mdiChild = App.frame.getActiveChild();
@@ -7468,7 +7475,7 @@ if (mdiChild == null) return;
 string sDir = Path_Helper();
 if (File.Exists(sDir)) sDir = Path.GetDirectoryName(sDir);
 if (!Directory.Exists(sDir)) {
-Lbc.Show("The current folder could not be worked out, so there is nowhere to save.", sTitle);
+Homer.LbcAsk.show("The current folder could not be worked out, so there is nowhere to save.", sTitle);
 return;
 }
 
@@ -7506,7 +7513,7 @@ return;
 string sMessage = sErr.Trim();
 if (sMessage.Length == 0) sMessage = sOut.Trim();
 if (sMessage.Length == 0) sMessage = "yt-dlp returned " + iCode + ".";
-Lbc.Show("Nothing was downloaded.\n\n" + sMessage, sTitle);
+Homer.LbcAsk.show("Nothing was downloaded.\n\n" + sMessage, sTitle);
 } // mediaDownload_Helper method
 
 void menuMiscWebDownload_Click(object sender, EventArgs e) {
@@ -7519,7 +7526,7 @@ string sUrl = Homer.Util.getUrl();
 if (sUrl.Length == 0) sUrl = App.sWebText;
 else App.sWebText = sUrl;
 
-sUrl = Lbc.InputDialog("Web Address", "Address", sUrl, "WebAddress");
+sUrl = Homer.LbcAsk.inputDialog("Web Address", "Address", sUrl, "WebAddress");
 if (sUrl.Length == 0) return;
 
 // A page of links and a page holding a video want opposite treatment, and no
@@ -7564,7 +7571,7 @@ listFiles.Add(sFile);
 
 string[] aFiles = listFiles.ToArray();
 string sText = Homer.Util.getExtensions(aFiles);
-string sResult = Lbc.InputDialog("Download Extensions", "Extensions", sText, "DownloadExtensions").Replace(".", "").Trim().ToLower();
+string sResult = Homer.LbcAsk.inputDialog("Download Extensions", "Extensions", sText, "DownloadExtensions").Replace(".", "").Trim().ToLower();
 if (sResult.Length == 0) return;
 
 string[] aResults = Homer.Util.getFilesWithExtensions(aFiles, sResult);
@@ -7592,7 +7599,7 @@ return;
 }
 
 string[] aValues = listItems.ToArray();
-aResults = Lbc.MultiCheckDialog("Pick Files", aValues, new int[] {}, false, 0);
+aResults = Homer.LbcAsk.multiCheckDialog("Pick Files", aValues, new int[] {}, false, 0);
 if (aResults.Length == 0) return;
 
 string sDir = Directory.GetCurrentDirectory();
@@ -7612,7 +7619,7 @@ if (sSaved.Length == 0) throw new IOException("Download failed: " + sRef);
 sFile = sSaved;
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 refresh_Helper(sFile);
@@ -7628,7 +7635,7 @@ string sTmp = Path.Combine(App.sAppDir, "WebGet.tmp");
 string s = Homer.Util.getUrl();
 if (s != "") App.sWebText = s;
 
-string sURL = Lbc.InputDialog("Web Address", "&Address", App.sWebText, "WebAddress");
+string sURL = Homer.LbcAsk.inputDialog("Web Address", "&Address", App.sWebText, "WebAddress");
 if (sURL.Length > 0) App.sWebText = sURL;
 if (sURL.Trim() == "") return;
 
@@ -7650,7 +7657,7 @@ try {
 Homer.Util.runHideWait(sExe + " " + sURL);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 //string sTmp = Path.Combine(App.sAppDir, "WebGet.tmp");
@@ -7661,7 +7668,7 @@ StringBuilder sbFiles  = new StringBuilder();
 foreach (string sLine in aLines) {
 string[] aParts = sLine.Split('\t');
 if (aParts.Length < 3) {
-//Lbc.Show(sLine);
+//Homer.LbcAsk.show(sLine);
 continue;
 }
 sbURLs.Append(aParts[1] + "\n");
@@ -7677,7 +7684,7 @@ App.say("No files!");
 return;
 }
 
-List<int> listFiles = Lbc.MultiListDialog("Multi Pick", aLinks, false);
+List<int> listFiles = Homer.LbcAsk.multiListDialog("Multi Pick", aLinks, false);
 if (listFiles.Count == 0) return;
 
 string sDir = mdiChild.Text;
@@ -7691,7 +7698,7 @@ App.deleteFile(sFile, App.Recycle);
 App.downloadFile(sURL, sFile, sUserName, sPassword);
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 refresh_Helper(sFile);
@@ -7703,7 +7710,7 @@ App.say("Done!", true);
 
 void menuMiscEvaluate_Click(object sender, EventArgs e) {
 string sExp = App.sEvaluateText;
-sExp = Lbc.InputDialog("Evaluate", "Expression", sExp, "Evaluate");
+sExp = Homer.LbcAsk.inputDialog("Evaluate", "Expression", sExp, "Evaluate");
 if (sExp == "") return;
 App.sEvaluateText = sExp;
 MdiChild mdiChild = App.frame.getActiveChild();
@@ -7728,13 +7735,13 @@ aKeys[i] = a[0];
 aValues[i] = a[1];
 aItems[i] = a[0].Replace("_TO_", " to ").Replace("_", " ");
 }
-//string sItem = Lbc.ListDialog("Pick", "", aItems, false, iItem);
+//string sItem = Homer.LbcAsk.listDialog("Pick", "", aItems, false, iItem);
 string sTitle = "Pick (" + aItems.Length + ") and Input";
-//List<string> list = Lbc.ListInputDialog("Pick and Input", "&Units", aItems, "&Value", App.sCalculateText, 
-List<string> list = Lbc.ListInputDialog(sTitle, "&Units", aItems, "&Value", App.sCalculateText, false, iItem);
+//List<string> list = Homer.LbcAsk.listInputDialog("Pick and Input", "&Units", aItems, "&Value", App.sCalculateText, 
+List<string> list = Homer.LbcAsk.listInputDialog(sTitle, "&Units", aItems, "&Value", App.sCalculateText, false, iItem);
 //if (sItem == "") return;
 if (list.Count == 0) return;
-//string sValue = Lbc.InputDialog("Input", "&Value", App.sCalculateText).Trim();
+//string sValue = Homer.LbcAsk.inputDialog("Input", "&Value", App.sCalculateText).Trim();
 string sItem = list[0];
 iItem = Array.IndexOf(aItems, sItem);
 App.iCalculateItem = iItem;
@@ -7769,7 +7776,7 @@ App.say("Start timer");
 
 string[] aFields = {"&Announcement Interval", "&Stop Time"};
 String[] aValues = {App.sTimerInterval, App.sTimerStop};
-ArrayList list = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList list = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (list.Count == 0) return;
 
 string sInterval = list[0].ToString().Trim();
@@ -7790,7 +7797,7 @@ return;
 }
 }
 catch (Exception ex) {
-Lbc.Show(ex.Message, "Error");
+Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 
@@ -7860,7 +7867,7 @@ App.timer = null;
 void menuMiscConfigureTimer_Click(object sender, EventArgs e) {
 string[] aFields = {"&Announcement Interval", "&Stop Time"};
 String[] aValues = {App.sTimerInterval, App.sTimerStop};
-ArrayList list = Lbc.FieldDialog("Fields", aFields, aValues);
+ArrayList list = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (list.Count == 0) return;
 
 string sInterval = (string) list[0];
@@ -7911,7 +7918,7 @@ if (abortInZip()) return;
 string sTitle = "Play Media";
 App.say(sTitle);
 if (Homer.Media.mpvProgram().Length == 0) {
-Lbc.Show("mpv was not found, so there is nothing to play with.\r\n\r\n"
+Homer.LbcAsk.show("mpv was not found, so there is nothing to play with.\r\n\r\n"
 + "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box. "
 + "Play List still writes a play list without it.\r\n\r\n"
 + "If mpv IS installed, this is where FileDir looked. Send these lines and the search can be widened:\r\n\r\n"
@@ -7964,7 +7971,7 @@ try {
 File.WriteAllText(sTemp, "#EXTM3U\r\n" + String.Join("\r\n", lsPlay.ToArray()), new UTF8Encoding(false));
 }
 catch (Exception ex) {
-Lbc.Show("The play list could not be written.\n\n" + ex.Message, sTitle);
+Homer.LbcAsk.show("The play list could not be written.\n\n" + ex.Message, sTitle);
 return;
 }
 Homer.Log.info("Play Media: " + lsPlay.Count + " entries " + sWhere + ".");
@@ -8413,7 +8420,7 @@ bool bMedia = isPlayable_Helper(sOne);
 bool bReadable = Homer.Conversion.readableAsText(sOne);
 if (bList || bMedia || bReadable) {
 if (Homer.Media.mpvProgram().Length == 0) {
-Lbc.Show("mpv is not installed, so there is nothing to play with.\r\n\r\n"
+Homer.LbcAsk.show("mpv is not installed, so there is nothing to play with.\r\n\r\n"
 + "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box.\r\n\r\n"
 + "Mark two or more files and press this key again to write a play list without playing it.", "Play List");
 return;
@@ -8444,7 +8451,7 @@ try {
 File.WriteAllText(sTempList, "#EXTM3U\r\n" + String.Join("\r\n", lsFound.ToArray()), new UTF8Encoding(false));
 }
 catch (Exception ex) {
-Lbc.Show("The play list could not be written.\r\n\r\n" + ex.Message, "Play List");
+Homer.LbcAsk.show("The play list could not be written.\r\n\r\n" + ex.Message, "Play List");
 return;
 }
 int iLinks = 0;
@@ -8479,7 +8486,7 @@ int iLeftOut = aPaths.Length - lsMedia.Count;
 
 string sFile = Path.Combine(Directory.GetCurrentDirectory(), "PlayList.m3u");
 sFile = Homer.Util.getUniqueName(sFile);
-sFile = Lbc.SaveFileDialog("Save Play List", sFile, "Play lists (*.m3u)|*.m3u", 1, true);
+sFile = Homer.LbcAsk.saveFileDialog("Save Play List", sFile, "Play lists (*.m3u)|*.m3u", 1, true);
 if (sFile == null || sFile.Trim().Length == 0) return;
 
 StringBuilder sbList = new StringBuilder();
@@ -8497,7 +8504,7 @@ try {
 File.WriteAllText(sFile, sbList.ToString(), new UTF8Encoding(false));
 }
 catch (Exception ex) {
-Lbc.Show("The play list could not be written.\r\n\r\n" + ex.Message, "Output Type");
+Homer.LbcAsk.show("The play list could not be written.\r\n\r\n" + ex.Message, "Output Type");
 return;
 }
 Homer.Log.info("Output Type: wrote " + lsMedia.Count + " entries to " + sFile);
@@ -8615,7 +8622,7 @@ System.Diagnostics.Process process = System.Diagnostics.Process.Start(info);
 if (process != null && process.WaitForExit(2000)) {
 Homer.Log.info("The player exited immediately, code " + process.ExitCode + ".");
 App.say("The player closed straight away. Nothing played.", true);
-Lbc.Show("mpv started and closed again without playing.\r\n\r\n"
+Homer.LbcAsk.show("mpv started and closed again without playing.\r\n\r\n"
 + "This is what it was given:\r\n\r\n"
 + sMpv + "\r\n" + sbArgs.ToString() + "\r\n\r\n"
 + "The play list is still at " + sPlayList + ", so the same line can be tried by hand.", sTitle);
@@ -8624,14 +8631,14 @@ return;
 App.say("Playing. Press q in the player window to stop.", true);
 }
 catch (Exception ex) {
-Lbc.Show("mpv could not be started.\r\n\r\n" + ex.Message + "\r\n\r\nIt was found at " + sMpv, sTitle);
+Homer.LbcAsk.show("mpv could not be started.\r\n\r\n" + ex.Message + "\r\n\r\nIt was found at " + sMpv, sTitle);
 }
 } // playMedia_Helper method
 
 void MenuMiscNetworkConnections_Click(object sender, EventArgs e) {
 string sTitle = "Network Connections";
 string[] aButtons = new string[] {"&Connect", "&Disconnect", "&Restore"};
-string sResult = Lbc.ButtonDialog(sTitle, "", aButtons, 0);
+string sResult = Homer.LbcAsk.buttonDialog(sTitle, "", aButtons, 0);
 
 NetworkDrive oNetDrive  = new NetworkDrive();
 switch (sResult) {
@@ -8661,7 +8668,7 @@ if (d.IsReady && d.VolumeLabel != "") sName += "\t" + d.VolumeLabel;
 sNameList += sName + "\n";
 }
 string[] aNames = sNameList.Trim().Split('\n');
-sName = Lbc.ListDialog("Pick", "", aNames, true, 0);
+sName = Homer.LbcAsk.listDialog("Pick", "", aNames, true, 0);
 if (sName.Length == 0) return;
 string sDir = sName.Substring(0, 1) + ":";
 Homer.Util.formatDrive(App.frame.Handle, sDir);
@@ -8703,7 +8710,7 @@ for (int i = 0; i < aProcesses.Length; i++) aPids[i] = aProcesses[i].Id;
 
 if (iIndex >= aItems.Length) iIndex = 0;
 sTitle = "Iterate Processes";
-aResult = Lbc.ListButtonDialog(sTitle, aPids, aItems, aButtons, true, iIndex);
+aResult = Homer.LbcAsk.listButtonDialog(sTitle, aPids, aItems, aButtons, true, iIndex);
 if (aResult.Length == 0) return;
 
 iPid = (int) aResult[0];
@@ -8720,7 +8727,7 @@ process = null;
 
 switch (sButton) {
 case "&Activate" :
-if (process == null) Lbc.Show("Can no longer find " + s + "process", "Alert");
+if (process == null) Homer.LbcAsk.show("Can no longer find " + s + "process", "Alert");
 else {
 Microsoft.VisualBasic.Interaction.AppActivate(iPid);
 bLoop = false;
@@ -8732,7 +8739,7 @@ process.CloseMainWindow();
 System.Threading.Thread.Sleep(500);
 try {
 process = Process.GetProcessById(iPid);
-if (Lbc.ConfirmDialog("Confirm", s + " did not close by request.  Try to force it?", "Y") == "Y") process.Kill();
+if (Homer.LbcAsk.confirmDialog("Confirm", s + " did not close by request.  Try to force it?", "Y") == "Y") process.Kill();
 System.Threading.Thread.Sleep(500);
  break;
 }
@@ -8755,7 +8762,7 @@ string sEndOfDocument = "\n----------\nEnd of Document\n";
 string sSourceDir = Directory.GetCurrentDirectory();
 string sTargetDir = App.sGoToText;
 if (sTargetDir == null || sTargetDir.Length == 0) sTargetDir = App.sOpenText;
-sTargetDir = Lbc.DirectoryDialog("Target Folder", "Folder", sTargetDir).Trim();
+sTargetDir = Homer.LbcAsk.directoryDialog("Target Folder", "Folder", sTargetDir).Trim();
 if (sTargetDir.Length == 0) return;
 
 string[] aSourceDirs, aSourceFiles;
@@ -8829,7 +8836,7 @@ sBody = sContents + sDivider + sBody;
 string sReportFile = Path.Combine(sSourceDir, "Report.txt");
 sReportFile = Homer.Util.getUniqueName(sReportFile);
 string sFilter = "Text files (*.txt)|*.txt";
-sReportFile = Lbc.SaveFileDialog("", sReportFile, sFilter, 0, true);
+sReportFile = Homer.LbcAsk.saveFileDialog("", sReportFile, sFilter, 0, true);
 if (sReportFile.Length == 0) return;
 
 Homer.Util.string2File(sBody, sReportFile);
@@ -8963,7 +8970,7 @@ string sName = "FileDir_setup.exe";
 App.say("Checking for updates");
 string sTag = App.fetchLatestReleaseTag(sOwnerRepo);
 if (sTag.Length == 0) {
-Lbc.Show("Could not check for updates right now.\nPlease check your internet connection and try again.\nYou can also download the latest installer from\n" + sReleasesUrl, "Elevate Version");
+Homer.LbcAsk.show("Could not check for updates right now.\nPlease check your internet connection and try again.\nYou can also download the latest installer from\n" + sReleasesUrl, "Elevate Version");
 return;
 }
 string sLocal = App.VersionString;
@@ -8977,12 +8984,12 @@ sDefault = "Y";
 }
 else if (iCompare == 0) sMsg = "FileDir is up to date (version " + sLocal + ").\nLatest release: " + sLatest + "\n\nReinstall the latest release anyway?";
 else sMsg = "FileDir is running a newer version (" + sLocal + ") than the latest public release (" + sLatest + ").\n\nReinstall the public release anyway?";
-if (Lbc.ConfirmDialog("Elevate Version", sMsg, sDefault) != "Y") return;
+if (Homer.LbcAsk.confirmDialog("Elevate Version", sMsg, sDefault) != "Y") return;
 App.say("Downloading installer");
 string sUrl = sReleasesUrl + "/download/" + sName;
 string sFile = Homer.Web.download(sUrl, Path.GetTempPath(), sName);
 if (sFile.Length == 0) {
-Lbc.Show("The download did not complete.\nYou can download the installer manually from\n" + sReleasesUrl, "Elevate Version");
+Homer.LbcAsk.show("The download did not complete.\nYou can download the installer manually from\n" + sReleasesUrl, "Elevate Version");
 return;
 }
 App.say("Starting installer");
@@ -8993,7 +9000,7 @@ processStartInfo.UseShellExecute = true;
 Process.Start(processStartInfo);
 }
 catch (Exception ex) {
-Lbc.Show("The installer downloaded but could not be started.\n" + ex.Message + "\n\nThe file is here:\n" + sFile, "Elevate Version");
+Homer.LbcAsk.show("The installer downloaded but could not be started.\n" + ex.Message + "\n\nThe file is here:\n" + sFile, "Elevate Version");
 }
 } // menuHelpElevateVersion_Click method
 
@@ -9020,7 +9027,7 @@ App.say("No actions available for this file type!");
 return;
 }
 
-string sChoice = Lbc.ListDialog("Pick", "", aVerbs, true, 0);
+string sChoice = Homer.LbcAsk.listDialog("Pick", "", aVerbs, true, 0);
 if (sChoice == "") return;
 process.StartInfo.Verb = sChoice;
 if (mdiChild.InZip) {
@@ -9452,7 +9459,7 @@ else if (aPaths != null) {
 fillTableFromVirtual(tbl, aPaths);
 }
 else {
-//Lbc.Show(sDir, Path.GetFullPath(sDir));
+//Homer.LbcAsk.show(sDir, Path.GetFullPath(sDir));
 sDir = Path.GetFullPath(sDir);
 fillTableFromDir(tbl, sDir);
 }
@@ -9472,7 +9479,7 @@ lst.Font = new Font("Courier New", 10.0f);
 //lst.Left = 14;
 //this.DockPadding.All = 14;
 lst.Padding = new Padding(4, 4, 4, 4);
-//Lbc.Show(lst.Padding.All);
+//Homer.LbcAsk.show(lst.Padding.All);
 this.Controls.Add(lst);
 //this.Text = Path.Combine(dir, spec);
 //this.Activated += delegate(object sender, EventArgs e) { if (Directory.Exists(sDir)) App.SetDirectory(sDir); };
@@ -9629,7 +9636,7 @@ string sLine = aLines[i];
 // added a row whether or not a path had been read -- an empty entry at the end
 // of every listing. It has to be "A and (B or C)".
 if (sPath.Length > 0 && ((i > 0 && sLine.StartsWith("Path =")) || (i == iCount - 1))) {
-// Lbc.Show("Path", sPath);
+// Homer.LbcAsk.show("Path", sPath);
 tbl.Rows.Add(sPath, sName.PadRight(50), sExt, size, time, attr, type, hidden, readOnly, system, tagged);
 attr = 0;
 hidden = ' ';
@@ -9753,7 +9760,7 @@ readOnly = ((attr & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) ? ']' :
 system = ((attr & FileAttributes.System) == FileAttributes.System) ? '}' : ' ';
 tbl.Rows.Add(file, name.PadRight(50), ext, size, time, attr, ' ', hidden, readOnly, system, ' ');
 //tbl.Rows.Add(file, name.PadRight(50), ext, size, time, attr, ' ', ' ');
-//if ((attr & FileAttributes.Hidden) == FileAttributes.Hidden) Lbc.Show(file);
+//if ((attr & FileAttributes.Hidden) == FileAttributes.Hidden) Homer.LbcAsk.show(file);
 }
 //this.bs.ResumeBinding();
 } // fillTable method
