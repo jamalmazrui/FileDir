@@ -51,42 +51,8 @@ Homer.LbcMessage.show(oText.ToString(), oTitle.ToString());
 
 
 
-public static string Pick(string sTitle, string[] aValue, bool bSort) {
-return Pick(sTitle, aValue, null, bSort, 0);
-} // Pick method
 
-public static string Pick(string sTitle, string[] aValue, bool bSort, int iIndex) {
-return Pick(sTitle, aValue, null, bSort, iIndex);
-} // Pick method
 
-public static string Pick(string sTitle, string[] aValue, string[] aDisplay, bool bSort, int iIndex) {
-// Pick one item, shown by one name and answered with another: aDisplay is
-// what the list says, aValue what comes back. With no aDisplay the two are the
-// same. Built on the kit's LbcDialog, so the list has jump, search and filter.
-// Returns the value, or "" when cancelled.
-if (aValue == null || aValue.Length == 0) return "";
-string[] aShown = (aDisplay != null && aDisplay.Length == aValue.Length) ? aDisplay : aValue;
-List<int> lsOrder = new List<int>();
-for (int i = 0; i < aShown.Length; i++) lsOrder.Add(i);
-if (bSort) lsOrder.Sort(delegate(int a, int b) { return string.Compare(aShown[a], aShown[b], StringComparison.OrdinalIgnoreCase); });
-List<string> lsNames = new List<string>();
-foreach (int iAt in lsOrder) lsNames.Add(aShown[iAt]);
-string sSelected = (iIndex >= 0 && iIndex < lsNames.Count) ? lsNames[iIndex] : lsNames[0];
-using (Homer.LbcDialog dlg = new Homer.LbcDialog(sTitle, Homer.LbcAsk.ownerForm())) {
-ListBox lb = dlg.addListBox(lsNames, sSelected, null);
-dlg.primaryList = lb;
-if (!dlg.runOkCancel()) {
-Homer.LbcAsk.say("Cancel", true);
-return "";
-}
-// By the text chosen, not the row: a filtered list (Control+F) shows fewer
-// rows than it holds, so a row number would point at the wrong item.
-if (lb.SelectedItem == null) return "";
-int iRow = lsNames.IndexOf(lb.SelectedItem.ToString());
-if (iRow < 0) return "";
-return aValue[lsOrder[iRow]];
-}
-} // Pick method
 
 
 

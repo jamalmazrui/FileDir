@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- One list for picking
+
+- **Picking from a list uses the kit's dialog,** shared with EdSharp, with the list labelled Choices, as Homer's lists are.
+
 ## 10 November 2026 -- Script, the one word
 
 - **Script, not snippet,** in the words FileDir's code uses for what its scripting runs, as across Homer.

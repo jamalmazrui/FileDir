@@ -6376,7 +6376,7 @@ int iFound = Array.IndexOf(aLabels, sRemembered);
 if (iFound >= 0) iIndex = iFound;
 }
 bool bSort = false;
-string sPicked = Dialog.Pick("Pick", aLabels, bSort, iIndex);
+string sPicked = Homer.LbcAsk.pick("Pick", aLabels, bSort, iIndex);
 if (sPicked.Length == 0) return;
 App.writeValue(App.sIniFile, "Data", sKey, sPicked);
 int iTarget = Array.IndexOf(aLabels, sPicked);
@@ -6557,7 +6557,7 @@ if (sEncoding.Length > 0) iIndex = Array.IndexOf(aEncodings, sEncoding.ToLower()
 if (iIndex == -1) iIndex = 0;
 bool bSort = false;
 sTitle = "Pick";
-sEncoding = Dialog.Pick(sTitle, aEncodings, bSort, iIndex).ToLower();
+sEncoding = Homer.LbcAsk.pick(sTitle, aEncodings, bSort, iIndex).ToLower();
 if (sEncoding.Length == 0) return;
 
 App.writeValue(App.sIniFile, "Data", "ConvertEncoding", sEncoding);
@@ -7484,7 +7484,7 @@ string sWhat = App.readValue(App.sIniFile, "Data", "MediaDownloadWhat", aWhat[0]
 int iWhat = Array.IndexOf(aWhat, sWhat);
 if (iWhat < 0) iWhat = 0;
 bool bSort = false;
-sWhat = Dialog.Pick("Pick", aWhat, bSort, iWhat);
+sWhat = Homer.LbcAsk.pick("Pick", aWhat, bSort, iWhat);
 if (sWhat.Length == 0) return;
 App.writeValue(App.sIniFile, "Data", "MediaDownloadWhat", sWhat);
 
@@ -7540,7 +7540,7 @@ string sHow = App.readValue(App.sIniFile, "Data", "WebDownloadHow", aHow[0]);
 int iHow = Array.IndexOf(aHow, sHow);
 if (iHow < 0) iHow = 0;
 bool bSortHow = false;
-sHow = Dialog.Pick("Pick", aHow, bSortHow, iHow);
+sHow = Homer.LbcAsk.pick("Pick", aHow, bSortHow, iHow);
 if (sHow.Length == 0) return;
 App.writeValue(App.sIniFile, "Data", "WebDownloadHow", sHow);
 if (sHow == aHow[0]) {
