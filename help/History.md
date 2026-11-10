@@ -4,6 +4,7 @@
 
 ## 10 November 2026 -- One list for picking
 
+- **FileDir's list of strings is the kit's HomerList,** shared with the other Homer apps.
 - **Prompts for text use the kit's one input,** the same as EdSharp's.
 - **FileDir's own Dialog class is gone;** its questions, lists and messages are the kit's, shared with EdSharp.
 - **Picking from a list uses the kit's dialog,** shared with EdSharp, with the list labelled Choices, as Homer's lists are.
