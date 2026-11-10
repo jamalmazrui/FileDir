@@ -255,6 +255,14 @@ rem set "useTesseract=1"       rem HomerScribe: reading scanned text quickly
 set "useUde=1"             rem EdSharp and FileDir: detecting a text file's encoding
 rem set "useWhisper=1"         rem HomerScribe: transcribing speech
 
+rem ---- configs\FileDir.ini is retired (10 November 2026) -----------
+rem FileDir keeps its settings in FileDir.inix under AppData; the shipped FileDir.ini seeded nothing and was read by
+rem nothing, so the installer no longer ships it, and it is removed here.
+if exist "configs\FileDir.ini" (
+  del /q "configs\FileDir.ini"
+  echo Retired configs\FileDir.ini: FileDir's settings are FileDir.inix under AppData.>> "%log%"
+)
+
 rem ---- version: version.txt is the single source of truth -----------
 rem A MISSING version.txt IS MADE, NOT AN ERROR. Every build needs a number --
 rem the program reports it, the installer carries it, the release tag is it --

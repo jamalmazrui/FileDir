@@ -4,6 +4,7 @@
 
 ## 10 November 2026 -- Settings in FileDir.inix
 
+- **FileDir.ini is retired.** Anything it held that FileDir.inix did not is added to the .inix, never over a value already there, and the old file is renamed FileDir.ini.migrated. FileDir reads and writes only FileDir.inix now, and Manual Options opens it. The installer no longer ships the FileDir.ini that seeded nothing.
 - **Your settings are kept in FileDir.inix,** Homer's settings format, in FileDir's data folder. The first time this version runs, your FileDir.ini is copied there, accented letters and all, and from then on FileDir writes only the .inix. It still reads the .ini for anything the .inix lacks, so no setting goes missing.
 
 ## 10 November 2026 -- One list for picking

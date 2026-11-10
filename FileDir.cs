@@ -462,7 +462,7 @@ return true;
 static List<Homer.InixCodec.Section> lsInixSections = null;
 static bool bInixLoaded = false;
 
-static string getInixPath() {
+public static string getInixPath() {
 if (string.IsNullOrEmpty(App.sIniFile)) return null;
 if (App.sIniFile.ToLower().EndsWith(".ini")) return App.sIniFile.Substring(0, App.sIniFile.Length - 4) + ".inix";
 return App.sIniFile + ".inix";
@@ -492,7 +492,10 @@ return false;
 
 public static string readValue(string sFile, string sSection, string sKey, string sDefault) {
 string sValue;
-if (!string.IsNullOrEmpty(sFile) && string.Equals(sFile, App.sIniFile, StringComparison.OrdinalIgnoreCase) && inixTryGet(sSection, sKey, out sValue)) return sValue;
+if (!string.IsNullOrEmpty(sFile) && string.Equals(sFile, App.sIniFile, StringComparison.OrdinalIgnoreCase)) {
+// FileDir's settings come from FileDir.inix alone (10 November 2026); what it does not set is FileDir's default.
+return inixTryGet(sSection, sKey, out sValue) ? sValue : sDefault;
+}
 return Homer.Util.readValue(sFile, sSection, sKey, sDefault);
 } // readValue method
 
@@ -1240,19 +1243,29 @@ sDataDir = Homer.Util.getShortPath(sDataDir);
 string sQuickDir = Path.Combine(sDataDir, "Quick");
 if (!Directory.Exists(sQuickDir)) Directory.CreateDirectory(sQuickDir);
 sIniFile = Path.Combine(sDataDir, sName);
-// .INIX, NOT .INI (10 November 2026). Homer apps keep settings in .inix. FileDir read its FileDir.inix first, but
-// wrote FileDir.ini and copied into the .inix only when one already existed, so most people never had one. Now, the
-// first time, the .ini is copied to FileDir.inix -- read as Windows wrote it, in the system's code page or by its
-// byte order mark, and written as UTF-8 -- and from then on FileDir writes its settings to the .inix alone. Reading
-// still falls back to the .ini, so a setting never goes missing.
+// .INIX, NOT .INI (10 November 2026). Homer apps keep settings in .inix, and FileDir.ini is retired: what it holds
+// that FileDir.inix does not -- read as Windows wrote it, in the system's code page -- is added to the .inix, never
+// over a value already there, and the old file is renamed FileDir.ini.migrated, not deleted. FileDir reads and
+// writes only the .inix from then on.
 try {
 string sInix = getInixPath();
-if (sInix != null && !File.Exists(sInix) && File.Exists(sIniFile)) {
-File.WriteAllText(sInix, File.ReadAllText(sIniFile, System.Text.Encoding.Default), new System.Text.UTF8Encoding(true));
-Homer.Log.info("settings: " + sIniFile + " copied to " + sInix + "; FileDir writes the .inix from now on");
+if (sInix != null && File.Exists(sIniFile)) {
+int iAdded = 0;
+List<Homer.InixCodec.Section> lsOld = Homer.InixCodec.parseLines(File.ReadAllText(sIniFile, System.Text.Encoding.Default).Replace("\r\n", "\n").Split('\n'));
+foreach (Homer.InixCodec.Section sec in lsOld) {
+foreach (Homer.InixCodec.Pair pair in sec.Pairs) {
+if (string.IsNullOrEmpty(pair.Value)) continue;
+if (File.Exists(sInix) && Homer.InixCodec.readValue(sInix, sec.Name, pair.Key, null) != null) continue;
+if (Homer.InixCodec.writeValue(sInix, sec.Name, pair.Key, pair.Value)) iAdded++;
 }
 }
-catch (Exception ex) { Homer.Log.info("settings: the .ini could not be copied to .inix: " + ex.Message); }
+string sRetired = sIniFile + ".migrated";
+if (File.Exists(sRetired)) sRetired = sIniFile + "." + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".migrated";
+File.Move(sIniFile, sRetired);
+Homer.Log.info("settings: " + iAdded + " value(s) added to " + sInix + " from " + sIniFile + ", which is now " + sRetired);
+}
+}
+catch (Exception ex) { Homer.Log.info("settings: " + sIniFile + " could not be retired: " + ex.Message); }
 App.readIni();
 App.wireListHistory();
 // sTempFile = Path.Combine(sDataDir, "FileDir.tmp");
@@ -6009,7 +6022,7 @@ if (App.DirsBeforeFiles != bDirsBeforeFiles) hashOrder_Helper();
 
 void menuMiscManualOptions_Click(object sender, EventArgs e) {
 App.writeIni();
-Process.Start(App.sTextEditor, Homer.Util.stringQuote(Homer.Util.getLfn(App.sIniFile)));
+Process.Start(App.sTextEditor, Homer.Util.stringQuote(App.getInixPath()));   // FileDir.inix, where the settings are (10 November 2026)
 // readIni();
 } // menuMiscManualOptions_Click method
 

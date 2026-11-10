@@ -201,9 +201,8 @@ Source: "RepoFiles.txt"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoes
 Source: "LocalFiles.txt"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "accept.inix"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 
-; SETTINGS AND DATA. FileDir.ini seeds the per-user settings and is never
-; overwritten; the program writes its own copy under AppData from the first run.
-Source: "configs\FileDir.ini"; DestDir: "{app}\configs"; Flags: onlyifdoesntexist skipifsourcedoesntexist
+; SETTINGS AND DATA. FileDir writes its own settings, FileDir.inix, under AppData from the first run; the shipped
+; FileDir.ini that once seeded them was read by nothing, and is gone (10 November 2026).
 Source: "configs\Convert.txt"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "configs\Quick.txt"; DestDir: "{app}\configs"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "configs\Hints.inix"; DestDir: "{app}\configs"; Flags: ignoreversion
@@ -533,6 +532,8 @@ FileName: "{app}\help\FileDir.htm"; \
   Flags: postinstall shellexec nowait skipifsilent skipifdoesntexist runasoriginaluser unchecked
 
 [InstallDelete]
+; FileDir.ini is not shipped any more (10 November 2026).
+Type: files; Name: "{app}\configs\FileDir.ini"
 ; UPGRADING FROM THE FLAT LAYOUT. Every FileDir before 5.0.106 put the program,
 ; its libraries, its tools, its documents and its scripts at the root of the
 ; program folder. They are all one level down now, and an old copy left at the
