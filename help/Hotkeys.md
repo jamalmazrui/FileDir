@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.230**  
+**Version 5.0.231**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -182,7 +182,7 @@ Commands in alphabetical order.
 - **Say Folder Name**, Shift+Apostrophe -- Say the current folder's name, then its full path
 - **Say Item Name**, Apostrophe -- Say name of current file or folder item
 - **Say Path**, Alt+P -- Say the full path of the current item
-- **Say Position**, Alt+Delete or Shift+5 -- Say the current item's number, the count and the percent
+- **Say Position**, Alt+Delete or Shift+5 -- Say the current position: the item's number, the count and the percent
 - **Say Selected**, Shift+Space -- or JAWSKey+Shift+DownArrow, Say the marked items, or the current one
 - **Say Size**, Shift+S -- Say the current item's size
 - **Say Status**, Alt+Z -- Say the current item's date and size, then the order and filter
@@ -253,7 +253,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Comma** -- Unmark All But Current: Unmark all but current item
 - **Alt+Control+F** -- Launch FileDir: Start FileDir, or switch to it, from its desktop shortcut
 - **Alt+D** -- Date Order: Sort items in date/time order
-- **Alt+Delete or Shift+5** -- Say Position: Say the current item's number, the count and the percent
+- **Alt+Delete or Shift+5** -- Say Position: Say the current position: the item's number, the count and the percent
 - **Alt+Enter** -- Properties: Show the Windows properties of the current item
 - **Alt+F1** -- About: Say FileDir's version and release date
 - **Alt+F10** -- Alternate Menu: Pick any command from one list, in menu, name or key order

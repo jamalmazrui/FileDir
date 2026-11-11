@@ -2,6 +2,10 @@
 
 
 
+## 10 November 2026 -- Say Position, said as the suite says it
+
+- **Say Position's description** reads "Say the current position: the item's number, the count and the percent", the suite's sentence for every app.
+
 ## 10 November 2026 -- Every message, always
 
 - **Extra Speech Toggle and Extra Speech Log are gone, and their keys are free.** FileDir always speaks its messages, each chosen and short, and Configuration Options no longer offers ExtraSpeech. A message it does not speak, because FileDir is not in front or Scroll Lock is on, is written to the session log with the reason, which replaces speech.log.
