@@ -558,7 +558,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 15: Alt+F1
 
-Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
+Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
 
 Screen reader:
 
@@ -582,7 +582,7 @@ Control plus slash, Where Am I, says the folder and where you are in it; pressed
 
 Screen reader:
 
-- Where Am I
+- Hotkey Summary
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -2082,7 +2082,7 @@ Screen reader:
 
 ### Step 25
 
-F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
 
 ### Step 26
 
@@ -2342,9 +2342,7 @@ on the clipboard.
    for good.
 5. Press **Alt+Shift+M** for Manual Options to change something for this session
    only.
-6. Press **Control+Shift+X** — Extra Speech Toggle — if FileDir says more than
-   you want. Press it again to bring the extra messages back.
-7. Press **F11** now and then for Elevate Version, which checks whether a newer
+6. Press **F11** now and then for Elevate Version, which checks whether a newer
    FileDir has been released.
 
 **What you learned:** where the settings are, and how to explore the rest on

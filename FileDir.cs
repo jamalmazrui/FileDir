@@ -288,7 +288,6 @@ return lsSeen.ToArray();
 } // recentDistinct method
 public static bool Recycle = true;
 public static bool DirsBeforeFiles = true;
-public static bool bExtraSpeech = true;
 public static bool bZipOpener = true;
 public static string sUserName = "";
 public static string sPassword = "";
@@ -436,15 +435,11 @@ return say(oText, false);
 } // say method
 
 public static bool say(object oText, bool bGlobal) {
-if (!App.bExtraSpeech) {
-string sLog = File.Exists(App.sSpeechLog) ? File.ReadAllText(App.sSpeechLog) : "";
-File.WriteAllText(App.sSpeechLog, sLog + oText.ToString() + "\r\n");
-return true;
-}
-
+// WHAT IS NOT SPOKEN IS STILL LOGGED (10 November 2026): no extra-speech switch, and the runtime log holds every
+// message, spoken or not, with the reason; speech.log, which held only the unspoken ones, is retired.
 if (!bGlobal) {
-if (!isAppActiveWindow()) return false;
-if (Control.IsKeyLocked(Keys.Scroll)) return false;
+if (!isAppActiveWindow()) { Homer.Say.noteUnspoken(oText.ToString(), "FileDir is not the active window"); return false; }
+if (Control.IsKeyLocked(Keys.Scroll)) { Homer.Say.noteUnspoken(oText.ToString(), "Scroll Lock is on"); return false; }
 }
 
 Homer.Say.sayForced(oText.ToString());
@@ -999,7 +994,6 @@ bLoadingIni = true;
 try {
 App.Recycle = App.readValue(App.sIniFile, "Settings", "RecycleWithDelete", (App.Recycle ? "y" : "n")).Trim().ToLower() == "n" ? false : true;
 App.DirsBeforeFiles = App.readValue(App.sIniFile, "Settings", "DirsBeforeFiles", (App.DirsBeforeFiles ? "y" : "n")).Trim().ToLower() == "n" ? false : true;
-App.bExtraSpeech = App.readValue(App.sIniFile, "Settings", "ExtraSpeech", (App.bExtraSpeech ? "y" : "n")).Trim().ToLower() == "n" ? false : true;
 App.bZipOpener = App.readValue(App.sIniFile, "Settings", "ZipOpener", (App.bZipOpener ? "y" : "n")).Trim().ToLower() == "n" ? false : true;
 App.sTextEditor = App.readValue(App.sIniFile, "Settings", "TextEditor", App.sTextEditor);
 App.sWordProcessor = App.readValue(App.sIniFile, "Settings", "WordProcessor", App.sWordProcessor);
@@ -1064,7 +1058,6 @@ catch (Exception) { }
 public static void writeIni() {
 App.writeValue(App.sIniFile, "Settings", "RecycleWithDelete", (App.Recycle ? "y" : "n"));
 App.writeValue(App.sIniFile, "Settings", "DirsBeforeFiles", (App.DirsBeforeFiles ? "y" : "n"));
-App.writeValue(App.sIniFile, "Settings", "ExtraSpeech", (App.bExtraSpeech ? "y" : "n"));
 App.writeValue(App.sIniFile, "Settings", "ZipOpener", (App.bZipOpener ? "y" : "n"));
 App.writeValue(App.sIniFile, "Settings", "TextEditor", App.sTextEditor);
 App.writeValue(App.sIniFile, "Settings", "WordProcessor", App.sWordProcessor);
@@ -1483,8 +1476,6 @@ public HomerToolStripMenuItem menuQueryTimer;
 public HomerToolStripMenuItem menuMisc;
 public HomerToolStripMenuItem menuMiscConfigurationOptions;
 public HomerToolStripMenuItem menuMiscManualOptions;
-public HomerToolStripMenuItem menuMiscExtraSpeechToggle;
-public HomerToolStripMenuItem menuMiscExtraSpeechLog;
 public HomerToolStripMenuItem menuMiscEnvironmentVariables;
 public HomerToolStripMenuItem menuMiscRecycleToggle;
 public HomerToolStripMenuItem menuMiscOpenRecycleBin;
@@ -1650,7 +1641,7 @@ menuEditUntagAllButCurrent = menu_Helper("Unmark All But Current", "Alt+,", Menu
 menuEditStartTagOrUntag = menu_Helper("Start Mark or Unmark", "F8", MenuEditStartTagOrUntag_Click);
 menuEditCompleteTag = menu_Helper("Complete Mark", "Shift+F8", MenuEditCompleteTag_Click);
 menuEditCompleteUntag = menu_Helper("Complete Unmark", "Alt+Shift+F8", MenuEditCompleteUntag_Click);
-menuEditInvertTagged = menu_Helper("&Invert Marked", "Control+I", MenuEditInvertTagged_Click);
+menuEditInvertTagged = menu_Helper("&Invert Marked", "Control+I or Alt+Shift+I", MenuEditInvertTagged_Click);
 menuEditSaveTags = menu_Helper("&Save Marks", "Control+S", MenuEditSaveTags_Click);
 menuEditRestoreTags = menu_Helper("Restore Marks", "Control+Shift+S", MenuEditRestoreTags_Click);
 menuEditCopyToClipboardTagged = menu_Helper("&Copy", "Control+C", menuEditCopyToClipboardTagged_Click);
@@ -1666,7 +1657,7 @@ menuEditDeleteTaggedWithoutRecycle = menu_Helper("Delete without Recycle", "Shif
 menuEditDeleteAndRecycleTagged = menu_Helper("Delete and Recycle", "Control+Delete", MenuEditDeleteAndRecycleTagged_Click);
 menuEditDeleteFileNow = menu_Helper("Delete and Recycle File Now", "Control+D", MenuEditDeleteFileNow_Click);
 menuEditDeleteFileNowWithoutRecycle = menu_Helper("Delete File Now", "Control+Shift+D", MenuEditDeleteFileNowWithoutRecycle_Click);
-menuEditRename = menu_Helper("Rename ...", "Shift+R or F2", menuEditRename_Click);
+menuEditRename = menu_Helper("Rename ...", "Shift+R or F2 or Shift+F2", menuEditRename_Click);
 menuEditRenameWithWildcards = menu_Helper("Rename with Wildcards ...", "Control+R", menuEditRenameWithWildcards_Click);
 menuEditRenameWithRegex = menu_Helper("Rename with Regex ...", "Control+Shift+R", menuEditRenameWithRegex_Click);
 menuEditRenameToTitle = menu_Helper("Rename to Identify Content", "Control+Shift+I", MenuEditRenameToTitle_Click);
@@ -1695,8 +1686,8 @@ menuNavigateKeywords = menu_Helper("&Keywords ...", "Control+K", menuNavigateKey
 menuNavigateKeywordsAgain = menu_Helper("Keywords Again", "Alt+K", menuNavigateKeywordsAgain_Click);
 menuNavigateKeywordsBack = menu_Helper("Reverse Keywords", "Control+Shift+K", menuNavigateKeywordsBack_Click);
 menuNavigateSearchAgain = menu_Helper("Search Next", "F3", menuNavigateSearchAgain_Click);
-menuNavigateNextPart = menu_Helper("Next Part", "F6", menuNavigateNextPart_Click);
-menuNavigatePreviousPart = menu_Helper("Previous Part", "Shift+F6", menuNavigatePreviousPart_Click);
+menuNavigateNextPart = menu_Helper("Next Pane", "F6", menuNavigateNextPart_Click);
+menuNavigatePreviousPart = menu_Helper("Previous Pane", "Shift+F6", menuNavigatePreviousPart_Click);
 menuNavigateNextSiblingFolder = menu_Helper("Next Sibling Folder", "Control+F6", menuNavigateNextSiblingFolder_Click);
 menuNavigatePreviousSiblingFolder = menu_Helper("Previous Sibling Folder", "Control+Shift+F6", menuNavigatePreviousSiblingFolder_Click);
 menuNavigateNextVisitedFolder = menu_Helper("Next Visited Folder", "Alt+F6", menuNavigateNextVisitedFolder_Click);
@@ -1744,8 +1735,6 @@ menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryLi
 menuMisc = menu_Helper("&Misc");
 menuMiscConfigurationOptions = menu_Helper("Edit Settings", "Alt+Shift+E", menuMiscOptions_Click);
 menuMiscManualOptions = menu_Helper("Edit Settings File", "Alt+Shift+F2", menuMiscManualOptions_Click);
-menuMiscExtraSpeechToggle = menu_Helper("Extra Speech Toggle", "Alt+Shift+Z", menuMiscExtraSpeechToggle_Click);
-menuMiscExtraSpeechLog = menu_Helper("Extra Speech Log", "Alt+Shift+F12", menuMiscExtraSpeechLog_Click);
 menuMiscEnvironmentVariables = menu_Helper("&Environment Variables ...", "Control+E", menuMiscEnvironmentVariables_Click);
 menuMiscRecycleToggle = menu_Helper("Recycle Toggle", "Alt+Shift+R", menuMiscRecycleToggle_Click);
 menuMiscOpenRecycleBin = menu_Helper("Recycle Bin", "Control+B", menuMiscOpenRecycleBin_Click);
@@ -1798,11 +1787,11 @@ menuMiscPlayFolder = menu_Helper("Play Media", "Control+P", MenuMiscPlayFolder_C
 // wearing Q was borrowing a letter that already means something else.
 menuMiscHomerPlayer = menu_Helper("Homer Player", "Control+Shift+H", menuMiscHomerPlayer_Click);
 menuMiscIterateProcesses = menu_Helper("Iterate Processes ...", "Alt+I", MenuMiscIterateProcesses_Click);
-menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I", MenuMiscInquireDifferences_Click);
+menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "", MenuMiscInquireDifferences_Click);
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscExtraSpeechToggle, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -1840,7 +1829,13 @@ menuHelpSendToMenu = menu_Helper("SendTo Menu ...", "Control+F10", MenuHelpSendT
 menuHelpAlternateMenu = menu_Helper("Alternate Menu ...", "Alt+F10", MenuHelpAlternateMenu_Click);
 menuHelpElevateVersion = menu_Helper("Elevate Version", "F11", menuHelpElevateVersion_Click);
 menuHelpCopyLog = menu_Helper("Copy Log", "Control+F12", MenuHelpCopyLog_Click);
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpWhatThisDoes, menuHelpWhereAmI, menuHelpChangeHistory, menuHelpPlayTutorials, menuHelpReadMe, menuHelpHotkeysPage, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
+// EVERY DOCUMENT ON THE HELP MENU (10 November 2026): the documents FileDir ships, each an item, as in DbDo and EdSharp.
+HomerToolStripMenuItem menuHelpFrequentlyAskedQuestions = menu_Helper("Frequently Asked Questions", "", delegate(object oSender, EventArgs oArgs) { Homer.SuiteCommands.openHelp("FAQ.htm"); });
+HomerToolStripMenuItem menuHelpTutorialsTranscript = menu_Helper("Tutorials Transcript", "", delegate(object oSender, EventArgs oArgs) { Homer.SuiteCommands.openHelp("Tutorials.htm"); });
+HomerToolStripMenuItem menuHelpAnnouncement = menu_Helper("Announcement", "", delegate(object oSender, EventArgs oArgs) { Homer.SuiteCommands.openHelp("Announce.htm"); });
+HomerToolStripMenuItem menuHelpDeveloperGuide = menu_Helper("Developer Guide", "", delegate(object oSender, EventArgs oArgs) { Homer.SuiteCommands.openHelp("Developer.htm"); });
+HomerToolStripMenuItem menuHelpLicense = menu_Helper("License", "", delegate(object oSender, EventArgs oArgs) { Homer.SuiteCommands.openHelp("License.htm"); });
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpWhatThisDoes, menuHelpWhereAmI, menuHelpChangeHistory, menuHelpPlayTutorials, menuHelpReadMe, menuHelpHotkeysPage, menuHelpFrequentlyAskedQuestions, menuHelpTutorialsTranscript, menuHelpAnnouncement, menuHelpDeveloperGuide, menuHelpLicense, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
 //menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpHotKeys, menuHelpContextMenu, menuHelpExplorerMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion});
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuQuery, menuNavigate, menuMisc, menuWindow, menuHelp});
@@ -6000,8 +5995,8 @@ else timer_Helper(App.tsElapsed);
 
 void menuMiscOptions_Click(object sender, EventArgs e) {
 //App.readIni();
-string[] aFields = {"&Text Editor", "&Word Processor", "&LogInUserName", "&Password", "&SenderAddress", "&OutgoingServer", "&UnarchivePassword", "&RecycleWithDelete", "&DirsBeforeFiles", "E&xtraSpeech", "&ZipOpener"};
-string[] aValues = {App.sTextEditor, App.sWordProcessor, App.sUserName, App.sPassword, App.sSenderAddress, App.sOutgoingServer, App.sUnarchivePassword, (App.Recycle ? "y" : "n"), (App.DirsBeforeFiles ? "y" : "n"), (App.bExtraSpeech ? "y" : "n"), (App.bZipOpener ? "y" : "n")};
+string[] aFields = {"&Text Editor", "&Word Processor", "&LogInUserName", "&Password", "&SenderAddress", "&OutgoingServer", "&UnarchivePassword", "&RecycleWithDelete", "&DirsBeforeFiles", "&ZipOpener"};
+string[] aValues = {App.sTextEditor, App.sWordProcessor, App.sUserName, App.sPassword, App.sSenderAddress, App.sOutgoingServer, App.sUnarchivePassword, (App.Recycle ? "y" : "n"), (App.DirsBeforeFiles ? "y" : "n"), (App.bZipOpener ? "y" : "n")};
 //Homer.LbcAsk.show(aFields.Length, aValues.Length);
 ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
 if (sResultList.Count == 0) return;
@@ -6016,8 +6011,7 @@ App.sUnarchivePassword = (string) sResultList[6];
 App.Recycle = ((string) sResultList[7]).Trim().ToUpper() == "N" ? false : true;
 bool bDirsBeforeFiles = App.DirsBeforeFiles;
 App.DirsBeforeFiles = ((string) sResultList[8]).Trim().ToUpper() == "N" ? false : true;
-App.bExtraSpeech = ((string) sResultList[9]).Trim().ToUpper() == "N" ? false : true;
-App.bZipOpener = ((string) sResultList[10]).Trim().ToUpper() == "N" ? false : true;
+App.bZipOpener = ((string) sResultList[9]).Trim().ToUpper() == "N" ? false : true;
 App.writeIni();
 if (App.DirsBeforeFiles != bDirsBeforeFiles) hashOrder_Helper();
 } // menuMiscOptions_Click method
@@ -6028,17 +6022,7 @@ Process.Start(App.sTextEditor, Homer.Util.stringQuote(App.getInixPath()));   // 
 // readIni();
 } // menuMiscManualOptions_Click method
 
-void menuMiscExtraSpeechToggle_Click(object sender, EventArgs e) {
-bool bSpeech = App.bExtraSpeech;
-App.bExtraSpeech = true;
-App.say("Extra speech");
-App.say(bSpeech ? "Off" : "On");
-App.bExtraSpeech = !bSpeech;
-} // menuMiscExtraSpeechToggle_Click method
 
-void menuMiscExtraSpeechLog_Click(object sender, EventArgs e) {
-Process.Start(App.sSpeechLog);
-} // menuMiscExtraSpeechLog_Click method
 
 void menuMiscEnvironmentVariables_Click(object sender, EventArgs e) {
 string sChoice = Homer.LbcAsk.buttonDialog("Target", "", new string[] {"&Process", "&User", "&Machine"}, 0);
@@ -9286,8 +9270,6 @@ declareKey("menuMiscWindowsControlPanel", menuMiscWindowsControlPanel, Keys.Cont
 declareKey("menuMiscWebDownload", menuMiscWebDownload, Keys.Alt | Keys.Shift | Keys.W);
 declareKey("menuNavigateExtensionChange", menuNavigateExtensionChange, Keys.Shift | Keys.X);
 declareKey("menuEditCutToClipboardTagged", menuEditCutToClipboardTagged, Keys.Control | Keys.X);
-declareKey("menuMiscExtraSpeechToggle", menuMiscExtraSpeechToggle, Keys.Alt | Keys.Shift | Keys.Z);
-declareKey("menuMiscExtraSpeechLog", menuMiscExtraSpeechLog, Keys.Alt | Keys.Shift | Keys.F12);
 declareKey("menuEditDeleteAndRecycleTagged", menuEditDeleteAndRecycleTagged, Keys.Control | Keys.Delete);
 declareKey("menuQueryYieldTagged", menuQueryYieldTagged, Keys.Shift | Keys.Y);
 declareKey("menuQueryYieldFiles", menuQueryYieldFiles, Keys.Alt | Keys.Y);

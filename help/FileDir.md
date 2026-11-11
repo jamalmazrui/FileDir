@@ -104,7 +104,7 @@ FileDir uses a "Multiple Document Interface" (MDI), so any number of directory v
 
 Some commands differ in whether they open a new window ore re-use the existing one. Commands with "Go to" in the name re-use the existing window, whereas "Open" commands start a new one.
 
-Extra speech is provided through a UIA notification that JAWS, NVDA, and Narrator announce. These are intended to be comprehensible chunks of targeted information. For example, pressing Shift+Y gives the "yield" or count and combined size of marked folder and file items in the current directory view. Speech of this nature can be efficient for screen reader users as opposed to, say, a message box that generates additional screen reader speech describing the dialog, and then has to be dismissed with another key, triggering more screen reader speech.
+FileDir's own messages are spoken through a UIA notification that JAWS, NVDA, and Narrator announce. These are intended to be comprehensible chunks of targeted information. For example, pressing Shift+Y gives the "yield" or count and combined size of marked folder and file items in the current directory view. Speech of this nature can be efficient for screen reader users as opposed to, say, a message box that generates additional screen reader speech describing the dialog, and then has to be dismissed with another key, triggering more screen reader speech.
 
 Typically, a key combination using Alt or Control rather than Shift performs another variation of the command. For example, Shift+L lists all marked items, Control+L lists all items regardless of marked state, and Alt+L lists all files, but not folders.
 
@@ -413,8 +413,6 @@ Shift+Space tells you what items are currently checked. Alt+A says the address o
 ## Miscellaneous Commands
 
 Miscellaneous commands do not fit neatly into previous categories. Use the Edit Settings command, Alt+Shift+E, to configure FileDir options such as the word processor invoked with Control+W or the text editor invoked with Control+T. Alternatively, use the Edit Settings File command, Alt+Shift+F2, to adjust configuration options in the designated text editor.
-
-Extra speech messages may be toggled off -- or reactivated -- with Control+Shift+X. When off, such messages are redirected to a text file called Speech.log, which may be examined in an editing window with Alt+Shift+X. This file is initialized when FileDir starts, and the Extra Speech setting is remembered from the previous session.
 
 With the optional JAWS scripts, you can toggle a speech setting of reading all or no punctuation using JAWSKey plus the grave accent at the top left of the main keypad (U.S. keyboard). All punctuation is useful when reading carefully for details, whereas no punctuation is useful when reading quickly for concepts.
 
