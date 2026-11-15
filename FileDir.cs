@@ -1641,7 +1641,9 @@ menuEditUntagAllButCurrent = menu_Helper("Unmark All But Current", "Alt+,", Menu
 menuEditStartTagOrUntag = menu_Helper("Start Mark or Unmark", "F8", MenuEditStartTagOrUntag_Click);
 menuEditCompleteTag = menu_Helper("Complete Mark", "Shift+F8", MenuEditCompleteTag_Click);
 menuEditCompleteUntag = menu_Helper("Complete Unmark", "Alt+Shift+F8", MenuEditCompleteUntag_Click);
-menuEditInvertTagged = menu_Helper("&Invert Marked", "Control+I or Alt+Shift+I", MenuEditInvertTagged_Click);
+// WHAT IS SHOWN IS WHAT RUNS (15 November 2026, the keyboard audit's A6): Alt+Shift+I was shown here but runs Inquire
+// Differences. Invert Marked moves to Alt+Shift+I only when Inquire Differences has a new key.
+menuEditInvertTagged = menu_Helper("&Invert Marked", "Control+I", MenuEditInvertTagged_Click);
 menuEditSaveTags = menu_Helper("&Save Marks", "Control+S", MenuEditSaveTags_Click);
 menuEditRestoreTags = menu_Helper("Restore Marks", "Control+Shift+S", MenuEditRestoreTags_Click);
 menuEditCopyToClipboardTagged = menu_Helper("&Copy", "Control+C", menuEditCopyToClipboardTagged_Click);
@@ -1695,7 +1697,7 @@ menuNavigatePreviousVisitedFolder = menu_Helper("Previous Visited Folder", "Alt+
 menuNavigateSearchBack = menu_Helper("Search Previous", "Shift+F3", menuNavigateSearchBack_Click);
 menuNavigateSetFilter = menu_Helper("Set &Filter ...", "Control+F", menuNavigateSetFilter_Click);
 menuNavigateClearFilter = menu_Helper("Clear Filter", "Control+Shift+F", menuNavigateClearFilter_Click);
-menuNavigateBeginningFile = menu_Helper("Beginning File", "Alt+B", menuNavigateBeginningFile_Click);
+menuNavigateBeginningFile = menu_Helper("Beginning File", "Alt+B or Alt+Home", menuNavigateBeginningFile_Click);
 menuNavigateBeginningTagged = menu_Helper("Beginning Marked", "Shift+B or Control+Shift+Home", menuNavigateBeginningTagged_Click);
 menuNavigateEndTagged = menu_Helper("End Marked", "Shift+E or Control+Shift+End", menuNavigateEndTagged_Click);
 menuNavigateNextTagged = menu_Helper("Next Marked", "Shift+N or Control+DownArrow", menuNavigateNextTagged_Click);
@@ -1758,7 +1760,7 @@ menuMiscMailBody = menu_Helper("Mail Body", "Control+M", menuMiscMailBody_Click)
 menuMiscMailAttachTagged = menu_Helper("Mail Attachment", "Control+Shift+M", menuMiscMailAttachTagged_Click);
 menuMiscBatchMail = menu_Helper("Batch Mail", "Control+Shift+B", menuMiscBatchMail_Click);
 menuMiscZipTagged = menu_Helper("Zip ...", "Shift+Z", menuMiscZipTagged_Click);
-menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Z", menuMiscZipTaggedThenDelete_Click);
+menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Z or Control+Shift+Delete", menuMiscZipTaggedThenDelete_Click);
 menuMiscZipList = menu_Helper("Zip List ...", "Control+Shift+Z", menuMiscZipList_Click);
 menuMiscUnarchiveTagged = menu_Helper("Unarchive", "Shift+U", menuMiscUnarchiveTagged_Click);
 menuMiscUnarchiveTaggedWithoutSubfolders = menu_Helper("Unarchive without Subfolders", "Control+U", menuMiscUnarchiveTaggedWithoutSubfolders_Click);
@@ -1787,7 +1789,7 @@ menuMiscPlayFolder = menu_Helper("Play Media", "Control+P", MenuMiscPlayFolder_C
 // wearing Q was borrowing a letter that already means something else.
 menuMiscHomerPlayer = menu_Helper("Homer Player", "Control+Shift+H", menuMiscHomerPlayer_Click);
 menuMiscIterateProcesses = menu_Helper("Iterate Processes ...", "Alt+I", MenuMiscIterateProcesses_Click);
-menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "", MenuMiscInquireDifferences_Click);
+menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I", MenuMiscInquireDifferences_Click);
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
@@ -9150,7 +9152,9 @@ declareKey("menuEditTagWithRegularExpression", menuEditTagWithRegularExpression,
 declareKey("menuEditUntagAllButCurrent", menuEditUntagAllButCurrent, Keys.Alt | Keys.Oemcomma);
 declareKey("menuEditTag", menuEditTag, Keys.OemSemicolon);
 declareKey("menuQueryNow", menuQueryNow, Keys.Alt | Keys.OemSemicolon);
-declareKey("menuEditUntag", menuEditUntag, Keys.Alt | Keys.Shift | Keys.Clear, Keys.OemQuestion);
+// MAIN KEYS FIRST (15 November 2026, the keyboard audit's A13): the first key is the one Hotkeys and the describer name, and
+// a keypad key (Clear is keypad 5 with Num Lock off) is not on every keyboard, so it follows as an alias.
+declareKey("menuEditUntag", menuEditUntag, Keys.OemQuestion, Keys.Alt | Keys.Shift | Keys.Clear);
 declareKey("menuEditDeleteTagged", menuEditDeleteTagged, Keys.Delete);
 declareKey("menuEditDeleteTaggedWithoutRecycle", menuEditDeleteTaggedWithoutRecycle, Keys.Shift | Keys.Delete);
 declareKey("menuMiscAlphaOrder", menuMiscAlphaOrder, Keys.Alt | Keys.A);
@@ -9169,7 +9173,7 @@ declareKey("menuEditCompleteUntag", menuEditCompleteUntag, Keys.Alt | Keys.Shift
 declareKey("menuEditCopyTagged", menuEditCopyTagged, Keys.Shift | Keys.C);
 declareKey("menuMiscOpenRecycleBin", menuMiscOpenRecycleBin, Keys.Control | Keys.B);
 declareKey("menuMiscBatchMail", menuMiscBatchMail, Keys.Control | Keys.Shift | Keys.B);
-declareKey("menuNavigateBeginningFile", menuNavigateBeginningFile, Keys.Alt | Keys.Home, Keys.Alt | Keys.B);
+declareKey("menuNavigateBeginningFile", menuNavigateBeginningFile, Keys.Alt | Keys.B, Keys.Alt | Keys.Home);
 declareKey("menuMiscBurnTagged", menuMiscBurnTagged, Keys.Alt | Keys.Shift | Keys.B);
 declareKey("menuNavigateBeginningTagged", menuNavigateBeginningTagged, Keys.Shift | Keys.B, Keys.Control | Keys.Shift | Keys.Home);
 declareKey("menuNavigateEndTagged", menuNavigateEndTagged, Keys.Shift | Keys.E, Keys.Control | Keys.Shift | Keys.End);
@@ -9240,8 +9244,15 @@ declareKey("menuFileGoToQuickFolder", menuFileGoToQuickFolder, Keys.Oemtilde);
 declareKey("menuFileOpenQuickFolder", menuFileOpenQuickFolder, Keys.Control | Keys.Q);
 declareKey("menuFileQuickShortcut", menuFileQuickShortcut, Keys.Shift | Keys.Q);
 declareKey("menuFileQuickURL", menuFileQuickURL, Keys.Alt | Keys.Shift | Keys.Q);
-declareKey("menuEditRename", menuEditRename, Keys.F2, Keys.Shift | Keys.R);
+// SHIFT+F2, THE SUITE'S RENAME KEY (15 November 2026): it was shown and listed in Hotkeys, but no key ran it.
+declareKey("menuEditRename", menuEditRename, Keys.F2, Keys.Shift | Keys.R, Keys.Shift | Keys.F2);
 declareKey("menuEditRenameWithWildcards", menuEditRenameWithWildcards, Keys.Control | Keys.R);
+// EVERY LIVE COMMAND IN THE REGISTRY (15 November 2026, the keyboard audit's A13): these three had no keys, so they were
+// never declared, and the Alternate Menu's name order, the export and the checks could not see them. They stay keyless
+// by recorded exception (help\KeyDecisions.md in the kit): Print, Hotkeys and Hotkey Summary.
+declareKey("menuFilePrintTagged", menuFilePrintTagged);
+declareKey("menuHelpHotkeysPage", menuHelpHotkeysPage);
+declareKey("menuHelpHotKeys", menuHelpHotKeys);
 declareKey("menuEditRenameWithRegex", menuEditRenameWithRegex, Keys.Control | Keys.Shift | Keys.R);
 declareKey("menuFileRecentFolders", menuFileRecentFolders, Keys.Alt | Keys.R);
 declareKey("menuMiscRecycleToggle", menuMiscRecycleToggle, Keys.Alt | Keys.Shift | Keys.R);
@@ -9264,7 +9275,7 @@ declareKey("menuEditPasteFromClipboard", menuEditPasteFromClipboard, Keys.Contro
 declareKey("menuMiscVolumeFormat", menuMiscVolumeFormat, Keys.Control | Keys.Shift | Keys.V);
 declareKey("menuEditPasteCopy", menuEditPasteCopy, Keys.Alt | Keys.V);
 declareKey("menuEditPasteMove", menuEditPasteMove, Keys.Alt | Keys.Shift | Keys.V);
-declareKey("menuQueryWindowsOpen", menuQueryWindowsOpen, Keys.Alt | Keys.Clear, Keys.Shift | Keys.F4);
+declareKey("menuQueryWindowsOpen", menuQueryWindowsOpen, Keys.Shift | Keys.F4, Keys.Alt | Keys.Clear);
 declareKey("menuMiscSendToWordProcessor", menuMiscSendToWordProcessor, Keys.Control | Keys.W);
 declareKey("menuMiscWindowsControlPanel", menuMiscWindowsControlPanel, Keys.Control | Keys.Shift | Keys.W);
 declareKey("menuMiscWebDownload", menuMiscWebDownload, Keys.Alt | Keys.Shift | Keys.W);

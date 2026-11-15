@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.13" />
+  <meta name="generator" content="pandoc 3.14" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Hotkeys</title>
   <style>
@@ -35,27 +35,6 @@
       }
       h1 {
         font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        color-scheme: light only;
-      }
-      html, body, pre, code {
-        background-color: transparent;
-      }
-      body, a, a:visited, blockquote {
-        color: black;
-      }
-      pre, code {
-        padding: 0;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
       }
     }
     p {
@@ -163,6 +142,12 @@
       text-decoration: none;
     }
     span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
     div.columns{display: flex; gap: 1.5em;}
     div.column{flex: auto;}
     @media screen {
@@ -179,15 +164,35 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-  </style>
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
 </head>
 <body>
 <main>
 <h1 id="filedir-hotkeys">FileDir Hotkeys</h1>
-<p><strong>Version 5.0.231</strong><br />
+<p><strong>Version 5.0.232</strong><br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
-<p>Generated from Hotkeys.inix on 10 November 2026. Do not edit this
+<p>Generated from Hotkeys.inix on 15 November 2026. Do not edit this
 file; edit Hotkeys.inix and build again.</p>
 <p>This is the complete list of FileDir commands, given three ways so
 you can find a command however you happen to be thinking about it. Press
@@ -218,8 +223,8 @@ the marked files to the clipboard</li>
 windows</li>
 <li><strong>Batch Mail</strong>, Control+Shift+B – Send a message
 individually to multiple recipients</li>
-<li><strong>Beginning File</strong>, Alt+B – Go to beginning file item,
-skipping over folder items</li>
+<li><strong>Beginning File</strong>, Alt+B or Alt+Home – Go to beginning
+file item, skipping over folder items</li>
 <li><strong>Beginning Marked</strong>, Shift+B or Control+Shift+Home –
 Go to beginning marked item</li>
 <li><strong>Burn to CD</strong>, Alt+Shift+B – Burn the current item or
@@ -346,10 +351,10 @@ its key and description</li>
 and key</li>
 <li><strong>Initial Change</strong>, Shift+I – Go to next item with
 different initial letter</li>
-<li><strong>Inquire Differences</strong>, no key – Make a report that
-compares the files in two folders</li>
-<li><strong>Invert Marked</strong>, Control+I – or Alt+Shift+I, Mark the
-unmarked items in view and unmark the marked ones</li>
+<li><strong>Inquire Differences</strong>, Alt+Shift+I – Make a report
+that compares the files in two folders</li>
+<li><strong>Invert Marked</strong>, Control+I – Mark the unmarked items
+in view and unmark the marked ones</li>
 <li><strong>Iterate Processes</strong>, Alt+I – List running processes
 and activate or terminate</li>
 <li><strong>Jump</strong>, Control+J – Go to the next item whose name
@@ -647,8 +652,8 @@ window on drive letter corresponding to digit</li>
 order</li>
 <li><strong>Alt+Apostrophe</strong> – Say Clipboard: Say the clipboard
 text</li>
-<li><strong>Alt+B</strong> – Beginning File: Go to beginning file item,
-skipping over folder items</li>
+<li><strong>Alt+B or Alt+Home</strong> – Beginning File: Go to beginning
+file item, skipping over folder items</li>
 <li><strong>Alt+Backslash</strong> – Open in Explorer: Open the current
 folder in Windows Explorer</li>
 <li><strong>Alt+C</strong> – Copy Append: Add the current item or the
@@ -734,6 +739,8 @@ from the range’s start to the current one</li>
 folder definition in same window</li>
 <li><strong>Alt+Shift+Home</strong> – Unmark to Top: Unmark to top of
 list</li>
+<li><strong>Alt+Shift+I</strong> – Inquire Differences: Make a report
+that compares the files in two folders</li>
 <li><strong>Alt+Shift+J</strong> – Find Duplicates in Tree: Find
 duplicate files in this folder and below</li>
 <li><strong>Alt+Shift+K</strong> – Reorder Names: Rename files so they
@@ -820,8 +827,8 @@ window</li>
 folder beside this one, by name</li>
 <li><strong>Control+G</strong> – Go to Folder: Go to folder in same
 window</li>
-<li><strong>Control+I</strong> – Invert Marked: or Alt+Shift+I, Mark the
-unmarked items in view and unmark the marked ones</li>
+<li><strong>Control+I</strong> – Invert Marked: Mark the unmarked items
+in view and unmark the marked ones</li>
 <li><strong>Control+J</strong> – Jump: Go to the next item whose name
 holds the text</li>
 <li><strong>Control+K</strong> – Keywords: Go to the next item whose
@@ -1062,6 +1069,7 @@ quickest way to see what a family of keys does.</p>
 <li><strong>Alt+Shift+J</strong> – Find Duplicates in Tree</li>
 <li><strong>Alt+Shift+C</strong> – Folder to Clipboard</li>
 <li><strong>Alt+Shift+G</strong> – Go to Virtual Folder</li>
+<li><strong>Alt+Shift+I</strong> – Inquire Differences</li>
 <li><strong>Alt+Shift+Period</strong> – Mark Duplicate Files</li>
 <li><strong>Alt+Shift+Comma</strong> – Mark Similar Files</li>
 <li><strong>Alt+Shift+N</strong> – Network Connections</li>
@@ -1131,7 +1139,7 @@ Window</li>
 <li><strong>Alt+A</strong> – Alpha Order</li>
 <li><strong>Alt+F10</strong> – Alternate Menu</li>
 <li><strong>Alt+F11</strong> – Arrange Icons</li>
-<li><strong>Alt+B</strong> – Beginning File</li>
+<li><strong>Alt+B or Alt+Home</strong> – Beginning File</li>
 <li><strong>Alt+C</strong> – Copy Append</li>
 <li><strong>Alt+D</strong> – Date Order</li>
 <li><strong>Alt+1</strong> – Drive Letter</li>

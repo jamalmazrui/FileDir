@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.13" />
+  <meta name="generator" content="pandoc 3.14" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>History</title>
   <style>
@@ -35,27 +35,6 @@
       }
       h1 {
         font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        color-scheme: light only;
-      }
-      html, body, pre, code {
-        background-color: transparent;
-      }
-      body, a, a:visited, blockquote {
-        color: black;
-      }
-      pre, code {
-        padding: 0;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
       }
     }
     p {
@@ -163,6 +142,12 @@
       text-decoration: none;
     }
     span.smallcaps{font-variant: small-caps;}
+    em, em em em, em em em em em {
+      font-style: italic;
+    }
+    em em, em em em em {
+      font-style: normal;
+    }
     div.columns{display: flex; gap: 1.5em;}
     div.column{flex: auto;}
     @media screen {
@@ -179,11 +164,54 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-  </style>
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }  </style>
 </head>
 <body>
 <main>
 <h1 id="filedir-change-history">FileDir — Change History</h1>
+<h2 id="november-2026-the-keys-filedir-shows-are-the-keys-it-answers">15
+November 2026 – The keys FileDir shows are the keys it answers</h2>
+<ul>
+<li><strong>Invert Marked</strong> shows Control+I only. It also showed
+Alt+Shift+I, which has always gone to Inquire Differences. Moving Invert
+Marked to Alt+Shift+I waits until Inquire Differences has another
+key.</li>
+<li><strong>Rename</strong> answers Shift+F2, the suite’s Rename key,
+which the menu showed but the keyboard never routed. F2 and Shift+R
+still rename.</li>
+<li><strong>Beginning File</strong> shows both its keys, Alt+B and
+Alt+Home, and Zip then Delete shows Control+Z and
+Control+Shift+Delete.</li>
+<li><strong>Main keys come first.</strong> Unmark lists Slash before
+Alt+Shift+Clear, and Say Windows Open lists Shift+F4 before Alt+Clear,
+so the key a menu or the Key Describer names first is the one on every
+keyboard.</li>
+<li><strong>Every live command is registered</strong>, including Print,
+the Hotkeys page and Hotkey Summary, which have no key, so the Key
+Describer and the command list find them.</li>
+<li>FileDir now needs HomerDev 1.235.0, whose suite check records the
+Invert Marked exception.</li>
+</ul>
 <h2 id="november-2026-say-position-said-as-the-suite-says-it">10
 November 2026 – Say Position, said as the suite says it</h2>
 <ul>

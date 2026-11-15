@@ -2,6 +2,15 @@
 
 
 
+## 15 November 2026 -- The keys FileDir shows are the keys it answers
+
+- **Invert Marked** shows Control+I only. It also showed Alt+Shift+I, which has always gone to Inquire Differences. Moving Invert Marked to Alt+Shift+I waits until Inquire Differences has another key.
+- **Rename** answers Shift+F2, the suite's Rename key, which the menu showed but the keyboard never routed. F2 and Shift+R still rename.
+- **Beginning File** shows both its keys, Alt+B and Alt+Home, and Zip then Delete shows Control+Z and Control+Shift+Delete.
+- **Main keys come first.** Unmark lists Slash before Alt+Shift+Clear, and Say Windows Open lists Shift+F4 before Alt+Clear, so the key a menu or the Key Describer names first is the one on every keyboard.
+- **Every live command is registered**, including Print, the Hotkeys page and Hotkey Summary, which have no key, so the Key Describer and the command list find them.
+- FileDir now needs HomerDev 1.235.0, whose suite check records the Invert Marked exception.
+
 ## 10 November 2026 -- Say Position, said as the suite says it
 
 - **Say Position's description** reads "Say the current position: the item's number, the count and the percent", the suite's sentence for every app.
