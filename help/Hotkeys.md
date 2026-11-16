@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.237**  
+**Version 5.0.238**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -23,14 +23,13 @@ Commands in alphabetical order.
 - **Alternate Menu**, Alt+F10 -- Pick any command from one list, in menu, name or key order
 - **Announcement**, no key -- Open the announcement of this version
 - **Append Clipboard**, Control+Shift+Apostrophe -- Add the clipboard text to the end of a file you name
-- **Append to Clipboard**, Shift+A -- Append the text of the marked files to the clipboard
+- **Append File Contents**, Shift+A -- Append the text of the marked files to the clipboard
 - **Arrange Icons**, Alt+F11 -- Arrange the open windows
 - **Batch Mail**, Control+Shift+B -- Send a message individually to multiple recipients
 - **Beginning File**, Alt+B or Alt+Home -- Go to beginning file item, skipping over folder items
 - **Beginning Marked**, Shift+B or Control+Shift+Home -- Go to beginning marked item
 - **Burn to CD**, Alt+Shift+B -- Burn the current item or the marked ones to a CD
 - **Cascade**, Control+F11 -- Cascade the open windows
-- **Character Encoding**, Shift+2 -- Say the current file's character encoding
 - **Chat about File**, Shift+F12 -- Ask the AI model on this computer about the current file
 - **Chat with AI**, F12 -- Ask the AI model on this computer a question
 - **Clear Clipboard**, Alt+Shift+Apostrophe -- Empty the clipboard
@@ -100,9 +99,6 @@ Commands in alphabetical order.
 - **Keywords Again**, Alt+K -- Repeat Keywords command with same string
 - **Launch FileDir**, Alt+Control+F -- Start FileDir, or switch to it, from its desktop shortcut
 - **License**, no key -- Open the license
-- **List**, Control+L -- Say items in current folder
-- **List Files**, Alt+L -- Say the files, not the folders, in this folder
-- **List Marked**, Shift+L -- Say marked items in current folder
 - **Mail Attachment**, Control+Shift+M -- Send the current item or the marked ones as email attachments
 - **Mail Body**, Control+M -- Send the current file's text as the body of an email message
 - **Mark**, SemiColon -- Mark current item
@@ -175,21 +171,29 @@ Commands in alphabetical order.
 - **Reverse Type Order**, Alt+Shift+T -- Sort items in reverse type/extension order
 - **Save Clipboard**, Control+Apostrophe -- Save the clipboard text to a file you name
 - **Save Marks**, Control+S -- Save which items are marked in the current folder view
+- **Say Character Encoding**, Shift+2 -- Say the current file's character encoding
 - **Say Clipboard**, Alt+Apostrophe -- Say the clipboard text
 - **Say Date**, Shift+D -- Say date and time of current item
 - **Say Filter and Order**, Shift+8 -- Say current sort order and filter specification
 - **Say Folder Name**, Shift+Apostrophe -- Say the current folder's name, then its full path
 - **Say Item Name**, Apostrophe -- Say name of current file or folder item
+- **Say List**, Control+L -- Say the items in view
+- **Say List Files**, Alt+L -- Say the files in view, not the folders
+- **Say List Marked**, Shift+L -- Say the marked items in view
 - **Say Path**, Alt+P -- Say the full path of the current item
 - **Say Position**, Alt+Delete or Shift+5 -- Say the current position: the item's number, the count and the percent
 - **Say Selected**, Shift+Space -- or JAWSKey+Shift+DownArrow, Say the marked items, or the current one
 - **Say Size**, Shift+S -- Say the current item's size
 - **Say Status**, Alt+Z -- Say the current item's date and size, then the order and filter, and the timer when one is set
 - **Say Time**, Alt+Semicolon -- Say the date and time
-- **Say Timer**, no key -- Say the timer's time, not counting pauses
 - **Say Type**, Shift+T -- Say type/extension of current item
 - **Say What Content**, Question -- Say the current file's text, or list what the folder holds
 - **Say Windows Open**, Shift+F4 -- or Alt+NumPad5, Say how many windows are open, and their titles
+- **Say Yield**, Alt+Y -- Say how many items are in view, and their total size
+- **Say Yield Files**, Control+Y -- Say how many files are in view, and their total size
+- **Say Yield in Operating System**, Alt+Shift+Y -- Say Windows version, physical memory, and virtual memory
+- **Say Yield Marked**, Shift+Y -- Say how many items are marked, and their total size
+- **Say Yield on Drive**, Control+Shift+Y -- Say the current drive's total size and free space
 - **Search Next**, F3 -- Repeat the last Keywords or Jump, forward
 - **Search Previous**, Shift+F3 -- Repeat the last Keywords or Jump, backward
 - **Send to Text Editor**, Control+T -- Send the current file to your text editor
@@ -198,6 +202,7 @@ Commands in alphabetical order.
 - **Set Filter**, Control+F -- Show only the items whose names match
 - **Short Path to Clipboard**, Tilde -- Copy short path of current item to clipboard
 - **Show**, LeftParen -- Remove Hidden attribute of current or marked items
+- **Show Type Extended**, Control+Shift+T -- Show every property of the current item
 - **Size Order**, Alt+S -- Sort items in size order
 - **Stamp with Date and Time**, Exclamation -- Point, Stamp date and time of current or marked items
 - **Start Mark or Unmark**, F8 -- Mark start of sequence to be marked or unmarked
@@ -205,12 +210,10 @@ Commands in alphabetical order.
 - **System**, RightBrace -- Set System attribute of current or marked items
 - **Tile Horizontal**, Alt+Shift+F11 -- Tile the open windows across
 - **Tile Vertical**, Shift+F11 -- Tile the open windows down
-- **Timer**, no key -- Say the time since the timer started
 - **Timer Toggle**, Alt+Shift+Z -- Start a timer, pause it or resume it
-- **Toggle Mark**, Space or Control+Space -- Invert marked state of current item
+- **Toggle Mark**, Space or Control+Space -- Mark or unmark the current item
 - **Translate File**, Alt+Shift+F7 -- Translate the marked files, or the current one, into another language
 - **Tutorials Transcript**, no key -- Open the text of the tutorials
-- **Type Extended**, Control+Shift+T -- Show every property of the current item
 - **Type Order**, Alt+T -- Sort items in type/extension order
 - **Unarchive**, Shift+U -- Unzip current or marked files
 - **Unarchive Password**, Alt+Shift+U -- Set password to be used when creating, extracting, or viewing zip archives
@@ -229,11 +232,6 @@ Commands in alphabetical order.
 - **What This Does**, Shift+F1 -- Say what the control with focus does
 - **Where Am I**, Control+Slash -- Say where you are, what has focus and its keys
 - **Windows Control Panel**, Control+Shift+W -- Launch Control Panel to configure Windows
-- **Yield**, Control+Y -- Say count and size of items in current folder
-- **Yield Files**, Alt+Y -- Say the count and size of the files in this folder
-- **Yield in Operating System**, Alt+Shift+Y -- Say Windows version, physical memory, and virtual memory
-- **Yield Marked**, Shift+Y -- Say count and size of marked items in current folder
-- **Yield on Drive**, Control+Shift+Y -- Say total size and bytes free on current drive
 - **Zip**, Shift+Z -- Add current or marked files to zip archive
 - **Zip List**, Control+Shift+Z -- Create or update a zip archive based on a list of files or folders
 - **Zip then Delete**, Control+Z or Control+Shift+Delete -- Add current or marked files to zip archive, then delete originals
@@ -265,7 +263,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+I** -- Iterate Processes: List running processes and activate or terminate
 - **Alt+J** -- Jump Again: Repeat Jump command with same string
 - **Alt+K** -- Keywords Again: Repeat Keywords command with same string
-- **Alt+L** -- List Files: Say the files, not the folders, in this folder
+- **Alt+L** -- Say List Files: Say the files in view, not the folders
 - **Alt+LeftArrow** -- Go Back: Go to the folder visited before this one
 - **Alt+O** -- Open Drive: Pick drive to open in new window
 - **Alt+P** -- Say Path: Say the full path of the current item
@@ -305,12 +303,12 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+U** -- Unarchive Password: Set password to be used when creating, extracting, or viewing zip archives
 - **Alt+Shift+V** -- Paste Move: Move items listed on clipboard to current folder
 - **Alt+Shift+W** -- Web Download: Download files linked from a web page
-- **Alt+Shift+Y** -- Yield in Operating System: Say Windows version, physical memory, and virtual memory
+- **Alt+Shift+Y** -- Say Yield in Operating System: Say Windows version, physical memory, and virtual memory
 - **Alt+Shift+Z** -- Timer Toggle: Start a timer, pause it or resume it
 - **Alt+T** -- Type Order: Sort items in type/extension order
 - **Alt+U** -- Unarchive Test: Check if current file item can be unzipped successfully
 - **Alt+V** -- Paste Copy: Copy items listed on clipboard to current folder
-- **Alt+Y** -- Yield Files: Say the count and size of the files in this folder
+- **Alt+Y** -- Say Yield: Say how many items are in view, and their total size
 - **Alt+Z** -- Say Status: Say the current item's date and size, then the order and filter, and the timer when one is set
 - **Apostrophe** -- Say Item Name: Say name of current file or folder item
 - **Backslash** -- Open Root Folder: Open the drive's root folder in a new window
@@ -339,7 +337,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+I** -- Invert Marked: Mark the unmarked items in view and unmark the marked ones
 - **Control+J** -- Jump: Go to the next item whose name holds the text
 - **Control+K** -- Keywords: Go to the next item whose content holds the keywords
-- **Control+L** -- List: Say items in current folder
+- **Control+L** -- Say List: Say the items in view
 - **Control+M** -- Mail Body: Send the current file's text as the body of an email message
 - **Control+N** -- New Folder: Create new folder on disk
 - **Control+O** -- Open Folder: Open folder in new window
@@ -370,13 +368,13 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+Period** -- Mark with Regex: Mark files that match a regular expression
 - **Control+Shift+R** -- Rename with Regex: Rename current or marked items with regular expressions
 - **Control+Shift+S** -- Restore Marks: Apply previously saved marks
-- **Control+Shift+T** -- Type Extended: Show every property of the current item
+- **Control+Shift+T** -- Show Type Extended: Show every property of the current item
 - **Control+Shift+Tab** -- Previous Window: Switch to the previous window
 - **Control+Shift+U** -- Unarchive to Same Name: Unzip current or marked files to a folder named like the archive
 - **Control+Shift+UpArrow** -- Unmark and Previous: Unmark the current item and go to the previous
 - **Control+Shift+V** -- Volume Format: Format a disk or storage card
 - **Control+Shift+W** -- Windows Control Panel: Launch Control Panel to configure Windows
-- **Control+Shift+Y** -- Yield on Drive: Say total size and bytes free on current drive
+- **Control+Shift+Y** -- Say Yield on Drive: Say the current drive's total size and free space
 - **Control+Shift+Z** -- Zip List: Create or update a zip archive based on a list of files or folders
 - **Control+Slash** -- Where Am I: Say where you are, what has focus and its keys
 - **Control+T** -- Send to Text Editor: Send the current file to your text editor
@@ -385,7 +383,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+V** -- Paste: Paste the clipboard items into the current folder
 - **Control+W** -- Send to Word Processor: Send the current file to your word processor
 - **Control+X** -- Cut: Cut the current item or the marked ones to the clipboard
-- **Control+Y** -- Yield: Say count and size of items in current folder
+- **Control+Y** -- Say Yield Files: Say how many files are in view, and their total size
 - **Control+Z or Control+Shift+Delete** -- Zip then Delete: Add current or marked files to zip archive, then delete originals
 - **Delete** -- Delete: Delete current or marked items and recycle according to setting
 - **Enter** -- Open Item: Open subfolder in new window, view zip archive, or launch file
@@ -406,10 +404,10 @@ The same commands, in alphabetical order of the key that runs them.
 - **RightBracket** -- ReadOnly: Set ReadOnly attribute of current or marked items
 - **RightParen** -- Hide: Set Hidden attribute of current or marked items
 - **SemiColon** -- Mark: Mark current item
-- **Shift+2** -- Character Encoding: Say the current file's character encoding
+- **Shift+2** -- Say Character Encoding: Say the current file's character encoding
 - **Shift+3** -- Convert Units: Convert between different units of measure and copy result to clipboard
 - **Shift+8** -- Say Filter and Order: Say current sort order and filter specification
-- **Shift+A** -- Append to Clipboard: Append the text of the marked files to the clipboard
+- **Shift+A** -- Append File Contents: Append the text of the marked files to the clipboard
 - **Shift+Apostrophe** -- Say Folder Name: Say the current folder's name, then its full path
 - **Shift+B or Control+Shift+Home** -- Beginning Marked: Go to beginning marked item
 - **Shift+Backslash** -- Go to Root Folder: Go to root folder of current drive in same window
@@ -432,7 +430,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+G** -- Get FTP: Download files from an FTP folder
 - **Shift+Home** -- Mark to Top: Mark to top of list
 - **Shift+I** -- Initial Change: Go to next item with different initial letter
-- **Shift+L** -- List Marked: Say marked items in current folder
+- **Shift+L** -- Say List Marked: Say the marked items in view
 - **Shift+M** -- Move to Folder: Move current or marked items to another folder
 - **Shift+N or Control+DownArrow** -- Next Marked: Go to the next marked item
 - **Shift+O** -- Output Type: Convert the marked files, or the current one, to a type you pick
@@ -446,10 +444,10 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+U** -- Unarchive: Unzip current or marked files
 - **Shift+UpArrow** -- Mark and Previous: Mark the current item and go to the previous
 - **Shift+X** -- Extension Change: Go to next item with different extension
-- **Shift+Y** -- Yield Marked: Say count and size of marked items in current folder
+- **Shift+Y** -- Say Yield Marked: Say how many items are marked, and their total size
 - **Shift+Z** -- Zip: Add current or marked files to zip archive
 - **Slash or Alt+Shift+NumPad5** -- Unmark: Unmark current item
-- **Space or Control+Space** -- Toggle Mark: Invert marked state of current item
+- **Space or Control+Space** -- Toggle Mark: Mark or unmark the current item
 - **Tilde** -- Short Path to Clipboard: Copy short path of current item to clipboard
 
 ## By First Modifier
@@ -483,6 +481,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+D** -- Reverse Date Order
 - **Alt+Shift+S** -- Reverse Size Order
 - **Alt+Shift+T** -- Reverse Type Order
+- **Alt+Shift+Y** -- Say Yield in Operating System
 - **Alt+Shift+F11** -- Tile Horizontal
 - **Alt+Shift+Z** -- Timer Toggle
 - **Alt+Shift+F7** -- Translate File
@@ -490,7 +489,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+End** -- Unmark to Bottom
 - **Alt+Shift+Home** -- Unmark to Top
 - **Alt+Shift+W** -- Web Download
-- **Alt+Shift+Y** -- Yield in Operating System
 
 ### Alt+Control
 
@@ -521,13 +519,13 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+R** -- Rename with Regex
 - **Control+Shift+S** -- Restore Marks
 - **Control+Shift+K** -- Reverse Keywords
-- **Control+Shift+T** -- Type Extended
+- **Control+Shift+Y** -- Say Yield on Drive
+- **Control+Shift+T** -- Show Type Extended
 - **Control+Shift+U** -- Unarchive to Same Name
 - **Control+Shift+A** -- Unmark All
 - **Control+Shift+UpArrow** -- Unmark and Previous
 - **Control+Shift+V** -- Volume Format
 - **Control+Shift+W** -- Windows Control Panel
-- **Control+Shift+Y** -- Yield on Drive
 - **Control+Shift+Z** -- Zip List
 
 ### Alt
@@ -547,7 +545,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+I** -- Iterate Processes
 - **Alt+J** -- Jump Again
 - **Alt+K** -- Keywords Again
-- **Alt+L** -- List Files
 - **Alt+Period** -- Mark All Files
 - **Alt+F6** -- Next Visited Folder
 - **Alt+O** -- Open Drive
@@ -557,16 +554,17 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Enter** -- Properties
 - **Alt+R** -- Recent Folders
 - **Alt+Apostrophe** -- Say Clipboard
+- **Alt+L** -- Say List Files
 - **Alt+P** -- Say Path
 - **Alt+Delete or Shift+5** -- Say Position
 - **Alt+Z** -- Say Status
 - **Alt+Semicolon** -- Say Time
+- **Alt+Y** -- Say Yield
 - **Alt+S** -- Size Order
 - **Alt+F2** -- Stop Timer
 - **Alt+T** -- Type Order
 - **Alt+U** -- Unarchive Test
 - **Alt+Comma** -- Unmark All But Current
-- **Alt+Y** -- Yield Files
 
 ### Control
 
@@ -585,7 +583,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+J** -- Jump
 - **Control+F1** -- Key Describer Toggle
 - **Control+K** -- Keywords
-- **Control+L** -- List
 - **Control+M** -- Mail Body
 - **Control+A** -- Mark All
 - **Control+N** -- New Folder
@@ -600,20 +597,20 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+R** -- Rename with Wildcards
 - **Control+Apostrophe** -- Save Clipboard
 - **Control+S** -- Save Marks
+- **Control+L** -- Say List
+- **Control+Y** -- Say Yield Files
 - **Control+T** -- Send to Text Editor
 - **Control+W** -- Send to Word Processor
 - **Control+F10** -- SendTo Menu
 - **Control+F** -- Set Filter
 - **Control+U** -- Unarchive without Subfolders
 - **Control+Slash** -- Where Am I
-- **Control+Y** -- Yield
 - **Control+Z or Control+Shift+Delete** -- Zip then Delete
 
 ### Shift
 
-- **Shift+A** -- Append to Clipboard
+- **Shift+A** -- Append File Contents
 - **Shift+B or Control+Shift+Home** -- Beginning Marked
-- **Shift+2** -- Character Encoding
 - **Shift+F12** -- Chat about File
 - **Shift+F8** -- Complete Mark
 - **Shift+F10 or Applications** -- Context Menu
@@ -627,7 +624,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Shift+Enter** -- Go to Item
 - **Shift+Backslash** -- Go to Root Folder
 - **Shift+I** -- Initial Change
-- **Shift+L** -- List Marked
 - **Shift+Period or Shift+DownArrow** -- Mark and Next
 - **Shift+UpArrow** -- Mark and Previous
 - **Shift+End** -- Mark to Bottom
@@ -639,19 +635,21 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Shift+F6** -- Previous Pane
 - **Shift+Q** -- Quick Shortcut
 - **Shift+R** -- Rename
+- **Shift+2** -- Say Character Encoding
 - **Shift+D** -- Say Date
 - **Shift+8** -- Say Filter and Order
 - **Shift+Apostrophe** -- Say Folder Name
+- **Shift+L** -- Say List Marked
 - **Shift+Space** -- Say Selected
 - **Shift+S** -- Say Size
 - **Shift+T** -- Say Type
 - **Shift+F4** -- Say Windows Open
+- **Shift+Y** -- Say Yield Marked
 - **Shift+F3** -- Search Previous
 - **Shift+F11** -- Tile Vertical
 - **Shift+U** -- Unarchive
 - **Shift+Comma or Control+Shift+DownArrow** -- Unmark and Next
 - **Shift+F1** -- What This Does
-- **Shift+Y** -- Yield Marked
 - **Shift+Z** -- Zip
 
 ### Function keys

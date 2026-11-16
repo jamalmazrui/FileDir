@@ -298,9 +298,9 @@ Audio sample rate
 
 Channels
 
-Press Control+L to list all items in the current folder, or Shift+L for those marked. Press Alt+L to list files but not folders.
+Press Control+L, Say List, to hear all items in view, or Shift+L, Say List Marked, for those marked. Press Alt+L, Say List Files, for files but not folders.
 
-Press Y for the yield, or count and combined size, of items in the current folder. Press Shift+Y for those marked or Alt+Y for files only. Press Control+Shift+Y for the total size and free space on the current drive. Press Alt+Shift+Y for operating system information, including the Windows version, physical memory, and virtual memory.
+Press Alt+Y, Say Yield, for the yield, or count and combined size, of the items in view, as Alt+Y does in every Homer app. Press Shift+Y for those marked, or Control+Y for files only. Press Control+Shift+Y for the total size and free space on the current drive. Press Alt+Shift+Y for operating system information, including the Windows version, physical memory, and virtual memory.
 
 Press % (Shift+5) for the Percent Through command, which indicates the relative position of the current item in the list, e.g., "6 of 20 items, 30% through." If you are sequentially examining the files in a folder or ZIP archive, this gives you a sense of how much is done and what remains. Use the Filter Query command, Star (Shift+8), to quickly check the current sort order and filter specification.
 
@@ -634,7 +634,7 @@ Use the Elevate Version command, F11, to download and install the latest version
 
 ## What Is Inside a File
 
-Press **Control+Shift+T** for Type Extended. It shows everything known about the
+Press **Control+Shift+T** for Show Type Extended. It shows everything known about the
 item you are on as one plain list of field names and values, sorted by name
 without regard to capitalization.
 

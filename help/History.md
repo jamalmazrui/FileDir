@@ -2,6 +2,16 @@
 
 
 
+## 15 November 2026 -- Say and Show, and Alt+Y as in every Homer app
+
+- **The Query commands say what they do.** List, List Marked and List Files are **Say List**, **Say List Marked** and **Say List Files**; Yield Marked, Yield on Drive and Yield in Operating System are **Say Yield Marked**, **Say Yield on Drive** and **Say Yield in Operating System**; Character Encoding is **Say Character Encoding**; and Type Extended, which opens a window, is **Show Type Extended**.
+- **Alt+Y is Say Yield,** the count and size of everything in view, as Alt+Y is in DbDo, EdSharp and HomerView; it was Yield on Control+Y. **Say Yield Files**, files only, moves from Alt+Y to Control+Y.
+- **Append File Contents** (Shift+A) was Append to Clipboard, to tell it from Copy Append (Alt+C), which appends the items themselves.
+- **Toggle Mark** says "Mark or unmark the current item", as in DbDo.
+- **Timer is retired.** Say Status (Alt+Z) says the timer's state and time.
+- The Alternate Menu still finds each command by its old name: its line ends "Formerly" and the name.
+- FileDir now needs HomerDev 1.241.0.
+
 ## 15 November 2026 -- What FileDir binds, shown truly
 
 - **Context Menu shows both its keys,** Shift+F10 and the Applications key, which it always answered; the first comparison of what FileDir binds with what it shows found the second.

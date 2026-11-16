@@ -70,7 +70,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Not every question needs a model. Control plus Shift plus T, Type Extended, lists every property FileDir can find for the file, alphabetically: its dates, its size, its author and title.
+Say=Not every question needs a model. Control plus Shift plus T, Show Type Extended, lists every property FileDir can find for the file, alphabetically: its dates, its size, its author and title.
 Key=Control+Shift+T
 Hear=Type Extended, read only edit
 Note=Confirm the wording with a live run: buildTutorials -live.

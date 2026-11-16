@@ -558,7 +558,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 15: Alt+F1
 
-Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
+Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes, and Alt plus F1 says the version and offers a newer one if there is one.
 
 Screen reader:
 
@@ -582,7 +582,7 @@ Control plus slash, Where Am I, says the folder and where you are in it; pressed
 
 Screen reader:
 
-- Hotkey Summary
+- Where Am I
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -911,7 +911,7 @@ Screen reader:
 
 ### Step 13: Control+Shift+T
 
-Control plus Shift plus T, Type Extended, says more: every property of the current item in one alphabetical list, such as a document's title and author, or a sound file's length. Walk five shows the Player's own Extra Info.
+Control plus Shift plus T, Show Type Extended, says more: every property of the current item in one alphabetical list, such as a document's title and author, or a sound file's length. Walk five shows the Player's own Extra Info.
 
 Screen reader:
 
@@ -1603,7 +1603,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 13: Shift+A
 
-Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
+Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append File Contents, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
 
 Screen reader:
 
@@ -1768,7 +1768,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 10: Control+Shift+T
 
-Not every question needs a model. Control plus Shift plus T, Type Extended, lists every property FileDir can find for the file, alphabetically: its dates, its size, its author and title.
+Not every question needs a model. Control plus Shift plus T, Show Type Extended, lists every property FileDir can find for the file, alphabetically: its dates, its size, its author and title.
 
 Screen reader:
 
@@ -2082,7 +2082,7 @@ Screen reader:
 
 ### Step 25
 
-F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 opens the history of changes. Alt plus F1 says the version.
+F1 opens the guide, the whole of FileDir in one document, from inside the program. Shift plus F1 says what the control with focus does. Control plus Shift plus F1 opens the history of changes. Alt plus F1 says the version.
 
 ### Step 26
 

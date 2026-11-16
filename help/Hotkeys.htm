@@ -189,7 +189,7 @@
 <body>
 <main>
 <h1 id="filedir-hotkeys">FileDir Hotkeys</h1>
-<p><strong>Version 5.0.237</strong><br />
+<p><strong>Version 5.0.238</strong><br />
 Copyright 2006-2026 by Jamal Mazrui<br />
 MIT License</p>
 <p>Generated from Hotkeys.inix on 15 November 2026. Do not edit this
@@ -217,7 +217,7 @@ list, in menu, name or key order</li>
 this version</li>
 <li><strong>Append Clipboard</strong>, Control+Shift+Apostrophe – Add
 the clipboard text to the end of a file you name</li>
-<li><strong>Append to Clipboard</strong>, Shift+A – Append the text of
+<li><strong>Append File Contents</strong>, Shift+A – Append the text of
 the marked files to the clipboard</li>
 <li><strong>Arrange Icons</strong>, Alt+F11 – Arrange the open
 windows</li>
@@ -231,8 +231,6 @@ Go to beginning marked item</li>
 the marked ones to a CD</li>
 <li><strong>Cascade</strong>, Control+F11 – Cascade the open
 windows</li>
-<li><strong>Character Encoding</strong>, Shift+2 – Say the current
-file’s character encoding</li>
 <li><strong>Chat about File</strong>, Shift+F12 – Ask the AI model on
 this computer about the current file</li>
 <li><strong>Chat with AI</strong>, F12 – Ask the AI model on this
@@ -368,11 +366,6 @@ with same string</li>
 <li><strong>Launch FileDir</strong>, Alt+Control+F – Start FileDir, or
 switch to it, from its desktop shortcut</li>
 <li><strong>License</strong>, no key – Open the license</li>
-<li><strong>List</strong>, Control+L – Say items in current folder</li>
-<li><strong>List Files</strong>, Alt+L – Say the files, not the folders,
-in this folder</li>
-<li><strong>List Marked</strong>, Shift+L – Say marked items in current
-folder</li>
 <li><strong>Mail Attachment</strong>, Control+Shift+M – Send the current
 item or the marked ones as email attachments</li>
 <li><strong>Mail Body</strong>, Control+M – Send the current file’s text
@@ -514,6 +507,8 @@ reverse type/extension order</li>
 clipboard text to a file you name</li>
 <li><strong>Save Marks</strong>, Control+S – Save which items are marked
 in the current folder view</li>
+<li><strong>Say Character Encoding</strong>, Shift+2 – Say the current
+file’s character encoding</li>
 <li><strong>Say Clipboard</strong>, Alt+Apostrophe – Say the clipboard
 text</li>
 <li><strong>Say Date</strong>, Shift+D – Say date and time of current
@@ -524,6 +519,11 @@ order and filter specification</li>
 folder’s name, then its full path</li>
 <li><strong>Say Item Name</strong>, Apostrophe – Say name of current
 file or folder item</li>
+<li><strong>Say List</strong>, Control+L – Say the items in view</li>
+<li><strong>Say List Files</strong>, Alt+L – Say the files in view, not
+the folders</li>
+<li><strong>Say List Marked</strong>, Shift+L – Say the marked items in
+view</li>
 <li><strong>Say Path</strong>, Alt+P – Say the full path of the current
 item</li>
 <li><strong>Say Position</strong>, Alt+Delete or Shift+5 – Say the
@@ -536,14 +536,22 @@ size</li>
 size, then the order and filter, and the timer when one is set</li>
 <li><strong>Say Time</strong>, Alt+Semicolon – Say the date and
 time</li>
-<li><strong>Say Timer</strong>, no key – Say the timer’s time, not
-counting pauses</li>
 <li><strong>Say Type</strong>, Shift+T – Say type/extension of current
 item</li>
 <li><strong>Say What Content</strong>, Question – Say the current file’s
 text, or list what the folder holds</li>
 <li><strong>Say Windows Open</strong>, Shift+F4 – or Alt+NumPad5, Say
 how many windows are open, and their titles</li>
+<li><strong>Say Yield</strong>, Alt+Y – Say how many items are in view,
+and their total size</li>
+<li><strong>Say Yield Files</strong>, Control+Y – Say how many files are
+in view, and their total size</li>
+<li><strong>Say Yield in Operating System</strong>, Alt+Shift+Y – Say
+Windows version, physical memory, and virtual memory</li>
+<li><strong>Say Yield Marked</strong>, Shift+Y – Say how many items are
+marked, and their total size</li>
+<li><strong>Say Yield on Drive</strong>, Control+Shift+Y – Say the
+current drive’s total size and free space</li>
 <li><strong>Search Next</strong>, F3 – Repeat the last Keywords or Jump,
 forward</li>
 <li><strong>Search Previous</strong>, Shift+F3 – Repeat the last
@@ -560,6 +568,8 @@ names match</li>
 current item to clipboard</li>
 <li><strong>Show</strong>, LeftParen – Remove Hidden attribute of
 current or marked items</li>
+<li><strong>Show Type Extended</strong>, Control+Shift+T – Show every
+property of the current item</li>
 <li><strong>Size Order</strong>, Alt+S – Sort items in size order</li>
 <li><strong>Stamp with Date and Time</strong>, Exclamation – Point,
 Stamp date and time of current or marked items</li>
@@ -573,18 +583,14 @@ current or marked items</li>
 windows across</li>
 <li><strong>Tile Vertical</strong>, Shift+F11 – Tile the open windows
 down</li>
-<li><strong>Timer</strong>, no key – Say the time since the timer
-started</li>
 <li><strong>Timer Toggle</strong>, Alt+Shift+Z – Start a timer, pause it
 or resume it</li>
-<li><strong>Toggle Mark</strong>, Space or Control+Space – Invert marked
-state of current item</li>
+<li><strong>Toggle Mark</strong>, Space or Control+Space – Mark or
+unmark the current item</li>
 <li><strong>Translate File</strong>, Alt+Shift+F7 – Translate the marked
 files, or the current one, into another language</li>
 <li><strong>Tutorials Transcript</strong>, no key – Open the text of the
 tutorials</li>
-<li><strong>Type Extended</strong>, Control+Shift+T – Show every
-property of the current item</li>
 <li><strong>Type Order</strong>, Alt+T – Sort items in type/extension
 order</li>
 <li><strong>Unarchive</strong>, Shift+U – Unzip current or marked
@@ -622,16 +628,6 @@ with focus does</li>
 has focus and its keys</li>
 <li><strong>Windows Control Panel</strong>, Control+Shift+W – Launch
 Control Panel to configure Windows</li>
-<li><strong>Yield</strong>, Control+Y – Say count and size of items in
-current folder</li>
-<li><strong>Yield Files</strong>, Alt+Y – Say the count and size of the
-files in this folder</li>
-<li><strong>Yield in Operating System</strong>, Alt+Shift+Y – Say
-Windows version, physical memory, and virtual memory</li>
-<li><strong>Yield Marked</strong>, Shift+Y – Say count and size of
-marked items in current folder</li>
-<li><strong>Yield on Drive</strong>, Control+Shift+Y – Say total size
-and bytes free on current drive</li>
 <li><strong>Zip</strong>, Shift+Z – Add current or marked files to zip
 archive</li>
 <li><strong>Zip List</strong>, Control+Shift+Z – Create or update a zip
@@ -688,8 +684,8 @@ and activate or terminate</li>
 string</li>
 <li><strong>Alt+K</strong> – Keywords Again: Repeat Keywords command
 with same string</li>
-<li><strong>Alt+L</strong> – List Files: Say the files, not the folders,
-in this folder</li>
+<li><strong>Alt+L</strong> – Say List Files: Say the files in view, not
+the folders</li>
 <li><strong>Alt+LeftArrow</strong> – Go Back: Go to the folder visited
 before this one</li>
 <li><strong>Alt+O</strong> – Open Drive: Pick drive to open in new
@@ -767,7 +763,7 @@ be used when creating, extracting, or viewing zip archives</li>
 clipboard to current folder</li>
 <li><strong>Alt+Shift+W</strong> – Web Download: Download files linked
 from a web page</li>
-<li><strong>Alt+Shift+Y</strong> – Yield in Operating System: Say
+<li><strong>Alt+Shift+Y</strong> – Say Yield in Operating System: Say
 Windows version, physical memory, and virtual memory</li>
 <li><strong>Alt+Shift+Z</strong> – Timer Toggle: Start a timer, pause it
 or resume it</li>
@@ -777,8 +773,8 @@ order</li>
 can be unzipped successfully</li>
 <li><strong>Alt+V</strong> – Paste Copy: Copy items listed on clipboard
 to current folder</li>
-<li><strong>Alt+Y</strong> – Yield Files: Say the count and size of the
-files in this folder</li>
+<li><strong>Alt+Y</strong> – Say Yield: Say how many items are in view,
+and their total size</li>
 <li><strong>Alt+Z</strong> – Say Status: Say the current item’s date and
 size, then the order and filter, and the timer when one is set</li>
 <li><strong>Apostrophe</strong> – Say Item Name: Say name of current
@@ -834,7 +830,7 @@ in view and unmark the marked ones</li>
 holds the text</li>
 <li><strong>Control+K</strong> – Keywords: Go to the next item whose
 content holds the keywords</li>
-<li><strong>Control+L</strong> – List: Say items in current folder</li>
+<li><strong>Control+L</strong> – Say List: Say the items in view</li>
 <li><strong>Control+M</strong> – Mail Body: Send the current file’s text
 as the body of an email message</li>
 <li><strong>Control+N</strong> – New Folder: Create new folder on
@@ -895,7 +891,7 @@ that match a regular expression</li>
 or marked items with regular expressions</li>
 <li><strong>Control+Shift+S</strong> – Restore Marks: Apply previously
 saved marks</li>
-<li><strong>Control+Shift+T</strong> – Type Extended: Show every
+<li><strong>Control+Shift+T</strong> – Show Type Extended: Show every
 property of the current item</li>
 <li><strong>Control+Shift+Tab</strong> – Previous Window: Switch to the
 previous window</li>
@@ -907,8 +903,8 @@ the current item and go to the previous</li>
 storage card</li>
 <li><strong>Control+Shift+W</strong> – Windows Control Panel: Launch
 Control Panel to configure Windows</li>
-<li><strong>Control+Shift+Y</strong> – Yield on Drive: Say total size
-and bytes free on current drive</li>
+<li><strong>Control+Shift+Y</strong> – Say Yield on Drive: Say the
+current drive’s total size and free space</li>
 <li><strong>Control+Shift+Z</strong> – Zip List: Create or update a zip
 archive based on a list of files or folders</li>
 <li><strong>Control+Slash</strong> – Where Am I: Say where you are, what
@@ -925,8 +921,8 @@ the current folder</li>
 current file to your word processor</li>
 <li><strong>Control+X</strong> – Cut: Cut the current item or the marked
 ones to the clipboard</li>
-<li><strong>Control+Y</strong> – Yield: Say count and size of items in
-current folder</li>
+<li><strong>Control+Y</strong> – Say Yield Files: Say how many files are
+in view, and their total size</li>
 <li><strong>Control+Z or Control+Shift+Delete</strong> – Zip then
 Delete: Add current or marked files to zip archive, then delete
 originals</li>
@@ -966,13 +962,13 @@ current or marked items</li>
 <li><strong>RightParen</strong> – Hide: Set Hidden attribute of current
 or marked items</li>
 <li><strong>SemiColon</strong> – Mark: Mark current item</li>
-<li><strong>Shift+2</strong> – Character Encoding: Say the current
+<li><strong>Shift+2</strong> – Say Character Encoding: Say the current
 file’s character encoding</li>
 <li><strong>Shift+3</strong> – Convert Units: Convert between different
 units of measure and copy result to clipboard</li>
 <li><strong>Shift+8</strong> – Say Filter and Order: Say current sort
 order and filter specification</li>
-<li><strong>Shift+A</strong> – Append to Clipboard: Append the text of
+<li><strong>Shift+A</strong> – Append File Contents: Append the text of
 the marked files to the clipboard</li>
 <li><strong>Shift+Apostrophe</strong> – Say Folder Name: Say the current
 folder’s name, then its full path</li>
@@ -1017,8 +1013,8 @@ folder</li>
 <li><strong>Shift+Home</strong> – Mark to Top: Mark to top of list</li>
 <li><strong>Shift+I</strong> – Initial Change: Go to next item with
 different initial letter</li>
-<li><strong>Shift+L</strong> – List Marked: Say marked items in current
-folder</li>
+<li><strong>Shift+L</strong> – Say List Marked: Say the marked items in
+view</li>
 <li><strong>Shift+M</strong> – Move to Folder: Move current or marked
 items to another folder</li>
 <li><strong>Shift+N or Control+DownArrow</strong> – Next Marked: Go to
@@ -1045,14 +1041,14 @@ files</li>
 item and go to the previous</li>
 <li><strong>Shift+X</strong> – Extension Change: Go to next item with
 different extension</li>
-<li><strong>Shift+Y</strong> – Yield Marked: Say count and size of
-marked items in current folder</li>
+<li><strong>Shift+Y</strong> – Say Yield Marked: Say how many items are
+marked, and their total size</li>
 <li><strong>Shift+Z</strong> – Zip: Add current or marked files to zip
 archive</li>
 <li><strong>Slash or Alt+Shift+NumPad5</strong> – Unmark: Unmark current
 item</li>
-<li><strong>Space or Control+Space</strong> – Toggle Mark: Invert marked
-state of current item</li>
+<li><strong>Space or Control+Space</strong> – Toggle Mark: Mark or
+unmark the current item</li>
 <li><strong>Tilde</strong> – Short Path to Clipboard: Copy short path of
 current item to clipboard</li>
 </ul>
@@ -1086,6 +1082,7 @@ quickest way to see what a family of keys does.</p>
 <li><strong>Alt+Shift+D</strong> – Reverse Date Order</li>
 <li><strong>Alt+Shift+S</strong> – Reverse Size Order</li>
 <li><strong>Alt+Shift+T</strong> – Reverse Type Order</li>
+<li><strong>Alt+Shift+Y</strong> – Say Yield in Operating System</li>
 <li><strong>Alt+Shift+F11</strong> – Tile Horizontal</li>
 <li><strong>Alt+Shift+Z</strong> – Timer Toggle</li>
 <li><strong>Alt+Shift+F7</strong> – Translate File</li>
@@ -1093,7 +1090,6 @@ quickest way to see what a family of keys does.</p>
 <li><strong>Alt+Shift+End</strong> – Unmark to Bottom</li>
 <li><strong>Alt+Shift+Home</strong> – Unmark to Top</li>
 <li><strong>Alt+Shift+W</strong> – Web Download</li>
-<li><strong>Alt+Shift+Y</strong> – Yield in Operating System</li>
 </ul>
 <h3 id="altcontrol">Alt+Control</h3>
 <ul>
@@ -1125,13 +1121,13 @@ Window</li>
 <li><strong>Control+Shift+R</strong> – Rename with Regex</li>
 <li><strong>Control+Shift+S</strong> – Restore Marks</li>
 <li><strong>Control+Shift+K</strong> – Reverse Keywords</li>
-<li><strong>Control+Shift+T</strong> – Type Extended</li>
+<li><strong>Control+Shift+Y</strong> – Say Yield on Drive</li>
+<li><strong>Control+Shift+T</strong> – Show Type Extended</li>
 <li><strong>Control+Shift+U</strong> – Unarchive to Same Name</li>
 <li><strong>Control+Shift+A</strong> – Unmark All</li>
 <li><strong>Control+Shift+UpArrow</strong> – Unmark and Previous</li>
 <li><strong>Control+Shift+V</strong> – Volume Format</li>
 <li><strong>Control+Shift+W</strong> – Windows Control Panel</li>
-<li><strong>Control+Shift+Y</strong> – Yield on Drive</li>
 <li><strong>Control+Shift+Z</strong> – Zip List</li>
 </ul>
 <h3 id="alt">Alt</h3>
@@ -1151,7 +1147,6 @@ Window</li>
 <li><strong>Alt+I</strong> – Iterate Processes</li>
 <li><strong>Alt+J</strong> – Jump Again</li>
 <li><strong>Alt+K</strong> – Keywords Again</li>
-<li><strong>Alt+L</strong> – List Files</li>
 <li><strong>Alt+Period</strong> – Mark All Files</li>
 <li><strong>Alt+F6</strong> – Next Visited Folder</li>
 <li><strong>Alt+O</strong> – Open Drive</li>
@@ -1161,16 +1156,17 @@ Window</li>
 <li><strong>Alt+Enter</strong> – Properties</li>
 <li><strong>Alt+R</strong> – Recent Folders</li>
 <li><strong>Alt+Apostrophe</strong> – Say Clipboard</li>
+<li><strong>Alt+L</strong> – Say List Files</li>
 <li><strong>Alt+P</strong> – Say Path</li>
 <li><strong>Alt+Delete or Shift+5</strong> – Say Position</li>
 <li><strong>Alt+Z</strong> – Say Status</li>
 <li><strong>Alt+Semicolon</strong> – Say Time</li>
+<li><strong>Alt+Y</strong> – Say Yield</li>
 <li><strong>Alt+S</strong> – Size Order</li>
 <li><strong>Alt+F2</strong> – Stop Timer</li>
 <li><strong>Alt+T</strong> – Type Order</li>
 <li><strong>Alt+U</strong> – Unarchive Test</li>
 <li><strong>Alt+Comma</strong> – Unmark All But Current</li>
-<li><strong>Alt+Y</strong> – Yield Files</li>
 </ul>
 <h3 id="control">Control</h3>
 <ul>
@@ -1189,7 +1185,6 @@ Window</li>
 <li><strong>Control+J</strong> – Jump</li>
 <li><strong>Control+F1</strong> – Key Describer Toggle</li>
 <li><strong>Control+K</strong> – Keywords</li>
-<li><strong>Control+L</strong> – List</li>
 <li><strong>Control+M</strong> – Mail Body</li>
 <li><strong>Control+A</strong> – Mark All</li>
 <li><strong>Control+N</strong> – New Folder</li>
@@ -1204,22 +1199,22 @@ Window</li>
 <li><strong>Control+R</strong> – Rename with Wildcards</li>
 <li><strong>Control+Apostrophe</strong> – Save Clipboard</li>
 <li><strong>Control+S</strong> – Save Marks</li>
+<li><strong>Control+L</strong> – Say List</li>
+<li><strong>Control+Y</strong> – Say Yield Files</li>
 <li><strong>Control+T</strong> – Send to Text Editor</li>
 <li><strong>Control+W</strong> – Send to Word Processor</li>
 <li><strong>Control+F10</strong> – SendTo Menu</li>
 <li><strong>Control+F</strong> – Set Filter</li>
 <li><strong>Control+U</strong> – Unarchive without Subfolders</li>
 <li><strong>Control+Slash</strong> – Where Am I</li>
-<li><strong>Control+Y</strong> – Yield</li>
 <li><strong>Control+Z or Control+Shift+Delete</strong> – Zip then
 Delete</li>
 </ul>
 <h3 id="shift">Shift</h3>
 <ul>
-<li><strong>Shift+A</strong> – Append to Clipboard</li>
+<li><strong>Shift+A</strong> – Append File Contents</li>
 <li><strong>Shift+B or Control+Shift+Home</strong> – Beginning
 Marked</li>
-<li><strong>Shift+2</strong> – Character Encoding</li>
 <li><strong>Shift+F12</strong> – Chat about File</li>
 <li><strong>Shift+F8</strong> – Complete Mark</li>
 <li><strong>Shift+F10 or Applications</strong> – Context Menu</li>
@@ -1233,7 +1228,6 @@ Marked</li>
 <li><strong>Shift+Enter</strong> – Go to Item</li>
 <li><strong>Shift+Backslash</strong> – Go to Root Folder</li>
 <li><strong>Shift+I</strong> – Initial Change</li>
-<li><strong>Shift+L</strong> – List Marked</li>
 <li><strong>Shift+Period or Shift+DownArrow</strong> – Mark and
 Next</li>
 <li><strong>Shift+UpArrow</strong> – Mark and Previous</li>
@@ -1246,20 +1240,22 @@ Next</li>
 <li><strong>Shift+F6</strong> – Previous Pane</li>
 <li><strong>Shift+Q</strong> – Quick Shortcut</li>
 <li><strong>Shift+R</strong> – Rename</li>
+<li><strong>Shift+2</strong> – Say Character Encoding</li>
 <li><strong>Shift+D</strong> – Say Date</li>
 <li><strong>Shift+8</strong> – Say Filter and Order</li>
 <li><strong>Shift+Apostrophe</strong> – Say Folder Name</li>
+<li><strong>Shift+L</strong> – Say List Marked</li>
 <li><strong>Shift+Space</strong> – Say Selected</li>
 <li><strong>Shift+S</strong> – Say Size</li>
 <li><strong>Shift+T</strong> – Say Type</li>
 <li><strong>Shift+F4</strong> – Say Windows Open</li>
+<li><strong>Shift+Y</strong> – Say Yield Marked</li>
 <li><strong>Shift+F3</strong> – Search Previous</li>
 <li><strong>Shift+F11</strong> – Tile Vertical</li>
 <li><strong>Shift+U</strong> – Unarchive</li>
 <li><strong>Shift+Comma or Control+Shift+DownArrow</strong> – Unmark and
 Next</li>
 <li><strong>Shift+F1</strong> – What This Does</li>
-<li><strong>Shift+Y</strong> – Yield Marked</li>
 <li><strong>Shift+Z</strong> – Zip</li>
 </ul>
 <h3 id="function-keys">Function keys</h3>

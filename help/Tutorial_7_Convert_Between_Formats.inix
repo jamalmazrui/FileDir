@@ -93,7 +93,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append to Clipboard, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
+Say=Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append File Contents, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
 Key=Shift+A
 Hear=Appended 3 files to clipboard
 Note=Confirm the wording with a live run: buildTutorials -live.

@@ -1480,7 +1480,6 @@ public HomerToolStripMenuItem menuQueryFolderName;
 public HomerToolStripMenuItem menuQueryClipboard;
 public HomerToolStripMenuItem menuQueryNow;
 public HomerToolStripMenuItem menuQueryWhat;
-public HomerToolStripMenuItem menuQueryTimer;
 
 public HomerToolStripMenuItem menuMisc;
 public HomerToolStripMenuItem menuMiscConfigurationOptions;
@@ -1717,22 +1716,26 @@ menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuN
 
 menuQuery = menu_Helper("&Query");
 menuQueryDate = menu_Helper("Say Date", "Shift+D", menuQueryDate_Click);
-menuQueryList = menu_Helper("List", "Control+L", menuQueryList_Click);
-menuQueryListTagged = menu_Helper("List Marked", "Shift+L", menuQueryListTagged_Click);
+// SAY AND SHOW (15 November 2026, the keyboard audit's A11): the Query commands that speak take Say, and the one that
+// opens a window takes Show, as in DbDo and EdSharp; their old names stay findable in the Alternate Menu. Say Yield takes
+// Alt+Y, the suite's key, and Say Yield Files Control+Y, where Yield was: in every Homer app Alt+Y says the yield of
+// everything in view and Shift+Y of what is marked.
+menuQueryList = menu_Helper("Say List", "Control+L", menuQueryList_Click);
+menuQueryListTagged = menu_Helper("Say List Marked", "Shift+L", menuQueryListTagged_Click);
 menuQuerySelected = menu_Helper("Say Selected", "Shift+Space", MenuQuerySelected_Click);
-menuQueryListFiles = menu_Helper("List Files", "Alt+L", menuQueryListFiles_Click);
+menuQueryListFiles = menu_Helper("Say List Files", "Alt+L", menuQueryListFiles_Click);
 menuQueryPath = menu_Helper("Say Path", "Alt+P", menuQueryPath_Click);
 menuQuerySize = menu_Helper("Say Size", "Shift+S", menuQuerySize_Click);
 menuQueryType = menu_Helper("Say Type", "Shift+T", menuQueryType_Click);
-menuQueryTypeExtended = menu_Helper("Type Extended", "Control+Shift+T", menuQueryTypeExtended_Click);
+menuQueryTypeExtended = menu_Helper("Show Type Extended", "Control+Shift+T", menuQueryTypeExtended_Click);
 menuQueryWindowsOpen = menu_Helper("Say Windows Open", "Shift+F4 or Alt+NumPad5", MenuQueryWindowsOpen_Click);
-menuQueryYield = menu_Helper("Yield", "Control+Y", menuQueryYield_Click);
-menuQueryYieldTagged = menu_Helper("Yield Marked", "Shift+Y", menuQueryYieldTagged_Click);
-menuQueryYieldFiles = menu_Helper("Yield Files", "Alt+Y", menuQueryYieldFiles_Click);
-menuQueryYieldOnDrive = menu_Helper("Yield on Drive", "Control+Shift+Y", menuQueryYieldOnDrive_Click);
-menuQueryYieldInOperatingSystem = menu_Helper("Yield in Operating System", "Alt+Shift+Y", MenuQueryYieldInOperatingSystem_Click);
+menuQueryYield = menu_Helper("Say Yield", "Alt+Y", menuQueryYield_Click);
+menuQueryYieldTagged = menu_Helper("Say Yield Marked", "Shift+Y", menuQueryYieldTagged_Click);
+menuQueryYieldFiles = menu_Helper("Say Yield Files", "Control+Y", menuQueryYieldFiles_Click);
+menuQueryYieldOnDrive = menu_Helper("Say Yield on Drive", "Control+Shift+Y", menuQueryYieldOnDrive_Click);
+menuQueryYieldInOperatingSystem = menu_Helper("Say Yield in Operating System", "Alt+Shift+Y", MenuQueryYieldInOperatingSystem_Click);
 menuQueryStatus = menu_Helper("Say Status", "Alt+Z", menuQueryStatus_Click);
-menuQueryCharacterEncoding = menu_Helper("Character Encoding", "Shift+2 or @", MenuQueryCharacterEncoding_Click);
+menuQueryCharacterEncoding = menu_Helper("Say Character Encoding", "Shift+2 or @", MenuQueryCharacterEncoding_Click);
 menuQueryPercentThrough = menu_Helper("Say Position", "Alt+Delete or Shift+5", menuQueryPercentThrough_Click);
 menuQueryFilter = menu_Helper("Say Filter and Order", "Shift+8", menuQueryFilter_Click);
 menuQueryName = menu_Helper("Say Item Name", "'", menuQueryName_Click);
@@ -1740,8 +1743,8 @@ menuQueryFolderName = menu_Helper("Say Folder Name", "Shift+'", menuQueryFolderN
 menuQueryClipboard = menu_Helper("Say Clipboard", "Alt+'", menuQueryClipboard_Click);
 menuQueryNow = menu_Helper("Say Time", "Alt+;", menuQueryNow_Click);
 menuQueryWhat = menu_Helper("Say What Content", "?", menuQueryWhat_Click);
-menuQueryTimer = menu_Helper("Timer", "", menuQueryTimer_Click);
-menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryList, menuQueryListTagged, menuQuerySelected, menuQueryListFiles, menuQueryPath, menuQuerySize, menuQueryType, menuQueryTypeExtended, menuQueryWindowsOpen, menuQueryYield, menuQueryYieldTagged, menuQueryYieldFiles, menuQueryYieldOnDrive, menuQueryYieldInOperatingSystem, menuQueryStatus, menuQueryCharacterEncoding, menuQueryPercentThrough, menuQueryFilter, menuQueryName, menuQueryFolderName, menuQueryClipboard, menuQueryNow, menuQueryWhat, menuQueryTimer});
+// TIMER RETIRED (15 November 2026, the keyboard audit's A15): Say Status (Alt+Z) says the timer's state and time.
+menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryList, menuQueryListTagged, menuQuerySelected, menuQueryListFiles, menuQueryPath, menuQuerySize, menuQueryType, menuQueryTypeExtended, menuQueryWindowsOpen, menuQueryYield, menuQueryYieldTagged, menuQueryYieldFiles, menuQueryYieldOnDrive, menuQueryYieldInOperatingSystem, menuQueryStatus, menuQueryCharacterEncoding, menuQueryPercentThrough, menuQueryFilter, menuQueryName, menuQueryFolderName, menuQueryClipboard, menuQueryNow, menuQueryWhat});
 
 menuMisc = menu_Helper("&Misc");
 menuMiscConfigurationOptions = menu_Helper("Edit Settings", "Alt+Shift+E", menuMiscOptions_Click);
@@ -1761,7 +1764,7 @@ menuMiscReverseTypeOrder = menu_Helper("Reverse Type Order", "Alt+Shift+T", menu
 menuMiscSendToWordProcessor = menu_Helper("Send to Word Processor", "Control+W", MenuMiscSendToWordProcessor_Click);
 menuMiscSendToTextEditor = menu_Helper("Send to Text Editor", "Control+T", MenuMiscSendToTextEditor_Click);
 menuMiscOutputTagged = menu_Helper("Output Type", "Shift+O", MenuMiscOutputTagged_Click);
-menuMiscAppendTagged = menu_Helper("Append to Clipboard", "Shift+A", MenuMiscAppendTagged_Click);
+menuMiscAppendTagged = menu_Helper("Append File Contents", "Shift+A", MenuMiscAppendTagged_Click);
 menuMiscConvertEncodingTagged = menu_Helper("Convert Encoding", "Control+2", MenuMiscConvertEncodingTagged_Click);
 menuMiscTranslateTagged = menu_Helper("Translate File", "Alt+Shift+F7", MenuMiscTranslateTagged_Click);
 menuMiscExtractTagged = menu_Helper("Extract with Regex", "Control+Shift+E", MenuMiscExtractTagged_Click);
@@ -9153,6 +9156,21 @@ private bool bKeysDeclared = false;
 public bool declareKeys() {
 if (bKeysDeclared) return true;
 bKeysDeclared = true;
+// FORMER NAMES (15 November 2026, the keyboard audit's A11): each command renamed that day stays findable by its old
+// name; the Alternate Menu ends its line with "Formerly <name>.", through the kit's KeyMap.
+Homer.KeyMap.addFormerName("Append File Contents", "Append to Clipboard");
+Homer.KeyMap.addFormerName("Say Character Encoding", "Character Encoding");
+Homer.KeyMap.addFormerName("Say List", "List");
+Homer.KeyMap.addFormerName("Say List Files", "List Files");
+Homer.KeyMap.addFormerName("Say List Marked", "List Marked");
+Homer.KeyMap.addFormerName("Say Status", "Timer");
+Homer.KeyMap.addFormerName("Say Yield", "Yield");
+Homer.KeyMap.addFormerName("Say Yield Files", "Yield Files");
+Homer.KeyMap.addFormerName("Say Yield Marked", "Yield Marked");
+Homer.KeyMap.addFormerName("Say Yield in Operating System", "Yield in Operating System");
+Homer.KeyMap.addFormerName("Say Yield on Drive", "Yield on Drive");
+Homer.KeyMap.addFormerName("Show Type Extended", "Type Extended");
+Homer.KeyMap.addFormerName("Timer Toggle", "Start Timer");
 // ECHO BY THE SUITE'S RULE (19 October 2026). The handlers no longer say their own names --
 // 69 of them did, some with names since changed ("Tag and next") -- so the router says a
 // command's name if and only if nothing else would tell you it is under way: help\CommandEcho.md.
@@ -9308,8 +9326,8 @@ declareKey("menuNavigateExtensionChange", menuNavigateExtensionChange, Keys.Shif
 declareKey("menuEditCutToClipboardTagged", menuEditCutToClipboardTagged, Keys.Control | Keys.X);
 declareKey("menuEditDeleteAndRecycleTagged", menuEditDeleteAndRecycleTagged, Keys.Control | Keys.Delete);
 declareKey("menuQueryYieldTagged", menuQueryYieldTagged, Keys.Shift | Keys.Y);
-declareKey("menuQueryYieldFiles", menuQueryYieldFiles, Keys.Alt | Keys.Y);
-declareKey("menuQueryYield", menuQueryYield, Keys.Control | Keys.Y);
+declareKey("menuQueryYieldFiles", menuQueryYieldFiles, Keys.Control | Keys.Y);
+declareKey("menuQueryYield", menuQueryYield, Keys.Alt | Keys.Y);
 declareKey("menuQueryYieldOnDrive", menuQueryYieldOnDrive, Keys.Control | Keys.Shift | Keys.Y);
 declareKey("menuQueryYieldInOperatingSystem", menuQueryYieldInOperatingSystem, Keys.Alt | Keys.Shift | Keys.Y);
 declareKey("menuMiscZipTagged", menuMiscZipTagged, Keys.Shift | Keys.Z);
@@ -9372,7 +9390,6 @@ declareKey("menuMiscChatAboutFile", menuMiscChatAboutFile, Keys.Shift | Keys.F12
 declareKey("menuHelpCopyLog", menuHelpCopyLog, Keys.Control | Keys.F12);
 declareKey("menuMiscStartTimer", menuMiscStartTimer, Keys.Alt | Keys.Shift | Keys.Z);
 declareKey("menuMiscStopTimer", menuMiscStopTimer, Keys.Alt | Keys.F2);
-declareKey("menuQueryTimer", menuQueryTimer);
 declareKey("menuMiscTranslateTagged", menuMiscTranslateTagged, Keys.Alt | Keys.Shift | Keys.F7);
 // CONTROL+Z IS ZIP THEN DELETE AGAIN (19 October 2026, Jamal's ruling). FileDir's
 // list has no Undo for Control+Z to mean, and he missed it. It is a recorded

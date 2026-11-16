@@ -5,7 +5,7 @@
     <link>Tutorials.htm</link>
     <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Nov 2026 16:53:08 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2026 04:09:19 +0000</lastBuildDate>
     <itunes:author>Jamal Mazrui</itunes:author>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Technology"/>
@@ -42,7 +42,7 @@
       <description>FileDir is open on a folder of saved web pages. Full transcript: Tutorials.htm#0c-3-open-a-folder-and-find-a-file</description>
       <link>Tutorials.htm#0c-3-open-a-folder-and-find-a-file</link>
       <guid isPermaLink="false">homer-tutorial_3_open_a_folder_and_find_a_file</guid>
-      <enclosure url="tutorials/3_Open_a_Folder_and_Find_a_File.mp3" length="1473159" type="audio/mpeg"/>
+      <enclosure url="tutorials/3_Open_a_Folder_and_Find_a_File.mp3" length="1472417" type="audio/mpeg"/>
       <itunes:duration>00:03:24</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
@@ -78,7 +78,7 @@
       <description>A folder holds a Word document and a PDF. Full transcript: Tutorials.htm#0g-7-convert-between-formats</description>
       <link>Tutorials.htm#0g-7-convert-between-formats</link>
       <guid isPermaLink="false">homer-tutorial_7_convert_between_formats</guid>
-      <enclosure url="tutorials/7_Convert_Between_Formats.mp3" length="1262711" type="audio/mpeg"/>
+      <enclosure url="tutorials/7_Convert_Between_Formats.mp3" length="1257437" type="audio/mpeg"/>
       <itunes:duration>00:03:06</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
@@ -87,7 +87,7 @@
       <description>A model is installed for FileDir's AI commands, and a folder holds a long document. Full transcript: Tutorials.htm#0h-8-ask-about-a-file</description>
       <link>Tutorials.htm#0h-8-ask-about-a-file</link>
       <guid isPermaLink="false">homer-tutorial_8_ask_about_a_file</guid>
-      <enclosure url="tutorials/8_Ask_About_a_File.mp3" length="1450656" type="audio/mpeg"/>
+      <enclosure url="tutorials/8_Ask_About_a_File.mp3" length="1442479" type="audio/mpeg"/>
       <itunes:duration>00:03:31</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>

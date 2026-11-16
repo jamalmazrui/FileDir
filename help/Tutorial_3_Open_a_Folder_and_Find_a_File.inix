@@ -84,7 +84,7 @@ Hear=Plain text, 12 kilobytes, 212 lines, changed 3 October 2026
 
 [step]
 
-Say=Control plus Shift plus T, Type Extended, says more: every property of the current item in one alphabetical list, such as a document's title and author, or a sound file's length. Walk five shows the Player's own Extra Info.
+Say=Control plus Shift plus T, Show Type Extended, says more: every property of the current item in one alphabetical list, such as a document's title and author, or a sound file's length. Walk five shows the Player's own Extra Info.
 Key=Control+Shift+T
 Hear=Type Extended, read only edit
 Note=Confirm the wording with a live run: buildTutorials -live.
