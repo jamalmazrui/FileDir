@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.232**  
+**Version 5.0.233**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -60,7 +60,6 @@ Commands in alphabetical order.
 - **Documentation**, F1 -- Open the FileDir guide
 - **Drive Letter**, Alt+1 -- through Alt+9, Open new window on drive letter corresponding to digit
 - **Edit Settings**, Alt+Shift+E -- Edit FileDir's settings file
-- **Edit Settings File**, Alt+Shift+F2 -- Edit FileDir's settings file in your text editor
 - **Elevate Version**, F11 -- Download and install the latest FileDir
 - **End Marked**, Shift+E or Control+Shift+End -- Go to end marked item
 - **Environment Variables**, Control+E -- Change Windows environment variables for this process, your account or the system
@@ -185,7 +184,7 @@ Commands in alphabetical order.
 - **Say Position**, Alt+Delete or Shift+5 -- Say the current position: the item's number, the count and the percent
 - **Say Selected**, Shift+Space -- or JAWSKey+Shift+DownArrow, Say the marked items, or the current one
 - **Say Size**, Shift+S -- Say the current item's size
-- **Say Status**, Alt+Z -- Say the current item's date and size, then the order and filter
+- **Say Status**, Alt+Z -- Say the current item's date and size, then the order and filter, and the timer when one is set
 - **Say Time**, Alt+Semicolon -- Say the date and time
 - **Say Timer**, no key -- Say the timer's time, not counting pauses
 - **Say Type**, Shift+T -- Say type/extension of current item
@@ -202,12 +201,12 @@ Commands in alphabetical order.
 - **Size Order**, Alt+S -- Sort items in size order
 - **Stamp with Date and Time**, Exclamation -- Point, Stamp date and time of current or marked items
 - **Start Mark or Unmark**, F8 -- Mark start of sequence to be marked or unmarked
-- **Start Timer**, no key -- Start, pause or resume the timer
-- **Stop Timer**, no key -- Stop the timer
+- **Stop Timer**, Alt+F2 -- Stop the timer and say how long it ran
 - **System**, RightBrace -- Set System attribute of current or marked items
 - **Tile Horizontal**, Alt+Shift+F11 -- Tile the open windows across
 - **Tile Vertical**, Shift+F11 -- Tile the open windows down
 - **Timer**, no key -- Say the time since the timer started
+- **Timer Toggle**, Alt+Shift+Z -- Start a timer, pause it or resume it
 - **Toggle Mark**, Space or Control+Space -- Invert marked state of current item
 - **Translate File**, Alt+Shift+F7 -- Translate the marked files, or the current one, into another language
 - **Tutorials Transcript**, no key -- Open the text of the tutorials
@@ -259,6 +258,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+F10** -- Alternate Menu: Pick any command from one list, in menu, name or key order
 - **Alt+F11** -- Arrange Icons: Arrange the open windows
 - **Alt+F12** -- Play Tutorials: Play the spoken tutorials
+- **Alt+F2** -- Stop Timer: Stop the timer and say how long it ran
 - **Alt+F4** -- Exit FileDir: Close FileDir
 - **Alt+F6** -- Next Visited Folder: Open the next folder in the order you visited them, newest first
 - **Alt+G** -- Go to Drive: Pick drive to open in same window
@@ -285,7 +285,6 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+F** -- File Find: Find files by name and content in this folder and below, and go to one
 - **Alt+Shift+F1** -- ReadMe: Open the quick start
 - **Alt+Shift+F11** -- Tile Horizontal: Tile the open windows across
-- **Alt+Shift+F2** -- Edit Settings File: Edit FileDir's settings file in your text editor
 - **Alt+Shift+F4** -- Restart Windows: Restart Windows after confirming
 - **Alt+Shift+F6** -- Previous Visited Folder: Go the other way through the folders you visited
 - **Alt+Shift+F7** -- Translate File: Translate the marked files, or the current one, into another language
@@ -307,11 +306,12 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+V** -- Paste Move: Move items listed on clipboard to current folder
 - **Alt+Shift+W** -- Web Download: Download files linked from a web page
 - **Alt+Shift+Y** -- Yield in Operating System: Say Windows version, physical memory, and virtual memory
+- **Alt+Shift+Z** -- Timer Toggle: Start a timer, pause it or resume it
 - **Alt+T** -- Type Order: Sort items in type/extension order
 - **Alt+U** -- Unarchive Test: Check if current file item can be unzipped successfully
 - **Alt+V** -- Paste Copy: Copy items listed on clipboard to current folder
 - **Alt+Y** -- Yield Files: Say the count and size of the files in this folder
-- **Alt+Z** -- Say Status: Say the current item's date and size, then the order and filter
+- **Alt+Z** -- Say Status: Say the current item's date and size, then the order and filter, and the timer when one is set
 - **Apostrophe** -- Say Item Name: Say name of current file or folder item
 - **Backslash** -- Open Root Folder: Open the drive's root folder in a new window
 - **Backspace** -- Open Parent Folder: Open the parent folder in a new window
@@ -462,7 +462,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+Apostrophe** -- Clear Clipboard
 - **Alt+Shift+F8** -- Complete Unmark
 - **Alt+Shift+E** -- Edit Settings
-- **Alt+Shift+F2** -- Edit Settings File
 - **Alt+Shift+F** -- File Find
 - **Alt+Shift+J** -- Find Duplicates in Tree
 - **Alt+Shift+C** -- Folder to Clipboard
@@ -485,6 +484,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+S** -- Reverse Size Order
 - **Alt+Shift+T** -- Reverse Type Order
 - **Alt+Shift+F11** -- Tile Horizontal
+- **Alt+Shift+Z** -- Timer Toggle
 - **Alt+Shift+F7** -- Translate File
 - **Alt+Shift+U** -- Unarchive Password
 - **Alt+Shift+End** -- Unmark to Bottom
@@ -562,6 +562,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Z** -- Say Status
 - **Alt+Semicolon** -- Say Time
 - **Alt+S** -- Size Order
+- **Alt+F2** -- Stop Timer
 - **Alt+T** -- Type Order
 - **Alt+U** -- Unarchive Test
 - **Alt+Comma** -- Unmark All But Current

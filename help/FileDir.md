@@ -412,7 +412,7 @@ Shift+Space tells you what items are currently checked. Alt+A says the address o
 
 ## Miscellaneous Commands
 
-Miscellaneous commands do not fit neatly into previous categories. Use the Edit Settings command, Alt+Shift+E, to configure FileDir options such as the word processor invoked with Control+W or the text editor invoked with Control+T. Alternatively, use the Edit Settings File command, Alt+Shift+F2, to adjust configuration options in the designated text editor.
+Miscellaneous commands do not fit neatly into previous categories. Use the Edit Settings command, Alt+Shift+E, to configure FileDir options such as the word processor invoked with Control+W or the text editor invoked with Control+T. To change the settings file itself in your text editor, press the Settings file button in that dialog, Alt+F.
 
 With the optional JAWS scripts, you can toggle a speech setting of reading all or no punctuation using JAWSKey plus the grave accent at the top left of the main keypad (U.S. keyboard). All punctuation is useful when reading carefully for details, whereas no punctuation is useful when reading quickly for concepts.
 
@@ -608,7 +608,7 @@ Yard to meter
 
 Conversions may be added, modified, or deleted by editing the Convert.txt file in the FileDir program folder. A new installation of FileDir will replace this file, however, so custom changes would need to be manually backed up and restored.
 
-Timer keys are on Alt+Control. Press **Alt+Control+T** to start a timer; FileDir asks for the announcement interval and the stop time. The announcement interval, in seconds, is how often FileDir says how long has passed since the timer started, so 60 means once a minute. Those announcements happen whatever program is in front. Leave the interval blank or 0 to run the timer silently. Press **Alt+Control+Y** at any time to hear how long has passed. If a timer is running, Alt+Control+T pauses it; if paused, it resumes. Press **Alt+Control+S** to stop the timer and hear the total time it ran.
+Press **Alt+Shift+Z**, Timer Toggle, to start a timer; FileDir asks for the announcement interval and the stop time. The announcement interval, in seconds, is how often FileDir says how long has passed since the timer started, so 60 means once a minute. Those announcements happen whatever program is in front. Leave the interval blank or 0 to run the timer silently. Say Status, **Alt+Z**, ends with whether the timer is running or paused and how long it has run. Alt+Shift+Z pauses a running timer and resumes a paused one, since Z keys are toggles. Press **Alt+F2**, Stop Timer, to stop the timer and hear the total time it ran.
 
 The timer moved off the F12 row so that F12 and Shift+F12 could ask the AI, as they do in EdSharp.
 
@@ -1087,8 +1087,10 @@ complete.
 These need Ollama, the same installation the Translate File command uses.
 
 **A note on the keys.** The whole F12 row held the Timer commands here
-for twenty years. They moved to **Alt+Control+T**, **Alt+Control+S** and
-**Alt+Control+Y** so that FileDir and EdSharp agree about the F12 column.
+for twenty years. They moved off it so that FileDir and EdSharp agree about the
+F12 column, and in November 2026 off Alt+Control, which is for Windows desktop
+shortcuts: Timer Toggle is **Alt+Shift+Z**, Stop Timer is **Alt+F2**, and Say
+Status (**Alt+Z**) says the timer.
 Matching the sibling program is worth more than protecting a habit that few
 people had, now that a phone or a smart speaker sets a timer better than a file
 manager does.

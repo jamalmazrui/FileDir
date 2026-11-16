@@ -1475,7 +1475,6 @@ public HomerToolStripMenuItem menuQueryTimer;
 
 public HomerToolStripMenuItem menuMisc;
 public HomerToolStripMenuItem menuMiscConfigurationOptions;
-public HomerToolStripMenuItem menuMiscManualOptions;
 public HomerToolStripMenuItem menuMiscEnvironmentVariables;
 public HomerToolStripMenuItem menuMiscRecycleToggle;
 public HomerToolStripMenuItem menuMiscOpenRecycleBin;
@@ -1642,7 +1641,8 @@ menuEditStartTagOrUntag = menu_Helper("Start Mark or Unmark", "F8", MenuEditStar
 menuEditCompleteTag = menu_Helper("Complete Mark", "Shift+F8", MenuEditCompleteTag_Click);
 menuEditCompleteUntag = menu_Helper("Complete Unmark", "Alt+Shift+F8", MenuEditCompleteUntag_Click);
 // WHAT IS SHOWN IS WHAT RUNS (15 November 2026, the keyboard audit's A6): Alt+Shift+I was shown here but runs Inquire
-// Differences. Invert Marked moves to Alt+Shift+I only when Inquire Differences has a new key.
+// Differences. Every I and D key Inquire Differences could move to is taken, so Invert Marked keeps Control+I, recorded
+// as an exception in the kit's SuiteCatalog.inix.
 menuEditInvertTagged = menu_Helper("&Invert Marked", "Control+I", MenuEditInvertTagged_Click);
 menuEditSaveTags = menu_Helper("&Save Marks", "Control+S", MenuEditSaveTags_Click);
 menuEditRestoreTags = menu_Helper("Restore Marks", "Control+Shift+S", MenuEditRestoreTags_Click);
@@ -1736,7 +1736,8 @@ menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryLi
 
 menuMisc = menu_Helper("&Misc");
 menuMiscConfigurationOptions = menu_Helper("Edit Settings", "Alt+Shift+E", menuMiscOptions_Click);
-menuMiscManualOptions = menu_Helper("Edit Settings File", "Alt+Shift+F2", menuMiscManualOptions_Click);
+// ONE SETTINGS ENTRY (15 November 2026, the keyboard audit's A4): Edit Settings File (Alt+Shift+F2) is retired. Its
+// file is the Settings file button in Edit Settings, the kit's LbcAsk.settingsDialog, as in EdSharp.
 menuMiscEnvironmentVariables = menu_Helper("&Environment Variables ...", "Control+E", menuMiscEnvironmentVariables_Click);
 menuMiscRecycleToggle = menu_Helper("Recycle Toggle", "Alt+Shift+R", menuMiscRecycleToggle_Click);
 menuMiscOpenRecycleBin = menu_Helper("Recycle Bin", "Control+B", menuMiscOpenRecycleBin_Click);
@@ -1775,8 +1776,13 @@ menuMiscGetFTP = menu_Helper("Get FTP ...", "Shift+G", menuMiscGetFTP_Click);
 menuMiscWebDownload = menu_Helper("Web Download ...", "Alt+Shift+W", menuMiscWebDownload_Click);
 menuMiscEvaluate = menu_Helper("Evaluate Expression ...", "Control+Equals", menuMiscEvaluate_Click);
 menuMiscConvertUnits = menu_Helper("Convert Units ...", "Shift+3", menuMiscConvertUnits_Click);
-menuMiscStartTimer = menu_Helper("Start Timer ...", "", menuMiscStartTimer_Click);
-menuMiscStopTimer = menu_Helper("Stop Timer", "", menuMiscStopTimer_Click);
+// THE TIMER KEYS (15 November 2026, the keyboard audit's A15, agreed by Claude and ChatGPT). Alt+Control is for Windows
+// desktop shortcuts, so Alt+Control+T, S and Y go. Start Timer already started, paused and resumed, so it is named for
+// what it does, Timer Toggle, on Alt+Shift+Z: Z keys are toggles. Stop Timer keeps a key of its own, Alt+F2, which no
+// Homer app, Windows or screen reader claims; Control+Shift+F11, the audit's first candidate, is JAWS's system tray.
+// Say Status (Alt+Z) now says the timer too, so Timer keeps its menu item, without a key, under its own name.
+menuMiscStartTimer = menu_Helper("Timer Toggle ...", "Alt+Shift+Z", menuMiscStartTimer_Click);
+menuMiscStopTimer = menu_Helper("Stop Timer", "Alt+F2", menuMiscStopTimer_Click);
 menuMiscChatWithAI = menu_Helper("Chat with AI", "F12", MenuMiscChatWithAI_Click);
 menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChatAboutFile_Click);
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
@@ -1793,7 +1799,7 @@ menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "Alt+Shift+N", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscBatchMail, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -5857,6 +5863,12 @@ void menuQueryStatus_Click(object sender, EventArgs e) {
 App.say("Status");
 string sText = App.frame.statusLabel.Text;
 App.say(sText);
+// THE TIMER IS PART OF THE STATUS (15 November 2026, A15): when a timer is set, Say Status ends with whether it runs
+// or is paused, and the time it has run, not counting pauses, as Timer says it.
+if (App.timer == null) return;
+TimeSpan tsRun = App.timer.Enabled ? App.tsElapsed + (DateTime.Now - App.dtTimerStart) : App.tsElapsed;
+App.say(App.timer.Enabled ? "Timer running" : "Timer paused");
+timer_Helper(tsRun);
 } // menuQueryStatus_Click method
 
 void MenuQueryCharacterEncoding_Click(object sender, EventArgs e) {
@@ -5999,9 +6011,13 @@ void menuMiscOptions_Click(object sender, EventArgs e) {
 //App.readIni();
 string[] aFields = {"&Text Editor", "&Word Processor", "&LogInUserName", "&Password", "&SenderAddress", "&OutgoingServer", "&UnarchivePassword", "&RecycleWithDelete", "&DirsBeforeFiles", "&ZipOpener"};
 string[] aValues = {App.sTextEditor, App.sWordProcessor, App.sUserName, App.sPassword, App.sSenderAddress, App.sOutgoingServer, App.sUnarchivePassword, (App.Recycle ? "y" : "n"), (App.DirsBeforeFiles ? "y" : "n"), (App.bZipOpener ? "y" : "n")};
-//Homer.LbcAsk.show(aFields.Length, aValues.Length);
-ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
-if (sResultList.Count == 0) return;
+string sFileButton;
+string[] sResultList = Homer.LbcAsk.settingsDialog("Edit Settings", aFields, aValues, new string[] {"Settings &file"}, out sFileButton);
+if (sFileButton != "") {
+menuMiscManualOptions_Click(sender, e);
+return;
+}
+if (sResultList.Length == 0) return;
 
 App.sTextEditor = (string) sResultList[0];
 App.sWordProcessor = (string) sResultList[1];
@@ -9187,7 +9203,6 @@ declareKey("menuNavigateNextTagged", menuNavigateNextTagged, Keys.Control | Keys
 declareKey("menuFileRefreshFolder", menuFileRefreshFolder, Keys.OemPeriod, Keys.F5);
 declareKey("menuMiscMailBody", menuMiscMailBody, Keys.Control | Keys.M);
 declareKey("menuMiscMailAttachTagged", menuMiscMailAttachTagged, Keys.Control | Keys.Shift | Keys.M);
-declareKey("menuMiscManualOptions", menuMiscManualOptions, Keys.Alt | Keys.Shift | Keys.F2);
 declareKey("menuFileNewFolder", menuFileNewFolder, Keys.Control | Keys.N);
 declareKey("menuFileNewItemCopy", menuFileNewItemCopy, Keys.Control | Keys.Shift | Keys.N);
 declareKey("menuMiscNetworkConnections", menuMiscNetworkConnections, Keys.Alt | Keys.Shift | Keys.N);
@@ -9345,9 +9360,9 @@ declareKey("menuWindowTileVertical", menuWindowTileVertical, Keys.Shift | Keys.F
 declareKey("menuMiscChatWithAI", menuMiscChatWithAI, Keys.F12);
 declareKey("menuMiscChatAboutFile", menuMiscChatAboutFile, Keys.Shift | Keys.F12);
 declareKey("menuHelpCopyLog", menuHelpCopyLog, Keys.Control | Keys.F12);
-declareKey("menuMiscStartTimer", menuMiscStartTimer, Keys.Alt | Keys.Control | Keys.T);
-declareKey("menuMiscStopTimer", menuMiscStopTimer, Keys.Alt | Keys.Control | Keys.S);
-declareKey("menuQueryTimer", menuQueryTimer, Keys.Alt | Keys.Control | Keys.Y);
+declareKey("menuMiscStartTimer", menuMiscStartTimer, Keys.Alt | Keys.Shift | Keys.Z);
+declareKey("menuMiscStopTimer", menuMiscStopTimer, Keys.Alt | Keys.F2);
+declareKey("menuQueryTimer", menuQueryTimer);
 declareKey("menuMiscTranslateTagged", menuMiscTranslateTagged, Keys.Alt | Keys.Shift | Keys.F7);
 // CONTROL+Z IS ZIP THEN DELETE AGAIN (19 October 2026, Jamal's ruling). FileDir's
 // list has no Undo for Control+Z to mean, and he missed it. It is a recorded

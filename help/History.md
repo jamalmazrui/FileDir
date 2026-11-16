@@ -2,6 +2,20 @@
 
 
 
+## 15 November 2026 -- One Edit Settings
+
+- **Edit Settings** (Alt+Shift+E) is the one entry to FileDir's settings, titled Edit Settings rather than Fields. Its **Settings file** button (Alt+F) opens FileDir.inix in your text editor. Edit Settings File (Alt+Shift+F2) is retired.
+- FileDir now needs HomerDev 1.237.0.
+
+## 15 November 2026 -- The timer keys leave Alt+Control
+
+- **Timer Toggle** (Alt+Shift+Z) is the new name of Start Timer, which always started, paused and resumed the timer. Z keys are toggles.
+- **Stop Timer** is Alt+F2.
+- **Say Status** (Alt+Z) ends with the timer when one is set: whether it is running or paused, and how long it has run. Timer stays on the Query menu, without a key.
+- Alt+Control+T, S and Y no longer work: Alt+Control is for Windows desktop shortcuts. The guide and the FAQ say where the timer went.
+- **Invert Marked** keeps Control+I for good. Moving it to Alt+Shift+I, where DbDo has it, would need another key for Inquire Differences, and every I and D key is taken.
+- FileDir now needs HomerDev 1.236.0.
+
 ## 15 November 2026 -- The keys FileDir shows are the keys it answers
 
 - **Invert Marked** shows Control+I only. It also showed Alt+Shift+I, which has always gone to Inquire Differences. Moving Invert Marked to Alt+Shift+I waits until Inquire Differences has another key.
