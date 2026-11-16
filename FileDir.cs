@@ -1840,7 +1840,8 @@ menuHelpReadMe = menu_Helper("ReadMe", "Alt+Shift+F1", menuHelpReadMe_Click);
 menuHelpHotkeysPage = menu_Helper("Hotkeys", "", menuHelpHotkeysPage_Click);
 menuHelpKeyDescriber = menu_Helper("Key Describer Toggle", "Control+F1", MenuHelpKeyDescriber_Click);
 menuHelpHotKeys = menu_Helper("Hotkey Summary", "", MenuHelpHotKeys_Click);
-menuHelpContextMenu = menu_Helper("Context Menu ...", "Shift+F10", MenuHelpContextMenu_Click);
+// BOTH KEYS SHOWN (15 November 2026): the Applications key opens it too, as /exportkeys showed.
+menuHelpContextMenu = menu_Helper("Context Menu ...", "Shift+F10 or Applications", MenuHelpContextMenu_Click);
 //menuHelpExplorerMenu = menu_Helper("Explorer Menu ...", "Alt+Shift+F10", MenuHelpExplorerMenu_Click);
 menuHelpSendToMenu = menu_Helper("SendTo Menu ...", "Control+F10", MenuHelpSendToMenu_Click);
 menuHelpAlternateMenu = menu_Helper("Alternate Menu ...", "Alt+F10", MenuHelpAlternateMenu_Click);

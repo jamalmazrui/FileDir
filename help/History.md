@@ -2,6 +2,11 @@
 
 
 
+## 15 November 2026 -- What FileDir binds, shown truly
+
+- **Context Menu shows both its keys,** Shift+F10 and the Applications key, which it always answered; the first comparison of what FileDir binds with what it shows found the second.
+- The build uses C:\HomerDev when the installed kit has the same version.
+
 ## 15 November 2026 -- FileDir says which keys it binds
 
 - **FileDir.exe /exportkeys <file>** writes every command and key FileDir declares, without opening a window, and ends. The kit's check runs it at every push and compares the file with configs\\Hotkeys.inix, so a key the menus or the Key Describer name is a key that runs. For now a difference is a warning, listed in the check's log.

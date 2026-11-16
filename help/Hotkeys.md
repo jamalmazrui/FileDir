@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.235**  
+**Version 5.0.236**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -40,7 +40,7 @@ Commands in alphabetical order.
 - **Come up Level**, Comma -- or Backspace, Go to the parent folder in this window, on the folder you left
 - **Complete Mark**, Shift+F8 -- Mark every item from the range's start to the current one
 - **Complete Unmark**, Alt+Shift+F8 -- Unmark every item from the range's start to the current one
-- **Context Menu**, Shift+F10 -- Open the Windows context menu for the current item or the marked ones
+- **Context Menu**, Shift+F10 or Applications -- Open the Windows context menu for the current item or the marked ones
 - **Convert Encoding**, Control+2 -- Rewrite the marked text files in an encoding you pick
 - **Convert Units**, Shift+3 -- Convert between different units of measure and copy result to clipboard
 - **Copy**, Control+C -- Copy the current item or the marked ones to the clipboard
@@ -422,7 +422,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+Enter** -- Go to Item: Go to subfolder in same window, view zip archive, or launch file
 - **Shift+F** -- FTP Put: Upload current or marked files to an FTP folder
 - **Shift+F1** -- What This Does: Say what the control with focus does
-- **Shift+F10** -- Context Menu: Open the Windows context menu for the current item or the marked ones
+- **Shift+F10 or Applications** -- Context Menu: Open the Windows context menu for the current item or the marked ones
 - **Shift+F11** -- Tile Vertical: Tile the open windows down
 - **Shift+F12** -- Chat about File: Ask the AI model on this computer about the current file
 - **Shift+F3** -- Search Previous: Repeat the last Keywords or Jump, backward
@@ -616,7 +616,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Shift+2** -- Character Encoding
 - **Shift+F12** -- Chat about File
 - **Shift+F8** -- Complete Mark
-- **Shift+F10** -- Context Menu
+- **Shift+F10 or Applications** -- Context Menu
 - **Shift+3** -- Convert Units
 - **Shift+C** -- Copy to Folder
 - **Shift+Delete** -- Delete without Recycle
