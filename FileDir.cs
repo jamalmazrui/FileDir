@@ -1270,6 +1270,15 @@ try {
 //Application.EnableVisualStyles();
 Application.SetCompatibleTextRenderingDefault(true);
 
+// THE KEYS AS DECLARED (15 November 2026, the keyboard audit's Phase 1): "FileDir.exe /exportkeys <file>" builds the
+// main window without showing it, declares its keys and writes them all with the kit's KeyMap, then ends. It runs
+// before the single instance, so a FileDir already open is never handed the request. The kit's check compares the
+// file with configs\Hotkeys.inix, so a key shown is a key that runs.
+if (Homer.KeyMap.exportKeysPath() != "") {
+App.frame = new Frame();
+App.frame.declareKeys();
+Homer.KeyMap.exportAndExit("FileDir");
+}
 singleInstanceApplication application = new singleInstanceApplication();
 application.Run(args);
 

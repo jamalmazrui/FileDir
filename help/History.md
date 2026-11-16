@@ -2,6 +2,11 @@
 
 
 
+## 15 November 2026 -- FileDir says which keys it binds
+
+- **FileDir.exe /exportkeys <file>** writes every command and key FileDir declares, without opening a window, and ends. The kit's check runs it at every push and compares the file with configs\\Hotkeys.inix, so a key the menus or the Key Describer name is a key that runs. For now a difference is a warning, listed in the check's log.
+- FileDir now needs HomerDev 1.238.0.
+
 ## 15 November 2026 -- One Edit Settings
 
 - **Edit Settings** (Alt+Shift+E) is the one entry to FileDir's settings, titled Edit Settings rather than Fields. Its **Settings file** button (Alt+F) opens FileDir.inix in your text editor. Edit Settings File (Alt+Shift+F2) is retired.
