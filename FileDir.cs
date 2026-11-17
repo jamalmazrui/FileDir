@@ -5403,13 +5403,14 @@ break;
 if (!bFound) App.say("Not found.");
 } // menuNavigateExtensionChange_Click method
 
+// TWICE SPELLS OR SHOWS (17 November 2026): testSay heard this command say the same thing on its second press. The
+// suite's rule, KeyMap.answer, spells a short value on a second press and shows a longer one in a window.
 void menuQueryDate_Click(object sender, EventArgs e) {
-App.say("Date");
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 DateTime dt = (DateTime) mdiChild.tbl.DefaultView[i]["Time"];
-App.say(dt.ToLongDateString() + " at " + dt.ToLongTimeString());
+Homer.KeyMap.answer("Date", "date:", dt.ToLongDateString() + " at " + dt.ToLongTimeString());
 status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQueryDate_Click method
 
@@ -5601,8 +5602,9 @@ iItemCount++;
 if (iItemCount == 0) App.say("No items.");
 } // menuQueryListFiles_Click method
 
+// TWICE SPELLS OR SHOWS (17 November 2026): testSay heard this command say the same thing on its second press. The
+// suite's rule, KeyMap.answer, spells a short value on a second press and shows a longer one in a window.
 void menuQuerySize_Click(object sender, EventArgs e) {
-App.say("Size");
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
@@ -5619,7 +5621,7 @@ mdiChild.tbl.DefaultView[i]["Size"] = lSize;
 // The friendly form, because this command is answering "how big is it" and a
 // nine-digit number is not an answer anybody keeps in their head. The exact
 // count is still in the list itself and in the status line for when it matters.
-App.say(App.sizeFriendly(lSize));
+Homer.KeyMap.answer("Size", "size: " + App.sizeFriendly(lSize));
 status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQuerySize_Click method
 
@@ -5655,15 +5657,14 @@ else frame.statusLabel.Text = String.Format("Date: {0}   Size: {1}   Order: {2} 
 void menuQueryPath_Click(object sender, EventArgs e) {
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
-if (mdiChild.InZip) App.say("Path in archive");
-else App.say("Path");
-App.say(Path_Helper());
+Homer.KeyMap.answer("Path", mdiChild.InZip ? "path in archive:" : "path:", Path_Helper());
 } // menuQueryPath_Click method
 
+// TWICE SPELLS OR SHOWS (17 November 2026): testSay heard this command say the same thing on its second press. The
+// suite's rule, KeyMap.answer, spells a short value on a second press and shows a longer one in a window.
 void menuQueryName_Click(object sender, EventArgs e) {
-//App.say("File");
-App.say(Path.GetFileName(Path_Helper()));
-if ((char) Field_Helper("Tagged") == '>') App.say("Marked");
+Homer.KeyMap.answer("Item Name", Path.GetFileName(Path_Helper()));
+if (Homer.KeyMap.iPressCount == 1 && (char) Field_Helper("Tagged") == '>') App.say("Marked");
 } // menuQueryName_Click method
 
 // FOLDER NAME SAYS THE PATH TOO (19 October 2026, key decision for FileDir). The
@@ -5693,29 +5694,22 @@ Homer.LbcMessage.show(this, "The tutorials are not here.\r\n\r\nThey ship with F
 } // menuHelpPlayTutorials_Click method
 void menuHelpHotkeysPage_Click(object sender, EventArgs e) { Homer.SuiteCommands.openHotkeys(this); }
 
+// TWICE SHOWS (17 November 2026): the parts go to the suite's KeyMap.answer, so a second press shows them in a window
+// rather than saying them again, as testSay heard.
 void menuQueryType_Click(object sender, EventArgs e) {
-App.say("Type");
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 string ext = (string) mdiChild.tbl.DefaultView[i]["Ext"];
 string sPath = (string) mdiChild.tbl.DefaultView[i]["Path"];
-App.say(ext);
-if (ext.Length > 1) ext = ext.Substring(1);
-foreach (char c in ext) {
-//App.say(c.ToString());
-}
-
+List<string> lsParts = new List<string>();
+lsParts.Add("type: " + ext);
 char type = (char) mdiChild.tbl.DefaultView[i]["Type"];
-if (type == '\\') App.say("Folder");
-else App.say(Homer.Util.getPathType(sPath));
-
-char hidden = (char) mdiChild.tbl.DefaultView[i]["Hidden"];
-if (hidden == ')') App.say("Hidden");
-char readOnly = (char) mdiChild.tbl.DefaultView[i]["ReadOnly"];
-if (readOnly == ']') App.say("ReadOnly");
-char system = (char) mdiChild.tbl.DefaultView[i]["System"];
-if (system == '}') App.say("System");
+lsParts.Add(type == '\\' ? "Folder" : Homer.Util.getPathType(sPath));
+if ((char) mdiChild.tbl.DefaultView[i]["Hidden"] == ')') lsParts.Add("Hidden");
+if ((char) mdiChild.tbl.DefaultView[i]["ReadOnly"] == ']') lsParts.Add("ReadOnly");
+if ((char) mdiChild.tbl.DefaultView[i]["System"] == '}') lsParts.Add("System");
+Homer.KeyMap.answer("Type", lsParts.ToArray());
 status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQueryType_Click method
 
@@ -5974,7 +5968,7 @@ App.say("Code Page " + en.CodePage);
 // detects it with the Ude library and reports it the same way, including the
 // utf-8b / utf-8n distinction that says whether a byte-order mark is present.
 if (!File.Exists(sFile)) {
-App.say(Directory.Exists(sFile) ? "A folder has no encoding." : "Not found!");
+App.say(Directory.Exists(sFile) ? "A folder has no encoding." : "Not found.");
 return;
 }
 if (!Homer.Util.looksLikeText(sFile)) {
@@ -5983,7 +5977,8 @@ if (!Homer.Util.looksLikeText(sFile)) {
 App.say("Not a text file, so it has no character encoding.");
 return;
 }
-App.say(Homer.Util.getFileEncodingName(sFile).ToUpper());
+// TWICE SPELLS (17 November 2026), by the suite's KeyMap.answer, as testSay showed it repeating instead.
+Homer.KeyMap.answer("Character Encoding", "encoding: " + Homer.Util.getFileEncodingName(sFile).ToUpper());
 } // menuQueryCharacterEncoding method
 
 void menuQueryPercentThrough_Click(object sender, EventArgs e) {

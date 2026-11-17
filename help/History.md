@@ -2,6 +2,10 @@
 
 
 
+## 17 November 2026 -- A second press spells or shows
+
+- **Say Item Name, Say Path, Say Date, Say Size, Say Type and Say Character Encoding follow the suite's rule for a second press:** a short value is spelled, and a longer one is shown in a window to read or copy. testSay heard each say the same thing twice. Press Apostrophe twice to hear a file's name spelled.
+
 ## 17 November 2026 -- Marked or Current, and every Shift key says
 
 - **Marked or Current.** When some items in view are marked but the one you are on is not, a command that can act on many items -- copy, move, zip, delete and the rest -- asks first, in a dialog titled with the command's name: Marked items, with how many, which Enter chooses; Current item; Cancel; and Help. M and C choose too, Shift+F1 says what a button does, and Control+Slash says where you are. When the current item is marked, or none are, nothing is asked.
