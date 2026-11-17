@@ -2,6 +2,15 @@
 
 
 
+## 17 November 2026 -- Marked or Current, and every Shift key says
+
+- **Marked or Current.** When some items in view are marked but the one you are on is not, a command that can act on many items -- copy, move, zip, delete and the rest -- asks first, in a dialog titled with the command's name: Marked items, with how many, which Enter chooses; Current item; Cancel; and Help. M and C choose too, Shift+F1 says what a button does, and Control+Slash says where you are. When the current item is marked, or none are, nothing is asked.
+- **Every Shift key now says something,** or moves as Shift+DownArrow, Shift+Backslash and Shift+Space do. The aliases that repeated other keys are gone: Shift+Period and Shift+Comma (use Shift+DownArrow and Control+Shift+DownArrow), and Shift+B, Shift+E, Shift+N and Shift+P (use Control+Shift+Home and End, and Control+DownArrow and UpArrow).
+- **On their menus, with no key:** Initial Change, Extension Change, Stamp with Date and Time, Hide, Show, System, General, Short Path to Clipboard and Say Yield in Operating System.
+- **Export Type is Control+Shift+X,** as in DbDo and EdSharp; it was Alt+Shift+X. **Say Yield on Drive is Alt+Shift+Y**, and **Yield with Regex is new on Control+Shift+Y**: it counts the matches of a regular expression in the marked files, as in EdSharp.
+- **Batch Mail is retired.** It signed in to a mail server with a saved password and sent many messages, which mail providers now refuse or mark as spam.
+- **Say Time is gone.** Insert+F12 says the time in every program.
+
 ## 17 November 2026 -- Plainer words, and keys JAWS kept
 
 - **Spoken messages end with a full stop, not an exclamation mark,** such as "No items." and "Not found.". Two ways of saying one thing became one: "The current item is not a file."

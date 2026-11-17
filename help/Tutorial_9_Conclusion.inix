@@ -101,7 +101,7 @@ Hear=Every command with its key, in a window to search. Control plus slash, pres
 
 Say=Initial Change.
 Key=
-Hear=The next name starting with a different letter. Shift plus I; Shift plus X for the next kind of file.
+Hear=The next name starting with a different letter, from the Navigate menu; Extension Change, beside it, for the next kind of file.
 
 [step]
 

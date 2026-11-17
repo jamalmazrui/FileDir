@@ -2,7 +2,7 @@
 
 [about]
 Title=7 - Convert Between Formats
-Intro=One want: a Word document as a web page, or a PDF as plain text, without opening either. Alt plus Shift plus X, X for Export, offers what the file can become and converts the marked files, or the current one, keeping each name.
+Intro=One want: a Word document as a web page, or a PDF as plain text, without opening either. Control plus Shift plus X, X for Export, offers what the file can become and converts the marked files, or the current one, keeping each name.
 Setup=A folder holds a Word document and a PDF.
 Homework=Convert a Markdown file of your own to a web page, then open the web page in your browser.
 
@@ -21,8 +21,8 @@ Hear=FileDir
 
 [step]
 
-Say=I arrow to a Word document. Alt plus Shift plus X is Export Type, X for Export, as in DbDo and EdSharp.
-Key=Alt+Shift+X
+Say=I arrow to a Word document. Control plus Shift plus X is Export Type, X for Export, as in DbDo and EdSharp.
+Key=Control+Shift+X
 Hear=Export Type dialog
 Hear=Web page
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -50,8 +50,8 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Alt plus Shift plus X.
-Key=Alt+Shift+X
+Say=The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Control plus Shift plus X.
+Key=Control+Shift+X
 Hear=Export Type dialog
 Hear=Plain text
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -72,7 +72,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Alt plus Shift plus X, the web page, and Enter: all three convert, each beside its original.
+Say=Control plus Shift plus X, the web page, and Enter: all three convert, each beside its original.
 Key=Enter
 Hear=Converted 3 files
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -105,8 +105,8 @@ Key=
 
 [step]
 
-Say=Export Type is not only for documents. On a sound file, Alt plus Shift plus X offers other kinds of audio.
-Key=Alt+Shift+X
+Say=Export Type is not only for documents. On a sound file, Control plus Shift plus X offers other kinds of audio.
+Key=Control+Shift+X
 Hear=Export Type dialog
 Hear=MP3 audio
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -121,7 +121,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 [step]
 
 Say=On a picture, it offers other kinds of picture, and on a video, other kinds of video.
-Key=Alt+Shift+X
+Key=Control+Shift+X
 Hear=Export Type dialog
 Hear=PNG picture
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -142,7 +142,7 @@ Key=
 
 Say=Choose what this file becomes.
 Key=
-Hear=Alt plus Shift plus X
+Hear=Control plus Shift plus X
 
 [step]
 

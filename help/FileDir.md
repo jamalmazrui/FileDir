@@ -92,13 +92,13 @@ FileDir implements the list of items as a standard Windows ListBox control. This
 
 Navigation by initial character is another ListBox behavior. Pressing the letter "b," for example, will move focus to the next file or folder item with a name starting with that letter. Pressing multiple letters quickly, however, does not move to the next item starting with that sequence.
 
-Since initial letter navigation works the same whether lower or upper case letters are used, the upper case or shifted versions are used by FileDir to add features through hot keys. A Shift+letter key never changes anything: it says something, as Shift+S says the size of the current item, or it moves, as Shift+I goes to the next item with a different initial letter. So a Shift+letter pressed by mistake costs nothing. Commands that act -- copy, move, zip, unzip -- use Control or Alt with the letter, as Control+Shift+C copies files to another folder. Since you can type a lower case letter to jump to a file that starts with either the lower or upper case form of it, the Shift+letter keys are an extra capability without loss of functionality.
+Since initial letter navigation works the same whether lower or upper case letters are used, the upper case or shifted versions are used by FileDir to add features through hot keys. A Shift+letter key never changes anything: it says something, as Shift+S says the size of the current item, or it moves, as Shift+DownArrow marks the current item and goes to the next. So a Shift+letter pressed by mistake costs nothing. Commands that act -- copy, move, zip, unzip -- use Control or Alt with the letter, as Control+Shift+C copies files to another folder. Since you can type a lower case letter to jump to a file that starts with either the lower or upper case form of it, the Shift+letter keys are an extra capability without loss of functionality.
 
 This command needs more information to complete the copy operation, so it prompts for a target folder. It remembers the previous input, if any, which can be accepted by simply pressing Enter. To provide another value instead, type it, replacing other text, and press Enter to activate the default, OK button. You can also pick a folder from a standard tree control by activating the Browse button. Other buttons let you pick a folder from one of three listboxes: directories open in current windows, those opened during this FileDir session, or those with shortcuts in the Quick folder.
 
 If no items are marked, the command assumes you want to process the current, focused item. With one ore more marked items, the command performs a batch operation. If you want to verify what files are marked before copying, use the Shift+L hot key to list marked items. Use Shift+Space instead to say either the marked items, or the current item if there are no marks.
 
-A > symbol following an item indicates that it is marked (putting this symbol after rather than before preserves initial letter navigation in the ListBox. The > symbol is also the key (Shift+Period) to mark an item and automatically move to the next one in the list. The < symbol untags and also moves ahead, thereby allowing you to efficiently go through a directory list and selectively mark items. This marking approach has benefits over selection in Windows Explorer, e.g., marks are not lost by an accidental key press that moves focus.
+A > symbol following an item indicates that it is marked (putting this symbol after rather than before preserves initial letter navigation in the ListBox. Shift+DownArrow marks an item and moves to the next one in the list. Control+Shift+DownArrow unmarks and also moves ahead, thereby allowing you to efficiently go through a directory list and selectively mark items. This marking approach has benefits over selection in Windows Explorer, e.g., marks are not lost by an accidental key press that moves focus.
 
 FileDir uses a "Multiple Document Interface" (MDI), so any number of directory views may be opened, cycled among with Control+Tab, or closed with Control+F4. It is also a "single instance" application, so the desktop shortcut key, Alt+Control+F, activates the same program when FileDir is found in memory, rather than opening a new copy.
 
@@ -128,9 +128,9 @@ If another word processor or text editor is to be used, its full path may need t
 
 The Rename command, F2 or Shift+F2, lets you edit the name of the current file or folder item. Control+R lets you rename multiple items using the * and ? wildcard characters. A DOS command is used behind the scenes to accomplish this, so all items in the current directory are processed -- regardless of their marked state within FileDir. You can use Control+Shift+R to rename marked items based on a "regular expression" -- a powerful but complex syntax that is beyond the scope of this guide (Google will find many tutorials). Control+Shift+I renames files to the initial line of text inside them (if found), which is often a convenient way of making the name of a file the same as the title of the document inside.
 
-Like the greater than symbol meaning mark, special symbols are associated with folder and file attributes. A backslash symbol after an item indicates that it is a folder rather than a file. A right parenthesis after a list item means that the Hidden attribute is set. As a memory aid, you may think of parenthesis hiding something from full view. The RightParen key, Shift+0, sets the Hidden attribute of the current or marked items. The LeftParen key does the reverse, removing the Hidden attribute. Similarly, the right bracket symbol means that an item has the ReadOnly attribute set. You may think of a bracket protecting something from being modified. The LeftBracket key removes the ReadOnly attribute. Finally, the right brace symbol means the System attribute is set. You may think of a brace as a character used in programming systems. The LeftBrace key removes the System attribute.
+Like the greater than symbol meaning mark, special symbols are associated with folder and file attributes. A backslash symbol after an item indicates that it is a folder rather than a file. A right parenthesis after a list item means that the Hidden attribute is set. As a memory aid, you may think of parenthesis hiding something from full view. The Hide command, on the Edit menu with no key since 17 November 2026, sets the Hidden attribute of the current or marked items, and Show does the reverse; a shifted key now only ever says something, so these moved to the menu. Similarly, the right bracket symbol means that an item has the ReadOnly attribute set. You may think of a bracket protecting something from being modified. The RightBracket key sets the ReadOnly attribute, and the LeftBracket key removes it; they are not shifted, so they keep their keys. Finally, the right brace symbol means the System attribute is set. You may think of a brace as a character used in programming systems. The System and General commands, on the Edit menu with no key, set and remove the System attribute.
 
-Press Exclamation Point (! or Shift+1) to stamp the current or marked items with a different modification date and time. FileDir prompts for numeric values for the year, month, day, hour, minute, and second, defaulting to those of the current file or folder item.
+Stamp with Date and Time, on the Edit menu with no key since 17 November 2026, stamps the current or marked items with a different modification date and time. FileDir prompts for numeric values for the year, month, day, hour, minute, and second, defaulting to those of the current file or folder item.
 
 ## Find Commands
 
@@ -194,9 +194,9 @@ FileDir supports the concept of a "virtual folder" that does not exist as a phys
 
 Navigate commands change the focus within a folder, based on a fixed increment or boundary. Press Home to navigate to the beginning or first item, or End for the end or last one. If the current folder contains subfolders, then the beginning item will be a folder since they always appear before files. Press Alt+B to go to the beginning file, skipping over folder items before it.
 
-A group of shifted letter keys navigate similarly within the set of marked items: Shift+B for Beginning marked, Shift+E for End marked, Shift+N for Next marked, and Shift+P for Previous marked (if any). These commands let you review or inspect the subset of marked items. Shift+L also may be useful to list all marked items.
+A group of Control keys navigate similarly within the set of marked items: Control+Shift+Home for Beginning Marked, Control+Shift+End for End Marked, Control+DownArrow for Next Marked, and Control+UpArrow for Previous Marked (if any). These commands let you review or inspect the subset of marked items. Shift+L also may be useful to list all marked items.
 
-Press Shift+I for Initial Change, which jumps to the next item that starts with a different letter. Similarly, press Shift+X for Extension Change, which jumps to the next file with a different extension. These commands are most useful when the sort order is by alpha/name or extension.
+Initial Change, on the Navigate menu, jumps to the next item that starts with a different letter. Similarly, Extension Change, beside it, which jumps to the next file with a different extension. These commands are most useful when the sort order is by alpha/name or extension.
 
 ## Query Commands
 
@@ -230,7 +230,7 @@ Press Alt+P to confirm the complete path
 C:\temp\Calendar.doc
 ```
 
-Press Alt+Semicolon to query the current time and date. Press Alt+Apostrophe to hear text currently on the clipboard (You may think of this as quoting the clipboard). Press Question Mark (?) for the What Content command, which verbalizes the textual content of the current file item, or lists items contained in a folder item or zip archive. For technical reasons, the command reads a maximum of about 20K from a file.
+To hear the time, use your screen reader's own key: Insert+F12 in JAWS or NVDA; pressed twice, it gives the date. Press Alt+Apostrophe to hear text currently on the clipboard (You may think of this as quoting the clipboard). Press Question Mark (?) for the What Content command, which verbalizes the textual content of the current file item, or lists items contained in a folder item or zip archive. For technical reasons, the command reads a maximum of about 20K from a file.
 
 Press Shift+S for the size of the current file or folder item. Press Shift+D for its date and time stamp. Press Shift+T for Type, which provides miscellaneous information, including the registered file type and ReadOnly, Hidden, or System attributes set (if any). Press Control+Shift+T to examine all "extended properties" that are available to Windows Explorer. Depending on the type, 32 possible properties may be examined as follows:
 
@@ -300,7 +300,7 @@ Channels
 
 Press Control+L, Say List, to hear all items in view, or Shift+L, Say List Marked, for those marked. Press Alt+L, Say List Files, for files but not folders.
 
-Press Alt+Y, Say Yield, for the yield, or count and combined size, of the items in view, as Alt+Y does in every Homer app. Press Shift+Y for those marked, or Control+Y for files only. Press Control+Shift+Y for the total size and free space on the current drive. Press Alt+Shift+Y for operating system information, including the Windows version, physical memory, and virtual memory.
+Press Alt+Y, Say Yield, for the yield, or count and combined size, of the items in view, as Alt+Y does in every Homer app. Press Shift+Y for those marked, or Control+Y for files only. Press Alt+Shift+Y for the total size and free space on the current drive. Say Yield in Operating System, on the Say menu with no key, gives the Windows version, physical memory, and virtual memory. Control+Shift+Y is Yield with Regex, which counts the matches of a regular expression in the marked files, as in EdSharp.
 
 Press % (Shift+5) for the Percent Through command, which indicates the relative position of the current item in the list, e.g., "6 of 20 items, 30% through." If you are sequentially examining the files in a folder or ZIP archive, this gives you a sense of how much is done and what remains. Use the Filter Query command, Star (Shift+8), to quickly check the current sort order and filter specification.
 
@@ -314,7 +314,7 @@ To navigate and make mark decisions together, use the GreaterThan key (Shift+.) 
 
 Adding the Alt modifier key performs the same actions except for untagging rather than marking. Thus, Alt+Shift+NumPad5 untags the current item, Alt+Shift+Home untags to the top of the list, Alt+Shift+End untags to the bottom, Alt+Shift+DownArrow untags en route to the next, and Alt+Shift+UpArrow untags en route to the previous.
 
-Other arrow keypad actions duplicate home row commands for navigating among marked items. Control+Home goes to the Beginning Marked item, like Shift+B, and Control+End goes to the End one, like Shift+E. Control+DownArrow goes to the Next Marked item, like Shift+N, and Control+UpArrow goes to the previous one, like Shift+P.
+The arrow keys move among marked items too: Control+Shift+Home goes to the Beginning Marked item and Control+Shift+End to the End one; Control+DownArrow goes to the Next Marked item and Control+UpArrow to the previous one. The Shift+letter keys that once did the same were retired on 17 November 2026, so every Shift+letter now says something.
 
 Press Control+S to save marks in the current directory view, and Control+Shift+S to restore them. This could be useful if you need to temporarily change which items are marked.
 
@@ -348,23 +348,7 @@ To put a list of file names on the clipboard without preceding paths, press Alt+
 
 Control+P sends current or marked items to the default printer. Control+M starts a mail message with its body being the textual content of the current item. For example, pressing Control+M when a Microsoft Word document is the current item will extract its text for the message body and use its name (without extension) as the default subject. Control+Shift+M starts a message with the current or marked items as attached files. If no items are marked, FileDir both attaches the file and includes its text in the message body.
 
-Use the Batch Mail command, Control+Shift+B, to individually send a message to multiple recipients (please do not use this for spam). FileDir prompts for a text file that defines a batch mail operation. The first nonblank line is assumed to be the subject of the message. The next nonblank line is the full path of a text file that contains the body. Each subsequent line that contains an @ symbol is the address of a recipient. Here is an example definition:
-
-[Content of Batch.eml File]
-
-This is the subject line
-
-```
-C:\My Documents\Body.txt
-```
-
-[jane@doe.com](mailto:jane@doe.com)
-
-"John Doe" <[john.doe@mail.net](mailto:john.doe@mail.net)
-
-[End of Content]
-
-Before sending a batch email, configure FileDir options for LogInUserName, Password (stored in an encrypted form), SenderAddress, and OutGoingServer (e.g., outgoing.verizon.net). Test the command by sending yourself mail first. This command only works with common SMTP protocol settings.
+Batch Mail, which sent one message to many recipients through your own mail server, was retired on 17 November 2026. Mail providers now refuse or flag a script that signs in with a saved password and sends many messages, so it rarely arrived. For one message to many people, use your mail program's own mail merge or a mailing-list service; Control+M still sends the current file's text as a message, and Control+Shift+M sends files as attachments, through your own mail program.
 
 Press Alt+Shift+X, Export Type, and pick plain text to output marked files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
 
@@ -374,7 +358,7 @@ Alt+P queries the full path of the current item, whereas Alt+Shift+P copies it t
 
 C:\Documents and Settings\Owner\My Documents\My Music\MySong.mp3
 
-This may be useful so that the string is available by pressing Control+V to paste it into the open file dialog of another application. To get the short path instead, press the Tilde key (Shift plus the Grave Accent at the top left of the main keyboard). A short path contains no spaces and uses a suffix of a tilde symbol (~) and a number to abbreviate file or folder names. This may be useful when pasting into a command line, since more characters and surrounding quotes are usually needed otherwise to specify a file.
+This may be useful so that the string is available by pressing Control+V to paste it into the open file dialog of another application. To get the short path instead, choose Short Path to Clipboard from the Alternate Menu, Alt+F10; it has no key since 17 November 2026. A short path contains no spaces and uses a suffix of a tilde symbol (~) and a number to abbreviate file or folder names. This may be useful when pasting into a command line, since more characters and surrounding quotes are usually needed otherwise to specify a file.
 
 Control+C copies the full path of marked items to the clipboard, whereas Alt+Shift+N copies their names only -- no preceding directories.
 

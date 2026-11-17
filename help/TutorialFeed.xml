@@ -5,7 +5,7 @@
     <link>Tutorials.htm</link>
     <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2026 01:50:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Nov 2026 22:40:26 +0000</lastBuildDate>
     <itunes:author>Jamal Mazrui</itunes:author>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Technology"/>
@@ -42,7 +42,7 @@
       <description>FileDir is open on a folder of saved web pages. Full transcript: Tutorials.htm#0c-3-open-a-folder-and-find-a-file</description>
       <link>Tutorials.htm#0c-3-open-a-folder-and-find-a-file</link>
       <guid isPermaLink="false">homer-tutorial_3_open_a_folder_and_find_a_file</guid>
-      <enclosure url="tutorials/3_Open_a_Folder_and_Find_a_File.mp3" length="1477789" type="audio/mpeg"/>
+      <enclosure url="tutorials/3_Open_a_Folder_and_Find_a_File.mp3" length="1473122" type="audio/mpeg"/>
       <itunes:duration>00:03:25</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
@@ -51,7 +51,7 @@
       <description>A folder of files is open. Full transcript: Tutorials.htm#0d-4-mark-files-and-copy-them</description>
       <link>Tutorials.htm#0d-4-mark-files-and-copy-them</link>
       <guid isPermaLink="false">homer-tutorial_4_mark_files_and_copy_them</guid>
-      <enclosure url="tutorials/4_Mark_Files_and_Copy_Them.mp3" length="1447506" type="audio/mpeg"/>
+      <enclosure url="tutorials/4_Mark_Files_and_Copy_Them.mp3" length="1455969" type="audio/mpeg"/>
       <itunes:duration>00:03:21</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
@@ -78,8 +78,8 @@
       <description>A folder holds a Word document and a PDF. Full transcript: Tutorials.htm#0g-7-convert-between-formats</description>
       <link>Tutorials.htm#0g-7-convert-between-formats</link>
       <guid isPermaLink="false">homer-tutorial_7_convert_between_formats</guid>
-      <enclosure url="tutorials/7_Convert_Between_Formats.mp3" length="1347140" type="audio/mpeg"/>
-      <itunes:duration>00:03:17</itunes:duration>
+      <enclosure url="tutorials/7_Convert_Between_Formats.mp3" length="1360120" type="audio/mpeg"/>
+      <itunes:duration>00:03:19</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -96,8 +96,8 @@
       <description>Nothing is needed. Full transcript: Tutorials.htm#0i-9-conclusion</description>
       <link>Tutorials.htm#0i-9-conclusion</link>
       <guid isPermaLink="false">homer-tutorial_9_conclusion</guid>
-      <enclosure url="tutorials/9_Conclusion.mp3" length="1544360" type="audio/mpeg"/>
-      <itunes:duration>00:03:42</itunes:duration>
+      <enclosure url="tutorials/9_Conclusion.mp3" length="1560894" type="audio/mpeg"/>
+      <itunes:duration>00:03:43</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
   </channel>

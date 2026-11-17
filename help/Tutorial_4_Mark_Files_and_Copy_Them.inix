@@ -41,7 +41,7 @@ Hear=
 
 [step]
 
-Say=Among the marked, Shift plus N and Shift plus P go to the next and previous marked item; Shift plus B and Shift plus E to the first and last. The Apostrophe says whether the item you are on is marked.
+Say=Among the marked, Control plus Down Arrow and Control plus Up Arrow go to the next and previous marked item; Control plus Shift plus Home and End to the first and last. Shift plus M says whether the item you are on is marked.
 Key=
 Hear=
 

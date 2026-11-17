@@ -875,7 +875,7 @@ Screen reader:
 
 ### Step 7
 
-Shift plus I, Initial Change, jumps to the next name starting with a different letter -- a fast way down a long folder; Shift plus X, Extension Change, jumps to the next kind of file.
+Initial Change, on the Navigate menu, jumps to the next name starting with a different letter -- a fast way down a long folder; Extension Change, beside it, jumps to the next kind of file.
 
 ### Step 8: Control+F
 
@@ -1006,7 +1006,7 @@ Other ways to mark. Spacebar toggles the current item; the greater-than key mark
 
 ### Step 6
 
-Among the marked, Shift plus N and Shift plus P go to the next and previous marked item; Shift plus B and Shift plus E to the first and last. The Apostrophe says whether the item you are on is marked.
+Among the marked, Control plus Down Arrow and Control plus Up Arrow go to the next and previous marked item; Control plus Shift plus Home and End to the first and last. Shift plus M says whether the item you are on is marked.
 
 ### Step 7
 
@@ -1483,7 +1483,7 @@ Screen reader:
 
 ## 7 - Convert Between Formats
 
-One want: a Word document as a web page, or a PDF as plain text, without opening either. Alt plus Shift plus X, X for Export, offers what the file can become and converts the marked files, or the current one, keeping each name.
+One want: a Word document as a web page, or a PDF as plain text, without opening either. Control plus Shift plus X, X for Export, offers what the file can become and converts the marked files, or the current one, keeping each name.
 
 **Before you start:** A folder holds a Word document and a PDF.
 
@@ -1499,9 +1499,9 @@ Screen reader:
 
 - FileDir
 
-### Step 3: Alt+Shift+X
+### Step 3: Control+Shift+X
 
-I arrow to a Word document. Alt plus Shift plus X is Export Type, X for Export, as in DbDo and EdSharp.
+I arrow to a Word document. Control plus Shift plus X is Export Type, X for Export, as in DbDo and EdSharp.
 
 Screen reader:
 
@@ -1540,9 +1540,9 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 7: Alt+Shift+X
+### Step 7: Control+Shift+X
 
-The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Alt plus Shift plus X.
+The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Control plus Shift plus X.
 
 Screen reader:
 
@@ -1573,7 +1573,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 10: Enter
 
-Alt plus Shift plus X, the web page, and Enter: all three convert, each beside its original.
+Control plus Shift plus X, the web page, and Enter: all three convert, each beside its original.
 
 Screen reader:
 
@@ -1615,9 +1615,9 @@ Confirm the wording with a live run: buildTutorials -live.
 
 Then one paste in any program puts it all there: three documents' text in one email, for example.
 
-### Step 15: Alt+Shift+X
+### Step 15: Control+Shift+X
 
-Export Type is not only for documents. On a sound file, Alt plus Shift plus X offers other kinds of audio.
+Export Type is not only for documents. On a sound file, Control plus Shift plus X offers other kinds of audio.
 
 Screen reader:
 
@@ -1636,7 +1636,7 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 17: Alt+Shift+X
+### Step 17: Control+Shift+X
 
 On a picture, it offers other kinds of picture, and on a video, other kinds of video.
 
@@ -1667,7 +1667,7 @@ Choose what this file becomes.
 
 Screen reader:
 
-- Alt plus Shift plus X
+- Control plus Shift plus X
 
 ### Step 21
 
@@ -2014,7 +2014,7 @@ Initial Change.
 
 Screen reader:
 
-- The next name starting with a different letter. Shift plus I; Shift plus X for the next kind of file.
+- The next name starting with a different letter, from the Navigate menu; Extension Change, beside it, for the next kind of file.
 
 ### Step 17
 
@@ -2112,7 +2112,7 @@ FileDir is one of the Homer Tools, free programs for working by ear: EdSharp for
    key you will press most.
 4. Press **Shift+S** for its size, **Shift+D** for its date, **Shift+T** for its
    type, and **Alt+P** for the full path.
-5. Press **Shift+P** to hear how far down the list you are: item so many of so
+5. Press **Shift+5** to hear how far down the list you are: item so many of so
    many.
 6. Press **Enter** on a folder. A new window opens on it, and the first window
    is still there behind it.
@@ -2206,7 +2206,7 @@ moves any number of files.
 1. Move to a document — a .docx, a .pdf, a .md, or a plain text file.
 2. Press **Question Mark**. FileDir converts the file to text and reads it out.
    Word and PowerPoint files need Office installed; PDF and Markdown do not.
-3. Press **Alt+Shift+X** — Export Type — on a tagged set and pick plain text to
+3. Press **Control+Shift+X** — Export Type — on a tagged set and pick plain text to
    write each one out as a .txt file you can read or search.
 4. Press **Alt+Shift+C** — Append File Contents — to put the text of every tagged file on
    the clipboard, one after another. Useful for gathering notes scattered across
@@ -2244,7 +2244,7 @@ This needs Pandoc, which the FileDir installer marks by default. If you unmarked
 it, run `installPandoc.cmd` in the FileDir folder as an administrator.
 
 1. Open the folder and **tag** the files to convert.
-2. Press **Alt+Shift+X** for Export Type.
+2. Press **Control+Shift+X** for Export Type.
 3. A list of ten formats appears, each with its extension named. **Arrow to the
    one you want** and press Enter. FileDir remembers your choice for next time.
 4. Listen. FileDir says which file it is on and how many there are.

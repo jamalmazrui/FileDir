@@ -48,7 +48,7 @@ Hear=FileDir, List box
 
 [step]
 
-Say=Shift plus I, Initial Change, jumps to the next name starting with a different letter -- a fast way down a long folder; Shift plus X, Extension Change, jumps to the next kind of file.
+Say=Initial Change, on the Navigate menu, jumps to the next name starting with a different letter -- a fast way down a long folder; Extension Change, beside it, jumps to the next kind of file.
 Key=
 Hear=
 

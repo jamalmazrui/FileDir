@@ -1,4 +1,4 @@
-﻿#EXTM3U
+#EXTM3U
 #EXTINF:160,Homer Tools Walkthroughs
 0_Overview.mp3
 #EXTINF:276,1 - User Interface
@@ -13,9 +13,9 @@
 5_Play_a_Pages_Media_in_the_Homer_Player.mp3
 #EXTINF:219,6 - Rename Files to What Is Inside
 6_Rename_Files_to_What_Is_Inside.mp3
-#EXTINF:197,7 - Convert Between Formats
+#EXTINF:199,7 - Convert Between Formats
 7_Convert_Between_Formats.mp3
 #EXTINF:211,8 - Ask About a File
 8_Ask_About_a_File.mp3
-#EXTINF:222,9 - Conclusion
+#EXTINF:223,9 - Conclusion
 9_Conclusion.mp3
