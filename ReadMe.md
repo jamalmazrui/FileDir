@@ -35,7 +35,7 @@ blind developer for people who work by keyboard and screen reader.
 - **Speech that adds rather than repeats.** FileDir speaks through JAWS, then
   NVDA, then a Windows notification that Narrator reads. It says only what your
   screen reader does not already say.
-- **Conversion between formats, in batches.** Mark files, press Shift+O, pick
+- **Conversion between formats, in batches.** Mark files, press Alt+Shift+X, pick
   what they should become. Documents, audio, video and pictures all convert,
   and PDFs keep their headings, lists and tables. No Microsoft Office needed.
 - **Naming files by what is inside them.** Control+Shift+I renames to the title,
@@ -118,7 +118,7 @@ Try these in order. Each is one keystroke.
    for Word, PDF, and other document formats, not only plain text.
 6. Press **Space** on two or three files to mark them, then **Shift+L** to hear
    what you have marked and **Shift+Y** for how many they are and how big.
-7. With those files still marked, press **Shift+Z** to zip them, or **Shift+C**
+7. With those files still marked, press **Control+Shift+Z** to zip them, or **Control+Shift+C**
    to copy them to another folder.
 8. Press **Alt+Shift+F7** to translate them into a language you name, if you
    installed Ollama. FileDir writes a translation beside each file.

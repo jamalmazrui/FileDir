@@ -730,8 +730,9 @@ you can search.</p>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
 <h3 id="step-18-escape">Step 18: Escape</h3>
 <p>Every key is named for a word in its command: Control plus J for
-Jump, Control plus O for Open, Shift plus C for Copy to Folder. A key
-never comes from the middle of a word.</p>
+Jump, Control plus O for Open, Control plus Shift plus C for Copy to
+Folder. A key never comes from the middle of a word, and a Shift letter
+alone never changes anything: it says something, or moves.</p>
 <p>Screen reader:</p>
 <ul>
 <li>Documents, list box</li>
@@ -745,11 +746,12 @@ what it does instead of doing it: the safe way to explore.</p>
 <li>Key Describer on</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
-<h3 id="step-20-shiftz">Step 20: Shift+Z</h3>
-<p>Now Shift plus Z only says what it would do.</p>
+<h3 id="step-20-controlshiftz">Step 20: Control+Shift+Z</h3>
+<p>Now Control plus Shift plus Z only says what it would do.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Shift plus Z, Zip, add current or marked files to zip archive</li>
+<li>Control plus Shift plus Z, Zip, add current or marked files to zip
+archive</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
 <h3 id="step-21-controlf1">Step 21: Control+F1</h3>
@@ -777,25 +779,25 @@ line.</p>
 current item.</p>
 <p>Screen reader:</p>
 <ul>
-<li>F2, or Shift plus R</li>
+<li>F2</li>
 </ul>
 <h3 id="step-25">Step 25</h3>
 <p>Copy the marked items to another folder.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Shift plus C</li>
+<li>Control plus Shift plus C</li>
 </ul>
 <h3 id="step-26">Step 26</h3>
 <p>Move them.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Shift plus M</li>
+<li>Alt plus Shift plus M</li>
 </ul>
 <h3 id="step-27">Step 27</h3>
 <p>Zip them.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Shift plus Z</li>
+<li>Control plus Shift plus Z</li>
 </ul>
 <h3 id="step-28">Step 28</h3>
 <p>Go to the parent folder.</p>
@@ -1004,9 +1006,9 @@ files, not in their names; walk five uses it on a page of episodes.</p>
 <li>FileDir, List box</li>
 </ul>
 <h3 id="step-10-2">Step 10</h3>
-<p>Shift plus Q adds the current file or folder to the Quick folder,
-your list of favorites; Control plus Q opens that folder, from anywhere,
-and Enter there goes straight to the item.</p>
+<p>Control plus Shift plus Q adds the current file or folder to the
+Quick folder, your list of favorites; Control plus Q opens that folder,
+from anywhere, and Enter there goes straight to the item.</p>
 <h3 id="step-11-2">Step 11</h3>
 <p>Opening what you find. Enter opens the file in the program Windows
 has for it; Control plus E opens it in your editor, EdSharp when it is
@@ -1084,9 +1086,9 @@ are marked as the number changes.</p>
 <li>2 marked files</li>
 </ul>
 <p>Alt plus Y says the count at any time.</p>
-<h3 id="step-3-shiftc">Step 3: Shift+C</h3>
-<p>Press Shift plus C, C for Copy, to copy the marked files to a folder.
-FileDir asks where to.</p>
+<h3 id="step-3-controlshiftc">Step 3: Control+Shift+C</h3>
+<p>Press Control plus Shift plus C, C for Copy, to copy the marked files
+to a folder. FileDir asks where to.</p>
 <p>Screen reader:</p>
 <ul>
 <li>Copy To</li>
@@ -1101,7 +1103,7 @@ Enter.</p>
 <ul>
 <li>2 files copied</li>
 </ul>
-<p>Nothing is moved; Shift plus M moves instead.</p>
+<p>Nothing is moved; Alt plus Shift plus M moves instead.</p>
 <h3 id="step-5-1">Step 5</h3>
 <p>Other ways to mark. Spacebar toggles the current item; the
 greater-than key marks and moves to the next, so a run of files is
@@ -1112,10 +1114,10 @@ way. Control plus A marks all, Control plus Shift plus A clears all.</p>
 previous marked item; Shift plus B and Shift plus E to the first and
 last. The Apostrophe says whether the item you are on is marked.</p>
 <h3 id="step-7-3">Step 7</h3>
-<p>What a mark feeds. Shift plus C copies the marked files to a folder
-you choose; Shift plus M moves them; Shift plus Z zips them into one
-archive; Delete recycles them, after asking once. The same marks, a
-different verb.</p>
+<p>What a mark feeds. Control plus Shift plus C copies the marked files
+to a folder you choose; Alt plus Shift plus M moves them; Control plus
+Shift plus Z zips them into one archive; Delete recycles them, after
+asking once. The same marks, a different verb.</p>
 <h3 id="step-8-1">Step 8</h3>
 <p>Control plus C, Control plus X and Control plus V copy, cut and paste
 marked files through the clipboard, as in Windows Explorer – so files
@@ -1149,8 +1151,8 @@ unmarked marked, for when it is easier to say what you do not want. Alt
 plus Comma untags everything except the current item.</p>
 <h3 id="step-13-3">Step 13</h3>
 <p>A filter and a mark together: Control plus F to show only star dot j
-p g, Control plus A to mark them all, Shift plus M to move them to
-Pictures. Three keys, and a year of photographs is sorted.</p>
+p g, Control plus A to mark them all, Alt plus Shift plus M to move them
+to Pictures. Three keys, and a year of photographs is sorted.</p>
 <h3 id="step-14-shifts">Step 14: Shift+S</h3>
 <p>Shift plus S says the size of the marked files together, before a
 copy to a small drive; Alt plus S says the size of the folder you are
@@ -1164,14 +1166,15 @@ in.</p>
 dot j p e g to star dot j p g – and renames every marked file by it,
 saying the count. F2 renames the current one by name.</p>
 <h3 id="step-16-2">Step 16</h3>
-<p>Shift plus Z zips the marked files into one archive named for the
-folder, or for a name you give; Shift plus U unpacks the current archive
-into a folder of its name. Both say what they did and how many.</p>
+<p>Control plus Shift plus Z zips the marked files into one archive
+named for the folder, or for a name you give; Control plus U unpacks the
+current archive into a folder of its name. Both say what they did and
+how many.</p>
 <h3 id="step-17-2">Step 17</h3>
 <p>What this walk taught. I say the key; the reader says what it
 does.</p>
 <h3 id="step-18-4">Step 18</h3>
-<p>Shift plus C.</p>
+<p>Control plus Shift plus C.</p>
 <p>Screen reader:</p>
 <ul>
 <li>Copy to Folder</li>
@@ -1496,8 +1499,8 @@ Enter accepts.</p>
 <p>Every rename, of whatever kind, can be checked by ear first: each
 dialog lists what will change before it changes.</p>
 <h3 id="step-17-f2">Step 17: F2</h3>
-<p>And one file at a time is always there. F2, or Shift plus R, renames
-the current item, with its name ready to edit.</p>
+<p>And one file at a time is always there. F2 renames the current item,
+with its name ready to edit.</p>
 <p>Screen reader:</p>
 <ul>
 <li>Rename dialog, Name: edit, IMG underscore 4021 dot jpg</li>
@@ -1546,9 +1549,9 @@ rename them to what is inside; then check each new name with Down
 Arrow.</p>
 <h2 id="convert-between-formats">7 - Convert Between Formats</h2>
 <p>One want: a Word document as a web page, or a PDF as plain text,
-without opening either. Shift plus O, O for Output, offers what the file
-can become and converts the marked files, or the current one, keeping
-each name.</p>
+without opening either. Alt plus Shift plus X, X for Export, offers what
+the file can become and converts the marked files, or the current one,
+keeping each name.</p>
 <p><strong>Before you start:</strong> A folder holds a Word document and
 a PDF.</p>
 <h3 id="step-1-5">Step 1</h3>
@@ -1561,12 +1564,12 @@ showed.</p>
 <ul>
 <li>FileDir</li>
 </ul>
-<h3 id="step-3-shifto">Step 3: Shift+O</h3>
-<p>I arrow to a Word document. Shift plus O is Output Type, O for
-Output.</p>
+<h3 id="step-3-altshiftx">Step 3: Alt+Shift+X</h3>
+<p>I arrow to a Word document. Alt plus Shift plus X is Export Type, X
+for Export, as in DbDo and EdSharp.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Output Type dialog</li>
+<li>Export Type dialog</li>
 <li>Web page</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
@@ -1593,14 +1596,14 @@ others. Down Arrow moves through them.</p>
 <li>Converted to report dot h t m l</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
-<h3 id="step-7-shifto">Step 7: Shift+O</h3>
+<h3 id="step-7-altshiftx">Step 7: Alt+Shift+X</h3>
 <p>The new file lands beside the old one with the same root name, and
 nothing is ever overwritten. A planned misstep: a PDF offers fewer
 choices, because only its text can be read out of it. I arrow to one and
-press Shift plus O.</p>
+press Alt plus Shift plus X.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Output Type dialog</li>
+<li>Export Type dialog</li>
 <li>Plain text</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
@@ -1621,8 +1624,8 @@ Semicolon.</p>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
 <h3 id="step-10-enter">Step 10: Enter</h3>
-<p>Shift plus O, the web page, and Enter: all three convert, each beside
-its original.</p>
+<p>Alt plus Shift plus X, the web page, and Enter: all three convert,
+each beside its original.</p>
 <p>Screen reader:</p>
 <ul>
 <li>Converted 3 files</li>
@@ -1645,10 +1648,11 @@ is lost if the choice was wrong. Escape, for now.</p>
 <li>FileDir</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
-<h3 id="step-13-shifta">Step 13: Shift+A</h3>
-<p>Sometimes the text is wanted somewhere else, not as a file. Shift
-plus A, Append File Contents, adds the text of the marked files to the
-clipboard, one after another, converting each from its own format.</p>
+<h3 id="step-13-altshiftc">Step 13: Alt+Shift+C</h3>
+<p>Sometimes the text is wanted somewhere else, not as a file. Alt plus
+Shift plus C, Append File Contents, beside Copy Append on Alt plus C,
+adds the text of the marked files to the clipboard, one after another,
+converting each from its own format.</p>
 <p>Screen reader:</p>
 <ul>
 <li>Appended 3 files to clipboard</li>
@@ -1657,12 +1661,12 @@ clipboard, one after another, converting each from its own format.</p>
 <h3 id="step-14-2">Step 14</h3>
 <p>Then one paste in any program puts it all there: three documents’
 text in one email, for example.</p>
-<h3 id="step-15-shifto">Step 15: Shift+O</h3>
-<p>Output Type is not only for documents. On a sound file, Shift plus O
-offers other kinds of audio.</p>
+<h3 id="step-15-altshiftx">Step 15: Alt+Shift+X</h3>
+<p>Export Type is not only for documents. On a sound file, Alt plus
+Shift plus X offers other kinds of audio.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Output Type dialog</li>
+<li>Export Type dialog</li>
 <li>MP3 audio</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
@@ -1674,12 +1678,12 @@ recording. Escape, for now.</p>
 <li>FileDir</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
-<h3 id="step-17-shifto">Step 17: Shift+O</h3>
+<h3 id="step-17-altshiftx">Step 17: Alt+Shift+X</h3>
 <p>On a picture, it offers other kinds of picture, and on a video, other
 kinds of video.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Output Type dialog</li>
+<li>Export Type dialog</li>
 <li>PNG picture</li>
 </ul>
 <p>Confirm the wording with a live run: buildTutorials -live.</p>
@@ -1697,7 +1701,7 @@ so there is no wrong choice to make. Escape.</p>
 <p>Choose what this file becomes.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Shift plus O</li>
+<li>Alt plus Shift plus X</li>
 </ul>
 <h3 id="step-21-1">Step 21</h3>
 <p>Leave without converting.</p>
@@ -1904,7 +1908,7 @@ word of its command, so it can be guessed.</p>
 files at once. Copy them.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Shift plus C</li>
+<li>Control plus Shift plus C</li>
 </ul>
 <h3 id="step-4">Step 4</h3>
 <p>Keywords finds by what is inside a file, not by its name.</p>
@@ -1931,7 +1935,7 @@ letter, Jump, Initial Change and a filter get you down it.</p>
 clipboard carries files between folders.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Shift plus M</li>
+<li>Alt plus Shift plus M</li>
 </ul>
 <h3 id="step-8-2">Step 8</h3>
 <p>Where the walks stop and the guide begins: scheduled jobs, the
@@ -2016,8 +2020,8 @@ plus Shift plus L.</li>
 <p>Quick folder.</p>
 <p>Screen reader:</p>
 <ul>
-<li>Your favorites: files, folders and web links. Shift plus Q adds one;
-Control plus Q opens the folder.</li>
+<li>Your favorites: files, folders and web links. Control plus Shift
+plus Q adds one; Control plus Q opens the folder.</li>
 </ul>
 <h3 id="step-21-2">Step 21</h3>
 <p>recent folders.</p>
@@ -2029,8 +2033,8 @@ Control plus Q opens the folder.</li>
 <p>rename.</p>
 <p>Screen reader:</p>
 <ul>
-<li>A new name for the current file or folder. F2, or Shift plus R;
-Control plus R renames many with wildcards.</li>
+<li>A new name for the current file or folder. F2; Control plus R
+renames many with wildcards.</li>
 </ul>
 <h3 id="step-23-3">Step 23</h3>
 <p>sort.</p>
@@ -2113,9 +2117,9 @@ only, a right brace for system.</li>
 <li>Press <strong>Control+F</strong> for Filter. Type a word and the
 list narrows to items containing it. Clear the filter to bring the rest
 back.</li>
-<li>Press <strong>Shift+F</strong> to search inside files rather than in
-names, when what you remember is a phrase in a document rather than its
-name.</li>
+<li>Press <strong>Alt+Shift+F</strong> for File Find to search inside
+files rather than in names, when what you remember is a phrase in a
+document rather than its name.</li>
 </ol>
 <p><strong>What you learned:</strong> four different ways to find
 something, each quicker than scrolling.</p>
@@ -2162,13 +2166,13 @@ Between Two Folders</h2>
 <li>Press <strong>Control+F6</strong> to go back to the first
 window.</li>
 <li><strong>Tag</strong> the files you want, as in tutorial 3.</li>
-<li>Press <strong>Shift+C</strong> for Copy Tagged. FileDir asks where
-to. The other open window is offered, so you usually just press
-Enter.</li>
+<li>Press <strong>Control+Shift+C</strong> for Copy to Folder. FileDir
+asks where to. The other open window is offered, so you usually just
+press Enter.</li>
 <li>Press <strong>Control+F6</strong> to look at the destination and
 confirm they arrived.</li>
-<li>Press <strong>Shift+M</strong> instead of Shift+C to move rather
-than copy.</li>
+<li>Press <strong>Alt+Shift+M</strong>, Move to Folder, instead of
+Control+Shift+C to move rather than copy.</li>
 <li>Press <strong>Alt+P</strong> on a file and then paste elsewhere:
 FileDir put the full path on the clipboard, which is often what you
 actually wanted.</li>
@@ -2185,13 +2189,14 @@ file.</li>
 <li>Press <strong>Question Mark</strong>. FileDir converts the file to
 text and reads it out. Word and PowerPoint files need Office installed;
 PDF and Markdown do not.</li>
-<li>Press <strong>Shift+O</strong> — Output to Text — on a tagged set to
-write each one out as a .txt file you can read or search.</li>
-<li>Press <strong>Shift+A</strong> — Append Tagged — to put the text of
-every tagged file on the clipboard, one after another. Useful for
-gathering notes scattered across a folder.</li>
-<li>Press <strong>E</strong> to open the file in your text editor when
-you want to change it rather than read it.</li>
+<li>Press <strong>Alt+Shift+X</strong> — Export Type — on a tagged set
+and pick plain text to write each one out as a .txt file you can read or
+search.</li>
+<li>Press <strong>Alt+Shift+C</strong> — Append File Contents — to put
+the text of every tagged file on the clipboard, one after another.
+Useful for gathering notes scattered across a folder.</li>
+<li>Press <strong>Control+T</strong> to open the file in your text
+editor when you want to change it rather than read it.</li>
 </ol>
 <p><strong>What you learned:</strong> the fastest way to answer “what is
 this file?”</p>
@@ -2199,18 +2204,19 @@ this file?”</p>
 <p><strong>The job: pack files up and take them apart.</strong></p>
 <ol type="1">
 <li><strong>Tag</strong> the files you want to pack.</li>
-<li>Press <strong>Shift+Z</strong> for Zip Tagged. FileDir asks for a
+<li>Press <strong>Control+Shift+Z</strong> for Zip. FileDir asks for a
 name and makes the archive in the current folder.</li>
 <li>Move to the new archive and press <strong>Enter</strong>. You are
 now looking inside it as though it were a folder.</li>
 <li>Press <strong>Backspace</strong> to come out again.</li>
-<li>Tag one or more archives and press <strong>Shift+X</strong> —
-Unarchive Tagged — to extract them. FileDir handles nearly every archive
+<li>Tag one or more archives and press <strong>Control+U</strong> —
+Unarchive — to extract them. FileDir handles nearly every archive
 format, not only zip.</li>
-<li>Press <strong>Alt+Shift+X</strong> to extract without recreating the
-folders inside, when you want everything in one place.</li>
-<li>Press <strong>Control+Shift+X</strong> to test an archive without
-extracting anything.</li>
+<li>Press <strong>Alt+U</strong>, Unarchive without Subfolders, to
+extract without recreating the folders inside, when you want everything
+in one place.</li>
+<li>Choose <strong>Unarchive Test</strong> on the Misc menu to test an
+archive without extracting anything.</li>
 </ol>
 <p><strong>What you learned:</strong> archives are just folders, and
 packing is one key.</p>
@@ -2218,20 +2224,19 @@ packing is one key.</p>
 Folder to Another Format</h2>
 <p><strong>The job: turn a folder of Word documents into Markdown, or
 anything into anything.</strong></p>
-<p>This needs Pandoc, which the FileDir installer ticks by default. If
-you unticked it, run <code>installPandoc.cmd</code> in the FileDir
+<p>This needs Pandoc, which the FileDir installer marks by default. If
+you unmarked it, run <code>installPandoc.cmd</code> in the FileDir
 folder as an administrator.</p>
 <ol type="1">
 <li>Open the folder and <strong>tag</strong> the files to convert.</li>
-<li>Press <strong>Alt+Shift+K</strong> for Convert Format.</li>
+<li>Press <strong>Alt+Shift+X</strong> for Export Type.</li>
 <li>A list of ten formats appears, each with its extension named.
 <strong>Arrow to the one you want</strong> and press Enter. FileDir
 remembers your choice for next time.</li>
 <li>Listen. FileDir says which file it is on and how many there
 are.</li>
-<li>A file Pandoc cannot read — a legacy .doc, or a PDF — is skipped,
-and FileDir says so by name. Use <strong>Shift+O</strong>, Output to
-Text, for those instead.</li>
+<li>A file that cannot become the format you chose is skipped, and
+FileDir says so by name.</li>
 <li>At the end you hear how many were converted, how many skipped, and
 how many failed. The folder refreshes so the new files are there.</li>
 <li>Press <strong>Question Mark</strong> on one to hear the result.</li>

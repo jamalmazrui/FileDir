@@ -66,7 +66,7 @@ Hear=FileDir, List box
 
 [step]
 
-Say=Shift plus Q adds the current file or folder to the Quick folder, your list of favorites; Control plus Q opens that folder, from anywhere, and Enter there goes straight to the item.
+Say=Control plus Shift plus Q adds the current file or folder to the Quick folder, your list of favorites; Control plus Q opens that folder, from anywhere, and Enter there goes straight to the item.
 Key=
 Hear=
 

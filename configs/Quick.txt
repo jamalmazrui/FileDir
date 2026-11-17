@@ -10,6 +10,6 @@ Press Control+L to hear a list of items in the current folder, including both fi
 
 For specific information about the current item, the one with keyboard focus, press Shift+S for its size in bytes or Shift+D for the date and time it was last modified.  Press Shift+T for its type, as well as the default program to open it, if any.  Press question mark for the What command, which reads the contents of the file.  
 
-Several commands operate on the currently tagged items.  These include Shift+C to copy, Shift+M to move, Shift+R to rename, Shift+U to unzip, and Shift+Z to zip.  Shift+W writes tagged files or folders to a CD, if found.  Control+M mails items as attachments using the default program for electronic mail.
+Several commands operate on the currently tagged items.  These include Control+Shift+C to copy, Alt+Shift+M to move, F2 to rename, Control+U to unzip, and Control+Shift+Z to zip.  Alt+Shift+B writes tagged files or folders to a CD, if found.  Control+Shift+M mails items as attachments using the default program for electronic mail.
 
 Other commands switch the view from one folder to another.  Press Control+G to go to a folder that you then specify, either by typing a path or picking from a folder tree.  Press Alt+O to open one of a list of special folders such as My Documents.  Press Control+Tab to cycle to a view of another folder that may be readily accessed.

@@ -20,7 +20,7 @@ Hear=Control plus J
 
 Say=The semicolon marks, and every command then acts on all the marked files at once. Copy them.
 Key=
-Hear=Shift plus C
+Hear=Control plus Shift plus C
 
 [step]
 
@@ -44,7 +44,7 @@ Hear=Control plus F
 
 Say=Walk four: mark, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
 Key=
-Hear=Shift plus M
+Hear=Alt plus Shift plus M
 
 [step]
 
@@ -125,7 +125,7 @@ Hear=Every media link a page holds, queued in the Homer Player. Control plus Shi
 
 Say=Quick folder.
 Key=
-Hear=Your favorites: files, folders and web links. Shift plus Q adds one; Control plus Q opens the folder.
+Hear=Your favorites: files, folders and web links. Control plus Shift plus Q adds one; Control plus Q opens the folder.
 
 [step]
 
@@ -137,7 +137,7 @@ Hear=Every folder opened this session, newest first. Alt plus R.
 
 Say=rename.
 Key=
-Hear=A new name for the current file or folder. F2, or Shift plus R; Control plus R renames many with wildcards.
+Hear=A new name for the current file or folder. F2; Control plus R renames many with wildcards.
 
 [step]
 

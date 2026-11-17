@@ -20,8 +20,8 @@ Note=Alt plus Y says the count at any time.
 
 [step]
 
-Say=Press Shift plus C, C for Copy, to copy the marked files to a folder. FileDir asks where to.
-Key=Shift+C
+Say=Press Control plus Shift plus C, C for Copy, to copy the marked files to a folder. FileDir asks where to.
+Key=Control+Shift+C
 Hear=Copy To
 Hear=Folder edit
 Note=The window is named for the command. The box remembers the last ten answers.
@@ -31,7 +31,7 @@ Note=The window is named for the command. The box remembers the last ten answers
 Say=Type the folder, or press Alt plus B to browse for it, then Enter.
 Key=Enter
 Hear=2 files copied
-Note=Nothing is moved; Shift plus M moves instead.
+Note=Nothing is moved; Alt plus Shift plus M moves instead.
 
 [step]
 
@@ -47,7 +47,7 @@ Hear=
 
 [step]
 
-Say=What a mark feeds. Shift plus C copies the marked files to a folder you choose; Shift plus M moves them; Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
+Say=What a mark feeds. Control plus Shift plus C copies the marked files to a folder you choose; Alt plus Shift plus M moves them; Control plus Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
 Key=
 Hear=
 
@@ -83,7 +83,7 @@ Hear=
 
 [step]
 
-Say=A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+Say=A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Alt plus Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
 Key=
 Hear=
 
@@ -101,7 +101,7 @@ Hear=
 
 [step]
 
-Say=Shift plus Z zips the marked files into one archive named for the folder, or for a name you give; Shift plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+Say=Control plus Shift plus Z zips the marked files into one archive named for the folder, or for a name you give; Control plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
 Key=
 Hear=
 
@@ -113,6 +113,6 @@ Hear=
 
 [step]
 
-Say=Shift plus C.
+Say=Control plus Shift plus C.
 Key=
 Hear=Copy to Folder

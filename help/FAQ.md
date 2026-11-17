@@ -124,7 +124,7 @@ the converted copy beside each original and never overwrites anything.
 Word (.docx), OpenDocument, EPUB, HTML, Markdown, reStructuredText, LaTeX, rich
 text, AsciiDoc, CSV, MediaWiki, PowerPoint (.pptx) and Excel (.xlsx), among
 others. It cannot read legacy .doc, .ppt or .xls, and it cannot read PDF. Use
-Shift+O, Output to Text, for those: that goes through 2htm, which comes with
+Alt+Shift+X, Export Type, for those: that goes through 2htm, which comes with
 FileDir.
 
 **How are PDFs read?**

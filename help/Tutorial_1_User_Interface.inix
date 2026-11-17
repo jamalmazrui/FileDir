@@ -121,7 +121,7 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Every key is named for a word in its command: Control plus J for Jump, Control plus O for Open, Shift plus C for Copy to Folder. A key never comes from the middle of a word.
+Say=Every key is named for a word in its command: Control plus J for Jump, Control plus O for Open, Control plus Shift plus C for Copy to Folder. A key never comes from the middle of a word, and a Shift letter alone never changes anything: it says something, or moves.
 Key=Escape
 Hear=Documents, list box
 Note=Confirm the wording with a live run: buildTutorials -live.
@@ -135,9 +135,9 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Now Shift plus Z only says what it would do.
-Key=Shift+Z
-Hear=Shift plus Z, Zip, add current or marked files to zip archive
+Say=Now Control plus Shift plus Z only says what it would do.
+Key=Control+Shift+Z
+Hear=Control plus Shift plus Z, Zip, add current or marked files to zip archive
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
@@ -163,25 +163,25 @@ Key=
 
 Say=A short review. I say a command; the reader says its key. Rename the current item.
 Key=
-Hear=F2, or Shift plus R
+Hear=F2
 
 [step]
 
 Say=Copy the marked items to another folder.
 Key=
-Hear=Shift plus C
+Hear=Control plus Shift plus C
 
 [step]
 
 Say=Move them.
 Key=
-Hear=Shift plus M
+Hear=Alt plus Shift plus M
 
 [step]
 
 Say=Zip them.
 Key=
-Hear=Shift plus Z
+Hear=Control plus Shift plus Z
 
 [step]
 

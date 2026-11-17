@@ -114,7 +114,7 @@ Key=
 
 [step]
 
-Say=And one file at a time is always there. F2, or Shift plus R, renames the current item, with its name ready to edit.
+Say=And one file at a time is always there. F2 renames the current item, with its name ready to edit.
 Key=F2
 Hear=Rename dialog, Name: edit, IMG underscore 4021 dot jpg
 Note=Confirm the wording with a live run: buildTutorials -live.

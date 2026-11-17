@@ -687,7 +687,7 @@ deliberate: nothing fundamental depends on a commercial product.
 | .pdf | PyMuPDF4LLM through Python | Python and the package |
 | .doc .ppt .xls | 2htm | Office, and System.Memory.dll |
 
-`categoryOf` decides what Output Type offers, and every category must have an
+`categoryOf` decides what Export Type offers, and every category must have an
 engine that can serve its targets. Two tables that must agree is where the bugs
 live: three separate lists once claimed to say what Pandoc reads, and they
 disagreed three ways.

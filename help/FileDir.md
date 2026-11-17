@@ -84,7 +84,7 @@ FileDir is designed to be a powerful, efficient, and convenient alternative to F
 
 Since the number of possible FileDir commands is large, involving nearly every letter and several punctuation keys, some organizing concepts, explained below, help the learning curve.
 
-The standard environment of FileDir is a view of items in a particular folder of the computer's file system. The title of the window says "FileDir" followed by the path and name of the folder being viewed. Below the title bar is a list of items contained in the folder, one item per line, folder items first, then file items after. The date and time of the current item, its size, the sort order, and filter specification (if any) are displayed on the status line. This may be reviewed with Alt+Z or a screen reader-specific command such as Insert+PageDown in JAWS. Note that the size of a folder item will be -1 until a Size or Yield query causes it to be calculated (by recursively summing the sizes of all contained files and subfolders). On the status line, the size is expressed in an abbreviated manner using K for kilobytes, M for megabytes, or G for gigabytes.
+The standard environment of FileDir is a view of items in a particular folder of the computer's file system. The title of the window says "FileDir" followed by the path and name of the folder being viewed. Below the title bar is a list of items contained in the folder, one item per line, folder items first, then file items after. The date and time of the current item, its size, the sort order, and filter specification (if any) are displayed on the status line. This may be reviewed with Say Status, Alt+Z or Shift+Z, or a screen reader-specific command such as Insert+PageDown in JAWS. For one part alone, Shift+F says the filter, Shift+O the order, and Shift+M whether the current item is marked, as in DbDo; Shift+8 says the order and the filter together. Note that the size of a folder item will be -1 until a Size or Yield query causes it to be calculated (by recursively summing the sizes of all contained files and subfolders). On the status line, the size is expressed in an abbreviated manner using K for kilobytes, M for megabytes, or G for gigabytes.
 
 At any time, a single file or folder item has keyboard focus, which may be called the current item -- the location of the PC cursor in Jaws terminology. At any time, zero or more items may be marked, that is, marked in a way that makes them available for further action by commands that can act on multiple items at once. Note that the focused or current item may not be marked: focus and marked state are independent. To remind you that a command may affect multiple, marked files, the word "marked" is included as part of its menu name. Conversely, command names without this word apply regardless of marked state, e.g., to the focused item only, or independent of focus and marked state.
 
@@ -92,7 +92,7 @@ FileDir implements the list of items as a standard Windows ListBox control. This
 
 Navigation by initial character is another ListBox behavior. Pressing the letter "b," for example, will move focus to the next file or folder item with a name starting with that letter. Pressing multiple letters quickly, however, does not move to the next item starting with that sequence.
 
-Since initial letter navigation works the same whether lower or upper case letters are used, the upper case or shifted versions are used by FileDir to add features through hot keys. For example, the Shift+C hot key lets you copy files to another folder without using the more involved "copy and paste" method of Windows Explorer (though similar functionality is also supported by FileDir). Since you can type a lower case "c" to jump to a file that starts with either the lower or upper case form of that letter, FileDir's use of Shift+C means an extra capability without loss of functionality.
+Since initial letter navigation works the same whether lower or upper case letters are used, the upper case or shifted versions are used by FileDir to add features through hot keys. A Shift+letter key never changes anything: it says something, as Shift+S says the size of the current item, or it moves, as Shift+I goes to the next item with a different initial letter. So a Shift+letter pressed by mistake costs nothing. Commands that act -- copy, move, zip, unzip -- use Control or Alt with the letter, as Control+Shift+C copies files to another folder. Since you can type a lower case letter to jump to a file that starts with either the lower or upper case form of it, the Shift+letter keys are an extra capability without loss of functionality.
 
 This command needs more information to complete the copy operation, so it prompts for a target folder. It remembers the previous input, if any, which can be accepted by simply pressing Enter. To provide another value instead, type it, replacing other text, and press Enter to activate the default, OK button. You can also pick a folder from a standard tree control by activating the Browse button. Other buttons let you pick a folder from one of three listboxes: directories open in current windows, those opened during this FileDir session, or those with shortcuts in the Quick folder.
 
@@ -126,7 +126,7 @@ Press Control+W to load the current file into a word processor. Microsoft Word i
 
 If another word processor or text editor is to be used, its full path may need to be specified if the executable is not located on the Windows search path. Such configuration options may also be manually edited, since they are stored in a standard .ini file, FileDir.ini, with an optional FileDir.inix overlay, located in the FileDir folder under your Windows Application Data directory.
 
-The Rename command, Shift+R or F2, lets you edit the name of the current file or folder item. Control+R lets you rename multiple items using the * and ? wildcard characters. A DOS command is used behind the scenes to accomplish this, so all items in the current directory are processed -- regardless of their marked state within FileDir. You can use Control+Shift+R to rename marked items based on a "regular expression" -- a powerful but complex syntax that is beyond the scope of this guide (Google will find many tutorials). Control+Shift+I renames files to the initial line of text inside them (if found), which is often a convenient way of making the name of a file the same as the title of the document inside.
+The Rename command, F2 or Shift+F2, lets you edit the name of the current file or folder item. Control+R lets you rename multiple items using the * and ? wildcard characters. A DOS command is used behind the scenes to accomplish this, so all items in the current directory are processed -- regardless of their marked state within FileDir. You can use Control+Shift+R to rename marked items based on a "regular expression" -- a powerful but complex syntax that is beyond the scope of this guide (Google will find many tutorials). Control+Shift+I renames files to the initial line of text inside them (if found), which is often a convenient way of making the name of a file the same as the title of the document inside.
 
 Like the greater than symbol meaning mark, special symbols are associated with folder and file attributes. A backslash symbol after an item indicates that it is a folder rather than a file. A right parenthesis after a list item means that the Hidden attribute is set. As a memory aid, you may think of parenthesis hiding something from full view. The RightParen key, Shift+0, sets the Hidden attribute of the current or marked items. The LeftParen key does the reverse, removing the Hidden attribute. Similarly, the right bracket symbol means that an item has the ReadOnly attribute set. You may think of a bracket protecting something from being modified. The LeftBracket key removes the ReadOnly attribute. Finally, the right brace symbol means the System attribute is set. You may think of a brace as a character used in programming systems. The LeftBrace key removes the System attribute.
 
@@ -174,7 +174,7 @@ Press backslash (\) to go to the root level of the current drive. Press comma (,
 
 When the current item is a folder, pressing Enter goes to it. When it is a zip archive, FileDir presents a view of the contained items that is similar to a directory view. If you would prefer to open a .zip file with another program associated with that extension (e.g., WinZip), change the ZipOpener configuration option to N for No. Also, you could normally view archives with FileDir by pressing Enter, but choose to open them with another program instead by pressing Shift+Enter. This opens them with the default program associated with the extension in the Windows registry.
 
-The Quick Links feature efficiently opens favorite files, folders, or URLs. Press Shift+Q to add a quick link for the current item. A standard Windows shortcut (.lnk file) will be created in the Quick subfolder of the FileDir program folder. FileDir lets yu rename the shortcut before creating it.
+The Quick Links feature efficiently opens favorite files, folders, or URLs. Press Control+Shift+Q to add a quick link for the current item. A standard Windows shortcut (.lnk file) will be created in the Quick subfolder of the FileDir program folder. FileDir lets yu rename the shortcut before creating it.
 
 Use the Quick URL command, Alt+Shift+Q, to create a quick link to an Internet resource. FileDir prompts for the name and URL, and then creates a standard .url file in the Quick folder. If the clipboard holds a web address, FileDir offers it as the default URL, so you can copy a link in your browser and then create the shortcut with a single command.
 
@@ -320,15 +320,15 @@ Press Control+S to save marks in the current directory view, and Control+Shift+S
 
 ## Transfer Commands
 
-Transfer commands take action on a whole item, copying or moving it to another folder, the clipboard, printer, or recycle bin. Press Shift+C to copy, Shift+M to move, or the Delete key to delete. The Recycle Toggle, Alt+Shift+R, determines whether deleted files or folders are moved to the recycle bin. The initial setting is On, and then FileDir remembers the value between sessions. Regardless of the current setting, Shift+Delete deletes without recycling, whereas Control+Delete deletes and recycles. Use the Delete Recycle Now command, Control+D, or Delete Now Command, Control+Shift+D, to quickly delete a single file (but not folder) without a confirmation dialog. Note that the Delete, Copy, and Move commands execute noticeably faster when deleted or replaced items are not moved to the recycle bin. Press Control+B to open the Recycle Bin and recover deleted items.
+Transfer commands take action on a whole item, copying or moving it to another folder, the clipboard, printer, or recycle bin. Press Control+Shift+C to copy, Alt+Shift+M to move, or the Delete key to delete. The Recycle Toggle, Alt+Shift+R, determines whether deleted files or folders are moved to the recycle bin. The initial setting is On, and then FileDir remembers the value between sessions. Regardless of the current setting, Shift+Delete deletes without recycling, whereas Control+Delete deletes and recycles. Use the Delete Recycle Now command, Control+D, or Delete Now Command, Control+Shift+D, to quickly delete a single file (but not folder) without a confirmation dialog. Note that the Delete, Copy, and Move commands execute noticeably faster when deleted or replaced items are not moved to the recycle bin. Press Control+B to open the Recycle Bin and recover deleted items.
 
-Press Shift+Z to zip files into a compressed archive, or Shift+U to unzip them. Zip then Delete, Control+Z or Control+Shift+Delete, also zips, but then deletes originals after confirming the integrity of the zip target. It is not on Control+Z, because Control+Z is Undo in every Homer app.
+Press Control+Shift+Z to zip files into a compressed archive, or Control+U to unzip them. Zip then Delete, Control+Z or Control+Shift+Delete, also zips, but then deletes originals after confirming the integrity of the zip target. It asks before deleting anything, and FileDir's list has no Undo for Control+Z to mean.
 
-Use the Zip List command, Control+Shift+Z, to create or update a zip archive based on a list of files or folders in a text file. For example, the file backup.lst would contain the full path of the target zip archive as the first line of text. Subsequent lines would contain file or folder names to be added to the archive. Paths are not needed before these names if they are in the same directory as the archive.
+Use the Zip List command, Alt+Shift+L, to create or update a zip archive based on a list of files or folders in a text file. For example, the file backup.lst would contain the full path of the target zip archive as the first line of text. Subsequent lines would contain file or folder names to be added to the archive. Paths are not needed before these names if they are in the same directory as the archive.
 
-Control+U unzips without preserving subfolders. It unzips all files to the chosen folder, but not subfolders below (folder paths, if any, are ignored). Control+Shift+U unzips to a target with the same name as the archive. For example, if focus is on mag0712.zip, then the proposed target path will end in mag0712.
+Alt+U, Unarchive without Subfolders, unzips without preserving subfolders. It unzips all files to the chosen folder, but not subfolders below (folder paths, if any, are ignored). Control+Shift+U unzips to a target with the same name as the archive. For example, if focus is on mag0712.zip, then the proposed target path will end in mag0712.
 
-You can test whether a file can be unzipped successfully by pressing Alt+U. Press Alt+Shift+U to set a password to be used by FileDir when creating, extracting, or viewing zip archives. It may also be set in the Options dialog, Alt+O. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
+You can test whether a file can be unzipped successfully with Unarchive Test, on the Misc menu. Press Alt+Shift+U to set a password to be used by FileDir when creating, extracting, or viewing zip archives. It may also be set in the Options dialog, Alt+O. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
 
 Starting with FileDir 3.7, the unzip commands are now broader, unarchive commands that work with almost any archive format, including .rar, .tar, .gz, .bz2, .chm, .cab,. FileDir does this with the free 7Zip utility behind the scenes, which is also available independently at [the 7-Zip home page](https://www.7-zip.org/)
 
@@ -336,7 +336,7 @@ Although any archive may be viewed or extracted, it is still the case that only 
 
 Some commands work with a copy of a zipped item that is unarchived to a temporary folder as needed. This lets you use the What Content command, Question Mark, to identify the content of a file without unzipping the archive that contains it. The Run command, Entor, and Send to Word Processor or Text Editor commands, Control+W or Control+T, also work in this way.
 
-The Copy or Move Marked commands, Shift+C or Shift+M, prompt whether to overwrite existing folders and files. You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal. You can choose to keep all targets with the same names, replace them, replace them only with updated source items, or increment source names to eliminate conflicts (e.g., ReadMe_01.txt).
+The Copy to Folder and Move to Folder commands, Control+Shift+C and Alt+Shift+M, prompt whether to overwrite existing folders and files. You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal. You can choose to keep all targets with the same names, replace them, replace them only with updated source items, or increment source names to eliminate conflicts (e.g., ReadMe_01.txt).
 
 Like Windows Explorer, Control+C, Control+X, and Control+V copy, cut, and paste file or folder items between the current directory and clipboard. FileDir enhances these commands with a plain text format in addition to the binary "drop list" that Windows Explorer uses to facilitate drag and drop transfers with a mouse. Since the clipboard can actually hold multiple formats at the same time, FileDir creates both a binary and a text format when copying with Control+C or cutting with Control+X. The text format is simply a list of file or folder paths, one per line. Thus, paths on the clipboard are simultaneously available both to applications like Windows Explorer that look for the binary format, and applications like Notepad that look for plain text.
 
@@ -344,7 +344,7 @@ When pasting, Control+V recognizes the text format as well as the binary one. Si
 
 Use the Copy Append command, Alt+C, to add items to the clipboard in both binary and text formats. This lets you build a list on the clipboard from files in different directories. It also lets you build a list by pressing Alt+C when focused on each item of interest, rather than first creating a set of marked items and then copying them as a batch.
 
-To put a list of file names on the clipboard without preceding paths, press Control+Shift+C. To hear what files are on the clipboard, use the Quote Clipboard command, Alt+Apostrophe. Before saying each path, FileDir says "Path drop list" if it finds this binary format. Otherwise, FileDir only speaks text format -- other binary formats on the clipboard are not interpreted.
+To put a list of file names on the clipboard without preceding paths, press Alt+Shift+N, Copy Name. To hear what files are on the clipboard, use the Quote Clipboard command, Alt+Apostrophe. Before saying each path, FileDir says "Path drop list" if it finds this binary format. Otherwise, FileDir only speaks text format -- other binary formats on the clipboard are not interpreted.
 
 Control+P sends current or marked items to the default printer. Control+M starts a mail message with its body being the textual content of the current item. For example, pressing Control+M when a Microsoft Word document is the current item will extract its text for the message body and use its name (without extension) as the default subject. Control+Shift+M starts a message with the current or marked items as attached files. If no items are marked, FileDir both attaches the file and includes its text in the message body.
 
@@ -366,9 +366,9 @@ C:\My Documents\Body.txt
 
 Before sending a batch email, configure FileDir options for LogInUserName, Password (stored in an encrypted form), SenderAddress, and OutGoingServer (e.g., outgoing.verizon.net). Test the command by sending yourself mail first. This command only works with common SMTP protocol settings.
 
-Press Shift+O to output marked files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
+Press Alt+Shift+X, Export Type, and pick plain text to output marked files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
 
-The same conversion mechanism may be used to place text on the Windows clipboard instead of creating new files. Press Shift+A to append the textual body of currently marked files to the clipboard. They will be separated by a sequence of characters indicating a divider between sections of a composite document: a line of 10 dashes followed by a form feed (hard page break). A termination sequence says "End of Document." This command is useful for combining multiple, related files, e.g., downloaded web pages, into a single document. You can use the Clear Clipboard command, Alt+Shift+', to clear the clipboard before appending to it. The Extract with Regex command, Control+Shift+E, works similarly except that you are prompted for a regular expression, and only matching text is copied.
+The same conversion mechanism may be used to place text on the Windows clipboard instead of creating new files. Press Alt+Shift+C, Append File Contents, to append the textual body of currently marked files to the clipboard. It pairs with Copy Append, Alt+C, which appends the items themselves. They will be separated by a sequence of characters indicating a divider between sections of a composite document: a line of 10 dashes followed by a form feed (hard page break). A termination sequence says "End of Document." This command is useful for combining multiple, related files, e.g., downloaded web pages, into a single document. You can use the Clear Clipboard command, Alt+Shift+', to clear the clipboard before appending to it. The Extract with Regex command, Control+Shift+E, works similarly except that you are prompted for a regular expression, and only matching text is copied.
 
 Alt+P queries the full path of the current item, whereas Alt+Shift+P copies it to the clipboard, e.g.,
 
@@ -376,7 +376,7 @@ C:\Documents and Settings\Owner\My Documents\My Music\MySong.mp3
 
 This may be useful so that the string is available by pressing Control+V to paste it into the open file dialog of another application. To get the short path instead, press the Tilde key (Shift plus the Grave Accent at the top left of the main keyboard). A short path contains no spaces and uses a suffix of a tilde symbol (~) and a number to abbreviate file or folder names. This may be useful when pasting into a command line, since more characters and surrounding quotes are usually needed otherwise to specify a file.
 
-Control+C copies the full path of marked items to the clipboard, whereas Control+Shift+C copies their names only -- no preceding directories.
+Control+C copies the full path of marked items to the clipboard, whereas Alt+Shift+N copies their names only -- no preceding directories.
 
 Control+Shift+P copies the full paths of all items below a subfolder item in the directory hierarchy. For example, if the My Documents directory is being viewed, and focus is on the My Music subfolder item, pressing Control+Shift+P would copy the paths of all files and subfolders under My Music. After determining what file extensions are present, FileDir prompts for which ones to include in the resulting list. Edit the choices, or just press Enter to accept them all. You can save the path list to disk with the Export Clipboard command, Alt+Shift+E, which prompts for a file name and then saves clipboard text to it.
 
@@ -384,7 +384,7 @@ Press Control+N to create a new folder. Press Control+Shift+N to make a new copy
 
 FileDir includes the capability to "put" or upload files to a directory on an FTP server, and to "get" or download from there. For private directories, a user name and password may be set either in the specific dialogs for these commands or in the Edit Settings dialog, Alt+Shift+E. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
 
-Use the FTP Put command, Shift+F, to upload files. FileDir prompts for an FTP directory. If the value entered does not contain the :// sequence of characters, FileDir adds an FTP:// prefix and a / suffix for more convenient typing. For example, a value of
+Use the FTP Put command, on the Misc menu, to upload files. FileDir prompts for an FTP directory. If the value entered does not contain the :// sequence of characters, FileDir adds an FTP:// prefix and a / suffix for more convenient typing. For example, a value of
 
 smart.net
 
@@ -394,7 +394,7 @@ ftp://smart.net/
 
 If you include the :// sequence of a protocol, however, FileDir accepts the value verbatim -- without making changes. The URL is remembered as the default value for the next FTP command.
 
-The opposite command is Get FTP, Shift+G, which downloads files from a remote directory. FileDir presents a multiple selection list box with all file names it found in that directory. The files selected will be downloaded to the current directory view. Any existing files with the same names are replaced and sent to the recycle bin according to the Recycle setting, Alt+Shift+R (on by default).
+The opposite command is Get FTP, also on the Misc menu, which downloads files from a remote directory. FileDir presents a multiple selection list box with all file names it found in that directory. The files selected will be downloaded to the current directory view. Any existing files with the same names are replaced and sent to the recycle bin according to the Recycle setting, Alt+Shift+R (on by default).
 
 The Web Download command, Alt+Shift+W, lets you pick one or more files to download from a page whose address you specify.  If the clipboard holds a web address, FileDir offers it as the default.  Downloading is done by FileDir itself, with no web browser involved. Each item of the resulting checked listbox shows both the clickable text of the url and its target file name. Press Spacebar to toggle the checked state of an item. After picking files, you are prompted for the target folder on disk. If the URL of a link does not end in a valid file name, FileDir creates a file name for the target on disk based on other characters in the URL. If a file with the same name already exists, a unique name is created by adding a numeric suffix, e.g., page_001.htm, page_002.htm, etc.
 
@@ -430,7 +430,7 @@ Use the Inquire Differences command, Alt+Shift+I, to compare the files in two fo
 
 Use the Volume Format command, Control+Shift+V, to format a disk or storage card. Press Control+Shift+W to launch Windows Control Panel. If you associated FileDir with folders rather than Windows Explorer, you may need to open Control Panel in this way rather than through the Windows Start Menu.
 
-Press Alt+Shift+N to manage network connections. A dialog lets you connect, disconnect, or restore mappings between physical storage and logical drives.
+Choose Network Connections on the Misc menu to manage network connections. A dialog lets you connect, disconnect, or restore mappings between physical storage and logical drives.
 
 Since FileDir is a program designed to be generally available while running others, it offers a few, simple utilities not directly related to file management. The Evaluate command, Control+Equals, prompts for a mathematical expression, and then copies the result to the clipboard. Standard arithmetic operators may be used, as well as methods of the C# programming language. For example, the expression
 
@@ -444,7 +444,7 @@ Math.Pow(3, 4)
 
 produces 81.
 
-Use the Convert Units command, number sign (#) or Shift+3, to convert between different units of measure, e.g., between metric and other units of distance, volume, weight, or temperature. Pick the type of conversion from the list box and enter the input value in the edit box. The output value is spoken and copied to the clipboard (and may be reviewed with the Quote Clipboard command, Alt+Apostrophe). About 80 conversions are available as follows:
+Use the Convert Units command, Control+3, to convert between different units of measure, e.g., between metric and other units of distance, volume, weight, or temperature. Pick the type of conversion from the list box and enter the input value in the edit box. The output value is spoken and copied to the clipboard (and may be reviewed with the Quote Clipboard command, Alt+Apostrophe). About 80 conversions are available as follows:
 
 Acre to hectare
 
@@ -702,7 +702,7 @@ Your Quick folder holds shortcuts and web links you want to reach in one
 keystroke. Press **Accent** to go there, or **Control+Q** to open it in a new
 window.
 
-Press **Shift+Q** for Quick Shortcut to add the file or folder you are on. Press
+Press **Control+Shift+Q** for Quick Shortcut to add the file or folder you are on. Press
 **Alt+Shift+Q** for Quick URL to add a web link: copy a link in any browser
 first and the address fills itself in, with the site name offered as the name.
 Both let you edit the name and the address before anything is written.
@@ -759,12 +759,12 @@ overwritten.
 
 ## Converting Between Formats
 
-Press **Shift+O** for Output Type. FileDir looks at what the file is, offers a
+Press **Alt+Shift+X** for Export Type, X for Export as in DbDo and EdSharp. FileDir looks at what the file is, offers a
 short list of what it can become, and converts the marked files, or the current
 one, keeping each root name. The result lands beside the original and nothing is
 ever overwritten.
 
-This was Output to Text, which only ever wrote a .txt file. Text is still one of
+This was Output to Text, which only ever wrote a .txt file, and then Output Type on Shift+O. Text is still one of
 the choices; the rest were not available before.
 
 What you are offered depends on what you are on:

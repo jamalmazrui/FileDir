@@ -588,7 +588,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 18: Escape
 
-Every key is named for a word in its command: Control plus J for Jump, Control plus O for Open, Shift plus C for Copy to Folder. A key never comes from the middle of a word.
+Every key is named for a word in its command: Control plus J for Jump, Control plus O for Open, Control plus Shift plus C for Copy to Folder. A key never comes from the middle of a word, and a Shift letter alone never changes anything: it says something, or moves.
 
 Screen reader:
 
@@ -606,13 +606,13 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 20: Shift+Z
+### Step 20: Control+Shift+Z
 
-Now Shift plus Z only says what it would do.
+Now Control plus Shift plus Z only says what it would do.
 
 Screen reader:
 
-- Shift plus Z, Zip, add current or marked files to zip archive
+- Control plus Shift plus Z, Zip, add current or marked files to zip archive
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -646,7 +646,7 @@ A short review. I say a command; the reader says its key. Rename the current ite
 
 Screen reader:
 
-- F2, or Shift plus R
+- F2
 
 ### Step 25
 
@@ -654,7 +654,7 @@ Copy the marked items to another folder.
 
 Screen reader:
 
-- Shift plus C
+- Control plus Shift plus C
 
 ### Step 26
 
@@ -662,7 +662,7 @@ Move them.
 
 Screen reader:
 
-- Shift plus M
+- Alt plus Shift plus M
 
 ### Step 27
 
@@ -670,7 +670,7 @@ Zip them.
 
 Screen reader:
 
-- Shift plus Z
+- Control plus Shift plus Z
 
 ### Step 28
 
@@ -895,7 +895,7 @@ Screen reader:
 
 ### Step 10
 
-Shift plus Q adds the current file or folder to the Quick folder, your list of favorites; Control plus Q opens that folder, from anywhere, and Enter there goes straight to the item.
+Control plus Shift plus Q adds the current file or folder to the Quick folder, your list of favorites; Control plus Q opens that folder, from anywhere, and Enter there goes straight to the item.
 
 ### Step 11
 
@@ -979,9 +979,9 @@ Screen reader:
 
 Alt plus Y says the count at any time.
 
-### Step 3: Shift+C
+### Step 3: Control+Shift+C
 
-Press Shift plus C, C for Copy, to copy the marked files to a folder. FileDir asks where to.
+Press Control plus Shift plus C, C for Copy, to copy the marked files to a folder. FileDir asks where to.
 
 Screen reader:
 
@@ -998,7 +998,7 @@ Screen reader:
 
 - 2 files copied
 
-Nothing is moved; Shift plus M moves instead.
+Nothing is moved; Alt plus Shift plus M moves instead.
 
 ### Step 5
 
@@ -1010,7 +1010,7 @@ Among the marked, Shift plus N and Shift plus P go to the next and previous mark
 
 ### Step 7
 
-What a mark feeds. Shift plus C copies the marked files to a folder you choose; Shift plus M moves them; Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
+What a mark feeds. Control plus Shift plus C copies the marked files to a folder you choose; Alt plus Shift plus M moves them; Control plus Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
 
 ### Step 8
 
@@ -1042,7 +1042,7 @@ Control plus I inverts the marks: marked becomes unmarked and unmarked marked, f
 
 ### Step 13
 
-A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Alt plus Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
 
 ### Step 14: Shift+S
 
@@ -1058,7 +1058,7 @@ Renaming many: Control plus R takes a pattern with wildcards -- star dot j p e g
 
 ### Step 16
 
-Shift plus Z zips the marked files into one archive named for the folder, or for a name you give; Shift plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+Control plus Shift plus Z zips the marked files into one archive named for the folder, or for a name you give; Control plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
 
 ### Step 17
 
@@ -1066,7 +1066,7 @@ What this walk taught. I say the key; the reader says what it does.
 
 ### Step 18
 
-Shift plus C.
+Control plus Shift plus C.
 
 Screen reader:
 
@@ -1421,7 +1421,7 @@ Every rename, of whatever kind, can be checked by ear first: each dialog lists w
 
 ### Step 17: F2
 
-And one file at a time is always there. F2, or Shift plus R, renames the current item, with its name ready to edit.
+And one file at a time is always there. F2 renames the current item, with its name ready to edit.
 
 Screen reader:
 
@@ -1483,7 +1483,7 @@ Screen reader:
 
 ## 7 - Convert Between Formats
 
-One want: a Word document as a web page, or a PDF as plain text, without opening either. Shift plus O, O for Output, offers what the file can become and converts the marked files, or the current one, keeping each name.
+One want: a Word document as a web page, or a PDF as plain text, without opening either. Alt plus Shift plus X, X for Export, offers what the file can become and converts the marked files, or the current one, keeping each name.
 
 **Before you start:** A folder holds a Word document and a PDF.
 
@@ -1499,13 +1499,13 @@ Screen reader:
 
 - FileDir
 
-### Step 3: Shift+O
+### Step 3: Alt+Shift+X
 
-I arrow to a Word document. Shift plus O is Output Type, O for Output.
+I arrow to a Word document. Alt plus Shift plus X is Export Type, X for Export, as in DbDo and EdSharp.
 
 Screen reader:
 
-- Output Type dialog
+- Export Type dialog
 - Web page
 
 Confirm the wording with a live run: buildTutorials -live.
@@ -1540,13 +1540,13 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 7: Shift+O
+### Step 7: Alt+Shift+X
 
-The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Shift plus O.
+The new file lands beside the old one with the same root name, and nothing is ever overwritten. A planned misstep: a PDF offers fewer choices, because only its text can be read out of it. I arrow to one and press Alt plus Shift plus X.
 
 Screen reader:
 
-- Output Type dialog
+- Export Type dialog
 - Plain text
 
 Confirm the wording with a live run: buildTutorials -live.
@@ -1573,7 +1573,7 @@ Confirm the wording with a live run: buildTutorials -live.
 
 ### Step 10: Enter
 
-Shift plus O, the web page, and Enter: all three convert, each beside its original.
+Alt plus Shift plus X, the web page, and Enter: all three convert, each beside its original.
 
 Screen reader:
 
@@ -1601,9 +1601,9 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 13: Shift+A
+### Step 13: Alt+Shift+C
 
-Sometimes the text is wanted somewhere else, not as a file. Shift plus A, Append File Contents, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
+Sometimes the text is wanted somewhere else, not as a file. Alt plus Shift plus C, Append File Contents, beside Copy Append on Alt plus C, adds the text of the marked files to the clipboard, one after another, converting each from its own format.
 
 Screen reader:
 
@@ -1615,13 +1615,13 @@ Confirm the wording with a live run: buildTutorials -live.
 
 Then one paste in any program puts it all there: three documents' text in one email, for example.
 
-### Step 15: Shift+O
+### Step 15: Alt+Shift+X
 
-Output Type is not only for documents. On a sound file, Shift plus O offers other kinds of audio.
+Export Type is not only for documents. On a sound file, Alt plus Shift plus X offers other kinds of audio.
 
 Screen reader:
 
-- Output Type dialog
+- Export Type dialog
 - MP3 audio
 
 Confirm the wording with a live run: buildTutorials -live.
@@ -1636,13 +1636,13 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 17: Shift+O
+### Step 17: Alt+Shift+X
 
 On a picture, it offers other kinds of picture, and on a video, other kinds of video.
 
 Screen reader:
 
-- Output Type dialog
+- Export Type dialog
 - PNG picture
 
 Confirm the wording with a live run: buildTutorials -live.
@@ -1667,7 +1667,7 @@ Choose what this file becomes.
 
 Screen reader:
 
-- Shift plus O
+- Alt plus Shift plus X
 
 ### Step 21
 
@@ -1918,7 +1918,7 @@ The semicolon marks, and every command then acts on all the marked files at once
 
 Screen reader:
 
-- Shift plus C
+- Control plus Shift plus C
 
 ### Step 4
 
@@ -1950,7 +1950,7 @@ Walk four: mark, then act -- copy, move, zip, delete -- and the clipboard carrie
 
 Screen reader:
 
-- Shift plus M
+- Alt plus Shift plus M
 
 ### Step 8
 
@@ -2046,7 +2046,7 @@ Quick folder.
 
 Screen reader:
 
-- Your favorites: files, folders and web links. Shift plus Q adds one; Control plus Q opens the folder.
+- Your favorites: files, folders and web links. Control plus Shift plus Q adds one; Control plus Q opens the folder.
 
 ### Step 21
 
@@ -2062,7 +2062,7 @@ rename.
 
 Screen reader:
 
-- A new name for the current file or folder. F2, or Shift plus R; Control plus R renames many with wildcards.
+- A new name for the current file or folder. F2; Control plus R renames many with wildcards.
 
 ### Step 23
 
@@ -2143,8 +2143,8 @@ opening and going.
    for hidden, a right bracket for read only, a right brace for system.
 6. Press **Control+F** for Filter. Type a word and the list narrows to items
    containing it. Clear the filter to bring the rest back.
-7. Press **Shift+F** to search inside files rather than in names, when what you
-   remember is a phrase in a document rather than its name.
+7. Press **Alt+Shift+F** for File Find to search inside files rather than in
+   names, when what you remember is a phrase in a document rather than its name.
 
 **What you learned:** four different ways to find something, each quicker than
 scrolling.
@@ -2188,10 +2188,11 @@ it.
    window. Type or paste its path.
 3. Press **Control+F6** to go back to the first window.
 4. **Tag** the files you want, as in tutorial 3.
-5. Press **Shift+C** for Copy Tagged. FileDir asks where to. The other open
+5. Press **Control+Shift+C** for Copy to Folder. FileDir asks where to. The other open
    window is offered, so you usually just press Enter.
 6. Press **Control+F6** to look at the destination and confirm they arrived.
-7. Press **Shift+M** instead of Shift+C to move rather than copy.
+7. Press **Alt+Shift+M**, Move to Folder, instead of Control+Shift+C to move
+   rather than copy.
 8. Press **Alt+P** on a file and then paste elsewhere: FileDir put the full path
    on the clipboard, which is often what you actually wanted.
 
@@ -2205,12 +2206,12 @@ moves any number of files.
 1. Move to a document — a .docx, a .pdf, a .md, or a plain text file.
 2. Press **Question Mark**. FileDir converts the file to text and reads it out.
    Word and PowerPoint files need Office installed; PDF and Markdown do not.
-3. Press **Shift+O** — Output to Text — on a tagged set to write each one out as
-   a .txt file you can read or search.
-4. Press **Shift+A** — Append Tagged — to put the text of every tagged file on
+3. Press **Alt+Shift+X** — Export Type — on a tagged set and pick plain text to
+   write each one out as a .txt file you can read or search.
+4. Press **Alt+Shift+C** — Append File Contents — to put the text of every tagged file on
    the clipboard, one after another. Useful for gathering notes scattered across
    a folder.
-5. Press **E** to open the file in your text editor when you want to change it
+5. Press **Control+T** to open the file in your text editor when you want to change it
    rather than read it.
 
 **What you learned:** the fastest way to answer "what is this file?"
@@ -2220,16 +2221,17 @@ moves any number of files.
 **The job: pack files up and take them apart.**
 
 1. **Tag** the files you want to pack.
-2. Press **Shift+Z** for Zip Tagged. FileDir asks for a name and makes the
+2. Press **Control+Shift+Z** for Zip. FileDir asks for a name and makes the
    archive in the current folder.
 3. Move to the new archive and press **Enter**. You are now looking inside it as
    though it were a folder.
 4. Press **Backspace** to come out again.
-5. Tag one or more archives and press **Shift+X** — Unarchive Tagged — to
+5. Tag one or more archives and press **Control+U** — Unarchive — to
    extract them. FileDir handles nearly every archive format, not only zip.
-6. Press **Alt+Shift+X** to extract without recreating the folders inside, when
-   you want everything in one place.
-7. Press **Control+Shift+X** to test an archive without extracting anything.
+6. Press **Alt+U**, Unarchive without Subfolders, to extract without recreating
+   the folders inside, when you want everything in one place.
+7. Choose **Unarchive Test** on the Misc menu to test an archive without
+   extracting anything.
 
 **What you learned:** archives are just folders, and packing is one key.
 
@@ -2238,16 +2240,16 @@ moves any number of files.
 **The job: turn a folder of Word documents into Markdown, or anything into
 anything.**
 
-This needs Pandoc, which the FileDir installer ticks by default. If you unticked
+This needs Pandoc, which the FileDir installer marks by default. If you unmarked
 it, run `installPandoc.cmd` in the FileDir folder as an administrator.
 
 1. Open the folder and **tag** the files to convert.
-2. Press **Alt+Shift+K** for Convert Format.
+2. Press **Alt+Shift+X** for Export Type.
 3. A list of ten formats appears, each with its extension named. **Arrow to the
    one you want** and press Enter. FileDir remembers your choice for next time.
 4. Listen. FileDir says which file it is on and how many there are.
-5. A file Pandoc cannot read — a legacy .doc, or a PDF — is skipped, and FileDir
-   says so by name. Use **Shift+O**, Output to Text, for those instead.
+5. A file that cannot become the format you chose is skipped, and FileDir says
+   so by name.
 6. At the end you hear how many were converted, how many skipped, and how many
    failed. The folder refreshes so the new files are there.
 7. Press **Question Mark** on one to hear the result.

@@ -2,6 +2,26 @@
 
 
 
+## 16 November 2026 -- A Shift letter only says or moves
+
+A Shift+letter key no longer changes anything. It says something, or it moves, as in DbDo, so a Shift+letter pressed by mistake costs nothing. Commands that act moved to Control or Alt keys.
+
+- **Moved:**
+  - **Append File Contents:** Alt+Shift+C, beside Copy Append on Alt+C (was Shift+A).
+  - **Convert Units:** Control+3, beside Convert Encoding on Control+2 (was Shift+3).
+  - **Copy Name:** Alt+Shift+N, N for Name (was Control+Shift+C).
+  - **Copy to Folder:** Control+Shift+C (was Shift+C).
+  - **Export Type:** Alt+Shift+X, X for Export, as in DbDo and EdSharp (was Output Type, Shift+O). The Alternate Menu still finds it as Output Type.
+  - **Move to Folder:** Alt+Shift+M (was Shift+M). Control+Shift+M stays Mail Attachment, as in EdSharp.
+  - **Quick Shortcut:** Control+Shift+Q, beside Open Quick Folder on Control+Q (was Shift+Q).
+  - **Rename:** F2 or Shift+F2 (Shift+R is gone).
+  - **Unarchive:** Control+U (was Shift+U). Unarchive without Subfolders moved to Alt+U.
+  - **Zip:** Control+Shift+Z, beside Zip then Delete on Control+Z (was Shift+Z). Zip List moved to Alt+Shift+L.
+- **On the Misc or Edit menu, with no key:** Folder to Clipboard (Backspace, then Control+C, does the same), FTP Put, Get FTP, Network Connections and Unarchive Test.
+- **New, as in DbDo:** Say Filter (Shift+F), Say Marked (Shift+M), and Say Order (Shift+O). A second press spells a short answer.
+- **Say Status** also answers Shift+Z, as in DbDo, beside Alt+Z.
+- The guide, the tutorials, the Hotkeys page and the JAWS key map use the new keys; the tutorial audio is made again by the build.
+
 ## 15 November 2026 -- Say and Show, and Alt+Y as in every Homer app
 
 - **The Query commands say what they do.** List, List Marked and List Files are **Say List**, **Say List Marked** and **Say List Files**; Yield Marked, Yield on Drive and Yield in Operating System are **Say Yield Marked**, **Say Yield on Drive** and **Say Yield in Operating System**; Character Encoding is **Say Character Encoding**; and Type Extended, which opens a window, is **Show Type Extended**.
