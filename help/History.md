@@ -2,6 +2,14 @@
 
 
 
+## 17 November 2026 -- Plainer words, and keys JAWS kept
+
+- **Spoken messages end with a full stop, not an exclamation mark,** such as "No items." and "Not found.". Two ways of saying one thing became one: "The current item is not a file."
+- **Twenty-seven command descriptions read like the rest of the suite's:** each begins with its verb and says "the current item", with no slash for "or". For example, "Say the current item's date and time", not "Say date and time of current item".
+- **Alt+Shift+Comma, Mark Similar Files, reaches FileDir under JAWS.** JAWS's laptop table command took it; the key map now hands it on.
+- **The mpv scripts' key map had its one line backward,** a key named HotKeyHelp bound to a script named INSERT+H. JAWS+H now gives the mpv scripts' own hot key help.
+- FileDir now needs HomerDev 1.246.0.
+
 ## 17 November 2026 -- Say Filter and Order names its parts
 
 - **Say Filter and Order, Shift+8, says "filter: ...; order: ...",** as DbDo's Shift+8 now does, where it said the order and the filter one after the other with no names, the order first. A filter of * is said as none. A second press spells the answer, as other Say commands do.

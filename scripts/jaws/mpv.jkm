@@ -9,4 +9,7 @@
 ; The commands themselves are reached from the view rather than from keys, which
 ; is the point: a person can find them without knowing they exist.
 ;
-HotKeyHelp=INSERT+H
+; THE KEY COMES FIRST (17 November 2026): this line read HotKeyHelp=INSERT+H, a key named HotKeyHelp
+; bound to a script named INSERT+H, so JAWS ran its own hot key help, not mpv's. Found by the kit's
+; audit of every key map line against the scripts it names.
+JAWSKey+H=HotKeyHelp

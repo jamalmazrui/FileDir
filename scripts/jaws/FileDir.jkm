@@ -1,6 +1,7 @@
 [Common Keys]
 ; Homer suite pass-through -- written by the kit's tidy from data\KeyOwnership.inix; do not edit
 Alt+Delete=TypeCurrentScriptKey
+Alt+Shift+Comma=TypeCurrentScriptKey
 ; end of Homer suite pass-through
 Control+JAWSKey+Space=UIWebClientUtilities
 Control+Insert+Space=UIWebClientUtilities
@@ -235,7 +236,7 @@ Apostrophe=TypeCurrentScriptKey
 Shift+Apostrophe=TypeCurrentScriptKey
 Control+Apostrophe=TypeCurrentScriptKey
 Control+Shift+Apostrophe=TypeCurrentScriptKey
-Alt+Apostrophe=TypecurrentScriptKey
+Alt+Apostrophe=TypeCurrentScriptKey
 Alt+Shift+Apostrophe=TypeCurrentScriptKey
 Shift+9=TypeCurrentScriptKey
 Shift+0=TypeCurrentScriptKey

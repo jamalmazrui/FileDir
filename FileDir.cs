@@ -1995,7 +1995,7 @@ return menuItem;
 public bool abortInZip() {
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild.InZip) {
-App.say("Command unavailable in archive view!");
+App.say("Command unavailable in archive view.");
 return true;
 }
 else return false;
@@ -2180,7 +2180,7 @@ if (sName.Length == 0) return;
 string sDir = sName.Substring(0, 1) + ":";
 DriveInfo drive = new DriveInfo(sDir);
 if (!drive.IsReady) {
-App.say("Drive not ready!");
+App.say("Drive not ready.");
 return;
 }
 
@@ -2246,7 +2246,7 @@ if (mdiChild == null) return;
 if (mdiChild != null) mdiChild.Dispose();
 FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, App.sFilterText);
 }
-else App.say("No parent folder!");
+else App.say("No parent folder.");
 } // menuFileOpenParentFolder_Click method
 
 void goTo_Helper(string sPath) {
@@ -2291,7 +2291,7 @@ mdiChild.Dispose();
 activate_Helper(sDir);
 goTo_Helper(sPath);
 }
-else App.say("No parent folder!");
+else App.say("No parent folder.");
 } // parentFolder_Helper method
 
 void menuFileOpenParentFolder_Click(object sender, EventArgs e) {
@@ -2322,7 +2322,7 @@ mdiChild.Dispose();
 //FolderWindow form = new FolderWindow(App.frame, sDir, App.sOrderText, App.sFilterText);
 activate_Helper(sDir);
 }
-else App.say("No root folder!");
+else App.say("No root folder.");
 } // rootFolder_Helper method
 
 void menuFileOpenRootFolder_Click(object sender, EventArgs e) {
@@ -2614,7 +2614,7 @@ ReadOnlyCollection<string> oPaths = null;
 if (sText == "") oPaths = App.getFiles(sDir, sFilter);
 else oPaths = App.findInFiles(sDir, sText, sFilter);
 if (oPaths.Count == 0) {
-App.say("No files found!");
+App.say("No files found.");
 return;
 }
 foreach (string s in oPaths) {
@@ -2968,7 +2968,7 @@ break;
 }
 }
 if (!bFound) {
-App.say("No previous window!");
+App.say("No previous window.");
 return;
 }
 
@@ -3610,7 +3610,7 @@ if (mdiChild == null) return;
 DataView view = mdiChild.tbl.DefaultView;
 int iStart = mdiChild.StartTagOrUntag;
 if (iStart == -1) {
-App.say("No start position is set!");
+App.say("No start position is set.");
 return;
 }
 
@@ -3722,7 +3722,7 @@ if (mdiChild == null) return;
 
 string sDir = Path_Helper();
 if (!Directory.Exists(sDir)) {
-App.say("Command requires a folder item!");
+App.say("Command requires a folder item.");
 return;
 }
 
@@ -3736,7 +3736,7 @@ if (sResult.Length == 0) return;
 
 string[] aResults = Homer.Util.getFilesWithExtensions(aFiles, sResult);
 if (aResults.Length == 0) {
-App.say("No matching files!");
+App.say("No matching files.");
 return;
 }
 
@@ -3873,7 +3873,7 @@ iFileCount++;
 App.say("Done!", true);
 //if (iDirCount > 0) App.say(Homer.Util.stringPlural("folder", iDirCount));
 //if (iFileCount > 0) App.say(Homer.Util.stringPlural("file", iFileCount));
-//if (iDirCount ==0 && iFileCount == 0) App.say("No items!");
+//if (iDirCount ==0 && iFileCount == 0) App.say("No items.");
 } // menuEditCopyTagged_Click method
 
 void menuEditMoveTagged_Click(object sender, EventArgs e) {
@@ -3976,7 +3976,7 @@ delete_Helper(sSource);
 App.say("Done!", true);
 //if (iDirCount > 0) App.say(Homer.Util.stringPlural("folder", iDirCount));
 //if (iFileCount > 0) App.say(Homer.Util.stringPlural("file", iFileCount));
-//if (iDirCount ==0 && iFileCount == 0) App.say("No items!");
+//if (iDirCount ==0 && iFileCount == 0) App.say("No items.");
 } // menuEditMoveTagged_Click method
 
 void delete_Helper(string sPath) {
@@ -4009,7 +4009,7 @@ if (mdiChild == null) return;
 
 string sPath = Path_Helper();
 if (Directory.Exists(sPath)) {
-App.say("Command unavailable on folder item!");
+App.say("Command unavailable on folder item.");
 return;
 }
 else if (File.Exists(sPath)) {
@@ -4487,7 +4487,7 @@ string sChoice = "";
 string sCompare = "";
 
 if (aPaths.Length == 0) {
-App.say("No items!");
+App.say("No items.");
 return;
 }
 
@@ -4577,7 +4577,7 @@ refresh_Helper(sTarget);
 App.say("Done!", true);
 //if (iDirCount > 0) App.say(Homer.Util.stringPlural("folder", iDirCount));
 //if (iFileCount > 0) App.say(Homer.Util.stringPlural("file", iFileCount));
-//if (iDirCount ==0 && iFileCount == 0) App.say("No items!");
+//if (iDirCount ==0 && iFileCount == 0) App.say("No items.");
 } // pasteCopy_Helper method
 
 void menuEditPasteFromClipboard_Click(object sender, EventArgs e) {
@@ -4618,7 +4618,7 @@ string sChoice = "";
 string sCompare = "";
 
 if (aPaths.Length == 0) {
-App.say("No items!");
+App.say("No items.");
 return;
 }
 
@@ -4709,7 +4709,7 @@ Clipboard.Clear();
 App.say("Done!", true);
 //if (iDirCount > 0) App.say(Homer.Util.stringPlural("folder", iDirCount));
 //if (iFileCount > 0) App.say(Homer.Util.stringPlural("file", iFileCount));
-//if (iDirCount ==0 && iFileCount == 0) App.say("No items!");
+//if (iDirCount ==0 && iFileCount == 0) App.say("No items.");
 } // pasteMove_Helper method
 
 void menuEditPasteMove_Click(object sender, EventArgs e) {
@@ -5209,7 +5209,7 @@ mdiChild.bs.Filter = "Shown = true";
 }
 mdiChild.bs.EndEdit();
 if (sText != "*" && sText != "" && mdiChild.bs.Count == 0) {
-//App.say("No items!");
+//App.say("No items.");
 string sChoice = Homer.LbcAsk.confirmDialog("Confirm", "No items match the filter.  Clear it?", "Y");
 if (sChoice == "Y") {
 // The view now shows every item: the Shown marks hold this filter's answer,
@@ -5267,7 +5267,7 @@ bFound = true;
 break;
 }
 }
-if (!bFound) App.say("Not found!");
+if (!bFound) App.say("Not found.");
 } // menuNavigateBeginningFile_Click method
 
 void menuNavigateBeginningTagged_Click(object sender, EventArgs e) {
@@ -5282,7 +5282,7 @@ bFound = true;
 break;
 }
 }
-if (!bFound) App.say("Not found!");
+if (!bFound) App.say("Not found.");
 } // menuNavigateBeginningTagged_Click method
 
 void menuNavigateEndTagged_Click(object sender, EventArgs e) {
@@ -5297,7 +5297,7 @@ bFound = true;
 break;
 }
 }
-if (!bFound) App.say("Not found!");
+if (!bFound) App.say("Not found.");
 } // menuNavigateEndTagged_Click method
 
 void menuNavigateNextTagged_Click(object sender, EventArgs e) {
@@ -5312,7 +5312,7 @@ bFound = true;
 break;
 }
 }
-if (!bFound) App.say("Not found!");
+if (!bFound) App.say("Not found.");
 } // menuNavigateNextTagged_Click method
 
 void menuNavigatePreviousTagged_Click(object sender, EventArgs e) {
@@ -5327,7 +5327,7 @@ bFound = true;
 break;
 }
 }
-if (!bFound) App.say("Not found!");
+if (!bFound) App.say("Not found.");
 } // menuNavigatePreviousTagged_Click method
 
 void menuNavigateInitialChange_Click(object sender, EventArgs e) {
@@ -5347,7 +5347,7 @@ bFound = true;
 break;
 }
 }
-if (!bFound) App.say("Not found!");
+if (!bFound) App.say("Not found.");
 } // menuNavigateInitialChange_Click method
 
 void menuNavigateExtensionChange_Click(object sender, EventArgs e) {
@@ -5366,7 +5366,7 @@ bFound = true;
 break;
 }
 }
-if (!bFound) App.say("Not found!");
+if (!bFound) App.say("Not found.");
 } // menuNavigateExtensionChange_Click method
 
 void menuQueryDate_Click(object sender, EventArgs e) {
@@ -5478,7 +5478,7 @@ if (iFileCount > 0) App.say(sYield);
 
 if (iDirCount + iFileCount == 0) {
 int i = mdiChild.bs.Position;
-if (i < 0) App.say("No folder or File!");
+if (i < 0) App.say("No folder or file.");
 else {
 sPathList = (string) view[i]["Path"];
 //if (Directory.Exists(sPathList)) {
@@ -5502,7 +5502,7 @@ foreach (DataRowView row in mdiChild.tbl.DefaultView) {
 App.say(row["DisplayFields"]);
 iItemCount++;
 }
-if (iItemCount == 0) App.say("No items!");
+if (iItemCount == 0) App.say("No items.");
 } // menuQueryList_Click method
 
 void MenuQuerySelected_Click(object sender, EventArgs e) {
@@ -5524,7 +5524,7 @@ App.say(row["DisplayFields"]);
 iItemCount++;
 }
 }
-if (iItemCount == 0) App.say("No items!");
+if (iItemCount == 0) App.say("No items.");
 } // menuQueryListTagged_Click method
 
 void menuQueryListFiles_Click(object sender, EventArgs e) {
@@ -5538,7 +5538,7 @@ App.say(row["DisplayFields"]);
 iItemCount++;
 }
 }
-if (iItemCount == 0) App.say("No items!");
+if (iItemCount == 0) App.say("No items.");
 } // menuQueryListFiles_Click method
 
 void menuQuerySize_Click(object sender, EventArgs e) {
@@ -5772,7 +5772,7 @@ if (iFiles !=1) s += "s";
 if (iFiles > 0) App.say(s);
 
 if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
-if (iDirs == 0 && iFiles == 0) App.say("No items!");
+if (iDirs == 0 && iFiles == 0) App.say("No items.");
 } // menuQueryYield_Click method
 
 void menuQueryYieldTagged_Click(object sender, EventArgs e) {
@@ -5814,7 +5814,7 @@ if (iFiles !=1) s += "s";
 if (iFiles > 0) App.say(s);
 
 if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
-if (iDirs == 0 && iFiles == 0) App.say("No items!");
+if (iDirs == 0 && iFiles == 0) App.say("No items.");
 } // menuQueryYieldTagged_Click method
 
 void menuQueryYieldFiles_Click(object sender, EventArgs e) {
@@ -5856,13 +5856,13 @@ if (iFiles !=1) s += "s";
 if (iFiles > 0) App.say(s);
 
 if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
-if (iDirs == 0 && iFiles == 0) App.say("No items!");
+if (iDirs == 0 && iFiles == 0) App.say("No items.");
 } // menuQueryYieldFiles_Click method
 
 void menuQueryYieldOnDrive_Click(object sender, EventArgs e) {
 DriveInfo d = new DriveInfo(Directory.GetCurrentDirectory());
 if (!d.IsReady) {
-App.say("Drive not ready!");
+App.say("Drive not ready.");
 return;
 }
 
@@ -5900,7 +5900,7 @@ if (mdiChild == null) return;
 
 string sFile = Path_Helper();
 if (!File.Exists(sFile)) {
-App.say("Current item must be a file for this command!");
+App.say("The current item is not a file.");
 return;
 }
 
@@ -5931,7 +5931,7 @@ FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
 int iCount = mdiChild.bs.Count;
-if (iCount == 0) App.say("No items!");
+if (iCount == 0) App.say("No items.");
 else {
 int i = mdiChild.bs.Position;
 i++;
@@ -6048,7 +6048,7 @@ else if (sWhy.Length > 0) Homer.Say.sayForced(sWhy);
 
 void menuQueryTimer_Click(object sender, EventArgs e) {
 if (App.timer == null) {
-App.say("No timer!");
+App.say("No timer.");
 return;
 }
 
@@ -6899,7 +6899,7 @@ if (abortInZip()) return;
 App.say("Mail body");
 string sPath = Path_Helper();
 if (!File.Exists(sPath)) {
-App.say("Command requires the current item to be a file!");
+App.say("The current item is not a file.");
 return;
 }
 
@@ -7121,7 +7121,7 @@ delete_Helper(sItem);
 }
 }
 if (testZip(sZip)) App.say("Done!", true);
-else App.say("Error!");
+else App.say("Error.");
 App.SetDirectory(sOldDir);
 //Homer.Util.stringPlural("file", iFileCount);
 //Homer.LbcAsk.show(Homer.Util.stringEquiv(Directory.GetCurrentDirectory(), Path.GetDirectoryName(sZip)));
@@ -7332,7 +7332,7 @@ if (App.frame != null && App.frame.TopLevelControl.Handle != (IntPtr) Homer.Util
 sText = sText.Replace("\r\n", "\n");
 string sMatch = "\nEverything is Ok\n";
 bool bError = sText.IndexOf(sMatch) < 0;
-if (bError) App.say("Error!");
+if (bError) App.say("Error.");
 string sReturn = Path.Combine(sDir, Path.GetFileName(sPath));
 return sReturn;
 } // z7Entry2Dir method
@@ -7360,8 +7360,8 @@ if (App.sUnarchivePassword.Trim().Length > 0) {
 App.say("With password");
 }
 bool bResult = testZip(sPath);
-if (bResult) App.say("Passed!");
-else App.say("Failed!");
+if (bResult) App.say("Passed.");
+else App.say("Failed.");
 } // menuMiscUnarchiveTest_Click method
 
 void menuMiscCommandPrompt_Click(object sender, EventArgs e) {
@@ -7512,7 +7512,7 @@ Homer.LbcAsk.show(ex.Message, "Error");
 return;
 }
 if (aFiles.Length == 0) {
-App.say("No files!");
+App.say("No files.");
 return;
 }
 
@@ -7680,7 +7680,7 @@ listRefs.Add(sRef);
 }
 
 if (listItems.Count == 0) {
-App.say("No items!");
+App.say("No items.");
 return;
 }
 
@@ -7766,7 +7766,7 @@ aLinks = sbLinks.ToString().Trim().Split('\n');
 aFiles = sbFiles.ToString().Trim().Split('\n');
 if (aFiles.Length == 1 && aFiles[0] == "") aFiles = new string[] {};
 if (aFiles.Length == 0) {
-App.say("No files!");
+App.say("No files.");
 return;
 }
 
@@ -7877,7 +7877,7 @@ if (sInterval != "0") iInterval = Int32.Parse(sInterval);
 if (sStop != "0") {
 dtStop = DateTime.Parse(sStop);
 if (dtStop <= DateTime.Now) {
-App.say("Stop time has already occurred!");
+App.say("Stop time has already occurred.");
 return;
 }
 }
@@ -7931,7 +7931,7 @@ if (elapsed.Seconds > 0) App.say(Homer.Util.stringPlural("second", elapsed.Secon
 
 void menuMiscStopTimer_Click(object sender, EventArgs e) {
 if (App.timer == null) {
-App.say("No timer!");
+App.say("No timer.");
 return;
 }
 
@@ -8928,11 +8928,11 @@ if (sReportFile.Length == 0) return;
 Homer.Util.string2File(sBody, sReportFile);
 
 if (File.Exists(sReportFile)) {
-App.say("Done!");
+App.say("Done.");
 refresh_Helper(sReportFile);
 goTo_Helper(sReportFile);
 }
-else App.say("Error!");
+else App.say("Error.");
 } // menuInquireDifferences_Click method
 
 void menuWindowArrangeIcons_Click(object sender, EventArgs e) {
@@ -8958,7 +8958,7 @@ string sDrive = sText.Substring(7, 1);
 App.say("Drive " + sDrive);
 DriveInfo drive = new DriveInfo(sDrive);
 if (!drive.IsReady) {
-App.say("Drive not ready!");
+App.say("Drive not ready.");
 return;
 }
 
@@ -9096,7 +9096,7 @@ if (mdiChild == null) return;
 
 string sPath = Path_Helper();
 if (!File.Exists(sPath)) {
-//App.say("Command requires the current item to be a file!");
+//App.say("The current item is not a file.");
 return;
 }
 
@@ -9109,7 +9109,7 @@ aVerbs[aVerbs.Length - 1] = "OpenWith";
 //Array.Resize(ref aVerbs, aVerbs.Length + 1);
 //aVerbs[aVerbs.Length - 1] = "Properties";
 if (aVerbs.Length == 0) {
-App.say("No actions available for this file type!");
+App.say("No actions available for this file type.");
 return;
 }
 
@@ -9481,7 +9481,7 @@ return true;
 
 public FolderWindow getActiveChild() {
 FolderWindow mdiChild = (FolderWindow) App.frame.ActiveMdiChild;
-if (mdiChild == null) App.say("Command unavailable outside view window!");
+if (mdiChild == null) App.say("Command unavailable outside view window.");
 return mdiChild;
 } // getActiveChild method
 
