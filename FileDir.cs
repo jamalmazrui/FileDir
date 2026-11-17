@@ -5941,12 +5941,16 @@ App.say(String.Format("{0} of {1}, {2} percent through", i, iCount, f));
 }
 } // menuQueryPercentThrough_Click method
 
+// SAY FILTER AND ORDER (17 November 2026): the filter, then the order, each named, as DbDo's Shift+8 says them.
+// A second press spells the answer, through the kit's KeyMap.answer.
 void menuQueryFilter_Click(object sender, EventArgs e) {
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
-//App.say("Filter");
-App.say(App.frame.hashOrder[mdiChild.sOrderText]);
-App.say(mdiChild.sFilterText);
+string sFilter = mdiChild.sFilterText ?? App.sFilterText ?? "";
+if (sFilter.Trim() == "" || sFilter.Trim() == "*") sFilter = "none";
+string sOrder = "";
+if (mdiChild.sOrderText != null && App.frame.hashOrder.ContainsKey(mdiChild.sOrderText)) sOrder = App.frame.hashOrder[mdiChild.sOrderText];
+Homer.KeyMap.answer("Filter and Order", "filter: " + sFilter + "; order: " + (sOrder == "" ? "as listed" : sOrder));
 } // menuQueryFilter_Click method
 
 // SAY FILTER, SAY MARKED, SAY ORDER (16 November 2026): DbDo's Shift+F, Shift+M and Shift+O, with FileDir's

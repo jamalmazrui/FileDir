@@ -120,7 +120,7 @@ rem FileDir's work on Lbc -- the slider, the list searching, the status line,
 rem the command-key hooks and the accessible-name clean-out -- with the two
 rem corrections that followed it.
 rem 1.65.3: the kit's MediaPlayer.cs, with the move of the player's settings.
-set "kitNeeded=1.242.0"
+set "kitNeeded=1.245.0"
 rem COMPARED IN CMD, WITH NO POWERSHELL AT ALL. Three attempts had PowerShell
 rem parse the two numbers, and every one reported a perfectly good version as
 rem unreadable -- the quoting between cmd and PowerShell was never right, and
@@ -700,10 +700,11 @@ rem ---- the kit's scripts the app carries, refreshed on every build ----------
 rem One source of truth for the shared install and release scripts:
 rem installCommon (the logging half of every install script), installOllama,
 rem installScreenReaderSupport, the tutorial tools, tidy, check, push,
-rem release, unpushed and finish. installModels.cmd is the app's own, since it
+rem release, unpushed and finish; and since 17 November 2026 recordWalk, runMacro and testSay, which press
+rem FileDir's keys and hear what the reader says. installModels.cmd is the app's own, since it
 rem names the app's models.
 if not exist "scripts" mkdir "scripts"
-for %%F in (buildTutorials.cmd buildTutorials.ps1 check.cmd check.py checkTutorial.cmd checkTutorial.py finish.cmd fixEncoding.cmd fixEncoding.py getPdfPig.cmd getPdfPig.ps1 installCommon.cmd installOllama.cmd installScreenReaderSupport.cmd installWhisper.cmd kind.cmd kind.py makeTutorials.cmd makeTutorials.py push.cmd release.cmd release.ps1 tidy.cmd tidy.py unpushed.cmd unpushed.py) do (
+for %%F in (buildTutorials.cmd buildTutorials.ps1 check.cmd check.py checkTutorial.cmd checkTutorial.py finish.cmd fixEncoding.cmd fixEncoding.py getPdfPig.cmd getPdfPig.ps1 installCommon.cmd installOllama.cmd installScreenReaderSupport.cmd installWhisper.cmd kind.cmd kind.py makeTutorials.cmd makeTutorials.py push.cmd recordWalk.cmd recordWalk.py release.cmd release.ps1 runMacro.cmd runMacro.py testSay.cmd testSay.py tidy.cmd tidy.py unpushed.cmd unpushed.py) do (
   if exist "%homerDev%\scripts\%%F" copy /y "%homerDev%\scripts\%%F" scripts\ >nul
 )
 rem A RETIRED TOP-LEVEL FOLDER (9 October 2026): FileDir keeps its Quick folder

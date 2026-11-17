@@ -2,6 +2,15 @@
 
 
 
+## 17 November 2026 -- Say Filter and Order names its parts
+
+- **Say Filter and Order, Shift+8, says "filter: ...; order: ...",** as DbDo's Shift+8 now does, where it said the order and the filter one after the other with no names, the order first. A filter of * is said as none. A second press spells the answer, as other Say commands do.
+- **Say Selected is keyed JAWS+Shift+DownArrow** in the key file, the way the kit writes JAWS keys.
+- .gitattributes no longer starts with a byte order mark, which git would read as part of its first line.
+- **testSay, in scripts,** runs every Say command once, then twice, then Escape, and then has the Key Describer describe each key, recording what JAWS says and writing it down. Open FileDir on a folder worth hearing about, then run it from FileDir's folder. testSay --only 8,f hears just Shift+8 and Shift+F. The reports, recordings and FileDir's own logs are gathered in one folder under logs to upload.
+- **A live test after every build.** scripts\tests\sayBasics.inix is a short macro script that the kit's tidy plays when FileDir is closed and a screen reader is running. It checks that Shift+8 and Say Position are heard, that the Alternate Menu opens, and that the Key Describer describes. It is played again only when FileDir, its key file or the macro has changed.
+- FileDir now needs HomerDev 1.245.0.
+
 ## 16 November 2026 -- A Shift letter only says or moves
 
 A Shift+letter key no longer changes anything. It says something, or it moves, as in DbDo, so a Shift+letter pressed by mistake costs nothing. Commands that act moved to Control or Alt keys.

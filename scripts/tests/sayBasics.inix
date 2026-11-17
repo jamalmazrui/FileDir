@@ -1,0 +1,23 @@
+﻿; sayBasics.inix -- a live test of FileDir, played by tidy after a build.
+;
+; Tidy plays every macro in scripts\tests when FileDir is closed, a screen reader is running, and the macro, the program
+; or the key file changed since its last pass. It opens the build just made, presses these keys, listens to the reader
+; and checks what Windows shows. It only says things and opens and closes the Alternate Menu, so it changes nothing.
+; Play it by hand with: scripts\runMacro scripts\tests\sayBasics.inix
+
+FileTask = macroScript
+App = FileDir
+Name = The Say family speaks, and the Key Describer describes
+
+[steps]
+Say Filter and Order
+Expect speech filter
+Say Position
+Expect speech percent
+Alternate Menu
+Expect window Alternate Menu
+Press Escape
+Key Describer Toggle
+Say Filter and Order
+Expect speech filter and order
+Key Describer Toggle
