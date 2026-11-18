@@ -69,7 +69,7 @@ and words its checkbox as Install, Update or Reinstall with the versions in
 play; `installScreenReaderSupport.cmd` unpacks `exec\FileDir_JAWS.zip`, which
 the build makes from `scripts\jaws`; `installCommon.cmd` is the logging half of
 every install script; and the Results box after Finish reports one past-tense
-line per box that was ticked. `summarizeSetup` and FileDir's own finish-page
+line per box that was marked. `summarizeSetup` and FileDir's own finish-page
 code are gone.
 
 One line is not the template's and must stay: `AppId=FileDir`. FileDir has
@@ -606,7 +606,7 @@ and is deliberately not reinvented. The rules it encodes:
   installed.
 - **Each tool appears three times**, with a `Check` function so only one entry
   shows: install, update, or reinstall. They are grouped in that order, so the
-  boxes that do something come first, and reinstall is never ticked because
+  boxes that do something come first, and reinstall is never marked because
   there is nothing to gain.
 - **Every label says what the box will do**, with the version and the size:
   "Install Ollama 0.x", "Update Ollama from A to B", "Reinstall Ollama A

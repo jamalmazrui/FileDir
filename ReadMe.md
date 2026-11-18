@@ -71,15 +71,15 @@ or to switch to it if it is already open.
 
 At the end you are offered a list of checkboxes. The first four are about
 FileDir itself: install the JAWS scripts, install the NVDA add-on, start FileDir,
-and open the guide. The first three are ticked already; untick the screen reader
+and open the guide. The first three are marked already; unmark the screen reader
 boxes if they do not apply to you.
 
-Below them are the optional components. **Pandoc is ticked**, because it is what
+Below them are the optional components. **Pandoc is marked**, because it is what
 gives FileDir its conversions: about 100 MB, installed machine wide in
 `C:\Program Files\Pandoc` and shared with EdSharp and HomerScribe, so one
 download serves all three.
 
-The two for translation are **not ticked**:
+The two for translation are **not marked**:
 
 - **Ollama with the llama3.2 chat model**, about 2 GB. This is what makes
   Alt+Shift+F7 work at all.

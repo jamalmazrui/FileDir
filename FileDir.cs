@@ -1141,7 +1141,7 @@ string sMessage = Homer.JawsSettingsInstaller.install("FileDir", App.sShippedJaw
 //
 // Installed whether or not mpv is on the machine yet. The files are harmless
 // where there is no mpv, and installing them now means the player works
-// properly the day somebody ticks that box, rather than needing the FileDir
+// properly the day somebody marks that box, rather than needing the FileDir
 // installer run a second time.
 int iMpvCopied = 0;
 int iMpvCompiled = 0;
@@ -1209,7 +1209,7 @@ if (sLine.Trim().Length > 0) Homer.Log.info("  " + sLine.Trim());
 // The box appears only when a person asked for this from the Help menu.  The
 // installer passes --quiet, because a wall of "JAWS 2024 / enu: jkm jss jsb"
 // lines is a report to nobody: it interrupts an installation to say that the
-// thing the person ticked has happened, which the Results box says at the end
+// thing the person marked has happened, which the Results box says at the end
 // anyway, in one line, along with everything else.
 if (!bQuietJaws && sMessage.Length > 0) Homer.LbcMessage.show(sMessage, "FileDir - JAWS Settings");
 return;
@@ -1792,7 +1792,9 @@ menuMiscZipList = menu_Helper("Zip List ...", "Alt+Shift+L", menuMiscZipList_Cli
 menuMiscUnarchiveTagged = menu_Helper("Unarchive", "Control+U", menuMiscUnarchiveTagged_Click);
 menuMiscUnarchiveTaggedWithoutSubfolders = menu_Helper("Unarchive without Subfolders", "Alt+U", menuMiscUnarchiveTaggedWithoutSubfolders_Click);
 menuMiscUnarchiveTaggedToSameName = menu_Helper("Unarchive to Same Name", "Control+Shift+U", menuMiscUnarchiveTaggedToSameName_Click);
-menuMiscUnarchiveTest = menu_Helper("Unarchive Test", "", menuMiscUnarchiveTest_Click);
+// SAY UNARCHIVE TEST ON SHIFT+U (17 November 2026, Jamal's ask for a useful Shift+letter): it changes nothing and
+// says whether the archive unzips, so it belongs to the Say layer, U as in Unarchive (Control+U).
+menuMiscUnarchiveTest = menu_Helper("Say Unarchive Test", "Shift+U", menuMiscUnarchiveTest_Click);
 menuMiscUnarchivePassword = menu_Helper("Unarchive Password", "Alt+Shift+U", menuMiscUnarchivePassword_Click);
 menuMiscCommandPrompt = menu_Helper("Open Command Prompt", "Control+Backslash", menuMiscCommandPrompt_Click);
 menuMiscExplorerDir = menu_Helper("Open in Explorer", "Alt+Backslash", menuMiscExplorerDir_Click);
@@ -1825,7 +1827,9 @@ menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "", MenuMiscNetworkConnections_Click);
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscUnarchiveTest, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
+// Say Unarchive Test is made with the Misc commands, beside its Unarchive family, and shown on the Say menu.
+menuQuery.DropDownItems.Add(menuMiscUnarchiveTest);
 
 menuWindow = menu_Helper("&Window");
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
@@ -5482,8 +5486,8 @@ return list_Helper(out aDirs, out aFiles, iTagged, iTagged == 1);
 
 // MARKED OR CURRENT (17 November 2026). With iTagged 1 a command acts on the marked items in view, or on the current
 // one when none is marked. Jamal marks files for a batch copy, move or zip, meets one he wants to treat on its own, and
-// the command took every marked one. Now, when marked items are in view and the current one is not marked, the kit's
-// Marked or Current dialog asks, titled with the command's name: Marked items (with their count) is the default, so
+// the command took every marked one. Now, when marked items are in view (unless the one marked item is the current
+// one), the kit's Marked or Current dialog asks, titled with the command's name: Marked items (with their count) is the default, so
 // Enter does what it always did; Current item, or C, takes the one under the cursor. Cancel gives an empty list, which
 // every caller takes as nothing to do. bAsk false is for a Say command, such as Say Selected, which must never ask.
 public string[] list_Helper(out string[] aDirs, out string[] aFiles, int iTagged, bool bAsk) {
@@ -5497,8 +5501,10 @@ int iMarkedInView = 0;
 foreach (DataRowView rowCount in view) if ((char) rowCount["Tagged"] == '>') iMarkedInView++;
 int iAt = mdiChild.bs.Position;
 bool bCurrentMarked = iAt >= 0 && iAt < view.Count && (char) view[iAt]["Tagged"] == '>';
-if (iMarkedInView > 0 && !bCurrentMarked && iAt >= 0 && iAt < view.Count) {
-string sAnswer = Homer.LbcAsk.markedOrCurrent(Homer.KeyMap.sRunningName, iMarkedInView, "item", "items");
+// ASKED WHENEVER ANY ARE MARKED (17 November 2026, evening): Control+Z with folders marked and the cursor on one of
+// them asked nothing, nor did it after Mark All. Only when the one marked item is the current one is there no question.
+if (iMarkedInView > 0 && !(iMarkedInView == 1 && bCurrentMarked) && iAt >= 0 && iAt < view.Count) {
+string sAnswer = Homer.LbcAsk.markedOrCurrent(Homer.KeyMap.sRunningName, iMarkedInView, "item", "items", bCurrentMarked);
 if (sAnswer == "") {
 aDirs = new string[0];
 aFiles = new string[0];
@@ -6741,7 +6747,7 @@ string sTitle = "Chat with AI";
 // is nothing to ask -- and the screen reader reads a window's title when it
 // opens. Saying it first only makes the reader say it twice.
 if (!Homer.Ollama.isRunning()) {
-Homer.LbcAsk.show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+Homer.LbcAsk.show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and mark the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
 return;
 }
 string sModel = Homer.Ollama.bestTranslateModel();
@@ -6784,7 +6790,7 @@ Homer.LbcAsk.show("Move to a file first. This command asks about one file, not a
 return;
 }
 if (!Homer.Ollama.isRunning()) {
-Homer.LbcAsk.show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+Homer.LbcAsk.show("Ollama is not running on this computer, so there is nothing to ask.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and mark the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
 return;
 }
 string sModel = Homer.Ollama.bestTranslateModel();
@@ -6847,7 +6853,7 @@ if (aPaths.Length == 0) return;
 // feature needs a download is better than typing a language first and being
 // told afterwards.
 if (!Homer.Ollama.isRunning()) {
-Homer.LbcAsk.show("Ollama is not running on this computer, so nothing can be translated.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and tick the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
+Homer.LbcAsk.show("Ollama is not running on this computer, so nothing can be translated.\n\nTo add it, run installOllama.cmd in the FileDir folder, or install FileDir again and mark the Ollama box.\n\nOllama is shared with EdSharp and DbDo, so if you have installed it for one of those it is already here.", sTitle);
 return;
 }
 string sModel = Homer.Ollama.bestTranslateModel();
@@ -7411,15 +7417,11 @@ void menuMiscUnarchiveTest_Click(object sender, EventArgs e) {
 string sPath = Path_Helper();
 string sName = Path.GetFileName(sPath);
 if (!File.Exists(sPath)) {
-App.say(sName +" not found!");
+App.say("unarchive test: " + sName + " is not a file");
 return;
 }
-if (App.sUnarchivePassword.Trim().Length > 0) {
-App.say("With password");
-}
 bool bResult = testZip(sPath);
-if (bResult) App.say("Passed.");
-else App.say("Failed.");
+App.say("unarchive test" + (App.sUnarchivePassword.Trim().Length > 0 ? ", with password" : "") + ": " + (bResult ? "passed" : "failed"));
 } // menuMiscUnarchiveTest_Click method
 
 void menuMiscCommandPrompt_Click(object sender, EventArgs e) {
@@ -8064,7 +8066,7 @@ string sTitle = "Play Media";
 App.say(sTitle);
 if (Homer.Media.mpvProgram().Length == 0) {
 Homer.LbcAsk.show("mpv was not found, so there is nothing to play with.\r\n\r\n"
-+ "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box. "
++ "Run installMpv.cmd in the FileDir folder, or install FileDir again and mark the mpv box. "
 + "Play List still writes a play list without it.\r\n\r\n"
 + "If mpv IS installed, this is where FileDir looked. Send these lines and the search can be widened:\r\n\r\n"
 + Homer.Media.searchLog(), sTitle);
@@ -8568,7 +8570,7 @@ bool bReadable = Homer.Conversion.readableAsText(sOne);
 if (bList || bMedia || bReadable) {
 if (Homer.Media.mpvProgram().Length == 0) {
 Homer.LbcAsk.show("mpv is not installed, so there is nothing to play with.\r\n\r\n"
-+ "Run installMpv.cmd in the FileDir folder, or install FileDir again and tick the mpv box.\r\n\r\n"
++ "Run installMpv.cmd in the FileDir folder, or install FileDir again and mark the mpv box.\r\n\r\n"
 + "Mark two or more files and press this key again to write a play list without playing it.", "Play List");
 return;
 }
@@ -9264,6 +9266,7 @@ bKeysDeclared = true;
 // FORMER NAMES (15 November 2026, the keyboard audit's A11): each command renamed that day stays findable by its old
 // name; the Alternate Menu ends its line with "Formerly <name>.", through the kit's KeyMap.
 Homer.KeyMap.addFormerName("Append File Contents", "Append to Clipboard");
+Homer.KeyMap.addFormerName("Say Unarchive Test", "Unarchive Test");
 Homer.KeyMap.addFormerName("Export Type", "Output Type");
 Homer.KeyMap.addFormerName("Say Character Encoding", "Character Encoding");
 Homer.KeyMap.addFormerName("Say List", "List");
@@ -9421,7 +9424,7 @@ declareKey("menuMiscReverseTypeOrder", menuMiscReverseTypeOrder, Keys.Alt | Keys
 declareKey("menuMiscUnarchiveTagged", menuMiscUnarchiveTagged, Keys.Control | Keys.U);
 declareKey("menuMiscUnarchiveTaggedWithoutSubfolders", menuMiscUnarchiveTaggedWithoutSubfolders, Keys.Alt | Keys.U);
 declareKey("menuMiscUnarchiveTaggedToSameName", menuMiscUnarchiveTaggedToSameName, Keys.Control | Keys.Shift | Keys.U);
-declareKey("menuMiscUnarchiveTest", menuMiscUnarchiveTest);
+declareKey("menuMiscUnarchiveTest", menuMiscUnarchiveTest, Keys.Shift | Keys.U);
 declareKey("menuMiscUnarchivePassword", menuMiscUnarchivePassword, Keys.Alt | Keys.Shift | Keys.U);
 declareKey("menuEditPasteFromClipboard", menuEditPasteFromClipboard, Keys.Control | Keys.V);
 declareKey("menuMiscVolumeFormat", menuMiscVolumeFormat, Keys.Control | Keys.Shift | Keys.V);

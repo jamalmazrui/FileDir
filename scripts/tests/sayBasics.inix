@@ -5,6 +5,8 @@
 ; and checks what Windows shows. It only says things and opens and closes the Alternate Menu, so it changes nothing.
 ; Play it by hand with: scripts\runMacro scripts\tests\sayBasics.inix
 
+; Say Position says how far down the list you are, or "No items" in an empty folder, so either passes (17 November 2026).
+
 FileTask = macroScript
 App = FileDir
 Name = The Say family speaks, and the Key Describer describes
@@ -13,7 +15,7 @@ Name = The Say family speaks, and the Key Describer describes
 Say Filter and Order
 Expect speech filter
 Say Position
-Expect speech percent
+Expect speech percent | no items
 Alternate Menu
 Expect window Alternate Menu
 Press Escape

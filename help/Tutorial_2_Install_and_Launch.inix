@@ -18,7 +18,7 @@ Hear=Next button
 
 [step]
 
-Say=A box that is ticked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
+Say=A box that is marked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
 Key=
 Hear=
 

@@ -104,7 +104,7 @@ on, because your screen reader announces those itself.
 
 They help. Mostly they stop JAWS reading the name of a keystroke out loud, such
 as "Shift S", so you hear just the command name, "Size". The installer offers
-them and ticks the box when JAWS is on the computer.
+them and marks the box when JAWS is on the computer.
 
 **How does FileDir talk to NVDA?**
 
@@ -129,7 +129,7 @@ FileDir.
 
 **How are PDFs read?**
 
-By PyMuPDF4LLM, a free reader the installer offers as a ticked checkbox. It
+By PyMuPDF4LLM, a free reader the installer offers as a marked checkbox. It
 reads the PDF's own structure, so you get headings, lists and tables rather than
 a wall of text. Microsoft Word is not involved.
 
@@ -142,7 +142,7 @@ ordinary parsing: font sizes become headings, ruled areas become tables.
 
 **Does FileDir install Python?**
 
-Only if you tick the PDF reader and this computer has no Python. The reader runs
+Only if you mark the PDF reader and this computer has no Python. The reader runs
 under Python, so the installer fetches it — about 30 MB — the same way it
 fetches everything else. FileDir itself is a Windows program and needs no
 Python for anything else.
@@ -154,13 +154,13 @@ quiet.
 **Can I convert iPhone photos?**
 
 Yes, with the image tools installed — the installer offers them as a checkbox,
-unticked. iPhone photos are HEIC, which ffmpeg cannot read whatever build you
+unmarked. iPhone photos are HEIC, which ffmpeg cannot read whatever build you
 have, so ImageMagick handles those along with camera raw files, SVG drawings and
 Windows icons. Ordinary PNG and JPEG work without it.
 
 **Do I need Pandoc?**
 
-Yes, for Convert Format. The installer offers it as a checkbox and ticks it,
+Yes, for Convert Format. The installer offers it as a checkbox and marks it,
 because it is what gives FileDir its conversions.
 
 **Where does Pandoc go?**
@@ -240,7 +240,7 @@ page: you can translate something private.
 
 Yes, and it is optional. The FileDir installer offers Ollama as a checkbox, with
 the llama3.2 model, about 2 GB. A second checkbox offers qwen2.5:7b, about 5 GB,
-which translates noticeably better. Neither box is ticked to begin with, because
+which translates noticeably better. Neither box is marked to begin with, because
 nobody should download gigabytes by not noticing a checkbox.
 
 **I already installed Ollama for EdSharp. Do I need it twice?**

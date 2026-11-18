@@ -2,6 +2,27 @@
 
 
 
+## 18 November 2026 -- JAWS keeps its system tray key
+
+- **Control+Shift+F11 is JAWS's again in FileDir.** Tile Vertical moved to Shift+F11, but FileDir's JAWS key map still handed Control+Shift+F11 to FileDir, so JAWS's list of system tray items did nothing there. The kit's new "reader keys" check found it.
+- **This needs HomerDev 1.259.0.**
+
+## 17 November 2026 -- The live test passes in an empty folder
+
+- **The live test's Say Position accepts "No items".** Its first run expected a percent, but FileDir opened on an empty folder and rightly said "No items." Either answer passes now. This needs HomerDev 1.256.0, whose macros may list either of two expected words.
+
+## 17 November 2026 -- Marked or Current asks whenever items are marked
+
+- **Control+Z, and every command that can act on marked items, asks Marked or Current whenever marked items are in view,** not only when the current item is unmarked. Marked folders with the cursor on one of them, or Mark All, used to go straight to the batch. Enter still takes the marked items; C takes the current one alone. The one case left unasked is a single marked item that is the current one, where both answers are the same.
+
+## 17 November 2026 -- Marked, not ticked
+
+- **A checkbox is marked, never ticked,** in the installer, its finish page, the guides, the tutorials and every message, as Homer has said since 11 November; some fifty lines still said tick. The kit's check now fails on the word, so it cannot come back.
+
+## 17 November 2026 -- Say Unarchive Test on Shift+U
+
+- **Shift+U says whether the current archive unzips successfully,** without unzipping it: "unarchive test: passed". It was Unarchive Test, with no key, on the Misc menu; it now sits on the Say menu, since a Shift+letter key only says. U is for Unarchive, as in Control+U. Alt+U stays Unarchive without Subfolders.
+
 ## 17 November 2026 -- A second press spells or shows
 
 - **Say Item Name, Say Path, Say Date, Say Size, Say Type and Say Character Encoding follow the suite's rule for a second press:** a short value is spelled, and a longer one is shown in a window to read or copy. testSay heard each say the same thing twice. Press Apostrophe twice to hear a file's name spelled.

@@ -196,7 +196,7 @@ F11=TypeCurrentScriptKey
 Alt+F11=TypeCurrentScriptKey
 Control+F11=TypeCurrentScriptKey
 Alt+Shift+F11=TypeCurrentScriptKey
-Control+Shift+F11=TypeCurrentScriptKey
+; Control+Shift+F11 is JAWS's system tray list, and FileDir no longer binds it: Tile Vertical moved to Shift+F11 (18 November 2026).
 F12=TypeCurrentScriptKey
 Shift+F12=TypeCurrentScriptKey
 Alt+F12=TypeCurrentScriptKey

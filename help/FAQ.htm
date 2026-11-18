@@ -273,7 +273,7 @@ itself.</p>
 <p><strong>Do I need the JAWS scripts?</strong></p>
 <p>They help. Mostly they stop JAWS reading the name of a keystroke out
 loud, such as “Shift S”, so you hear just the command name, “Size”. The
-installer offers them and ticks the box when JAWS is on the
+installer offers them and marks the box when JAWS is on the
 computer.</p>
 <p><strong>How does FileDir talk to NVDA?</strong></p>
 <p>Directly, when <code>nvdaControllerClient.dll</code> is in the
@@ -293,7 +293,7 @@ LaTeX, rich text, AsciiDoc, CSV, MediaWiki, PowerPoint (.pptx) and Excel
 cannot read PDF. Use Control+Shift+X, Export Type, for those: that goes
 through 2htm, which comes with FileDir.</p>
 <p><strong>How are PDFs read?</strong></p>
-<p>By PyMuPDF4LLM, a free reader the installer offers as a ticked
+<p>By PyMuPDF4LLM, a free reader the installer offers as a marked
 checkbox. It reads the PDF’s own structure, so you get headings, lists
 and tables rather than a wall of text. Microsoft Word is not
 involved.</p>
@@ -305,7 +305,7 @@ to an AI later — it describes the output format, not how the work is
 done. The reading itself is ordinary parsing: font sizes become
 headings, ruled areas become tables.</p>
 <p><strong>Does FileDir install Python?</strong></p>
-<p>Only if you tick the PDF reader and this computer has no Python. The
+<p>Only if you mark the PDF reader and this computer has no Python. The
 reader runs under Python, so the installer fetches it — about 30 MB —
 the same way it fetches everything else. FileDir itself is a Windows
 program and needs no Python for anything else.</p>
@@ -314,13 +314,13 @@ optical character recognition rather than conversion. FileDir says so
 rather than going quiet.</p>
 <p><strong>Can I convert iPhone photos?</strong></p>
 <p>Yes, with the image tools installed — the installer offers them as a
-checkbox, unticked. iPhone photos are HEIC, which ffmpeg cannot read
+checkbox, unmarked. iPhone photos are HEIC, which ffmpeg cannot read
 whatever build you have, so ImageMagick handles those along with camera
 raw files, SVG drawings and Windows icons. Ordinary PNG and JPEG work
 without it.</p>
 <p><strong>Do I need Pandoc?</strong></p>
 <p>Yes, for Convert Format. The installer offers it as a checkbox and
-ticks it, because it is what gives FileDir its conversions.</p>
+marks it, because it is what gives FileDir its conversions.</p>
 <p><strong>Where does Pandoc go?</strong></p>
 <p><code>C:\Program Files\Pandoc</code>, machine wide. It is about 100
 MB and EdSharp and HomerScribe use the same copy, so one download serves
@@ -384,7 +384,7 @@ pasting into a web page: you can translate something private.</p>
 <p>Yes, and it is optional. The FileDir installer offers Ollama as a
 checkbox, with the llama3.2 model, about 2 GB. A second checkbox offers
 qwen2.5:7b, about 5 GB, which translates noticeably better. Neither box
-is ticked to begin with, because nobody should download gigabytes by not
+is marked to begin with, because nobody should download gigabytes by not
 noticing a checkbox.</p>
 <p><strong>I already installed Ollama for EdSharp. Do I need it
 twice?</strong></p>

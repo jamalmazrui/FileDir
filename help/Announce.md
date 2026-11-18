@@ -108,7 +108,7 @@ for you. Nothing is a manual download. A component already on your computer is
 found and offered as an update rather than installed twice, and one copy is
 shared with EdSharp and HomerScribe.
 
-The document and media tools are ticked, because the conversion features need
+The document and media tools are marked, because the conversion features need
 them. The AI pieces are not: they are several gigabytes, and nobody should
 download that by failing to notice a checkbox. They buy translation, summarizing
 and file questions that ask no account and never send a document anywhere.

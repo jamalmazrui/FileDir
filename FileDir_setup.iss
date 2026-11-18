@@ -22,17 +22,17 @@
 ;
 ; CHECKBOX ORDER AND DEFAULTS, in the order the user meets them (HomerDev
 ; rule, 25 September 2026; the [Run] section says how it is done):
-;   1. Install entries, TICKED: screen reader scripts first -- a blind user
+;   1. Install entries, MARKED: screen reader scripts first -- a blind user
 ;      installing a Homer tool wants its JAWS scripts and its NVDA add-on --
 ;      then components in alphabetical order.
-;   2. Update entries, TICKED, alphabetical.
-;   3. Reinstall entries, UNTICKED, alphabetical.
-;   4. Launch, TICKED, after the Results box has been read.
-;   5. Open the user guide, UNTICKED: there when wanted, out of the way when not.
+;   2. Update entries, MARKED, alphabetical.
+;   3. Reinstall entries, UNMARKED, alphabetical.
+;   4. Launch, MARKED, after the Results box has been read.
+;   5. Open the user guide, UNMARKED: there when wanted, out of the way when not.
 ;
 ; THE RESULTS BOX COMES BEFORE THE LAUNCH. The Launch entry only leaves a
 ; marker; CurStepChanged(ssDone) shows one Results box -- a past-tense line per
-; box that was ticked, probed after its script ran, and nothing about the rest
+; box that was marked, probed after its script ran, and nothing about the rest
 ; -- and starts the program only after that box is dismissed.
 
 #define AppName       "FileDir"
@@ -244,12 +244,12 @@ Name: "{autodesktop}\{#AppName}"; Filename: "{app}\exec\{#AppExeName}"; WorkingD
 
 [Run]
 ; FINISH-PAGE ORDER, a HomerDev rule (25 September 2026):
-;   1. Install entries, ticked -- screen reader scripts first, then components
+;   1. Install entries, marked -- screen reader scripts first, then components
 ;      in alphabetical order.
-;   2. Update entries, ticked, alphabetical.
-;   3. Reinstall entries, UNTICKED, alphabetical.
-;   4. Launch, ticked.
-;   5. Open the user guide, unticked.
+;   2. Update entries, marked, alphabetical.
+;   3. Reinstall entries, UNMARKED, alphabetical.
+;   4. Launch, marked.
+;   5. Open the user guide, unmarked.
 ; Inno shows [Run] entries in script order and Check: hides the ones that do not
 ; apply, so three entries per component -- one per verb, each with its own
 ; Check: from Templates\HomerComponents.iss -- group the page by themselves.
@@ -264,7 +264,7 @@ Name: "{autodesktop}\{#AppName}"; Filename: "{app}\exec\{#AppExeName}"; WorkingD
 ; Scripts run DIRECTLY, with "noPause" as their argument -- never through a cmd
 ; wrapper with a "set X=1 &&" prefix, which cmd /s cannot quote correctly.
 
-; ---- 1. Install, ticked --------------------------------------------------------
+; ---- 1. Install, marked --------------------------------------------------------
 ; Alphabetical by name within each group, the JAWS scripts and NVDA add-on
 ; among the others, each worded Install, Update or Reinstall by its state
 ; (HomerDev 1.43.43; help\FinishPage.md).
@@ -352,7 +352,7 @@ FileName: "{app}\scripts\installYtDlp.cmd"; \
   Check: isInstallYtDlp; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-; ---- 2. Update, ticked ---------------------------------------------------------
+; ---- 2. Update, marked ---------------------------------------------------------
 FileName: "{app}\scripts\installExifTool.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -430,7 +430,7 @@ FileName: "{app}\scripts\installYtDlp.cmd"; \
   Check: isUpdateYtDlp; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-; ---- 3. Reinstall, unticked ----------------------------------------------------
+; ---- 3. Reinstall, unmarked ----------------------------------------------------
 FileName: "{app}\scripts\installExifTool.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -515,7 +515,7 @@ FileName: "{app}\scripts\installYtDlp.cmd"; \
   Check: isReinstallYtDlp; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
 
-; ---- 4. Launch, ticked --------------------------------------------------------
+; ---- 4. Launch, marked --------------------------------------------------------
 ; The entry only leaves a marker. The program starts from CurStepChanged(ssDone),
 ; AFTER the Results box has been read and closed -- so the box is not hidden
 ; behind the program's own window. Inno runs postinstall entries before ssDone.
@@ -526,7 +526,7 @@ FileName: "{cmd}"; \
   Description: "Launch {#AppName} (desktop hotkey {#HotKeyDisplay})"; \
   Flags: postinstall skipifsilent runhidden runasoriginaluser
 
-; ---- 5. Open the user guide, unticked -----------------------------------------
+; ---- 5. Open the user guide, unmarked -----------------------------------------
 FileName: "{app}\help\FileDir.htm"; \
   Description: "Open the user guide (F1 in {#AppName})"; \
   Flags: postinstall shellexec nowait skipifsilent skipifdoesntexist runasoriginaluser unchecked
@@ -605,9 +605,9 @@ Type: filesandordirs; Name: "{localappdata}\FileDir\logs"
 //      file, then the exe, then the registry) and words every checkbox;
 //    - reads the version of any previous install, so the screen reader
 //      script entries say Install or Update truthfully;
-//    - records which boxes were ticked when Finish is pressed, and after
+//    - records which boxes were marked when Finish is pressed, and after
 //      the scripts have run, reports what happened to each of THOSE -- one
-//      past-tense line per ticked box, nothing about the rest;
+//      past-tense line per marked box, nothing about the rest;
 //    - keeps the setup log with the program's own logs;
 //    - starts the program only after the Results box has been closed.
 //
@@ -768,7 +768,7 @@ function labelModel(sParam: String): String;   begin Result := homerModelLabel('
 function isModelInstall(): Boolean;            begin Result := homerModelIs('qwen2.5:7b', False); end;
 function isModelReinstall(): Boolean;          begin Result := homerModelIs('qwen2.5:7b', True); end;
 
-//  ---- the Results box: one line per ticked box, probed after the scripts ran
+//  ---- the Results box: one line per marked box, probed after the scripts ran
 procedure addAction(sText: String);
 begin
   if sText = '' then exit;

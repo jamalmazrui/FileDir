@@ -56,16 +56,16 @@ with something else you use, move to the FileDir item on the desktop, press
 Alt+Enter for properties, and set a different key, or clear it.
 
 At the end of the install you are offered four checkboxes. The first three are
-already ticked:
+already marked:
 
 - **Install scripts for the JAWS screen reader.** These fine tune what JAWS
   says. Mainly they stop JAWS reading the name of a keystroke out loud, such as
-  "Shift S", so you hear just the command name, "Size". Untick this box if you
+  "Shift S", so you hear just the command name, "Size". Unmark this box if you
   use a different screen reader.
 - **Install the add-on for the NVDA screen reader.** This box only appears when
   an add-on is included in the release.
 - **Start FileDir.**
-- **Open the user guide.** This is the one box that is not ticked to begin with.
+- **Open the user guide.** This is the one box that is not marked to begin with.
 
 You can install a new version straight over an older one. Press Alt+F1 for the
 About box, which gives the version number and release date. Press Shift+F1 for
@@ -328,7 +328,7 @@ Use the Zip List command, Alt+Shift+L, to create or update a zip archive based o
 
 Alt+U, Unarchive without Subfolders, unzips without preserving subfolders. It unzips all files to the chosen folder, but not subfolders below (folder paths, if any, are ignored). Control+Shift+U unzips to a target with the same name as the archive. For example, if focus is on mag0712.zip, then the proposed target path will end in mag0712.
 
-You can test whether a file can be unzipped successfully with Unarchive Test, on the Misc menu. Press Alt+Shift+U to set a password to be used by FileDir when creating, extracting, or viewing zip archives. It may also be set in the Options dialog, Alt+O. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
+Shift+U, Say Unarchive Test, says whether the current archive unzips successfully, without unzipping it. Like every Shift+letter key, it only says. Press Alt+Shift+U to set a password to be used by FileDir when creating, extracting, or viewing zip archives. It may also be set in the Options dialog, Alt+O. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
 
 Starting with FileDir 3.7, the unzip commands are now broader, unarchive commands that work with almost any archive format, including .rar, .tar, .gz, .bz2, .chm, .cab,. FileDir does this with the free 7Zip utility behind the scenes, which is also available independently at [the 7-Zip home page](https://www.7-zip.org/)
 
@@ -1024,7 +1024,7 @@ the
 list is worth steering: a page of podcasts where the titles matter, or a set of
 files you want to move around in.
 
-mpv is optional and the installer does not tick it. It is about 60 MB, and it
+mpv is optional and the installer does not mark it. It is about 60 MB, and it
 carries its own copy of ffmpeg which FileDir already has, so it is worth adding
 only if you play media from the file list. Converting audio and video does not
 need it.
@@ -1115,7 +1115,7 @@ of that file, so you can tell it is working rather than stuck.
 
 The translation is done by Ollama, which is free and separate from FileDir. The
 FileDir installer offers it as a checkbox, along with a second checkbox for a
-larger model that translates better. Neither is ticked by default: together they
+larger model that translates better. Neither is marked by default: together they
 are several gigabytes, which is not something to download by accident.
 
 - **llama3.2**, about 2 GB, comes with the Ollama checkbox. It translates

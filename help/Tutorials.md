@@ -718,7 +718,7 @@ Screen reader:
 
 ### Step 3
 
-A box that is ticked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
+A box that is marked will be done; Spacebar changes it. Install means it is not there yet; Update, that a newer one is available; Reinstall, that it is there and current.
 
 ### Step 4: Enter
 
@@ -2263,8 +2263,8 @@ and what to do about the ones it does not.
 anywhere.**
 
 This needs Ollama, which the FileDir installer offers as a checkbox. If you did
-not tick it, run `installOllama.cmd` in the FileDir folder, or install FileDir
-again and tick the box. If you already installed Ollama for EdSharp or DbDo, it
+not mark it, run `installOllama.cmd` in the FileDir folder, or install FileDir
+again and mark the box. If you already installed Ollama for EdSharp or DbDo, it
 is already here — one installation serves them all.
 
 1. Open the folder holding the documents.
