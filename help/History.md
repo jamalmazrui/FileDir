@@ -2,6 +2,12 @@
 
 
 
+## 22 November 2026 -- Zip on Control+Z
+
+- **Zip is Control+Z, and Zip then Delete is Control+Shift+Z.** The safer command takes the plainer key, and the one that removes the files adds Shift, as a new Homer key guideline asks. Zip then Delete keeps its other key, Control+Shift+Delete, and still asks before deleting anything.
+- **The tutorials say Control plus Shift plus M for Move to Folder,** its key since 21 November. Three places still said Alt plus Shift plus M.
+- **This needs HomerDev 1.274.0.**
+
 ## 22 November 2026 -- The installer's PDF tools and Whisper
 
 - **PDF tools update properly.** The installer judged them by Python's own version, so it offered an Update that the PDF tools script, which updates the PDF package and never Python, could not make; the box came back after every install. It now compares the PDF package itself, as HomerDev's installer does.

@@ -5,7 +5,7 @@
     <link>Tutorials.htm</link>
     <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Nov 2026 06:33:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Nov 2026 19:31:31 +0000</lastBuildDate>
     <itunes:author>Jamal Mazrui</itunes:author>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Technology"/>
@@ -24,8 +24,8 @@
       <description>FileDir is open on a folder of your own, such as Documents. Full transcript: Tutorials.htm#0a-1-user-interface</description>
       <link>Tutorials.htm#0a-1-user-interface</link>
       <guid isPermaLink="false">homer-tutorial_1_user_interface</guid>
-      <enclosure url="tutorials/1_User_Interface.mp3" length="1914269" type="audio/mpeg"/>
-      <itunes:duration>00:04:36</itunes:duration>
+      <enclosure url="tutorials/1_User_Interface.mp3" length="1902810" type="audio/mpeg"/>
+      <itunes:duration>00:04:35</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -51,7 +51,7 @@
       <description>A folder of files is open. Full transcript: Tutorials.htm#0d-4-mark-files-and-copy-them</description>
       <link>Tutorials.htm#0d-4-mark-files-and-copy-them</link>
       <guid isPermaLink="false">homer-tutorial_4_mark_files_and_copy_them</guid>
-      <enclosure url="tutorials/4_Mark_Files_and_Copy_Them.mp3" length="1455969" type="audio/mpeg"/>
+      <enclosure url="tutorials/4_Mark_Files_and_Copy_Them.mp3" length="1450787" type="audio/mpeg"/>
       <itunes:duration>00:03:21</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
@@ -96,8 +96,8 @@
       <description>Nothing is needed. Full transcript: Tutorials.htm#0i-9-conclusion</description>
       <link>Tutorials.htm#0i-9-conclusion</link>
       <guid isPermaLink="false">homer-tutorial_9_conclusion</guid>
-      <enclosure url="tutorials/9_Conclusion.mp3" length="1539661" type="audio/mpeg"/>
-      <itunes:duration>00:03:42</itunes:duration>
+      <enclosure url="tutorials/9_Conclusion.mp3" length="1544161" type="audio/mpeg"/>
+      <itunes:duration>00:03:43</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
   </channel>

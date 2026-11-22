@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.254**  
+**Version 5.0.255**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -237,9 +237,9 @@ Commands in alphabetical order.
 - **Where Am I**, Control+Slash -- Say where you are, what has focus and its keys
 - **Windows Control Panel**, Control+Shift+W -- Launch Control Panel to configure Windows
 - **Yield with Regex**, Control+Shift+Y -- Count the matches of a regular expression in the marked files, and the files that hold them
-- **Zip**, Control+Shift+Z -- Add current or marked files to zip archive
+- **Zip**, Control+Z -- Add current or marked files to zip archive
 - **Zip List**, no key -- Create or update a zip archive based on a list of files or folders
-- **Zip then Delete**, Control+Z or Control+Shift+Delete -- Add current or marked files to zip archive, then delete originals
+- **Zip then Delete**, Control+Shift+Z or Control+Shift+Delete -- Add current or marked files to zip archive, then delete originals
 
 ## By Key
 
@@ -385,7 +385,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+Shift+W** -- Windows Control Panel: Launch Control Panel to configure Windows
 - **Control+Shift+X** -- Export Type: Convert the marked files, or the current one, to a type you pick
 - **Control+Shift+Y** -- Yield with Regex: Count the matches of a regular expression in the marked files, and the files that hold them
-- **Control+Shift+Z** -- Zip: Add current or marked files to zip archive
+- **Control+Shift+Z or Control+Shift+Delete** -- Zip then Delete: Add current or marked files to zip archive, then delete originals
 - **Control+Slash** -- Where Am I: Say where you are, what has focus and its keys
 - **Control+T** -- Send to Text Editor: Send the current file to your text editor
 - **Control+Tab** -- Next Window: Switch to the next window
@@ -395,7 +395,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Control+W** -- Send to Word Processor: Send the current file to your word processor
 - **Control+X** -- Cut: Cut the current item or the marked ones to the clipboard
 - **Control+Y** -- Say Yield from Current: Say how many items there are from the current one on, and their total size
-- **Control+Z or Control+Shift+Delete** -- Zip then Delete: Add current or marked files to zip archive, then delete originals
+- **Control+Z** -- Zip: Add current or marked files to zip archive
 - **Delete** -- Delete: Delete current or marked items and recycle according to setting
 - **Enter** -- Open Item: Open subfolder in new window, view zip archive, or launch file
 - **F1** -- Documentation: Open the FileDir guide
@@ -517,7 +517,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+Shift+UpArrow** -- Unmark and Previous
 - **Control+Shift+W** -- Windows Control Panel
 - **Control+Shift+Y** -- Yield with Regex
-- **Control+Shift+Z** -- Zip
+- **Control+Shift+Z or Control+Shift+Delete** -- Zip then Delete
 
 ### Alt
 
@@ -600,7 +600,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Control+F10** -- SendTo Menu
 - **Control+U** -- Unarchive
 - **Control+Slash** -- Where Am I
-- **Control+Z or Control+Shift+Delete** -- Zip then Delete
+- **Control+Z** -- Zip
 
 ### Shift
 

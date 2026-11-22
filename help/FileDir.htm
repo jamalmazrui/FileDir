@@ -783,11 +783,12 @@ single file (but not folder) without a confirmation dialog. Note that
 the Delete, Copy, and Move commands execute noticeably faster when
 deleted or replaced items are not moved to the recycle bin. Press
 Control+B to open the Recycle Bin and recover deleted items.</p>
-<p>Press Control+Shift+Z to zip files into a compressed archive, or
-Control+U to unzip them. Zip then Delete, Control+Z or
-Control+Shift+Delete, also zips, but then deletes originals after
-confirming the integrity of the zip target. It asks before deleting
-anything, and FileDir’s list has no Undo for Control+Z to mean.</p>
+<p>Press Control+Z to zip files into a compressed archive, or Control+U
+to unzip them. Zip then Delete, Control+Shift+Z or Control+Shift+Delete,
+also zips, but then deletes the originals after testing that the new
+archive is whole. It asks before deleting anything. Shift is added for
+the version that removes files, as across Homer: the more destructive of
+two similar commands takes the extra modifier.</p>
 <p>Use the Zip List command, on the Misc menu with no key, to create or
 update a zip archive based on a list of files or folders in a text file.
 For example, the file backup.lst would contain the full path of the

@@ -31,7 +31,7 @@ Note=The window is named for the command. The box remembers the last ten answers
 Say=Type the folder, or press Alt plus B to browse for it, then Enter.
 Key=Enter
 Hear=2 files copied
-Note=Nothing is moved; Alt plus Shift plus M moves instead.
+Note=Nothing is moved; Control plus Shift plus M moves instead.
 
 [step]
 
@@ -47,7 +47,7 @@ Hear=
 
 [step]
 
-Say=What a mark feeds. Control plus Shift plus C copies the marked files to a folder you choose; Alt plus Shift plus M moves them; Control plus Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
+Say=What a mark feeds. Control plus Shift plus C copies the marked files to a folder you choose; Control plus Shift plus M moves them; Control plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
 Key=
 Hear=
 
@@ -83,7 +83,7 @@ Hear=
 
 [step]
 
-Say=A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Alt plus Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+Say=A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Control plus Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
 Key=
 Hear=
 
@@ -101,7 +101,7 @@ Hear=
 
 [step]
 
-Say=Control plus Shift plus Z zips the marked files into one archive named for the folder, or for a name you give; Control plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+Say=Control plus Z zips the marked files into one archive named for the folder, or for a name you give; Control plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
 Key=
 Hear=
 

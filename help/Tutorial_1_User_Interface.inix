@@ -135,9 +135,9 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Now Control plus Shift plus Z only says what it would do.
-Key=Control+Shift+Z
-Hear=Control plus Shift plus Z, Zip, add current or marked files to zip archive
+Say=Now Control plus Z only says what it would do.
+Key=Control+Z
+Hear=Control plus Z, Zip, add current or marked files to zip archive
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
@@ -175,13 +175,13 @@ Hear=Control plus Shift plus C
 
 Say=Move them.
 Key=
-Hear=Alt plus Shift plus M
+Hear=Control plus Shift plus M
 
 [step]
 
 Say=Zip them.
 Key=
-Hear=Control plus Shift plus Z
+Hear=Control plus Z
 
 [step]
 

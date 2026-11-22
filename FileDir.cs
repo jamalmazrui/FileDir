@@ -1827,8 +1827,8 @@ menuMiscMailAttachTagged = menu_Helper("Mail", "Control+M", menuMiscMailAttachTa
 // BATCH MAIL IS GONE (17 November 2026): it sent through SMTP with a stored user name and password, which Gmail,
 // Outlook.com and most mail services no longer accept, and mail sent one by one to a list now reads as spam.
 menuMiscBatchMail = null;
-menuMiscZipTagged = menu_Helper("Zip ...", "Control+Shift+Z", menuMiscZipTagged_Click);
-menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Z or Control+Shift+Delete", menuMiscZipTaggedThenDelete_Click);
+menuMiscZipTagged = menu_Helper("Zip ...", "Control+Z", menuMiscZipTagged_Click);
+menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Shift+Z or Control+Shift+Delete", menuMiscZipTaggedThenDelete_Click);
 // NO KEY (21 November 2026): Read Lean Marked took Alt+Shift+L. A zip made from a list file is rarely wanted.
 menuMiscZipList = menu_Helper("Zip List ...", "", menuMiscZipList_Click);
 menuMiscUnarchiveTagged = menu_Helper("Unarchive", "Control+U", menuMiscUnarchiveTagged_Click);
@@ -9317,8 +9317,8 @@ return base.ProcessCmdKey (ref msg, keyData);
 
 // declareKeys: FileDir's key table, generated on 19 October 2026 from the
 // switch it replaces, so no key was lost -- each menu item with every key that
-// clicked it. Zip then Delete and Zip List keep Control+Z and Control+Shift+Z, as
-// recorded exceptions below. Run once, at the first key.
+// clicked it. Zip and Zip then Delete take Control+Z and Control+Shift+Z, as
+// recorded below. Run once, at the first key.
 private bool bKeysDeclared = false;
 public bool declareKeys() {
 if (bKeysDeclared) return true;
@@ -9521,7 +9521,7 @@ declareKey("menuQueryYield", menuQueryYield, Keys.Alt | Keys.Y);
 // so Say Yield on Drive moves to Alt+Shift+Y, which Say Yield in Operating System gives up: Windows says its own version.
 declareKey("menuQueryYieldOnDrive", menuQueryYieldOnDrive, Keys.Shift | Keys.Y);
 declareKey("menuQueryYieldWithRegex", menuQueryYieldWithRegex, Keys.Control | Keys.Shift | Keys.Y);
-declareKey("menuMiscZipTagged", menuMiscZipTagged, Keys.Control | Keys.Shift | Keys.Z);
+declareKey("menuMiscZipTagged", menuMiscZipTagged, Keys.Control | Keys.Z);
 declareKey("menuQueryStatus", menuQueryStatus, Keys.Alt | Keys.Z, Keys.Shift | Keys.Z);
 declareKey("menuQueryPercentThrough", menuQueryPercentThrough, Keys.Alt | Keys.Delete, Keys.Shift | Keys.D5);
 declareKey("menuQueryCharacterEncoding", menuQueryCharacterEncoding, Keys.Shift | Keys.D2);
@@ -9579,13 +9579,16 @@ declareKey("menuHelpCopyLog", menuHelpCopyLog, Keys.Control | Keys.F12);
 declareKey("menuMiscStartTimer", menuMiscStartTimer, Keys.Alt | Keys.Shift | Keys.Z);
 declareKey("menuMiscStopTimer", menuMiscStopTimer, Keys.Alt | Keys.F2);
 declareKey("menuMiscTranslateTagged", menuMiscTranslateTagged, Keys.Alt | Keys.Shift | Keys.F7);
+// THE MORE DESTRUCTIVE ONE TAKES SHIFT (22 November 2026, Jamal's key guideline): Zip, which leaves the files on
+// disk, is Control+Z, and Zip then Delete, which removes them once the new archive tests whole, is Control+Shift+Z,
+// beside its other key, Control+Shift+Delete. The history below is how it stood before.
 // CONTROL+Z IS ZIP THEN DELETE AGAIN (19 October 2026, Jamal's ruling). FileDir's
 // list has no Undo for Control+Z to mean, and he missed it. It is a recorded
 // exception: the command asks before deleting anything, so a reflex press costs
 // only an Escape. Control+Shift+Delete stays as its second key, beside the other
 // delete keys. Zip, which left Shift+Z on 16 November 2026 (no Shift+letter acts), takes
 // Control+Shift+Z beside it, and Zip List moves to Alt+Shift+L, for List.
-declareKey("menuMiscZipTaggedThenDelete", menuMiscZipTaggedThenDelete, Keys.Control | Keys.Z, Keys.Control | Keys.Shift | Keys.Delete);
+declareKey("menuMiscZipTaggedThenDelete", menuMiscZipTaggedThenDelete, Keys.Control | Keys.Shift | Keys.Z, Keys.Control | Keys.Shift | Keys.Delete);
 declareKey("menuMiscZipList", menuMiscZipList);
 foreach (string sProblem in Homer.KeyMap.lsProblems) Homer.Log.warn("Key map: " + sProblem);
 return true;

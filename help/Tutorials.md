@@ -606,13 +606,13 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 20: Control+Shift+Z
+### Step 20: Control+Z
 
-Now Control plus Shift plus Z only says what it would do.
+Now Control plus Z only says what it would do.
 
 Screen reader:
 
-- Control plus Shift plus Z, Zip, add current or marked files to zip archive
+- Control plus Z, Zip, add current or marked files to zip archive
 
 Confirm the wording with a live run: buildTutorials -live.
 
@@ -662,7 +662,7 @@ Move them.
 
 Screen reader:
 
-- Alt plus Shift plus M
+- Control plus Shift plus M
 
 ### Step 27
 
@@ -670,7 +670,7 @@ Zip them.
 
 Screen reader:
 
-- Control plus Shift plus Z
+- Control plus Z
 
 ### Step 28
 
@@ -998,7 +998,7 @@ Screen reader:
 
 - 2 files copied
 
-Nothing is moved; Alt plus Shift plus M moves instead.
+Nothing is moved; Control plus Shift plus M moves instead.
 
 ### Step 5
 
@@ -1010,7 +1010,7 @@ Among the marked, Control plus Down Arrow and Control plus Up Arrow go to the ne
 
 ### Step 7
 
-What a mark feeds. Control plus Shift plus C copies the marked files to a folder you choose; Alt plus Shift plus M moves them; Control plus Shift plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
+What a mark feeds. Control plus Shift plus C copies the marked files to a folder you choose; Control plus Shift plus M moves them; Control plus Z zips them into one archive; Delete recycles them, after asking once. The same marks, a different verb.
 
 ### Step 8
 
@@ -1042,7 +1042,7 @@ Control plus I inverts the marks: marked becomes unmarked and unmarked marked, f
 
 ### Step 13
 
-A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Alt plus Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
+A filter and a mark together: Control plus F to show only star dot j p g, Control plus A to mark them all, Control plus Shift plus M to move them to Pictures. Three keys, and a year of photographs is sorted.
 
 ### Step 14: Shift+S
 
@@ -1058,7 +1058,7 @@ Renaming many: Control plus R takes a pattern with wildcards -- star dot j p e g
 
 ### Step 16
 
-Control plus Shift plus Z zips the marked files into one archive named for the folder, or for a name you give; Control plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
+Control plus Z zips the marked files into one archive named for the folder, or for a name you give; Control plus U unpacks the current archive into a folder of its name. Both say what they did and how many.
 
 ### Step 17
 
@@ -1950,7 +1950,7 @@ Walk four: mark, then act -- copy, move, zip, delete -- and the clipboard carrie
 
 Screen reader:
 
-- Alt plus Shift plus M
+- Control plus Shift plus M
 
 ### Step 8
 
@@ -2221,7 +2221,7 @@ moves any number of files.
 **The job: pack files up and take them apart.**
 
 1. **Tag** the files you want to pack.
-2. Press **Control+Shift+Z** for Zip. FileDir asks for a name and makes the
+2. Press **Control+Z** for Zip. FileDir asks for a name and makes the
    archive in the current folder.
 3. Move to the new archive and press **Enter**. You are now looking inside it as
    though it were a folder.

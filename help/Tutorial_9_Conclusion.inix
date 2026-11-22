@@ -44,7 +44,7 @@ Hear=Control plus F
 
 Say=Walk four: mark, then act -- copy, move, zip, delete -- and the clipboard carries files between folders.
 Key=
-Hear=Alt plus Shift plus M
+Hear=Control plus Shift plus M
 
 [step]
 
