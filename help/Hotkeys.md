@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.250**  
+**Version 5.0.251**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -110,7 +110,7 @@ Commands in alphabetical order.
 - **Mark to Last**, Control+Shift+End or Shift+End -- Mark every item from the current one to the last
 - **Mark with Regex**, Control+Shift+Period -- Mark files that match a regular expression
 - **Move to Folder**, Control+Shift+M -- Move current or marked items to another folder
-- **Name to Clipboard**, Alt+Shift+N -- Copy the names of the current or marked items to the clipboard
+- **Name to Clipboard**, Alt+Shift+N -- Copy the names of the current or marked items to the clipboard, one per line
 - **Network Connections**, no key -- Connect, disconnect, or restore mappings between physical storage and logical drives
 - **New Copy**, Control+Shift+N -- Add a new item with the current item's contents, beside it under its name with a number added
 - **New Folder**, Control+N -- Create new folder on disk
@@ -135,7 +135,6 @@ Commands in alphabetical order.
 - **Paste Copy**, no key -- Copy the items on the clipboard to the current folder
 - **Paste Move**, Control+Shift+V -- Move the items on the clipboard to the current folder
 - **Path List to Clipboard**, Control+Shift+L -- Copy to clipboard file paths below current folder item
-- **Path to Clipboard**, Alt+Shift+P -- Copy the full path of the current item to the clipboard
 - **Play List**, no key -- Write a play list of the marked files, and play it in mpv's own window
 - **Play Media**, Control+P -- Play the marked files, a play list or linked document, the clipboard, or the folder in the Homer Player
 - **Play Tutorials**, Alt+F12 -- Play the spoken tutorials
@@ -297,9 +296,8 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+Shift+I** -- Inquire Differences: Make a report that compares the files in two folders
 - **Alt+Shift+J** -- Find Duplicates in Tree: Find duplicate files in this folder and below
 - **Alt+Shift+L** -- Read Lean Marked: Read the items' names in the marked items, from the first
-- **Alt+Shift+N** -- Name to Clipboard: Copy the names of the current or marked items to the clipboard
+- **Alt+Shift+N** -- Name to Clipboard: Copy the names of the current or marked items to the clipboard, one per line
 - **Alt+Shift+O** -- Open Virtual Folder: Open a virtual folder definition in new window
-- **Alt+Shift+P** -- Path to Clipboard: Copy the full path of the current item to the clipboard
 - **Alt+Shift+Period** -- Mark Duplicate Files: Mark files whose content repeats an earlier file
 - **Alt+Shift+Q** -- Quick url: Add a web link from the clipboard to your Quick folder
 - **Alt+Shift+R** -- Recycle Toggle: Toggle whether deleted items go to the recycle bin
@@ -460,7 +458,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Shift+Comma** -- Mark Similar Files
 - **Alt+Shift+N** -- Name to Clipboard
 - **Alt+Shift+O** -- Open Virtual Folder
-- **Alt+Shift+P** -- Path to Clipboard
 - **Alt+Shift+F6** -- Previous Visited Folder
 - **Alt+Shift+Q** -- Quick url
 - **Alt+Shift+L** -- Read Lean Marked

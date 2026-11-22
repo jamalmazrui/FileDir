@@ -96,7 +96,7 @@ Since initial letter navigation works the same whether lower or upper case lette
 
 This command needs more information to complete the copy operation, so it prompts for a target folder. It remembers the previous input, if any, which can be accepted by simply pressing Enter. To provide another value instead, type it, replacing other text, and press Enter to activate the default, OK button. You can also pick a folder from a standard tree control by activating the Browse button. Other buttons let you pick a folder from one of three listboxes: directories open in current windows, those opened during this FileDir session, or those with shortcuts in the Quick folder.
 
-If no items are marked, the command assumes you want to process the current, focused item. With one ore more marked items, the command performs a batch operation. If you want to verify what files are marked before copying, use the Shift+L hot key to list marked items. Use Shift+Space instead to say either the marked items, or the current item if there are no marks.
+If no items are marked, the command processes the current, focused item. With items marked, it asks which you mean, in a dialog titled with the command's name: Enter takes the marked items, as a batch, and C takes the current item alone, leaving the marks as they are. It does not ask when the only marked item is the current one. Every command that can act on one item or several asks this way -- copy, move, delete, mail, zip, play and the rest -- and DbDo asks the same question about records. To hear what is marked first, press Alt+Shift+L, or Shift+Space to say the marked items, or the current item if none is marked.
 
 A > symbol following an item indicates that it is marked (putting this symbol after rather than before preserves initial letter navigation in the ListBox. Shift+DownArrow marks an item and moves to the next one in the list. Control+Shift+DownArrow unmarks and also moves ahead, thereby allowing you to efficiently go through a directory list and selectively mark items. This marking approach has benefits over selection in Windows Explorer, e.g., marks are not lost by an accidental key press that moves focus.
 
@@ -350,15 +350,15 @@ Print, in the File menu, sends current or marked items to the default printer; i
 
 Batch Mail, which sent one message to many recipients through your own mail server, was retired on 17 November 2026. Mail providers now refuse or flag a script that signs in with a saved password and sends many messages, so it rarely arrived. For one message to many people, use your mail program's own mail merge or a mailing-list service; Control+M still sends the current file's text as a message, and Control+Shift+M sends files as attachments, through your own mail program.
 
-Press Alt+Shift+X, Export Type, and pick plain text to output marked files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
+Press Control+Shift+X, Export Type, and pick plain text to output marked files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
 
 The same conversion mechanism may be used to place text on the Windows clipboard instead of creating new files. Press Alt+Shift+C, Append File Contents, to append the textual body of currently marked files to the clipboard. It pairs with Copy Append, Alt+C, which appends the items themselves. They will be separated by a sequence of characters indicating a divider between sections of a composite document: a line of 10 dashes followed by a form feed (hard page break). A termination sequence says "End of Document." This command is useful for combining multiple, related files, e.g., downloaded web pages, into a single document. You can use the Clear Clipboard command, Alt+Shift+', to clear the clipboard before appending to it. The Extract with Regex command, Control+Shift+E, works similarly except that you are prompted for a regular expression, and only matching text is copied.
 
-Alt+P queries the full path of the current item, whereas Alt+Shift+P copies it to the clipboard, e.g.,
+Alt+P says the full path of the current item. To put full paths on the clipboard, press Control+C, Copy: it holds the current or marked items both as files, for pasting into a folder, and as their full paths in text, one per line, for pasting into the open file dialog of another application, e.g.,
 
 C:\Documents and Settings\Owner\My Documents\My Music\MySong.mp3
 
-This may be useful so that the string is available by pressing Control+V to paste it into the open file dialog of another application. To get the short path instead, choose Short Path to Clipboard from the Alternate Menu, Alt+F10; it has no key since 17 November 2026. A short path contains no spaces and uses a suffix of a tilde symbol (~) and a number to abbreviate file or folder names. This may be useful when pasting into a command line, since more characters and surrounding quotes are usually needed otherwise to specify a file.
+Until 22 November 2026 Path to Clipboard, Alt+Shift+P, also copied the current item's path; Control+C does that now, so the two no longer repeat each other. To copy only the names, with their extensions and no folders, press Alt+Shift+N, Name to Clipboard: plain lines of text, such as MySong.mp3, that do not paste as files. To get the short path instead, choose Short Path to Clipboard from the Alternate Menu, Alt+F10; it has no key since 17 November 2026. A short path contains no spaces and uses a suffix of a tilde symbol (~) and a number to abbreviate file or folder names. This may be useful when pasting into a command line, since more characters and surrounding quotes are usually needed otherwise to specify a file.
 
 Control+C copies the full path of marked items to the clipboard, whereas Alt+Shift+N copies their names only -- no preceding directories.
 
@@ -388,7 +388,7 @@ Control+F sets a filter to restrict what items are shown, in the search syntax (
 
 Multiple commands support flexible checking or unchecking in a checked listbox such as the Web Download dialog. Press Space to toggle the checked state of the current item, Control+A to check all items, or Control+Shift+A to uncheck all. Press Shift+DownArrow for check and Next, or Shift+UpArrow for check and Previous. Press Shift+End for check to Bottom, or Shift+Home for check to Top. Shift+NumPad5 checks the current item. F8 marks the start of a checking operation, completed with Shift+F8.
 
-Adding the Alt modifier key performs the same action except for uncheckging rather than checkging. Thus, Alt+Shift+NumPad5 unchecks the current item, Alt+Shift+Home unchecks to the top of the list, Alt+Shift+End unchecks to the bottom, Alt+Shift+DownArrow unchecks en route to the next item, and Alt+Shift+UpArrow unchecks en route to the previous. F8 then Alt+Shift+F8 unchecks items in that range.
+Adding the Alt modifier key performs the same action except for unmarking rather than marking. Thus, Alt+Shift+NumPad5 unmarks the current item, Alt+Shift+Home unmarks to the top of the list, Alt+Shift+End unmarks to the bottom, Alt+Shift+DownArrow unmarks en route to the next item, and Alt+Shift+UpArrow unmarks en route to the previous. F8 then Alt+Shift+F8 unmarks items in that range.
 
 Other arrow keypad actions navigate among checkged items. Control+Home goes to the top checkged item, and Control+End goes to the bottom one. Control+DownArrow goes to the Next , and Control+UpArrow goes to the previous.
 
@@ -743,7 +743,7 @@ overwritten.
 
 ## Converting Between Formats
 
-Press **Alt+Shift+X** for Export Type, X for Export as in DbDo and EdSharp. FileDir looks at what the file is, offers a
+Press **Control+Shift+X** for Export Type, X for Export, the key DbDo and EdSharp use for export too. FileDir looks at what the file is, offers a
 short list of what it can become, and converts the marked files, or the current
 one, keeping each root name. The result lands beside the original and nothing is
 ever overwritten.
@@ -768,6 +768,8 @@ What you are offered depends on what you are on:
   for the sound alone, or a transcript. With HomerScribe installed, the
   transcript comes with a **description** of what can be seen, in the same
   document, under its own heading.
+- **A play list.** When the current item or any marked item is sound or video, one choice is a .m3u play list of
+  them, saved where you say. Only what can be played goes in. This is the keyboard way to make a play list.
 - **Pictures** can become PNG, JPEG, WebP, BMP, GIF, TIFF, a Windows icon or
   AVIF. With the image tools installed, iPhone photos (HEIC), camera raw files,
   SVG drawings and icons can be converted too — ffmpeg cannot read any of those.
@@ -830,8 +832,9 @@ button again, now named Stop capture, or Alt+Shift+R, to stop recording while
 the playing goes on. DbDo has the
 same two keys.
 
-Play List has no key now; find it in the Misc menu or with Alt+F10. It writes a
-.m3u play list of the marked files and plays it in mpv's own window, which comes
+Play List has no key now; find it in the Misc menu or with Alt+F10. To save a play
+list from the keyboard, press Control+Shift+X, Export Type, and choose the play
+list. Play List writes a .m3u play list of the marked files and plays it in mpv's own window, which comes
 to the front with mpv's own keys: space to pause, arrows to seek, angle brackets
 for the previous and next item, q to stop, and Control+V to add the address on
 the clipboard. Use it to keep a list, or to start something and walk away. Until

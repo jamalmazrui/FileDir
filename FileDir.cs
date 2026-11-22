@@ -1703,13 +1703,17 @@ menuEditReadOnlyTagged = menu_Helper("ReadOnly", "]", menuEditReadOnlyTagged_Cli
 menuEditReadWriteTagged = menu_Helper("ReadWrite", "[", menuEditReadWriteTagged_Click);
 menuEditSystemTagged = menu_Helper("System", "", menuEditSystemTagged_Click);
 menuEditGeneralTagged = menu_Helper("General", "", menuEditGeneralTagged_Click);
-menuEditPathToClipboard = menu_Helper("Path to Clipboard", "Alt+Shift+P", menuEditPathToClipboard_Click);
+// RETIRED INTO COPY (22 November 2026, Jamal's ruling: no two commands copy the same paths). Control+C puts the current or
+// marked items on the clipboard both as files and as their full paths in text, so Path to Clipboard only repeated it
+// for the current item. Off the menu, as Homer Player is; Alt+Shift+P is free, and "Path to Clipboard" in an old key
+// list runs Copy. Name to Clipboard, Alt+Shift+N, stays: names alone, as plain lines of text.
+menuEditPathToClipboard = null;
 menuEditShortPathToClipboard = menu_Helper("Short Path to Clipboard", "", menuEditShortPathToClipboard_Click);
 menuEditFullFolderToClipboard = menu_Helper("Folder to Clipboard", "", menuEditFullFolderToClipboard_Click);
 menuEditClearClipboard = menu_Helper("Clear Clipboard", "Alt+Shift+'", menuEditClearClipboard_Click);
 menuEditExportClipboardToFile = menu_Helper("Save Clipboard ...", "Control+Apostrophe", menuEditExportClipboardToFile_Click);
 menuEditAppendClipboard = menu_Helper("Append Clipboard ...", "Control+Shift+Apostrophe", menuEditAppendClipboard_Click);
-menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditTagAndNext, menuEditUntagAndNext, menuEditTagAndPrevious, menuEditUntagAndPrevious, menuEditTagToBottom, menuEditUntagToBottom, menuEditTagToTop, menuEditUntagToTop, menuEditTag, menuEditUntag, menuEditToggleTag, menuEditTagAll, menuEditUntagAll, menuEditTagAllFiles, menuEditTagDuplicateFiles, menuEditTagSimilarFiles, menuEditReorderNames, menuEditFindDuplicates, menuEditTagWithRegularExpression, menuEditUntagAllButCurrent, menuEditStartTagOrUntag, menuEditCompleteTag, menuEditCompleteUntag, menuEditInvertTagged, menuEditSaveTags, menuEditRestoreTags, menuEditCopyToClipboardTagged, menuEditCopyAppendToClipboardTagged, menuEditCutToClipboardTagged, menuEditCopyNameTagged, menuEditPathList, menuEditCopyTagged, menuEditMoveTagged, menuEditDeleteTagged, menuEditDeleteAndRecycleTagged, menuEditDeleteTaggedWithoutRecycle, menuEditDeleteFileNow, menuEditDeleteFileNowWithoutRecycle, menuEditRename, menuEditRenameWithWildcards, menuEditRenameWithRegex, menuEditRenameToTitle, menuEditPasteFromClipboard, menuEditPasteCopy, menuEditPasteMove, menuEditStampTagged, menuEditHideTagged, menuEditShowTagged, menuEditReadOnlyTagged, menuEditReadWriteTagged, menuEditReadWriteTagged, menuEditSystemTagged, menuEditGeneralTagged, menuEditPathToClipboard, menuEditShortPathToClipboard, menuEditFullFolderToClipboard, menuEditClearClipboard, menuEditExportClipboardToFile, menuEditAppendClipboard});
+menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditTagAndNext, menuEditUntagAndNext, menuEditTagAndPrevious, menuEditUntagAndPrevious, menuEditTagToBottom, menuEditUntagToBottom, menuEditTagToTop, menuEditUntagToTop, menuEditTag, menuEditUntag, menuEditToggleTag, menuEditTagAll, menuEditUntagAll, menuEditTagAllFiles, menuEditTagDuplicateFiles, menuEditTagSimilarFiles, menuEditReorderNames, menuEditFindDuplicates, menuEditTagWithRegularExpression, menuEditUntagAllButCurrent, menuEditStartTagOrUntag, menuEditCompleteTag, menuEditCompleteUntag, menuEditInvertTagged, menuEditSaveTags, menuEditRestoreTags, menuEditCopyToClipboardTagged, menuEditCopyAppendToClipboardTagged, menuEditCutToClipboardTagged, menuEditCopyNameTagged, menuEditPathList, menuEditCopyTagged, menuEditMoveTagged, menuEditDeleteTagged, menuEditDeleteAndRecycleTagged, menuEditDeleteTaggedWithoutRecycle, menuEditDeleteFileNow, menuEditDeleteFileNowWithoutRecycle, menuEditRename, menuEditRenameWithWildcards, menuEditRenameWithRegex, menuEditRenameToTitle, menuEditPasteFromClipboard, menuEditPasteCopy, menuEditPasteMove, menuEditStampTagged, menuEditHideTagged, menuEditShowTagged, menuEditReadOnlyTagged, menuEditReadWriteTagged, menuEditReadWriteTagged, menuEditSystemTagged, menuEditGeneralTagged, menuEditShortPathToClipboard, menuEditFullFolderToClipboard, menuEditClearClipboard, menuEditExportClipboardToFile, menuEditAppendClipboard});
 
 menuNavigate = menu_Helper("&Navigate");
 menuNavigateJump = menu_Helper("&Jump ...", "Control+J", menuNavigateJump_Click);
@@ -1810,7 +1814,7 @@ menuMiscTypeOrder = menu_Helper("Type Order", "Alt+T", menuMiscTypeOrder_Click);
 menuMiscReverseTypeOrder = menu_Helper("Reverse Type Order", "Alt+Shift+T", menuMiscReverseTypeOrder_Click);
 menuMiscSendToWordProcessor = menu_Helper("Send to Word Processor", "Control+W", MenuMiscSendToWordProcessor_Click);
 menuMiscSendToTextEditor = menu_Helper("Send to Text Editor", "Control+T", MenuMiscSendToTextEditor_Click);
-menuMiscOutputTagged = menu_Helper("Export Type", "Alt+Shift+X", MenuMiscOutputTagged_Click);
+menuMiscOutputTagged = menu_Helper("Export Type", "Control+Shift+X", MenuMiscOutputTagged_Click);
 menuMiscAppendTagged = menu_Helper("Append File Contents", "Alt+Shift+C", MenuMiscAppendTagged_Click);
 menuMiscConvertEncodingTagged = menu_Helper("Convert Encoding", "Control+2", MenuMiscConvertEncodingTagged_Click);
 menuMiscTranslateTagged = menu_Helper("Translate File", "Alt+Shift+F7", MenuMiscTranslateTagged_Click);
@@ -3774,10 +3778,17 @@ void menuEditCopyNameTagged_Click(object sender, EventArgs e) {
 string[] aDirs, aFiles;
 string[] aNames = list_Helper(out aDirs, out aFiles, 1);
 if (aNames.Length == 0) return; // nothing to act on, or Cancel in Marked or Current
-string sNameList = "";
-foreach (string sName in aNames) sNameList += Path.GetFileName(sName) + "\r\n";
-Clipboard.SetText(sNameList);
-App.say("Done!", true);
+// NAMES ALONE, AS TEXT (22 November 2026): each item's name with its extension, one per line, joined by carriage return and
+// line feed. Plain text only, never the file list Windows pastes as files -- that is Copy, Control+C.
+List<string> lsNames = new List<string>();
+foreach (string sName in aNames) {
+string sTrim = sName.TrimEnd('\\', '/');
+string sBase = sTrim.EndsWith(":") ? sTrim : Path.GetFileName(sTrim);
+if (sBase.Length > 0) lsNames.Add(sBase);
+}
+if (lsNames.Count == 0) { App.say("0 names copied", true); return; }
+Clipboard.SetText(String.Join("\r\n", lsNames.ToArray()));
+App.say(Homer.Util.stringPlural("name", lsNames.Count) + " copied", true);
 } // menuEditCopyNameTagged_Click method
 
 void menuEditPathList_Click(object sender, EventArgs e) {
@@ -6505,6 +6516,26 @@ return;
 }
 string[] aExtensions;
 string[] aLabels = Homer.Conversion.targetLabelsFor(sDriver, out aExtensions);
+// A PLAY LIST WHENEVER SOUND OR VIDEO IS AMONG THEM (22 November 2026). Export Type is the keyboard way to write a
+// .m3u, so Play List needs no key of its own. The first file decides the other choices, but when it is not sound or
+// video and another of the current or marked items is, the play list is offered too; writePlaylist_Helper keeps
+// only what mpv can play.
+string sDriverKind = Homer.Conversion.categoryOf(sDriver);
+if (sDriverKind != "audio" && sDriverKind != "video" && Array.IndexOf(aExtensions, "m3u") < 0) {
+bool bAnyMedia = false;
+foreach (string sPath in aPaths) {
+string sKind = File.Exists(sPath) ? Homer.Conversion.categoryOf(sPath) : "";
+if (sKind == "audio" || sKind == "video") { bAnyMedia = true; break; }
+}
+if (bAnyMedia) {
+List<string> lsLabels = new List<string>(aLabels);
+List<string> lsExtensions = new List<string>(aExtensions);
+lsLabels.Add("Play list of the sound and video files");
+lsExtensions.Add("m3u");
+aLabels = lsLabels.ToArray();
+aExtensions = lsExtensions.ToArray();
+}
+}
 if (aLabels.Length == 0) {
 Homer.LbcAsk.show("FileDir does not know what " + Path.GetExtension(sDriver).ToLower()
 + " files can become.\n\nDocuments, legacy Office files, PDF, audio, video and pictures are all understood.", sTitle);
@@ -6987,14 +7018,12 @@ string sSubject = "";
 string sBody = "";
 FolderWindow mdiChild = App.frame.getActiveChild();
 string sPath = Path_Helper();
-bool bTags = false;
+// ONE FILE GETS ITS TEXT IN THE BODY (22 November 2026): when files were marked but Marked or Current was answered
+// Current, the one file is mailed as a lone file is, its text in the body too; before, any mark in view kept the body
+// empty. The path is the one list_Helper chose, not the cursor's when they differ.
+bool bTags = aPaths.Length != 1;
+if (aPaths.Length == 1) sPath = aPaths[0];
 if (File.Exists(sPath)) {
-foreach (DataRowView row in mdiChild.tbl.DefaultView) {
-if ((char) row["Tagged"] == '>') {
-bTags = true;
-break;
-}
-}
 
 if (!bTags) {
 sPath = Homer.Util.getShortPath(sPath);
@@ -9303,6 +9332,7 @@ Homer.KeyMap.addFormerName("Name to Clipboard", "Copy Name");
 Homer.KeyMap.addFormerName("Filter Items", "Set Filter");
 Homer.KeyMap.addFormerName("New Copy", "New Item Copy");
 Homer.KeyMap.addFormerName("Play Media", "Homer Player");
+Homer.KeyMap.addFormerName("Copy", "Path to Clipboard");
 Homer.KeyMap.addFormerName("Mail", "Mail Attachment");
 Homer.KeyMap.addFormerName("Say Character Encoding", "Character Encoding");
 Homer.KeyMap.addFormerName("Read Lean", "List");
@@ -9434,7 +9464,6 @@ declareKey("menuFileOpenDrive", menuFileOpenDrive, Keys.Alt | Keys.O);
 declareKey("menuFileOpenVirtualFolder", menuFileOpenVirtualFolder, Keys.Alt |Keys.Shift | Keys.O);
 declareKey("menuEditPathList", menuEditPathList, Keys.Control | Keys.Shift | Keys.L);
 declareKey("menuQueryPath", menuQueryPath, Keys.Alt | Keys.P);
-declareKey("menuEditPathToClipboard", menuEditPathToClipboard, Keys.Alt | Keys.Shift | Keys.P);
 declareKey("menuFileGoToQuickFolder", menuFileGoToQuickFolder, Keys.Oemtilde);
 declareKey("menuFileOpenQuickFolder", menuFileOpenQuickFolder, Keys.Control | Keys.Q);
 declareKey("menuFileQuickShortcut", menuFileQuickShortcut, Keys.Control | Keys.Shift | Keys.Q);
