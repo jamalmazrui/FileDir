@@ -282,13 +282,6 @@ FileName: "{app}\scripts\installFfmpeg.cmd"; \
   Check: isInstallffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
-FileName: "{app}\scripts\installWhisper.cmd"; \
-  Parameters: "noPause"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "{code:labelWhisper}"; \
-  Check: homerFinishRuns and isInstallWhisper; \
-  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist
-
 FileName: "{app}\scripts\installImageMagick.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -345,6 +338,13 @@ FileName: "{app}\scripts\installModels.cmd"; \
   Check: isModelInstall; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
+FileName: "{app}\scripts\installWhisper.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelWhisper}"; \
+  Check: homerFinishRuns and isInstallWhisper; \
+  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist
+
 FileName: "{app}\scripts\installYtDlp.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -366,13 +366,6 @@ FileName: "{app}\scripts\installFfmpeg.cmd"; \
   Description: "{code:labelffmpeg}"; \
   Check: isUpdateffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
-
-FileName: "{app}\scripts\installWhisper.cmd"; \
-  Parameters: "noPause"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "{code:labelWhisper}"; \
-  Check: homerFinishRuns and isUpdateWhisper; \
-  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist
 
 FileName: "{app}\scripts\installImageMagick.cmd"; \
   Parameters: "noPause"; \
@@ -423,6 +416,13 @@ FileName: "{app}\scripts\installPdfTools.cmd"; \
   Check: isUpdatePdfTools; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated skipifdoesntexist
 
+FileName: "{app}\scripts\installWhisper.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelWhisper}"; \
+  Check: homerFinishRuns and isUpdateWhisper; \
+  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist
+
 FileName: "{app}\scripts\installYtDlp.cmd"; \
   Parameters: "noPause"; \
   WorkingDir: "{app}\scripts"; \
@@ -444,13 +444,6 @@ FileName: "{app}\scripts\installFfmpeg.cmd"; \
   Description: "{code:labelffmpeg}"; \
   Check: isReinstallffmpeg; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
-
-FileName: "{app}\scripts\installWhisper.cmd"; \
-  Parameters: "noPause"; \
-  WorkingDir: "{app}\scripts"; \
-  Description: "{code:labelWhisper}"; \
-  Check: homerFinishRuns and isReinstallWhisper; \
-  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist unchecked
 
 FileName: "{app}\scripts\installImageMagick.cmd"; \
   Parameters: "noPause"; \
@@ -507,6 +500,13 @@ FileName: "{app}\scripts\installModels.cmd"; \
   Description: "{code:labelModel}"; \
   Check: isModelReinstall; \
   Flags: postinstall skipifsilent runascurrentuser waituntilterminated unchecked skipifdoesntexist
+
+FileName: "{app}\scripts\installWhisper.cmd"; \
+  Parameters: "noPause"; \
+  WorkingDir: "{app}\scripts"; \
+  Description: "{code:labelWhisper}"; \
+  Check: homerFinishRuns and isReinstallWhisper; \
+  Flags: postinstall runascurrentuser waituntilterminated skipifdoesntexist unchecked
 
 FileName: "{app}\scripts\installYtDlp.cmd"; \
   Parameters: "noPause"; \
@@ -639,8 +639,6 @@ begin
     '', 'reads what a recording or photo knows about itself', 'ExifTool');
   iFfmpeg := homerAdd('ffmpeg', 'Gyan.FFmpeg', 'ffmpeg',
     '', 'converts audio and video, with ffprobe', '');
-  iWhisper := homerAdd('Whisper', '', '"{pf}\Whisper\whisper-cli.exe"',
-    '{pf}\Whisper\whisper-cli.exe', 'transcribes speech', '');
   iImageMagick := homerAdd('ImageMagick', 'ImageMagick.ImageMagick', 'magick',
     '', 'converts and resizes images', 'ImageMagick');
   iMpv := homerAdd('mpv', 'shinchiro.mpv', 'mpv',
@@ -649,8 +647,15 @@ begin
     '{localappdata}\Programs\Ollama\ollama.exe', 'runs the local AI model', 'Ollama');
   iPandoc := homerAdd('Pandoc', 'JohnMacFarlane.Pandoc', 'pandoc',
     '{pf}\Pandoc\pandoc.exe', 'converts documents between formats', 'Pandoc');
-  iPdfTools := homerAdd('PDF tools', 'Python.Python.3.13', 'python',
-    '', 'reads PDF files as text, through Python', 'Python 3.13');
+  // pip:pymupdf4llm, as HomerDev has it since 3 November 2026 (22 November 2026): under winget's Python 3.13 the
+  // box compared Python's own versions and offered an Update that installPdfTools, which updates the PDF package
+  // and never Python, could not make, so the box came back after every install.
+  iPdfTools := homerAdd('PDF tools', 'pip:pymupdf4llm', '',
+    '', 'reads PDF files as text, through Python', '');
+  // github:ggml-org/whisper.cpp, as HomerDev has it (22 November 2026): with no id there was no newest version to
+  // compare, so Whisper could never be offered as an Update. Listed after PDF tools, in alphabetical order.
+  iWhisper := homerAdd('Whisper', 'github:ggml-org/whisper.cpp', '"{pf}\Whisper\whisper-cli.exe"',
+    '{pf}\Whisper\whisper-cli.exe', 'transcribes speech', '');
   iYtDlp := homerAdd('yt-dlp', 'yt-dlp.yt-dlp', 'yt-dlp',
     '', 'fetches audio and video from web pages', '');
   sPriorVersion := '';
@@ -816,8 +821,8 @@ begin
   addAction(homerOutcomeLine(impv));
   addAction(homerOutcomeLine(iOllama));
   addAction(homerOutcomeLine(iPandoc));
-  addAction(homerOutcomeLine(iWhisper));
   addAction(homerOutcomeLine(iPdfTools));
+  addAction(homerOutcomeLine(iWhisper));
   addAction(homerOutcomeLine(iYtDlp));
   addAction(homerModelOutcomeLine('qwen2.5:7b', 'translates text', 'about 4.7 GB'));
   sBody := '{#AppName} {#AppVersion} is installed.';

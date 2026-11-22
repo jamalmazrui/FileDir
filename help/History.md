@@ -2,6 +2,13 @@
 
 
 
+## 22 November 2026 -- The installer's PDF tools and Whisper
+
+- **PDF tools update properly.** The installer judged them by Python's own version, so it offered an Update that the PDF tools script, which updates the PDF package and never Python, could not make; the box came back after every install. It now compares the PDF package itself, as HomerDev's installer does.
+- **Whisper can be offered as an Update.** The installer now asks GitHub for Whisper's newest version, as HomerDev's does.
+- **The last page's boxes are in alphabetical order.** Whisper had come between ffmpeg and ImageMagick, so the boxes, and the installs after Finish, said Whisper before PDF tools. It now comes after PDF tools and the AI model.
+- **This needs HomerDev 1.273.0.**
+
 ## 22 November 2026 -- Mail, play lists, names and paths
 
 - **This needs HomerDev 1.271.0.**
