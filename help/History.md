@@ -4,6 +4,9 @@
 
 ## 22 November 2026 -- Mail, play lists, names and paths
 
+- **This needs HomerDev 1.271.0.**
+- **The folder box takes a path however you have it:** forward slashes, a file: address from a browser (file:///C:/Program%20Files/ScanMaster/help/), quotes and %variables%. A file's path goes to its folder, with the cursor on the file. This works in Open Folder, Go to Folder and every box that asks for a folder, and for a path given to FileDir when it starts.
+
 - **Export Type, Control+Shift+X, offers a .m3u play list** whenever the current item or any marked item is sound or video, even when the first item is something else. It is the keyboard way to save a play list; Play List stays on the menu with no key. The Export Type menu item now shows its real key, Control+Shift+X.
 - **Path to Clipboard is retired into Copy.** Control+C already puts the current or marked items' full paths on the clipboard as text, with the files, so the two repeated each other. Alt+Shift+P is free, and Path to Clipboard in an old key list runs Copy.
 - **Name to Clipboard, Alt+Shift+N, copies names alone:** each name with its extension, one per line, as plain text that does not paste as files. It says how many names it copied.

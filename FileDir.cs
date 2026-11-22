@@ -1957,7 +1957,9 @@ string sOrder = App.sDefaultOrder;
 if (!App.itemExists(sDir)) sDir = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 string[] aArgs = Environment.GetCommandLineArgs();
 if (aArgs != null && aArgs.Length > 1 && aArgs[1].Length > 0) sDir = aArgs[1];
-sDir = sDir.Trim('"');
+// A PATH AS GIVEN (22 November 2026): quotes, a file: url, forward slashes and %variables% are taken as the kit's
+// Util.localPath takes them in a typed box.
+sDir = Homer.Util.localPath(sDir);
 string sZip = "";
 string[] aPaths = null;
 if (!Directory.Exists(sDir) && File.Exists(sDir)) {
@@ -2197,8 +2199,12 @@ string sDefaultDir;
 if (bOpen)sDefaultDir = App.sOpenText;
 else sDefaultDir = App.sGoToText;
 
-string sDir = Homer.LbcAsk.directoryDialog("Open Folder", "Folder", sDefaultDir).Trim();
+// ANY PATH AS PEOPLE HAVE IT (22 November 2026, Jamal's request). The kit's folder box now takes a file: url from a
+// browser (file:///C:/Program%20Files/ScanMaster/help/), forward slashes, quotes and %variables%, and the path of a
+// file: it returns the file's folder, and LbcAsk.sTypedFile names the file, so the cursor lands on it below.
+string sDir = Homer.LbcAsk.directoryDialog(bOpen ? "Open Folder" : "Go to Folder", "Folder", sDefaultDir).Trim();
 if (sDir.Length == 0) return;
+string sLandOn = Homer.LbcAsk.sTypedFile;
 if (!Directory.Exists(sDir)) {
 App.say("Folder " + sDir + " not found!");
 return;
@@ -2212,6 +2218,7 @@ if (mdiChild != null) mdiChild.Dispose();
 }
 
 activate_Helper(sDir);
+if (sLandOn.Length > 0 && File.Exists(sLandOn)) goTo_Helper(sLandOn);
 } // openFolder_Helper method
 
 void menuFileOpenDrive_Click(object sender, EventArgs e) {
