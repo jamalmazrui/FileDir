@@ -5,7 +5,7 @@
     <link>Tutorials.htm</link>
     <description>Short simulated walks through FileDir and the Player, for people who work by ear. Each one is a few minutes, with something to try at the end.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Nov 2026 02:31:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Nov 2026 06:33:37 +0000</lastBuildDate>
     <itunes:author>Jamal Mazrui</itunes:author>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Technology"/>
@@ -60,8 +60,8 @@
       <description>FileDir is open on a folder of saved podcast directories, on Access On dot h t m. Full transcript: Tutorials.htm#0e-5-play-a-pages-media-in-the-homer-player</description>
       <link>Tutorials.htm#0e-5-play-a-pages-media-in-the-homer-player</link>
       <guid isPermaLink="false">homer-tutorial_5_play_a_pages_media_in_the_homer_player</guid>
-      <enclosure url="tutorials/5_Play_a_Pages_Media_in_the_Homer_Player.mp3" length="1703534" type="audio/mpeg"/>
-      <itunes:duration>00:04:02</itunes:duration>
+      <enclosure url="tutorials/5_Play_a_Pages_Media_in_the_Homer_Player.mp3" length="1693080" type="audio/mpeg"/>
+      <itunes:duration>00:04:01</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -69,8 +69,8 @@
       <description>A folder holds downloaded files with names that say nothing. Full transcript: Tutorials.htm#0f-6-rename-files-to-what-is-inside</description>
       <link>Tutorials.htm#0f-6-rename-files-to-what-is-inside</link>
       <guid isPermaLink="false">homer-tutorial_6_rename_files_to_what_is_inside</guid>
-      <enclosure url="tutorials/6_Rename_Files_to_What_Is_Inside.mp3" length="1513904" type="audio/mpeg"/>
-      <itunes:duration>00:03:39</itunes:duration>
+      <enclosure url="tutorials/6_Rename_Files_to_What_Is_Inside.mp3" length="1507322" type="audio/mpeg"/>
+      <itunes:duration>00:03:38</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
@@ -96,8 +96,8 @@
       <description>Nothing is needed. Full transcript: Tutorials.htm#0i-9-conclusion</description>
       <link>Tutorials.htm#0i-9-conclusion</link>
       <guid isPermaLink="false">homer-tutorial_9_conclusion</guid>
-      <enclosure url="tutorials/9_Conclusion.mp3" length="1560894" type="audio/mpeg"/>
-      <itunes:duration>00:03:43</itunes:duration>
+      <enclosure url="tutorials/9_Conclusion.mp3" length="1539661" type="audio/mpeg"/>
+      <itunes:duration>00:03:42</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
   </channel>

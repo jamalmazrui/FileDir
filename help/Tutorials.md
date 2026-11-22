@@ -78,13 +78,13 @@ You hear:
 
 Jump looks at names. Control plus K looks inside the files.
 
-### Step 4: Control+Shift+L
+### Step 4: Control+P
 
-This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
+This page lists the episodes of a podcast. Control plus P, Play Media, plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
 
 You hear:
 
-- Play list
+- Play Media
 - Looking for media links in AccessOn.htm
 - AccessOn.htm
 - Track list, 92 tracks from links in AccessOn.htm: List box
@@ -1080,13 +1080,13 @@ A saved podcast page's episodes found and queued in the Homer Player; the transp
 
 **Before you start:** FileDir is open on a folder of saved podcast directories, on Access On dot h t m.
 
-### Step 1: Control+Shift+L
+### Step 1: Control+P
 
-This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
+This page lists the episodes of a podcast. Control plus P, Play Media, plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
 
 Screen reader:
 
-- Play list
+- Play Media
 - Looking for media links in Access On dot h t m
 - Access On dot h t m
 - Track list, 92 tracks from links in Access On dot h t m: List box
@@ -1249,11 +1249,11 @@ What this walk taught. I say the key; the reader says what it does.
 
 ### Step 17
 
-Control plus Shift plus L.
+Control plus P.
 
 Screen reader:
 
-- Play list
+- Play Media
 
 ### Step 18
 
@@ -1395,9 +1395,9 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 14: Alt+Shift+K
+### Step 14: Control+F2
 
-Numbered files often sort wrongly by ear: Chapter 10 before Chapter 2. Alt plus Shift plus K, Reorder Names, pads single leading digits, so the list reads in order.
+Numbered files often sort wrongly by ear: Chapter 10 before Chapter 2. Control plus F2, Reorder Names, pads single leading digits, so the list reads in order.
 
 Screen reader:
 
@@ -1934,7 +1934,7 @@ And the Homer Player is the same in every Homer program; play everything a page 
 
 Screen reader:
 
-- Control plus Shift plus L
+- Control plus P
 
 ### Step 6
 
@@ -2038,7 +2038,7 @@ play list.
 
 Screen reader:
 
-- Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+- Every media link a page holds, queued in the Homer Player. Control plus P.
 
 ### Step 20
 
@@ -2160,8 +2160,8 @@ to tag, and when you do, one command does the work of twenty.
 1. Move to a file and press **Space**. It is now tagged. Press Space again to
    untag it.
 2. Tag three or four files this way.
-3. Press **Shift+L** to hear the list of what you have tagged.
-4. Press **Shift+Y** to hear how many they are and how much they come to
+3. Press **Alt+Shift+L** to hear the list of what you have tagged.
+4. Press **Alt+Shift+Y** to hear how many they are and how much they come to
    altogether.
 5. Press **Greater Than** on an untagged file: it tags and moves down, which is
    quicker when you are tagging a run by hand. **Less Than** untags and moves
@@ -2191,7 +2191,7 @@ it.
 5. Press **Control+Shift+C** for Copy to Folder. FileDir asks where to. The other open
    window is offered, so you usually just press Enter.
 6. Press **Control+F6** to look at the destination and confirm they arrived.
-7. Press **Alt+Shift+M**, Move to Folder, instead of Control+Shift+C to move
+7. Press **Control+Shift+M**, Move to Folder, instead of Control+Shift+C to move
    rather than copy.
 8. Press **Alt+P** on a file and then paste elsewhere: FileDir put the full path
    on the clipboard, which is often what you actually wanted.
@@ -2306,7 +2306,7 @@ costs you nothing.
 FileDir.**
 
 1. Move to the page -- a saved .htm, or a Markdown directory of shows.
-2. Press **Control+Shift+H** for the Homer Player. FileDir reads the page, finds the
+2. Press **Control+P** for Play Media. FileDir reads the page, finds the
    media links, and opens the Homer Player with one track per link, named with
    the words the page used.
 3. You land in the **Track list**. Arrow through it: nothing plays while you

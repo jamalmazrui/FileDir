@@ -124,7 +124,7 @@ FileDir itself:
 
 - `FileDir.cs` — the program. One monolithic WinForms source, about 8,170 lines.
 - `Dialogs.cs` — FileDir's own dialogs.
-- `MediaPlayer.cs` — the Homer Player dialog, on Control+Shift+H: the queue, its
+- `MediaPlayer.cs` — the Homer Player dialog, opened by Play Media (Control+P) and Record Playback (Control+Shift+P): the queue, its
   ordering, the transport, the clip export, and the per-play-list settings kept
   in `HomerPlayer.inix`. It owns the mpv process for exactly as long as the
   dialog is open.

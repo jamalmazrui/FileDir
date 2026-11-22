@@ -2,6 +2,34 @@
 
 
 
+## 21 November 2026 -- Play Media and Record Playback
+
+- **Play Media, Control+P, plays in the Homer Player,** as DbDo's does. It plays the marked files; else a play list, or a document with media links, under the cursor; else the clipboard's addresses; else the folder.
+- **Record Playback, Control+Shift+P,** is new, as in DbDo: Play Media, playing at once and recording what plays to Music, Homer Player.
+- **Homer Player is retired into Play Media,** and Control+Shift+H is free. Pressing Homer Player in an old key list runs Play Media.
+- **Play List keeps no key.** It is in the Misc menu: it writes a play list and plays it in mpv's own window. It was Control+Shift+L.
+- **Path List to Clipboard is Control+Shift+L,** L for List. It was Control+Shift+P.
+- **This needs HomerDev 1.269.0.**
+
+## 21 November 2026 -- Key groups
+
+- **The marking keys are DbDo's:** Mark to First and Mark to Last on Control+Shift+Home and End, Unmark to First and Last with Alt added, First Marked and Last Marked on Control+PageUp and PageDown. Shift+Home and End, and Alt+Shift+Home and End, still mark and unmark. They were Mark to Top and Bottom, Unmark to Top and Bottom, and Beginning and End Marked.
+- **Reverse Jump, Control+Shift+J,** is new, as in DbDo.
+- **Alt+F8 reads everything** (Read Lean), as Read All does in EdSharp and HomerView.
+- **Names in the suite's words:** Name to Clipboard (was Copy Name), Filter Items (was Set Filter), New Copy (was New Item Copy), Unmark All but Current, Close All but Current Window. Jump Again, Keywords Again, Keywords and Start Mark or Unmark say the same sentences as in DbDo.
+
+## 21 November 2026 -- Move to Folder on Control+Shift+M, and one Mail
+
+- **Move to Folder is Control+Shift+M,** beside Copy to Folder on Control+Shift+C. It was Alt+Shift+M.
+- **Mail, Control+M, replaces Mail Body and Mail Attachment.** It attaches the current item or the marked ones, and puts a lone file's text in the body too, as Mail Attachment did.
+- **Paste Move is Control+Shift+V,** beside Paste. Paste Copy (was Alt+V) and Volume Format (was Control+Shift+V) are on their menus with no key.
+- **Reorder Names is Control+F2,** in the F2 rename family. It was Alt+Shift+K.
+- **The L and Y keys are DbDo's.** Read Lean (Alt+L), Read Lean Marked (Alt+Shift+L) and Read Lean from Current (Control+L) read the items' names, one at a time, any key stopping them; twice shows them in a window. They were Say List (Control+L) and Say List Marked (Shift+L). Say Yield stays Alt+Y, Say Yield Marked is Alt+Shift+Y (was Shift+Y), and Say Yield from Current is new on Control+Y. FileDir has no W keys, since its list has one column.
+- **Kept, with no key:** Read Lean Marked from Current and Say Yield Marked from Current, as in DbDo; Say List Files (was Alt+L) and Say Yield Files (was Control+Y), whose answers Alt+Period then Alt+Shift+L or Alt+Shift+Y give; and Zip List (was Alt+Shift+L). Play List stays Control+Shift+L.
+- **Say Yield on Drive is Shift+Y.**
+- **No Window menu.** Arrange Icons, Cascade and the two Tile commands come just before Exit FileDir on the File menu, and Drive A through Drive I (Alt+1 to Alt+9) follow Go to Drive. No key changed.
+- **This needs HomerDev 1.269.0.**
+
 ## 18 November 2026 -- JAWS keeps its system tray key
 
 - **Control+Shift+F11 is JAWS's again in FileDir.** Tile Vertical moved to Shift+F11, but FileDir's JAWS key map still handed Control+Shift+F11 to FileDir, so JAWS's list of system tray items did nothing there. The kit's new "reader keys" check found it.

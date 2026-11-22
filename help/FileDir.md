@@ -106,7 +106,7 @@ Some commands differ in whether they open a new window ore re-use the existing o
 
 FileDir's own messages are spoken through a UIA notification that JAWS, NVDA, and Narrator announce. These are intended to be comprehensible chunks of targeted information. For example, pressing Shift+Y gives the "yield" or count and combined size of marked folder and file items in the current directory view. Speech of this nature can be efficient for screen reader users as opposed to, say, a message box that generates additional screen reader speech describing the dialog, and then has to be dismissed with another key, triggering more screen reader speech.
 
-Typically, a key combination using Alt or Control rather than Shift performs another variation of the command. For example, Shift+L lists all marked items, Control+L lists all items regardless of marked state, and Alt+L lists all files, but not folders.
+Typically, a key combination using Alt or Control rather than Shift performs another variation of the command. For example, Alt+L reads the names of all items, Alt+Shift+L only the marked ones, and Control+L those from the current item on. These are the same keys DbDo uses for its lean reading of one column.
 
 FileDir commands often include verbal confirmation during execution, e.g., announcing the name of each file before a copy attempt and the message "Done!" after batch processing is complete.
 
@@ -182,19 +182,19 @@ Press Control+Q to open the Quick folder, or the grave accent key (`) at the far
 
 Alt+R lists recent folders -- every folder or zip archive opened since the start of the current FileDir session, with the most recent first. Choose an item from this standard listbox to open it. Use the Windows Toggle command, Shift+W, to switch between a pair of directory views that you are working with. Each presss returns to the previous window viewed.
 
-Nine commands on the Window menu let you quickly open or go to an existing view on a drive. Drives A through I are associated with the digits 1 through 9. For example, press Alt+1 to go to Drive A or Alt+3 to go to Drive C.
+Nine commands on the File menu, after Open Drive and Go to Drive, let you quickly open or go to an existing view on a drive. Drives A through I are associated with the digits 1 through 9. For example, press Alt+1 to go to Drive A or Alt+3 to go to Drive C.
 
 In general, FileDir checks if you are trying to open a folder that already has an open window. If so, it says "Returning and activates that window rather than creating a new one. Press F4 to pick one of the currently open windows from a standard ListBox. Alternatively, Control+Tab or Alt+RightArrow activates the next open window, and Control+Shift+Tab or Alt+LeftArrow activates the previous one. Press Shift+F4 or Alt+NumPad5 to hear the number and titles of all open windows. Press Control+F4 to close the current window, or Control+Shift+F4 to close all windows except the current one. Alt+F4 exits FileDir, and Alt+Shift+F4 restarts Windows (after confirming).
 
 As you type in the edit box for specifying a folder, it guesses the input desired based on existing paths, in the way a web browser completes an address as you type. If the path you ultimately entered is not found on disk, the dialog prompts whether to create it. This makes it convenient to copy, move, or unzip files to a new folder with a single command.
 
-FileDir supports the concept of a "virtual folder" that does not exist as a physical directory on disk. A virtual folder is defined by a path list in a text file. It contains the full paths of files or folders, not necessarily in a single directory, but in any directory and on any drive. You can create such a file in a text editor, or with the help of FileDir commands like Path List, Control+Shift+P, and Export Clipboard, Alt+Shift+E. Press Alt+Shift+O to open a virtual folder definition, or Alt+Shift+G to go to it. In general, you can then process items as if they were in the same directory.
+FileDir supports the concept of a "virtual folder" that does not exist as a physical directory on disk. A virtual folder is defined by a path list in a text file. It contains the full paths of files or folders, not necessarily in a single directory, but in any directory and on any drive. You can create such a file in a text editor, or with the help of FileDir commands like Path List, Control+Shift+L, and Export Clipboard, Alt+Shift+E. Press Alt+Shift+O to open a virtual folder definition, or Alt+Shift+G to go to it. In general, you can then process items as if they were in the same directory.
 
 ## Navigate Commands
 
 Navigate commands change the focus within a folder, based on a fixed increment or boundary. Press Home to navigate to the beginning or first item, or End for the end or last one. If the current folder contains subfolders, then the beginning item will be a folder since they always appear before files. Press Alt+B to go to the beginning file, skipping over folder items before it.
 
-A group of Control keys navigate similarly within the set of marked items: Control+Shift+Home for Beginning Marked, Control+Shift+End for End Marked, Control+DownArrow for Next Marked, and Control+UpArrow for Previous Marked (if any). These commands let you review or inspect the subset of marked items. Shift+L also may be useful to list all marked items.
+A group of Control keys navigate similarly within the set of marked items: Control+PageUp for First Marked, Control+PageDown for Last Marked, Control+DownArrow for Next Marked, and Control+UpArrow for Previous Marked (if any). These are DbDo's keys too. These commands let you review or inspect the subset of marked items. Alt+Shift+L also may be useful to hear all marked items.
 
 Initial Change, on the Navigate menu, jumps to the next item that starts with a different letter. Similarly, Extension Change, beside it, which jumps to the next file with a different extension. These commands are most useful when the sort order is by alpha/name or extension.
 
@@ -298,9 +298,9 @@ Audio sample rate
 
 Channels
 
-Press Control+L, Say List, to hear all items in view, or Shift+L, Say List Marked, for those marked. Press Alt+L, Say List Files, for files but not folders.
+Press Alt+L, Read Lean, to hear the names of all items in view, Alt+Shift+L, Read Lean Marked, for those marked, or Control+L, Read Lean from Current, for those from the current item on. Each name is read on its own, and any key stops the reading; press the key twice to see the names in a window. L is for lean: one column, as in DbDo. Say List Files, on the Say menu with no key, says the files but not the folders; you can also mark the files with Alt+Period and press Alt+Shift+L.
 
-Press Alt+Y, Say Yield, for the yield, or count and combined size, of the items in view, as Alt+Y does in every Homer app. Press Shift+Y for those marked, or Control+Y for files only. Press Alt+Shift+Y for the total size and free space on the current drive. Say Yield in Operating System, on the Say menu with no key, gives the Windows version, physical memory, and virtual memory. Control+Shift+Y is Yield with Regex, which counts the matches of a regular expression in the marked files, as in EdSharp.
+Press Alt+Y, Say Yield, for the yield, or count and combined size, of the items in view, as Alt+Y does in every Homer app. Press Alt+Shift+Y for those marked, or Control+Y, Say Yield from Current, for those from the current item on, as in DbDo. Say Yield Files, on the Say menu with no key, counts files only. Press Shift+Y for the total size and free space on the current drive. Say Yield in Operating System, on the Say menu with no key, gives the Windows version, physical memory, and virtual memory. Control+Shift+Y is Yield with Regex, which counts the matches of a regular expression in the marked files, as in EdSharp.
 
 Press % (Shift+5) for the Percent Through command, which indicates the relative position of the current item in the list, e.g., "6 of 20 items, 30% through." If you are sequentially examining the files in a folder or ZIP archive, this gives you a sense of how much is done and what remains. Use the Filter Query command, Star (Shift+8), to quickly check the current sort order and filter specification.
 
@@ -310,21 +310,21 @@ Mark commands increase or decrease the subset of items that are marked for furth
 
 Press Alt+Comma to unmark all items except the current one. Control+I inverts all marked states, untagging items that were marked and vice versa. Spacebar toggles the marked state of the current item. Press semicolon (;) to mark the current item regardless of its previous state, or ForwardSlash (/) to unmark it.
 
-To navigate and make mark decisions together, use the GreaterThan key (Shift+.) to mark and go to the next item, or the LessThan key (Shift+,) to unmark instead. Alternatively, use arrow keypad commands similar to Windows Explorer. For example, press Shift+DownArrow for Mark and Next, or Shift+UpArrow for Mark and Previous. Press Shift+End for Mark to Bottom, or Shift+Home for Mark to Top. Semicolon marks the current item.
+To navigate and make mark decisions together, use the GreaterThan key (Shift+.) to mark and go to the next item, or the LessThan key (Shift+,) to unmark instead. Alternatively, use arrow keypad commands similar to Windows Explorer. For example, press Shift+DownArrow for Mark and Next, or Shift+UpArrow for Mark and Previous. Press Control+Shift+End or Shift+End for Mark to Last, or Control+Shift+Home or Shift+Home for Mark to First. The Control+Shift keys are DbDo's; the Shift keys are the Windows habit. Semicolon marks the current item.
 
-Adding the Alt modifier key performs the same actions except for untagging rather than marking. Thus, Alt+Shift+NumPad5 untags the current item, Alt+Shift+Home untags to the top of the list, Alt+Shift+End untags to the bottom, Alt+Shift+DownArrow untags en route to the next, and Alt+Shift+UpArrow untags en route to the previous.
+Adding the Alt modifier key performs the same actions except for untagging rather than marking. Thus, Alt+Shift+NumPad5 untags the current item, Alt+Shift+Home (or Alt+Control+Shift+Home) unmarks to the first item, Alt+Shift+End (or Alt+Control+Shift+End) unmarks to the last, Alt+Shift+DownArrow untags en route to the next, and Alt+Shift+UpArrow untags en route to the previous.
 
-The arrow keys move among marked items too: Control+Shift+Home goes to the Beginning Marked item and Control+Shift+End to the End one; Control+DownArrow goes to the Next Marked item and Control+UpArrow to the previous one. The Shift+letter keys that once did the same were retired on 17 November 2026, so every Shift+letter now says something.
+The arrow keys move among marked items too: Control+PageUp goes to the First Marked item and Control+PageDown to the Last one; Control+DownArrow goes to the Next Marked item and Control+UpArrow to the previous one. The Shift+letter keys that once did the same were retired on 17 November 2026, so every Shift+letter now says something.
 
 Press Control+S to save marks in the current directory view, and Control+Shift+S to restore them. This could be useful if you need to temporarily change which items are marked.
 
 ## Transfer Commands
 
-Transfer commands take action on a whole item, copying or moving it to another folder, the clipboard, printer, or recycle bin. Press Control+Shift+C to copy, Alt+Shift+M to move, or the Delete key to delete. The Recycle Toggle, Alt+Shift+R, determines whether deleted files or folders are moved to the recycle bin. The initial setting is On, and then FileDir remembers the value between sessions. Regardless of the current setting, Shift+Delete deletes without recycling, whereas Control+Delete deletes and recycles. Use the Delete Recycle Now command, Control+D, or Delete Now Command, Control+Shift+D, to quickly delete a single file (but not folder) without a confirmation dialog. Note that the Delete, Copy, and Move commands execute noticeably faster when deleted or replaced items are not moved to the recycle bin. Press Control+B to open the Recycle Bin and recover deleted items.
+Transfer commands take action on a whole item, copying or moving it to another folder, the clipboard, printer, or recycle bin. Press Control+Shift+C to copy, Control+Shift+M to move, or the Delete key to delete. The Recycle Toggle, Alt+Shift+R, determines whether deleted files or folders are moved to the recycle bin. The initial setting is On, and then FileDir remembers the value between sessions. Regardless of the current setting, Shift+Delete deletes without recycling, whereas Control+Delete deletes and recycles. Use the Delete Recycle Now command, Control+D, or Delete Now Command, Control+Shift+D, to quickly delete a single file (but not folder) without a confirmation dialog. Note that the Delete, Copy, and Move commands execute noticeably faster when deleted or replaced items are not moved to the recycle bin. Press Control+B to open the Recycle Bin and recover deleted items.
 
 Press Control+Shift+Z to zip files into a compressed archive, or Control+U to unzip them. Zip then Delete, Control+Z or Control+Shift+Delete, also zips, but then deletes originals after confirming the integrity of the zip target. It asks before deleting anything, and FileDir's list has no Undo for Control+Z to mean.
 
-Use the Zip List command, Alt+Shift+L, to create or update a zip archive based on a list of files or folders in a text file. For example, the file backup.lst would contain the full path of the target zip archive as the first line of text. Subsequent lines would contain file or folder names to be added to the archive. Paths are not needed before these names if they are in the same directory as the archive.
+Use the Zip List command, on the Misc menu with no key, to create or update a zip archive based on a list of files or folders in a text file. For example, the file backup.lst would contain the full path of the target zip archive as the first line of text. Subsequent lines would contain file or folder names to be added to the archive. Paths are not needed before these names if they are in the same directory as the archive.
 
 Alt+U, Unarchive without Subfolders, unzips without preserving subfolders. It unzips all files to the chosen folder, but not subfolders below (folder paths, if any, are ignored). Control+Shift+U unzips to a target with the same name as the archive. For example, if focus is on mag0712.zip, then the proposed target path will end in mag0712.
 
@@ -336,17 +336,17 @@ Although any archive may be viewed or extracted, it is still the case that only 
 
 Some commands work with a copy of a zipped item that is unarchived to a temporary folder as needed. This lets you use the What Content command, Question Mark, to identify the content of a file without unzipping the archive that contains it. The Run command, Entor, and Send to Word Processor or Text Editor commands, Control+W or Control+T, also work in this way.
 
-The Copy to Folder and Move to Folder commands, Control+Shift+C and Alt+Shift+M, prompt whether to overwrite existing folders and files. You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal. You can choose to keep all targets with the same names, replace them, replace them only with updated source items, or increment source names to eliminate conflicts (e.g., ReadMe_01.txt).
+The Copy to Folder and Move to Folder commands, Control+Shift+C and Control+Shift+M, prompt whether to overwrite existing folders and files. You are informed whether the date of a target with the same name is older, newer, or current and whether its size is smaller, larger, or equal. You can choose to keep all targets with the same names, replace them, replace them only with updated source items, or increment source names to eliminate conflicts (e.g., ReadMe_01.txt).
 
 Like Windows Explorer, Control+C, Control+X, and Control+V copy, cut, and paste file or folder items between the current directory and clipboard. FileDir enhances these commands with a plain text format in addition to the binary "drop list" that Windows Explorer uses to facilitate drag and drop transfers with a mouse. Since the clipboard can actually hold multiple formats at the same time, FileDir creates both a binary and a text format when copying with Control+C or cutting with Control+X. The text format is simply a list of file or folder paths, one per line. Thus, paths on the clipboard are simultaneously available both to applications like Windows Explorer that look for the binary format, and applications like Notepad that look for plain text.
 
-When pasting, Control+V recognizes the text format as well as the binary one. Since the text format does not indicate whether files had been copied or cut to the clipboard, this command copies, rather than moves, the originals when only text format is found. With either format, you may ensure that the originals are copied with Alt+V, or that they are moved with Alt+Shift+V.
+When pasting, Control+V recognizes the text format as well as the binary one. Since the text format does not indicate whether files had been copied or cut to the clipboard, this command copies, rather than moves, the originals when only text format is found. With either format, you may ensure that the originals are moved with Control+Shift+V, Paste Move. Paste Copy, on the Edit menu with no key, makes sure they are copied.
 
 Use the Copy Append command, Alt+C, to add items to the clipboard in both binary and text formats. This lets you build a list on the clipboard from files in different directories. It also lets you build a list by pressing Alt+C when focused on each item of interest, rather than first creating a set of marked items and then copying them as a batch.
 
-To put a list of file names on the clipboard without preceding paths, press Alt+Shift+N, Copy Name. To hear what files are on the clipboard, use the Quote Clipboard command, Alt+Apostrophe. Before saying each path, FileDir says "Path drop list" if it finds this binary format. Otherwise, FileDir only speaks text format -- other binary formats on the clipboard are not interpreted.
+To put a list of file names on the clipboard without preceding paths, press Alt+Shift+N, Name to Clipboard. To hear what files are on the clipboard, use the Quote Clipboard command, Alt+Apostrophe. Before saying each path, FileDir says "Path drop list" if it finds this binary format. Otherwise, FileDir only speaks text format -- other binary formats on the clipboard are not interpreted.
 
-Control+P sends current or marked items to the default printer. Control+M starts a mail message with its body being the textual content of the current item. For example, pressing Control+M when a Microsoft Word document is the current item will extract its text for the message body and use its name (without extension) as the default subject. Control+Shift+M starts a message with the current or marked items as attached files. If no items are marked, FileDir both attaches the file and includes its text in the message body.
+Print, in the File menu, sends current or marked items to the default printer; it has no key, since Control+P is Play Media. Control+M, Mail, starts a mail message with the current or marked items as attached files. If no items are marked, FileDir both attaches the current file and puts its text in the message body: for a Microsoft Word document, it extracts the text. Until 21 November 2026 this was two commands, Mail Body and Mail Attachment.
 
 Batch Mail, which sent one message to many recipients through your own mail server, was retired on 17 November 2026. Mail providers now refuse or flag a script that signs in with a saved password and sends many messages, so it rarely arrived. For one message to many people, use your mail program's own mail merge or a mailing-list service; Control+M still sends the current file's text as a message, and Control+Shift+M sends files as attachments, through your own mail program.
 
@@ -362,7 +362,7 @@ This may be useful so that the string is available by pressing Control+V to past
 
 Control+C copies the full path of marked items to the clipboard, whereas Alt+Shift+N copies their names only -- no preceding directories.
 
-Control+Shift+P copies the full paths of all items below a subfolder item in the directory hierarchy. For example, if the My Documents directory is being viewed, and focus is on the My Music subfolder item, pressing Control+Shift+P would copy the paths of all files and subfolders under My Music. After determining what file extensions are present, FileDir prompts for which ones to include in the resulting list. Edit the choices, or just press Enter to accept them all. You can save the path list to disk with the Export Clipboard command, Alt+Shift+E, which prompts for a file name and then saves clipboard text to it.
+Control+Shift+L, Path List to Clipboard (L for List), copies the full paths of all items below a subfolder item in the directory hierarchy. For example, if the My Documents directory is being viewed, and focus is on the My Music subfolder item, pressing Control+Shift+L would copy the paths of all files and subfolders under My Music. After determining what file extensions are present, FileDir prompts for which ones to include in the resulting list. Edit the choices, or just press Enter to accept them all. You can save the path list to disk with the Export Clipboard command, Alt+Shift+E, which prompts for a file name and then saves clipboard text to it.
 
 Press Control+N to create a new folder. Press Control+Shift+N to make a new copy of the current file or folder item. It will have the same name except for a unique numeric suffix after the root, e.g., plan_01.doc would be a copy of plan.doc, and plan_02.doc would be the next copy. Such a file is sometimes useful when you want to preserve the original unaltered and then make changes to a copy in the same folder.
 
@@ -412,7 +412,7 @@ Use the Iterate Processes command, Alt+I, to list all processes currently runnin
 
 Use the Inquire Differences command, Alt+Shift+I, to compare the files in two folders. The current folder is considered the source. You are prompted for a target folder. FileDir generates a report in structured text format and prompts you for where to save it. The default name is Report.txt in the current folder. The report contains three sections: common target files, missing target files, and additional target files. The first section lists target file names that also exist in the source folder, and indicates whether each is newer, older, or current (a time stamp comparison), as well whether it is larger, smaller, or equal (a size comparison). The second section lists file names that are missing in the target folder. The third section lists additional file names found in the target folder.
 
-Use the Volume Format command, Control+Shift+V, to format a disk or storage card. Press Control+Shift+W to launch Windows Control Panel. If you associated FileDir with folders rather than Windows Explorer, you may need to open Control Panel in this way rather than through the Windows Start Menu.
+Use the Volume Format command, on the Misc menu with no key, to format a disk or storage card. Press Control+Shift+W to launch Windows Control Panel. If you associated FileDir with folders rather than Windows Explorer, you may need to open Control Panel in this way rather than through the Windows Start Menu.
 
 Choose Network Connections on the Misc menu to manage network connections. A dialog lets you connect, disconnect, or restore mappings between physical storage and logical drives.
 
@@ -608,11 +608,11 @@ In the dialog that prompts for the announcement interval, another field is the s
 
 When the stop time is reached, FileDir plays some chimes and ends the timer. Such an alarm may be used either with or without intervening announcements of time intervals. A timer runs independently of other FileDir operations, so you can continue working in FileDir while using this capability.
 
-Use the Play List command, Control+Shift+L, to create a .m3u file with references of marked items to play sequentially. Types may include .mp3, .wav, or .cda (the extension of a track on a standard audio CD). FileDir prompts for the name of the play list to create, defaulting to PlayList.m3u in the current directory. Focus is then placed on that file (if in the same directory), so you can simply press Enter to execute the play list. Note that if you want to play tracks on an audio CD, however, you need to save the play list in another directory that permits the creation of new files.
+Use the Play List command, in the Misc menu, to create a .m3u file with references of marked items to play sequentially. Types may include .mp3, .wav, or .cda (the extension of a track on a standard audio CD). FileDir prompts for the name of the play list to create, defaulting to PlayList.m3u in the current directory. Focus is then placed on that file (if in the same directory), so you can simply press Enter to execute the play list. Note that if you want to play tracks on an audio CD, however, you need to save the play list in another directory that permits the creation of new files.
 
 Use the Environment Variables command, Control+E, to review or change such settings of Windows. Choose those of the current process, user, or system as a whole. Jump quickly to a particular variable based on its initial letter, e.g., Alt+P for the PATH setting that determines where Windows searches for an executable file that is not found in the current directory. Changes to process settings affect the current session of FileDir, but not the next time it is run. User settings take effect when you log in again. System settings take affect when you restart the computer.
 
-FileDir windows may be visually organized according to common MDI (multiple document interface) patterns. The Window menu includes the following commands: Arrange Icons, Alt+F11; Cascade, Control+F11; Tile Horizontal, Alt+Shift+F11; and Tile Vertical, Control+Shift+F11.
+FileDir windows may be visually organized according to common MDI (multiple document interface) patterns. FileDir has no Window menu; these commands are on the File menu, before Exit FileDir: Arrange Icons, Alt+F11; Cascade, Control+F11; Tile Horizontal, Alt+Shift+F11; and Tile Vertical, Shift+F11.
 
 Use the Elevate Version command, F11, to download and install the latest version of FileDir. You are prompted for confirmation. The installer is downloaded to the folder for temporary Internet files so it will be deleted automatically when Windows reclaims space in that folder. The current FileDir version is then unloaded so that the installer can replace any files that were in use. You can reload the updated version in the usual manner after installation, e.g., by pressing Alt+Control+F.
 
@@ -734,7 +734,7 @@ partial download is smaller than the whole. A different extension is a different
 file. Names like chapter1 and chapter2 are left alone: those are a book's
 chapters, not copies.
 
-Press **Alt+Shift+K** for Reorder Names. It renames files so an alphabetical
+Press **Control+F2** for Reorder Names, beside Rename on F2. It renames files so an alphabetical
 list reads in the order you mean. A single leading digit is padded with a zero,
 so 2name comes before 11name instead of after it. ReadMe, index, introduction
 and overview move to the top. Licence, contributing, change log and credits move
@@ -801,15 +801,21 @@ says how many were written, skipped and failed.
 
 ## Playing Media
 
-Press **Control+P** for Play Media to hear something now without keeping a
-list. It looks in three places, in this order:
+Press **Control+P** for Play Media to hear something now. It plays in the Homer
+Player, a dialog inside FileDir, and looks in four places, in this order:
 
-1. **The clipboard**, when it holds a play list or web addresses. Copy a list of
+1. **The marked files**, if any are marked. With the cursor elsewhere, the Marked
+   or Current question asks which you mean, as every batch command does.
+2. **A play list or a document under the cursor.** A .m3u or .pls file plays its
+   tracks. Any readable document -- a web page, a Markdown file, a Word document
+   -- is searched for media links, and those play, each with the words written
+   about it. Put the cursor on a directory of podcasts and press Control+P; no
+   copying needed. A file that is neither, such as a program or a picture, is
+   passed over.
+3. **The clipboard**, when it holds a play list or web addresses. Copy a list of
    YouTube addresses from a mail message and press Control+P, and they play in
-   order with their titles. Anything mpv can reach works, because yt-dlp is
-   handed the addresses.
-2. **The marked files**, if any are marked.
-3. **Everything playable in the folder**, in the order the window is sorted.
+   order. Anything mpv can reach works, because yt-dlp is handed the addresses.
+4. **Everything playable in the folder**, in the order the window is sorted.
    Sort by date and it plays in date order, which is usually what a recording
    session or a downloaded series wants.
 
@@ -817,40 +823,22 @@ The clipboard is used only when every line is a web address or names a file that
 exists. One line of ordinary prose and it is ignored, so the command never
 surprises you with whatever you copied last.
 
-**While the player is running, Control+V adds more.** mpv reads the clipboard
-itself, so copy another address, press Control+V in the player window, and it
-joins the end of the list. If nothing is playing it starts at once. That is
-mpv's own key, not FileDir's, and it takes one address at a time; a whole list
-is what Control+P is for.
+Press **Control+Shift+P** for Record Playback. It plays exactly what Play Media
+would, starts at once, and records what plays into the Homer Player folder under
+Music. It is the player's Capture stream button, pressed for you. Press that
+button again, now named Stop capture, or Alt+Shift+R, to stop recording while
+the playing goes on. DbDo has the
+same two keys.
 
-Other useful keys in the player window: space to pause, left and right arrows to
-seek, angle brackets for the previous and next item, and q to stop.
+Play List has no key now; find it in the Misc menu or with Alt+F10. It writes a
+.m3u play list of the marked files and plays it in mpv's own window, which comes
+to the front with mpv's own keys: space to pause, arrows to seek, angle brackets
+for the previous and next item, q to stop, and Control+V to add the address on
+the clipboard. Use it to keep a list, or to start something and walk away. Until
+21 November 2026 Play List was Control+Shift+L, and the Homer Player had a key of
+its own, Control+Shift+H; Play Media now does that job.
 
-Press **Control+Shift+L** for Play List. What it does depends on what is
-selected, in the way you would want:
-
-- **Files marked** — it writes a play list of them and plays it.
-- **Nothing marked, and you are on a play list** — it plays that.
-- **Nothing marked, and you are on a sound or video file** — it plays that.
-- **Nothing marked, and you are on any readable document** — it looks inside for
-  media links and plays those. Put the cursor on a directory of podcasts and
-  press the key; no copying needed.
-
-When the set is worth keeping, It writes
-an .m3u beside the files and plays it. Move to a play list you made earlier and
-press Control+Shift+L again to play that one rather than making another.
-
-Neither command asks anything: they start playing, with sound and picture. The
-player runs on its own, so FileDir does not sit waiting while you listen.
-Its own keys work in its window: space to pause, arrows to seek, q to stop.
-
-Press **Control+Shift+H** for the Homer Player. It plays the same things Play List
-plays, but inside FileDir instead of inside the player's own window.
-
-The difference is where the list lives. Play List hands everything to mpv and
-steps out of the way: mpv comes to the front, its keys work, and FileDir is not
-involved again until you press q. The Homer Player keeps the list here, in a
-dialog:
+In the Homer Player:
 
 - The tracks are in a list you can move through, each with **the name it came
   with**. For a document that means the words somebody wrote about the link --
@@ -985,7 +973,7 @@ all the way, minus and plus for volume, slash and star for speed.
 
 Control rather than Shift, because Shift already means something in these
 programs: in FileDir, Shift+Up and Shift+Down mark and move, and Shift+Home and
-Shift+End mark to the top and bottom. Control is the movement modifier in
+Shift+End mark to the first and last. Control is the movement modifier in
 FileDir, DbDo and EdSharp alike, and moving among things is what a transport
 does.
 
@@ -1018,11 +1006,10 @@ Everything the dialog says is also written to the status line, one message
 after another, so you can read back over it with your screen reader's
 say-status-bar key instead of asking again.
 
-Which command to use is a matter of what you are doing. Play List is quicker
-when you want to start something and walk away. The Homer Player is better when
-the
-list is worth steering: a page of podcasts where the titles matter, or a set of
-files you want to move around in.
+Which command to use is a matter of what you are doing. Play List, from the menu,
+is quicker when you want to keep a list or start something and walk away. Play
+Media is better when the list is worth steering: a page of podcasts where the
+titles matter, or a set of files you want to move around in.
 
 mpv is optional and the installer does not mark it. It is about 60 MB, and it
 carries its own copy of ffmpeg which FileDir already has, so it is worth adding

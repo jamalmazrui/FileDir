@@ -32,7 +32,7 @@ Hear=Control plus K
 
 Say=And the Homer Player is the same in every Homer program; play everything a page or a folder holds.
 Key=
-Hear=Control plus Shift plus L
+Hear=Control plus P
 
 [step]
 
@@ -119,7 +119,7 @@ Hear=A search across everything known about each file or episode: name, date, ad
 
 Say=play list.
 Key=
-Hear=Every media link a page holds, queued in the Homer Player. Control plus Shift plus L.
+Hear=Every media link a page holds, queued in the Homer Player. Control plus P.
 
 [step]
 

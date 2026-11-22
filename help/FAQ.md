@@ -116,7 +116,7 @@ direct route is a little quicker; nothing is lost without it.
 
 **How do I convert a Word document to Markdown, or the other way round?**
 
-Mark the files, press Alt+Shift+K, and pick the format you want. FileDir writes
+Mark the files, press Control+Shift+X, Export Type, and pick the format you want. FileDir writes
 the converted copy beside each original and never overwrites anything.
 
 **Which formats can it read?**
@@ -194,12 +194,12 @@ addresses onto the clipboard, Control+P plays them at once.
 
 **What is the difference between Play list and the Homer Player?**
 
-Play list, Control+Shift+L, hands everything to mpv and steps out of the way:
-mpv's own window comes to the front and its keys work. The Homer Player,
-Control+Shift+H, keeps the list inside FileDir in the Homer Player, where every
-control has an Alt key and the player itself has no window at all. The sources
-are the same either way -- marked files, a play list, or the media links in the
-document you are on.
+Play List, in the Misc menu with no key, hands everything to mpv and steps out of
+the way: mpv's own window comes to the front and its keys work. Play Media,
+Control+P, keeps the list inside FileDir in the Homer Player, where every control
+has an Alt key and the player itself has no window at all. Record Playback,
+Control+Shift+P, is Play Media recording as it plays. Until 21 November 2026 the
+Homer Player had its own key, Control+Shift+H.
 
 **Does the Homer Player remember anything?**
 

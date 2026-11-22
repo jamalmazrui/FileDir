@@ -1433,6 +1433,7 @@ public HomerToolStripMenuItem menuEditAppendClipboard;
 
 public HomerToolStripMenuItem menuNavigate;
 public HomerToolStripMenuItem menuNavigateJump;
+public HomerToolStripMenuItem menuNavigateReverseJump;
 public HomerToolStripMenuItem menuNavigateJumpAgain;
 public HomerToolStripMenuItem menuNavigateKeywords;
 public HomerToolStripMenuItem menuNavigateKeywordsAgain;
@@ -1459,6 +1460,8 @@ public HomerToolStripMenuItem menuQuery;
 public HomerToolStripMenuItem menuQueryDate;
 public HomerToolStripMenuItem menuQueryList;
 public HomerToolStripMenuItem menuQueryListTagged;
+public HomerToolStripMenuItem menuQueryListCurrent;
+public HomerToolStripMenuItem menuQueryListCurrentTagged;
 public HomerToolStripMenuItem menuQuerySelected;
 public HomerToolStripMenuItem menuQueryListFiles;
 public HomerToolStripMenuItem menuQueryPath;
@@ -1469,6 +1472,8 @@ public HomerToolStripMenuItem menuQueryWindowsOpen;
 public HomerToolStripMenuItem menuQueryYield;
 public HomerToolStripMenuItem menuQueryYieldTagged;
 public HomerToolStripMenuItem menuQueryYieldFiles;
+public HomerToolStripMenuItem menuQueryYieldCurrent;
+public HomerToolStripMenuItem menuQueryYieldCurrentTagged;
 public HomerToolStripMenuItem menuQueryYieldOnDrive;
 public HomerToolStripMenuItem menuQueryYieldInOperatingSystem;
 public HomerToolStripMenuItem menuQueryYieldWithRegex;
@@ -1506,7 +1511,6 @@ public HomerToolStripMenuItem menuMiscConvertEncodingTagged;
 public HomerToolStripMenuItem menuMiscTranslateTagged;
 public HomerToolStripMenuItem menuMiscExtractTagged;
 public HomerToolStripMenuItem menuMiscBurnTagged;
-public HomerToolStripMenuItem menuMiscMailBody;
 public HomerToolStripMenuItem menuMiscMailAttachTagged;
 public HomerToolStripMenuItem menuMiscBatchMail;
 public HomerToolStripMenuItem menuMiscZipTagged;
@@ -1533,13 +1537,13 @@ public HomerToolStripMenuItem menuMiscConfigureTimer;
 public HomerToolStripMenuItem menuMiscPlayList;
 public HomerToolStripMenuItem menuMiscHomerPlayer;
 public HomerToolStripMenuItem menuMiscPlayFolder;
+public HomerToolStripMenuItem menuMiscRecordPlayback;
 public HomerToolStripMenuItem menuMiscIterateProcesses;
 public HomerToolStripMenuItem menuMiscInquireDifferences;
 public HomerToolStripMenuItem menuMiscNetworkConnections;
 public HomerToolStripMenuItem menuMiscVolumeFormat;
 public HomerToolStripMenuItem menuMiscWindowsControlPanel;
 
-public HomerToolStripMenuItem menuWindow;
 public HomerToolStripMenuItem menuWindowArrangeIcons;
 public HomerToolStripMenuItem menuWindowCascade;
 public HomerToolStripMenuItem menuWindowTileHorizontal;
@@ -1589,7 +1593,8 @@ menuMain.LayoutStyle = ToolStripLayoutStyle.Flow;
 
 menuFile = menu_Helper("&File");
 menuFileRefreshFolder = menu_Helper("Refresh Folder", ". or F5", MenuFileRefreshFolder_Click);
-menuFileNewItemCopy = menu_Helper("New Item Copy", "Control+Shift+N", MenuFileNewItemCopy_Click);
+// NEW COPY (21 November 2026, key groups): DbDo's name for the same job on the same key; it was New Item Copy.
+menuFileNewItemCopy = menu_Helper("New Copy", "Control+Shift+N", MenuFileNewItemCopy_Click);
 menuFileNewFolder = menu_Helper("&New Folder ...", "Control+N", menuFileNewFolder_Click);
 menuFileOpenFolder = menu_Helper("&Open Folder ...", "Control+O", menuFileOpenFolder_Click);
 menuFileGoToFolder = menu_Helper("&Go to Folder ...", "Control+G", menuFileGoToFolder_Click);
@@ -1622,7 +1627,7 @@ menuFileCurrentWindows = menu_Helper("Current Windows ...", "F4", menuFileCurren
 menuFileNextWindow = menu_Helper("Next Window", "Control+Tab", MenuFileNextWindow_Click);
 menuFilePreviousWindow = menu_Helper("Previous Window", "Control+Shift+Tab", MenuFilePreviousWindow_Click);
 menuFileClose = menu_Helper("Close Window", "Control+F4", MenuFileClose_Click);
-menuFileCloseAllButCurrent = menu_Helper("Close All But Current Window", "Control+Shift+F4", menuFileCloseAllButCurrent_Click);
+menuFileCloseAllButCurrent = menu_Helper("Close All but Current Window", "Control+Shift+F4", menuFileCloseAllButCurrent_Click);
 menuFileExit = menu_Helper("Exit FileDir", "Alt+F4", MenuFileExit_Click);
 menuFileRestartWindows = menu_Helper("Restart Windows", "Alt+Shift+F4", MenuFileRestartWindows_Click);
 //menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileRefreshFolder, menuFileNewViewCopy,
@@ -1633,10 +1638,14 @@ menuEditTagAndNext = menu_Helper("Mark and Next", "Shift+DownArrow", MenuEditTag
 menuEditUntagAndNext = menu_Helper("Unmark and Next", "Control+Shift+DownArrow", MenuEditUntagAndNext_Click);
 menuEditTagAndPrevious = menu_Helper("Mark and Previous", "Shift+UpArrow", MenuEditTagAndPrevious_Click);
 menuEditUntagAndPrevious = menu_Helper("Unmark and Previous", "Control+Shift+UpArrow", MenuEditUntagAndPrevious_Click);
-menuEditTagToBottom = menu_Helper("Mark to Bottom", "Shift+End", MenuEditTagToBottom_Click);
-menuEditUntagToBottom = menu_Helper("Unmark to Bottom", "Alt+Shift+End", MenuEditUntagToBottom_Click);
-menuEditTagToTop = menu_Helper("Mark to Top", "Shift+Home", MenuEditTagToTop_Click);
-menuEditUntagToTop = menu_Helper("Unmark to Top", "Alt+Shift+Home", MenuEditUntagToTop_Click);
+// THE MARKING GROUP IS DBDO'S (21 November 2026, key groups): Mark to First and Last on Control+Shift+Home and End, Unmark to First and
+// Last with Alt added, First and Last Marked on Control+PageUp and PageDown, as in DbDo, whose grid gives plain Home
+// and End to columns. FileDir keeps Shift+Home and End, and Alt+Shift+Home and End, as second keys, the Windows habit.
+// They were Mark to Top and Bottom, Unmark to Top and Bottom, and Beginning and End Marked.
+menuEditTagToBottom = menu_Helper("Mark to Last", "Control+Shift+End or Shift+End", MenuEditTagToBottom_Click);
+menuEditUntagToBottom = menu_Helper("Unmark to Last", "Alt+Control+Shift+End or Alt+Shift+End", MenuEditUntagToBottom_Click);
+menuEditTagToTop = menu_Helper("Mark to First", "Control+Shift+Home or Shift+Home", MenuEditTagToTop_Click);
+menuEditUntagToTop = menu_Helper("Unmark to First", "Alt+Control+Shift+Home or Alt+Shift+Home", MenuEditUntagToTop_Click);
 menuEditTag = menu_Helper("Mark", "SemiColon", MenuEditTag_Click);
 menuEditUntag = menu_Helper("Unmark", "/ or Alt+Shift+NumPad5", MenuEditUntag_Click);
 menuEditToggleTag = menu_Helper("Toggle Mark", "Space or Control+Space", MenuEditToggleTag_Click);
@@ -1645,10 +1654,12 @@ menuEditUntagAll = menu_Helper("Unmark All", "Control+Shift+A", MenuEditUntagAll
 menuEditTagAllFiles = menu_Helper("Mark All Files", "Alt+.", MenuEditTagAllFiles_Click);
 menuEditTagDuplicateFiles = menu_Helper("Mark Duplicate Files", "Alt+Shift+.", MenuEditTagDuplicateFiles_Click);
 menuEditTagSimilarFiles = menu_Helper("Mark Similar Files", "Alt+Shift+,", MenuEditTagSimilarFiles_Click);
-menuEditReorderNames = menu_Helper("Reorder Names", "Alt+Shift+K", MenuEditReorderNames_Click);
+// CONTROL+F2 (21 November 2026): Reorder Names renames files, so it joins the F2 rename family on Control, the
+// modifier for commands that change data. Alt+Shift+K began no word of its name.
+menuEditReorderNames = menu_Helper("Reorder Names", "Control+F2", MenuEditReorderNames_Click);
 menuEditFindDuplicates = menu_Helper("Find Duplicates in Tree", "Alt+Shift+J", MenuEditFindDuplicates_Click);
 menuEditTagWithRegularExpression = menu_Helper("Mark with Regex ...", "Control+Shift+.", MenuEditTagWithRegularExpression_Click);
-menuEditUntagAllButCurrent = menu_Helper("Unmark All But Current", "Alt+,", MenuEditUntagAllButCurrent_Click);
+menuEditUntagAllButCurrent = menu_Helper("Unmark All but Current", "Alt+,", MenuEditUntagAllButCurrent_Click);
 menuEditStartTagOrUntag = menu_Helper("Start Mark or Unmark", "F8", MenuEditStartTagOrUntag_Click);
 menuEditCompleteTag = menu_Helper("Complete Mark", "Shift+F8", MenuEditCompleteTag_Click);
 menuEditCompleteUntag = menu_Helper("Complete Unmark", "Alt+Shift+F8", MenuEditCompleteUntag_Click);
@@ -1662,10 +1673,15 @@ menuEditCopyToClipboardTagged = menu_Helper("&Copy", "Control+C", menuEditCopyTo
 menuEditCopyAppendToClipboardTagged = menu_Helper("Copy Append", "Alt+C", menuEditCopyAppendToClipboardTagged_Click);
 menuEditCutToClipboardTagged = menu_Helper("Cut", "Control+X", menuEditCutToClipboardTagged_Click);
 //menuEditCopyPathTagged = menu_Helper("Copy Path Tagged to Clipboard", "Alt+C", menuEditCopyPathTagged_Click);
-menuEditCopyNameTagged = menu_Helper("Copy Name", "Alt+Shift+N", menuEditCopyNameTagged_Click);
-menuEditPathList = menu_Helper("Path List to Clipboard", "Control+Shift+P", menuEditPathList_Click);
+// NAME TO CLIPBOARD (21 November 2026, key groups): the clipboard group names its "put this on the clipboard" commands "<thing> to
+// Clipboard", as Path to Clipboard on Alt+Shift+P beside it. It was Copy Name.
+menuEditCopyNameTagged = menu_Helper("Name to Clipboard", "Alt+Shift+N", menuEditCopyNameTagged_Click);
+// CONTROL+SHIFT+L (21 November 2026, the AV group), L for List: Record Playback took Control+Shift+P, beside Play Media.
+menuEditPathList = menu_Helper("Path List to Clipboard", "Control+Shift+L", menuEditPathList_Click);
 menuEditCopyTagged = menu_Helper("Copy to Folder", "Control+Shift+C", menuEditCopyTagged_Click);
-menuEditMoveTagged = menu_Helper("Move to Folder", "Alt+Shift+M", menuEditMoveTagged_Click);
+// CONTROL+SHIFT+M (21 November 2026, Jamal's choice): Move to Folder beside Copy to Folder on Control+Shift+C. Mail
+// Body and Mail Attachment became Mail, on Control+M, which freed the key.
+menuEditMoveTagged = menu_Helper("Move to Folder", "Control+Shift+M", menuEditMoveTagged_Click);
 menuEditDeleteTagged = menu_Helper("Delete", "Delete", menuEditDeleteTagged_Click);
 menuEditDeleteTaggedWithoutRecycle = menu_Helper("Delete without Recycle", "Shift+Delete", menuEditDeleteTaggedWithoutRecycle_Click);
 menuEditDeleteAndRecycleTagged = menu_Helper("Delete and Recycle", "Control+Delete", MenuEditDeleteAndRecycleTagged_Click);
@@ -1676,8 +1692,10 @@ menuEditRenameWithWildcards = menu_Helper("Rename with Wildcards ...", "Control+
 menuEditRenameWithRegex = menu_Helper("Rename with Regex ...", "Control+Shift+R", menuEditRenameWithRegex_Click);
 menuEditRenameToTitle = menu_Helper("Rename to Identify Content", "Control+Shift+I", MenuEditRenameToTitle_Click);
 menuEditPasteFromClipboard = menu_Helper("Paste", "Control+V", menuEditPasteFromClipboard_Click);
-menuEditPasteCopy = menu_Helper("Paste Copy", "Alt+V", menuEditPasteCopy_Click);
-menuEditPasteMove = menu_Helper("Paste Move", "Alt+Shift+V", menuEditPasteMove_Click);
+// PASTE KEYS ON CONTROL (21 November 2026): Paste Move changes the disk, so it takes Control+Shift+V beside Paste on
+// Control+V. Paste Copy keeps no key: after Copy, Paste already copies. Volume Format gave up Control+Shift+V.
+menuEditPasteCopy = menu_Helper("Paste Copy", "", menuEditPasteCopy_Click);
+menuEditPasteMove = menu_Helper("Paste Move", "Control+Shift+V", menuEditPasteMove_Click);
 menuEditStampTagged = menu_Helper("Stamp with Date and Time ...", "", menuEditStampTagged_Click);
 menuEditHideTagged = menu_Helper("Hide", "", menuEditHideTagged_Click);
 menuEditShowTagged = menu_Helper("Show", "", menuEditShowTagged_Click);
@@ -1691,10 +1709,12 @@ menuEditFullFolderToClipboard = menu_Helper("Folder to Clipboard", "", menuEditF
 menuEditClearClipboard = menu_Helper("Clear Clipboard", "Alt+Shift+'", menuEditClearClipboard_Click);
 menuEditExportClipboardToFile = menu_Helper("Save Clipboard ...", "Control+Apostrophe", menuEditExportClipboardToFile_Click);
 menuEditAppendClipboard = menu_Helper("Append Clipboard ...", "Control+Shift+Apostrophe", menuEditAppendClipboard_Click);
-menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditTagAndNext, menuEditUntagAndNext, menuEditTagAndPrevious, menuEditUntagAndPrevious, menuEditTagToBottom, menuEditUntagToBottom, menuEditTagToTop, menuEditUntagToTop, menuEditTag, menuEditUntag, menuEditToggleTag, menuEditTagAll, menuEditUntagAll, menuEditTagAllFiles, menuEditTagDuplicateFiles, menuEditTagSimilarFiles, menuEditReorderNames, menuEditFindDuplicates, menuEditTagWithRegularExpression, menuEditUntagAllButCurrent, menuEditStartTagOrUntag, menuEditCompleteTag, menuEditCompleteUntag, menuEditInvertTagged, menuEditSaveTags, menuEditRestoreTags, menuEditCopyToClipboardTagged, menuEditCopyAppendToClipboardTagged, menuEditCutToClipboardTagged, menuEditCopyNameTagged, menuEditPathList, menuEditCopyTagged, menuEditMoveTagged, menuEditDeleteTagged, menuEditDeleteAndRecycleTagged, menuEditDeleteTaggedWithoutRecycle, menuEditDeleteFileNow, menuEditDeleteFileNowWithoutRecycle, menuEditRename, menuEditRenameWithWildcards, menuEditRenameWithRegex, menuEditRenameToTitle, menuEditPasteFromClipboard, menuEditPasteCopy, menuEditStampTagged, menuEditHideTagged, menuEditShowTagged, menuEditReadOnlyTagged, menuEditReadWriteTagged, menuEditReadWriteTagged, menuEditSystemTagged, menuEditGeneralTagged, menuEditPathToClipboard, menuEditShortPathToClipboard, menuEditFullFolderToClipboard, menuEditClearClipboard, menuEditExportClipboardToFile, menuEditAppendClipboard});
+menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditTagAndNext, menuEditUntagAndNext, menuEditTagAndPrevious, menuEditUntagAndPrevious, menuEditTagToBottom, menuEditUntagToBottom, menuEditTagToTop, menuEditUntagToTop, menuEditTag, menuEditUntag, menuEditToggleTag, menuEditTagAll, menuEditUntagAll, menuEditTagAllFiles, menuEditTagDuplicateFiles, menuEditTagSimilarFiles, menuEditReorderNames, menuEditFindDuplicates, menuEditTagWithRegularExpression, menuEditUntagAllButCurrent, menuEditStartTagOrUntag, menuEditCompleteTag, menuEditCompleteUntag, menuEditInvertTagged, menuEditSaveTags, menuEditRestoreTags, menuEditCopyToClipboardTagged, menuEditCopyAppendToClipboardTagged, menuEditCutToClipboardTagged, menuEditCopyNameTagged, menuEditPathList, menuEditCopyTagged, menuEditMoveTagged, menuEditDeleteTagged, menuEditDeleteAndRecycleTagged, menuEditDeleteTaggedWithoutRecycle, menuEditDeleteFileNow, menuEditDeleteFileNowWithoutRecycle, menuEditRename, menuEditRenameWithWildcards, menuEditRenameWithRegex, menuEditRenameToTitle, menuEditPasteFromClipboard, menuEditPasteCopy, menuEditPasteMove, menuEditStampTagged, menuEditHideTagged, menuEditShowTagged, menuEditReadOnlyTagged, menuEditReadWriteTagged, menuEditReadWriteTagged, menuEditSystemTagged, menuEditGeneralTagged, menuEditPathToClipboard, menuEditShortPathToClipboard, menuEditFullFolderToClipboard, menuEditClearClipboard, menuEditExportClipboardToFile, menuEditAppendClipboard});
 
 menuNavigate = menu_Helper("&Navigate");
 menuNavigateJump = menu_Helper("&Jump ...", "Control+J", menuNavigateJump_Click);
+// REVERSE JUMP (21 November 2026, key groups), as in DbDo and as Reverse Keywords beside it.
+menuNavigateReverseJump = menu_Helper("Reverse Jump ...", "Control+Shift+J", menuNavigateReverseJump_Click);
 menuNavigateJumpAgain = menu_Helper("Jump Again", "Alt+J", menuNavigateJumpAgain_Click);
 menuNavigateKeywords = menu_Helper("&Keywords ...", "Control+K", menuNavigateKeywords_Click);
 menuNavigateKeywordsAgain = menu_Helper("Keywords Again", "Alt+K", menuNavigateKeywordsAgain_Click);
@@ -1707,16 +1727,17 @@ menuNavigatePreviousSiblingFolder = menu_Helper("Previous Sibling Folder", "Cont
 menuNavigateNextVisitedFolder = menu_Helper("Next Visited Folder", "Alt+F6", menuNavigateNextVisitedFolder_Click);
 menuNavigatePreviousVisitedFolder = menu_Helper("Previous Visited Folder", "Alt+Shift+F6", menuNavigatePreviousVisitedFolder_Click);
 menuNavigateSearchBack = menu_Helper("Search Previous", "Shift+F3", menuNavigateSearchBack_Click);
-menuNavigateSetFilter = menu_Helper("Set &Filter ...", "Control+F", menuNavigateSetFilter_Click);
+// FILTER ITEMS (21 November 2026, key groups), as DbDo's Filter Records on the same key; it was Set Filter.
+menuNavigateSetFilter = menu_Helper("&Filter Items ...", "Control+F", menuNavigateSetFilter_Click);
 menuNavigateClearFilter = menu_Helper("Clear Filter", "Control+Shift+F", menuNavigateClearFilter_Click);
 menuNavigateBeginningFile = menu_Helper("Beginning File", "Alt+B or Alt+Home", menuNavigateBeginningFile_Click);
-menuNavigateBeginningTagged = menu_Helper("Beginning Marked", "Control+Shift+Home", menuNavigateBeginningTagged_Click);
-menuNavigateEndTagged = menu_Helper("End Marked", "Control+Shift+End", menuNavigateEndTagged_Click);
+menuNavigateBeginningTagged = menu_Helper("First Marked", "Control+PageUp", menuNavigateBeginningTagged_Click);
+menuNavigateEndTagged = menu_Helper("Last Marked", "Control+PageDown", menuNavigateEndTagged_Click);
 menuNavigateNextTagged = menu_Helper("Next Marked", "Control+DownArrow", menuNavigateNextTagged_Click);
 menuNavigatePreviousTagged = menu_Helper("Previous Marked", "Control+UpArrow", menuNavigatePreviousTagged_Click);
 menuNavigateInitialChange = menu_Helper("Initial Change", "", menuNavigateInitialChange_Click);
 menuNavigateExtensionChange = menu_Helper("Extension Change", "", menuNavigateExtensionChange_Click);
-menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateJumpAgain, menuNavigateKeywords, menuNavigateKeywordsAgain, menuNavigateKeywordsBack, menuNavigateSearchAgain, menuNavigateSearchBack, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange, menuNavigateNextPart, menuNavigatePreviousPart, menuNavigateNextSiblingFolder, menuNavigatePreviousSiblingFolder, menuNavigateNextVisitedFolder, menuNavigatePreviousVisitedFolder});
+menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateReverseJump, menuNavigateJumpAgain, menuNavigateKeywords, menuNavigateKeywordsAgain, menuNavigateKeywordsBack, menuNavigateSearchAgain, menuNavigateSearchBack, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange, menuNavigateNextPart, menuNavigatePreviousPart, menuNavigateNextSiblingFolder, menuNavigatePreviousSiblingFolder, menuNavigateNextVisitedFolder, menuNavigatePreviousVisitedFolder});
 
 menuQuery = menu_Helper("&Query");
 menuQueryDate = menu_Helper("Say Date", "Shift+D", menuQueryDate_Click);
@@ -1724,19 +1745,33 @@ menuQueryDate = menu_Helper("Say Date", "Shift+D", menuQueryDate_Click);
 // opens a window takes Show, as in DbDo and EdSharp; their old names stay findable in the Alternate Menu. Say Yield takes
 // Alt+Y, the suite's key, and Say Yield Files Control+Y, where Yield was: in every Homer app Alt+Y says the yield of
 // everything in view and Shift+Y of what is marked.
-menuQueryList = menu_Helper("Say List", "Control+L", menuQueryList_Click);
-menuQueryListTagged = menu_Helper("Say List Marked", "Shift+L", menuQueryListTagged_Click);
+// THE SAME L KEYS AS DBDO (21 November 2026, Jamal's ruling: the suite's two list apps have the same commands). L is
+// lean, one column: here, the items' names. Alt reads from the first item, Control from the current one, and Shift
+// keeps only the marked items; Read Lean Marked from Current keeps no key, as in DbDo, and Control+Shift+L stays Play
+// List. Read Lean was Say List, and Read Lean Marked was Say List Marked. FileDir has no W
+// keys, since its list has one column. Say List Files keeps no key: mark the files with Alt+Period, then press
+// Alt+Shift+L.
+menuQueryList = menu_Helper("Read Lean", "Alt+L or Alt+F8", menuQueryList_Click);
+menuQueryListTagged = menu_Helper("Read Lean Marked", "Alt+Shift+L", menuQueryListTagged_Click);
+menuQueryListCurrent = menu_Helper("Read Lean from Current", "Control+L", menuQueryListCurrent_Click);
+menuQueryListCurrentTagged = menu_Helper("Read Lean Marked from Current", "", menuQueryListCurrentTagged_Click);
 menuQuerySelected = menu_Helper("Say Selected", "Shift+Space", MenuQuerySelected_Click);
-menuQueryListFiles = menu_Helper("Say List Files", "Alt+L", menuQueryListFiles_Click);
+menuQueryListFiles = menu_Helper("Say List Files", "", menuQueryListFiles_Click);
 menuQueryPath = menu_Helper("Say Path", "Alt+P", menuQueryPath_Click);
 menuQuerySize = menu_Helper("Say Size", "Shift+S", menuQuerySize_Click);
 menuQueryType = menu_Helper("Say Type", "Shift+T", menuQueryType_Click);
 menuQueryTypeExtended = menu_Helper("Show Type Extended", "Control+Shift+T", menuQueryTypeExtended_Click);
 menuQueryWindowsOpen = menu_Helper("Say Windows Open", "Shift+F4 or Alt+NumPad5", MenuQueryWindowsOpen_Click);
 menuQueryYield = menu_Helper("Say Yield", "Alt+Y", menuQueryYield_Click);
-menuQueryYieldTagged = menu_Helper("Say Yield Marked", "Shift+Y", menuQueryYieldTagged_Click);
-menuQueryYieldFiles = menu_Helper("Say Yield Files", "Control+Y", menuQueryYieldFiles_Click);
-menuQueryYieldOnDrive = menu_Helper("Say Yield on Drive", "Alt+Shift+Y", menuQueryYieldOnDrive_Click);
+// THE Y FAMILY (21 November 2026), as in DbDo: Alt+Y the yield of what is in view, Alt+Shift+Y of what is marked.
+// Say Yield on Drive takes Shift+Y, since a Shift+letter only says.
+menuQueryYieldTagged = menu_Helper("Say Yield Marked", "Alt+Shift+Y", menuQueryYieldTagged_Click);
+// Control+Y counts from the current item on, as in DbDo; Say Yield Files keeps no key (Alt+Period marks the files,
+// then Alt+Shift+Y), and Say Yield Marked from Current has none, since Control+Shift+Y is Yield with Regex.
+menuQueryYieldCurrent = menu_Helper("Say Yield from Current", "Control+Y", menuQueryYieldCurrent_Click);
+menuQueryYieldCurrentTagged = menu_Helper("Say Yield Marked from Current", "", menuQueryYieldCurrentTagged_Click);
+menuQueryYieldFiles = menu_Helper("Say Yield Files", "", menuQueryYieldFiles_Click);
+menuQueryYieldOnDrive = menu_Helper("Say Yield on Drive", "Shift+Y", menuQueryYieldOnDrive_Click);
 menuQueryYieldWithRegex = menu_Helper("Yield with Regex ...", "Control+Shift+Y", MenuQueryYieldWithRegex_Click);
 menuQueryYieldInOperatingSystem = menu_Helper("Say Yield in Operating System", "", MenuQueryYieldInOperatingSystem_Click);
 menuQueryStatus = menu_Helper("Say Status", "Alt+Z or Shift+Z", menuQueryStatus_Click);
@@ -1756,7 +1791,7 @@ menuQueryClipboard = menu_Helper("Say Clipboard", "Alt+'", menuQueryClipboard_Cl
 menuQueryNow = null;
 menuQueryWhat = menu_Helper("Say What Content", "?", menuQueryWhat_Click);
 // TIMER RETIRED (15 November 2026, the keyboard audit's A15): Say Status (Alt+Z) says the timer's state and time.
-menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryList, menuQueryListTagged, menuQuerySelected, menuQueryListFiles, menuQueryPath, menuQuerySize, menuQueryType, menuQueryTypeExtended, menuQueryWindowsOpen, menuQueryYield, menuQueryYieldTagged, menuQueryYieldFiles, menuQueryYieldOnDrive, menuQueryYieldWithRegex, menuQueryYieldInOperatingSystem, menuQueryStatus, menuQueryCharacterEncoding, menuQueryPercentThrough, menuQuerySayFilter, menuQuerySayMarked, menuQuerySayOrder, menuQueryFilter, menuQueryName, menuQueryFolderName, menuQueryClipboard, menuQueryWhat});
+menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryDate, menuQueryList, menuQueryListTagged, menuQueryListCurrent, menuQueryListCurrentTagged, menuQuerySelected, menuQueryListFiles, menuQueryPath, menuQuerySize, menuQueryType, menuQueryTypeExtended, menuQueryWindowsOpen, menuQueryYield, menuQueryYieldTagged, menuQueryYieldCurrent, menuQueryYieldCurrentTagged, menuQueryYieldFiles, menuQueryYieldOnDrive, menuQueryYieldWithRegex, menuQueryYieldInOperatingSystem, menuQueryStatus, menuQueryCharacterEncoding, menuQueryPercentThrough, menuQuerySayFilter, menuQuerySayMarked, menuQuerySayOrder, menuQueryFilter, menuQueryName, menuQueryFolderName, menuQueryClipboard, menuQueryWhat});
 
 menuMisc = menu_Helper("&Misc");
 menuMiscConfigurationOptions = menu_Helper("Edit Settings", "Alt+Shift+E", menuMiscOptions_Click);
@@ -1781,14 +1816,17 @@ menuMiscConvertEncodingTagged = menu_Helper("Convert Encoding", "Control+2", Men
 menuMiscTranslateTagged = menu_Helper("Translate File", "Alt+Shift+F7", MenuMiscTranslateTagged_Click);
 menuMiscExtractTagged = menu_Helper("Extract with Regex", "Control+Shift+E", MenuMiscExtractTagged_Click);
 menuMiscBurnTagged = menu_Helper("Burn to CD", "Alt+Shift+B", menuMiscBurnTagged_Click);
-menuMiscMailBody = menu_Helper("Mail Body", "Control+M", menuMiscMailBody_Click);
-menuMiscMailAttachTagged = menu_Helper("Mail Attachment", "Control+Shift+M", menuMiscMailAttachTagged_Click);
+// ONE MAIL COMMAND (21 November 2026): Mail Attachment already put a lone file's text in the body as well as attaching
+// it, so Mail Body only repeated it. Mail, Control+M, does both jobs, as in EdSharp. Mail Body's handler is kept,
+// unbound and off the menu.
+menuMiscMailAttachTagged = menu_Helper("Mail", "Control+M", menuMiscMailAttachTagged_Click);
 // BATCH MAIL IS GONE (17 November 2026): it sent through SMTP with a stored user name and password, which Gmail,
 // Outlook.com and most mail services no longer accept, and mail sent one by one to a list now reads as spam.
 menuMiscBatchMail = null;
 menuMiscZipTagged = menu_Helper("Zip ...", "Control+Shift+Z", menuMiscZipTagged_Click);
 menuMiscZipTaggedThenDelete = menu_Helper("Zip then Delete ...", "Control+Z or Control+Shift+Delete", menuMiscZipTaggedThenDelete_Click);
-menuMiscZipList = menu_Helper("Zip List ...", "Alt+Shift+L", menuMiscZipList_Click);
+// NO KEY (21 November 2026): Read Lean Marked took Alt+Shift+L. A zip made from a list file is rarely wanted.
+menuMiscZipList = menu_Helper("Zip List ...", "", menuMiscZipList_Click);
 menuMiscUnarchiveTagged = menu_Helper("Unarchive", "Control+U", menuMiscUnarchiveTagged_Click);
 menuMiscUnarchiveTaggedWithoutSubfolders = menu_Helper("Unarchive without Subfolders", "Alt+U", menuMiscUnarchiveTaggedWithoutSubfolders_Click);
 menuMiscUnarchiveTaggedToSameName = menu_Helper("Unarchive to Same Name", "Control+Shift+U", menuMiscUnarchiveTaggedToSameName_Click);
@@ -1814,38 +1852,50 @@ menuMiscStopTimer = menu_Helper("Stop Timer", "Alt+F2", menuMiscStopTimer_Click)
 menuMiscChatWithAI = menu_Helper("Chat with AI", "F12", MenuMiscChatWithAI_Click);
 menuMiscChatAboutFile = menu_Helper("Chat about File", "Shift+F12", MenuMiscChatAboutFile_Click);
 // menuMiscConfigureTimer = menu_Helper("Configure Timer", "Control+F12", menuMiscConfigureTimer_Click);
-menuMiscPlayList = menu_Helper("Play List", "Control+Shift+L", menuMiscPlayList_Click);
+// NO KEY (21 November 2026, the AV group): Play Media plays in the Homer Player; Play List, which writes a play list and hands it to mpv's
+// own window, stays here for "start it and walk away". Control+Shift+L went to Path List to Clipboard.
+menuMiscPlayList = menu_Helper("Play List", "", menuMiscPlayList_Click);
 // CONTROL+P PLAYS (9 November 2026), as in Windows Media Player; it was Alt+Shift+L, not a letter of its name.
 menuMiscPlayFolder = menu_Helper("Play Media", "Control+P", MenuMiscPlayFolder_Click);
 // H FOR HOMER, beside Control+Shift+L for Play List. Q meant nothing here: in
 // FileDir, Q is the Quick family -- Control+Q opens a quick folder, Shift+Q
 // makes a quick shortcut, Alt+Shift+Q a quick URL -- so a playback command
 // wearing Q was borrowing a letter that already means something else.
-menuMiscHomerPlayer = menu_Helper("Homer Player", "Control+Shift+H", menuMiscHomerPlayer_Click);
+// RETIRED INTO PLAY MEDIA (21 November 2026, the AV group): Play Media now plays in the Homer Player, so Homer Player
+// only repeated it. Its body is homerPlayer_Helper, which Play Media calls; it is off the menu, as Mail Body is, and
+// Control+Shift+H is free.
+menuMiscHomerPlayer = null;
+menuMiscRecordPlayback = menu_Helper("Record Playback", "Control+Shift+P", menuMiscRecordPlayback_Click);
 menuMiscIterateProcesses = menu_Helper("Iterate Processes ...", "Alt+I", MenuMiscIterateProcesses_Click);
 menuMiscInquireDifferences = menu_Helper("Inquire Differences ...", "Alt+Shift+I", MenuMiscInquireDifferences_Click);
 menuMiscNetworkConnections = menu_Helper("Network Connections ...", "", MenuMiscNetworkConnections_Click);
-menuMiscVolumeFormat = menu_Helper("Volume Format ...", "Control+Shift+V", menuMiscVolumeFormat_Click);
+// NO KEY (21 November 2026): formatting a disk is rare and cannot be undone, so it is on the Misc menu only.
+menuMiscVolumeFormat = menu_Helper("Volume Format ...", "", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailBody, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscHomerPlayer, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscRecordPlayback, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
 // Say Unarchive Test is made with the Misc commands, beside its Unarchive family, and shown on the Say menu.
 menuQuery.DropDownItems.Add(menuMiscUnarchiveTest);
 
-menuWindow = menu_Helper("&Window");
+// NO WINDOW MENU (21 November 2026, Jamal's ruling, as in DbDo and EdSharp): the layout commands join the window
+// commands on the File menu, before Exit, and the drive keys join Open Drive and Go to Drive. A digit or function key
+// takes no trigger letter.
 menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
 menuWindowCascade = menu_Helper("Cascade", "Control+F11", menuWindowCascade_Click);
 menuWindowTileHorizontal = menu_Helper("Tile Horizontal", "Alt+Shift+F11", menuWindowTileHorizontal_Click);
 menuWindowTileVertical = menu_Helper("Tile Vertical", "Shift+F11", menuWindowTileVertical_Click);
-menuWindowDriveA = menu_Helper("Drive &A", "Alt+1", menuWindowDrive_Click);
-menuWindowDriveB = menu_Helper("Drive &B", "Alt+2", menuWindowDrive_Click);
-menuWindowDriveC = menu_Helper("Drive &C", "Alt+3", menuWindowDrive_Click);
-menuWindowDriveD = menu_Helper("Drive &D", "Alt+4", menuWindowDrive_Click);
-menuWindowDriveE = menu_Helper("Drive &E", "Alt+5", menuWindowDrive_Click);
-menuWindowDriveF = menu_Helper("Drive &F", "Alt+6", menuWindowDrive_Click);
-menuWindowDriveG = menu_Helper("Drive &G", "Alt+7", menuWindowDrive_Click);
-menuWindowDriveH = menu_Helper("Drive &H", "Alt+8", menuWindowDrive_Click);
-menuWindowDriveI = menu_Helper("Drive &I", "Alt+9", menuWindowDrive_Click);
-menuWindow.DropDownItems.AddRange(new ToolStripItem[] {menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical, menuWindowDriveA, menuWindowDriveB, menuWindowDriveC, menuWindowDriveD, menuWindowDriveE, menuWindowDriveF, menuWindowDriveG, menuWindowDriveH, menuWindowDriveI});
+menuWindowDriveA = menu_Helper("Drive A", "Alt+1", menuWindowDrive_Click);
+menuWindowDriveB = menu_Helper("Drive B", "Alt+2", menuWindowDrive_Click);
+menuWindowDriveC = menu_Helper("Drive C", "Alt+3", menuWindowDrive_Click);
+menuWindowDriveD = menu_Helper("Drive D", "Alt+4", menuWindowDrive_Click);
+menuWindowDriveE = menu_Helper("Drive E", "Alt+5", menuWindowDrive_Click);
+menuWindowDriveF = menu_Helper("Drive F", "Alt+6", menuWindowDrive_Click);
+menuWindowDriveG = menu_Helper("Drive G", "Alt+7", menuWindowDrive_Click);
+menuWindowDriveH = menu_Helper("Drive H", "Alt+8", menuWindowDrive_Click);
+menuWindowDriveI = menu_Helper("Drive I", "Alt+9", menuWindowDrive_Click);
+int iAt = menuFile.DropDownItems.IndexOf(menuFileGoToDrive) + 1;
+foreach (ToolStripItem menuDrive in new ToolStripItem[] {menuWindowDriveI, menuWindowDriveH, menuWindowDriveG, menuWindowDriveF, menuWindowDriveE, menuWindowDriveD, menuWindowDriveC, menuWindowDriveB, menuWindowDriveA}) menuFile.DropDownItems.Insert(iAt, menuDrive);
+iAt = menuFile.DropDownItems.IndexOf(menuFileExit);
+foreach (ToolStripItem menuLayout in new ToolStripItem[] {menuWindowTileVertical, menuWindowTileHorizontal, menuWindowCascade, menuWindowArrangeIcons}) menuFile.DropDownItems.Insert(iAt, menuLayout);
 
 menuHelp = menu_Helper("&Help");
 menuHelpAbout = menu_Helper("About", "Alt+F1", MenuHelpAbout_Click);
@@ -1877,9 +1927,9 @@ HomerToolStripMenuItem menuHelpLicense = menu_Helper("License", "", delegate(obj
 menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpWhatThisDoes, menuHelpWhereAmI, menuHelpChangeHistory, menuHelpPlayTutorials, menuHelpReadMe, menuHelpHotkeysPage, menuHelpFrequentlyAskedQuestions, menuHelpTutorialsTranscript, menuHelpAnnouncement, menuHelpDeveloperGuide, menuHelpLicense, menuHelpKeyDescriber, menuHelpHotKeys, menuHelpContextMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion, menuHelpCopyLog});
 //menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpChangeHistory, menuHelpHotKeys, menuHelpContextMenu, menuHelpExplorerMenu, menuHelpSendToMenu, menuHelpAlternateMenu, menuHelpElevateVersion});
 
-menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuQuery, menuNavigate, menuMisc, menuWindow, menuHelp});
+menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuQuery, menuNavigate, menuMisc, menuHelp});
 menuMain.Dock = DockStyle.Top;
-menuMain.MdiWindowListItem = menuWindow;
+// No MdiWindowListItem: with no Window menu, F4 (Current Windows) lists the open windows.
 
 StatusStrip statusBar = new StatusStrip();
 statusBar.SuspendLayout();
@@ -5073,6 +5123,18 @@ App.sJumpText = sText;
 jump_Helper(iStart);
 } // menuNavigateJump_Click method
 
+void menuNavigateReverseJump_Click(object sender, EventArgs e) {
+bLastSearchWasKeywords = false;
+FolderWindow mdiChild = App.frame.getActiveChild();
+if (mdiChild == null) return;
+if (mdiChild.sJumpText == null) mdiChild.sJumpText = App.sJumpText;
+string sText = Homer.LbcAsk.input("Reverse Jump", "Text", mdiChild.sJumpText, "Reverse Jump");
+if (sText.Length == 0) return;
+mdiChild.sJumpText = sText;
+App.sJumpText = sText;
+jumpBack_Helper(mdiChild);
+} // menuNavigateReverseJump_Click method
+
 void menuNavigateJumpAgain_Click(object sender, EventArgs e) {
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
@@ -5560,17 +5622,38 @@ aFiles = sPathList.Trim().Split('\n');
 return sPathList.Trim().Split('\n');
 } // list_Helper method
 
-void menuQueryList_Click(object sender, EventArgs e) {
-App.say("List");
+// THE READ LEAN FAMILY (21 November 2026), as in DbDo: the items' names, each its own utterance through the kit's
+// ReadAloud, so any key stops the reading; a second press shows them in a window instead.
+void menuQueryList_Click(object sender, EventArgs e) { readLean_Helper(false, false); }
+void menuQueryListCurrent_Click(object sender, EventArgs e) { readLean_Helper(false, true); }
+void menuQueryListCurrentTagged_Click(object sender, EventArgs e) { readLean_Helper(true, true); }
+
+bool readLean_Helper(bool bMarkedOnly, bool bFromCurrent) {
+bool bShow = Homer.KeyMap.iPressCount == 2;
+int i, iStart;
+List<string> lsNames = new List<string>();
+string sCommand = "Read Lean" + (bMarkedOnly ? " Marked" : "") + (bFromCurrent ? " from Current" : "");
+if (bShow) Homer.ReadAloud.stop(true);
 FolderWindow mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-int iItemCount = 0;
-foreach (DataRowView row in mdiChild.tbl.DefaultView) {
-App.say(row["DisplayFields"]);
-iItemCount++;
+if (mdiChild == null) return false;
+DataView view = mdiChild.tbl.DefaultView;
+iStart = bFromCurrent ? mdiChild.bs.Position : 0;
+if (iStart < 0) iStart = 0;
+for (i = iStart; i < view.Count; i++) {
+if (bMarkedOnly && (char) view[i]["Tagged"] != '>') continue;
+lsNames.Add(view[i]["DisplayFields"].ToString());
 }
-if (iItemCount == 0) App.say("No items.");
-} // menuQueryList_Click method
+if (lsNames.Count == 0) {
+App.say(bMarkedOnly ? "No marked items." : "No items.");
+return false;
+}
+if (bShow) {
+Homer.LbcAsk.infoDialog(sCommand, string.Join(Environment.NewLine, lsNames.ToArray()), false);
+return true;
+}
+Homer.ReadAloud.start(sCommand, lsNames, null);
+return true;
+} // readLean_Helper method
 
 void MenuQuerySelected_Click(object sender, EventArgs e) {
 string[] aDirs, aFiles;
@@ -5580,19 +5663,7 @@ foreach (string sPath in aPaths) App.say(getName(sPath));
 }
 // querySelected_Click method
 
-void menuQueryListTagged_Click(object sender, EventArgs e) {
-App.say("List marked");
-FolderWindow mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-int iItemCount = 0;
-foreach (DataRowView row in mdiChild.tbl.DefaultView) {
-if ((char) row["Tagged"] == '>') {
-App.say(row["DisplayFields"]);
-iItemCount++;
-}
-}
-if (iItemCount == 0) App.say("No items.");
-} // menuQueryListTagged_Click method
+void menuQueryListTagged_Click(object sender, EventArgs e) { readLean_Helper(true, false); }
 
 void menuQueryListFiles_Click(object sender, EventArgs e) {
 App.say("List files");
@@ -5794,23 +5865,32 @@ void MenuQueryWindowsOpen_Click(object sender, EventArgs e) {
 Homer.MdiWindows.sayOpen(App.frame);
 } // menuQueryWindowsOpen_Click method
 
-void menuQueryYield_Click(object sender, EventArgs e) {
-App.say("Yield");
+// THE Y FAMILY SHARES ONE COUNT (21 November 2026): Say Yield, Say Yield Marked, Say Yield Files and the two from
+// Current differ only in which items they count, so one helper counts and speaks for all five, as each did before.
+void menuQueryYield_Click(object sender, EventArgs e) { sayYield_Helper("Yield", false, false, false); }
+void menuQueryYieldCurrent_Click(object sender, EventArgs e) { sayYield_Helper("Yield from current", false, false, true); }
+void menuQueryYieldCurrentTagged_Click(object sender, EventArgs e) { sayYield_Helper("Yield marked from current", true, false, true); }
+
+bool sayYield_Helper(string sLabel, bool bMarkedOnly, bool bFilesOnly, bool bFromCurrent) {
+int i, iDirs = 0, iFiles = 0, iStart;
+long lDirSize = 0, lFileSize = 0, lSize;
+string s;
+App.say(sLabel);
 FolderWindow mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-int iDirs = 0;
-int iFiles = 0;
-long lDirSize = 0;
-long lFileSize = 0;
-foreach (DataRowView row in mdiChild.tbl.DefaultView) {
-long lSize = (long) row["Size"];
+if (mdiChild == null) return false;
+DataView view = mdiChild.tbl.DefaultView;
+iStart = bFromCurrent ? mdiChild.bs.Position : 0;
+if (iStart < 0) iStart = 0;
+for (i = iStart; i < view.Count; i++) {
+DataRowView row = view[i];
+if (bMarkedOnly && (char) row["Tagged"] != '>') continue;
+if (bFilesOnly && (char) row["Type"] != ' ') continue;
+lSize = (long) row["Size"];
 if (lSize == -1) {
-string sDir = (string) row["Path"];
-DirectoryInfo di = new DirectoryInfo(sDir);
+DirectoryInfo di = new DirectoryInfo((string) row["Path"]);
 lSize = App.DirSize(di);
 row["Size"] = lSize;
 }
-
 if ((char) row["Type"] == '\\') {
 iDirs++;
 lDirSize += lSize;
@@ -5820,104 +5900,21 @@ iFiles++;
 lFileSize += lSize;
 }
 }
-
-string s = iDirs.ToString() + " folder";
-if (iDirs !=1) s += "s";
+s = iDirs.ToString() + " folder";
+if (iDirs != 1) s += "s";
 if (iDirs > 0) App.say(s);
-
 if (iDirs > 0) App.say(App.sizeFriendly(lDirSize));
-
 s = iFiles.ToString() + " file";
-if (iFiles !=1) s += "s";
+if (iFiles != 1) s += "s";
 if (iFiles > 0) App.say(s);
-
 if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
 if (iDirs == 0 && iFiles == 0) App.say("No items.");
-} // menuQueryYield_Click method
+return true;
+} // sayYield_Helper method
 
-void menuQueryYieldTagged_Click(object sender, EventArgs e) {
-App.say("Yield marked");
-FolderWindow mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-int iDirs = 0;
-int iFiles = 0;
-long lDirSize = 0;
-long lFileSize = 0;
-foreach (DataRowView row in mdiChild.tbl.DefaultView) {
-if ((char) row["Tagged"] != '>') continue;
-long lSize = (long) row["Size"];
-if (lSize == -1) {
-string sDir = (string) row["Path"];
-DirectoryInfo di = new DirectoryInfo(sDir);
-lSize = App.DirSize(di);
-row["Size"] = lSize;
-}
+void menuQueryYieldTagged_Click(object sender, EventArgs e) { sayYield_Helper("Yield marked", true, false, false); }
 
-if ((char) row["Type"] == '\\') {
-iDirs++;
-lDirSize += lSize;
-}
-else {
-iFiles++;
-lFileSize += lSize;
-}
-}
-
-string s = iDirs.ToString() + " folder";
-if (iDirs !=1) s += "s";
-if (iDirs > 0) App.say(s);
-
-if (iDirs > 0) App.say(App.sizeFriendly(lDirSize));
-
-s = iFiles.ToString() + " file";
-if (iFiles !=1) s += "s";
-if (iFiles > 0) App.say(s);
-
-if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
-if (iDirs == 0 && iFiles == 0) App.say("No items.");
-} // menuQueryYieldTagged_Click method
-
-void menuQueryYieldFiles_Click(object sender, EventArgs e) {
-App.say("Yield files");
-FolderWindow mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-int iDirs = 0;
-int iFiles = 0;
-long lDirSize = 0;
-long lFileSize = 0;
-foreach (DataRowView row in mdiChild.tbl.DefaultView) {
-if ((char) row["Type"] != ' ') continue;
-long lSize = (long) row["Size"];
-if (lSize == -1) {
-string sDir = (string) row["Path"];
-DirectoryInfo di = new DirectoryInfo(sDir);
-lSize = App.DirSize(di);
-row["Size"] = lSize;
-}
-
-if ((char) row["Type"] == '\\') {
-iDirs++;
-lDirSize += lSize;
-}
-else {
-iFiles++;
-lFileSize += lSize;
-}
-}
-
-string s = iDirs.ToString() + " folder";
-if (iDirs !=1) s += "s";
-if (iDirs > 0) App.say(s);
-
-if (iDirs > 0) App.say(App.sizeFriendly(lDirSize));
-
-s = iFiles.ToString() + " file";
-if (iFiles !=1) s += "s";
-if (iFiles > 0) App.say(s);
-
-if (iFiles > 0) App.say(App.sizeFriendly(lFileSize));
-if (iDirs == 0 && iFiles == 0) App.say("No items.");
-} // menuQueryYieldFiles_Click method
+void menuQueryYieldFiles_Click(object sender, EventArgs e) { sayYield_Helper("Yield files", false, true, false); }
 
 void menuQueryYieldOnDrive_Click(object sender, EventArgs e) {
 DriveInfo d = new DriveInfo(Directory.GetCurrentDirectory());
@@ -8027,10 +8024,11 @@ App.sTimerStop = dtStop.ToString();
 } // menuMiscConfigureTimer_Click method
 
 void MenuMiscPlayFolder_Click(object sender, EventArgs e) {
-// Play something now: whatever is on the clipboard if that is playable,
-// otherwise the tagged files, otherwise everything playable in this folder.
+// Play something now in the Homer Player: the marked files; else a play list or a document with media links under
+// the cursor; else whatever is on the clipboard if that is playable; else everything playable in this folder.
+// (Before 21 November 2026 the clipboard came first and mpv's own window played; Homer Player had its own key.)
 //
-// THE CLIPBOARD FIRST, AND WHY.
+// THE CLIPBOARD, AND WHY.
 //
 // mpv plays anything it can reach, and with yt-dlp beside it that includes a
 // YouTube address. So a play list of web addresses is as playable as a folder
@@ -8075,26 +8073,47 @@ return;
 FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 
+// PLAY MEDIA PLAYS IN THE HOMER PLAYER (21 November 2026, the AV group), as DbDo's does: one play command in the suite, on Control+P.
+// Homer Player is retired into it, and Play List, which hands a list to mpv's own window, keeps no key. The order:
+// the marked files; else a play list or document under the cursor, its media links found; else the clipboard,
+// when it holds addresses or file names; else everything playable in the folder.
 List<string> lsPlay = new List<string>();
 string sWhere = "";
-
-// 1. The clipboard, when it holds addresses or file names.
-foreach (string sLine in clipboardPlaylist_Helper()) lsPlay.Add(sLine);
-if (lsPlay.Count > 0) sWhere = "from the clipboard";
-
-// 2. The tagged files.
-if (lsPlay.Count == 0) {
+bool bFiles = false;
 string[] aDirs, aFiles;
 string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
 if (aPaths.Length == 0) return; // nothing to act on, or Cancel in Marked or Current
-if (aPaths.Length > 1) {
+
+// 1. The marked files -- or, when some are marked and Marked or Current was answered Current, the current one.
+bool bAnyMarked = false;
+foreach (DataRowView rowMarked in mdiChild.tbl.DefaultView) if ((char) rowMarked["Tagged"] == '>') { bAnyMarked = true; break; }
+if (aPaths.Length > 1 || bAnyMarked) {
 foreach (string sPath in aPaths)
 if (File.Exists(sPath) && isPlayable_Helper(sPath)) lsPlay.Add(sPath);
-if (lsPlay.Count > 0) sWhere = "marked";
+if (lsPlay.Count > 0) { sWhere = "the marked files"; bFiles = true; }
+}
+
+// 2. A play list under the cursor, or a document whose text holds media links: the Homer Player reads it. A file
+// that is neither (a program, a picture, a document without links) does not stop the folder from playing.
+if (lsPlay.Count == 0 && aPaths.Length == 1 && File.Exists(aPaths[0])) {
+string sOne = aPaths[0];
+string sOneExt = Path.GetExtension(sOne).ToLower();
+bool bPlayList = sOneExt == ".m3u" || sOneExt == ".m3u8" || sOneExt == ".pls";
+bool bDocument = !bPlayList && !isPlayable_Helper(sOne)
+&& (Homer.Conversion.readableAsText(sOne) || ".docx.pdf.rtf.epub.odt".IndexOf(sOneExt.Length > 1 ? sOneExt : "?", StringComparison.Ordinal) >= 0);
+if (bPlayList || (bDocument && documentLinks_Helper(sOne).Count > 0)) {
+homerPlayer_Helper(new string[] { sOne });
+return;
 }
 }
 
-// 3. Everything playable in the window, in the order shown. Sort by date and
+// 3. The clipboard, when it holds addresses or file names.
+if (lsPlay.Count == 0) {
+foreach (string sLine in clipboardPlaylist_Helper()) lsPlay.Add(sLine);
+if (lsPlay.Count > 0) sWhere = "the clipboard";
+}
+
+// 4. Everything playable in the window, in the order shown. Sort by date and
 // this plays in date order, which is how a recording session or a downloaded
 // series wants to be heard.
 if (lsPlay.Count == 0) {
@@ -8103,7 +8122,7 @@ for (int i = 0; i < view.Count; i++) {
 string sPath = (string) view[i]["Path"];
 if (File.Exists(sPath) && isPlayable_Helper(sPath)) lsPlay.Add(sPath);
 }
-if (lsPlay.Count > 0) sWhere = "in this folder";
+if (lsPlay.Count > 0) { sWhere = "this folder"; bFiles = true; }
 }
 
 if (lsPlay.Count == 0) {
@@ -8111,18 +8130,7 @@ App.say("Nothing to play. Copy a play list or some addresses, or move to a folde
 return;
 }
 
-// A temporary list rather than one in the folder: this is playing, not filing,
-// and leaving an .m3u behind every time would be litter.  It keeps its name so
-// the same thing can be replayed, and Open Virtual Folder can reach it.
-string sTemp = Path.Combine(Path.GetTempPath(), "FileDir_play.m3u");
-try {
-File.WriteAllText(sTemp, "#EXTM3U\r\n" + String.Join("\r\n", lsPlay.ToArray()), new UTF8Encoding(false));
-}
-catch (Exception ex) {
-Homer.LbcAsk.show("The play list could not be written.\n\n" + ex.Message, sTitle);
-return;
-}
-Homer.Log.info("Play Media: " + lsPlay.Count + " entries " + sWhere + ".");
+Homer.Log.info("Play Media: " + lsPlay.Count + " entries from " + sWhere + ".");
 
 // Warned before the silence rather than after it. If nothing in the list names
 // a media file, every entry is a page the player has to fetch and examine
@@ -8148,9 +8156,19 @@ string sWarn = Homer.Util.stringPlural("address", iAddresses)
 + "those, where its web pages do not.";
 if (Homer.LbcAsk.choose(sTitle, sWarn, aButtons, 1) != "&Try anyway") return;
 }
-App.say(Homer.Util.stringPlural("item", lsPlay.Count) + " " + sWhere);
-playMedia_Helper(sTemp);
+List<Homer.MediaTrack> lsTracks = bFiles ? Homer.MediaPlayer.fromFiles(lsPlay) : Homer.MediaPlayer.fromPlaylistLines(lsPlay);
+Homer.MediaPlayer.run(App.frame, sWhere == "this folder" ? mdiChild.Text : "Player", sWhere, lsTracks, bRecordPlayback);
 } // MenuMiscPlayFolder_Click method
+
+bool bRecordPlayback = false;
+
+// RECORD PLAYBACK (21 November 2026, the AV group): Control+Shift+P, Play Media playing at once and recording, as in DbDo. Shift adds
+// recording to Play Media, and P begins Playback.
+void menuMiscRecordPlayback_Click(object sender, EventArgs e) {
+bRecordPlayback = true;
+try { MenuMiscPlayFolder_Click(sender, e); }
+finally { bRecordPlayback = false; }
+} // menuMiscRecordPlayback_Click method
 
 List<string> linksToPlay_Helper(string sText) {
 // Media links found in a piece of text, with their titles.
@@ -8466,6 +8484,12 @@ string[] aQueueDirs, aQueueFiles;
 string[] aQueuePaths = list_Helper(out aQueueDirs, out aQueueFiles, 1);
 if (aQueuePaths.Length == 0) return; // nothing to act on, or Cancel in Marked or Current
 aQueuePaths = aQueueFiles;
+homerPlayer_Helper(aQueuePaths);
+} // menuMiscHomerPlayer_Click method
+
+// homerPlayer_Helper: a play list, a media file or the media links in a document, or several marked files, queued
+// in the Homer Player. Play Media and Record Playback come here for a single play list or document.
+void homerPlayer_Helper(string[] aQueuePaths) {
 if (aQueuePaths.Length == 0) return;
 
 List<Homer.MediaTrack> lsTracks = null;
@@ -8520,8 +8544,8 @@ App.say("0 tracks to play", true);
 return;
 }
 Homer.Log.info("Homer Player: " + lsTracks.Count + " tracks");
-Homer.MediaPlayer.run(App.frame, sQueueTitle, sQueueSource, lsTracks);
-} // menuMiscHomerPlayer_Click method
+Homer.MediaPlayer.run(App.frame, sQueueTitle, sQueueSource, lsTracks, bRecordPlayback);
+} // homerPlayer_Helper method
 
 void menuMiscPlayList_Click(object sender, EventArgs e) {
 // Make a play list of the tagged files, and, when mpv is installed, offer to
@@ -9016,8 +9040,8 @@ this.LayoutMdi(MdiLayout.TileVertical);
 
 void menuWindowDrive_Click(object sender, EventArgs e) {
 HomerToolStripMenuItem menuItem = (HomerToolStripMenuItem) sender;
-string sText = menuItem.Text;
-string sDrive = sText.Substring(7, 1);
+string sText = menuItem.Text.Replace("&", "").Trim();
+string sDrive = sText.Substring(sText.Length - 1, 1);
 App.say("Drive " + sDrive);
 DriveInfo drive = new DriveInfo(sDrive);
 if (!drive.IsReady) {
@@ -9268,10 +9292,24 @@ bKeysDeclared = true;
 Homer.KeyMap.addFormerName("Append File Contents", "Append to Clipboard");
 Homer.KeyMap.addFormerName("Say Unarchive Test", "Unarchive Test");
 Homer.KeyMap.addFormerName("Export Type", "Output Type");
+Homer.KeyMap.addFormerName("Mail", "Mail Body");
+Homer.KeyMap.addFormerName("First Marked", "Beginning Marked");
+Homer.KeyMap.addFormerName("Last Marked", "End Marked");
+Homer.KeyMap.addFormerName("Mark to First", "Mark to Top");
+Homer.KeyMap.addFormerName("Mark to Last", "Mark to Bottom");
+Homer.KeyMap.addFormerName("Unmark to First", "Unmark to Top");
+Homer.KeyMap.addFormerName("Unmark to Last", "Unmark to Bottom");
+Homer.KeyMap.addFormerName("Name to Clipboard", "Copy Name");
+Homer.KeyMap.addFormerName("Filter Items", "Set Filter");
+Homer.KeyMap.addFormerName("New Copy", "New Item Copy");
+Homer.KeyMap.addFormerName("Play Media", "Homer Player");
+Homer.KeyMap.addFormerName("Mail", "Mail Attachment");
 Homer.KeyMap.addFormerName("Say Character Encoding", "Character Encoding");
-Homer.KeyMap.addFormerName("Say List", "List");
+Homer.KeyMap.addFormerName("Read Lean", "List");
+Homer.KeyMap.addFormerName("Read Lean", "Say List");
 Homer.KeyMap.addFormerName("Say List Files", "List Files");
-Homer.KeyMap.addFormerName("Say List Marked", "List Marked");
+Homer.KeyMap.addFormerName("Read Lean Marked", "List Marked");
+Homer.KeyMap.addFormerName("Read Lean Marked", "Say List Marked");
 Homer.KeyMap.addFormerName("Say Status", "Timer");
 Homer.KeyMap.addFormerName("Say Yield", "Yield");
 Homer.KeyMap.addFormerName("Say Yield Files", "Yield Files");
@@ -9297,14 +9335,14 @@ declareKey("menuEditTagAndNext", menuEditTagAndNext, Keys.Shift | Keys.Down);
 declareKey("menuEditUntagAndNext", menuEditUntagAndNext, Keys.Control | Keys.Shift | Keys.Down);
 declareKey("menuEditTagAndPrevious", menuEditTagAndPrevious, Keys.Shift | Keys.Up);
 declareKey("menuEditUntagAndPrevious", menuEditUntagAndPrevious, Keys.Control | Keys.Shift | Keys.Up);
-declareKey("menuEditTagToBottom", menuEditTagToBottom, Keys.Shift | Keys.End);
-declareKey("menuEditUntagToBottom", menuEditUntagToBottom, Keys.Alt | Keys.Shift | Keys.End);
-declareKey("menuEditTagToTop", menuEditTagToTop, Keys.Shift | Keys.Home);
-declareKey("menuEditUntagToTop", menuEditUntagToTop, Keys.Alt | Keys.Shift | Keys.Home);
+declareKey("menuEditTagToBottom", menuEditTagToBottom, Keys.Control | Keys.Shift | Keys.End, Keys.Shift | Keys.End);
+declareKey("menuEditUntagToBottom", menuEditUntagToBottom, Keys.Alt | Keys.Control | Keys.Shift | Keys.End, Keys.Alt | Keys.Shift | Keys.End);
+declareKey("menuEditTagToTop", menuEditTagToTop, Keys.Control | Keys.Shift | Keys.Home, Keys.Shift | Keys.Home);
+declareKey("menuEditUntagToTop", menuEditUntagToTop, Keys.Alt | Keys.Control | Keys.Shift | Keys.Home, Keys.Alt | Keys.Shift | Keys.Home);
 declareKey("menuEditTagAllFiles", menuEditTagAllFiles, Keys.Alt | Keys.OemPeriod);
 declareKey("menuEditTagDuplicateFiles", menuEditTagDuplicateFiles, Keys.Alt | Keys.Shift | Keys.OemPeriod);
 declareKey("menuEditTagSimilarFiles", menuEditTagSimilarFiles, Keys.Alt | Keys.Shift | Keys.Oemcomma);
-declareKey("menuEditReorderNames", menuEditReorderNames, Keys.Alt | Keys.Shift | Keys.K);
+declareKey("menuEditReorderNames", menuEditReorderNames, Keys.Control | Keys.F2);
 declareKey("menuEditFindDuplicates", menuEditFindDuplicates, Keys.Alt | Keys.Shift | Keys.J);
 declareKey("menuEditTagWithRegularExpression", menuEditTagWithRegularExpression, Keys.Control | Keys.Shift | Keys.OemPeriod);
 declareKey("menuEditUntagAllButCurrent", menuEditUntagAllButCurrent, Keys.Alt | Keys.Oemcomma);
@@ -9331,8 +9369,8 @@ declareKey("menuEditCopyTagged", menuEditCopyTagged, Keys.Control | Keys.Shift |
 declareKey("menuMiscOpenRecycleBin", menuMiscOpenRecycleBin, Keys.Control | Keys.B);
 declareKey("menuNavigateBeginningFile", menuNavigateBeginningFile, Keys.Alt | Keys.B, Keys.Alt | Keys.Home);
 declareKey("menuMiscBurnTagged", menuMiscBurnTagged, Keys.Alt | Keys.Shift | Keys.B);
-declareKey("menuNavigateBeginningTagged", menuNavigateBeginningTagged, Keys.Control | Keys.Shift | Keys.Home);
-declareKey("menuNavigateEndTagged", menuNavigateEndTagged, Keys.Control | Keys.Shift | Keys.End);
+declareKey("menuNavigateBeginningTagged", menuNavigateBeginningTagged, Keys.Control | Keys.PageUp);
+declareKey("menuNavigateEndTagged", menuNavigateEndTagged, Keys.Control | Keys.PageDown);
 declareKey("menuMiscEnvironmentVariables", menuMiscEnvironmentVariables, Keys.Control | Keys.E);
 declareKey("menuMiscEvaluate", menuMiscEvaluate, Keys.Control | Keys.Oemplus);
 declareKey("menuEditExportClipboardToFile", menuEditExportClipboardToFile, Keys.Control | Keys.OemQuotes);
@@ -9341,8 +9379,7 @@ declareKey("menuHelpPlayTutorials", menuHelpPlayTutorials, Keys.Alt | Keys.F12);
 declareKey("menuHelpReadMe", menuHelpReadMe, Keys.Alt | Keys.Shift | Keys.F1);
 declareKey("menuNavigateNextTagged", menuNavigateNextTagged, Keys.Control | Keys.Down);
 declareKey("menuFileRefreshFolder", menuFileRefreshFolder, Keys.OemPeriod, Keys.F5);
-declareKey("menuMiscMailBody", menuMiscMailBody, Keys.Control | Keys.M);
-declareKey("menuMiscMailAttachTagged", menuMiscMailAttachTagged, Keys.Control | Keys.Shift | Keys.M);
+declareKey("menuMiscMailAttachTagged", menuMiscMailAttachTagged, Keys.Control | Keys.M);
 declareKey("menuFileNewFolder", menuFileNewFolder, Keys.Control | Keys.N);
 declareKey("menuFileNewItemCopy", menuFileNewItemCopy, Keys.Control | Keys.Shift | Keys.N);
 declareKey("menuMiscNetworkConnections", menuMiscNetworkConnections);
@@ -9369,6 +9406,7 @@ declareKey("menuMiscExtractTagged", menuMiscExtractTagged, Keys.Control | Keys.S
 declareKey("menuMiscIterateProcesses", menuMiscIterateProcesses, Keys.Alt | Keys.I);
 declareKey("menuMiscInquireDifferences", menuMiscInquireDifferences, Keys.Alt | Keys.Shift | Keys.I);
 declareKey("menuNavigateJump", menuNavigateJump, Keys.Control | Keys.J);
+declareKey("menuNavigateReverseJump", menuNavigateReverseJump, Keys.Control | Keys.Shift | Keys.J);
 declareKey("menuNavigateJumpAgain", menuNavigateJumpAgain, Keys.Alt | Keys.J);
 declareKey("menuNavigateKeywordsBack", menuNavigateKeywordsBack, Keys.Control | Keys.Shift | Keys.K);
 declareKey("menuNavigateSearchAgain", menuNavigateSearchAgain, Keys.F3);
@@ -9381,18 +9419,20 @@ declareKey("menuNavigatePreviousVisitedFolder", menuNavigatePreviousVisitedFolde
 declareKey("menuNavigateSearchBack", menuNavigateSearchBack, Keys.Shift | Keys.F3);
 declareKey("menuNavigateKeywords", menuNavigateKeywords, Keys.Control | Keys.K);
 declareKey("menuNavigateKeywordsAgain", menuNavigateKeywordsAgain, Keys.Alt | Keys.K);
-declareKey("menuQueryListTagged", menuQueryListTagged, Keys.Shift | Keys.L);
-declareKey("menuMiscPlayList", menuMiscPlayList, Keys.Control | Keys.Shift | Keys.L);
-declareKey("menuMiscHomerPlayer", menuMiscHomerPlayer, Keys.Control | Keys.Shift | Keys.H);
+declareKey("menuQueryListTagged", menuQueryListTagged, Keys.Alt | Keys.Shift | Keys.L);
+declareKey("menuQueryListCurrent", menuQueryListCurrent, Keys.Control | Keys.L);
+declareKey("menuQueryListCurrentTagged", menuQueryListCurrentTagged);
+declareKey("menuMiscPlayList", menuMiscPlayList);
+declareKey("menuMiscRecordPlayback", menuMiscRecordPlayback, Keys.Control | Keys.Shift | Keys.P);
 declareKey("menuMiscPlayFolder", menuMiscPlayFolder, Keys.Control | Keys.P);
-declareKey("menuQueryListFiles", menuQueryListFiles, Keys.Alt | Keys.L);
-declareKey("menuQueryList", menuQueryList, Keys.Control | Keys.L);
-declareKey("menuEditMoveTagged", menuEditMoveTagged, Keys.Alt | Keys.Shift | Keys.M);
+declareKey("menuQueryListFiles", menuQueryListFiles);
+declareKey("menuQueryList", menuQueryList, Keys.Alt | Keys.L, Keys.Alt | Keys.F8);  // Alt+F8 reads everything, as Read All in EdSharp and HomerView
+declareKey("menuEditMoveTagged", menuEditMoveTagged, Keys.Control | Keys.Shift | Keys.M);
 declareKey("menuFileOpenFolder", menuFileOpenFolder, Keys.Control | Keys.O);
 declareKey("menuFileOpenSpecialFolder", menuFileOpenSpecialFolder, Keys.Control |Keys.Shift | Keys.O);
 declareKey("menuFileOpenDrive", menuFileOpenDrive, Keys.Alt | Keys.O);
 declareKey("menuFileOpenVirtualFolder", menuFileOpenVirtualFolder, Keys.Alt |Keys.Shift | Keys.O);
-declareKey("menuEditPathList", menuEditPathList, Keys.Control | Keys.Shift | Keys.P);
+declareKey("menuEditPathList", menuEditPathList, Keys.Control | Keys.Shift | Keys.L);
 declareKey("menuQueryPath", menuQueryPath, Keys.Alt | Keys.P);
 declareKey("menuEditPathToClipboard", menuEditPathToClipboard, Keys.Alt | Keys.Shift | Keys.P);
 declareKey("menuFileGoToQuickFolder", menuFileGoToQuickFolder, Keys.Oemtilde);
@@ -9427,21 +9467,23 @@ declareKey("menuMiscUnarchiveTaggedToSameName", menuMiscUnarchiveTaggedToSameNam
 declareKey("menuMiscUnarchiveTest", menuMiscUnarchiveTest, Keys.Shift | Keys.U);
 declareKey("menuMiscUnarchivePassword", menuMiscUnarchivePassword, Keys.Alt | Keys.Shift | Keys.U);
 declareKey("menuEditPasteFromClipboard", menuEditPasteFromClipboard, Keys.Control | Keys.V);
-declareKey("menuMiscVolumeFormat", menuMiscVolumeFormat, Keys.Control | Keys.Shift | Keys.V);
-declareKey("menuEditPasteCopy", menuEditPasteCopy, Keys.Alt | Keys.V);
-declareKey("menuEditPasteMove", menuEditPasteMove, Keys.Alt | Keys.Shift | Keys.V);
+declareKey("menuMiscVolumeFormat", menuMiscVolumeFormat);
+declareKey("menuEditPasteCopy", menuEditPasteCopy);
+declareKey("menuEditPasteMove", menuEditPasteMove, Keys.Control | Keys.Shift | Keys.V);
 declareKey("menuQueryWindowsOpen", menuQueryWindowsOpen, Keys.Shift | Keys.F4, Keys.Alt | Keys.Clear);
 declareKey("menuMiscSendToWordProcessor", menuMiscSendToWordProcessor, Keys.Control | Keys.W);
 declareKey("menuMiscWindowsControlPanel", menuMiscWindowsControlPanel, Keys.Control | Keys.Shift | Keys.W);
 declareKey("menuMiscWebDownload", menuMiscWebDownload, Keys.Alt | Keys.Shift | Keys.W);
 declareKey("menuEditCutToClipboardTagged", menuEditCutToClipboardTagged, Keys.Control | Keys.X);
 declareKey("menuEditDeleteAndRecycleTagged", menuEditDeleteAndRecycleTagged, Keys.Control | Keys.Delete);
-declareKey("menuQueryYieldTagged", menuQueryYieldTagged, Keys.Shift | Keys.Y);
-declareKey("menuQueryYieldFiles", menuQueryYieldFiles, Keys.Control | Keys.Y);
+declareKey("menuQueryYieldTagged", menuQueryYieldTagged, Keys.Alt | Keys.Shift | Keys.Y);
+declareKey("menuQueryYieldFiles", menuQueryYieldFiles);
+declareKey("menuQueryYieldCurrent", menuQueryYieldCurrent, Keys.Control | Keys.Y);
+declareKey("menuQueryYieldCurrentTagged", menuQueryYieldCurrentTagged);
 declareKey("menuQueryYield", menuQueryYield, Keys.Alt | Keys.Y);
 // THE PATTERN FAMILY (17 November 2026): Control+Shift+Y is Yield with Regex in the suite, as in EdSharp and HomerView,
 // so Say Yield on Drive moves to Alt+Shift+Y, which Say Yield in Operating System gives up: Windows says its own version.
-declareKey("menuQueryYieldOnDrive", menuQueryYieldOnDrive, Keys.Alt | Keys.Shift | Keys.Y);
+declareKey("menuQueryYieldOnDrive", menuQueryYieldOnDrive, Keys.Shift | Keys.Y);
 declareKey("menuQueryYieldWithRegex", menuQueryYieldWithRegex, Keys.Control | Keys.Shift | Keys.Y);
 declareKey("menuMiscZipTagged", menuMiscZipTagged, Keys.Control | Keys.Shift | Keys.Z);
 declareKey("menuQueryStatus", menuQueryStatus, Keys.Alt | Keys.Z, Keys.Shift | Keys.Z);
@@ -9508,7 +9550,7 @@ declareKey("menuMiscTranslateTagged", menuMiscTranslateTagged, Keys.Alt | Keys.S
 // delete keys. Zip, which left Shift+Z on 16 November 2026 (no Shift+letter acts), takes
 // Control+Shift+Z beside it, and Zip List moves to Alt+Shift+L, for List.
 declareKey("menuMiscZipTaggedThenDelete", menuMiscZipTaggedThenDelete, Keys.Control | Keys.Z, Keys.Control | Keys.Shift | Keys.Delete);
-declareKey("menuMiscZipList", menuMiscZipList, Keys.Alt | Keys.Shift | Keys.L);
+declareKey("menuMiscZipList", menuMiscZipList);
 foreach (string sProblem in Homer.KeyMap.lsProblems) Homer.Log.warn("Key map: " + sProblem);
 return true;
 } // declareKeys method
@@ -10046,7 +10088,7 @@ bool shift = e.Shift;
 if (code == Keys.Alt) App.say("alt");
 else if (code == Keys.D && !alt && !control && shift) App.frame.menuQueryDate.clickOrDescribe();
 else if (code == Keys.D && alt && !control && !shift) App.frame.menuMiscDateOrder.clickOrDescribe();
-else if (code == Keys.L && !alt && control && !shift) App.frame.menuQueryList.clickOrDescribe();
+else if (code == Keys.L && !alt && control && !shift) App.frame.menuQueryListCurrent.clickOrDescribe();
 else if (code == Keys.S && !alt && !control && shift) App.frame.menuQuerySize.clickOrDescribe();
 else {
 skipKey = false;
@@ -10064,7 +10106,7 @@ e.Handled = true;
 if (code == Keys.Alt) App.say("alt");
 else if (code == Keys.D && !alt && !control && shift) App.frame.menuQueryDate.clickOrDescribe();
 else if (code == Keys.D && alt && !control && !shift) App.frame.menuMiscDateOrder.clickOrDescribe();
-else if (code == Keys.L && !alt && control && !shift) App.frame.menuQueryList.clickOrDescribe();
+else if (code == Keys.L && !alt && control && !shift) App.frame.menuQueryListCurrent.clickOrDescribe();
 else if (code == Keys.S && !alt && !control && shift) App.frame.menuQuerySize.clickOrDescribe();
 else {
 skipKey = false;

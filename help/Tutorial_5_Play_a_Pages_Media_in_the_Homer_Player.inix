@@ -6,9 +6,9 @@ Homework=Open a podcast page of your own, play an episode, pause it, and search 
 
 [step]
 
-Say=This page lists the episodes of a podcast. Control plus Shift plus L plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
-Key=Control+Shift+L
-Hear=Play list
+Say=This page lists the episodes of a podcast. Control plus P, Play Media, plays what is in it: FileDir reads the page, finds the media links, and opens the Player.
+Key=Control+P
+Hear=Play Media
 Hear=Looking for media links in Access On dot h t m
 Hear=Access On dot h t m
 Hear=Track list, 92 tracks from links in Access On dot h t m: List box
@@ -134,9 +134,9 @@ Hear=
 
 [step]
 
-Say=Control plus Shift plus L.
+Say=Control plus P.
 Key=
-Hear=Play list
+Hear=Play Media
 
 [step]
 

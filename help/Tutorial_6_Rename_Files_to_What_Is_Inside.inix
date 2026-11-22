@@ -95,8 +95,8 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Numbered files often sort wrongly by ear: Chapter 10 before Chapter 2. Alt plus Shift plus K, Reorder Names, pads single leading digits, so the list reads in order.
-Key=Alt+Shift+K
+Say=Numbered files often sort wrongly by ear: Chapter 10 before Chapter 2. Control plus F2, Reorder Names, pads single leading digits, so the list reads in order.
+Key=Control+F2
 Hear=Reorder Names dialog
 Note=Confirm the wording with a live run: buildTutorials -live.
 
