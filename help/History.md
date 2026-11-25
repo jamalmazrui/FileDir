@@ -2,6 +2,20 @@
 
 
 
+## 24 November 2026, late night -- Quiet Zip, and > and < again
+
+- **Control+Z no longer says "Undo."** The JAWS scripts meant to pass FileDir's keys on quietly in the file list, but their test for the list compared the whole window class name with its first part, so it never matched, and JAWS ran its own script for the key. Control+Z, which is Zip here, said "Undo." The test now checks how the class name begins, and the 24 scripts that use it all pass their keys quietly in the list.
+- **> marks and moves to the next item, and < unmarks and moves to the next,** from the home row, as in DbDo. Shift+DownArrow and Control+Shift+DownArrow still do the same. Neither character can begin a file name, so the list's letter navigation never needs them.
+- **Semicolon marks and Slash unmarks, now in DbDo too,** so both apps mark the same way. Control+M stays Mail, as it is in every Homer app.
+- **FTP Put and Get FTP are retired,** with their remembered address and their hint. They were unused.
+- **The quick start no longer risks your files.** It told you to press Control+Shift+Z to zip marked files, but that key is Zip then Delete, which removes them after the archive is tested. It now teaches Control+Z, Zip, which keeps them, and warns about the other. It also teaches Semicolon and Slash for marking, Shift+Space and Alt+Shift+Y to hear the marked files, the Alternate Menu's orders, Shift+F1 and Control+Slash, and the ten spoken lessons on Alt+F12.
+- **This needs HomerDev 1.289.1,** which carries the Conversion.cs that Say What Content uses. The build stopped on a kit without it.
+
+## 24 November 2026 -- Plain words from the question mark
+
+- **Say What Content (the question mark key) speaks plain text,** never markup. A Markdown file used to be read as written, with its pound signs, asterisks, list dashes and table bars, and a workbook came as a table drawn with bars. Now headings, lists, emphasis, links and tables are spoken as words, with a table's cells separated by tabs, which the screen reader passes over as a pause. A numbered list keeps its numbers. Source code, settings and data files are still read exactly as written, since their characters are their content. The same holds for a file inside a zip archive.
+- **This needs HomerDev 1.288.0.**
+
 ## 22 November 2026 -- Zip on Control+Z
 
 - **Zip is Control+Z, and Zip then Delete is Control+Shift+Z.** The safer command takes the plainer key, and the one that removes the files adds Shift, as a new Homer key guideline asks. Zip then Delete keeps its other key, Control+Shift+Delete, and still asks before deleting anything.

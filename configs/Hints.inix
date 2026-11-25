@@ -68,9 +68,6 @@ Expression = A calculation, such as 3 * (4 + 5); FileDir says the answer.
 [Web Address]
 Address = The web address to download or open, starting with http or https.
 
-[FTP Address]
-Address = The FTP address to connect to, starting with ftp.
-
 [Download Extensions]
 Extensions = The kinds of file to download from a page, by extension, separated by spaces, such as pdf docx.
 

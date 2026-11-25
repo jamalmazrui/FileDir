@@ -333,11 +333,6 @@ set { sFileFindFilterTextValue = value; rememberInternal("FileFindFilter", value
 public static string sFileFindDir = "*.*";
 public static string[] aFileFind = {};
 public static int iFileFind = -1;
-static string sFTPTextValue = "";
-public static string sFTPText {
-get { return sFTPTextValue; }
-set { sFTPTextValue = value; rememberInternal("FTP", value); }
-} // sFTPText property
 static string sGoToTextValue = "";
 public static string sGoToText {
 get { return sGoToTextValue; }
@@ -1011,7 +1006,6 @@ App.sCopyText = App.readValue(App.sIniFile, "Internal", "Copy", App.sCopyText);
 App.sEvaluateText = App.readValue(App.sIniFile, "Internal", "Evaluate", App.sEvaluateText);
 App.sCalculateText = App.readValue(App.sIniFile, "Internal", "Calculate", App.sCalculateText);
 App.iCalculateItem = Int32.Parse(App.readValue(App.sIniFile, "Internal", "CalculateItem", App.iCalculateItem.ToString()));
-App.sFTPText = App.readValue(App.sIniFile, "Internal", "FTP", App.sFTPText);
 App.sFileFindText = App.readValue(App.sIniFile, "Internal", "FileFind", App.sFileFindText);
 App.sFileFindFilterText = App.readValue(App.sIniFile, "Internal", "FileFindFilter", App.sFileFindFilterText);
 App.sGoToText = App.readValue(App.sIniFile, "Internal", "GoTo", App.sGoToText);
@@ -1075,7 +1069,6 @@ App.writeValue(App.sIniFile, "Internal", "Copy", App.sCopyText);
 App.writeValue(App.sIniFile, "Internal", "Evaluate", App.sEvaluateText);
 App.writeValue(App.sIniFile, "Internal", "Calculate", App.sCalculateText);
 App.writeValue(App.sIniFile, "Internal", "CalculateItem", App.iCalculateItem.ToString());
-App.writeValue(App.sIniFile, "Internal", "FTP", App.sFTPText);
 App.writeValue(App.sIniFile, "Internal", "FileFind", App.sFileFindText);
 App.writeValue(App.sIniFile, "Internal", "FileFindFilter", App.sFileFindFilterText);
 App.writeValue(App.sIniFile, "Internal", "GoTo", App.sGoToText);
@@ -1524,8 +1517,6 @@ public HomerToolStripMenuItem menuMiscUnarchivePassword;
 public HomerToolStripMenuItem menuMiscCommandPrompt;
 public HomerToolStripMenuItem menuMiscExplorerDir;
 public HomerToolStripMenuItem menuMiscOpenInDbDo;
-public HomerToolStripMenuItem menuMiscFTPPut;
-public HomerToolStripMenuItem menuMiscGetFTP;
 public HomerToolStripMenuItem menuMiscWebDownload;
 public HomerToolStripMenuItem menuMiscEvaluate;
 public HomerToolStripMenuItem menuMiscConvertUnits;
@@ -1823,6 +1814,8 @@ menuMiscBurnTagged = menu_Helper("Burn to CD", "Alt+Shift+B", menuMiscBurnTagged
 // ONE MAIL COMMAND (21 November 2026): Mail Attachment already put a lone file's text in the body as well as attaching
 // it, so Mail Body only repeated it. Mail, Control+M, does both jobs, as in EdSharp. Mail Body's handler is kept,
 // unbound and off the menu.
+// MAIL STAYS ON CONTROL+M (24 November 2026, Jamal): Control+M is Mail in every Homer app -- EdSharp, FileDir and DbDo's
+// Mail Record -- and Semicolon and Slash are the marking keys.
 menuMiscMailAttachTagged = menu_Helper("Mail", "Control+M", menuMiscMailAttachTagged_Click);
 // BATCH MAIL IS GONE (17 November 2026): it sent through SMTP with a stored user name and password, which Gmail,
 // Outlook.com and most mail services no longer accept, and mail sent one by one to a list now reads as spam.
@@ -1841,8 +1834,6 @@ menuMiscUnarchivePassword = menu_Helper("Unarchive Password", "Alt+Shift+U", men
 menuMiscCommandPrompt = menu_Helper("Open Command Prompt", "Control+Backslash", menuMiscCommandPrompt_Click);
 menuMiscExplorerDir = menu_Helper("Open in Explorer", "Alt+Backslash", menuMiscExplorerDir_Click);
 menuMiscOpenInDbDo = menu_Helper("Open in DbDo", "Control+Shift+Backslash", menuMiscOpenInDbDo_Click);
-menuMiscFTPPut = menu_Helper("FTP Put ...", "", menuMiscFTPPut_Click);
-menuMiscGetFTP = menu_Helper("Get FTP ...", "", menuMiscGetFTP_Click);
 menuMiscWebDownload = menu_Helper("Web Download ...", "Alt+Shift+W", menuMiscWebDownload_Click);
 menuMiscEvaluate = menu_Helper("Evaluate Expression ...", "Control+Equals", menuMiscEvaluate_Click);
 menuMiscConvertUnits = menu_Helper("Convert Units ...", "Control+3", menuMiscConvertUnits_Click);
@@ -1876,7 +1867,7 @@ menuMiscNetworkConnections = menu_Helper("Network Connections ...", "", MenuMisc
 // NO KEY (21 November 2026): formatting a disk is rare and cannot be undone, so it is on the Misc menu only.
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscFTPPut, menuMiscGetFTP, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscRecordPlayback, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscRecordPlayback, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
 // Say Unarchive Test is made with the Misc commands, beside its Unarchive family, and shown on the Say menu.
 menuQuery.DropDownItems.Add(menuMiscUnarchiveTest);
 
@@ -6084,7 +6075,11 @@ App.lsTempFile.Add(sDir);
 sDir = Path.GetDirectoryName(sDir);
 string sTarget = zipEntry2Dir(sZip, sPath, sDir);
 App.lsTempFile.Add(sTarget);
-App.say(Homer.Util.stringConvertQuotes(App.frame.convert2Text(sTarget)));
+// PLAIN TEXT, NOT EVEN MARKDOWN (24 November 2026), as for a file on disk below.
+string sEntryWhy;
+string sEntry = Homer.Conversion.toSpeech(sTarget, out sEntryWhy);
+if (sEntry.Length > 0) App.say(Homer.Util.stringConvertQuotes(sEntry));
+else if (sEntryWhy.Length > 0) App.say(sEntryWhy);
 }
 else if (Directory.Exists(sPath)) {
 // App.say("Folder items");
@@ -6114,8 +6109,11 @@ else {
 // extension is text when its bytes are -- and says so first, as its own
 // utterance. You asked, so it speaks even with Extra Speech off.
 Homer.Say.sayForced(Homer.Conversion.describe(sPath));
+// PLAIN TEXT, NOT EVEN MARKDOWN (24 November 2026, Jamal's rule): the kit's toSpeech clears
+// pound signs, bullets, table bars, emphasis and link addresses from a document, so the
+// screen reader hears words; source code, settings and data are still spoken as written.
 string sWhy;
-string sContent = Homer.Conversion.toText(sPath, out sWhy);
+string sContent = Homer.Conversion.toSpeech(sPath, out sWhy);
 if (sContent.Length > 0) Homer.Say.sayForced(Homer.Util.stringConvertQuotes(sContent));
 else if (sWhy.Length > 0) Homer.Say.sayForced(sWhy);
 }
@@ -7492,147 +7490,10 @@ return;
 }
 } // menuMiscExplorerDir_Click method
 
-void menuMiscFTPPut_Click(object sender, EventArgs e) {
-if (abortInZip()) return;
-FolderWindow mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
+// FTP PUT AND GET FTP RETIRED (24 November 2026, Jamal: "unused and can be retired"). Their code, menu items, settings
+// and hints are gone; the kit's Homer.Util.getFtpDir stays for any other user. ROLLBACK: the FileDir release of 24
+// November 2026, evening, has them.
 
-App.say("FTP put");
-string[] aDirs, aFiles;
-string[] aPaths = list_Helper(out aDirs, out aFiles, 1);
-if (aPaths.Length == 0) return; // nothing to act on, or Cancel in Marked or Current
-string sUserName = "";
-string sPassword = "";
-string sURL = "";
-
-//if (App.sUserName == "") {
-if (App.sUserName != null) {
-string[] aFields = {"&Address", "&LogInUserName", "&Password"};
-string[] aValues = {App.sFTPText, App.sUserName, App.sPassword};
-ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
-if (sResultList.Count == 0) return;
-sURL = (string) sResultList[0];
-sUserName = (string) sResultList[1];
-sPassword = (string) sResultList[2];
-}
-else {
-sUserName = App.sUserName;
-sPassword = App.sPassword;
-sURL = Homer.LbcAsk.input("FTP Address", "&Address", App.sFTPText, "FtpAddress");
-if (sURL == "") return;
-}
-
-if (!sURL.Contains("://")) {
-sURL = "ftp://" + sURL;
-if (!sURL.EndsWith("/")) sURL += "/";
-}
-App.sFTPText = sURL;
-App.sUserName = sUserName;
-App.sPassword = sPassword;
-string sBaseURL = sURL;
-
-foreach (string sPath in aPaths) {
-string sName = Path.GetFileName(sPath);
-App.say(sName);
-if (Directory.Exists(sPath)) {
-App.say("Skipping " + sName);
-continue;
-}
-else if (File.Exists(sPath)) {
-if (sBaseURL.EndsWith("/")) sURL = sBaseURL + Path.GetFileName(sPath);
-else sURL = sBaseURL + "/" + Path.GetFileName(sPath);
-
-try {
-//Homer.LbcAsk.show(sFile, sURL);
-//Homer.LbcAsk.show(sUserName, sPassword);
-App.uploadFile(sPath, sURL, sUserName, sPassword);
-}
-catch (Exception ex) {
-Homer.LbcAsk.show(ex.Message, "Error");
-return;
-}
-}
-else {
-App.say("Cannot find " + sName);
-continue;
-}
-}
-
-App.say("Done!", true);
-} // menuMiscFTPPut_Click method
-
-void menuMiscGetFTP_Click(object sender, EventArgs e) {
-if (abortInZip()) return;
-FolderWindow mdiChild = App.frame.getActiveChild();
-if (mdiChild == null) return;
-
-App.say("Get FTP");
-string sUserName = "";
-string sPassword = "";
-string sURL = "";
-//if (App.sUserName == "") {
-if (App.sUserName != null) {
-string[] aFields = {"&Address", "&LogInUserName", "&Password"};
-string[] aValues = {App.sFTPText, App.sUserName, App.sPassword};
-ArrayList sResultList = Homer.LbcAsk.fieldDialog("Fields", aFields, aValues);
-if (sResultList.Count == 0) return;
-sURL = (string) sResultList[0];
-sUserName = (string) sResultList[1];
-sPassword = (string) sResultList[2];
-}
-else {
-sUserName = App.sUserName;
-sPassword = App.sPassword;
-sURL = Homer.LbcAsk.input("FTP Address", "&Address", App.sFTPText, "FtpAddress");
-if (sURL == "") return;
-}
-
-if (!sURL.Contains("://")) {
-sURL = "ftp://" + sURL;
-if (!sURL.EndsWith("/")) sURL += "/";
-}
-App.sFTPText = sURL;
-App.sUserName = sUserName;
-App.sPassword = sPassword;
-string sBaseURL = sURL;
-
-string[] aFiles = null;
-App.say("Please wait");
-try {
-aFiles = Homer.Util.getFtpDir(sUserName, sPassword, sBaseURL);
-}
-catch (Exception ex) {
-Homer.LbcAsk.show(ex.Message, "Error");
-return;
-}
-if (aFiles.Length == 0) {
-App.say("No files.");
-return;
-}
-
-ArrayList listFiles = Homer.LbcAsk.multiListDialog("Multi Pick", "", aFiles, true, 0, new int[] {});
-if (listFiles.Count == 0) return;
-
-foreach (string sName in listFiles) {
-App.say(sName);
-if (sBaseURL.EndsWith("/")) sURL = sBaseURL + sName;
-else sURL = sBaseURL + "/" + sName;
-string sFile = sName;
-try {
-App.deleteFile(sFile, App.Recycle);
-//Homer.LbcAsk.show(sURL, sFile);
-App.downloadFile(sURL, sFile, sUserName, sPassword);
-}
-catch (Exception ex) {
-Homer.LbcAsk.show(ex.Message, "Error");
-return;
-}
-string s = Path.Combine(mdiChild.Text, sName);
-refresh_Helper(s);
-}
-
-App.say("Done!", true);
-} // menuMiscGetFTP_Click method
 
 void mediaDownload_Helper(string sUrl) {
 // yt-dlp fetches video and audio from the many sites it knows, into the folder
@@ -9368,8 +9229,12 @@ declareKey("menuQuerySelected", menuQuerySelected, Keys.Shift | Keys.Space);
 // keep Control+DownArrow and UpArrow; Beginning and End Marked keep Control+Shift+Home and End. Initial Change and
 // Extension Change are on the Navigate menu without a key, as DbDo's Jump to Next Initial is. Stamp, Hide, Show, System,
 // General and Short Path to Clipboard are on the Edit menu without a key: rare work now, and actions on the Shift layer.
-declareKey("menuEditTagAndNext", menuEditTagAndNext, Keys.Shift | Keys.Down);
-declareKey("menuEditUntagAndNext", menuEditUntagAndNext, Keys.Control | Keys.Shift | Keys.Down);
+// > AND < ARE BACK (24 November 2026, Jamal: "an efficiency gain from the home row of the keyboard"): > (Shift+Period)
+// marks and goes to the next item, < (Shift+Comma) unmarks and goes to the next, as in DbDo. They were dropped on 17
+// November under "Shift+letter says, never acts", but that rule is about letters; > and < are punctuation, and neither
+// can begin a Windows file name, so the list's type-ahead never wants them.
+declareKey("menuEditTagAndNext", menuEditTagAndNext, Keys.Shift | Keys.Down, Keys.Shift | Keys.OemPeriod);
+declareKey("menuEditUntagAndNext", menuEditUntagAndNext, Keys.Control | Keys.Shift | Keys.Down, Keys.Shift | Keys.Oemcomma);
 declareKey("menuEditTagAndPrevious", menuEditTagAndPrevious, Keys.Shift | Keys.Up);
 declareKey("menuEditUntagAndPrevious", menuEditUntagAndPrevious, Keys.Control | Keys.Shift | Keys.Up);
 declareKey("menuEditTagToBottom", menuEditTagToBottom, Keys.Control | Keys.Shift | Keys.End, Keys.Shift | Keys.End);
@@ -9428,11 +9293,9 @@ declareKey("menuEditDeleteFileNow", menuEditDeleteFileNow, Keys.Control | Keys.D
 declareKey("menuEditDeleteFileNowWithoutRecycle", menuEditDeleteFileNowWithoutRecycle, Keys.Control | Keys.Shift | Keys.D);
 declareKey("menuMiscDateOrder", menuMiscDateOrder, Keys.Alt | Keys.D);
 declareKey("menuMiscReverseDateOrder", menuMiscReverseDateOrder, Keys.Alt | Keys.Shift | Keys.D);
-declareKey("menuMiscFTPPut", menuMiscFTPPut);
 declareKey("menuNavigateSetFilter", menuNavigateSetFilter, Keys.Control | Keys.F);
 declareKey("menuNavigateClearFilter", menuNavigateClearFilter, Keys.Control | Keys.Shift | Keys.F);
 declareKey("menuFileFind", menuFileFind, Keys.Alt | Keys.Shift | Keys.F);
-declareKey("menuMiscGetFTP", menuMiscGetFTP);
 declareKey("menuFileGoToFolder", menuFileGoToFolder, Keys.Control | Keys.G);
 declareKey("menuFileGoToSpecialFolder", menuFileGoToSpecialFolder, Keys.Control |Keys.Shift | Keys.G);
 declareKey("menuFileGoToDrive", menuFileGoToDrive, Keys.Alt | Keys.G);

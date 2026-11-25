@@ -110,7 +110,7 @@ Typically, a key combination using Alt or Control rather than Shift performs ano
 
 FileDir commands often include verbal confirmation during execution, e.g., announcing the name of each file before a copy attempt and the message "Done!" after batch processing is complete.
 
-FileDir initially opens the Personal/My Documents folder when launched with no command line parameters. If a folder is passed as a parameter, however, that folder is opened instead. In subsequent sessions, FileDir remembers the last directory viewed, including its sort order and filter specification. It remembers other values from the previous session as well, including those for the Copy, Find in Files, FTP, Go To, Jump, Keywords, Move, Open, Unzip, and Zip commands.
+FileDir initially opens the Personal/My Documents folder when launched with no command line parameters. If a folder is passed as a parameter, however, that folder is opened instead. In subsequent sessions, FileDir remembers the last directory viewed, including its sort order and filter specification. It remembers other values from the previous session as well, including those for the Copy, Find in Files, Go To, Jump, Keywords, Move, Open, Unzip, and Zip commands.
 
 The default sort order is reverse date/time, meaning that most recently modified items appear first. All folder items, however, appear before any file items. FileDir applies the current sort order and filter specification when creating a new directory view.
 
@@ -232,7 +232,7 @@ Press Alt+P to confirm the complete path
 C:\temp\Calendar.doc
 ```
 
-To hear the time, use your screen reader's own key: Insert+F12 in JAWS or NVDA; pressed twice, it gives the date. Press Alt+Apostrophe to hear text currently on the clipboard (You may think of this as quoting the clipboard). Press Question Mark (?) for the What Content command, which verbalizes the textual content of the current file item, or lists items contained in a folder item or zip archive. For technical reasons, the command reads a maximum of about 20K from a file.
+To hear the time, use your screen reader's own key: Insert+F12 in JAWS or NVDA; pressed twice, it gives the date. Press Alt+Apostrophe to hear text currently on the clipboard (You may think of this as quoting the clipboard). Press Question Mark (?) for the What Content command, which verbalizes the textual content of the current file item, or lists items contained in a folder item or zip archive. A document is spoken as plain words, without markup such as the pound signs, asterisks and table bars of Markdown; source code, settings and data files are read exactly as written. For technical reasons, the command reads a maximum of about 20K from a file.
 
 Press Shift+S for the size of the current file or folder item. Press Shift+D for its date and time stamp. Press Shift+T for Type, which provides miscellaneous information, including the registered file type and ReadOnly, Hidden, or System attributes set (if any). Press Control+Shift+T to examine all "extended properties" that are available to Windows Explorer. Depending on the type, 32 possible properties may be examined as follows:
 
@@ -312,7 +312,7 @@ Mark commands increase or decrease the subset of items that are marked for furth
 
 Press Alt+Comma to unmark all items except the current one. Control+I inverts all marked states, untagging items that were marked and vice versa. Spacebar toggles the marked state of the current item. Press semicolon (;) to mark the current item regardless of its previous state, or ForwardSlash (/) to unmark it.
 
-To navigate and make mark decisions together, use the GreaterThan key (Shift+.) to mark and go to the next item, or the LessThan key (Shift+,) to unmark instead. Alternatively, use arrow keypad commands similar to Windows Explorer. For example, press Shift+DownArrow for Mark and Next, or Shift+UpArrow for Mark and Previous. Press Control+Shift+End or Shift+End for Mark to Last, or Control+Shift+Home or Shift+Home for Mark to First. The Control+Shift keys are DbDo's; the Shift keys are the Windows habit. Semicolon marks the current item.
+To navigate and make mark decisions together, use the GreaterThan key (Shift+.) to mark and go to the next item, or the LessThan key (Shift+,) to unmark instead. Alternatively, use arrow keypad commands similar to Windows Explorer. For example, press Shift+DownArrow for Mark and Next, or Shift+UpArrow for Mark and Previous. Press Control+Shift+End or Shift+End for Mark to Last, or Control+Shift+Home or Shift+Home for Mark to First. The Control+Shift keys are DbDo's; the Shift keys are the Windows habit. Semicolon marks the current item, and Slash unmarks it; DbDo uses the same keys.
 
 Adding the Alt modifier key performs the same actions except for untagging rather than marking. Thus, Alt+Shift+NumPad5 untags the current item, Alt+Shift+Home (or Alt+Control+Shift+Home) unmarks to the first item, Alt+Shift+End (or Alt+Control+Shift+End) unmarks to the last, Alt+Shift+DownArrow untags en route to the next, and Alt+Shift+UpArrow untags en route to the previous.
 
@@ -348,9 +348,9 @@ Use the Copy Append command, Alt+C, to add items to the clipboard in both binary
 
 To put a list of file names on the clipboard without preceding paths, press Alt+Shift+N, Name to Clipboard. To hear what files are on the clipboard, use the Quote Clipboard command, Alt+Apostrophe. Before saying each path, FileDir says "Path drop list" if it finds this binary format. Otherwise, FileDir only speaks text format -- other binary formats on the clipboard are not interpreted.
 
-Print, in the File menu, sends current or marked items to the default printer; it has no key, since Control+P is Play Media. Control+M, Mail, starts a mail message with the current or marked items as attached files. If no items are marked, FileDir both attaches the current file and puts its text in the message body: for a Microsoft Word document, it extracts the text. Until 21 November 2026 this was two commands, Mail Body and Mail Attachment.
+Print, in the File menu, sends current or marked items to the default printer; it has no key, since Control+P is Play Media. Control+M, Mail, starts a mail message with the current or marked items as attached files. Control+M is Mail in every Homer app. You can also press Control+C, which puts the items' paths on the clipboard, and paste them into a message in Outlook or another mail program to attach the files. If no items are marked, FileDir both attaches the current file and puts its text in the message body: for a Microsoft Word document, it extracts the text. Until 21 November 2026 this was two commands, Mail Body and Mail Attachment.
 
-Batch Mail, which sent one message to many recipients through your own mail server, was retired on 17 November 2026. Mail providers now refuse or flag a script that signs in with a saved password and sends many messages, so it rarely arrived. For one message to many people, use your mail program's own mail merge or a mailing-list service; Control+M still sends the current file's text as a message, and Control+Shift+M sends files as attachments, through your own mail program.
+Batch Mail, which sent one message to many recipients through your own mail server, was retired on 17 November 2026. Mail providers now refuse or flag a script that signs in with a saved password and sends many messages, so it rarely arrived. For one message to many people, use your mail program's own mail merge or a mailing-list service; Control+M still sends the current file's text and the file itself through your own mail program.
 
 Press Control+Shift+X, Export Type, and pick plain text to output marked files in plain text format. The original, source files will not be affected. The target, converted files will have the same names but a .txt extension. Conversions to text are available for Word, Excel, PowerPoint, PDF, HTML, Markdown, and comma separated files, in both their older and newer forms. The conversion is done by 2htm, which comes with FileDir, so no other program has to be installed.
 
@@ -367,20 +367,6 @@ Control+C copies the full path of marked items to the clipboard, whereas Alt+Shi
 Control+Shift+L, Path List to Clipboard (L for List), copies the full paths of all items below a subfolder item in the directory hierarchy. For example, if the My Documents directory is being viewed, and focus is on the My Music subfolder item, pressing Control+Shift+L would copy the paths of all files and subfolders under My Music. After determining what file extensions are present, FileDir prompts for which ones to include in the resulting list. Edit the choices, or just press Enter to accept them all. You can save the path list to disk with the Export Clipboard command, Alt+Shift+E, which prompts for a file name and then saves clipboard text to it.
 
 Press Control+N to create a new folder. Press Control+Shift+N to make a new copy of the current file or folder item. It will have the same name except for a unique numeric suffix after the root, e.g., plan_01.doc would be a copy of plan.doc, and plan_02.doc would be the next copy. Such a file is sometimes useful when you want to preserve the original unaltered and then make changes to a copy in the same folder.
-
-FileDir includes the capability to "put" or upload files to a directory on an FTP server, and to "get" or download from there. For private directories, a user name and password may be set either in the specific dialogs for these commands or in the Edit Settings dialog, Alt+Shift+E. For security, the password is saved between FileDir sessions in an encrypted form rather than as text with other settings in the FileDir.ini file.
-
-Use the FTP Put command, on the Misc menu, to upload files. FileDir prompts for an FTP directory. If the value entered does not contain the :// sequence of characters, FileDir adds an FTP:// prefix and a / suffix for more convenient typing. For example, a value of
-
-smart.net
-
-would become
-
-ftp://smart.net/
-
-If you include the :// sequence of a protocol, however, FileDir accepts the value verbatim -- without making changes. The URL is remembered as the default value for the next FTP command.
-
-The opposite command is Get FTP, also on the Misc menu, which downloads files from a remote directory. FileDir presents a multiple selection list box with all file names it found in that directory. The files selected will be downloaded to the current directory view. Any existing files with the same names are replaced and sent to the recycle bin according to the Recycle setting, Alt+Shift+R (on by default).
 
 The Web Download command, Alt+Shift+W, lets you pick one or more files to download from a page whose address you specify.  If the clipboard holds a web address, FileDir offers it as the default.  Downloading is done by FileDir itself, with no web browser involved. Each item of the resulting checked listbox shows both the clickable text of the url and its target file name. Press Spacebar to toggle the checked state of an item. After picking files, you are prompted for the target folder on disk. If the URL of a link does not end in a valid file name, FileDir creates a file name for the target on disk based on other characters in the URL. If a file with the same name already exists, a unique name is created by adding a numeric suffix, e.g., page_001.htm, page_002.htm, etc.
 

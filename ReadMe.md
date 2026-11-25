@@ -116,18 +116,24 @@ Try these in order. Each is one keystroke.
    instead of opening another.
 5. Press **Question Mark** to hear what is inside the current file. This works
    for Word, PDF, and other document formats, not only plain text.
-6. Press **Space** on two or three files to mark them, then **Shift+L** to hear
-   what you have marked and **Shift+Y** for how many they are and how big.
-7. With those files still marked, press **Control+Shift+Z** to zip them, or **Control+Shift+C**
-   to copy them to another folder.
+6. Press **Semicolon** on two or three files to mark them (**Slash** unmarks,
+   and **Space** switches the mark either way). Then press **Shift+Space** to hear
+   what you have marked and **Alt+Shift+Y** for how many they are and how big.
+7. With those files still marked, press **Control+Z** to zip them, or
+   **Control+Shift+C** to copy them to another folder. Zip keeps your files;
+   **Control+Shift+Z**, Zip then Delete, removes them once the archive is
+   tested, so use it only when you mean to.
 8. Press **Alt+Shift+F7** to translate them into a language you name, if you
    installed Ollama. FileDir writes a translation beside each file.
 9. Press **Control+F1** to turn on Key Describer. Now pressing a command key
    says its name, its key, and what it does, instead of running it. Press
    **Control+F1** again to turn it off. This is the fastest way to explore.
-10. Press **Alt+F10** for the Alternate Menu, an alphabetical list of every
-   command. Type a few letters to find one, and press Enter to run it.
+10. Press **Alt+F10** for the Alternate Menu, a list of every command in menu,
+   name or key order. Control+F filters the list by the words you type, and
+   Enter runs the command.
 11. Press **F1** for the full guide.
+12. Press **Shift+F1** to hear what the control with focus does, and
+   **Control+Slash** to hear where you are. Both work in every Homer app.
 
 ## The Other Documents
 
@@ -136,7 +142,9 @@ is on the Start menu:
 
 - **FileDir** is the complete guide: every command group explained, with the
   keys in context.
-- **Tutorials** walks through nine real jobs from start to finish.
+- **Tutorials** has ten spoken lessons, with a written transcript: an overview,
+  the user interface, seven real jobs from start to finish, and a conclusion.
+  Press **Alt+F12** to play them.
 - **Questions and Answers** gives short answers to what people ask most.
 - **Hotkeys** lists every command three ways: by name, by key, and grouped by
   modifier.

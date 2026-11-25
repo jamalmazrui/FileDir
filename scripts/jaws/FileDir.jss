@@ -92,6 +92,24 @@ EndIf
 EndWhile
 EndFunction
 
+; inFileDirList: PASS QUIETLY ONLY IN FILEDIR'S OWN WINDOWS (24 November 2026). Twenty-four scripts asked whether
+; the focus was FileDir's list with sClass == "WindowsForms10.LISTBOX.", but a WinForms class name goes on past that
+; prefix ("WindowsForms10.LISTBOX.app.0.<hash>"), so the test was never true. Every such key then ran JAWS's own
+; script: Control+Z, FileDir's Zip, said "Undo". The test now asks whether the class begins with the prefix, as
+; DbDo's inDbDoList does with StringContains.
+Int Function inFileDirList()
+Var
+String sClass
+If IsVirtualPCCursor() || !IsPCCursor() Then
+Return False
+EndIf
+Let sClass = GetWindowClass(GetFocus())
+If StringContains(sClass, "WindowsForms10.LISTBOX.") == 1 || StringContains(sClass, "WindowsForms10.MDICLIENT.") == 1 Then
+Return True
+EndIf
+Return False
+EndFunction
+
 Int Function new_SayFileByLine(String sFile)
 Var
 Object oFile, Object oNull, Object oSystem,
@@ -169,7 +187,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript BottomOfFile()
@@ -192,7 +210,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript ControlDownArrow()
@@ -205,7 +223,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript ControlUpArrow()
@@ -218,7 +236,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript CopySelectedTextToClipboard()
@@ -231,7 +249,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript CutToClipboard()
@@ -279,7 +297,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript JAWSBackspace()
@@ -292,7 +310,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript JAWSEnd()
@@ -305,7 +323,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript JAWSHome()
@@ -318,7 +336,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript JAWSPageDown()
@@ -331,7 +349,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript JAWSPageUp()
@@ -344,7 +362,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript MouseDown()
@@ -357,7 +375,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript MouseUp()
@@ -378,7 +396,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript PasteFromClipboard()
@@ -399,7 +417,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeKey("Shift+5")
 Else
 PerformScript SayActiveCursor()
@@ -412,7 +430,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript SayCurrentAccessKey()
@@ -427,7 +445,7 @@ String sKey, String sClass, String sText
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 ;SayLine()
 Let o = GetFocusObject(0)
 If o Then
@@ -462,7 +480,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeKey("Shift+Space")
 Else
 PerformScript SaySelectedText()
@@ -479,7 +497,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript SelectFromStartOfLine()
@@ -492,7 +510,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript SelectNextLine()
@@ -505,7 +523,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript SelectNextLine()
@@ -518,7 +536,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript SelectToEndOfLine()
@@ -595,7 +613,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript TopOfFile()
@@ -607,7 +625,7 @@ Var
 String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 Else
 SayCurrentScriptKeyLabel()
 EndIf
@@ -624,7 +642,7 @@ String sKey, String sClass
 Let sClass = GetWindowClass(GetFocus())
 Let sKey = GetCurrentScriptKeyName()
 
-If (!IsVirtualPCCursor() && IsPCCursor() && sClass == "WindowsForms10.LISTBOX." || sClass == "WindowsForms10.MDICLIENT.") Then
+If inFileDirList() Then
 TypeCurrentScriptKey()
 Else
 PerformScript Undo()
