@@ -2,6 +2,13 @@
 
 
 
+## 24 November 2026, night -- JAWS+A and JAWS+F in the list
+
+- **JAWS+A says the folder's name and path,** as Shift+Apostrophe does, the way JAWS reads File Explorer's address bar.
+- **JAWS+F says the item's type,** as Shift+T does, where JAWS would say the font. DbDo's JAWS+F says a field's type the same way.
+- **JAWS+Number Pad Delete still says the item's position,** as Alt+Delete does, now the same in DbDo and EdSharp.
+- In dialogs and boxes, the keys do what JAWS always does.
+
 ## 24 November 2026, late night -- Quiet Zip, and > and < again
 
 - **Control+Z no longer says "Undo."** The JAWS scripts meant to pass FileDir's keys on quietly in the file list, but their test for the list compared the whole window class name with its first part, so it never matched, and JAWS ran its own script for the key. Control+Z, which is Zip here, said "Undo." The test now checks how the class name begins, and the 24 scripts that use it all pass their keys quietly in the list.

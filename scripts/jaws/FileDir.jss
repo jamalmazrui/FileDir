@@ -424,6 +424,28 @@ PerformScript SayActiveCursor()
 EndIf
 EndScript
 
+; JAWS'S OWN QUESTIONS, ANSWERED BY FileDir IN THE LIST (24 November 2026), as DbDo answers them in its grid. Way:
+; answer with the app's key. Where: only here, in FileDir's list with the PC cursor; elsewhere JAWS's own script.
+; SayFont (JAWS+F): a file list has no font worth hearing; the item's type is its format, as DbDo's JAWS+F says a
+; field's type. Overriding the script by name keeps whatever key the user has for it.
+Script SayFont ()
+If inFileDirList() && IsPCCursor() Then
+TypeKey("Shift+T")
+Else
+PerformScript SayFont()
+EndIf
+EndScript
+
+; JAWS+A: in File Explorer, JAWS reads the address bar, the folder's path; FileDir's Say Folder Name says the same.
+; The key map names Insert+A, not JAWSKey+A, so a laptop's CapsLock+A stays Say All. Elsewhere the key goes on.
+Script sayFileDirAddress ()
+If inFileDirList() && IsPCCursor() Then
+TypeKey("Shift+Apostrophe")
+Else
+TypeCurrentScriptKey()
+EndIf
+EndScript
+
 Script SayCurrentAccessKey()
 Var
 String sKey, String sClass
