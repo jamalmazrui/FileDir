@@ -437,7 +437,7 @@ EndIf
 EndScript
 
 ; JAWS+A: in File Explorer, JAWS reads the address bar, the folder's path; FileDir's Say Folder Name says the same.
-; The key map names Insert+A, not JAWSKey+A, so a laptop's CapsLock+A stays Say All. Elsewhere the key goes on.
+; The key map binds it in [Desktop Keys] only, since in the laptop layout Insert+A is Say All. Elsewhere the key goes on.
 Script sayFileDirAddress ()
 If inFileDirList() && IsPCCursor() Then
 TypeKey("Shift+Apostrophe")

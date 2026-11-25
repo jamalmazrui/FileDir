@@ -3,8 +3,6 @@
 Alt+Delete=TypeCurrentScriptKey
 Alt+Shift+Comma=TypeCurrentScriptKey
 ; end of Homer suite pass-through
-; JAWS+A (24 November 2026): the folder's path, as JAWS reads File Explorer's address bar.
-Insert+A=sayFileDirAddress
 Control+JAWSKey+Space=UIWebClientUtilities
 Control+Insert+Space=UIWebClientUtilities
 Alt+A=TypeCurrentScriptKey
@@ -297,6 +295,10 @@ Control+Equals=UIEvaluateExpression
 [Desktop Keys]
 Control+JAWSKey+Space=UIWebClientUtilities
 Control+Insert+Space=UIWebClientUtilities
+; JAWS+A only in the desktop layout (24 November 2026, checked against JAWS 2026's default.jkm): in the laptop layout
+; Insert+A and JAWSKey+A are Say All, which must keep working; the desktop layout leaves Insert+A unbound.
+; The folder's path, as JAWS reads File Explorer's address bar.
+Insert+A=sayFileDirAddress
 [Laptop Keys]
 Control+JAWSKey+Space=UIWebClientUtilities
 Control+Insert+Space=UIWebClientUtilities

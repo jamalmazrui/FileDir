@@ -2,6 +2,11 @@
 
 
 
+## 24 November 2026, late night -- JAWS+A on laptops stays Say All
+
+- **JAWS+A answers only in JAWS's desktop layout.** In the laptop layout, JAWS+A is Say All, and FileDir's key map had taken it there too. The address key now sits in the key map's desktop section, checked against JAWS 2026's own key map.
+- **JAWS's key for where the cursor is is Alt+Delete,** which FileDir's key map already hands to FileDir's Say Position; JAWS+Number Pad Delete is JAWS's Route Virtual to PC. The guide is corrected.
+
 ## 24 November 2026, night -- JAWS+A and JAWS+F in the list
 
 - **JAWS+A says the folder's name and path,** as Shift+Apostrophe does, the way JAWS reads File Explorer's address bar.
