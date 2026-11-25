@@ -2,6 +2,16 @@
 
 
 
+## 25 November 2026, late afternoon -- F3 repeats Jump and Keywords; Alt+J and Alt+K retired
+
+- **Jump Again (Alt+J) and Keywords Again (Alt+K) are retired.** Search Next (F3) and Search Previous (Shift+F3) already repeat whichever came last, and Alt+J and Alt+K are free, as in DbDo, where they read what those searches find.
+
+## 25 November 2026 -- Menu review: window layouts and Burn to CD retired
+
+- **Arrange Icons, Cascade, Tile Horizontal and Tile Vertical are retired.** They arrange windows on the screen, which a screen reader user does not see, and FileDir's windows open maximized; they also held four F11 keys, the family for the version. Next Window, Previous Window and Current Windows stay on the File menu, as do the drive keys Alt+1 through Alt+9.
+- **Burn to CD is retired,** and Alt+Shift+B is free. Copying files to a writable disc is rare work now, and File Explorer does it.
+- A retired command keeps its code, so it can come back, but has no key and is on no menu, so the Alternate Menu does not list it either.
+
 ## 24 November 2026, late night -- JAWS+A on laptops stays Say All
 
 - **JAWS+A answers only in JAWS's desktop layout.** In the laptop layout, JAWS+A is Say All, and FileDir's key map had taken it there too. The address key now sits in the key map's desktop section, checked against JAWS 2026's own key map.

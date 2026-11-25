@@ -481,14 +481,13 @@ on text in its name, in the search syntax described below; plain letters
 are found anywhere in the name. The command also recognizes symbols
 associated with file attributes. Thus, you can jump to a ReadOnly file
 by entering a single ] character as the search string. A [ would find
-the next item without the ReadOnly attribute set. Using the Jump Again
-command, Alt+J, or F3, you can efficiently hop from one match to the
-next; Shift+F3 goes back.</p>
+the next item without the ReadOnly attribute set. Press F3 to hop from
+one match to the next, and Shift+F3 to go back.</p>
 <p>The Control+K command searches for keywords inside the body of a
 file, in the search syntax described below. For example, entering C# |
 Visual Basic would match files containing either language, whereas C#
-&amp; Visual Basic would require both. Press Alt+K or F3 to hop to the
-next matching file, and Shift+F3 to go back.</p>
+&amp; Visual Basic would require both. Press F3 to hop to the next
+matching file, and Shift+F3 to go back.</p>
 <p>Press Control+F to filter the current folder to the items whose names
 match a pattern, in the search syntax below: for example, <em>.doc |
 </em>.rtf for files in either Word or Rich Text Format, or !*.bak for
@@ -963,11 +962,12 @@ with that letter. To make navigation more flexible and efficient,
 particularly in a listbox with many items, FileDir adds the following
 features to a list based dialog. Control+J prompts for text within an
 item, going to the first match if a new search, or the next match if the
-previous value is accepted. Alt+J goes to the next match without
-prompting for a value. The item with focus when the dialog is closed –
-but not canceled – becomes the current item the next time that the same
-list dialog is invoked (you are notified when it is not the first item).
-The Jump value of that dialog is also remembered.</p>
+previous value is accepted. F3 goes to the next match without prompting
+for a value, and Shift+F3 to the one before. The item with focus when
+the dialog is closed – but not canceled – becomes the current item the
+next time that the same list dialog is invoked (you are notified when it
+is not the first item). The Jump value of that dialog is also
+remembered.</p>
 <p>Control+F sets a filter to restrict what items are shown, in the
 search syntax (* matches any run of characters, ? a single one, and
 &amp; | ! and quotes work as everywhere in Homer). For example, you
@@ -1018,9 +1018,6 @@ order. Add the Shift key to reverse the order, e.g., Alt+Shift+S puts
 the largest file first (to query its precise size, press Shift+S). If
 you would prefer files to be listed before subfolders, change the
 DirsBeforeFiles configuration option to N for No.</p>
-<p>Press Alt+Shift+B to burn marked files to a CD. An external utility
-is invoked that lets you pick a drive and check estimates of space
-before and after on the CD.</p>
 <p>The Context Menu command, Shift+F10, lets you choose an action to
 perform on the current file based on those available for its
 type/extension (in the Windows registry). Also included is the OpenWith
@@ -1217,11 +1214,9 @@ directory. Changes to process settings affect the current session of
 FileDir, but not the next time it is run. User settings take effect when
 you log in again. System settings take affect when you restart the
 computer.</p>
-<p>FileDir windows may be visually organized according to common MDI
-(multiple document interface) patterns. FileDir has no Window menu;
-these commands are on the File menu, before Exit FileDir: Arrange Icons,
-Alt+F11; Cascade, Control+F11; Tile Horizontal, Alt+Shift+F11; and Tile
-Vertical, Shift+F11.</p>
+<p>FileDir has no Window menu: Next Window (Control+Tab), Previous
+Window (Control+Shift+Tab) and Current Windows (F4) are on the File
+menu.</p>
 <p>Use the Elevate Version command, F11, to download and install the
 latest version of FileDir. You are prompted for confirmation. The
 installer is downloaded to the folder for temporary Internet files so it

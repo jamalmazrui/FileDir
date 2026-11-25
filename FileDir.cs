@@ -1710,9 +1710,12 @@ menuNavigate = menu_Helper("&Navigate");
 menuNavigateJump = menu_Helper("&Jump ...", "Control+J", menuNavigateJump_Click);
 // REVERSE JUMP (21 November 2026, key groups), as in DbDo and as Reverse Keywords beside it.
 menuNavigateReverseJump = menu_Helper("Reverse Jump ...", "Control+Shift+J", menuNavigateReverseJump_Click);
-menuNavigateJumpAgain = menu_Helper("Jump Again", "Alt+J", menuNavigateJumpAgain_Click);
+// RETIRED (25 November 2026, Jamal: "retire Alt+G and Alt+J for repeating a go-to or jump. Instead, use the F3 and
+// Shift+F3 mechanism."): Search Next (F3) repeats the last Jump or Keywords and calls these two to do it, so they stay
+// made, with no key and on no menu; Alt+J and Alt+K are free, as in DbDo.
+menuNavigateJumpAgain = menu_Helper("Jump Again", "", menuNavigateJumpAgain_Click);
 menuNavigateKeywords = menu_Helper("&Keywords ...", "Control+K", menuNavigateKeywords_Click);
-menuNavigateKeywordsAgain = menu_Helper("Keywords Again", "Alt+K", menuNavigateKeywordsAgain_Click);
+menuNavigateKeywordsAgain = menu_Helper("Keywords Again", "", menuNavigateKeywordsAgain_Click);
 menuNavigateKeywordsBack = menu_Helper("Reverse Keywords", "Control+Shift+K", menuNavigateKeywordsBack_Click);
 menuNavigateSearchAgain = menu_Helper("Search Next", "F3", menuNavigateSearchAgain_Click);
 menuNavigateNextPart = menu_Helper("Next Pane", "F6", menuNavigateNextPart_Click);
@@ -1732,7 +1735,7 @@ menuNavigateNextTagged = menu_Helper("Next Marked", "Control+DownArrow", menuNav
 menuNavigatePreviousTagged = menu_Helper("Previous Marked", "Control+UpArrow", menuNavigatePreviousTagged_Click);
 menuNavigateInitialChange = menu_Helper("Initial Change", "", menuNavigateInitialChange_Click);
 menuNavigateExtensionChange = menu_Helper("Extension Change", "", menuNavigateExtensionChange_Click);
-menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateReverseJump, menuNavigateJumpAgain, menuNavigateKeywords, menuNavigateKeywordsAgain, menuNavigateKeywordsBack, menuNavigateSearchAgain, menuNavigateSearchBack, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange, menuNavigateNextPart, menuNavigatePreviousPart, menuNavigateNextSiblingFolder, menuNavigatePreviousSiblingFolder, menuNavigateNextVisitedFolder, menuNavigatePreviousVisitedFolder});
+menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateJump, menuNavigateReverseJump, menuNavigateKeywords, menuNavigateKeywordsBack, menuNavigateSearchAgain, menuNavigateSearchBack, menuNavigateSetFilter, menuNavigateClearFilter, menuNavigateBeginningFile, menuNavigateBeginningTagged, menuNavigateEndTagged, menuNavigateNextTagged, menuNavigatePreviousTagged, menuNavigateInitialChange, menuNavigateExtensionChange, menuNavigateNextPart, menuNavigatePreviousPart, menuNavigateNextSiblingFolder, menuNavigatePreviousSiblingFolder, menuNavigateNextVisitedFolder, menuNavigatePreviousVisitedFolder});
 
 menuQuery = menu_Helper("&Query");
 menuQueryDate = menu_Helper("Say Date", "Shift+D", menuQueryDate_Click);
@@ -1810,7 +1813,7 @@ menuMiscAppendTagged = menu_Helper("Append File Contents", "Alt+Shift+C", MenuMi
 menuMiscConvertEncodingTagged = menu_Helper("Convert Encoding", "Control+2", MenuMiscConvertEncodingTagged_Click);
 menuMiscTranslateTagged = menu_Helper("Translate File", "Alt+Shift+F7", MenuMiscTranslateTagged_Click);
 menuMiscExtractTagged = menu_Helper("Extract with Regex", "Control+Shift+E", MenuMiscExtractTagged_Click);
-menuMiscBurnTagged = menu_Helper("Burn to CD", "Alt+Shift+B", menuMiscBurnTagged_Click);
+menuMiscBurnTagged = menu_Helper("Burn to CD", "", menuMiscBurnTagged_Click);
 // ONE MAIL COMMAND (21 November 2026): Mail Attachment already put a lone file's text in the body as well as attaching
 // it, so Mail Body only repeated it. Mail, Control+M, does both jobs, as in EdSharp. Mail Body's handler is kept,
 // unbound and off the menu.
@@ -1867,17 +1870,21 @@ menuMiscNetworkConnections = menu_Helper("Network Connections ...", "", MenuMisc
 // NO KEY (21 November 2026): formatting a disk is rare and cannot be undone, so it is on the Misc menu only.
 menuMiscVolumeFormat = menu_Helper("Volume Format ...", "", menuMiscVolumeFormat_Click);
 menuMiscWindowsControlPanel = menu_Helper("Windows Control Panel ...", "Control+Shift+W", MenuMiscWindowsControlPanel_Click);
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscBurnTagged, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscRecordPlayback, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscEnvironmentVariables, menuMiscRecycleToggle, menuMiscOpenRecycleBin, menuMiscDateOrder, menuMiscReverseDateOrder, menuMiscAlphaOrder, menuMiscReverseAlphaOrder, menuMiscSizeOrder, menuMiscReverseSizeOrder, menuMiscTypeOrder, menuMiscReverseTypeOrder, menuMiscSendToWordProcessor, menuMiscSendToTextEditor, menuMiscOutputTagged, menuMiscAppendTagged, menuMiscConvertEncodingTagged, menuMiscTranslateTagged, menuMiscExtractTagged, menuMiscMailAttachTagged, menuMiscZipTagged, menuMiscZipTaggedThenDelete, menuMiscZipList, menuMiscUnarchiveTagged, menuMiscUnarchiveTaggedWithoutSubfolders, menuMiscUnarchiveTaggedToSameName, menuMiscUnarchivePassword, menuMiscCommandPrompt, menuMiscExplorerDir, menuMiscOpenInDbDo, menuMiscWebDownload, menuMiscEvaluate, menuMiscConvertUnits, menuMiscStartTimer, menuMiscStopTimer, menuMiscChatWithAI, menuMiscChatAboutFile, menuMiscPlayList, menuMiscPlayFolder, menuMiscRecordPlayback, menuMiscIterateProcesses, menuMiscInquireDifferences, menuMiscNetworkConnections, menuMiscVolumeFormat, menuMiscWindowsControlPanel, menuFilePrintTagged});
 // Say Unarchive Test is made with the Misc commands, beside its Unarchive family, and shown on the Say menu.
 menuQuery.DropDownItems.Add(menuMiscUnarchiveTest);
 
 // NO WINDOW MENU (21 November 2026, Jamal's ruling, as in DbDo and EdSharp): the layout commands join the window
 // commands on the File menu, before Exit, and the drive keys join Open Drive and Go to Drive. A digit or function key
 // takes no trigger letter.
-menuWindowArrangeIcons = menu_Helper("Arrange Icons", "Alt+F11", menuWindowArrangeIcons_Click);
-menuWindowCascade = menu_Helper("Cascade", "Control+F11", menuWindowCascade_Click);
-menuWindowTileHorizontal = menu_Helper("Tile Horizontal", "Alt+Shift+F11", menuWindowTileHorizontal_Click);
-menuWindowTileVertical = menu_Helper("Tile Vertical", "Shift+F11", menuWindowTileVertical_Click);
+// RETIRED (25 November 2026, the menu review Jamal asked for): Arrange Icons, Cascade, Tile Horizontal, Tile Vertical and
+// Burn to CD. The four layouts arrange windows on the screen, which a screen reader user does not see, and every window
+// opens maximized; they also held four F11 keys, the version family. Burning a CD is rare work now. They stay made, with
+// no key and on no menu, so the code is there for a rollback; a command on no menu is not in the Alternate Menu either.
+menuWindowArrangeIcons = menu_Helper("Arrange Icons", "", menuWindowArrangeIcons_Click);
+menuWindowCascade = menu_Helper("Cascade", "", menuWindowCascade_Click);
+menuWindowTileHorizontal = menu_Helper("Tile Horizontal", "", menuWindowTileHorizontal_Click);
+menuWindowTileVertical = menu_Helper("Tile Vertical", "", menuWindowTileVertical_Click);
 menuWindowDriveA = menu_Helper("Drive A", "Alt+1", menuWindowDrive_Click);
 menuWindowDriveB = menu_Helper("Drive B", "Alt+2", menuWindowDrive_Click);
 menuWindowDriveC = menu_Helper("Drive C", "Alt+3", menuWindowDrive_Click);
@@ -1889,8 +1896,6 @@ menuWindowDriveH = menu_Helper("Drive H", "Alt+8", menuWindowDrive_Click);
 menuWindowDriveI = menu_Helper("Drive I", "Alt+9", menuWindowDrive_Click);
 int iAt = menuFile.DropDownItems.IndexOf(menuFileGoToDrive) + 1;
 foreach (ToolStripItem menuDrive in new ToolStripItem[] {menuWindowDriveI, menuWindowDriveH, menuWindowDriveG, menuWindowDriveF, menuWindowDriveE, menuWindowDriveD, menuWindowDriveC, menuWindowDriveB, menuWindowDriveA}) menuFile.DropDownItems.Insert(iAt, menuDrive);
-iAt = menuFile.DropDownItems.IndexOf(menuFileExit);
-foreach (ToolStripItem menuLayout in new ToolStripItem[] {menuWindowTileVertical, menuWindowTileHorizontal, menuWindowCascade, menuWindowArrangeIcons}) menuFile.DropDownItems.Insert(iAt, menuLayout);
 
 menuHelp = menu_Helper("&Help");
 menuHelpAbout = menu_Helper("About", "Alt+F1", MenuHelpAbout_Click);
@@ -9270,7 +9275,6 @@ declareKey("menuEditCompleteUntag", menuEditCompleteUntag, Keys.Alt | Keys.Shift
 declareKey("menuEditCopyTagged", menuEditCopyTagged, Keys.Control | Keys.Shift | Keys.C);
 declareKey("menuMiscOpenRecycleBin", menuMiscOpenRecycleBin, Keys.Control | Keys.B);
 declareKey("menuNavigateBeginningFile", menuNavigateBeginningFile, Keys.Alt | Keys.B, Keys.Alt | Keys.Home);
-declareKey("menuMiscBurnTagged", menuMiscBurnTagged, Keys.Alt | Keys.Shift | Keys.B);
 declareKey("menuNavigateBeginningTagged", menuNavigateBeginningTagged, Keys.Control | Keys.PageUp);
 declareKey("menuNavigateEndTagged", menuNavigateEndTagged, Keys.Control | Keys.PageDown);
 declareKey("menuMiscEnvironmentVariables", menuMiscEnvironmentVariables, Keys.Control | Keys.E);
@@ -9307,7 +9311,6 @@ declareKey("menuMiscIterateProcesses", menuMiscIterateProcesses, Keys.Alt | Keys
 declareKey("menuMiscInquireDifferences", menuMiscInquireDifferences, Keys.Alt | Keys.Shift | Keys.I);
 declareKey("menuNavigateJump", menuNavigateJump, Keys.Control | Keys.J);
 declareKey("menuNavigateReverseJump", menuNavigateReverseJump, Keys.Control | Keys.Shift | Keys.J);
-declareKey("menuNavigateJumpAgain", menuNavigateJumpAgain, Keys.Alt | Keys.J);
 declareKey("menuNavigateKeywordsBack", menuNavigateKeywordsBack, Keys.Control | Keys.Shift | Keys.K);
 declareKey("menuNavigateSearchAgain", menuNavigateSearchAgain, Keys.F3);
 declareKey("menuNavigateNextPart", menuNavigateNextPart, Keys.F6);
@@ -9318,7 +9321,6 @@ declareKey("menuNavigateNextVisitedFolder", menuNavigateNextVisitedFolder, Keys.
 declareKey("menuNavigatePreviousVisitedFolder", menuNavigatePreviousVisitedFolder, Keys.Alt | Keys.Shift | Keys.F6);
 declareKey("menuNavigateSearchBack", menuNavigateSearchBack, Keys.Shift | Keys.F3);
 declareKey("menuNavigateKeywords", menuNavigateKeywords, Keys.Control | Keys.K);
-declareKey("menuNavigateKeywordsAgain", menuNavigateKeywordsAgain, Keys.Alt | Keys.K);
 declareKey("menuQueryListTagged", menuQueryListTagged, Keys.Alt | Keys.Shift | Keys.L);
 declareKey("menuQueryListCurrent", menuQueryListCurrent, Keys.Control | Keys.L);
 declareKey("menuQueryListCurrentTagged", menuQueryListCurrentTagged);
@@ -9432,10 +9434,6 @@ declareKey("menuHelpContextMenu", menuHelpContextMenu, Keys.Apps, Keys.Shift | K
 declareKey("menuHelpSendToMenu", menuHelpSendToMenu, Keys.Control | Keys.F10);
 declareKey("menuHelpAlternateMenu", menuHelpAlternateMenu, Keys.Alt | Keys.F10);
 declareKey("menuHelpElevateVersion", menuHelpElevateVersion, Keys.F11);
-declareKey("menuWindowArrangeIcons", menuWindowArrangeIcons, Keys.Alt | Keys.F11);
-declareKey("menuWindowCascade", menuWindowCascade, Keys.Control | Keys.F11);
-declareKey("menuWindowTileHorizontal", menuWindowTileHorizontal, Keys.Alt | Keys.Shift | Keys.F11);
-declareKey("menuWindowTileVertical", menuWindowTileVertical, Keys.Shift | Keys.F11);
 declareKey("menuMiscChatWithAI", menuMiscChatWithAI, Keys.F12);
 declareKey("menuMiscChatAboutFile", menuMiscChatAboutFile, Keys.Shift | Keys.F12);
 declareKey("menuHelpCopyLog", menuHelpCopyLog, Keys.Control | Keys.F12);
