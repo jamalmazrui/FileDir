@@ -2,6 +2,10 @@
 
 
 
+## 26 November 2026, afternoon -- The Homer pattern
+
+- **The search syntax is now called the Homer pattern,** the parallel of a regex pattern, and it gains near: `"guide dog"~5` finds the words with at most five between them, useful in Keywords and File Find's Text, which read file contents. It works with the kit's 1.294.0.
+
 ## 25 November 2026, late afternoon -- F3 repeats Jump and Keywords; Alt+J and Alt+K retired
 
 - **Jump Again (Alt+J) and Keywords Again (Alt+K) are retired.** Search Next (F3) and Search Previous (Shift+F3) already repeat whichever came last, and Alt+J and Alt+K are free, as in DbDo, where they read what those searches find.

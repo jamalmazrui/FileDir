@@ -469,7 +469,7 @@ current file or folder item.</p>
 <p>Find commands search for an item by a string of characters in the
 name or body. Press Alt+Shift+F to find a file anywhere in the current
 folder or subfolders based on text it contains and/or a name pattern,
-both in the search syntax described below. For example, you could search
+both as a Homer pattern, described below. For example, you could search
 for the term “strategic plan” in each file with a name matching
 minutes*.doc (meaning a name that has minutes at the beginning and .doc
 at the end). FileDir will present a list of files that match the wild
@@ -477,26 +477,26 @@ card pattern. Use arrow key or initial letter navigation to focus on the
 item of interest. Pressing Enter will then go to the folder containing
 that item and place focus on it.</p>
 <p>Press Control+J to jump to an item within the current folder, based
-on text in its name, in the search syntax described below; plain letters
+on text in its name, as a Homer pattern, described below; plain letters
 are found anywhere in the name. The command also recognizes symbols
 associated with file attributes. Thus, you can jump to a ReadOnly file
 by entering a single ] character as the search string. A [ would find
 the next item without the ReadOnly attribute set. Press F3 to hop from
 one match to the next, and Shift+F3 to go back.</p>
 <p>The Control+K command searches for keywords inside the body of a
-file, in the search syntax described below. For example, entering C# |
+file, as a Homer pattern, described below. For example, entering C# |
 Visual Basic would match files containing either language, whereas C#
 &amp; Visual Basic would require both. Press F3 to hop to the next
 matching file, and Shift+F3 to go back.</p>
 <p>Press Control+F to filter the current folder to the items whose names
-match a pattern, in the search syntax below: for example, <em>.doc |
-</em>.rtf for files in either Word or Rich Text Format, or !*.bak for
-everything but backups. Press Control+Shift+F to remove any filter and
-make all items available in the view.</p>
-<h3 id="search-syntax">Search syntax</h3>
-<p>Every Homer search that is not a regular expression reads what you
-type the same way. A plain word is enough most of the time; the symbols
-are there when you need more.</p>
+match a pattern, as a Homer pattern, described below: for example,
+<em>.doc | </em>.rtf for files in either Word or Rich Text Format, or
+!*.bak for everything but backups. Press Control+Shift+F to remove any
+filter and make all items available in the view.</p>
+<h3 id="homer-patterns">Homer patterns</h3>
+<p>Every Homer search that is not a regex pattern reads what you type as
+a <strong>Homer pattern</strong>. A plain word is enough most of the
+time; the symbols are there when you need more.</p>
 <ul>
 <li><strong>A word</strong> is found anywhere, whatever its case:
 <code>river</code> finds “Riverside”.</li>
@@ -513,6 +513,9 @@ green.</li>
 <code>!draft</code>.</li>
 <li><strong>Quotes</strong> find exactly what is inside, symbols and
 all: <code>"C#"</code>, <code>"a &amp; b"</code>.</li>
+<li><strong>Quotes and a tilde</strong> find words near each other:
+<code>"guide dog"~5</code> finds guide and dog with at most five words
+between them, in either order.</li>
 </ul>
 <p>Where a wildcard counts depends on what is searched. When the search
 reads a <strong>name</strong> – a file name, a line of a list, one field
@@ -968,15 +971,15 @@ the dialog is closed – but not canceled – becomes the current item the
 next time that the same list dialog is invoked (you are notified when it
 is not the first item). The Jump value of that dialog is also
 remembered.</p>
-<p>Control+F sets a filter to restrict what items are shown, in the
-search syntax (* matches any run of characters, ? a single one, and
-&amp; | ! and quotes work as everywhere in Homer). For example, you
-could browse replace-related commands in the Alternate Menu, Alt+F10, by
-pressing Control+F after invoking that list and then entering
-<em>replace</em> as the filter expression. Control+Shift+F clears the
-filter so all items are shown again. The order of items may also be
-changed: Alt+A for alpha order, Alt+Shift+A for reverse alpha order,
-Alt+D for default order, or Alt+Shift+D for reverse default order.</p>
+<p>Control+F sets a filter to restrict what items are shown, as a Homer
+pattern (* matches any run of characters, ? a single one, and &amp; | !
+and quotes work as everywhere in Homer). For example, you could browse
+replace-related commands in the Alternate Menu, Alt+F10, by pressing
+Control+F after invoking that list and then entering <em>replace</em> as
+the filter expression. Control+Shift+F clears the filter so all items
+are shown again. The order of items may also be changed: Alt+A for alpha
+order, Alt+Shift+A for reverse alpha order, Alt+D for default order, or
+Alt+Shift+D for reverse default order.</p>
 <p>Multiple commands support flexible checking or unchecking in a
 checked listbox such as the Web Download dialog. Press Space to toggle
 the checked state of the current item, Control+A to check all items, or
@@ -1501,11 +1504,10 @@ jump or keyword search, whichever it was</li>
 <li><strong>Control+F</strong> filter the list,
 <strong>Control+Shift+F</strong> clear the filter</li>
 </ul>
-<p><strong>Keywords, Filter and Jump share the Homer search
-syntax</strong>, described under Find commands:
-<code>red &amp; blue</code> means both words, <code>red | blue</code>
-either, <code>!red</code> not, and <code>chap*</code> anything starting
-that way. Case never matters.</p>
+<p><strong>Keywords, Filter and Jump share the Homer pattern</strong>,
+described under Find commands: <code>red &amp; blue</code> means both
+words, <code>red | blue</code> either, <code>!red</code> not, and
+<code>chap*</code> anything starting that way. Case never matters.</p>
 <p>Each remembers its own last ten answers, and all of them ignore case.
 All act on the Track list from wherever you are, leave the keyboard
 where it was, and say the track they land on when the cursor is
