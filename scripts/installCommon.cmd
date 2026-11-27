@@ -121,6 +121,21 @@ rem winget upgrade answers such a copy with "no installed package found" (-19783
 rem installed in its default machine-wide folder instead, and the result is reported like any other.
 rem Labels rather than a parenthesized block, so the exit code is read when it is set whether or not the calling
 rem script turned on delayed expansion.
+rem USER SCOPE, ADMINISTRATOR CONTEXT (26 November 2026). Setup runs elevated, and winget refuses to upgrade a package a
+rem user installed for himself alone: "The requested operation is not permitted from an administrator context on
+rem packages installed within the user scope" (-1978335107). yt-dlp stayed at 2026.10.26 through every update for this.
+rem Exit code 2 tells the calling script so, and a script whose program can update itself (yt-dlp -U) does that.
+rem AS THE SIGNED-IN USER, AFTER SETUP (26 November 2026, second cycle). yt-dlp -U updated a copy on the PATH, but
+rem Setup reads the version winget records, which only winget itself changes, so the outcome still said MISMATCH. The
+rem upgrade is written as a request file in TEMP, and Setup's kit code runs every such request as the person who
+rem started Setup, not as administrator, before it confirms the outcome; that winget accepts.
+if "%iHomerUpgrade%"=="-1978335107" (
+  >> "%log%" echo %date% %time% winget will not upgrade %~2 from an administrator context, because it was installed for one user; Setup will run it as the signed-in user: %TEMP%\homerAsUser-%~2.cmd
+  > "%TEMP%\homerAsUser-%~2.cmd" echo @echo off
+  >> "%TEMP%\homerAsUser-%~2.cmd" echo winget upgrade --id %~2 --exact --silent --accept-source-agreements --accept-package-agreements --disable-interactivity ^>^> "%log%" 2^>^&1
+  >> "%TEMP%\homerAsUser-%~2.cmd" echo ^>^> "%log%" echo %%date%% %%time%% as the signed-in user: winget upgrade %~2 exit code %%errorlevel%%
+  exit /b 2
+)
 if not "%iHomerUpgrade%"=="-1978335212" exit /b 1
 >> "%log%" echo %date% %time% winget knows no installed %~2, so the newest release is installed instead
 set "sHomerRunLong=winget install --id %~2 --exact --silent --accept-source-agreements --accept-package-agreements --disable-interactivity"

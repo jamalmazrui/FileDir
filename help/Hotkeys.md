@@ -1,6 +1,6 @@
 ﻿# FileDir Hotkeys
 
-**Version 5.0.262**  
+**Version 5.0.263**  
 Copyright 2006-2026 by Jamal Mazrui  
 MIT License
 
@@ -181,7 +181,7 @@ Commands in alphabetical order.
 - **Say Position**, Alt+Delete or Shift+5 -- Say the current position: the item's number, the count and the percent
 - **Say Selected**, Shift+Space -- or JAWS+Shift+DownArrow, Say the marked items, or the current one
 - **Say Size**, Shift+S -- Say the current item's size
-- **Say Status**, Alt+Z or Shift+Z -- Say the current item's date and size, then the order and filter, and the timer when one is set
+- **Say Timer**, Shift+Z -- Say whether the timer runs or is paused, and how long it has run
 - **Say Type**, Shift+T -- Say the current item's type and extension
 - **Say Unarchive Test**, Shift+U -- Say whether the current archive unzips successfully
 - **Say What Content**, Question -- Say the current file's text, or list what the folder holds
@@ -296,7 +296,6 @@ The same commands, in alphabetical order of the key that runs them.
 - **Alt+T** -- Type Order: Sort items by type and extension
 - **Alt+U** -- Unarchive without Subfolders: Unzip current or marked files without subfolder paths
 - **Alt+Y** -- Say Yield: Say how many items are in view, and their total size
-- **Alt+Z or Shift+Z** -- Say Status: Say the current item's date and size, then the order and filter, and the timer when one is set
 - **Apostrophe** -- Say Item Name: Say the current item's name
 - **Backslash** -- Open Root Folder: Open the drive's root folder in a new window
 - **Backspace** -- Open Parent Folder: Open the parent folder in a new window
@@ -420,6 +419,7 @@ The same commands, in alphabetical order of the key that runs them.
 - **Shift+U** -- Say Unarchive Test: Say whether the current archive unzips successfully
 - **Shift+UpArrow** -- Mark and Previous: Mark the current item and go to the previous
 - **Shift+Y** -- Say Yield on Drive: Say the current drive's total size and free space
+- **Shift+Z** -- Say Timer: Say whether the timer runs or is paused, and how long it has run
 - **Slash or Alt+Shift+NumPad5** -- Unmark: Unmark current item
 - **Space or Control+Space** -- Toggle Mark: Mark or unmark the current item
 
@@ -526,7 +526,6 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Alt+Apostrophe** -- Say Clipboard
 - **Alt+P** -- Say Path
 - **Alt+Delete or Shift+5** -- Say Position
-- **Alt+Z or Shift+Z** -- Say Status
 - **Alt+Y** -- Say Yield
 - **Alt+S** -- Size Order
 - **Alt+F2** -- Stop Timer
@@ -600,6 +599,7 @@ Grouped by the modifier key a command starts with, which is often the quickest w
 - **Shift+O** -- Say Order
 - **Shift+Space** -- Say Selected
 - **Shift+S** -- Say Size
+- **Shift+Z** -- Say Timer
 - **Shift+T** -- Say Type
 - **Shift+U** -- Say Unarchive Test
 - **Shift+F4** -- Say Windows Open

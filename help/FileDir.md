@@ -84,7 +84,7 @@ FileDir is designed to be a powerful, efficient, and convenient alternative to F
 
 Since the number of possible FileDir commands is large, involving nearly every letter and several punctuation keys, some organizing concepts, explained below, help the learning curve.
 
-The standard environment of FileDir is a view of items in a particular folder of the computer's file system. The title of the window says "FileDir" followed by the path and name of the folder being viewed. Below the title bar is a list of items contained in the folder, one item per line, folder items first, then file items after. The date and time of the current item, its size, the sort order, and filter specification (if any) are displayed on the status line. This may be reviewed with Say Status, Alt+Z or Shift+Z, or a screen reader-specific command such as Insert+PageDown in JAWS. For one part alone, Shift+F says the filter, Shift+O the order, and Shift+M whether the current item is marked, as in DbDo; Shift+8 says the order and the filter together. Note that the size of a folder item will be -1 until a Size or Yield query causes it to be calculated (by recursively summing the sizes of all contained files and subfolders). On the status line, the size is expressed in an abbreviated manner using K for kilobytes, M for megabytes, or G for gigabytes.
+The standard environment of FileDir is a view of items in a particular folder of the computer's file system. The title of the window says "FileDir" followed by the path and name of the folder being viewed. Below the title bar is a list of items contained in the folder, one item per line, folder items first, then file items after. The date and time of the current item, its size, the sort order, and filter specification (if any) are displayed on the status line. Your screen reader reads it with its own key, such as Insert+PageDown in JAWS or NVDA+End in NVDA. For one part alone, Shift+D says the date, Shift+S the size, Shift+F the filter, Shift+O the order, and Shift+M whether the current item is marked, as in DbDo; Shift+8 says the order and the filter together. Note that the size of a folder item will be -1 until a Size or Yield query causes it to be calculated (by recursively summing the sizes of all contained files and subfolders). On the status line, the size is expressed in an abbreviated manner using K for kilobytes, M for megabytes, or G for gigabytes.
 
 With JAWS, two of its own keys answer in FileDir's words while you are in the list. JAWS+A, which reads the address bar in File Explorer, says the folder's name and path, as Shift+Apostrophe does; this is in JAWS's desktop layout, since in the laptop layout JAWS+A is Say All. JAWS+F, which elsewhere says the font, says the item's type, as Shift+T does. JAWS's key for where the cursor is, Alt+Delete, already says the item's position. DbDo and EdSharp answer the same keys with their own address and position. In dialogs and boxes, the keys do what JAWS always does.
 
@@ -582,7 +582,7 @@ Yard to meter
 
 Conversions may be added, modified, or deleted by editing the Convert.txt file in the FileDir program folder. A new installation of FileDir will replace this file, however, so custom changes would need to be manually backed up and restored.
 
-Press **Alt+Shift+Z**, Timer Toggle, to start a timer; FileDir asks for the announcement interval and the stop time. The announcement interval, in seconds, is how often FileDir says how long has passed since the timer started, so 60 means once a minute. Those announcements happen whatever program is in front. Leave the interval blank or 0 to run the timer silently. Say Status, **Alt+Z**, ends with whether the timer is running or paused and how long it has run. Alt+Shift+Z pauses a running timer and resumes a paused one, since Z keys are toggles. Press **Alt+F2**, Stop Timer, to stop the timer and hear the total time it ran.
+Press **Alt+Shift+Z**, Timer Toggle, to start a timer; FileDir asks for the announcement interval and the stop time. The announcement interval, in seconds, is how often FileDir says how long has passed since the timer started, so 60 means once a minute. Those announcements happen whatever program is in front. Leave the interval blank or 0 to run the timer silently. Say Timer, **Shift+Z**, says whether the timer is running or paused and how long it has run. Alt+Shift+Z pauses a running timer and resumes a paused one, since Z keys are toggles. Press **Alt+F2**, Stop Timer, to stop the timer and hear the total time it ran.
 
 The timer moved off the F12 row so that F12 and Shift+F12 could ask the AI, as they do in EdSharp.
 
@@ -1054,7 +1054,7 @@ These need Ollama, the same installation the Translate File command uses.
 for twenty years. They moved off it so that FileDir and EdSharp agree about the
 F12 column, and in November 2026 off Alt+Control, which is for Windows desktop
 shortcuts: Timer Toggle is **Alt+Shift+Z**, Stop Timer is **Alt+F2**, and Say
-Status (**Alt+Z**) says the timer.
+Timer (**Shift+Z**) says whether it runs and how long it has run.
 Matching the sibling program is worth more than protecting a habit that few
 people had, now that a phone or a smart speaker sets a timer better than a file
 manager does.

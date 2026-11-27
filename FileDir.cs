@@ -1772,7 +1772,11 @@ menuQueryYieldFiles = menu_Helper("Say Yield Files", "", menuQueryYieldFiles_Cli
 menuQueryYieldOnDrive = menu_Helper("Say Yield on Drive", "Shift+Y", menuQueryYieldOnDrive_Click);
 menuQueryYieldWithRegex = menu_Helper("Yield with Regex ...", "Control+Shift+Y", MenuQueryYieldWithRegex_Click);
 menuQueryYieldInOperatingSystem = menu_Helper("Say Yield in Operating System", "", MenuQueryYieldInOperatingSystem_Click);
-menuQueryStatus = menu_Helper("Say Status", "Alt+Z or Shift+Z", menuQueryStatus_Click);
+// SAY TIMER ON SHIFT+Z (26 November 2026, Jamal: no Homer app needs to read its status bar whole; JAWS and NVDA have
+// keys for that, and Homer gives each fact its own command). The status line's date, size, order and filter have
+// Shift+D, Shift+S, Shift+O and Shift+F; only the timer had no other key, so Shift+Z, beside Timer Toggle on
+// Alt+Shift+Z, says the timer, and Alt+Z is free.
+menuQueryStatus = menu_Helper("Say Timer", "Shift+Z", menuQueryStatus_Click);
 menuQueryCharacterEncoding = menu_Helper("Say Character Encoding", "Shift+2 or @", MenuQueryCharacterEncoding_Click);
 menuQueryPercentThrough = menu_Helper("Say Position", "Alt+Delete or Shift+5", menuQueryPercentThrough_Click);
 // SHIFT+LETTER ONLY SAYS OR MOVES (16 November 2026, Jamal's phase). The Shift letters that actions gave up take
@@ -5490,7 +5494,7 @@ FolderWindow mdiChild = App.frame.getActiveChild();
 if (mdiChild == null) return;
 int i = mdiChild.bs.Position;
 DateTime dt = (DateTime) mdiChild.tbl.DefaultView[i]["Time"];
-Homer.KeyMap.answer("Date", "date:", dt.ToLongDateString() + " at " + dt.ToLongTimeString());
+Homer.KeyMap.answerPrecise("Date", dt.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture), "date:", dt.ToLongDateString() + " at " + dt.ToLongTimeString());
 status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQueryDate_Click method
 
@@ -5712,7 +5716,9 @@ mdiChild.tbl.DefaultView[i]["Size"] = lSize;
 // The friendly form, because this command is answering "how big is it" and a
 // nine-digit number is not an answer anybody keeps in their head. The exact
 // count is still in the list itself and in the status line for when it matters.
-Homer.KeyMap.answer("Size", "size: " + App.sizeFriendly(lSize));
+// THE EXACT SIZE ON A SECOND PRESS (26 November 2026, Jamal: a more precise reading is what a double press is for):
+// the first press says "1 KB", the second spells the size in bytes.
+Homer.KeyMap.answerPrecise("Size", lSize.ToString(System.Globalization.CultureInfo.InvariantCulture) + " bytes", "size: " + App.sizeFriendly(lSize));
 status_Helper(App.frame, (FolderWindow) App.frame.ActiveMdiChild);
 } // menuQuerySize_Click method
 
@@ -5953,12 +5959,10 @@ Homer.LbcAsk.infoDialog("Yield in Operating System", sText, true);
 } // yieldInOperatingSystem method
 
 void menuQueryStatus_Click(object sender, EventArgs e) {
-App.say("Status");
-string sText = App.frame.statusLabel.Text;
-App.say(sText);
-// THE TIMER IS PART OF THE STATUS (15 November 2026, A15): when a timer is set, Say Status ends with whether it runs
-// or is paused, and the time it has run, not counting pauses, as Timer says it.
-if (App.timer == null) return;
+// Say Timer (26 November 2026): its word, then whether a timer runs or is paused and the time it has run, not
+// counting pauses; "none" when no timer is set.
+if (App.timer == null) { Homer.KeyMap.answer("Timer", "none"); return; }
+App.say("Timer");
 TimeSpan tsRun = App.timer.Enabled ? App.tsElapsed + (DateTime.Now - App.dtTimerStart) : App.tsElapsed;
 App.say(App.timer.Enabled ? "Timer running" : "Timer paused");
 timer_Helper(tsRun);
@@ -9213,7 +9217,7 @@ Homer.KeyMap.addFormerName("Read Lean", "Say List");
 Homer.KeyMap.addFormerName("Say List Files", "List Files");
 Homer.KeyMap.addFormerName("Read Lean Marked", "List Marked");
 Homer.KeyMap.addFormerName("Read Lean Marked", "Say List Marked");
-Homer.KeyMap.addFormerName("Say Status", "Timer");
+Homer.KeyMap.addFormerName("Say Timer", "Say Status");
 Homer.KeyMap.addFormerName("Say Yield", "Yield");
 Homer.KeyMap.addFormerName("Say Yield Files", "Yield Files");
 Homer.KeyMap.addFormerName("Say Yield Marked", "Yield Marked");
@@ -9387,7 +9391,7 @@ declareKey("menuQueryYield", menuQueryYield, Keys.Alt | Keys.Y);
 declareKey("menuQueryYieldOnDrive", menuQueryYieldOnDrive, Keys.Shift | Keys.Y);
 declareKey("menuQueryYieldWithRegex", menuQueryYieldWithRegex, Keys.Control | Keys.Shift | Keys.Y);
 declareKey("menuMiscZipTagged", menuMiscZipTagged, Keys.Control | Keys.Z);
-declareKey("menuQueryStatus", menuQueryStatus, Keys.Alt | Keys.Z, Keys.Shift | Keys.Z);
+declareKey("menuQueryStatus", menuQueryStatus, Keys.Shift | Keys.Z);
 declareKey("menuQueryPercentThrough", menuQueryPercentThrough, Keys.Alt | Keys.Delete, Keys.Shift | Keys.D5);
 declareKey("menuQueryCharacterEncoding", menuQueryCharacterEncoding, Keys.Shift | Keys.D2);
 declareKey("menuMiscConvertUnits", menuMiscConvertUnits, Keys.Control | Keys.D3);

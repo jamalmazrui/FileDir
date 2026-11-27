@@ -267,7 +267,7 @@ Control+C. Spacebar, Enter or Escape closes it.
 **Where did the timer go?**
 
 To Alt+Shift+Z, Timer Toggle, which starts, pauses and resumes it; Alt+F2 to stop
-it; and Alt+Z, Say Status, to hear how long it has run. It moved off F12 so that
+it; and Shift+Z, Say Timer, to hear how long it has run. It moved off F12 so that
 FileDir and EdSharp agree about which keys ask the AI, and off Alt+Control, which
 is for Windows desktop shortcuts.
 

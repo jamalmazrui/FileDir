@@ -2,6 +2,16 @@
 
 
 
+## 26 November 2026, before midnight -- Pick lists remember, everywhere
+
+- **Every pick list starts on your last choice, else the first item**, through the kit, and the memory now lasts after a restart for lists that had only remembered within one session.
+- Needs HomerDev 1.301.0.
+
+## 26 November 2026, night -- Say Timer on Shift+Z, and precise second presses
+
+- **Shift+Z is Say Timer; Say Status and Alt+Z are retired.** Say Status read the status line whole, which your screen reader already does with its own key, and its date, size, order and filter each have a key: Shift+D, Shift+S, Shift+O and Shift+F. Only the timer had no other key, so Shift+Z, beside Timer Toggle on Alt+Shift+Z, says it: "Timer", then whether it runs and how long it has run, or "none".
+- **Say keys say their word first, and a second press is precise.** Through the kit, each Say key says its word, then the answer; a quick second press spells the exact value: Say Size spells the size in bytes, Say Date the date and time to the second.
+
 ## 26 November 2026, afternoon -- The Homer pattern
 
 - **The search syntax is now called the Homer pattern,** the parallel of a regex pattern, and it gains near: `"guide dog"~5` finds the words with at most five between them, useful in Keywords and File Find's Text, which read file contents. It works with the kit's 1.294.0.

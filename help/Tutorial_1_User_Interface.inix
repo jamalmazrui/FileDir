@@ -39,9 +39,9 @@ Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]
 
-Say=Alt plus Z, Say Status, reads the status line: the item's date and size, the sort order, and any filter.
-Key=Alt+Z
-Hear=Budget dot xlsx, 14 kilobytes, modified 3 October 2026, sorted by name
+Say=Shift plus O, Say Order, says the sort order: first its word, then the answer.
+Key=Shift+O
+Hear=Order, name
 Note=Confirm the wording with a live run: buildTutorials -live.
 
 [step]

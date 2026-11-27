@@ -472,13 +472,13 @@ Screen reader:
 
 Confirm the wording with a live run: buildTutorials -live.
 
-### Step 6: Alt+Z
+### Step 6: Shift+O
 
-Alt plus Z, Say Status, reads the status line: the item's date and size, the sort order, and any filter.
+Shift plus O, Say Order, says the sort order: first its word, then the answer.
 
 Screen reader:
 
-- Budget dot xlsx, 14 kilobytes, modified 3 October 2026, sorted by name
+- Order, name
 
 Confirm the wording with a live run: buildTutorials -live.
 
